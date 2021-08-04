@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+//алкександр
+/// <summary>
+/// Вращение мира прикосновением
+/// </summary>
 public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     /// <summary>
