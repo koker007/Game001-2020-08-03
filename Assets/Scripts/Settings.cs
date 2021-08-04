@@ -11,8 +11,11 @@ public class Settings : MonoBehaviour
     //для хранения самого себя
     static Settings main;
 
+    [SerializeField]
     float volumeAll = 1;
+    [SerializeField]
     float volumeSound = 1;
+    [SerializeField]
     float volumeMusic = 1;
 
     /// <summary>
@@ -88,6 +91,10 @@ public class Settings : MonoBehaviour
     }
 
     bool screenIsVertical = true;
+
+    /// <summary>
+    /// Вертикальное ли положение экрана
+    /// </summary>
     public bool ScreenIsVertical {
         get {
             return screenIsVertical;
@@ -105,6 +112,6 @@ public class Settings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
