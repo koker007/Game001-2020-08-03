@@ -14,6 +14,9 @@ public class MenuHello : MonoBehaviour
     Text[] Version;
 
     [SerializeField]
+    RectTransform PanelDown;
+
+    [SerializeField]
     GameObject options;
 
 
@@ -34,6 +37,7 @@ public class MenuHello : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdatePanels();
         UpdatePanelOpttion();
     }
 
@@ -70,6 +74,30 @@ public class MenuHello : MonoBehaviour
         }
         else if(!isNeedOpenOptions && options.activeSelf) {
             options.SetActive(false);
+        }
+    }
+
+    private void OnEnable()
+    {
+        OpenPanels();
+    }
+
+
+    void OpenPanels() {
+        PanelDown.pivot = new Vector2(PanelDown.pivot.x,2);
+    }
+
+    //
+    void UpdatePanels() {
+        
+        moving();
+
+        void moving() {
+            float y = PanelDown.pivot.y;
+
+            y += (0 - y) * Time.unscaledDeltaTime * 4;
+
+            PanelDown.pivot = new Vector2(PanelDown.pivot.x, y);
         }
     }
 }
