@@ -11,17 +11,21 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public Transform RotatableObj;
 
     private Vector2 StartTouchPosition;
-    private Vector3 StartObjRotation;
 
     private const float SpeedRotation = 0.1f;
+    /// <summary>
+    /// даьность поворота мира
+    /// </summary>
+    public float rotation;
+    private float Srotation;
 
     private bool isDown;
 
-    //нажатие мышина обьект
+    //нажатие мыши на обьект
     public void OnPointerDown(PointerEventData eventData)
     {
         StartTouchPosition = Input.mousePosition;
-        StartObjRotation = RotatableObj.eulerAngles;
+        Srotation = rotation;
         this.isDown = true;
     }
 
@@ -35,8 +39,10 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (isDown)
         {
-            RotatableObj.eulerAngles = new Vector3(StartObjRotation.x - (StartTouchPosition.y - Input.mousePosition.y) * SpeedRotation, RotatableObj.eulerAngles.y, RotatableObj.eulerAngles.z);
-            Debug.Log((StartTouchPosition.y - Input.mousePosition.y) * SpeedRotation);
+            //изменение переменной поворота
+            rotation = Srotation - (StartTouchPosition.y - Input.mousePosition.y) * SpeedRotation;
         }
+        //поворот обьекта
+        RotatableObj.eulerAngles = new Vector3(rotation, 0, 0);
     }
 }
