@@ -8,25 +8,99 @@ using UnityEngine;
 /// </summary>
 public class UICTRL : MonoBehaviour
 {
+    /// <summary>
+    /// Основной UICTRL
+    /// </summary>
+    static public UICTRL main;
 
     [SerializeField]
-    GameObject UILoading;
+    GameObject UILoading; //Меню загрузки игры
     [SerializeField]
-    GameObject UIHello;
+    GameObject UIHello; //Меню приветствия
     [SerializeField]
-    GameObject UIWorld;
+    GameObject UIWorld; //Главное меню
     [SerializeField]
-    GameObject UIGameplay;
+    GameObject UIGameplay; //Игровой процесс
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        main = this;
+        OpenLoading();
     }
+
+    
 
     // Update is called once per frame
     void Update()
     {
+        UpdateUI();
+    }
+
+
+
+    float loadingPlayTime = 0; //Временная переменная для выключания загрузки.
+
+
+    /// <summary>
+    /// Закрыть все окна
+    /// </summary>
+    void CloseAll() {
+        UILoading.SetActive(false);
+        UIHello.SetActive(false);
+        UIWorld.SetActive(false);
+        UIGameplay.SetActive(false);
+    }
+
+    /// <summary>
+    /// Открыть окно загрузки
+    /// </summary>
+    public void OpenLoading() {
+        CloseAll();
+        UILoading.SetActive(true);
+    }
+
+    /// <summary>
+    /// Открыть приветственное меню
+    /// </summary>
+    public void OpenHello() {
+        CloseAll();
+        UIHello.SetActive(true);
+    }
+    
+    /// <summary>
+    /// Открыть основное меню карты
+    /// </summary>
+    public void OpenWorld()
+    {
+        CloseAll();
+        UIWorld.SetActive(true);
+    }
+
+    /// <summary>
+    /// Открыть игровой процесс
+    /// </summary>
+    public void OpenGameplay() {
+        CloseAll();
+        UIGameplay.SetActive(true);
+    }
+
+    //Главная функция обрабатывающая какое из окон показать
+    void UpdateUI() {
+        if (UILoading.activeSelf) {
+            loadingPlayTime += Time.deltaTime;
+            if (loadingPlayTime > 3) {
+                OpenHello();
+            }
+        }
+        else if (UIHello.activeSelf) {
+
+        }
+        else if (UIWorld.activeSelf) {
+
+        }
+        else if (UIGameplay.activeSelf) {
         
+        }
     }
 }
