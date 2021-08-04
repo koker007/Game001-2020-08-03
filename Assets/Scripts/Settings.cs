@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Семен
 /// <summary>
 /// Скрипт с настройками игры
 /// </summary>
@@ -17,7 +18,7 @@ public class Settings : MonoBehaviour
     /// <summary>
     /// Общая громкость от 0 до 1
     /// </summary>
-    float VolumeAll
+    public float VolumeAll
     {
         get
         {
@@ -42,7 +43,7 @@ public class Settings : MonoBehaviour
     /// <summary>
     ///Громкость звуков от 0 до 1
     /// </summary>
-    float VolumeSound {
+    public float VolumeSound {
         get {
             return volumeSound;
         }
@@ -63,7 +64,7 @@ public class Settings : MonoBehaviour
     /// <summary>
     ///Громкость музыки от 0 до 1
     /// </summary>
-    float VolumeMusic
+    public float VolumeMusic
     {
         get
         {
@@ -83,6 +84,13 @@ public class Settings : MonoBehaviour
             {
                 main.volumeMusic = value;
             }
+        }
+    }
+
+    bool screenIsVertical = true;
+    public bool ScreenIsVertical {
+        get {
+            return screenIsVertical;
         }
     }
 
