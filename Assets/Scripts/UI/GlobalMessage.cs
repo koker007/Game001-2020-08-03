@@ -63,6 +63,10 @@ public class GlobalMessage : MonoBehaviour
     static public void Tickets() {
         
     }
+
+    /// <summary>
+    /// Всплывающее окно события
+    /// </summary>
     static public void Events() {
 
     }
