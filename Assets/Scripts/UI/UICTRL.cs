@@ -89,7 +89,7 @@ public class UICTRL : MonoBehaviour
     void UpdateUI() {
         if (UILoading.activeSelf) {
             loadingPlayTime += Time.deltaTime;
-            if (loadingPlayTime > 3) {
+            if (loadingPlayTime > 0.1) {
                 OpenHello();
             }
         }
