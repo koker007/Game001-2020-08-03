@@ -26,6 +26,7 @@ public class MenuWorld : MonoBehaviour
     void Start()
     {
         main = this;
+        OpenMapPanel();
     }
 
     // Update is called once per frame
@@ -50,24 +51,31 @@ public class MenuWorld : MonoBehaviour
     /// Открыть панель игровой карты
     /// </summary>
     public void OpenMapPanel() {
-        CloseAllPanels();
-        Map.SetActive(true);
+        if (!Map.activeSelf) {
+            CloseAllPanels();
+            Map.SetActive(true);
+        }
     }
 
     /// <summary>
     /// Открыть панель профиля игрока
     /// </summary>
     public void OpenProfilePanel() {
-        CloseAllPanels();
-        Profile.SetActive(true);
+        if (!Profile.activeSelf) {
+            CloseAllPanels();
+            Profile.SetActive(true);
+        }
     }
 
     /// <summary>
     /// Открыть панель арены
     /// </summary>
     public void OpenArenaPanel() {
-        CloseAllPanels();
-        Arena.SetActive(true);
+        if (!Arena.activeSelf)
+        {
+            CloseAllPanels();
+            Arena.SetActive(true);
+        }
     }
 
     void updateButtons() {
@@ -75,15 +83,22 @@ public class MenuWorld : MonoBehaviour
 
         void moving() {
             float downY = Down.pivot.y;
-
             downY += (0 - downY) * Time.unscaledDeltaTime * 4;
-
             Down.pivot = new Vector2(Down.pivot.x, downY);
+
+            float upY = Up.pivot.y;
+            upY += (1 - upY) * Time.unscaledDeltaTime * 4;
+            Up.pivot = new Vector2(Up.pivot.x, upY);
         }
     }
 
     //Поставить панели в стартовое положение
     void startButtons() {
         Down.pivot = new Vector2(Down.pivot.x, 3);
+        Up.pivot = new Vector2(Up.pivot.x, -3);
+    }
+
+    public bool isOpenMap() {
+        return Map.activeSelf;
     }
 }

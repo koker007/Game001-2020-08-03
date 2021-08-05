@@ -89,7 +89,7 @@ public class UICTRL : MonoBehaviour
     void UpdateUI() {
         if (UILoading.activeSelf) {
             loadingPlayTime += Time.deltaTime;
-            if (loadingPlayTime > 3) {
+            if (loadingPlayTime > 0.1) {
                 OpenHello();
             }
         }
@@ -102,5 +102,12 @@ public class UICTRL : MonoBehaviour
         else if (UIGameplay.activeSelf) {
         
         }
+    }
+
+    public bool isOpenMap() {
+        if (UIWorld.activeSelf && MenuWorld.main.isOpenMap())
+            return true;
+
+        return false;
     }
 }
