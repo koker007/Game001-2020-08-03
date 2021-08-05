@@ -23,7 +23,10 @@ public class GlobalMessage : MonoBehaviour
     [SerializeField]
     GameObject PrefabMessanger;
     [SerializeField]
-    GameObject SelectMessanger;
+    RectTransform SelectMessanger;
+
+    //Нужно ли закрыть окно
+    public bool needClose = true;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +37,7 @@ public class GlobalMessage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        OpenClose();
     }
 
     /// <summary>
@@ -71,5 +74,38 @@ public class GlobalMessage : MonoBehaviour
 
     }
 
+    //Открытие или закрытие информационного меню
+    void OpenClose()
+    {
 
+        testFon();
+
+        //Изменение альфы
+        void testFon() {
+            float alphaMax = 0.5f;
+            if (needClose && Fon.color.a > 0)
+            {
+                float alpha = Fon.color.a;
+                alpha -= Time.unscaledDeltaTime;
+                if (alpha < 0)
+                {
+                    Fon.raycastTarget = false;
+                    alpha = 0;
+                }
+
+                Fon.color = new Color(Fon.color.r, Fon.color.g, Fon.color.b, alpha);
+            }
+            else if (!needClose && Fon.color.a < alphaMax) {
+                Fon.raycastTarget = true;
+
+                float alpha = Fon.color.a;
+                alpha += Time.unscaledDeltaTime;
+                if (alpha < 0)
+                {
+                    alpha = alphaMax;
+                }
+                Fon.color = new Color(Fon.color.r, Fon.color.g, Fon.color.b, alpha);
+            }
+        }
+    }
 }

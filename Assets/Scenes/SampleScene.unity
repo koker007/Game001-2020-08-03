@@ -363,8 +363,9 @@ GameObject:
   m_Component:
   - component: {fileID: 68347446}
   - component: {fileID: 68347447}
+  - component: {fileID: 68347448}
   m_Layer: 5
-  m_Name: Messange
+  m_Name: Message
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -402,6 +403,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 68347445}
   m_CullTransparentMesh: 1
+--- !u!114 &68347448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68347445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1156fd637a777094881f2f5828b188fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NeedClose: 0
+  sinTime: 6
+  text: {fileID: 1021947079}
 --- !u!1 &91406398
 GameObject:
   m_ObjectHideFlags: 0
@@ -2733,7 +2749,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &588510157
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2778,6 +2794,7 @@ MonoBehaviour:
   Fon: {fileID: 416935503}
   PrefabMessanger: {fileID: 0}
   SelectMessanger: {fileID: 0}
+  needClose: 1
 --- !u!1 &597577164
 GameObject:
   m_ObjectHideFlags: 0
