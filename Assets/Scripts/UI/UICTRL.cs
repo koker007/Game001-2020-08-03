@@ -103,4 +103,11 @@ public class UICTRL : MonoBehaviour
         
         }
     }
+
+    public bool isOpenMap() {
+        if (UIWorld.activeSelf && MenuWorld.main.isOpenMap())
+            return true;
+
+        return false;
+    }
 }

@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{AF6508BC-D908-6895-936E-F41E2B494A88}</ProjectGuid>
+    <ProjectGuid>{D6AC4226-482C-8160-AA94-FBE650A1E1BC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -59,7 +59,7 @@
     <Compile Include="Assets\Scripts\UI\Gameplay\MenuGameplay.cs" />
     <Compile Include="Assets\Scripts\UI\World\PanelProfile.cs" />
     <Compile Include="Assets\Scripts\UI\World\MenuWorld.cs" />
-    <Compile Include="Assets\Scripts\UI\World\LevelButton.cs" />
+    <Compile Include="Assets\Scripts\ButtonsManager.cs" />
     <Compile Include="Assets\Scripts\UI\World\WorldSlider.cs" />
     <Compile Include="Assets\Scripts\UI\World\PanelMap.cs" />
     <Compile Include="Assets\Scripts\Global\Gameplay.cs" />
@@ -67,7 +67,7 @@
     <Compile Include="Assets\Scripts\Global\Settings.cs" />
     <Compile Include="Assets\Scripts\UI\Loading.cs" />
     <Compile Include="Assets\Scripts\UI\Hello\MenuHello.cs" />
-    <Compile Include="Assets\Scripts\Global\MainComponents.cs" />
+    <Compile Include="Assets\Scripts\UI\GlobalMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -285,12 +285,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.15f2\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.15f2\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.15f2\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
