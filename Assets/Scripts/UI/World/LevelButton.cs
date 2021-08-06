@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 //alexandr
 /// <summary>
 /// Скрипт кнопок уровней
@@ -9,12 +10,13 @@ public class LevelButton : MonoBehaviour
 {
 
     public Animator LevelAnim;
+    public Text text;
 
     private Collider2D butCollider;
     /// <summary>
     /// номер уровня
     /// </summary>
-    public int NumLevel;
+    public int NumLevel = 0;
 
     private void Awake()
     {
@@ -31,16 +33,15 @@ public class LevelButton : MonoBehaviour
     //отслеживание нажатий на кнопку
     private void OnMouseDown()
     {
-        /*Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.collider == butCollider)
+            if (hit.collider.transform.tag == "LevelButton")
             {
                 LevelAnim.SetBool("Touch", true);
             }
-        }*/
-        LevelAnim.SetBool("Touch", true);
+        }
     }
 
     private void OnMouseExit()
@@ -51,6 +52,21 @@ public class LevelButton : MonoBehaviour
     private void OnMouseUpAsButton()
     {
         LevelAnim.SetBool("Touch", false);
-        Debug.Log("klick");
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.transform.tag == "LevelButton")
+            {
+                Debug.Log("klick");
+            }
+        }
+    }
+
+    public void LevelUpdate(int lev)
+    {
+        NumLevel = lev;
+        text.text = lev.ToString();
     }
 }

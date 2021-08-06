@@ -8,10 +8,12 @@ using UnityEngine;
 public class MainComponents : MonoBehaviour
 {
     public static GameObject MainCamera;
+    public static GameObject RotatableObj;
 
     private void Awake()
     {
         MainCamera = GameObject.Find("Main Camera");
+        RotatableObj = GameObject.Find("RotatableObj");
     }
 
 }
