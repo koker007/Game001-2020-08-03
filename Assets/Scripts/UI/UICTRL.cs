@@ -110,4 +110,9 @@ public class UICTRL : MonoBehaviour
 
         return false;
     }
+
+    public void ClickButtonOpttions()
+    {
+        GlobalMessage.Settings();
+    }
 }

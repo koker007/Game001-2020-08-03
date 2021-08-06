@@ -101,4 +101,12 @@ public class MenuWorld : MonoBehaviour
     public bool isOpenMap() {
         return Map.activeSelf;
     }
+
+
+    public void ClickButtonHealth() {
+        GlobalMessage.Health();
+    }
+    public void ClickButtonTicket() {
+        GlobalMessage.Message("Get More Health!", "ask your friends for more health", "to ask");
+    }
 }

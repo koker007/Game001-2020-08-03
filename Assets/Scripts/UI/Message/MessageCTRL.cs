@@ -27,7 +27,7 @@ public class MessageCTRL : MonoBehaviour
     void Start()
     {
         rectTransform = gameObject.GetComponent<RectTransform>();
-        
+        startPosition();
     }
 
     // Update is called once per frame
@@ -35,7 +35,11 @@ public class MessageCTRL : MonoBehaviour
     {
         moving();
     }
-
+    
+    void startPosition()
+    {
+        rectTransform.pivot = new Vector2(0.5f, 5);
+    }
     void moving() {
 
         //Появление
@@ -75,7 +79,10 @@ public class MessageCTRL : MonoBehaviour
 
             rectTransform.pivot = new Vector2(rectTransform.pivot.x, y);
 
-            
+            //Удаление префаба
+            if (Mathf.Abs(y) > 10) {
+                Destroy(gameObject);
+            }
         }
 
 
@@ -87,4 +94,11 @@ public class MessageCTRL : MonoBehaviour
         button.text = buttonFunc;
     }
 
+    /// <summary>
+    /// Закрыть сообщение
+    /// </summary>
+    public void ClickButtonClose() {
+        NeedClose = true;
+        GlobalMessage.Close();
+    }
 }

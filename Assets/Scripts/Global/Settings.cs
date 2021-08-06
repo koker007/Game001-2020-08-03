@@ -9,7 +9,7 @@ using UnityEngine;
 public class Settings : MonoBehaviour
 {
     //для хранения самого себя
-    static Settings main;
+    static public Settings main;
 
     [SerializeField]
     float volumeAll = 1;
