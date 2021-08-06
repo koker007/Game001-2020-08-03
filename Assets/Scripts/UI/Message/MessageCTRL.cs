@@ -10,12 +10,16 @@ using UnityEngine.UI;
 public class MessageCTRL : MonoBehaviour
 {
     [SerializeField]
-    bool NeedClose = false;
+    public bool NeedClose = false;
     [SerializeField]
-    float sinTime = 2; //Для дрожания по косинусу
+    float sinTime = 2; //Для дрожания по синусу
 
     [SerializeField]
-    Text text;
+    Text title;
+    [SerializeField]
+    Text message;
+    [SerializeField]
+    Text button;
 
     RectTransform rectTransform;
 
@@ -44,21 +48,43 @@ public class MessageCTRL : MonoBehaviour
             float sinPlus = Mathf.Sin(sinTime * 20);
 
             float y = rectTransform.pivot.y;
-            y += (0.5f - y) * Time.unscaledDeltaTime;
-            y += sinPlus * sinTime * 0.05f;
+            y += (0.5f - y) * Time.unscaledDeltaTime * 5;
+
+            //y += sinPlus * sinTime * 0.05f;
+
+            if (Mathf.Abs(y) > 3 || sinTime > 2) { 
+                y = -3;
+                sinTime = 1;
+            }
             rectTransform.pivot = new Vector2(rectTransform.pivot.x, y);
         }
         //Исчезание
         else {
             sinTime += Time.unscaledDeltaTime;
 
-            float sinPlus = Mathf.Sin(sinTime);
+            float sinPlus = Mathf.Sin(sinTime * 20);
             float y = rectTransform.pivot.y;
 
-            y += sinTime;
-            y += sinPlus * sinTime;
+            float minusTime = sinTime - 0.25f;
+            if (minusTime < 0) minusTime = 0;
+            y += minusTime;
+
+            float sinTimeCut = 0.5f - sinTime;
+            if (sinTimeCut < 0) sinTimeCut = 0;
+            y += sinPlus * sinTimeCut * 0.2f;
 
             rectTransform.pivot = new Vector2(rectTransform.pivot.x, y);
+
+            
         }
+
+
     }
+
+    public void setMessage(string titleFunc, string messageFunc, string buttonFunc) {
+        title.text = titleFunc;
+        message.text = messageFunc;
+        button.text = buttonFunc;
+    }
+
 }
