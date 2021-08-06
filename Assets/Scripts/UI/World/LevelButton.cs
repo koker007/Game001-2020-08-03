@@ -59,6 +59,7 @@ public class LevelButton : MonoBehaviour
         {
             if (hit.collider.transform.tag == "LevelButton")
             {
+                GlobalMessage.LevelInfo(NumLevel);
                 Debug.Log("klick");
             }
         }
