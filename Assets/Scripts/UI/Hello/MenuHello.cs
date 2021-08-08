@@ -16,13 +16,7 @@ public class MenuHello : MonoBehaviour
     
     [SerializeField]
     RectTransform PanelDown;
-
-    [SerializeField]
-    GameObject options;
-
-
-    bool isNeedOpenOptions; //Нужно ли открыть или закрыть панель опций
-    
+        
 
 
     //Время когда в последний раз работало это меню
@@ -39,7 +33,6 @@ public class MenuHello : MonoBehaviour
     void Update()
     {
         UpdatePanels();
-        UpdatePanelOpttion();
     }
 
     /// <summary>
@@ -61,21 +54,7 @@ public class MenuHello : MonoBehaviour
     /// </summary>
     public void clickButtonOpttion()
     {
-        isNeedOpenOptions = !isNeedOpenOptions;
-    }
-
-
-    /// <summary>
-    /// Отвечает за состояние панели опций
-    /// </summary>
-    void UpdatePanelOpttion() {
-        if (isNeedOpenOptions && !options.activeSelf)
-        {
-            options.SetActive(true);
-        }
-        else if(!isNeedOpenOptions && options.activeSelf) {
-            options.SetActive(false);
-        }
+        GlobalMessage.Settings();
     }
 
     private void OnEnable()

@@ -33,7 +33,7 @@ public class MessageSettings : MonoBehaviour
     }
 
     public void ClickButtonMusic() {
-        if (Settings.main.VolumeMusic > 0.5f)
+        if (Settings.main.VolumeMusic < 0.5f)
         {
             Settings.main.VolumeMusic = 1;
         }
@@ -42,7 +42,7 @@ public class MessageSettings : MonoBehaviour
         }
     }
     public void ClickButtonSound() {
-        if (Settings.main.VolumeSound > 0.5f)
+        if (Settings.main.VolumeSound < 0.5f)
         {
             Settings.main.VolumeSound = 1;
         }
@@ -57,7 +57,7 @@ public class MessageSettings : MonoBehaviour
 
     //Проверяет какое изображение поставить на кнопки
     void imagesUpdate() {
-        if (Settings.main.VolumeMusic == 0)
+        if (Settings.main.VolumeMusic < 0.001f)
         {
             ImageMusic.texture = MusicOff;
         }
@@ -65,13 +65,13 @@ public class MessageSettings : MonoBehaviour
             ImageMusic.texture = MusicOn;
         }
 
-        if (Settings.main.VolumeSound == 0)
+        if (Settings.main.VolumeSound < 0.001f)
         {
-            ImageMusic.texture = SoundOff;
+            ImageSound.texture = SoundOff;
         }
         else
         {
-            ImageMusic.texture = SoundOn;
+            ImageSound.texture = SoundOn;
         }
     }
 }
