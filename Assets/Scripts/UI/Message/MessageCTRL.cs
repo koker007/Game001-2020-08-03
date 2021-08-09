@@ -45,6 +45,7 @@ public class MessageCTRL : MonoBehaviour
         //Появление
         if (!NeedClose)
         {
+            Debug.Log("fff");
             sinTime -= Time.unscaledDeltaTime;
             if (sinTime < 0)
                 sinTime = 0;

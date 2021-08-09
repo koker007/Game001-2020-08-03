@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 //Семен
 /// <summary>
 /// Отвечает за вывод глобальных сообщений на экран
@@ -32,6 +33,8 @@ public class GlobalMessage : MonoBehaviour
     GameObject PrefabHealth;
     [SerializeField]
     GameObject PrefabLVLInfo;
+    [SerializeField]
+    GameObject PrefabShop;
 
     //Нужно ли закрыть окно
     [SerializeField]
@@ -110,6 +113,15 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void Tickets() {
         
+    }
+    /// <summary>
+    /// Всплывающее окно магазин
+    /// </summary>
+    static public void Shop()
+    {
+        GameObject messageObj = Instantiate(main.PrefabShop, main.transform);
+        main.SelectMessanger = messageObj.GetComponent<RectTransform>();
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
     }
 
     /// <summary>

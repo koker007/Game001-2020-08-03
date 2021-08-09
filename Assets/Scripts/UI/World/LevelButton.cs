@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 //alexandr
 /// <summary>
 /// Скрипт кнопок уровней
@@ -12,6 +13,11 @@ public class LevelButton : MonoBehaviour
     public Animator LevelAnim;
     public Text text;
 
+    public GraphicRaycaster raycaster;
+    private PointerEventData eventData;
+    private EventSystem eventSystem;
+    List<RaycastResult> result;
+
     private Collider2D butCollider;
     /// <summary>
     /// номер уровня
@@ -21,6 +27,8 @@ public class LevelButton : MonoBehaviour
     private void Awake()
     {
         butCollider = gameObject.GetComponent<Collider2D>();
+        eventSystem = MainComponents.eventSystem;
+        eventData = new PointerEventData(eventSystem);
     }
 
     private void Update()
@@ -29,17 +37,20 @@ public class LevelButton : MonoBehaviour
         transform.LookAt(MainComponents.MainCamera.transform);
     }
 
-
-    //отслеживание нажатий на кнопку
+    //нажатие на кнопку
     private void OnMouseDown()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        RayCast();
+        if (result.Count <= 1)
         {
-            if (hit.collider.transform.tag == "LevelButton")
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
             {
-                LevelAnim.SetBool("Touch", true);
+                if (hit.collider.transform.tag == "LevelButton")
+                {
+                    LevelAnim.SetBool("Touch", true);
+                }
             }
         }
     }
@@ -49,22 +60,36 @@ public class LevelButton : MonoBehaviour
         LevelAnim.SetBool("Touch", false);
     }
 
+    //отпускание конпки
     private void OnMouseUpAsButton()
     {
         LevelAnim.SetBool("Touch", false);
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        RayCast();
+        if (result.Count <= 1)
         {
-            if (hit.collider.transform.tag == "LevelButton")
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
             {
-                GlobalMessage.LevelInfo(NumLevel);
-                Debug.Log("klick");
+                if (hit.collider.transform.tag == "LevelButton")
+                {
+                    GlobalMessage.LevelInfo(NumLevel);
+                }
             }
         }
     }
 
+    //луч на кнопку
+    private void RayCast()
+    {
+        raycaster = MainComponents.graphicRaycaster;
+        eventData.position = Input.mousePosition;
+        result = new List<RaycastResult>();
+        raycaster.Raycast(eventData, result);
+    }
+
+    //обновление значения уровня у кнопки
     public void LevelUpdate(int lev)
     {
         NumLevel = lev;

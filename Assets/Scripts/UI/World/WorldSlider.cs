@@ -24,6 +24,7 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public static float rotation;
     private float RealRotation;
     private float Srotation;
+    private const float StartRotation = -115;
 
     private bool isDown;
 
@@ -43,7 +44,8 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void Start()
     {
-        RealRotation = 0;
+        RealRotation = StartRotation;
+        //rotation = StartRotation + 100;
     }
 
     private void Update()
@@ -52,6 +54,10 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             //изменение переменной поворота
             RealRotation = Srotation - (StartTouchPosition.y - Input.mousePosition.y) * SpeedRotation;
+            if (RealRotation >= StartRotation)
+            {
+                RealRotation = StartRotation;
+            }
         }
         rotation = Mathf.Lerp(rotation, RealRotation, Time.deltaTime * SpeedLerpRotation);
         //поворот обьекта
