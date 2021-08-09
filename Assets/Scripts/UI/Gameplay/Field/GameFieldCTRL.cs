@@ -81,11 +81,11 @@ public class GameFieldCTRL : MonoBehaviour
         for (int y = 0; y < cellCTRLs.GetLength(1); y++) {
             for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
 
-                //Если эта ячейка есть, пустая и без блокировки движения
-                if (cellCTRLs[x,y] && !cellCTRLs[x, y].cellInternal && cellCTRLs[x,y].dontMoving == 0) {
+                //Если эта ячейка есть, пустая и без блокировки движения и на ней сейчас нет движения
+                if (cellCTRLs[x,y] && !cellCTRLs[x, y].cellInternal && cellCTRLs[x,y].dontMoving == 0 && !cellCTRLs[x,y].movingInternalNow) {
 
                     //Проверяем сверху на то есть ли там что-то что может упасть
-                    for (int plusY = 0; plusY < cellCTRLs.GetLength(1); plusY++) {
+                    for (int plusY = 0; plusY <= cellCTRLs.GetLength(1); plusY++) {
                         //Если достигли самого верха поля
                         if (y + plusY >= cellCTRLs.GetLength(1))
                         {
@@ -93,8 +93,16 @@ public class GameFieldCTRL : MonoBehaviour
                             GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
                             //ставим на позицию 
                             RectTransform rect = internalObj.GetComponent<RectTransform>();
-                            rect.pivot = new Vector2(-x, -y);
-                            cellCTRLs[x, y].cellInternal = internalObj.GetComponent<CellInternalObject>();
+                            rect.pivot = new Vector2(-x, -y-10);
+
+                            CellInternalObject internalCtrl = internalObj.GetComponent<CellInternalObject>();
+                            //включаем падение
+                            internalCtrl.isDropped = true;
+                            //Ставим ячейку куда надо двигаться
+                            internalCtrl.myCell = cellCTRLs[x, y];
+
+                            cellCTRLs[x, y].setInternal(internalCtrl);
+
                             break;
                         }
                         //или дошли до несуществующей йчейки, выходим

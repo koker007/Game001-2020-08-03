@@ -17,6 +17,10 @@ public class CellCTRL : MonoBehaviour
     /// Внутренность ячейки
     /// </summary>
     public CellInternalObject cellInternal;
+    /// <summary>
+    /// Двигаются ли внутренности сейчас
+    /// </summary>
+    public bool movingInternalNow;
 
     /// <summary>
     /// Степень запрета на перемещение объекта
@@ -27,6 +31,11 @@ public class CellCTRL : MonoBehaviour
     /// </summary>
     public int gel;
 
+
+    public void setInternal(CellInternalObject internalObjectNew) {
+        cellInternal = internalObjectNew;
+        movingInternalNow = true;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +45,6 @@ public class CellCTRL : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
