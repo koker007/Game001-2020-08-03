@@ -24,4 +24,9 @@ public class MessageLevelInfo : MonoBehaviour
     void Inicialize() {
         LevelText.text = System.Convert.ToString(Gameplay.main.levelSelect);
     }
+
+    public void ClickButtonStartLevel() {
+        UICTRL.main.OpenGameplay();
+        GlobalMessage.Close();
+    }
 }
