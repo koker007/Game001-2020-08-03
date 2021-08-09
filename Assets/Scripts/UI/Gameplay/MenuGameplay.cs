@@ -15,7 +15,10 @@ public class MenuGameplay : MonoBehaviour
     [SerializeField]
     RectTransform PanelDown;
 
-
+    [SerializeField]
+    GameObject GameFieldPrefab;
+    [SerializeField]
+    Transform GameFieldParent;
 
     // Start is called before the first frame update
     void Start()
@@ -49,5 +52,17 @@ public class MenuGameplay : MonoBehaviour
             upY += (1 - upY) * Time.unscaledDeltaTime * 4;
             PanelUp.pivot = new Vector2(PanelUp.pivot.x, upY);
         }
+    }
+
+    private void OnEnable()
+    {
+        CreateGameField();
+    }
+
+    //—оздать игровое поле согласно параметрам игры
+    void CreateGameField() {
+        GameObject gamefieldObj = Instantiate(GameFieldPrefab, GameFieldParent);
+        GameFieldCTRL gameFieldCTRL = gamefieldObj.GetComponent<GameFieldCTRL>();
+        gameFieldCTRL.inicializeField(3,3);
     }
 }
