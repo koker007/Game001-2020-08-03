@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 //Семен
 /// <summary>
@@ -11,12 +12,14 @@ public class Settings : MonoBehaviour
     //для хранения самого себя
     static public Settings main;
 
+    public AudioMixer audioMixer;
+
     [SerializeField]
-    float volumeAll = 1;
+    float volumeAll = 0;
     [SerializeField]
-    float volumeSound = 1;
+    float volumeSound = 0;
     [SerializeField]
-    float volumeMusic = 1;
+    float volumeMusic = 0;
 
     /// <summary>
     /// Общая громкость от 0 до 1
@@ -29,18 +32,19 @@ public class Settings : MonoBehaviour
         }
         set
         {
-            if (value < 0)
+            if (value < -80)
+            {
+                main.volumeAll = -80;
+            }
+            else if (value > 0)
             {
                 main.volumeAll = 0;
-            }
-            else if (value > 1)
-            {
-                main.volumeAll = 1;
             }
             else
             {
                 main.volumeAll = value;
             }
+            audioMixer.SetFloat("Master", volumeAll);
         }
     }
     /// <summary>
@@ -51,17 +55,18 @@ public class Settings : MonoBehaviour
             return volumeSound;
         }
         set {
-            if (value < 0)
+            if (value < -80)
+            {
+                main.volumeSound = -80;
+            }
+            else if (value > 0)
             {
                 main.volumeSound = 0;
-            }
-            else if (value > 1)
-            {
-                main.volumeSound = 1;
             }
             else {
                 main.volumeSound = value;
             }
+            audioMixer.SetFloat("Sound", volumeSound);
         }
     }
     /// <summary>
@@ -75,18 +80,19 @@ public class Settings : MonoBehaviour
         }
         set
         {
-            if (value < 0)
+            if (value < -80)
+            {
+                main.volumeMusic = -80;
+            }
+            else if (value > 0)
             {
                 main.volumeMusic = 0;
-            }
-            else if (value > 1)
-            {
-                main.volumeMusic = 1;
             }
             else
             {
                 main.volumeMusic = value;
             }
+            audioMixer.SetFloat("Music", volumeMusic);
         }
     }
 

@@ -15,11 +15,19 @@ C:/Users/propo/OneDrive/Документы/Unity Projects/Game001-2020-08-03/Gam
 -logFile
 Logs/AssetImportWorker4.log
 -srvPort
+<<<<<<< HEAD
 54394
 Successfully changed project path to: C:/Users/propo/OneDrive/Документы/Unity Projects/Game001-2020-08-03/Game001
 C:/Users/propo/OneDrive/Документы/Unity Projects/Game001-2020-08-03/Game001
 Using Asset Import Pipeline V2.
 Refreshing native plugins compatible for Editor in 182.53 ms, found 2 plugins.
+=======
+52280
+Successfully changed project path to: C:/Users/propo/OneDrive/Документы/Unity Projects/Game001-2020-08-03/Game001
+C:/Users/propo/OneDrive/Документы/Unity Projects/Game001-2020-08-03/Game001
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 217.48 ms, found 2 plugins.
+>>>>>>> alex2
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.15f2 (6cf78cb77498)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.15f2/Editor/Data/Resources/UnitySubsystems
@@ -35,6 +43,7 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.15f2/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.15f2/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.15f2/Editor/Data/MonoBleedingEdge/etc'
+<<<<<<< HEAD
 Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56636
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
@@ -48,11 +57,27 @@ Mono: successfully reloaded assembly
 Domain Reload Profiling:
 	ReloadAssembly (16351ms)
 		BeginReloadAssembly (244ms)
+=======
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56420
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.15f2/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.007061 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 289.19 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in 17.361 seconds
+Domain Reload Profiling:
+	ReloadAssembly (17363ms)
+		BeginReloadAssembly (164ms)
+>>>>>>> alex2
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (2ms)
+<<<<<<< HEAD
 		EndReloadAssembly (2049ms)
 			LoadAssemblies (235ms)
 			RebuildTransferFunctionScriptingTraits (3ms)
@@ -67,12 +92,29 @@ Domain Reload Profiling:
 				BeforeProcessingInitializeOnLoad (65ms)
 				ProcessInitializeOnLoadAttributes (435ms)
 				ProcessInitializeOnLoadMethodAttributes (116ms)
+=======
+		EndReloadAssembly (3228ms)
+			LoadAssemblies (155ms)
+			RebuildTransferFunctionScriptingTraits (1ms)
+			SetupTypeCache (961ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (230ms)
+			SetupLoadedEditorAssemblies (1258ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (39ms)
+				SetLoadedEditorAssemblies (2ms)
+				RefreshPlugins (289ms)
+				BeforeProcessingInitializeOnLoad (64ms)
+				ProcessInitializeOnLoadAttributes (734ms)
+				ProcessInitializeOnLoadMethodAttributes (129ms)
+>>>>>>> alex2
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (1ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
+<<<<<<< HEAD
 Registered in 0.033748 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
@@ -111,13 +153,57 @@ Platform modules already initialized, skipping
 Worker process is ready to serve import requests
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.21 seconds
 Refreshing native plugins compatible for Editor in 2.90 ms, found 2 plugins.
+=======
+Registered in 0.045721 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.03 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  4.598 seconds
+Domain Reload Profiling:
+	ReloadAssembly (4601ms)
+		BeginReloadAssembly (543ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (13ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (58ms)
+		EndReloadAssembly (3834ms)
+			LoadAssemblies (324ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (1007ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (339ms)
+			SetupLoadedEditorAssemblies (1792ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (22ms)
+				SetLoadedEditorAssemblies (7ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (597ms)
+				ProcessInitializeOnLoadAttributes (1127ms)
+				ProcessInitializeOnLoadMethodAttributes (17ms)
+				AfterProcessingInitializeOnLoad (20ms)
+				EditorAssembliesLoaded (1ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (22ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.22 seconds
+Refreshing native plugins compatible for Editor in 0.94 ms, found 2 plugins.
+>>>>>>> alex2
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 1418 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 66.1 MB.
 System memory in use after: 66.2 MB.
 
 Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1851.
+<<<<<<< HEAD
 Total: 36.289300 ms (FindLiveObjects: 3.021600 ms CreateObjectMapping: 0.282400 ms MarkObjects: 23.581800 ms  DeleteObjects: 9.387000 ms)
+=======
+Total: 17.042700 ms (FindLiveObjects: 0.540100 ms CreateObjectMapping: 0.148700 ms MarkObjects: 14.282400 ms  DeleteObjects: 2.067300 ms)
+>>>>>>> alex2
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
@@ -131,6 +217,7 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
+<<<<<<< HEAD
   path: Assets/Scripts/UI/Gameplay/Field/CellCTRL.cs
   artifactKey: Guid(3c24d27d3d21c5642aea840b3755a29d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/Scripts/UI/Gameplay/Field/CellCTRL.cs using Guid(3c24d27d3d21c5642aea840b3755a29d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5faca185d714368d3a4d75e9a6bba8ed') in 0.247480 seconds 
@@ -541,10 +628,115 @@ Domain Reload Profiling:
 			ReleaseScriptCaches (3ms)
 			RebuildScriptCaches (125ms)
 			SetupLoadedEditorAssemblies (1519ms)
+=======
+  path: Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs
+  artifactKey: Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs using Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a3550febe3064a546a3b283358cb8370') in 1.625673 seconds 
+  Import took 1.679079 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.004172 seconds.
+  path: Assets/Scripts/UI/Gameplay/Field/GameFieldCTRL.cs
+  artifactKey: Guid(f635d36367ce7d44384a87b8b15f01cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/UI/Gameplay/Field/GameFieldCTRL.cs using Guid(f635d36367ce7d44384a87b8b15f01cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'df5996b98e74d0201b091c6f6136baf5') in 0.097319 seconds 
+  Import took 0.131277 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 312.078899 seconds.
+  path: Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs
+  artifactKey: Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs using Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f287a5a0c60f0ffd53bff4edaf904a50') in 0.133736 seconds 
+  Import took 2.558731 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.623565 seconds.
+  path: Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs
+  artifactKey: Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs using Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a6d07fc6abe5d4bea0f2fa9f77fa7ecf') in 1.252553 seconds 
+  Import took 2.332787 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.995190 seconds.
+  path: Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs
+  artifactKey: Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs using Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fcfb57adb5612df50dd333b8a91f6b27') in 0.167778 seconds 
+  Import took 0.237291 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 61.168961 seconds.
+  path: Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs
+  artifactKey: Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs using Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '08ce2c338aa585397330b05ee2636434') in 1.409010 seconds 
+  Import took 1.438889 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.471922 seconds.
+  path: Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs
+  artifactKey: Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs using Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ce8a3530a8c95875f1d7e334de73f9cd') in 0.207731 seconds 
+  Import took 0.672334 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 332.363059 seconds.
+  path: Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs
+  artifactKey: Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs using Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5a321d70e24304f3c41e145f8a5b7b2a') in 0.116957 seconds 
+  Import took 0.153152 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 97.752705 seconds.
+  path: Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs
+  artifactKey: Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs using Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '840077aa77787abc60904696ca89e603') in 0.831293 seconds 
+  Import took 0.991361 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 35.768117 seconds.
+  path: Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs
+  artifactKey: Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/UI/Gameplay/Field/CellInternalObject.cs using Guid(6dd709b982b9ab44297969c8357e0e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd5d26e0a3edaa339431848b8f2c687cf') in 0.554821 seconds 
+  Import took 0.647198 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.028172 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 1.19 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  4.694 seconds
+Domain Reload Profiling:
+	ReloadAssembly (4738ms)
+		BeginReloadAssembly (1065ms)
+			ExecutionOrderSort (1ms)
+			DisableScriptedObjects (161ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (2ms)
+			CreateAndSetChildDomain (468ms)
+		EndReloadAssembly (3376ms)
+			LoadAssemblies (366ms)
+			RebuildTransferFunctionScriptingTraits (1ms)
+			SetupTypeCache (1061ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (155ms)
+			SetupLoadedEditorAssemblies (1384ms)
+>>>>>>> alex2
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (20ms)
 				SetLoadedEditorAssemblies (2ms)
 				RefreshPlugins (1ms)
+<<<<<<< HEAD
 				BeforeProcessingInitializeOnLoad (343ms)
 				ProcessInitializeOnLoadAttributes (1111ms)
 				ProcessInitializeOnLoadMethodAttributes (15ms)
@@ -1228,6 +1420,25 @@ System memory in use after: 69.5 MB.
 
 Unloading 14 unused Assets to reduce memory usage. Loaded Objects now: 1907.
 Total: 6.813600 ms (FindLiveObjects: 0.552900 ms CreateObjectMapping: 0.140300 ms MarkObjects: 5.955100 ms  DeleteObjects: 0.161400 ms)
+=======
+				BeforeProcessingInitializeOnLoad (310ms)
+				ProcessInitializeOnLoadAttributes (1011ms)
+				ProcessInitializeOnLoadMethodAttributes (14ms)
+				AfterProcessingInitializeOnLoad (24ms)
+				EditorAssembliesLoaded (1ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (23ms)
+Platform modules already initialized, skipping
+Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
+Refreshing native plugins compatible for Editor in 1.70 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1416 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 66.1 MB.
+System memory in use after: 66.1 MB.
+
+Unloading 14 unused Assets to reduce memory usage. Loaded Objects now: 1854.
+Total: 50.619500 ms (FindLiveObjects: 29.576200 ms CreateObjectMapping: 0.751200 ms MarkObjects: 19.612200 ms  DeleteObjects: 0.674800 ms)
+>>>>>>> alex2
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 

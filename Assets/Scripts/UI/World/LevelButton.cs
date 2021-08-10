@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// Скрипт кнопок уровней
 /// </summary>
-public class LevelButton : MonoBehaviour
+public class LevelButton : World2Dobject
 {
 
     public Animator LevelAnim;
@@ -29,12 +29,6 @@ public class LevelButton : MonoBehaviour
         butCollider = gameObject.GetComponent<Collider2D>();
         eventSystem = MainComponents.eventSystem;
         eventData = new PointerEventData(eventSystem);
-    }
-
-    private void Update()
-    {
-        //поворот кнопки к камере
-        transform.LookAt(MainComponents.MainCamera.transform);
     }
 
     //нажатие на кнопку
@@ -74,6 +68,7 @@ public class LevelButton : MonoBehaviour
             {
                 if (hit.collider.transform.tag == "LevelButton")
                 {
+                    MainComponents.soundManager.PlaySound(MainComponents.soundManager.PressButton);
                     GlobalMessage.LevelInfo(NumLevel);
                 }
             }
