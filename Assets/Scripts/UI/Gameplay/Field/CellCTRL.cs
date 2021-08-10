@@ -9,6 +9,7 @@ using UnityEngine.UI;
 /// </summary>
 public class CellCTRL : MonoBehaviour
 {
+    static int lastInternarNum = 0;
 
     [SerializeField]
     Image[] ramka;
@@ -30,6 +31,7 @@ public class CellCTRL : MonoBehaviour
     /// Степень гели
     /// </summary>
     public int gel;
+    
 
 
     public void setInternal(CellInternalObject internalObjectNew) {

@@ -14,6 +14,22 @@ public class CellInternalObject : MonoBehaviour
     RectTransform rectMy;
     RectTransform rectCell;
 
+    public enum InternalColor {
+        Red,
+        Green,
+        Blue,
+        Yellow,
+        Violet
+    }
+    public enum Type {
+        color,
+        rocketHorizontal,
+        rocketVertical,
+        airplane
+    }
+
+    public InternalColor color;
+    public Type type;
 
     void GetRect() {
         rectMy = GetComponent<RectTransform>();

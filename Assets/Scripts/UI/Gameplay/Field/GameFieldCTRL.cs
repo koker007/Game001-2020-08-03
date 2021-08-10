@@ -73,6 +73,7 @@ public class GameFieldCTRL : MonoBehaviour
     void Update()
     {
         TestSpawn();
+        TestLine();
     }
 
     //Проверка ячеек на падение и совместимость
@@ -121,5 +122,54 @@ public class GameFieldCTRL : MonoBehaviour
                 }
             }
         }
+    }
+
+    //Проверки на линию одинаковых объектов
+    void TestLine()
+    {
+        //Начиная сверху проверяем собралась ли линия
+        for (int y = 0; y < cellCTRLs.GetLength(1); y++)
+        {
+            for (int x = 0; x < cellCTRLs.GetLength(0); x++)
+            {
+                
+            }
+        }
+
+        void line(int x, int y) {
+            //Если обьекта нет выходим.
+            if (!cellCTRLs[x,y].cellInternal) {
+                return;
+            }
+
+            testRight();
+            testDown();
+
+            //Проверка влево
+            void testRight() {
+                int combo = 0;
+                for (int plusX = 0; plusX < 5; plusX++) {
+                    //Если, вышли за пределы массива, или самой ячейки нет или если объекта в ячейке нет, обьект по цвету отличается, выходим
+                    if ((x+plusX) >= cellCTRLs.GetLength(0) ||
+                        !cellCTRLs[x+plusX, y] ||
+                        cellCTRLs[x+plusX, y].cellInternal ||
+                        cellCTRLs[x+plusX, y].cellInternal.color != cellCTRLs[x, y].cellInternal.color) {
+                        //На этом заканчиваем перебор
+                        break;
+                    }
+                    combo = 1 + plusX;
+                }
+
+                if (combo >= 3) {
+                    
+                }
+            }
+            //Проверка вниз
+            void testDown() {
+            
+            }
+
+        }
+
     }
 }
