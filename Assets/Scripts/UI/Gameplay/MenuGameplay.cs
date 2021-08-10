@@ -63,6 +63,6 @@ public class MenuGameplay : MonoBehaviour
     void CreateGameField() {
         GameObject gamefieldObj = Instantiate(GameFieldPrefab, GameFieldParent);
         GameFieldCTRL gameFieldCTRL = gamefieldObj.GetComponent<GameFieldCTRL>();
-        gameFieldCTRL.inicializeField(3,3);
+        gameFieldCTRL.inicializeField(10,10);
     }
 }

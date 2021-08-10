@@ -21,7 +21,7 @@ public class GameFieldCTRL : MonoBehaviour
     Transform parentOfInternals;
 
 
-    CellCTRL[,] cellCTRLs; //Ячейки
+    public CellCTRL[,] cellCTRLs; //Ячейки
     List<CellInternalObject> cellInternalObjects; //Внутренности ячеек
 
     //Инициализировать игровое поле
@@ -52,6 +52,8 @@ public class GameFieldCTRL : MonoBehaviour
                             break;
                         }
 
+                        cellCTRLs[x, y].pos = new Vector2Int(x, y);
+
                         //Перемещаем объект на свою позицию
                         RectTransform rect = cellObj.GetComponent<RectTransform>();
                         rect.pivot = new Vector2(-x,-y);
@@ -76,6 +78,7 @@ public class GameFieldCTRL : MonoBehaviour
         TestLine();
     }
 
+
     //Проверка ячеек на падение и совместимость
     void TestSpawn() {
         //Начиная снизу проверяем есть ли пустые ячейки
@@ -97,10 +100,17 @@ public class GameFieldCTRL : MonoBehaviour
                             rect.pivot = new Vector2(-x, -y-10);
 
                             CellInternalObject internalCtrl = internalObj.GetComponent<CellInternalObject>();
+
+                            //Установить цвет
+                            internalCtrl.randColor();
+
                             //включаем падение
-                            internalCtrl.isDropped = true;
+                            internalCtrl.dropStart(cellCTRLs[x, y]);
+
+                            //Устанавливаем поле
+                            internalCtrl.myField = this;
                             //Ставим ячейку куда надо двигаться
-                            internalCtrl.myCell = cellCTRLs[x, y];
+                            //internalCtrl.myCell = cellCTRLs[x, y];
 
                             cellCTRLs[x, y].setInternal(internalCtrl);
 
@@ -111,11 +121,18 @@ public class GameFieldCTRL : MonoBehaviour
                         {
                             break;
                         }
+
+                        //За перемещение ниже отвечает сам перемещаемый объект
+
                         //Если сверху есть ячейка с внутренностью и она не блокирована
                         else if (cellCTRLs[x, y + plusY].dontMoving <= 0 && cellCTRLs[x, y + plusY].cellInternal) {
                             //Перемещаем ее
-                            cellCTRLs[x, y].cellInternal = cellCTRLs[x, y + plusY].cellInternal;
-                            cellCTRLs[x, y + plusY].cellInternal = null;
+                            //cellCTRLs[x, y].cellInternal = cellCTRLs[x, y + plusY].cellInternal;
+                            //cellCTRLs[x, y + plusY].cellInternal = null;
+
+                            //cellCTRLs[x, y].cellInternal.dropStart(cellCTRLs[x, y]);
+
+                            break;
                         }
                     }
 
@@ -128,11 +145,11 @@ public class GameFieldCTRL : MonoBehaviour
     void TestLine()
     {
         //Начиная сверху проверяем собралась ли линия
-        for (int y = 0; y < cellCTRLs.GetLength(1); y++)
+        for (int y = cellCTRLs.GetLength(1) - 1; y >= 0; y--)
         {
             for (int x = 0; x < cellCTRLs.GetLength(0); x++)
             {
-                
+                line(x, y);
             }
         }
 
@@ -142,31 +159,65 @@ public class GameFieldCTRL : MonoBehaviour
                 return;
             }
 
+
             testRight();
             testDown();
 
             //Проверка влево
             void testRight() {
-                int combo = 0;
+                List<CellCTRL> cellLine = new List<CellCTRL>();
+
                 for (int plusX = 0; plusX < 5; plusX++) {
-                    //Если, вышли за пределы массива, или самой ячейки нет или если объекта в ячейке нет, обьект по цвету отличается, выходим
-                    if ((x+plusX) >= cellCTRLs.GetLength(0) ||
-                        !cellCTRLs[x+plusX, y] ||
-                        cellCTRLs[x+plusX, y].cellInternal ||
-                        cellCTRLs[x+plusX, y].cellInternal.color != cellCTRLs[x, y].cellInternal.color) {
+
+                    if ((x + plusX) >= cellCTRLs.GetLength(0) || //Если вышли за пределы массива
+                        !cellCTRLs[x + plusX, y] || //если самой ячейки нет
+                        !cellCTRLs[x + plusX, y].cellInternal || //если объекта в ячейке нет
+                        cellCTRLs[x + plusX, y].movingInternalNow || //если эти внутренности находятся в движении
+                        cellCTRLs[x + plusX, y].cellInternal.color != cellCTRLs[x, y].cellInternal.color) {
                         //На этом заканчиваем перебор
                         break;
                     }
-                    combo = 1 + plusX;
+
+                    //Добавляем ячейку с список линии
+                    cellLine.Add(cellCTRLs[x + plusX, y]);
                 }
 
-                if (combo >= 3) {
-                    
+                //Если собралась линия
+                if (cellLine.Count >= 3) {
+                    foreach (CellCTRL cell in cellLine) {
+                        cell.gettingScore();
+                    }
                 }
             }
             //Проверка вниз
             void testDown() {
-            
+                List<CellCTRL> cellLine = new List<CellCTRL>();
+
+                for (int minusY = 0; minusY < 5; minusY++)
+                {
+
+                    if ((y - minusY) < 0 || //Если вышли за пределы массива
+                        !cellCTRLs[x, y - minusY] || //если самой ячейки нет
+                        !cellCTRLs[x, y - minusY].cellInternal || //если объекта в ячейке нет
+                        cellCTRLs[x, y - minusY].movingInternalNow || //если эти внутренности находятся в движении
+                        cellCTRLs[x, y - minusY].cellInternal.color != cellCTRLs[x, y].cellInternal.color)
+                    {
+                        //На этом заканчиваем перебор
+                        break;
+                    }
+
+                    //Добавляем ячейку с список линии
+                    cellLine.Add(cellCTRLs[x, y - minusY]);
+                }
+
+                //Если собралась линия
+                if (cellLine.Count >= 3)
+                {
+                    foreach (CellCTRL cell in cellLine)
+                    {
+                        cell.gettingScore();
+                    }
+                }
             }
 
         }

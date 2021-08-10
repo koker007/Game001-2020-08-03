@@ -14,6 +14,7 @@ public class CellCTRL : MonoBehaviour
     [SerializeField]
     Image[] ramka;
 
+    public Vector2Int pos = new Vector2Int();
     /// <summary>
     /// ¬нутренность €чейки
     /// </summary>
@@ -32,11 +33,22 @@ public class CellCTRL : MonoBehaviour
     /// </summary>
     public int gel;
     
-
+    public int myInternalNum = 0;
 
     public void setInternal(CellInternalObject internalObjectNew) {
         cellInternal = internalObjectNew;
         movingInternalNow = true;
+        myInternalNum = lastInternarNum;
+        lastInternarNum++;
+    }
+
+    /// <summary>
+    /// получить очки и избавитьс€ от внутренности
+    /// </summary>
+    public void gettingScore() {
+
+        //»збавл€емс€
+        cellInternal.DestroyObj();
     }
     // Start is called before the first frame update
     void Start()
@@ -47,6 +59,14 @@ public class CellCTRL : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        TestInternal();
+    }
 
+    //ѕроверка если внутренний обьект не ссылаетс€ на эту €чейку, мы забываем про нее
+    void TestInternal() {
+        if (cellInternal && cellInternal.myCell != this) {
+            cellInternal = null;
+            movingInternalNow = false;
+        }
     }
 }
