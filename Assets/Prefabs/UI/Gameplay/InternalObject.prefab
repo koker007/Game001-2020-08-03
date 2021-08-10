@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1515285975908226108}
   - component: {fileID: 1515285975908226111}
   - component: {fileID: 1515285975908226110}
-  - component: {fileID: 1515285975908226109}
+  - component: {fileID: 2208757018717959807}
   m_Layer: 5
   m_Name: InternalObject
   m_TagString: Untagged
@@ -58,11 +58,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd709b982b9ab44297969c8357e0e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myField: {fileID: 0}
   myCell: {fileID: 0}
+  Image: {fileID: 2208757018717959807}
+  TextureRed: {fileID: 2800000, guid: 701c636813349664bbac67e4de2015bf, type: 3}
+  TextureGreen: {fileID: 2800000, guid: f9b40802191c6f647843b0dce05ffa9d, type: 3}
+  TextureBlue: {fileID: 2800000, guid: 3edc67fdcd6e41d4fa34307328fd1b38, type: 3}
+  TextureYellow: {fileID: 2800000, guid: c2dce731ee086274ba537e2167079a50, type: 3}
+  textureViolet: {fileID: 2800000, guid: 3bc353fb83a768d4494a4da0641d984e, type: 3}
   color: 0
   type: 0
   isDropped: 0
---- !u!114 &1515285975908226109
+--- !u!114 &2208757018717959807
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,7 +78,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1515285975908226051}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -82,13 +89,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 701c636813349664bbac67e4de2015bf, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_Texture: {fileID: 2800000, guid: 701c636813349664bbac67e4de2015bf, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
