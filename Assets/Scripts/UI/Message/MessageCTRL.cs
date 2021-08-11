@@ -12,6 +12,8 @@ public class MessageCTRL : MonoBehaviour
     [SerializeField]
     public bool NeedClose = false;
     [SerializeField]
+    public bool WorlUIClose;
+    [SerializeField]
     float sinTime = 2; //Для дрожания по синусу
 
     [SerializeField]
@@ -61,6 +63,12 @@ public class MessageCTRL : MonoBehaviour
                 sinTime = 1;
             }
             rectTransform.pivot = new Vector2(rectTransform.pivot.x, y);
+
+            //деактивация worldUI при появлении сообщения
+            if (WorlUIClose)
+            {
+                MainComponents.WorldUI.SetActive(false);
+            }
         }
         //Исчезание
         else {
@@ -78,6 +86,12 @@ public class MessageCTRL : MonoBehaviour
             y += sinPlus * sinTimeCut * 0.2f;
 
             rectTransform.pivot = new Vector2(rectTransform.pivot.x, y);
+
+            //активация worldUI
+            if (WorlUIClose)
+            {
+                MainComponents.WorldUI.SetActive(true);
+            }
 
             //Удаление префаба
             if (Mathf.Abs(y) > 10) {

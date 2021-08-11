@@ -114,4 +114,8 @@ public class MenuWorld : MonoBehaviour
     {
         GlobalMessage.Shop();
     }
+    public void ClickButtonEvents()
+    {
+        GlobalMessage.Events();
+    }
 }

@@ -14,6 +14,8 @@ public class MainComponents : MonoBehaviour
     [SerializeField]
     public static GameObject RotatableObj;
     [SerializeField]
+    public static GameObject WorldUI;
+    [SerializeField]
     public static EventSystem eventSystem;
     [SerializeField]
     public static GraphicRaycaster graphicRaycaster;
@@ -24,6 +26,7 @@ public class MainComponents : MonoBehaviour
     {
         MainCamera = GameObject.Find("Main Camera");
         RotatableObj = GameObject.Find("RotatableObj");
+        WorldUI = GameObject.Find("World");
         eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
         graphicRaycaster = GameObject.Find("UI").GetComponent<GraphicRaycaster>();
         soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();

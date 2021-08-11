@@ -9,20 +9,9 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    /// <summary>
-    /// вращаемый обьект (мир с уровнями)
-    /// </summary>
-    public Transform RotatableObj;
-
     private Vector2 StartTouchPosition;
 
     private const float SpeedRotation = 0.01f;
-    private const float SpeedLerpRotation = 2f;
-    /// <summary>
-    /// даьность поворота мира
-    /// </summary>
-    public static float rotation;
-    private float RealRotation;
     private float Srotation;
     private const float StartRotation = -115;
 
@@ -32,7 +21,7 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         StartTouchPosition = Input.mousePosition;
-        Srotation = RealRotation;
+        Srotation = WorldGenerateScene.RealRotation;
         this.isDown = true;
     }
 
@@ -44,8 +33,7 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void Start()
     {
-        RealRotation = StartRotation;
-        //rotation = StartRotation + 100;
+        WorldGenerateScene.RealRotation = StartRotation;
     }
 
     private void Update()
@@ -53,14 +41,11 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (isDown)
         {
             //изменение переменной поворота
-            RealRotation = Srotation - (StartTouchPosition.y - Input.mousePosition.y) * SpeedRotation;
-            if (RealRotation >= StartRotation)
+            WorldGenerateScene.RealRotation = Srotation - (StartTouchPosition.y - Input.mousePosition.y) * SpeedRotation;
+            if (WorldGenerateScene.RealRotation >= StartRotation)
             {
-                RealRotation = StartRotation;
+                WorldGenerateScene.RealRotation = StartRotation;
             }
         }
-        rotation = Mathf.Lerp(rotation, RealRotation, Time.deltaTime * SpeedLerpRotation);
-        //поворот обьекта
-        RotatableObj.eulerAngles = new Vector3(rotation, 0, 0);
     }
 }
