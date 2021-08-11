@@ -9,17 +9,31 @@ using UnityEngine.UI;
 /// </summary>
 public class GameFieldCTRL : MonoBehaviour
 {
-
+    [Header("Prefabs")]
     [SerializeField]
     GameObject prefabCell;
     [SerializeField]
     GameObject prefabInternal;
 
+    [Header("Particles")]
+    [SerializeField]
+    public GameObject PrefabParticleDie;
+    [SerializeField]
+    public GameObject PrefabParticleScore;
+    [SerializeField]
+    public GameObject PrefabParticleSelect;
+
+    [Header("Parents")]
     [SerializeField]
     Transform parentOfCells;
     [SerializeField]
     Transform parentOfInternals;
+    [SerializeField]
+    public Transform parentOfParticles;
+    [SerializeField]
+    public Transform parentOfScore;
 
+    [Header("Other")]
     [SerializeField]
     CellCTRL CellSelect;
     [SerializeField]
