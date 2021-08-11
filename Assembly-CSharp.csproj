@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{AF6508BC-D908-6895-936E-F41E2B494A88}</ProjectGuid>
+    <ProjectGuid>{D6AC4226-482C-8160-AA94-FBE650A1E1BC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -59,21 +59,28 @@
     <Compile Include="Assets\Scripts\UI\Message\MessageCTRL.cs" />
     <Compile Include="Assets\Scripts\UI\Gameplay\MenuGameplay.cs" />
     <Compile Include="Assets\Scripts\UI\World\PanelProfile.cs" />
+    <Compile Include="Assets\Scripts\UI\Gameplay\ScorePrefab.cs" />
     <Compile Include="Assets\Scripts\UI\Message\MessageSettings.cs" />
     <Compile Include="Assets\Scripts\UI\World\WorldGenerateScene.cs" />
     <Compile Include="Assets\Scripts\UI\World\MenuWorld.cs" />
+    <Compile Include="Assets\Scripts\UI\CameraScaler.cs" />
     <Compile Include="Assets\Scripts\UI\Message\MessageLevelInfo.cs" />
     <Compile Include="Assets\Scripts\UI\Message\GlobalMessage.cs" />
     <Compile Include="Assets\Scripts\UI\World\WorldSlider.cs" />
+    <Compile Include="Assets\Scripts\UI\World\World2Dobject.cs" />
     <Compile Include="Assets\Scripts\UI\World\PanelMap.cs" />
     <Compile Include="Assets\Scripts\Global\Gameplay.cs" />
     <Compile Include="Assets\Scripts\UI\UICTRL.cs" />
+    <Compile Include="Assets\Scripts\UI\Gameplay\Field\CellCTRL.cs" />
     <Compile Include="Assets\Scripts\Global\Settings.cs" />
     <Compile Include="Assets\Scripts\UI\World\LevelButton.cs" />
+    <Compile Include="Assets\Scripts\UI\Gameplay\Field\GameFieldCTRL.cs" />
     <Compile Include="Assets\Scripts\UI\Loading.cs" />
     <Compile Include="Assets\Scripts\UI\Hello\MenuHello.cs" />
+    <Compile Include="Assets\Scripts\UI\MainButtonManager.cs" />
     <Compile Include="Assets\Scripts\Global\MainComponents.cs" />
-    <Compile Include="Assets\Scripts\UI\CameraScaler.cs" />
+    <Compile Include="Assets\Scripts\Global\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\UI\Gameplay\Field\CellInternalObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -291,12 +298,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.15f2\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.15f2\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.15f2\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
@@ -660,6 +661,9 @@
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>

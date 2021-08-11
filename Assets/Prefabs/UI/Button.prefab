@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2534047200158020805}
   - component: {fileID: 673353667184756081}
   - component: {fileID: 5004331884763043042}
+  - component: {fileID: 3395613899637025207}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -121,7 +122,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2534047200158020805}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3395613899637025207}
+        m_TargetAssemblyTypeName: MainButtonManager, Assembly-CSharp
+        m_MethodName: PressButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &5004331884763043042
 Animator:
   serializedVersion: 3
@@ -141,6 +154,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3395613899637025207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052787884345213481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb2473dbcbcd68d499c24487381af2f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TouchSound: {fileID: 8300000, guid: 39e2ef457fac5d4419f29a74c72c9cc9, type: 3}
 --- !u!1 &5361943101469650051
 GameObject:
   m_ObjectHideFlags: 0

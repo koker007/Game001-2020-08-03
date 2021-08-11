@@ -122,6 +122,8 @@ public class GlobalMessage : MonoBehaviour
         GameObject messageObj = Instantiate(main.PrefabShop, main.transform);
         main.SelectMessanger = messageObj.GetComponent<RectTransform>();
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+
+        main.needClose = false;
     }
 
     /// <summary>

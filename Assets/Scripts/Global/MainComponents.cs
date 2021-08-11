@@ -17,6 +17,8 @@ public class MainComponents : MonoBehaviour
     public static EventSystem eventSystem;
     [SerializeField]
     public static GraphicRaycaster graphicRaycaster;
+    [SerializeField]
+    public static SoundManager soundManager;
 
     private void Awake()
     {
@@ -24,6 +26,7 @@ public class MainComponents : MonoBehaviour
         RotatableObj = GameObject.Find("RotatableObj");
         eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
         graphicRaycaster = GameObject.Find("UI").GetComponent<GraphicRaycaster>();
+        soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
     }
 
 }
