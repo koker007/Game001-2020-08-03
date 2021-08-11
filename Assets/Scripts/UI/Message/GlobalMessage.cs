@@ -35,6 +35,8 @@ public class GlobalMessage : MonoBehaviour
     GameObject PrefabLVLInfo;
     [SerializeField]
     GameObject PrefabShop;
+    [SerializeField]
+    GameObject PrefabEvents;
 
     //Нужно ли закрыть окно
     [SerializeField]
@@ -125,6 +127,17 @@ public class GlobalMessage : MonoBehaviour
 
         main.needClose = false;
     }
+    /// <summary>
+    /// Всплывающее окно события
+    /// </summary>
+    static public void Events()
+    {
+        GameObject messageObj = Instantiate(main.PrefabEvents, main.transform);
+        main.SelectMessanger = messageObj.GetComponent<RectTransform>();
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+
+        main.needClose = false;
+    }
 
     /// <summary>
     /// Выбрать уровень и показать информацию о нем
@@ -138,13 +151,6 @@ public class GlobalMessage : MonoBehaviour
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
 
         main.needClose = false;
-    }
-
-    /// <summary>
-    /// Всплывающее окно события
-    /// </summary>
-    static public void Events() {
-
     }
 
     //Открытие или закрытие информационного меню

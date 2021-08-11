@@ -9,6 +9,8 @@ using UnityEngine;
 public class WorldGenerateScene : MonoBehaviour
 {
     public GameObject PrefLevelButton;
+    public GameObject[] Location = new GameObject[0];
+
     private float SetRotationForWorldUp;
     private float SetRotationForWorldDown;
     private int MaxLevel;
@@ -16,6 +18,11 @@ public class WorldGenerateScene : MonoBehaviour
     private const float DistanceFromWorldCenter = 100.5f;
     private const float DistanceSpawnLevelBut = 5f;
     private const float WidthSpawnLevelBut = 8f;
+
+    private float rotation;
+    public static float RealRotation;
+    private const float SpeedLerpRotation = 2f;
+    private Transform RotatableObj;
 
     /// <summary>
     /// класс кнопки
@@ -37,39 +44,93 @@ public class WorldGenerateScene : MonoBehaviour
     }
 
     private List<LButton> LevelButtons = new List<LButton>();
+    private GameObject[] Locations = new GameObject[2];
+    private int locationCounter;
 
-    public void Start()
+    private void Awake()
     {
+        RotatableObj = MainComponents.RotatableObj.transform;
+    }
+
+    private void Start()
+    {
+        RealRotation = -100;
+
         SetRotationForWorldUp = 0;
         SetRotationForWorldDown = -180;
 
         MaxLevel = 0;
         MinLevel = 1;
+
+        locationCounter = 0;
+        Locations[locationCounter] = Instantiate(Location[1], MainComponents.RotatableObj.transform.position, Quaternion.identity, MainComponents.RotatableObj.transform);
+        locationCounter++;
     }
 
     private void Update()
     {
+        RotateMainObject();
+        UpdateMainObject();
+    }
 
-        //проверка обновлений цилиндра
-        if (WorldSlider.rotation <= SetRotationForWorldUp - DistanceSpawnLevelBut)
+    //поворот обьекта
+    private void RotateMainObject()
+    {
+        rotation = Mathf.Lerp(rotation, RealRotation, Time.deltaTime * SpeedLerpRotation);
+        RotatableObj.eulerAngles = new Vector3(rotation, 0, 0);
+    }
+
+    //проверка обновлений цилиндра
+    private void UpdateMainObject()
+    {
+        if (rotation <= SetRotationForWorldUp - DistanceSpawnLevelBut)
         {
             GenerateLevelButtonUp();
             SetRotationForWorldUp -= DistanceSpawnLevelBut;
+            UpdateLokations(true);
         }
-        else if (WorldSlider.rotation >= SetRotationForWorldUp + DistanceSpawnLevelBut && WorldSlider.rotation <= 9)
+        else if (rotation >= SetRotationForWorldUp + DistanceSpawnLevelBut && rotation <= 9)
         {
             DeleteLevelButtonUp();
             SetRotationForWorldUp += DistanceSpawnLevelBut;
+            UpdateLokations(false);
         }
-        if (WorldSlider.rotation <= SetRotationForWorldDown - DistanceSpawnLevelBut)
+        if (rotation <= SetRotationForWorldDown - DistanceSpawnLevelBut)
         {
             DeleteLevelButtonDown();
             SetRotationForWorldDown -= DistanceSpawnLevelBut;
         }
-        else if (WorldSlider.rotation >= SetRotationForWorldDown - DistanceSpawnLevelBut && WorldSlider.rotation <= -181)
+        else if (rotation >= SetRotationForWorldDown - DistanceSpawnLevelBut && rotation <= -181)
         {
             GenerateLevelButtonDown();
             SetRotationForWorldDown += DistanceSpawnLevelBut;
+        }
+    }
+
+    private void UpdateLokations(bool Up)
+    {
+        if (SetRotationForWorldUp % 180 == 0)
+        {
+            if (Up)
+            {
+                Destroy(Locations[locationCounter]);
+                Locations[locationCounter] = Instantiate(Location[Random.Range(0, 3)], MainComponents.RotatableObj.transform.position, Quaternion.identity, MainComponents.RotatableObj.transform);
+                locationCounter++;
+                if(locationCounter > 1)
+                {
+                    locationCounter = 0;
+                }
+            }
+            else
+            {
+                Destroy(Locations[locationCounter]);
+                Locations[locationCounter] = Instantiate(Location[Random.Range(0, 3)], MainComponents.RotatableObj.transform.position, Quaternion.identity, MainComponents.RotatableObj.transform);
+                locationCounter--;
+                if (locationCounter < 0)
+                {
+                    locationCounter = 1;
+                }
+            }
         }
     }
 
@@ -79,7 +140,7 @@ public class WorldGenerateScene : MonoBehaviour
         MaxLevel++;
         Vector3 position = MainComponents.RotatableObj.transform.position;
         float radian;
-        radian = (Mathf.Abs(WorldSlider.rotation) - MaxLevel * DistanceSpawnLevelBut) * Mathf.Deg2Rad;
+        radian = (Mathf.Abs(rotation) - MaxLevel * DistanceSpawnLevelBut) * Mathf.Deg2Rad;
         position = new Vector3(position.x + AlorithmX(MaxLevel), position.y + DistanceFromWorldCenter * Mathf.Sin(radian), position.z + DistanceFromWorldCenter * Mathf.Cos(radian));
         LevelButtons.Add(new LButton() { NumLevel = MaxLevel, obj = Instantiate(PrefLevelButton, position, Quaternion.identity, MainComponents.RotatableObj.transform) });
         LevelButtons[LevelButtons.Count - 1].Level();
@@ -90,7 +151,7 @@ public class WorldGenerateScene : MonoBehaviour
         MinLevel--;
         Vector3 position = MainComponents.RotatableObj.transform.position;
         float radian;
-        radian = (Mathf.Abs(WorldSlider.rotation) - MinLevel * DistanceSpawnLevelBut) * Mathf.Deg2Rad;
+        radian = (Mathf.Abs(rotation) - MinLevel * DistanceSpawnLevelBut) * Mathf.Deg2Rad;
         position = new Vector3(position.x + AlorithmX(MinLevel), position.y + DistanceFromWorldCenter * Mathf.Sin(radian), position.z + DistanceFromWorldCenter * Mathf.Cos(radian));
         LevelButtons.Insert(0, new LButton() { NumLevel = MinLevel, obj = Instantiate(PrefLevelButton, position, Quaternion.identity, MainComponents.RotatableObj.transform) });
         LevelButtons[0].Level();
