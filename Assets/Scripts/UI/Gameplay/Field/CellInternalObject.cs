@@ -239,6 +239,12 @@ public class CellInternalObject : MonoBehaviour
     /// Удалить объект
     /// </summary>
     public void DestroyObj() {
+
+        GameObject PrefabScore = Instantiate(myField.PrefabParticleScore, myField.parentOfScore);
+        RectTransform rectScore = PrefabScore.GetComponent<RectTransform>();
+
+        rectScore.pivot = rectMy.pivot;
+
         Destroy(gameObject);
     }
 
