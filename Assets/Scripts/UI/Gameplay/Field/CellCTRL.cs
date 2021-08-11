@@ -2,14 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 //Семен
 /// <summary>
 /// Ячейка и ее состояния
 /// </summary>
-public class CellCTRL : MonoBehaviour
+public class CellCTRL : MonoBehaviour, IPointerDownHandler
 {
-    static int lastInternarNum = 0;
+    static int lastInternalNum = 0; //нужно чтобы ячека знала насколько давно в ней происходило какое либо действие
+    public int LastInternalNum {
+        get {
+            int num = lastInternalNum;
+            lastInternalNum++;
+
+            return num;
+        }
+    }
+
+    public GameFieldCTRL myField;
 
     [SerializeField]
     Image[] ramka;
@@ -38,8 +50,8 @@ public class CellCTRL : MonoBehaviour
     public void setInternal(CellInternalObject internalObjectNew) {
         cellInternal = internalObjectNew;
         movingInternalNow = true;
-        myInternalNum = lastInternarNum;
-        lastInternarNum++;
+        myInternalNum = lastInternalNum;
+        lastInternalNum++;
     }
 
     /// <summary>
@@ -67,6 +79,28 @@ public class CellCTRL : MonoBehaviour
         if (cellInternal && cellInternal.myCell != this) {
             cellInternal = null;
             movingInternalNow = false;
+        }
+    }
+
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        //Если клик по ячейке
+        MouseCTRL.main.click();
+
+        //Если внутри есть объект и движения нет
+        if (cellInternal && !movingInternalNow) {
+
+            //если произошел двойной клик
+            if (MouseCTRL.main.ClickDouble)
+            {
+                cellInternal.ActivateObj();
+            }
+
+            //Одинарный клик
+            else {
+                myField.SetSelectCell(this);
+            }
         }
     }
 }

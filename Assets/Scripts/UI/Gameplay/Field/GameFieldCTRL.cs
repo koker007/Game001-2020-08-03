@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 //Семен
 /// <summary>
-/// Передвигаемый внутриячеестый объект
+/// Игровое поле
 /// </summary>
 public class GameFieldCTRL : MonoBehaviour
 {
@@ -19,6 +19,12 @@ public class GameFieldCTRL : MonoBehaviour
     Transform parentOfCells;
     [SerializeField]
     Transform parentOfInternals;
+
+    [SerializeField]
+    CellCTRL CellSelect;
+    [SerializeField]
+    CellCTRL CellSwap;
+
 
 
     public CellCTRL[,] cellCTRLs; //Ячейки
@@ -53,7 +59,7 @@ public class GameFieldCTRL : MonoBehaviour
                         }
 
                         cellCTRLs[x, y].pos = new Vector2Int(x, y);
-
+                        cellCTRLs[x, y].myField = this;
                         //Перемещаем объект на свою позицию
                         RectTransform rect = cellObj.GetComponent<RectTransform>();
                         rect.pivot = new Vector2(-x,-y);
@@ -76,6 +82,7 @@ public class GameFieldCTRL : MonoBehaviour
     {
         TestSpawn();
         TestLine();
+        TestSwap();
     }
 
 
@@ -105,7 +112,7 @@ public class GameFieldCTRL : MonoBehaviour
                             internalCtrl.randColor();
 
                             //включаем падение
-                            internalCtrl.dropStart(cellCTRLs[x, y]);
+                            internalCtrl.StartMove(cellCTRLs[x, y]);
 
                             //Устанавливаем поле
                             internalCtrl.myField = this;
@@ -178,7 +185,7 @@ public class GameFieldCTRL : MonoBehaviour
                         break;
                     }
 
-                    //Добавляем ячейку с список линии
+                    //Добавляем ячейку в список линии
                     cellLine.Add(cellCTRLs[x + plusX, y]);
                 }
 
@@ -222,5 +229,118 @@ public class GameFieldCTRL : MonoBehaviour
 
         }
 
+    }
+
+    //Проверка на то что нужно поменять местами объекты
+    void TestSwap()
+    {
+        //Только есть с кем поменяться
+        if (!CellSwap || !CellSelect)
+            return;
+
+        bool neibour = false;
+
+        //Проверяем соседство
+        //слева
+        if (CellSelect.pos.x > 0 && CellSwap == cellCTRLs[CellSelect.pos.x - 1, CellSelect.pos.y])
+            neibour = true;
+        //справа
+        else if (CellSelect.pos.x < cellCTRLs.GetLength(0) - 1 && CellSwap == cellCTRLs[CellSelect.pos.x + 1, CellSelect.pos.y])
+            neibour = true;
+        //Снизу
+        else if (CellSelect.pos.y > 0 && CellSwap == cellCTRLs[CellSelect.pos.x, CellSelect.pos.y - 1])
+            neibour = true;
+        //сверху
+        else if (CellSelect.pos.y < cellCTRLs.GetLength(1) - 1 && CellSwap == cellCTRLs[CellSelect.pos.x, CellSelect.pos.y + 1])
+            neibour = true;
+
+        //если не соседняя ячейка, выходим
+        if (!neibour)
+        {
+            CellSelect = null;
+            CellSwap = null;
+            return;
+        }
+
+        //Если обмен не возможен
+        if (!CellSelect.cellInternal || //Если у ячеек нечем меняться
+            !CellSwap.cellInternal ||
+            CellSelect.movingInternalNow || //Если в ячейки происходит движение
+            CellSwap.movingInternalNow ||
+            CellSelect.dontMoving > 0 || //Если ячейка заморожена
+            CellSwap.dontMoving > 0
+            )
+        {
+            CellSelect = null;
+            CellSwap = null;
+            return;
+        }
+
+        //Меняем внутренности
+        CellInternalObject InternalSelect = CellSelect.cellInternal;
+        CellInternalObject InternalSwap = CellSwap.cellInternal;
+
+        //Открепляем привязку к ячейкам у обьектов
+        CellSelect.cellInternal.myCell = null;
+        CellSwap.cellInternal.myCell = null;
+
+        //Открепляем привязку к обьектам у ячеек
+        CellSelect.cellInternal = null;
+        CellSwap.cellInternal = null;
+
+        InternalSelect.StartMove(CellSwap);
+        InternalSwap.StartMove(CellSelect);
+    }
+
+    //Сделать ячейку выделенной или целевой для перемещения
+    public void SetSelectCell(CellCTRL CellClick) {
+        if (!CellSelect) {
+            CellSelect = CellClick;
+        }
+        else {
+            //проверяем ячейку на соседство
+            if (isNeibour())
+            {
+                //Это сосед меняем местами
+                CellSwap = CellClick;
+            }
+            else {
+                CellSwap = null;
+                CellSelect = CellClick;
+            }
+
+            //проверить соседство
+            bool isNeibour() {
+
+                //Слева
+                if (CellSelect.pos.x > 0 &&
+                    cellCTRLs[CellSelect.pos.x - 1, CellSelect.pos.y] &&
+                    cellCTRLs[CellSelect.pos.x - 1, CellSelect.pos.y] == CellClick) {
+                    return true;
+                }
+                //Справа
+                else if (CellSelect.pos.x < cellCTRLs.GetLength(0) - 1 &&
+                    cellCTRLs[CellSelect.pos.x + 1, CellSelect.pos.y] &&
+                    cellCTRLs[CellSelect.pos.x + 1, CellSelect.pos.y] == CellClick) {
+                    return true;
+                }
+                //Снизу
+                else if (CellSelect.pos.y > 0 &&
+                    cellCTRLs[CellSelect.pos.y, CellSelect.pos.y - 1] &&
+                    cellCTRLs[CellSelect.pos.y, CellSelect.pos.y - 1] == CellClick)
+                {
+                    return true;
+                }
+                //Сверху
+                else if (CellSelect.pos.y < cellCTRLs.GetLength(1) - 1 &&
+                    cellCTRLs[CellSelect.pos.x, CellSelect.pos.y + 1] &&
+                    cellCTRLs[CellSelect.pos.x, CellSelect.pos.y + 1] == CellClick)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
     }
 }

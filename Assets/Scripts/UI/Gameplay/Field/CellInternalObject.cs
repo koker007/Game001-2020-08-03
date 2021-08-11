@@ -62,13 +62,16 @@ public class CellInternalObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        dropped();
-        //Moving();
+        Moving();
     }
 
     public bool isDropped = false;
     float DroppedSpeed = 0;
-    void dropped() {
+    float MovingSpeed = 0;
+    void Moving() {
+        
+        //Падение
+        /*
         if (isDropped)
         {
             DroppedSpeed += Time.unscaledDeltaTime * 4;
@@ -81,7 +84,7 @@ public class CellInternalObject : MonoBehaviour
                 CellCTRL cellMove = GetFreeCellDown();
                 if (cellMove)
                 {
-                    dropStart(cellMove);
+                    StartDrop(cellMove);
                 }
                 else
                 {
@@ -94,11 +97,90 @@ public class CellInternalObject : MonoBehaviour
             //Устанавливаем позицию
             rectMy.pivot = new Vector2(rectMy.pivot.x, posYnew);
         }
+        */
+
+        //Движение к соседу
+        if (isMove) {
+
+            //////////////////////////////////////////////////////////
+            //Горизонтальное движение
+            float posXnew = rectMy.pivot.x;
+
+            MovingSpeed += Time.unscaledDeltaTime * 4;
+            float speed = 0.05f + MovingSpeed;
+
+            //Движение влево
+            if (rectMy.pivot.x > rectCell.pivot.x) {
+                posXnew -= speed;
+
+                //Если слишком
+                if (posXnew <= rectCell.pivot.x)
+                    posXnew = rectCell.pivot.x;
+            }
+
+            //Движение вправо
+            if (rectMy.pivot.x < rectCell.pivot.x) {
+                posXnew += speed;
+
+                //Если слишком
+                if (posXnew >= rectCell.pivot.x)
+                    posXnew = rectCell.pivot.x;
+            }
+
+            /////////////////////////////////////////////////////////////
+            //вертикальное движение
+            float posYnew = rectMy.pivot.y;
+            //Движение вниз
+            if (rectMy.pivot.y > rectCell.pivot.y)
+            {
+                posYnew -= speed;
+                //Если слишком
+                if (posYnew <= rectCell.pivot.y)
+                {
+                    //Иначе останавливаемся
+                    posYnew = rectCell.pivot.y;
+                }
+            }
+
+            //Движение вверх
+            if (rectMy.pivot.y < rectCell.pivot.y)
+            {
+                posYnew += speed;
+                //Если слишком
+                if (posYnew >= rectCell.pivot.y)
+                    posYnew = rectCell.pivot.y;
+            }
+
+
+            //Если позиция равна точке назначения
+            if (rectCell.pivot.x == posXnew &&
+                rectCell.pivot.y == posYnew) {
+
+                //Если снизу ничего нет
+                CellCTRL cellMove = GetFreeCellDown();
+                if (cellMove)
+                {
+                    //Установить новую цель для движения
+                    StartMove(cellMove);
+                }
+                else
+                {
+                    //Движение окончено
+                    isMove = false;
+
+                    myCell.movingInternalNow = false; //Ячейка освободилась для дейсвия
+                }
+            }
+
+            //Присваиваем изменения
+            rectMy.pivot = new Vector2(posXnew, posYnew);
+        }
+
         //Проверяем снизу наличие свободной ячейки
         else {
             CellCTRL cellMove = GetFreeCellDown();
             if (cellMove)
-                dropStart(cellMove);
+                StartMove(cellMove);
         }
         
     }
@@ -118,14 +200,20 @@ public class CellInternalObject : MonoBehaviour
                 returnCell = myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY];
             }
             //Дальше таких ячеек нет
-            else { 
+            else {
                 //Выходим
+                break;
             }
         }
         return returnCell;
     }
 
-    public void dropStart(CellCTRL cellNew) {
+
+    public bool isMove = false;
+    /// <summary>
+    /// Движение к выбранной ячейке
+    /// </summary>
+    public void StartMove(CellCTRL cellNew) {
         if (myCell)
         {
             myCell.movingInternalNow = false;
@@ -134,14 +222,15 @@ public class CellInternalObject : MonoBehaviour
 
         myCell = cellNew;
 
-        if (!isDropped)
+        if (!isMove)
         {
-            DroppedSpeed = 0;
-            isDropped = true;
+            MovingSpeed = 0;
+            isMove = true;
         }
         //говорим текущей ячейке что к ней происходит движение
         myCell.movingInternalNow = true;
         myCell.cellInternal = this;
+        myCell.myInternalNum = myCell.LastInternalNum; //Запоминаем действие
 
         GetRect();
     }
@@ -181,7 +270,7 @@ public class CellInternalObject : MonoBehaviour
     {
         InternalColor colorReturn = InternalColor.Red;
 
-        int random = Random.Range(0, 3);
+        int random = Random.Range(0, 5);
         if (random == 0)
         {
             colorReturn = InternalColor.Red;
@@ -206,4 +295,7 @@ public class CellInternalObject : MonoBehaviour
         return colorReturn;
     }
 
+    public void ActivateObj() {
+        Debug.Log("Activate");
+    }
 }
