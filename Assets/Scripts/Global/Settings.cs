@@ -21,6 +21,14 @@ public class Settings : MonoBehaviour
     [SerializeField]
     float volumeMusic = 0;
 
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        main = this;
+        SetSettings();
+    }
+
     /// <summary>
     /// Общая громкость от 0 до 1
     /// </summary>
@@ -44,6 +52,7 @@ public class Settings : MonoBehaviour
             {
                 main.volumeAll = value;
             }
+            PlayerPrefs.SetFloat("volumeAll", volumeAll);
             audioMixer.SetFloat("Master", volumeAll);
         }
     }
@@ -66,6 +75,7 @@ public class Settings : MonoBehaviour
             else {
                 main.volumeSound = value;
             }
+            PlayerPrefs.SetFloat("volumeSound", volumeSound);
             audioMixer.SetFloat("Sound", volumeSound);
         }
     }
@@ -92,6 +102,7 @@ public class Settings : MonoBehaviour
             {
                 main.volumeMusic = value;
             }
+            PlayerPrefs.SetFloat("volumeMusic", volumeMusic);
             audioMixer.SetFloat("Music", volumeMusic);
         }
     }
@@ -107,13 +118,14 @@ public class Settings : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        main = this;
-    }
 
-    
+    //загрузка всех параметров
+    private void SetSettings()
+    {
+        volumeAll = PlayerPrefs.GetFloat("volumeAll", 0);
+        volumeSound = PlayerPrefs.GetFloat("volumeSound", 0);
+        volumeMusic = PlayerPrefs.GetFloat("volumeMusic", 0);
+    }
 
     // Update is called once per frame
     void Update()

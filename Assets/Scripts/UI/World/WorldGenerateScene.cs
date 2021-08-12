@@ -123,13 +123,13 @@ public class WorldGenerateScene : MonoBehaviour
             }
             else
             {
-                Destroy(Locations[locationCounter]);
-                Locations[locationCounter] = Instantiate(Location[Random.Range(0, 3)], MainComponents.RotatableObj.transform.position, Quaternion.identity, MainComponents.RotatableObj.transform);
                 locationCounter--;
                 if (locationCounter < 0)
                 {
                     locationCounter = 1;
                 }
+                Destroy(Locations[locationCounter]);
+                Locations[locationCounter] = Instantiate(Location[Random.Range(0, 3)], MainComponents.RotatableObj.transform.position, Quaternion.identity, MainComponents.RotatableObj.transform);
             }
         }
     }
