@@ -84,7 +84,7 @@ public class MenuGameplay : MonoBehaviour
     void updateUI() {
 
         Level.text = System.Convert.ToString(Gameplay.main.levelSelect);
-        Move.text = System.Convert.ToString(Gameplay.main.moving);
+        Move.text = System.Convert.ToString(Gameplay.main.movingCan);
         Score.text = System.Convert.ToString(Gameplay.main.score);
         
         
