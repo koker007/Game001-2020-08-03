@@ -23,6 +23,8 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler
 
     public GameFieldCTRL myField;
 
+    static CellCTRL CellClickOld;
+
     [SerializeField]
     Image[] ramka;
 
@@ -91,8 +93,8 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler
         //Если внутри есть объект и движения нет
         if (cellInternal && !movingInternalNow) {
 
-            //если произошел двойной клик
-            if (MouseCTRL.main.ClickDouble)
+            //если произошел двойной клик и клик по тойже ячейке
+            if (MouseCTRL.main.ClickDouble && CellClickOld == this)
             {
                 cellInternal.ActivateObj();
             }
@@ -101,6 +103,8 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler
             else {
                 myField.SetSelectCell(this);
             }
+
+            CellClickOld = this;
         }
     }
 }

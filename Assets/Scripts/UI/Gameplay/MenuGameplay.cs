@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Семен
 /// <summary>
@@ -20,6 +21,14 @@ public class MenuGameplay : MonoBehaviour
     [SerializeField]
     Transform GameFieldParent;
 
+    [Header("Score")]
+    [SerializeField]
+    Text Level;
+    [SerializeField]
+    Text Score;
+    [SerializeField]
+    Text Move;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +39,7 @@ public class MenuGameplay : MonoBehaviour
     void Update()
     {
         updateButtons();
+        updateUI();
     }
 
     void startButtons()
@@ -61,9 +71,22 @@ public class MenuGameplay : MonoBehaviour
 
     //Создать игровое поле согласно параметрам игры
     void CreateGameField() {
+        //Создание игрового поля
         GameObject gamefieldObj = Instantiate(GameFieldPrefab, GameFieldParent);
         GameFieldCTRL gameFieldCTRL = gamefieldObj.GetComponent<GameFieldCTRL>();
         gameFieldCTRL.inicializeField(10,10);
+
+        //Обнуление счета игры
+        Gameplay.main.StartGameplay();
     }
 
+    //Проверка данных интерфейса
+    void updateUI() {
+
+        Level.text = System.Convert.ToString(Gameplay.main.levelSelect);
+        Move.text = System.Convert.ToString(Gameplay.main.moving);
+        Score.text = System.Convert.ToString(Gameplay.main.score);
+        
+        
+    }
 }

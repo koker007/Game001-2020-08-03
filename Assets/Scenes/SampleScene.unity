@@ -5717,7 +5717,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -7.726288, y: 0}
   m_SizeDelta: {x: 4.5474, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6398,6 +6398,9 @@ MonoBehaviour:
   levelOpen: 0
   levelSelect: 0
   tickets: 0
+  score: 0
+  scoreMax: 0
+  moving: 0
 --- !u!4 &1319929787
 Transform:
   m_ObjectHideFlags: 0
@@ -6998,7 +7001,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1537194980
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7075,6 +7078,9 @@ MonoBehaviour:
   PanelDown: {fileID: 1913568378}
   GameFieldPrefab: {fileID: 7182278835875313947, guid: 80f4821f131eaa845bbaf3dd8f45e070, type: 3}
   GameFieldParent: {fileID: 171384276}
+  Level: {fileID: 1375218793}
+  Score: {fileID: 1159563553}
+  Move: {fileID: 51972848}
 --- !u!1 &1623671797
 GameObject:
   m_ObjectHideFlags: 0

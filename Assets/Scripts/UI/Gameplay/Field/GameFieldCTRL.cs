@@ -340,8 +340,8 @@ public class GameFieldCTRL : MonoBehaviour
                 }
                 //Снизу
                 else if (CellSelect.pos.y > 0 &&
-                    cellCTRLs[CellSelect.pos.y, CellSelect.pos.y - 1] &&
-                    cellCTRLs[CellSelect.pos.y, CellSelect.pos.y - 1] == CellClick)
+                    cellCTRLs[CellSelect.pos.x, CellSelect.pos.y - 1] &&
+                    cellCTRLs[CellSelect.pos.x, CellSelect.pos.y - 1] == CellClick)
                 {
                     return true;
                 }
