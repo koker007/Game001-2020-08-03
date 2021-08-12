@@ -44,6 +44,14 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     RectTransform rectParticleSelect;
 
+    //ћен€емые €чейки
+    struct Swap {
+        public CellCTRL first;
+        public CellCTRL second;
+    }
+
+    //’ранит €чейки которые были недавно обмен€ны
+    List<Swap> BufferSwap = new List<Swap>();
 
 
     public CellCTRL[,] cellCTRLs; //ячейки
@@ -101,7 +109,8 @@ public class GameFieldCTRL : MonoBehaviour
     {
         TestSpawn();
         TestLine();
-        TestSwap();
+        TestStartSwap();
+        TestReturnSwap();
     }
 
     void StartInicialize() {
@@ -311,7 +320,7 @@ public class GameFieldCTRL : MonoBehaviour
     }
 
     //ѕроверка на то что нужно помен€ть местами объекты
-    void TestSwap()
+    void TestStartSwap()
     {
         //≈сли есть выбранна€ €чейка
         if (CellSelect)
@@ -388,8 +397,23 @@ public class GameFieldCTRL : MonoBehaviour
         InternalSelect.StartMove(CellSwap);
         InternalSwap.StartMove(CellSelect);
 
+        //ƒобавл€ем €чейки в список перемещаемых
+        Swap swap;
+        swap.first = CellSelect;
+        swap.second = CellSwap;
+        BufferSwap.Add(swap);
+
         Gameplay.main.movingCount++;
         Gameplay.main.movingCan--;
+    }
+
+    void TestReturnSwap() {
+        foreach (Swap swap in BufferSwap) {
+            //≈сли у €чеек есть внутренности и они не движутс€, возвращаем на свои места
+            if (swap.first.cellInternal && swap.second.cellInternal && !swap.first.movingInternalNow && !swap.second.movingInternalNow) {
+                
+            }
+        }
     }
 
     //—делать €чейку выделенной или целевой дл€ перемещени€

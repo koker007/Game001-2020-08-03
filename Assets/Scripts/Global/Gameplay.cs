@@ -30,6 +30,7 @@ public class Gameplay : MonoBehaviour
     public int movingCan = 0;
     public int movingCount = 0;
     public int colors = 5;
+    public int combo = 0;
     
 
     // Start is called before the first frame update
