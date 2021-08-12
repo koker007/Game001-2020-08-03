@@ -29,6 +29,8 @@ public class MenuGameplay : MonoBehaviour
     [SerializeField]
     Text Move;
 
+    public static GameObject GameField;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,8 +74,8 @@ public class MenuGameplay : MonoBehaviour
     //Создать игровое поле согласно параметрам игры
     void CreateGameField() {
         //Создание игрового поля
-        GameObject gamefieldObj = Instantiate(GameFieldPrefab, GameFieldParent);
-        GameFieldCTRL gameFieldCTRL = gamefieldObj.GetComponent<GameFieldCTRL>();
+        GameField = Instantiate(GameFieldPrefab, GameFieldParent);
+        GameFieldCTRL gameFieldCTRL = GameField.GetComponent<GameFieldCTRL>();
         gameFieldCTRL.inicializeField(10,10);
 
         //Обнуление счета игры
@@ -88,5 +90,21 @@ public class MenuGameplay : MonoBehaviour
         Score.text = System.Convert.ToString(Gameplay.main.score);
         
         
+    }
+
+    /// <summary>
+    /// Открыть настройки меню
+    /// </summary>
+    public void clickButtoSettings()
+    {
+        GlobalMessage.Settings();
+    }
+
+    /// <summary>
+    /// Открыть меню выхода из игры
+    /// </summary>
+    public void clickButtonExitLevel()
+    {
+        GlobalMessage.ExitLevel();
     }
 }

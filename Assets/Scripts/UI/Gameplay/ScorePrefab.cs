@@ -12,6 +12,7 @@ public class ScorePrefab : MonoBehaviour
     private const float TimeLife = 2f;
     private Vector2 movePosition;
     private RectTransform rTransform;
+    public GameObject parent;
 
     private void Awake()
     {
@@ -21,7 +22,7 @@ public class ScorePrefab : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, TimeLife);
+        Destroy(parent, TimeLife);
 
         movePosition = new Vector2(rTransform.position.x, rTransform.position.y + Random.Range(100f, 200f));
     }

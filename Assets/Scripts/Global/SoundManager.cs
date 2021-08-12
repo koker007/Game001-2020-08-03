@@ -12,10 +12,17 @@ public class SoundManager : MonoBehaviour
 
     public AudioClip PressButton;
 
+    public static SoundManager main;
+
     private void Awake()
     {
         Sound = GameObject.Find("Sound").GetComponent<AudioSource>();
         Music = GameObject.Find("Music").GetComponent<AudioSource>();
+    }
+
+    private void Start()
+    {
+        main = this;
     }
 
     /// <summary>

@@ -3381,6 +3381,7 @@ MonoBehaviour:
   PrefabLVLInfo: {fileID: 3686116977431526258, guid: c93f18c795aa3e64297768e6eec8021b, type: 3}
   PrefabShop: {fileID: 7170427015913258267, guid: 217e22a2e592af442a3af969ae0875e8, type: 3}
   PrefabEvents: {fileID: 8365768786939755618, guid: 14f2389c09159b04c86e897b40f77ee8, type: 3}
+  PrefabExitLevel: {fileID: 8267006449023290826, guid: 3acd855960fa35b4d930cacc3405bd36, type: 3}
   needClose: 0
 --- !u!1 &597577164
 GameObject:
@@ -4177,6 +4178,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 127396750}
     m_Modifications:
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1537194983}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: clickButtonExitLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: MenuGameplay, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1052787884345213481, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
       propertyPath: m_Name
       value: ExitButton
@@ -5717,7 +5746,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -7.726288, y: 0}
   m_SizeDelta: {x: 4.5474, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7001,7 +7030,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1537194980
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8718,6 +8747,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1913568378}
     m_Modifications:
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1537194983}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: clickButtoSettings
+      objectReference: {fileID: 0}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: MenuGameplay, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1052787884345213481, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
       propertyPath: m_Name
       value: SettingsButton
