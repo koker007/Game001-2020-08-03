@@ -27,7 +27,9 @@ public class Gameplay : MonoBehaviour
     [Header("Level parameters")]
     public int score = 0;
     public int scoreMax = 0;
-    public int moving = 0;
+    public int movingCan = 0;
+    public int movingCount = 0;
+    public int colors = 5;
     
 
     // Start is called before the first frame update
@@ -45,6 +47,6 @@ public class Gameplay : MonoBehaviour
     public void StartGameplay() {
         //Если уровень выбран
         score = 0;
-        moving = 30;
+        movingCan = 30;
     }
 }

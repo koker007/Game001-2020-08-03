@@ -88,7 +88,7 @@ public class GameFieldCTRL : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartInicialize();
     }
 
     // Update is called once per frame
@@ -99,9 +99,60 @@ public class GameFieldCTRL : MonoBehaviour
         TestSwap();
     }
 
+    void StartInicialize() {
+        //Добавляем в поле все ячейки
+        RandomInicialize();
+
+        void RandomInicialize() {
+
+            bool isComplite = false;
+            int colors = Gameplay.main.colors;
+            if (colors < 3) {
+                colors = 3;
+            }
+
+            while (!isComplite) {
+                //Ставим внизу вверх
+                for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
+                    //слева в право
+                    for (int y = 0; y < cellCTRLs.GetLength(1); y++) {
+                        //Если ячейки нет - выходим
+                        if (!cellCTRLs[x,y]) {
+                            break;
+                        }
+
+                        //если ячейка пустая добавляем внутренность
+                        if (!cellCTRLs[x,y].cellInternal) {
+                            //создаем внутренность
+                            GameObject InternalObj = Instantiate(prefabInternal, parentOfInternals);
+                            CellInternalObject Internal = InternalObj.GetComponent<CellInternalObject>();
+
+                            Internal.myField = this;
+                            Internal.myCell = cellCTRLs[x, y];
+                            cellCTRLs[x, y].cellInternal = Internal;
+
+                            //Устанавливаем позицию
+                            Internal.IniRect();
+                            Internal.PosToCell();
+
+                            //Установить цвет
+                            Internal.randColor();
+                        }
+
+                        
+                    }
+                }
+
+                isComplite = true;
+            }
+        }
+    }
 
     //Проверка ячеек на падение и совместимость
     void TestSpawn() {
+        //Был ли спавн
+        int[] countSpawned = new int[cellCTRLs.GetLength(0)];
+
         //Начиная снизу проверяем есть ли пустые ячейки
         for (int y = 0; y < cellCTRLs.GetLength(1); y++) {
             for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
@@ -118,7 +169,9 @@ public class GameFieldCTRL : MonoBehaviour
                             GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
                             //ставим на позицию 
                             RectTransform rect = internalObj.GetComponent<RectTransform>();
-                            rect.pivot = new Vector2(-x, -y-10);
+                            
+                            //Считаем количество ходов до верха
+                            rect.pivot = new Vector2(-x, -y-(countSpawned[x]+cellCTRLs.GetLength(1)-y));
 
                             CellInternalObject internalCtrl = internalObj.GetComponent<CellInternalObject>();
 
@@ -134,6 +187,8 @@ public class GameFieldCTRL : MonoBehaviour
                             //internalCtrl.myCell = cellCTRLs[x, y];
 
                             cellCTRLs[x, y].setInternal(internalCtrl);
+
+                            countSpawned[x]++;
 
                             break;
                         }
@@ -157,6 +212,7 @@ public class GameFieldCTRL : MonoBehaviour
                         }
                     }
 
+                        
                 }
             }
         }
@@ -206,7 +262,9 @@ public class GameFieldCTRL : MonoBehaviour
                 //Если собралась линия
                 if (cellLine.Count >= 3) {
                     foreach (CellCTRL cell in cellLine) {
-                        cell.gettingScore();
+                        if (Gameplay.main.movingCount > 0)
+                            cell.gettingScore();
+                        else cell.cellInternal.randColor();
                     }
                 }
             }
@@ -236,7 +294,9 @@ public class GameFieldCTRL : MonoBehaviour
                 {
                     foreach (CellCTRL cell in cellLine)
                     {
-                        cell.gettingScore();
+                        if (Gameplay.main.movingCount > 0)
+                            cell.gettingScore();
+                        else cell.cellInternal.randColor();
                     }
                 }
             }
@@ -304,6 +364,8 @@ public class GameFieldCTRL : MonoBehaviour
 
         InternalSelect.StartMove(CellSwap);
         InternalSwap.StartMove(CellSelect);
+
+        Gameplay.main.movingCount++;
     }
 
     //Сделать ячейку выделенной или целевой для перемещения

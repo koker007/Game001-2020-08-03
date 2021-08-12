@@ -9,17 +9,25 @@ C:\Program Files\Unity\Hub\Editor\2020.3.15f2\Editor\Unity.exe
 -batchMode
 -noUpm
 -name
-AssetImportWorker0
+AssetImportWorker5
 -projectPath
 C:/Users/M2/Desktop/проект/Game001-2020-08-03
 -logFile
-Logs/AssetImportWorker0.log
+Logs/AssetImportWorker5.log
 -srvPort
+<<<<<<< HEAD:Logs/AssetImportWorker0.log
 63171
 Successfully changed project path to: C:/Users/M2/Desktop/проект/Game001-2020-08-03
 C:/Users/M2/Desktop/проект/Game001-2020-08-03
 Using Asset Import Pipeline V2.
 Refreshing native plugins compatible for Editor in 85.02 ms, found 2 plugins.
+=======
+54309
+Successfully changed project path to: C:/Users/propo/OneDrive/Документы/Unity Projects/Game001-2020-08-03/Game001
+C:/Users/propo/OneDrive/Документы/Unity Projects/Game001-2020-08-03/Game001
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 410.20 ms, found 2 plugins.
+>>>>>>> Семен:Logs/AssetImportWorker5-prev.log
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.15f2 (6cf78cb77498)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.15f2/Editor/Data/Resources/UnitySubsystems
@@ -35,6 +43,7 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.15f2/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.15f2/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.15f2/Editor/Data/MonoBleedingEdge/etc'
+<<<<<<< HEAD:Logs/AssetImportWorker0.log
 Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56224
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
@@ -48,10 +57,26 @@ Mono: successfully reloaded assembly
 Domain Reload Profiling:
 	ReloadAssembly (7035ms)
 		BeginReloadAssembly (108ms)
+=======
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56804
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.15f2/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.009191 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 143.39 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in 19.004 seconds
+Domain Reload Profiling:
+	ReloadAssembly (19005ms)
+		BeginReloadAssembly (230ms)
+>>>>>>> Семен:Logs/AssetImportWorker5-prev.log
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
+<<<<<<< HEAD:Logs/AssetImportWorker0.log
 			CreateAndSetChildDomain (2ms)
 		EndReloadAssembly (873ms)
 			LoadAssemblies (102ms)
@@ -517,6 +542,24 @@ Domain Reload Profiling:
 				ProcessInitializeOnLoadAttributes (1176ms)
 				ProcessInitializeOnLoadMethodAttributes (514ms)
 				AfterProcessingInitializeOnLoad (28ms)
+=======
+			CreateAndSetChildDomain (3ms)
+		EndReloadAssembly (2548ms)
+			LoadAssemblies (220ms)
+			RebuildTransferFunctionScriptingTraits (2ms)
+			SetupTypeCache (793ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (214ms)
+			SetupLoadedEditorAssemblies (1008ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (21ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (144ms)
+				BeforeProcessingInitializeOnLoad (74ms)
+				ProcessInitializeOnLoadAttributes (631ms)
+				ProcessInitializeOnLoadMethodAttributes (137ms)
+				AfterProcessingInitializeOnLoad (0ms)
+>>>>>>> Семен:Logs/AssetImportWorker5-prev.log
 				EditorAssembliesLoaded (1ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (30ms)
@@ -1199,6 +1242,7 @@ Start importing Assets/Scripts/UI/Gameplay/DestroyCrystalObject.cs using Guid(02
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
+<<<<<<< HEAD:Logs/AssetImportWorker0.log
 Registered in 0.017251 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
@@ -1966,10 +2010,14 @@ AssetImportParameters requested are different than current active one (requested
 Received Prepare
 Registering precompiled user dll's ...
 Registered in 0.021763 seconds.
+=======
+Registered in 0.033685 seconds.
+>>>>>>> Семен:Logs/AssetImportWorker5-prev.log
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Refreshing native plugins compatible for Editor in 1.23 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
+<<<<<<< HEAD:Logs/AssetImportWorker0.log
 Mono: successfully reloaded assembly
 - Completed reload, in  5.838 seconds
 Domain Reload Profiling:
@@ -2917,3 +2965,5 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file
+=======
+>>>>>>> Семен:Logs/AssetImportWorker5-prev.log

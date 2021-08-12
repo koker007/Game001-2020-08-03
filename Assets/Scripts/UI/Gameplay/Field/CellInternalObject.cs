@@ -48,7 +48,7 @@ public class CellInternalObject : MonoBehaviour
     public InternalColor color;
     public Type type;
 
-    void GetRect() {
+    public void IniRect() {
         rectMy = GetComponent<RectTransform>();
         rectCell = myCell.GetComponent<RectTransform>();
     }
@@ -56,7 +56,7 @@ public class CellInternalObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetRect();
+        IniRect();
     }
 
     // Update is called once per frame
@@ -232,7 +232,7 @@ public class CellInternalObject : MonoBehaviour
         myCell.cellInternal = this;
         myCell.myInternalNum = myCell.LastInternalNum; //Запоминаем действие
 
-        GetRect();
+        IniRect();
     }
 
     /// <summary>
@@ -275,7 +275,7 @@ public class CellInternalObject : MonoBehaviour
     {
         InternalColor colorReturn = InternalColor.Red;
 
-        int random = Random.Range(0, 5);
+        int random = Random.Range(0, Gameplay.main.colors);
         if (random == 0)
         {
             colorReturn = InternalColor.Red;
@@ -299,6 +299,14 @@ public class CellInternalObject : MonoBehaviour
 
         return colorReturn;
     }
+
+    public void PosToCell() {
+        IniRect();
+
+        rectMy.pivot = rectCell.pivot;
+    }
+
+
 
     public void ActivateObj() {
         Debug.Log("Activate");
