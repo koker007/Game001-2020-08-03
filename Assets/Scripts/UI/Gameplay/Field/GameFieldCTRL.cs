@@ -32,12 +32,17 @@ public class GameFieldCTRL : MonoBehaviour
     public Transform parentOfParticles;
     [SerializeField]
     public Transform parentOfScore;
+    [SerializeField]
+    public Transform parentOfSelect;
 
     [Header("Other")]
     [SerializeField]
     CellCTRL CellSelect;
     [SerializeField]
     CellCTRL CellSwap;
+
+    [SerializeField]
+    RectTransform rectParticleSelect;
 
 
 
@@ -308,6 +313,23 @@ public class GameFieldCTRL : MonoBehaviour
     //Проверка на то что нужно поменять местами объекты
     void TestSwap()
     {
+        //Если есть выбранная ячейка
+        if (CellSelect)
+        {
+            if (!rectParticleSelect)
+            {
+                GameObject select = Instantiate(PrefabParticleSelect, parentOfSelect);
+                rectParticleSelect = select.GetComponent<RectTransform>();
+
+            }
+
+            rectParticleSelect.pivot = new Vector2(CellSelect.pos.x * -1, CellSelect.pos.y * -1);
+        }
+        else if (rectParticleSelect)
+        {
+            Destroy(rectParticleSelect.gameObject);
+        }
+
         //Только есть с кем поменяться
         if (!CellSwap || !CellSelect)
             return;
@@ -342,7 +364,8 @@ public class GameFieldCTRL : MonoBehaviour
             CellSelect.movingInternalNow || //Если в ячейки происходит движение
             CellSwap.movingInternalNow ||
             CellSelect.dontMoving > 0 || //Если ячейка заморожена
-            CellSwap.dontMoving > 0
+            CellSwap.dontMoving > 0 ||
+            Gameplay.main.movingCan <= 0 //Если есть ходы
             )
         {
             CellSelect = null;
@@ -366,6 +389,7 @@ public class GameFieldCTRL : MonoBehaviour
         InternalSwap.StartMove(CellSelect);
 
         Gameplay.main.movingCount++;
+        Gameplay.main.movingCan--;
     }
 
     //Сделать ячейку выделенной или целевой для перемещения
@@ -419,4 +443,6 @@ public class GameFieldCTRL : MonoBehaviour
             }
         }
     }
+
+
 }

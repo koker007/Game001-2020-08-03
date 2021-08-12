@@ -66,7 +66,6 @@ public class CellInternalObject : MonoBehaviour
     }
 
     public bool isDropped = false;
-    float DroppedSpeed = 0;
     float MovingSpeed = 0;
     void Moving() {
         
@@ -239,10 +238,15 @@ public class CellInternalObject : MonoBehaviour
     /// Удалить объект
     /// </summary>
     public void DestroyObj() {
+        GameObject PrefabDie = Instantiate(myField.PrefabParticleDie, myField.parentOfScore);
+        RectTransform rectDie = PrefabDie.GetComponent<RectTransform>();
+
         GameObject PrefabScore = Instantiate(myField.PrefabParticleScore, myField.parentOfScore);
         RectTransform rectScore = PrefabScore.GetComponent<RectTransform>();
 
+        rectDie.pivot = rectMy.pivot;
         rectScore.pivot = rectMy.pivot;
+        
 
         Destroy(gameObject);
     }
