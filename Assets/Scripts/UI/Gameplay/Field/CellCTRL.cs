@@ -108,4 +108,8 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler
             CellClickOld = this;
         }
     }
+
+    public void Damage() {
+        
+    }
 }

@@ -321,6 +321,289 @@ public class GameFieldCTRL : MonoBehaviour
 
     }
 
+    void TestFieldCombination() {
+        //Начиная сверху проверяем собралась ли линия
+        for (int y = cellCTRLs.GetLength(1) - 1; y >= 0; y--)
+        {
+            for (int x = 0; x < cellCTRLs.GetLength(0); x++)
+            {
+                TestCellCombination(cellCTRLs[x, y]);
+            }
+        }
+    }
+    //Проверить ячейку на комбирнации
+    bool TestCellCombination(CellCTRL Cell) {
+        if (!Cell) {
+            return false;
+        }
+
+        List<CellCTRL> cellLineRight = new List<CellCTRL>();
+        List<CellCTRL> cellLineLeft = new List<CellCTRL>();
+        List<CellCTRL> cellLineDown = new List<CellCTRL>();
+        List<CellCTRL> cellLineUp = new List<CellCTRL>();
+
+        List<CellCTRL> cellSquare = new List<CellCTRL>();
+
+        //Список ячеек которые должны получить урон
+        List<CellCTRL> cellDamage = new List<CellCTRL>();
+
+        bool line5 = false;
+        bool square = false;
+        bool line4 = false;
+        bool cross = false;
+
+        bool foundCombination = false;
+
+        TestLines();
+        TestSquare();
+        CalcResult();
+        Damage();
+
+        return foundCombination;
+
+        ///////////////////////////////////////////////////////////////////
+        void TestLines() {
+
+            ///////////////////////////////////////////////////////
+            //Проверка вправо
+            for (int smeshenie = 1; smeshenie < 5; smeshenie++)
+            {
+
+                if ((Cell.pos.x + smeshenie) <= cellCTRLs.GetLength(0) || //Если вышли за пределы массива
+                    TestCellColor(cellCTRLs[Cell.pos.x + smeshenie, Cell.pos.y]))
+                {
+                    //На этом заканчиваем перебор
+                    break;
+                }
+
+                //Добавляем ячейку в список линии
+                cellLineRight.Add(cellCTRLs[Cell.pos.x + smeshenie, Cell.pos.y]);
+            }
+
+            ////////////////////////////////////////////////////
+            //Проверка влево
+            for (int smeshenie = 1; smeshenie < 5; smeshenie++)
+            {
+
+                if ((Cell.pos.x - smeshenie) >= 0 || //Если вышли за пределы массива
+                    TestCellColor(cellCTRLs[Cell.pos.x - smeshenie, Cell.pos.y]))
+                {
+                    //На этом заканчиваем перебор
+                    break;
+                }
+
+                //Добавляем ячейку в список линии
+                cellLineLeft.Add(cellCTRLs[Cell.pos.x - smeshenie, Cell.pos.y]);
+            }
+
+            /////////////////////////////////////////////////////
+            //Проверка вниз
+            for (int smeshenie = 1; smeshenie < 5; smeshenie++)
+            {
+
+                if ((Cell.pos.y - smeshenie) >= 0 || //Если вышли за пределы массива
+                    TestCellColor(cellCTRLs[Cell.pos.x, Cell.pos.y - smeshenie]))
+                {
+                    //На этом заканчиваем перебор
+                    break;
+                }
+
+                //Добавляем ячейку в список линии
+                cellLineDown.Add(cellCTRLs[Cell.pos.x, Cell.pos.y - smeshenie]);
+            }
+
+            /////////////////////////////////////////////////////
+            //Проверка вверх
+            for (int smeshenie = 1; smeshenie < 5; smeshenie++)
+            {
+
+                if ((Cell.pos.y + smeshenie) >= cellCTRLs.GetLength(0) || //Если вышли за пределы массива
+                    TestCellColor(cellCTRLs[Cell.pos.x, Cell.pos.y + smeshenie]))
+                {
+                    //На этом заканчиваем перебор
+                    break;
+                }
+
+                //Добавляем ячейку в список линии
+                cellLineUp.Add(cellCTRLs[Cell.pos.x, Cell.pos.y + smeshenie]);
+            }
+        }
+        void TestSquare() {
+            //Проверка на квадрат
+
+            //Справа сверху
+            if (cellLineRight.Count > 0 && cellLineUp.Count > 0 && TestCellColor(cellCTRLs[Cell.pos.x + 1, Cell.pos.y + 1])) {
+                cellSquare.Add(cellLineRight[0]);
+                cellSquare.Add(cellLineUp[0]);
+                cellSquare.Add(cellCTRLs[Cell.pos.x + 1, Cell.pos.y + 1]);
+            }
+
+            //Справа снизу
+            else if (cellLineRight.Count > 0 && cellLineDown.Count > 0 && TestCellColor(cellCTRLs[Cell.pos.x + 1, Cell.pos.y - 1]))
+            {
+                cellSquare.Add(cellLineRight[0]);
+                cellSquare.Add(cellLineDown[0]);
+                cellSquare.Add(cellCTRLs[Cell.pos.x + 1, Cell.pos.y - 1]);
+            }
+
+            //Слева снизу
+            else if (cellLineLeft.Count > 0 && cellLineDown.Count > 0 && TestCellColor(cellCTRLs[Cell.pos.x - 1, Cell.pos.y - 1]))
+            {
+                cellSquare.Add(cellLineLeft[0]);
+                cellSquare.Add(cellLineDown[0]);
+                cellSquare.Add(cellCTRLs[Cell.pos.x - 1, Cell.pos.y - 1]);
+            }
+
+            //Слева сверху
+            else if (cellLineLeft.Count > 0 && cellLineUp.Count > 0 && TestCellColor(cellCTRLs[Cell.pos.x - 1, Cell.pos.y + 1]))
+            {
+                cellSquare.Add(cellLineLeft[0]);
+                cellSquare.Add(cellLineDown[0]);
+                cellSquare.Add(cellCTRLs[Cell.pos.x - 1, Cell.pos.y + 1]);
+            }
+        }
+
+        void CalcResult() {
+
+            bool horizontal = false;
+            bool vertical = false;
+
+            Line5();
+            Line4();
+            Line3();
+            Square();
+            Cross();
+
+            //Собралась ли линия из 5
+            void Line5() {
+                if (cellLineRight.Count + cellLineLeft.Count == 4) {
+                    horizontal = true;
+                    line5 = true;
+
+                    AddDamage(Cell);
+                    foreach (CellCTRL c in cellLineRight) AddDamage(c);
+                    foreach (CellCTRL c in cellLineLeft) AddDamage(c);
+                }
+
+                if (cellLineDown.Count + cellLineUp.Count == 4)
+                {
+                    vertical = true;
+                    line5 = true;
+
+                    AddDamage(Cell);
+                    foreach (CellCTRL c in cellLineDown) AddDamage(c);
+                    foreach (CellCTRL c in cellLineUp) AddDamage(c);
+                }
+            }
+
+            //Собралась ли линия из 4
+            void Line4() {
+                if (cellLineRight.Count + cellLineLeft.Count == 3)
+                {
+                    horizontal = true;
+                    line4 = true;
+
+                    AddDamage(Cell);
+                    foreach (CellCTRL c in cellLineRight) AddDamage(c);
+                    foreach (CellCTRL c in cellLineLeft) AddDamage(c);
+                }
+
+                if (cellLineDown.Count + cellLineUp.Count == 3)
+                {
+                    vertical = true;
+                    line4 = true;
+
+                    AddDamage(Cell);
+                    foreach (CellCTRL c in cellLineDown) AddDamage(c);
+                    foreach (CellCTRL c in cellLineUp) AddDamage(c);
+                }
+            }
+
+            //Собралась ли линия из 3
+            void Line3()
+            {
+                if (cellLineRight.Count + cellLineLeft.Count == 2)
+                {
+                    horizontal = true;
+
+                    AddDamage(Cell);
+                    foreach (CellCTRL c in cellLineRight) AddDamage(c);
+                    foreach (CellCTRL c in cellLineLeft) AddDamage(c);
+                }
+
+                if (cellLineDown.Count + cellLineUp.Count == 2)
+                {
+                    vertical = true;
+
+                    AddDamage(Cell);
+                    foreach (CellCTRL c in cellLineDown) AddDamage(c);
+                    foreach (CellCTRL c in cellLineUp) AddDamage(c);
+                }
+            }
+
+            //Собрался ли квадрат
+            void Square() {
+                if (cellSquare.Count >= 3) {
+                    square = true;
+
+                    AddDamage(Cell);
+                    foreach (CellCTRL c in cellSquare) AddDamage(c);
+                }
+            }
+
+            //Собрался ли крест
+            void Cross() {
+                if (horizontal && vertical) {
+                    cross = true;
+                }
+            }
+        }
+
+        //Раздать урон всем обьектам которые в списке
+        void Damage() {
+            //Если комбинаций не было, выходим
+
+            //Раздать ячейкам урон
+            foreach (CellCTRL c in cellDamage) {
+                c.Damage();
+            }
+
+            foundCombination = true;
+
+            //Поставить новый обьект на место
+
+        }
+
+
+        //Проверить ячейку на совпадение цвета
+        bool TestCellColor(CellCTRL SecondCell) {
+
+            if (
+                !SecondCell || //если самой ячейки нет
+                !SecondCell.cellInternal || //если объекта в ячейке нет
+                SecondCell.movingInternalNow || //если эти внутренности находятся в движении
+                SecondCell.cellInternal.color != Cell.cellInternal.color)
+            {
+                //На этом заканчиваем перебор
+                return true;
+            }
+
+
+            return false;
+        }
+
+        //Добавить ячейку в список, проверяя что ее там нет
+        void AddDamage(CellCTRL cellDamageNew) {
+            //Проверяем что этого обьекта нет в списке
+            foreach (CellCTRL c in cellDamage) {
+                //Обьект уже есть в списке, выходим
+                if (c == cellDamageNew) return;
+            }
+
+            cellDamage.Add(cellDamageNew);
+        }
+    }
+
     //Проверка на то что нужно поменять местами объекты
     void TestStartSwap()
     {
