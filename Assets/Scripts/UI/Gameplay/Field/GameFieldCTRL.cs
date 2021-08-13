@@ -45,9 +45,11 @@ public class GameFieldCTRL : MonoBehaviour
     RectTransform rectParticleSelect;
 
     //ћен€емые €чейки
-    struct Swap {
+    class Swap {
         public CellCTRL first;
         public CellCTRL second;
+
+        public int stopSwap = 1;
     }
 
     //’ранит €чейки которые были недавно обмен€ны
@@ -398,7 +400,8 @@ public class GameFieldCTRL : MonoBehaviour
         InternalSwap.StartMove(CellSelect);
 
         //ƒобавл€ем €чейки в список перемещаемых
-        Swap swap;
+        Swap swap = new Swap();
+
         swap.first = CellSelect;
         swap.second = CellSwap;
         BufferSwap.Add(swap);
@@ -408,12 +411,43 @@ public class GameFieldCTRL : MonoBehaviour
     }
 
     void TestReturnSwap() {
+
+        List<Swap> BufferSwapNew = new List<Swap>();
+
         foreach (Swap swap in BufferSwap) {
-            //≈сли у €чеек есть внутренности и они не движутс€, возвращаем на свои места
-            if (swap.first.cellInternal && swap.second.cellInternal && !swap.first.movingInternalNow && !swap.second.movingInternalNow) {
-                
+
+            if (swap == null) {
+                continue;
             }
+            //≈сли у €чеек есть внутренности и они не движутс€, возвращаем на свои места
+            else if (swap.first.cellInternal && swap.second.cellInternal &&
+                !swap.first.movingInternalNow && !swap.second.movingInternalNow)
+            {
+
+                //ћен€ем внутренности
+                CellInternalObject InternalFirst = swap.first.cellInternal;
+                CellInternalObject InternalSecond = swap.second.cellInternal;
+
+                //ќткрепл€ем прив€зку к €чейкам у обьектов
+                swap.first.cellInternal.myCell = null;
+                swap.second.cellInternal.myCell = null;
+
+                //ќткрепл€ем прив€зку к обьектам у €чеек
+                swap.first.cellInternal = null;
+                swap.second.cellInternal = null;
+
+                InternalFirst.StartMove(swap.second);
+                InternalSecond.StartMove(swap.first);
+
+                Gameplay.main.movingCount++;
+                Gameplay.main.movingCan--;
+
+                continue;
+            }
+            BufferSwapNew.Add(swap);
+
         }
+        BufferSwap = BufferSwapNew;
     }
 
     //—делать €чейку выделенной или целевой дл€ перемещени€
