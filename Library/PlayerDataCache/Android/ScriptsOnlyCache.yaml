@@ -32,12 +32,6 @@ ScriptsOnlyBuild:
     - WorldSlider
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
-    UnityEditor.Graphs.dll:
-    - UnityEditor.Graphs.AnimationBlendTree.Graph
-    - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.Graph
-    - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -97,77 +91,77 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1442}
     - Class: 114
-      Script: {instanceID: 1446}
+      Script: {instanceID: 1466}
     - Class: 114
-      Script: {instanceID: 1452}
+      Script: {instanceID: 1472}
     - Class: 114
-      Script: {instanceID: 1482}
+      Script: {instanceID: 1504}
     - Class: 114
-      Script: {instanceID: 1486}
+      Script: {instanceID: 1508}
     - Class: 114
-      Script: {instanceID: 1496}
+      Script: {instanceID: 1518}
     - Class: 114
-      Script: {instanceID: 1738}
+      Script: {instanceID: 1760}
     - Class: 114
-      Script: {instanceID: 1750}
+      Script: {instanceID: 1772}
     - Class: 114
-      Script: {instanceID: 1792}
+      Script: {instanceID: 1814}
     - Class: 114
-      Script: {instanceID: 1838}
+      Script: {instanceID: 1860}
     - Class: 114
-      Script: {instanceID: 1874}
+      Script: {instanceID: 1896}
     - Class: 114
-      Script: {instanceID: 1978}
+      Script: {instanceID: 2000}
     - Class: 114
-      Script: {instanceID: 2106}
+      Script: {instanceID: 2128}
     - Class: 114
-      Script: {instanceID: 2266}
+      Script: {instanceID: 2288}
     - Class: 114
-      Script: {instanceID: 2272}
+      Script: {instanceID: 2294}
     - Class: 114
-      Script: {instanceID: 2370}
+      Script: {instanceID: 2392}
     - Class: 114
-      Script: {instanceID: 2526}
+      Script: {instanceID: 2548}
     - Class: 114
-      Script: {instanceID: 2554}
+      Script: {instanceID: 2576}
     - Class: 114
-      Script: {instanceID: 2682}
+      Script: {instanceID: 2704}
     - Class: 114
-      Script: {instanceID: 2712}
+      Script: {instanceID: 2734}
     - Class: 114
-      Script: {instanceID: 2720}
+      Script: {instanceID: 2742}
     - Class: 114
-      Script: {instanceID: 2786}
+      Script: {instanceID: 2808}
     - Class: 114
-      Script: {instanceID: 2794}
+      Script: {instanceID: 2816}
     - Class: 114
-      Script: {instanceID: 3306}
+      Script: {instanceID: 3328}
     - Class: 114
-      Script: {instanceID: 3376}
+      Script: {instanceID: 3398}
     - Class: 114
-      Script: {instanceID: 3386}
+      Script: {instanceID: 3408}
     - Class: 114
-      Script: {instanceID: 3436}
+      Script: {instanceID: 3458}
     - Class: 114
-      Script: {instanceID: 3450}
+      Script: {instanceID: 3472}
     - Class: 114
-      Script: {instanceID: 3484}
+      Script: {instanceID: 3506}
     - Class: 114
-      Script: {instanceID: 3500}
+      Script: {instanceID: 3522}
     - Class: 114
-      Script: {instanceID: 3740}
+      Script: {instanceID: 3762}
     - Class: 114
-      Script: {instanceID: 3906}
+      Script: {instanceID: 3930}
     - Class: 114
-      Script: {instanceID: 4010}
+      Script: {instanceID: 4034}
     - Class: 114
-      Script: {instanceID: 4042}
+      Script: {instanceID: 4066}
     - Class: 114
-      Script: {instanceID: 4228}
+      Script: {instanceID: 4252}
     - Class: 114
-      Script: {instanceID: 4330}
+      Script: {instanceID: 4354}
     - Class: 114
-      Script: {instanceID: 4346}
+      Script: {instanceID: 4370}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -177,10 +171,6 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
-      Script: {instanceID: 0}
-    - Class: 198
-      Script: {instanceID: 0}
-    - Class: 199
       Script: {instanceID: 0}
     - Class: 212
       Script: {instanceID: 0}
@@ -229,6 +219,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: AnimationPlayableAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Gameplayg
   - hash:
       serializedVersion: 2
       Hash: d55b9e94ffcc31dee715eae16c6290c9
@@ -621,7 +617,7 @@ ScriptsOnlyBuild:
     className: WorldRandomGenerator
   - hash:
       serializedVersion: 2
-      Hash: 5fcb2fa2c2f95db0c80473b3f86456f9
+      Hash: de3ce9987e462dc43850de12234e6fc4
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Gameplay
@@ -639,7 +635,7 @@ ScriptsOnlyBuild:
     className: UICTRL
   - hash:
       serializedVersion: 2
-      Hash: b1f40eacec4b3f2acb00adb6c2a8926b
+      Hash: afc7b41535b225b47c3a91cd28005982
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CellCTRL
@@ -711,10 +707,16 @@ ScriptsOnlyBuild:
     className: TMP_Settings
   - hash:
       serializedVersion: 2
-      Hash: 0c1d3a48f6cec59b3dd16228681d9edd
+      Hash: 70bb47e420b0afe83bc9126878512d2e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameFieldCTRL
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: InternalCellObject
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -795,11 +797,11 @@ ScriptsOnlyBuild:
     className: MessageExitLevel
   - hash:
       serializedVersion: 2
-      Hash: e77c79d4b9deb2813f9e430a584e18d9
+      Hash: b04f4543a894023d43abcc87f1cfbfc5
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CellInternalObject
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: C:/Users/M2/Desktop/Project/Game001-2020-08-03/test.apk
+  playerPath: C:/Users/koker/Documents/test.apk

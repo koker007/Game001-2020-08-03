@@ -33,10 +33,6 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler
     /// Внутренность ячейки
     /// </summary>
     public CellInternalObject cellInternal;
-    /// <summary>
-    /// Двигаются ли внутренности сейчас
-    /// </summary>
-    public bool movingInternalNow;
 
     /// <summary>
     /// Степень запрета на перемещение объекта
@@ -51,7 +47,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler
 
     public void setInternal(CellInternalObject internalObjectNew) {
         cellInternal = internalObjectNew;
-        movingInternalNow = true;
+        cellInternal.isMove = true;
         myInternalNum = lastInternalNum;
         lastInternalNum++;
     }
@@ -81,7 +77,6 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler
     void TestInternal() {
         if (cellInternal && cellInternal.myCell != this) {
             cellInternal = null;
-            movingInternalNow = false;
         }
     }
 
@@ -92,7 +87,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler
         MouseCTRL.main.click();
 
         //Если внутри есть объект и движения нет
-        if (cellInternal && !movingInternalNow) {
+        if (cellInternal && !cellInternal.isMove) {
 
             //если произошел двойной клик и клик по тойже ячейке
             if (MouseCTRL.main.ClickDouble && CellClickOld == this)

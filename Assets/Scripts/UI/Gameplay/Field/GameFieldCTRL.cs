@@ -110,10 +110,9 @@ public class GameFieldCTRL : MonoBehaviour
     void Update()
     {
         TestSpawn();
-        //TestLine();
         TestFieldCombination();
-        //TestStartSwap();
-        //TestReturnSwap();
+        TestStartSwap();
+        TestReturnSwap();
     }
 
     void StartInicialize() {
@@ -172,7 +171,7 @@ public class GameFieldCTRL : MonoBehaviour
             for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
 
                 //Если эта ячейка есть, пустая и без блокировки движения и на ней сейчас нет движения
-                if (cellCTRLs[x,y] && !cellCTRLs[x, y].cellInternal && cellCTRLs[x,y].dontMoving == 0 && !cellCTRLs[x,y].movingInternalNow) {
+                if (cellCTRLs[x,y] && !cellCTRLs[x, y].cellInternal && cellCTRLs[x,y].dontMoving == 0) {
 
                     //Проверяем сверху на то есть ли там что-то что может упасть
                     for (int plusY = 0; plusY <= cellCTRLs.GetLength(1); plusY++) {
@@ -216,11 +215,6 @@ public class GameFieldCTRL : MonoBehaviour
 
                         //Если сверху есть ячейка с внутренностью и она не блокирована
                         else if (cellCTRLs[x, y + plusY].dontMoving <= 0 && cellCTRLs[x, y + plusY].cellInternal) {
-                            //Перемещаем ее
-                            //cellCTRLs[x, y].cellInternal = cellCTRLs[x, y + plusY].cellInternal;
-                            //cellCTRLs[x, y + plusY].cellInternal = null;
-
-                            //cellCTRLs[x, y].cellInternal.dropStart(cellCTRLs[x, y]);
 
                             break;
                         }
@@ -232,96 +226,9 @@ public class GameFieldCTRL : MonoBehaviour
         }
     }
 
-    //Проверки на линию одинаковых объектов
-    void TestLine()
-    {
-        //Начиная сверху проверяем собралась ли линия
-        for (int y = cellCTRLs.GetLength(1) - 1; y >= 0; y--)
-        {
-            for (int x = 0; x < cellCTRLs.GetLength(0); x++)
-            {
-                line(x, y);
-            }
-        }
-
-        void line(int x, int y) {
-            //Если обьекта нет выходим.
-            if (!cellCTRLs[x,y].cellInternal) {
-                return;
-            }
-
-
-            testRight();
-            testDown();
-
-            //Проверка влево
-            void testRight() {
-                List<CellCTRL> cellLine = new List<CellCTRL>();
-
-                for (int plusX = 0; plusX < 5; plusX++) {
-
-                    if ((x + plusX) >= cellCTRLs.GetLength(0) || //Если вышли за пределы массива
-                        !cellCTRLs[x + plusX, y] || //если самой ячейки нет
-                        !cellCTRLs[x + plusX, y].cellInternal || //если объекта в ячейке нет
-                        cellCTRLs[x + plusX, y].movingInternalNow || //если эти внутренности находятся в движении
-                        cellCTRLs[x + plusX, y].cellInternal.color != cellCTRLs[x, y].cellInternal.color) {
-                        //На этом заканчиваем перебор
-                        break;
-                    }
-
-                    //Добавляем ячейку в список линии
-                    cellLine.Add(cellCTRLs[x + plusX, y]);
-                }
-
-                //Если собралась линия
-                if (cellLine.Count >= 3) {
-                    foreach (CellCTRL cell in cellLine) {
-                        if (Gameplay.main.movingCount > 0)
-                            cell.Damage();
-                        else cell.cellInternal.randColor();
-                    }
-                }
-            }
-            //Проверка вниз
-            void testDown() {
-                List<CellCTRL> cellLine = new List<CellCTRL>();
-
-                for (int minusY = 0; minusY < 5; minusY++)
-                {
-
-                    if ((y - minusY) < 0 || //Если вышли за пределы массива
-                        !cellCTRLs[x, y - minusY] || //если самой ячейки нет
-                        !cellCTRLs[x, y - minusY].cellInternal || //если объекта в ячейке нет
-                        cellCTRLs[x, y - minusY].movingInternalNow || //если эти внутренности находятся в движении
-                        cellCTRLs[x, y - minusY].cellInternal.color != cellCTRLs[x, y].cellInternal.color)
-                    {
-                        //На этом заканчиваем перебор
-                        break;
-                    }
-
-                    //Добавляем ячейку с список линии
-                    cellLine.Add(cellCTRLs[x, y - minusY]);
-                }
-
-                //Если собралась линия
-                if (cellLine.Count >= 3)
-                {
-                    foreach (CellCTRL cell in cellLine)
-                    {
-                        if (Gameplay.main.movingCount > 0)
-                            cell.Damage();
-                        else cell.cellInternal.randColor();
-                    }
-                }
-            }
-
-        }
-
-    }
-
     //Проверяем все ячейки на комбинаци
     void TestFieldCombination() {
-        //Начиная сверху проверяем собралась ли линия
+        //Начиная сверху проверяем все ячейки на комбинацию
         for (int y = cellCTRLs.GetLength(1) - 1; y >= 0; y--)
         {
             for (int x = 0; x < cellCTRLs.GetLength(0); x++)
@@ -330,14 +237,12 @@ public class GameFieldCTRL : MonoBehaviour
             }
         }
     }
-    //Проверить ячейку на комбирнации
+    //Проверить ячейку на комбинации
     bool TestCellCombination(CellCTRL Cell) {
-        if (!Cell) {
-            return false;
-        }
 
-        if (!Cell.cellInternal) {
-            Cell.movingInternalNow = false;
+        //Выходим если ячейки нет, или нет внутренности, или внутренность в движении
+        if (!Cell || !Cell.cellInternal || Cell.cellInternal.isMove) {
+            return false;
         }
 
         List<CellCTRL> cellLineRight = new List<CellCTRL>();
@@ -358,7 +263,7 @@ public class GameFieldCTRL : MonoBehaviour
         bool foundCombination = false;
 
         TestLines();
-        //TestSquare();
+        TestSquare();
         CalcResult();
         Damage();
 
@@ -435,14 +340,14 @@ public class GameFieldCTRL : MonoBehaviour
             //Проверка на квадрат
 
             //Справа сверху
-            if (cellLineRight.Count > 0 && cellLineUp.Count > 0 && TestCellColor(cellCTRLs[Cell.pos.x + 1, Cell.pos.y + 1])) {
+            if (cellLineRight.Count > 0 && cellLineUp.Count > 0 && !TestCellColor(cellCTRLs[Cell.pos.x + 1, Cell.pos.y + 1])) {
                 cellSquare.Add(cellLineRight[0]);
                 cellSquare.Add(cellLineUp[0]);
                 cellSquare.Add(cellCTRLs[Cell.pos.x + 1, Cell.pos.y + 1]);
             }
 
             //Справа снизу
-            else if (cellLineRight.Count > 0 && cellLineDown.Count > 0 && TestCellColor(cellCTRLs[Cell.pos.x + 1, Cell.pos.y - 1]))
+            else if (cellLineRight.Count > 0 && cellLineDown.Count > 0 && !TestCellColor(cellCTRLs[Cell.pos.x + 1, Cell.pos.y - 1]))
             {
                 cellSquare.Add(cellLineRight[0]);
                 cellSquare.Add(cellLineDown[0]);
@@ -450,7 +355,7 @@ public class GameFieldCTRL : MonoBehaviour
             }
 
             //Слева снизу
-            else if (cellLineLeft.Count > 0 && cellLineDown.Count > 0 && TestCellColor(cellCTRLs[Cell.pos.x - 1, Cell.pos.y - 1]))
+            else if (cellLineLeft.Count > 0 && cellLineDown.Count > 0 && !TestCellColor(cellCTRLs[Cell.pos.x - 1, Cell.pos.y - 1]))
             {
                 cellSquare.Add(cellLineLeft[0]);
                 cellSquare.Add(cellLineDown[0]);
@@ -458,7 +363,7 @@ public class GameFieldCTRL : MonoBehaviour
             }
 
             //Слева сверху
-            else if (cellLineLeft.Count > 0 && cellLineUp.Count > 0 && TestCellColor(cellCTRLs[Cell.pos.x - 1, Cell.pos.y + 1]))
+            else if (cellLineLeft.Count > 0 && cellLineUp.Count > 0 && !TestCellColor(cellCTRLs[Cell.pos.x - 1, Cell.pos.y + 1]))
             {
                 cellSquare.Add(cellLineLeft[0]);
                 cellSquare.Add(cellLineUp[0]);
@@ -572,6 +477,19 @@ public class GameFieldCTRL : MonoBehaviour
             //Раздать ячейкам урон или перемешать если игра еще не началась
             foreach (CellCTRL c in cellDamage) {
                 c.Damage();
+
+                //Отнимаем ход если комбинация получилась благодаря перемещениям игрока
+                List<Swap> BufferSwapNew = new List<Swap>();
+                foreach (Swap swap in BufferSwap) {
+                    if (swap.first == c || swap.second == c) {
+                        Gameplay.main.movingCount++;
+                        Gameplay.main.movingCan--;
+
+                        continue;
+                    }
+                    BufferSwapNew.Add(swap);
+                }
+                BufferSwap = BufferSwapNew;
             }
 
             //
@@ -585,12 +503,12 @@ public class GameFieldCTRL : MonoBehaviour
         //Проверить ячейку на совпадение цвета
         bool TestCellColor(CellCTRL SecondCell) {
 
-            
+            //Отмена если
             if (
                 !SecondCell || //если самой ячейки нет
                 !SecondCell.cellInternal ||
                 !Cell.cellInternal || //если объекта в ячейке нет
-                SecondCell.movingInternalNow || //если эти внутренности находятся в движении
+                SecondCell.cellInternal.isMove || //если эти внутренности находятся в движении
                 SecondCell.cellInternal.color != Cell.cellInternal.color)
             {
                 //На этом заканчиваем перебор
@@ -664,8 +582,8 @@ public class GameFieldCTRL : MonoBehaviour
         //Если обмен не возможен
         if (!CellSelect.cellInternal || //Если у ячеек нечем меняться
             !CellSwap.cellInternal ||
-            CellSelect.movingInternalNow || //Если в ячейки происходит движение
-            CellSwap.movingInternalNow ||
+            CellSelect.cellInternal.isMove || //Если в ячейки происходит движение
+            CellSwap.cellInternal.isMove ||
             CellSelect.dontMoving > 0 || //Если ячейка заморожена
             CellSwap.dontMoving > 0 ||
             Gameplay.main.movingCan <= 0 //Если есть ходы
@@ -698,8 +616,8 @@ public class GameFieldCTRL : MonoBehaviour
         swap.second = CellSwap;
         BufferSwap.Add(swap);
 
-        Gameplay.main.movingCount++;
-        Gameplay.main.movingCan--;
+        //Gameplay.main.movingCount++;
+        //Gameplay.main.movingCan--;
     }
 
     void TestReturnSwap() {
@@ -713,7 +631,7 @@ public class GameFieldCTRL : MonoBehaviour
             }
             //Если у ячеек есть внутренности и они не движутся, возвращаем на свои места
             else if (swap.first.cellInternal && swap.second.cellInternal &&
-                !swap.first.movingInternalNow && !swap.second.movingInternalNow)
+                !swap.first.cellInternal.isMove && !swap.second.cellInternal.isMove)
             {
 
                 //Меняем внутренности
@@ -731,8 +649,8 @@ public class GameFieldCTRL : MonoBehaviour
                 InternalFirst.StartMove(swap.second);
                 InternalSecond.StartMove(swap.first);
 
-                Gameplay.main.movingCount++;
-                Gameplay.main.movingCan--;
+                //Gameplay.main.movingCount++;
+                //Gameplay.main.movingCan--;
 
                 continue;
             }
