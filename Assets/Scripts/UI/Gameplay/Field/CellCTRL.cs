@@ -59,8 +59,8 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler
     /// <summary>
     /// получить очки и избавиться от внутренности
     /// </summary>
-    public void gettingScore() {
-
+    public void Damage() {
+        
         //Избавляемся
         cellInternal.DestroyObj();
     }
@@ -109,7 +109,4 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler
         }
     }
 
-    public void Damage() {
-        
-    }
 }

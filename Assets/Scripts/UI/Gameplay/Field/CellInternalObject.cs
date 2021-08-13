@@ -69,34 +69,6 @@ public class CellInternalObject : MonoBehaviour
     float MovingSpeed = 0;
     void Moving() {
         
-        //Падение
-        /*
-        if (isDropped)
-        {
-            DroppedSpeed += Time.unscaledDeltaTime * 4;
-
-            float posYnew = rectMy.pivot.y + 0.05f + DroppedSpeed;
-
-            //Если позиция ниже чем та куда надо
-            if (posYnew > rectCell.pivot.y)
-            {
-                CellCTRL cellMove = GetFreeCellDown();
-                if (cellMove)
-                {
-                    StartDrop(cellMove);
-                }
-                else
-                {
-                    posYnew = rectCell.pivot.y;
-                    isDropped = false; //падение закончиось
-                    myCell.movingInternalNow = false; //Ячейка освободилась для дейсвия
-                }
-            }
-
-            //Устанавливаем позицию
-            rectMy.pivot = new Vector2(rectMy.pivot.x, posYnew);
-        }
-        */
 
         //Движение к соседу
         if (isMove) {
@@ -105,7 +77,7 @@ public class CellInternalObject : MonoBehaviour
             //Горизонтальное движение
             float posXnew = rectMy.pivot.x;
 
-            MovingSpeed += Time.unscaledDeltaTime * 4;
+            MovingSpeed += Time.unscaledDeltaTime;
             float speed = 0.05f + MovingSpeed;
 
             //Движение влево
@@ -238,17 +210,21 @@ public class CellInternalObject : MonoBehaviour
     /// Удалить объект
     /// </summary>
     public void DestroyObj() {
-        GameObject PrefabDie = Instantiate(myField.PrefabParticleDie, myField.parentOfScore);
-        RectTransform rectDie = PrefabDie.GetComponent<RectTransform>();
 
-        GameObject PrefabScore = Instantiate(myField.PrefabParticleScore, myField.parentOfScore);
-        RectTransform rectScore = PrefabScore.GetComponent<RectTransform>();
-
-        rectDie.pivot = rectMy.pivot;
-        rectScore.pivot = rectMy.pivot;
-        
+        //SpawnEffects();
 
         Destroy(gameObject);
+
+        void SpawnEffects() {
+            GameObject PrefabDie = Instantiate(myField.PrefabParticleDie, myField.parentOfScore);
+            RectTransform rectDie = PrefabDie.GetComponent<RectTransform>();
+
+            GameObject PrefabScore = Instantiate(myField.PrefabParticleScore, myField.parentOfScore);
+            RectTransform rectScore = PrefabScore.GetComponent<RectTransform>();
+
+            rectDie.pivot = rectMy.pivot;
+            rectScore.pivot = rectMy.pivot;
+        }
     }
 
     public void randColor() {

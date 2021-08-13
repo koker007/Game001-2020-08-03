@@ -29,7 +29,7 @@ public class Gameplay : MonoBehaviour
     public int scoreMax = 0;
     public int movingCan = 0;
     public int movingCount = 0;
-    public int colors = 5;
+    public int colors = 3;
     public int combo = 0;
     
 

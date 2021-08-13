@@ -110,9 +110,10 @@ public class GameFieldCTRL : MonoBehaviour
     void Update()
     {
         TestSpawn();
-        TestLine();
-        TestStartSwap();
-        TestReturnSwap();
+        //TestLine();
+        TestFieldCombination();
+        //TestStartSwap();
+        //TestReturnSwap();
     }
 
     void StartInicialize() {
@@ -123,9 +124,6 @@ public class GameFieldCTRL : MonoBehaviour
 
             bool isComplite = false;
             int colors = Gameplay.main.colors;
-            if (colors < 3) {
-                colors = 3;
-            }
 
             while (!isComplite) {
                 //Ставим внизу вверх
@@ -279,7 +277,7 @@ public class GameFieldCTRL : MonoBehaviour
                 if (cellLine.Count >= 3) {
                     foreach (CellCTRL cell in cellLine) {
                         if (Gameplay.main.movingCount > 0)
-                            cell.gettingScore();
+                            cell.Damage();
                         else cell.cellInternal.randColor();
                     }
                 }
@@ -311,7 +309,7 @@ public class GameFieldCTRL : MonoBehaviour
                     foreach (CellCTRL cell in cellLine)
                     {
                         if (Gameplay.main.movingCount > 0)
-                            cell.gettingScore();
+                            cell.Damage();
                         else cell.cellInternal.randColor();
                     }
                 }
@@ -321,6 +319,7 @@ public class GameFieldCTRL : MonoBehaviour
 
     }
 
+    //Проверяем все ячейки на комбинаци
     void TestFieldCombination() {
         //Начиная сверху проверяем собралась ли линия
         for (int y = cellCTRLs.GetLength(1) - 1; y >= 0; y--)
@@ -335,6 +334,10 @@ public class GameFieldCTRL : MonoBehaviour
     bool TestCellCombination(CellCTRL Cell) {
         if (!Cell) {
             return false;
+        }
+
+        if (!Cell.cellInternal) {
+            Cell.movingInternalNow = false;
         }
 
         List<CellCTRL> cellLineRight = new List<CellCTRL>();
@@ -355,7 +358,7 @@ public class GameFieldCTRL : MonoBehaviour
         bool foundCombination = false;
 
         TestLines();
-        TestSquare();
+        //TestSquare();
         CalcResult();
         Damage();
 
@@ -369,7 +372,7 @@ public class GameFieldCTRL : MonoBehaviour
             for (int smeshenie = 1; smeshenie < 5; smeshenie++)
             {
 
-                if ((Cell.pos.x + smeshenie) <= cellCTRLs.GetLength(0) || //Если вышли за пределы массива
+                if ((Cell.pos.x + smeshenie) > cellCTRLs.GetLength(0) - 1 || //Если вышли за пределы массива
                     TestCellColor(cellCTRLs[Cell.pos.x + smeshenie, Cell.pos.y]))
                 {
                     //На этом заканчиваем перебор
@@ -385,7 +388,7 @@ public class GameFieldCTRL : MonoBehaviour
             for (int smeshenie = 1; smeshenie < 5; smeshenie++)
             {
 
-                if ((Cell.pos.x - smeshenie) >= 0 || //Если вышли за пределы массива
+                if ((Cell.pos.x - smeshenie) < 0 || //Если вышли за пределы массива
                     TestCellColor(cellCTRLs[Cell.pos.x - smeshenie, Cell.pos.y]))
                 {
                     //На этом заканчиваем перебор
@@ -401,7 +404,7 @@ public class GameFieldCTRL : MonoBehaviour
             for (int smeshenie = 1; smeshenie < 5; smeshenie++)
             {
 
-                if ((Cell.pos.y - smeshenie) >= 0 || //Если вышли за пределы массива
+                if ((Cell.pos.y - smeshenie) < 0 || //Если вышли за пределы массива
                     TestCellColor(cellCTRLs[Cell.pos.x, Cell.pos.y - smeshenie]))
                 {
                     //На этом заканчиваем перебор
@@ -417,7 +420,7 @@ public class GameFieldCTRL : MonoBehaviour
             for (int smeshenie = 1; smeshenie < 5; smeshenie++)
             {
 
-                if ((Cell.pos.y + smeshenie) >= cellCTRLs.GetLength(0) || //Если вышли за пределы массива
+                if ((Cell.pos.y + smeshenie) > cellCTRLs.GetLength(1) - 1 || //Если вышли за пределы массива
                     TestCellColor(cellCTRLs[Cell.pos.x, Cell.pos.y + smeshenie]))
                 {
                     //На этом заканчиваем перебор
@@ -458,7 +461,7 @@ public class GameFieldCTRL : MonoBehaviour
             else if (cellLineLeft.Count > 0 && cellLineUp.Count > 0 && TestCellColor(cellCTRLs[Cell.pos.x - 1, Cell.pos.y + 1]))
             {
                 cellSquare.Add(cellLineLeft[0]);
-                cellSquare.Add(cellLineDown[0]);
+                cellSquare.Add(cellLineUp[0]);
                 cellSquare.Add(cellCTRLs[Cell.pos.x - 1, Cell.pos.y + 1]);
             }
         }
@@ -562,12 +565,16 @@ public class GameFieldCTRL : MonoBehaviour
         //Раздать урон всем обьектам которые в списке
         void Damage() {
             //Если комбинаций не было, выходим
+            if (cellDamage.Count == 0) {
+                return;
+            }
 
-            //Раздать ячейкам урон
+            //Раздать ячейкам урон или перемешать если игра еще не началась
             foreach (CellCTRL c in cellDamage) {
                 c.Damage();
             }
 
+            //
             foundCombination = true;
 
             //Поставить новый обьект на место
@@ -578,9 +585,11 @@ public class GameFieldCTRL : MonoBehaviour
         //Проверить ячейку на совпадение цвета
         bool TestCellColor(CellCTRL SecondCell) {
 
+            
             if (
                 !SecondCell || //если самой ячейки нет
-                !SecondCell.cellInternal || //если объекта в ячейке нет
+                !SecondCell.cellInternal ||
+                !Cell.cellInternal || //если объекта в ячейке нет
                 SecondCell.movingInternalNow || //если эти внутренности находятся в движении
                 SecondCell.cellInternal.color != Cell.cellInternal.color)
             {
