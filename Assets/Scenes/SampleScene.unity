@@ -3382,6 +3382,7 @@ MonoBehaviour:
   PrefabShop: {fileID: 7170427015913258267, guid: 217e22a2e592af442a3af969ae0875e8, type: 3}
   PrefabEvents: {fileID: 8365768786939755618, guid: 14f2389c09159b04c86e897b40f77ee8, type: 3}
   PrefabExitLevel: {fileID: 8267006449023290826, guid: 3acd855960fa35b4d930cacc3405bd36, type: 3}
+  PrefabLose: {fileID: 851974992020451274, guid: f708a09f4e25a5d499a3ff5f8936b313, type: 3}
   needClose: 0
 --- !u!1 &597577164
 GameObject:
@@ -6405,6 +6406,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1319929787}
   - component: {fileID: 1319929786}
+  - component: {fileID: 1319929788}
   m_Layer: 0
   m_Name: _Gameplay
   m_TagString: Untagged
@@ -6427,11 +6429,13 @@ MonoBehaviour:
   levelOpen: 0
   levelSelect: 0
   tickets: 0
+  isGameplay: 0
   score: 0
   scoreMax: 0
   movingCan: 0
   movingCount: 0
   colors: 5
+  combo: 0
 --- !u!4 &1319929787
 Transform:
   m_ObjectHideFlags: 0
@@ -6446,6 +6450,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1319929788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319929785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c29cb6a375a94947b2498fee087aaf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1367551168
 GameObject:
   m_ObjectHideFlags: 0
@@ -8726,6 +8742,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PressButton: {fileID: 8300000, guid: 39e2ef457fac5d4419f29a74c72c9cc9, type: 3}
+  MoveCrystal: {fileID: 8300000, guid: ca772a68b87370a44bbfbbbf9a835251, type: 3}
+  DesctoyCrystal: {fileID: 8300000, guid: ac13ef6d9c344544aa256cae1e748574, type: 3}
 --- !u!4 &2043773061
 Transform:
   m_ObjectHideFlags: 0

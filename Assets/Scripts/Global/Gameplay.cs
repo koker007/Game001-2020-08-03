@@ -24,6 +24,8 @@ public class Gameplay : MonoBehaviour
     /// </summary>
     public int tickets = 0;
 
+    public bool isGameplay = false;
+
     [Header("Level parameters")]
     public int score = 0;
     public int scoreMax = 0;
@@ -42,12 +44,21 @@ public class Gameplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void StartGameplay() {
         //Если уровень выбран
         score = 0;
         movingCan = 30;
+    }
+
+    public void MinusMoving()
+    {
+        movingCount++;
+        movingCan--;
+        if (movingCan <= 0 && isGameplay)
+        {
+            GlobalMessage.Lose();
+        }
     }
 }

@@ -11,6 +11,8 @@ public class SoundManager : MonoBehaviour
     private AudioSource Music;
 
     public AudioClip PressButton;
+    public AudioClip MoveCrystal;
+    public AudioClip DesctoyCrystal;
 
     public static SoundManager main;
 

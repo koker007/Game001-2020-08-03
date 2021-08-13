@@ -39,6 +39,8 @@ public class GlobalMessage : MonoBehaviour
     GameObject PrefabEvents;
     [SerializeField]
     GameObject PrefabExitLevel;
+    [SerializeField]
+    GameObject PrefabLose;
 
     //Нужно ли закрыть окно
     [SerializeField]
@@ -148,6 +150,17 @@ public class GlobalMessage : MonoBehaviour
     static public void ExitLevel()
     {
         GameObject messageObj = Instantiate(main.PrefabExitLevel, main.transform);
+        main.SelectMessanger = messageObj.GetComponent<RectTransform>();
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+
+        main.needClose = false;
+    } 
+    /// <summary>
+    /// прогигрышь
+    /// </summary>
+    static public void Lose()
+    {
+        GameObject messageObj = Instantiate(main.PrefabLose, main.transform);
         main.SelectMessanger = messageObj.GetComponent<RectTransform>();
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
 

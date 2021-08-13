@@ -73,6 +73,7 @@ public class UICTRL : MonoBehaviour
     /// </summary>
     public void OpenWorld()
     {
+        Gameplay.main.isGameplay = false;
         CloseAll();
         UIWorld.SetActive(true);
     }
@@ -82,6 +83,7 @@ public class UICTRL : MonoBehaviour
     /// </summary>
     public void OpenGameplay() {
         CloseAll();
+        Gameplay.main.isGameplay = true;
         UIGameplay.SetActive(true);
     }
 
