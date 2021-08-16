@@ -14,6 +14,7 @@ public class CellInternalObject : MonoBehaviour
     //Моя ячейка
     public CellCTRL myCell;
 
+
     RectTransform rectMy;
     RectTransform rectCell;
 
@@ -65,38 +66,10 @@ public class CellInternalObject : MonoBehaviour
         Moving();
     }
 
-    public bool isDropped = false;
-    float MovingSpeed = 0;
+
+    public float MovingSpeed = 0;
     void Moving() {
         
-        //Падение
-        /*
-        if (isDropped)
-        {
-            DroppedSpeed += Time.unscaledDeltaTime * 4;
-
-            float posYnew = rectMy.pivot.y + 0.05f + DroppedSpeed;
-
-            //Если позиция ниже чем та куда надо
-            if (posYnew > rectCell.pivot.y)
-            {
-                CellCTRL cellMove = GetFreeCellDown();
-                if (cellMove)
-                {
-                    StartDrop(cellMove);
-                }
-                else
-                {
-                    posYnew = rectCell.pivot.y;
-                    isDropped = false; //падение закончиось
-                    myCell.movingInternalNow = false; //Ячейка освободилась для дейсвия
-                }
-            }
-
-            //Устанавливаем позицию
-            rectMy.pivot = new Vector2(rectMy.pivot.x, posYnew);
-        }
-        */
 
         //Движение к соседу
         if (isMove) {
@@ -105,8 +78,26 @@ public class CellInternalObject : MonoBehaviour
             //Горизонтальное движение
             float posXnew = rectMy.pivot.x;
 
-            MovingSpeed += Time.unscaledDeltaTime * 4;
+            MovingSpeed += Time.unscaledDeltaTime;
             float speed = 0.05f + MovingSpeed;
+
+            float correctY = 0;
+            //если обьект сверху находится близко и у него скорость падения быстрее
+            if (myCell.pos.y < myField.cellCTRLs.GetLength(1) - 1 && 
+                myField.cellCTRLs[myCell.pos.x, myCell.pos.y+1] &&
+                myField.cellCTRLs[myCell.pos.x, myCell.pos.y+1].cellInternal &&
+                Vector2.Distance(
+                    new Vector2(myField.cellCTRLs[myCell.pos.x, myCell.pos.y + 1].cellInternal.rectMy.pivot.x, myField.cellCTRLs[myCell.pos.x, myCell.pos.y + 1].cellInternal.rectMy.pivot.y), 
+                    new Vector2(rectMy.pivot.x, rectMy.pivot.y)) < 1 &&
+                MovingSpeed < myField.cellCTRLs[myCell.pos.x, myCell.pos.y + 1].cellInternal.MovingSpeed) {
+                //Ускоряем
+                MovingSpeed = myField.cellCTRLs[myCell.pos.x, myCell.pos.y + 1].cellInternal.MovingSpeed;
+
+                //перемещаем
+                correctY = 1 - Vector2.Distance(
+                    new Vector2(myField.cellCTRLs[myCell.pos.x, myCell.pos.y + 1].cellInternal.rectMy.pivot.x, myField.cellCTRLs[myCell.pos.x, myCell.pos.y + 1].cellInternal.rectMy.pivot.y),
+                    new Vector2(rectMy.pivot.x, rectMy.pivot.y));
+            }
 
             //Движение влево
             if (rectMy.pivot.x > rectCell.pivot.x) {
@@ -144,7 +135,7 @@ public class CellInternalObject : MonoBehaviour
             //Движение вверх
             if (rectMy.pivot.y < rectCell.pivot.y)
             {
-                posYnew += speed;
+                posYnew += speed + correctY;
                 //Если слишком
                 if (posYnew >= rectCell.pivot.y)
                     posYnew = rectCell.pivot.y;
@@ -166,8 +157,6 @@ public class CellInternalObject : MonoBehaviour
                 {
                     //Движение окончено
                     isMove = false;
-
-                    myCell.movingInternalNow = false; //Ячейка освободилась для дейсвия
                 }
             }
 
@@ -191,7 +180,6 @@ public class CellInternalObject : MonoBehaviour
             if (myCell.pos.y - minusY >= 0 && //если не вышли за массив
                 myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY] && //Если есть ячейка
                 !myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].cellInternal && //И она свободна
-                !myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].movingInternalNow && //Туда никто не движется
                 myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].dontMoving == 0 //И можно двигаться
                                                                                   )
             {
@@ -207,7 +195,9 @@ public class CellInternalObject : MonoBehaviour
         return returnCell;
     }
 
-
+    /// <summary>
+    /// Находится ли в движении обьект сейчас
+    /// </summary>
     public bool isMove = false;
     /// <summary>
     /// Движение к выбранной ячейке
@@ -215,7 +205,6 @@ public class CellInternalObject : MonoBehaviour
     public void StartMove(CellCTRL cellNew) {
         if (myCell)
         {
-            myCell.movingInternalNow = false;
             myCell.cellInternal = null;
         }
 
@@ -226,8 +215,8 @@ public class CellInternalObject : MonoBehaviour
             MovingSpeed = 0;
             isMove = true;
         }
-        //говорим текущей ячейке что к ней происходит движение
-        myCell.movingInternalNow = true;
+
+        //присваиваем ячейке обьект
         myCell.cellInternal = this;
         myCell.myInternalNum = myCell.LastInternalNum; //Запоминаем действие
 
@@ -238,17 +227,21 @@ public class CellInternalObject : MonoBehaviour
     /// Удалить объект
     /// </summary>
     public void DestroyObj() {
-        GameObject PrefabDie = Instantiate(myField.PrefabParticleDie, myField.parentOfScore);
-        RectTransform rectDie = PrefabDie.GetComponent<RectTransform>();
 
-        GameObject PrefabScore = Instantiate(myField.PrefabParticleScore, myField.parentOfScore);
-        RectTransform rectScore = PrefabScore.GetComponent<RectTransform>();
-
-        rectDie.pivot = rectMy.pivot;
-        rectScore.pivot = rectMy.pivot;
-        
+        SpawnEffects();
 
         Destroy(gameObject);
+
+        void SpawnEffects() {
+            GameObject PrefabDie = Instantiate(myField.PrefabParticleDie, myField.parentOfScore);
+            RectTransform rectDie = PrefabDie.GetComponent<RectTransform>();
+
+            GameObject PrefabScore = Instantiate(myField.PrefabParticleScore, myField.parentOfScore);
+            RectTransform rectScore = PrefabScore.GetComponent<RectTransform>();
+
+            rectDie.pivot = rectMy.pivot;
+            rectScore.pivot = rectMy.pivot;
+        }
     }
 
     public void randColor() {

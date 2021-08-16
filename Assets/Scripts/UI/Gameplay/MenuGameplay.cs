@@ -46,8 +46,8 @@ public class MenuGameplay : MonoBehaviour
 
     void startButtons()
     {
-        PanelDown.pivot = new Vector2(PanelDown.pivot.x, 3);
-        PanelUp.pivot = new Vector2(PanelUp.pivot.x, -3);
+        PanelDown.pivot = new Vector2(PanelDown.pivot.x, -3);
+        PanelUp.pivot = new Vector2(PanelUp.pivot.x, 3);
     }
 
     void updateButtons()
