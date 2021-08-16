@@ -493,7 +493,8 @@ public class GameFieldCTRL : MonoBehaviour
                 //Запоминаем ячейку с наибольшим перемещением
                 CellCTRL cellLast = cellDamage[0];
                 CellInternalObject.InternalColor internalColor = CellInternalObject.InternalColor.Red;
-                
+                if (cellLast.cellInternal) internalColor = cellLast.cellInternal.color;
+
                 //Раздать ячейкам урон или перемешать если игра еще не началась
                 foreach (CellCTRL c in cellDamage)
                 {

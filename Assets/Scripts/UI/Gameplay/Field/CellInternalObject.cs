@@ -377,19 +377,22 @@ public class CellInternalObject : MonoBehaviour
             //Активируем только если бомба еще не активна
             if (activate) return;
 
-            activate = false;
+            activate = true;
 
+            int sizeMax = 2;
             //проверяем по x
-            for (int x = -2; x <= 2; x++)
+            for (int x = -sizeMax; x <= sizeMax; x++)
             {
                 //Если вышли за пределы массива
-                if (x < 0 || x >= myField.cellCTRLs.GetLength(0)) continue;
+                if (myCell.pos.x + x < 0 || myCell.pos.x + x >= myField.cellCTRLs.GetLength(0)) continue;
 
                 //проверяем по y
-                for (int y = -2; y <= 2; y++)
+                for (int y = -sizeMax; y <= sizeMax; y++)
                 {
+                    //Если крайние
+                    if((Mathf.Abs(x)+Mathf.Abs(y)) == sizeMax*2) continue;
                     //Если вышли за пределы массива
-                    if (y < 0 || y >= myField.cellCTRLs.GetLength(1)) continue;
+                    if (myCell.pos.y + y < 0 || myCell.pos.y + y >= myField.cellCTRLs.GetLength(1)) continue;
                     //Если нету ячейки или внутренности
                     if (!myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y] && !myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].cellInternal) continue;
 
