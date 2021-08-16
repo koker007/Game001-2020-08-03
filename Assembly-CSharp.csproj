@@ -53,11 +53,12 @@
     <UnityVersion>2020.3.15f2</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\UI\Message\MessageCTRL.cs" />
     <Compile Include="Assets\Scripts\UI\Gameplay\MenuGameplay.cs" />
+    <Compile Include="Assets\Scripts\UI\Gameplay\Field\Gameplayg.cs" />
     <Compile Include="Assets\Scripts\UI\World\PanelProfile.cs" />
     <Compile Include="Assets\Scripts\UI\Gameplay\ScorePrefab.cs" />
     <Compile Include="Assets\Scripts\UI\Message\MessageSettings.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Assets\Scripts\Global\Settings.cs" />
     <Compile Include="Assets\Scripts\UI\World\LevelButton.cs" />
     <Compile Include="Assets\Scripts\UI\Gameplay\Field\GameFieldCTRL.cs" />
+    <Compile Include="Assets\Scripts\UI\Gameplay\Field\InternalCellObject.cs" />
     <Compile Include="Assets\Scripts\UI\Loading.cs" />
     <Compile Include="Assets\Scripts\UI\Hello\MenuHello.cs" />
     <Compile Include="Assets\Scripts\UI\MainButtonManager.cs" />
