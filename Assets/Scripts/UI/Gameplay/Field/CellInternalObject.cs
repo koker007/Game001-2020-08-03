@@ -22,6 +22,18 @@ public class CellInternalObject : MonoBehaviour
     RawImage Image;
 
     [SerializeField]
+    Color red = Color.red;
+    [SerializeField]
+    Color green = Color.green;
+    [SerializeField]
+    Color blue = Color.blue;
+    [SerializeField]
+    Color yellow = Color.yellow;
+    [SerializeField]
+    Color violet = Color.white;
+
+
+    [SerializeField]
     Texture2D TextureRed;
     [SerializeField]
     Texture2D TextureGreen;
@@ -30,7 +42,17 @@ public class CellInternalObject : MonoBehaviour
     [SerializeField]
     Texture2D TextureYellow;
     [SerializeField]
-    Texture2D textureViolet;
+    Texture2D TextureViolet;
+    [SerializeField]
+    Texture2D TextureSuperColor;
+    [SerializeField]
+    Texture2D TextureBomb;
+    [SerializeField]
+    Texture2D TextureFly;
+    [SerializeField]
+    Texture2D TextureRocketHorizontal;
+    [SerializeField]
+    Texture2D TextureRocketVertical;
 
     public enum InternalColor {
         Red,
@@ -41,8 +63,10 @@ public class CellInternalObject : MonoBehaviour
     }
     public enum Type {
         color,
+        supercolor,
         rocketHorizontal,
         rocketVertical,
+        bomb,
         airplane
     }
 
@@ -229,19 +253,21 @@ public class CellInternalObject : MonoBehaviour
     public void DestroyObj() {
 
         SpawnEffects();
-
         Destroy(gameObject);
 
         void SpawnEffects() {
-            GameObject PrefabDie = Instantiate(myField.PrefabParticleDie, myField.parentOfScore);
-            RectTransform rectDie = PrefabDie.GetComponent<RectTransform>();
+            if (type == Type.color) {
+                GameObject PrefabDie = Instantiate(myField.PrefabParticleDie, myField.parentOfScore);
+                RectTransform rectDie = PrefabDie.GetComponent<RectTransform>();
 
-            GameObject PrefabScore = Instantiate(myField.PrefabParticleScore, myField.parentOfScore);
-            RectTransform rectScore = PrefabScore.GetComponent<RectTransform>();
+                GameObject PrefabScore = Instantiate(myField.PrefabParticleScore, myField.parentOfScore);
+                RectTransform rectScore = PrefabScore.GetComponent<RectTransform>();
 
-            rectDie.pivot = rectMy.pivot;
-            rectScore.pivot = rectMy.pivot;
+                rectDie.pivot = rectMy.pivot;
+                rectScore.pivot = rectMy.pivot;
+            }
         }
+
     }
 
     public void randColor() {
@@ -249,21 +275,51 @@ public class CellInternalObject : MonoBehaviour
         if (type == Type.color) {
             if (color == InternalColor.Red) {
                 Image.texture = TextureRed;
+                Image.color = red;
             }
             else if (color == InternalColor.Green) {
                 Image.texture = TextureGreen;
+                Image.color = green;
             }
             else if (color == InternalColor.Blue)
             {
                 Image.texture = TextureBlue;
+                Image.color = blue;
             }
             else if (color == InternalColor.Yellow)
             {
                 Image.texture = TextureYellow;
+                Image.color = yellow;
             }
             else if (color == InternalColor.Violet)
             {
-                Image.texture = textureViolet;
+                Image.texture = TextureViolet;
+                Image.color = violet;
+            }
+        }
+    }
+    public void setColor(InternalColor internalColor) {
+        if (type == Type.color)
+        {
+            if (internalColor == InternalColor.Red)
+            {
+                Image.color = red;
+            }
+            else if (internalColor == InternalColor.Green)
+            {
+                Image.color = green;
+            }
+            else if (internalColor == InternalColor.Blue)
+            {
+                Image.color = blue;
+            }
+            else if (internalColor == InternalColor.Yellow)
+            {
+                Image.color = yellow;
+            }
+            else if (internalColor == InternalColor.Violet)
+            {
+                Image.color = violet;
             }
         }
     }
@@ -303,9 +359,87 @@ public class CellInternalObject : MonoBehaviour
         rectMy.pivot = rectCell.pivot;
     }
 
+    //Активируем врутренность ячейки
+    bool activate = false;
+    public void Activate() {
+        Activate(type);
+    }
+    public void Activate(Type ActivateType) {
 
+        if (ActivateType == Type.color) return;
 
-    public void ActivateObj() {
         Debug.Log("Activate");
+        if (ActivateType == Type.bomb) ActivateBomb();
+
+
+        void ActivateBomb()
+        {
+            //Активируем только если бомба еще не активна
+            if (activate) return;
+
+            activate = false;
+
+            //проверяем по x
+            for (int x = -2; x <= 2; x++)
+            {
+                //Если вышли за пределы массива
+                if (x < 0 || x >= myField.cellCTRLs.GetLength(0)) continue;
+
+                //проверяем по y
+                for (int y = -2; y <= 2; y++)
+                {
+                    //Если вышли за пределы массива
+                    if (y < 0 || y >= myField.cellCTRLs.GetLength(1)) continue;
+                    //Если нету ячейки или внутренности
+                    if (!myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y] && !myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].cellInternal) continue;
+
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].Damage();
+
+                }
+            }
+        }
+    }
+
+
+    public void IniBomb(CellCTRL myCellNew, GameFieldCTRL gameField ,InternalColor internalColor) {
+
+        myCell = myCellNew;
+        myField = gameField;
+        setColor(internalColor);
+
+        myCell.cellInternal = this;
+        PosToCell();
+
+        type = Type.bomb;
+        Image.texture = TextureBomb;
+    }
+
+    public void IniFly(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor)
+    {
+
+        myCell = myCellNew;
+        myField = gameField;
+        setColor(internalColor);
+
+        myCell.cellInternal = this;
+        PosToCell();
+
+        type = Type.airplane;
+        Image.texture = TextureFly;
+    }
+
+    public void IniSuperColor(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor)
+    {
+
+        myCell = myCellNew;
+        myField = gameField;
+        setColor(internalColor);
+
+        myCell.cellInternal = this;
+        PosToCell();
+
+        type = Type.supercolor;
+        Image.texture = TextureSuperColor;
+        
     }
 }

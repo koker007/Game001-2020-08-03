@@ -55,10 +55,16 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler
     /// <summary>
     /// получить очки и избавитьс€ от внутренности
     /// </summary>
-    public void Damage() {
-        
-        //»збавл€емс€
-        cellInternal.DestroyObj();
+    public void Damage()
+    {
+
+        if (cellInternal)
+        {
+
+            cellInternal.Activate();
+            //»збавл€емс€
+            cellInternal.DestroyObj();
+        }
     }
 
     // Start is called before the first frame update
@@ -92,7 +98,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler
             //если произошел двойной клик и клик по тойже €чейке
             if (MouseCTRL.main.ClickDouble && CellClickOld == this)
             {
-                cellInternal.ActivateObj();
+                cellInternal.Activate();
             }
 
             //ќдинарный клик
