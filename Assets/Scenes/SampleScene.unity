@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7484,6 +7484,24 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6106494515621661619, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
   m_PrefabInstance: {fileID: 1686910007}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1698822553 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5361943101469650051, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+  m_PrefabInstance: {fileID: 1512671469}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1698822557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698822553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: MapWorldButton
 --- !u!1 &1700430522
 GameObject:
   m_ObjectHideFlags: 0
@@ -8147,6 +8165,7 @@ GameObject:
   - component: {fileID: 1909814430}
   - component: {fileID: 1909814429}
   - component: {fileID: 1909814431}
+  - component: {fileID: 1909814432}
   m_Layer: 0
   m_Name: _Settings
   m_TagString: Untagged
@@ -8170,6 +8189,7 @@ MonoBehaviour:
   volumeAll: 0
   volumeSound: 0
   volumeMusic: 0
+  launguage: 
 --- !u!4 &1909814430
 Transform:
   m_ObjectHideFlags: 0
@@ -8198,6 +8218,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ClickDouble: 0
   Click: 0
+--- !u!114 &1909814432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909814428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 105d42954824213469535ecd2dacce43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1913568377
 GameObject:
   m_ObjectHideFlags: 0

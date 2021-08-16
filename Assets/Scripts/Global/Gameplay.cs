@@ -51,7 +51,7 @@ public class Gameplay : MonoBehaviour
         score = 0;
         movingCan = 30;
     }
-
+    //вычитает ход и делает проверку на 0 ходов
     public void MinusMoving()
     {
         movingCount++;

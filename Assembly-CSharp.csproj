@@ -53,7 +53,7 @@
     <UnityVersion>2020.3.15f2</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\UI\Message\MessageCTRL.cs" />
@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\UI\Gameplay\Field\MouseCTRL.cs" />
     <Compile Include="Assets\Scripts\UI\Gameplay\DestroyCrystalObject.cs" />
     <Compile Include="Assets\Scripts\UI\Message\GlobalMessage.cs" />
+    <Compile Include="Assets\Scripts\UI\Message\MessageYouLose.cs" />
     <Compile Include="Assets\Scripts\UI\World\WorldSlider.cs" />
     <Compile Include="Assets\Scripts\UI\World\World2Dobject.cs" />
     <Compile Include="Assets\Scripts\UI\Message\MessageEvens.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Assets\Scripts\UI\World\LevelButton.cs" />
     <Compile Include="Assets\Scripts\UI\Gameplay\Field\GameFieldCTRL.cs" />
     <Compile Include="Assets\Scripts\UI\Gameplay\Field\InternalCellObject.cs" />
+    <Compile Include="Assets\Scripts\UI\Gameplay\LevelsScript.cs" />
     <Compile Include="Assets\Scripts\UI\Loading.cs" />
     <Compile Include="Assets\Scripts\UI\Hello\MenuHello.cs" />
     <Compile Include="Assets\Scripts\UI\MainButtonManager.cs" />
@@ -88,8 +90,13 @@
     <Compile Include="Assets\Scripts\Global\SoundManager.cs" />
     <Compile Include="Assets\Scripts\UI\Message\MessageExitLevel.cs" />
     <Compile Include="Assets\Scripts\UI\Gameplay\Field\CellInternalObject.cs" />
-    <Compile Include="Assets\Scripts\UI\Gameplay\LevelsScript.cs" />
-    <Compile Include="Assets\Scripts\UI\Message\MessageYouLose.cs" />
+    <Compile Include="Assets\Scripts\UI\Text\TextTranslator.cs" />
+    <Compile Include="Assets\Scripts\UI\Text\TranslateManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Resources\Launguage\Russian\text.txt" />
+    <None Include="Assets\Resources\Launguage\English\text.txt" />
+    <None Include="Assets\Resources\Launguage\text.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

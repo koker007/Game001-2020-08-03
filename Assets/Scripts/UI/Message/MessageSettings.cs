@@ -9,6 +9,8 @@ using UnityEngine.UI;
 /// </summary>
 public class MessageSettings : MonoBehaviour
 {
+    public Dropdown launguageDropdown;
+
     [Header("Images")]
     [SerializeField]
     RawImage ImageMusic;
@@ -30,6 +32,7 @@ public class MessageSettings : MonoBehaviour
     private void Update()
     {
         imagesUpdate();
+        DropdownUpdate();
     }
 
     public void ClickButtonMusic() {
@@ -55,6 +58,19 @@ public class MessageSettings : MonoBehaviour
 
     }
 
+    public void ClickDropdownLaunguage()
+    {
+        switch (launguageDropdown.value)
+        {
+            case 0:
+                Settings.main.SetLaunguage("English");
+                break;
+            case 1:
+                Settings.main.SetLaunguage("Russian");
+                break;
+        }
+    }
+
     //Проверяет какое изображение поставить на кнопки
     void imagesUpdate() {
         if (Settings.main.VolumeMusic == -80)
@@ -72,6 +88,19 @@ public class MessageSettings : MonoBehaviour
         else
         {
             ImageSound.texture = SoundOn;
+        }
+    }
+
+    private void DropdownUpdate()
+    {
+        switch (Settings.main.launguage)
+        {
+            case "English":
+                launguageDropdown.value = 0;
+                break;
+            case "Russian":
+                launguageDropdown.value = 1;
+                break;
         }
     }
 }

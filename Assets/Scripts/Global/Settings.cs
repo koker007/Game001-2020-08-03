@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 //Семен
 /// <summary>
@@ -20,13 +21,15 @@ public class Settings : MonoBehaviour
     float volumeSound = 0;
     [SerializeField]
     float volumeMusic = 0;
+    [SerializeField]
+    public string launguage;
 
-
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         main = this;
+
         SetSettings();
+        TranslateManager.main.LoadFile(launguage);
     }
 
     /// <summary>
@@ -107,6 +110,16 @@ public class Settings : MonoBehaviour
         }
     }
 
+    public void SetLaunguage(string laung)
+    {
+        if(launguage != laung)
+        {
+            launguage = laung;
+            PlayerPrefs.SetString("Launguage", launguage);
+            SceneManager.LoadScene(0);
+        }
+    }
+
     bool screenIsVertical = true;
 
     /// <summary>
@@ -125,6 +138,7 @@ public class Settings : MonoBehaviour
         volumeAll = PlayerPrefs.GetFloat("volumeAll", 0);
         volumeSound = PlayerPrefs.GetFloat("volumeSound", 0);
         volumeMusic = PlayerPrefs.GetFloat("volumeMusic", 0);
+        launguage = PlayerPrefs.GetString("Launguage", "English");
     }
 
     // Update is called once per frame
