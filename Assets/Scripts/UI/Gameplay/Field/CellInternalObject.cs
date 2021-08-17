@@ -253,6 +253,9 @@ public class CellInternalObject : MonoBehaviour
     public void DestroyObj() {
 
         SpawnEffects();
+
+        //myCell.cellInternal = null;
+        //myCell = null;
         Destroy(gameObject);
 
         void SpawnEffects() {
@@ -361,16 +364,19 @@ public class CellInternalObject : MonoBehaviour
 
     //Активируем врутренность ячейки
     bool activate = false;
+
     public void Activate() {
-        Activate(type);
+        Activate(type, this);
     }
-    public void Activate(Type ActivateType) {
+    public void Activate(Type ActivateType, CellInternalObject partner) {
 
         if (ActivateType == Type.color) return;
 
         Debug.Log("Activate");
         if (ActivateType == Type.bomb) ActivateBomb();
-
+        else if (ActivateType == Type.rocketHorizontal) ActivateRocket(true, false);
+        else if (ActivateType == Type.rocketVertical) ActivateRocket(false, true);
+        else if (ActivateType == Type.supercolor) ActivateSuperColor();
 
         void ActivateBomb()
         {
@@ -397,40 +403,126 @@ public class CellInternalObject : MonoBehaviour
                     //Если нету ячейки или внутренности
                     if (!myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y] && !myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].cellInternal) continue;
 
-                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].Damage();
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].Damage(this);
 
                 }
             }
         }
 
-        void ActivateRocketHorizontal()
+        void ActivateRocket(bool horizontal, bool vertical)
         {
+            //Активируем только если бомба еще не активна
+            if (activate) return;
+            
+            //Если совмещаем с другой ракетой
+            if (partner != this && (partner.type == Type.rocketHorizontal || partner.type == Type.rocketVertical)) {
+                horizontal = true;
+                vertical = true;
+            }
+
+            //Горизонтальный запуск
+            if (horizontal)
+            {
+                //Номер проверки
+                for (int num = 1; num <= myField.cellCTRLs.GetLength(0); num++)
+                {
+                    float time = num *0.05f;
+
+                    //Слева
+                    if (myCell.pos.x - num >= 0)
+                    {
+                        myField.cellCTRLs[myCell.pos.x - num, myCell.pos.y].DamageInvoke(time);
+                    }
+
+                    //Справа
+                    if (myCell.pos.x + num < myField.cellCTRLs.GetLength(0))
+                    {
+                        myField.cellCTRLs[myCell.pos.x + num, myCell.pos.y].DamageInvoke(time);
+                    }
+                }
+            }
+            //Вертикальный запуск
+            if(vertical) {
+                //Номер проверки
+                for (int num = 1; num <= myField.cellCTRLs.GetLength(1); num++)
+                {
+                    float time = num * 0.05f;
+
+                    //Вниз
+                    if (myCell.pos.y - num >= 0)
+                    {
+                        myField.cellCTRLs[myCell.pos.x, myCell.pos.y - num].DamageInvoke(time);
+                    }
+
+                    //вверх
+                    if (myCell.pos.y + num < myField.cellCTRLs.GetLength(1))
+                    {
+                        myField.cellCTRLs[myCell.pos.x, myCell.pos.y + num].DamageInvoke(time);
+                    }
+                }
+            }
+
+            DestroyObj();
+        }
+
+        void ActivateSuperColor() {
             //Активируем только если бомба еще не активна
             if (activate) return;
 
             activate = true;
 
             int sizeMax = 1;
-            //Номер проверки
-            for (int num = 1; num <= myField.cellCTRLs.GetLength(0); num++)
-            {
-                Invoke("Damage", 0.1f * num);
+
+            //Если партнер я сам себе
+            if (partner == this) {
+                DestroyAllColor(partner.color);
+            }
+            //Партнер такая же бомба
+            else if (partner.type == Type.supercolor) {
+                DestroyAll();
+            }
+            //партнер ракета горизонтальная
+            else if (partner.type == Type.rocketHorizontal) {
+                
+            }
 
 
-                void Damage() {
-                    //Слева
-                    if (myCell.pos.x - num >= 0)
+            void DestroyAllColor(InternalColor internalColor) {
+                //Проверяем все ячейки на совпадение цветов
+                for (int x = 0; x < myField.cellCTRLs.GetLength(0); x++) {
+                    for (int y = 0; y < myField.cellCTRLs.GetLength(1); y++)
                     {
-                        myField.cellCTRLs[myCell.pos.x - num, myCell.pos.y].Damage();
-                    }
+                        if (!myField.cellCTRLs[x, y] || !myField.cellCTRLs[x, y].cellInternal) {
+                            continue;
+                        }
 
-                    //Справа
-                    if (myCell.pos.x + num < myField.cellCTRLs.GetLength(0))
-                    {
-                        myField.cellCTRLs[myCell.pos.x + num, myCell.pos.y].Damage();
+
+                        if (myField.cellCTRLs[x, y].cellInternal.color == internalColor)
+                        {
+                            myField.cellCTRLs[x, y].Damage(partner);
+                        }
                     }
                 }
             }
+
+            void DestroyAll()
+            {
+                //Проверяем все ячейки на совпадение цветов
+                for (int x = 0; x < myField.cellCTRLs.GetLength(0); x++)
+                {
+                    for (int y = 0; y < myField.cellCTRLs.GetLength(1); y++)
+                    {
+                        if (!myField.cellCTRLs[x, y] || !myField.cellCTRLs[x, y].cellInternal)
+                        {
+                            continue;
+                        }
+
+
+                        myField.cellCTRLs[x, y].Damage(partner);
+                    }
+                }
+            }
+
         }
     }
 

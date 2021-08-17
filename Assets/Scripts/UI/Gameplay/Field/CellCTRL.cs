@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// ячейка и ее состо€ни€
 /// </summary>
-public class CellCTRL : MonoBehaviour, IPointerDownHandler
+public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerUpHandler
 {
     static int lastInternalNum = 0; //нужно чтобы €чека знала насколько давно в ней происходило какое либо действие
     public int LastInternalNum {
@@ -24,6 +24,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler
     public GameFieldCTRL myField;
 
     static CellCTRL CellClickOld;
+    static CellCTRL CellEnterOld;
 
     [SerializeField]
     Image[] ramka;
@@ -57,14 +58,22 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler
     /// </summary>
     public void Damage()
     {
+        Damage(cellInternal);
+    }
+    public void Damage(CellInternalObject partner)
+    {
 
         if (cellInternal)
         {
 
-            cellInternal.Activate();
+            cellInternal.Activate(cellInternal.type, partner);
             //»збавл€емс€
             cellInternal.DestroyObj();
         }
+    }
+
+    public void DamageInvoke(float time) {
+        Invoke("Damage", time);
     }
 
     // Start is called before the first frame update
@@ -98,7 +107,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler
             //если произошел двойной клик и клик по тойже €чейке
             if (MouseCTRL.main.ClickDouble && CellClickOld == this)
             {
-                cellInternal.Activate();
+                //cellInternal.Activate();
             }
 
             //ќдинарный клик
@@ -108,6 +117,17 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler
 
             CellClickOld = this;
         }
+    }
+    public void OnPointerEnter(PointerEventData eventData) {
+
+        if (CellClickOld != this && CellEnterOld != this) {
+            myField.SetSelectCell(this);
+        }
+        CellEnterOld = this;
+    }
+    public void OnPointerUp( PointerEventData eventData)
+    {
+
     }
 
 }

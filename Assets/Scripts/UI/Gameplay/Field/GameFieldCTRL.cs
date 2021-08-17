@@ -228,6 +228,7 @@ public class GameFieldCTRL : MonoBehaviour
 
     //Проверяем все ячейки на комбинаци
     void TestFieldCombination() {
+
         //Начиная сверху проверяем все ячейки на комбинацию
         for (int y = cellCTRLs.GetLength(1) - 1; y >= 0; y--)
         {
@@ -389,6 +390,8 @@ public class GameFieldCTRL : MonoBehaviour
                 Square();
                 Cross();
 
+                TestActivate();
+
                 //Собралась ли линия из 5
                 void Line5()
                 {
@@ -479,6 +482,79 @@ public class GameFieldCTRL : MonoBehaviour
                         cross = true;
                     }
                 }
+
+                //Проверка на активацию
+                void TestActivate() {
+
+                    foreach (Swap swap in BufferSwap)
+                    {
+                        //Если хоть кто то в движении выходим
+                        if (swap.first.cellInternal.isMove || swap.second.cellInternal.isMove)
+                            continue;
+
+                        bool activeFirst = isActivate(swap.first);
+                        bool activeSecond = isActivate(swap.second);
+
+
+                        //Если первый компонент активируемый
+                        CellCTRL activate = swap.first;
+                        CellCTRL partner = swap.second;
+
+
+                        //инвертируем
+                        //если первый не активный а второй да
+                        if (!activeFirst && activeSecond) {
+                            activate = swap.second;
+                            partner = swap.first;
+
+                            activeFirst = true;
+                            activeSecond = false;
+                        }
+
+                        //Выходим если первый так и не стал не активным
+                        if (!activeFirst) continue;
+
+                        //если второй не активный то просто заносим активную ячейку в список урона
+                        if (!activeSecond)
+                        {
+                            AddDamage(activate);
+                        }
+                        //Иначе если оказывается активны обе ячейки то активируем по особому
+                        else {
+                            
+                        }
+                        
+
+                    }
+
+                    bool isActivate(CellCTRL cell)
+                    {
+                        bool result = false;
+                        if (cell.cellInternal.type == CellInternalObject.Type.airplane)
+                        {
+                            result = true;
+                        }
+                        else if (cell.cellInternal.type == CellInternalObject.Type.bomb)
+                        {
+                            result = true;
+                        }
+                        else if (cell.cellInternal.type == CellInternalObject.Type.rocketHorizontal)
+                        {
+                            result = true;
+                        }
+                        else if (cell.cellInternal.type == CellInternalObject.Type.rocketVertical)
+                        {
+                            result = true;
+                        }
+
+                        else if (cell.cellInternal.type == CellInternalObject.Type.supercolor)
+                        {
+                            result = true;
+                        }
+
+                        return result;
+                    }
+                }
             }
 
             //Раздать урон всем обьектам которые в списке
@@ -509,17 +585,19 @@ public class GameFieldCTRL : MonoBehaviour
                     }
 
 
-                    //Наносим урон по клетке
-                    c.Damage();
-
+                    CellInternalObject partner = c.cellInternal;
                     //Отнимаем ход если комбинация получилась благодаря перемещениям игрока
                     List<Swap> BufferSwapNew = new List<Swap>();
                     foreach (Swap swap in BufferSwap)
                     {
                         if (swap.first == c || swap.second == c)
                         {
-                            Gameplay.main.movingCount++;
-                            Gameplay.main.movingCan--;
+
+                            Gameplay.main.MinusMoving();
+
+                            //Запомнить  партнера по перемещениям
+                            if (swap.first != c) partner = c.cellInternal;
+                            else if (swap.second != c) partner = c.cellInternal; 
 
                             continue;
                         }
@@ -527,13 +605,15 @@ public class GameFieldCTRL : MonoBehaviour
                     }
                     BufferSwap = BufferSwapNew;
 
+                    //Наносим урон по клетке
+                    c.Damage(partner);
                 }
 
                 //
                 foundCombination = true;
 
                 //Поставить новый обьект на место
-                //Эсли линия из 5
+                //если линия из 5
                 if (line5) {
                     //Создаем супер цветовую боббу
                     CreateSuperColor(cellLast, internalColor);
@@ -586,7 +666,10 @@ public class GameFieldCTRL : MonoBehaviour
                 foreach (CellCTRL c in cellDamage)
                 {
                     //Обьект уже есть в списке, выходим
-                    if (c == cellDamageNew) return;
+                    if (c == cellDamageNew) { 
+                        return;
+                    
+                    }
                 }
 
                 cellDamage.Add(cellDamageNew);
@@ -763,9 +846,6 @@ public class GameFieldCTRL : MonoBehaviour
 
                 InternalFirst.StartMove(swap.second);
                 InternalSecond.StartMove(swap.first);
-
-                //Gameplay.main.movingCount++;
-                //Gameplay.main.movingCan--;
 
                 continue;
             }
