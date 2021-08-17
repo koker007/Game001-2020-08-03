@@ -34,7 +34,7 @@ public class TranslateManager : MonoBehaviour
         string file = "Launguage/" + launguage + "/text";
         try
         {
-            var text = Resources.Load<TextAsset>("Launguage/English/text").text;
+            var text = Resources.Load<TextAsset>(file).text;
             string[] fileStrings = text.Split('\n');
             foreach (string str in fileStrings)
             {

@@ -6,6 +6,6 @@ public class MessageEvens : MonoBehaviour
 {
     public void OkClick()
     {
-        MainComponents.WorldUI.GetComponent<MenuWorld>().OpenArenaPanel();
+        MenuWorld.main.OpenArenaPanel();
     }
 }

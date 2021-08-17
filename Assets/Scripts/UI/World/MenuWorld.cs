@@ -107,7 +107,7 @@ public class MenuWorld : MonoBehaviour
         GlobalMessage.Health();
     }
     public void ClickButtonTicket() {
-        GlobalMessage.Message("Get More Health!", "ask your friends for more health", "to ask");
+        GlobalMessage.Tickets();
     }
 
     public void ClickButtonShop()
@@ -117,5 +117,9 @@ public class MenuWorld : MonoBehaviour
     public void ClickButtonEvents()
     {
         GlobalMessage.Events();
+    }
+    public void ClickButtonMessages()
+    {
+        GlobalMessage.ComingSoon();
     }
 }
