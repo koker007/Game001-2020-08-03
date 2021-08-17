@@ -545,11 +545,11 @@ public class GameFieldCTRL : MonoBehaviour
                 }
                 //Если горизонтальная из 4
                 else if (line4 && horizontal) {
-
+                    CreateRocketVertical(cellLast, internalColor);
                 }
                 //Если вертикальная из 3
                 else if (line4 && vertical) {
-
+                    CreateRocketHorizontal(cellLast, internalColor);
                 }
                 //Если квадрат
                 else if (square) {
@@ -593,14 +593,6 @@ public class GameFieldCTRL : MonoBehaviour
             }
 
             
-
-            void CreateRocketHorizontal() {
-                
-            }
-            void CreateRocketVertical() {
-                
-            }
-
             //Создать бомбу на месте другой ячейки
             CellInternalObject CreateBomb(CellCTRL cellLast, CellInternalObject.InternalColor internalColor) {
                 GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
@@ -630,7 +622,26 @@ public class GameFieldCTRL : MonoBehaviour
 
                 return cellInternal;
             }
+            CellInternalObject CreateRocketVertical(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
+            {
+                GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
+                CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
 
+                cellInternal.IniRocketVertical(cellLast, this, internalColor);
+
+
+                return cellInternal;
+            }
+            CellInternalObject CreateRocketHorizontal(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
+            {
+                GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
+                CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
+
+                cellInternal.IniRocketHorizontal(cellLast, this, internalColor);
+
+
+                return cellInternal;
+            }
         }
 
     }

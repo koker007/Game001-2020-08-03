@@ -379,7 +379,7 @@ public class CellInternalObject : MonoBehaviour
 
             activate = true;
 
-            int sizeMax = 2;
+            int sizeMax = 1;
             //проверяем по x
             for (int x = -sizeMax; x <= sizeMax; x++)
             {
@@ -390,7 +390,8 @@ public class CellInternalObject : MonoBehaviour
                 for (int y = -sizeMax; y <= sizeMax; y++)
                 {
                     //Если крайние
-                    if((Mathf.Abs(x)+Mathf.Abs(y)) == sizeMax*2) continue;
+                    //if((Mathf.Abs(x)+Mathf.Abs(y)) == sizeMax*2) continue;
+
                     //Если вышли за пределы массива
                     if (myCell.pos.y + y < 0 || myCell.pos.y + y >= myField.cellCTRLs.GetLength(1)) continue;
                     //Если нету ячейки или внутренности
@@ -398,6 +399,36 @@ public class CellInternalObject : MonoBehaviour
 
                     myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].Damage();
 
+                }
+            }
+        }
+
+        void ActivateRocketHorizontal()
+        {
+            //Активируем только если бомба еще не активна
+            if (activate) return;
+
+            activate = true;
+
+            int sizeMax = 1;
+            //Номер проверки
+            for (int num = 1; num <= myField.cellCTRLs.GetLength(0); num++)
+            {
+                Invoke("Damage", 0.1f * num);
+
+
+                void Damage() {
+                    //Слева
+                    if (myCell.pos.x - num >= 0)
+                    {
+                        myField.cellCTRLs[myCell.pos.x - num, myCell.pos.y].Damage();
+                    }
+
+                    //Справа
+                    if (myCell.pos.x + num < myField.cellCTRLs.GetLength(0))
+                    {
+                        myField.cellCTRLs[myCell.pos.x + num, myCell.pos.y].Damage();
+                    }
                 }
             }
         }
@@ -444,5 +475,34 @@ public class CellInternalObject : MonoBehaviour
         type = Type.supercolor;
         Image.texture = TextureSuperColor;
         
+    }
+
+    public void IniRocketVertical(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor)
+    {
+
+        myCell = myCellNew;
+        myField = gameField;
+        setColor(internalColor);
+
+        myCell.cellInternal = this;
+        PosToCell();
+
+        type = Type.rocketVertical;
+        Image.texture = TextureRocketVertical;
+
+    }
+    public void IniRocketHorizontal(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor)
+    {
+
+        myCell = myCellNew;
+        myField = gameField;
+        setColor(internalColor);
+
+        myCell.cellInternal = this;
+        PosToCell();
+
+        type = Type.rocketHorizontal;
+        Image.texture = TextureRocketHorizontal;
+
     }
 }
