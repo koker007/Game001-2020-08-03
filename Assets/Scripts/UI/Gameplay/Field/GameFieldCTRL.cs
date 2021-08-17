@@ -236,299 +236,414 @@ public class GameFieldCTRL : MonoBehaviour
                 TestCellCombination(cellCTRLs[x, y]);
             }
         }
-    }
-    //Проверить ячейку на комбинации
-    bool TestCellCombination(CellCTRL Cell) {
 
-        //Выходим если ячейки нет, или нет внутренности, или внутренность в движении
-        if (!Cell || !Cell.cellInternal || Cell.cellInternal.isMove) {
-            return false;
-        }
+        ///////////////////////////////////////////////////////////////
+        //Проверить ячейку на комбинации
+        bool TestCellCombination(CellCTRL Cell)
+        {
 
-        List<CellCTRL> cellLineRight = new List<CellCTRL>();
-        List<CellCTRL> cellLineLeft = new List<CellCTRL>();
-        List<CellCTRL> cellLineDown = new List<CellCTRL>();
-        List<CellCTRL> cellLineUp = new List<CellCTRL>();
-
-        List<CellCTRL> cellSquare = new List<CellCTRL>();
-
-        //Список ячеек которые должны получить урон
-        List<CellCTRL> cellDamage = new List<CellCTRL>();
-
-        bool line5 = false;
-        bool square = false;
-        bool line4 = false;
-        bool cross = false;
-
-        bool foundCombination = false;
-
-        TestLines();
-        TestSquare();
-        CalcResult();
-        Damage();
-
-        return foundCombination;
-
-        ///////////////////////////////////////////////////////////////////
-        void TestLines() {
-
-            ///////////////////////////////////////////////////////
-            //Проверка вправо
-            for (int smeshenie = 1; smeshenie < 5; smeshenie++)
+            //Выходим если ячейки нет, или нет внутренности, или внутренность в движении, или это просто эффект
+            if (!Cell || !Cell.cellInternal || Cell.cellInternal.isMove)
             {
-
-                if ((Cell.pos.x + smeshenie) > cellCTRLs.GetLength(0) - 1 || //Если вышли за пределы массива
-                    TestCellColor(cellCTRLs[Cell.pos.x + smeshenie, Cell.pos.y]))
-                {
-                    //На этом заканчиваем перебор
-                    break;
-                }
-
-                //Добавляем ячейку в список линии
-                cellLineRight.Add(cellCTRLs[Cell.pos.x + smeshenie, Cell.pos.y]);
+                return false;
             }
 
-            ////////////////////////////////////////////////////
-            //Проверка влево
-            for (int smeshenie = 1; smeshenie < 5; smeshenie++)
-            {
+            List<CellCTRL> cellLineRight = new List<CellCTRL>();
+            List<CellCTRL> cellLineLeft = new List<CellCTRL>();
+            List<CellCTRL> cellLineDown = new List<CellCTRL>();
+            List<CellCTRL> cellLineUp = new List<CellCTRL>();
 
-                if ((Cell.pos.x - smeshenie) < 0 || //Если вышли за пределы массива
-                    TestCellColor(cellCTRLs[Cell.pos.x - smeshenie, Cell.pos.y]))
-                {
-                    //На этом заканчиваем перебор
-                    break;
-                }
+            List<CellCTRL> cellSquare = new List<CellCTRL>();
 
-                //Добавляем ячейку в список линии
-                cellLineLeft.Add(cellCTRLs[Cell.pos.x - smeshenie, Cell.pos.y]);
-            }
-
-            /////////////////////////////////////////////////////
-            //Проверка вниз
-            for (int smeshenie = 1; smeshenie < 5; smeshenie++)
-            {
-
-                if ((Cell.pos.y - smeshenie) < 0 || //Если вышли за пределы массива
-                    TestCellColor(cellCTRLs[Cell.pos.x, Cell.pos.y - smeshenie]))
-                {
-                    //На этом заканчиваем перебор
-                    break;
-                }
-
-                //Добавляем ячейку в список линии
-                cellLineDown.Add(cellCTRLs[Cell.pos.x, Cell.pos.y - smeshenie]);
-            }
-
-            /////////////////////////////////////////////////////
-            //Проверка вверх
-            for (int smeshenie = 1; smeshenie < 5; smeshenie++)
-            {
-
-                if ((Cell.pos.y + smeshenie) > cellCTRLs.GetLength(1) - 1 || //Если вышли за пределы массива
-                    TestCellColor(cellCTRLs[Cell.pos.x, Cell.pos.y + smeshenie]))
-                {
-                    //На этом заканчиваем перебор
-                    break;
-                }
-
-                //Добавляем ячейку в список линии
-                cellLineUp.Add(cellCTRLs[Cell.pos.x, Cell.pos.y + smeshenie]);
-            }
-        }
-        void TestSquare() {
-            //Проверка на квадрат
-
-            //Справа сверху
-            if (cellLineRight.Count > 0 && cellLineUp.Count > 0 && !TestCellColor(cellCTRLs[Cell.pos.x + 1, Cell.pos.y + 1])) {
-                cellSquare.Add(cellLineRight[0]);
-                cellSquare.Add(cellLineUp[0]);
-                cellSquare.Add(cellCTRLs[Cell.pos.x + 1, Cell.pos.y + 1]);
-            }
-
-            //Справа снизу
-            else if (cellLineRight.Count > 0 && cellLineDown.Count > 0 && !TestCellColor(cellCTRLs[Cell.pos.x + 1, Cell.pos.y - 1]))
-            {
-                cellSquare.Add(cellLineRight[0]);
-                cellSquare.Add(cellLineDown[0]);
-                cellSquare.Add(cellCTRLs[Cell.pos.x + 1, Cell.pos.y - 1]);
-            }
-
-            //Слева снизу
-            else if (cellLineLeft.Count > 0 && cellLineDown.Count > 0 && !TestCellColor(cellCTRLs[Cell.pos.x - 1, Cell.pos.y - 1]))
-            {
-                cellSquare.Add(cellLineLeft[0]);
-                cellSquare.Add(cellLineDown[0]);
-                cellSquare.Add(cellCTRLs[Cell.pos.x - 1, Cell.pos.y - 1]);
-            }
-
-            //Слева сверху
-            else if (cellLineLeft.Count > 0 && cellLineUp.Count > 0 && !TestCellColor(cellCTRLs[Cell.pos.x - 1, Cell.pos.y + 1]))
-            {
-                cellSquare.Add(cellLineLeft[0]);
-                cellSquare.Add(cellLineUp[0]);
-                cellSquare.Add(cellCTRLs[Cell.pos.x - 1, Cell.pos.y + 1]);
-            }
-        }
-
-        void CalcResult() {
+            //Список ячеек которые должны получить урон
+            List<CellCTRL> cellDamage = new List<CellCTRL>();
 
             bool horizontal = false;
             bool vertical = false;
 
-            Line5();
-            Line4();
-            Line3();
-            Square();
-            Cross();
+            bool line5 = false;
+            bool square = false;
+            bool line4 = false;
+            bool cross = false;
 
-            //Собралась ли линия из 5
-            void Line5() {
-                if (cellLineRight.Count + cellLineLeft.Count == 4) {
-                    horizontal = true;
-                    line5 = true;
+            bool foundCombination = false;
 
-                    AddDamage(Cell);
-                    foreach (CellCTRL c in cellLineRight) AddDamage(c);
-                    foreach (CellCTRL c in cellLineLeft) AddDamage(c);
-                }
+            TestLines();
+            TestSquare();
+            CalcResult();
+            Damage();
 
-                if (cellLineDown.Count + cellLineUp.Count == 4)
-                {
-                    vertical = true;
-                    line5 = true;
+            return foundCombination;
 
-                    AddDamage(Cell);
-                    foreach (CellCTRL c in cellLineDown) AddDamage(c);
-                    foreach (CellCTRL c in cellLineUp) AddDamage(c);
-                }
-            }
-
-            //Собралась ли линия из 4
-            void Line4() {
-                if (cellLineRight.Count + cellLineLeft.Count == 3)
-                {
-                    horizontal = true;
-                    line4 = true;
-
-                    AddDamage(Cell);
-                    foreach (CellCTRL c in cellLineRight) AddDamage(c);
-                    foreach (CellCTRL c in cellLineLeft) AddDamage(c);
-                }
-
-                if (cellLineDown.Count + cellLineUp.Count == 3)
-                {
-                    vertical = true;
-                    line4 = true;
-
-                    AddDamage(Cell);
-                    foreach (CellCTRL c in cellLineDown) AddDamage(c);
-                    foreach (CellCTRL c in cellLineUp) AddDamage(c);
-                }
-            }
-
-            //Собралась ли линия из 3
-            void Line3()
+            ///////////////////////////////////////////////////////////////////
+            void TestLines()
             {
-                if (cellLineRight.Count + cellLineLeft.Count == 2)
+
+                ///////////////////////////////////////////////////////
+                //Проверка вправо
+                for (int smeshenie = 1; smeshenie < 5; smeshenie++)
                 {
-                    horizontal = true;
 
-                    AddDamage(Cell);
-                    foreach (CellCTRL c in cellLineRight) AddDamage(c);
-                    foreach (CellCTRL c in cellLineLeft) AddDamage(c);
-                }
-
-                if (cellLineDown.Count + cellLineUp.Count == 2)
-                {
-                    vertical = true;
-
-                    AddDamage(Cell);
-                    foreach (CellCTRL c in cellLineDown) AddDamage(c);
-                    foreach (CellCTRL c in cellLineUp) AddDamage(c);
-                }
-            }
-
-            //Собрался ли квадрат
-            void Square() {
-                if (cellSquare.Count >= 3) {
-                    square = true;
-
-                    AddDamage(Cell);
-                    foreach (CellCTRL c in cellSquare) AddDamage(c);
-                }
-            }
-
-            //Собрался ли крест
-            void Cross() {
-                if (horizontal && vertical) {
-                    cross = true;
-                }
-            }
-        }
-
-        //Раздать урон всем обьектам которые в списке
-        void Damage() {
-            //Если комбинаций не было, выходим
-            if (cellDamage.Count == 0) {
-                return;
-            }
-
-            //Раздать ячейкам урон или перемешать если игра еще не началась
-            foreach (CellCTRL c in cellDamage) {
-                c.Damage();
-
-                //Отнимаем ход если комбинация получилась благодаря перемещениям игрока
-                List<Swap> BufferSwapNew = new List<Swap>();
-                foreach (Swap swap in BufferSwap) {
-                    if (swap.first == c || swap.second == c) {
-                        Gameplay.main.movingCount++;
-                        Gameplay.main.movingCan--;
-
-                        continue;
+                    if ((Cell.pos.x + smeshenie) > cellCTRLs.GetLength(0) - 1 || //Если вышли за пределы массива
+                        TestCellColor(cellCTRLs[Cell.pos.x + smeshenie, Cell.pos.y]))
+                    {
+                        //На этом заканчиваем перебор
+                        break;
                     }
-                    BufferSwapNew.Add(swap);
+
+                    //Добавляем ячейку в список линии
+                    cellLineRight.Add(cellCTRLs[Cell.pos.x + smeshenie, Cell.pos.y]);
                 }
-                BufferSwap = BufferSwapNew;
+
+                ////////////////////////////////////////////////////
+                //Проверка влево
+                for (int smeshenie = 1; smeshenie < 5; smeshenie++)
+                {
+
+                    if ((Cell.pos.x - smeshenie) < 0 || //Если вышли за пределы массива
+                        TestCellColor(cellCTRLs[Cell.pos.x - smeshenie, Cell.pos.y]))
+                    {
+                        //На этом заканчиваем перебор
+                        break;
+                    }
+
+                    //Добавляем ячейку в список линии
+                    cellLineLeft.Add(cellCTRLs[Cell.pos.x - smeshenie, Cell.pos.y]);
+                }
+
+                /////////////////////////////////////////////////////
+                //Проверка вниз
+                for (int smeshenie = 1; smeshenie < 5; smeshenie++)
+                {
+
+                    if ((Cell.pos.y - smeshenie) < 0 || //Если вышли за пределы массива
+                        TestCellColor(cellCTRLs[Cell.pos.x, Cell.pos.y - smeshenie]))
+                    {
+                        //На этом заканчиваем перебор
+                        break;
+                    }
+
+                    //Добавляем ячейку в список линии
+                    cellLineDown.Add(cellCTRLs[Cell.pos.x, Cell.pos.y - smeshenie]);
+                }
+
+                /////////////////////////////////////////////////////
+                //Проверка вверх
+                for (int smeshenie = 1; smeshenie < 5; smeshenie++)
+                {
+
+                    if ((Cell.pos.y + smeshenie) > cellCTRLs.GetLength(1) - 1 || //Если вышли за пределы массива
+                        TestCellColor(cellCTRLs[Cell.pos.x, Cell.pos.y + smeshenie]))
+                    {
+                        //На этом заканчиваем перебор
+                        break;
+                    }
+
+                    //Добавляем ячейку в список линии
+                    cellLineUp.Add(cellCTRLs[Cell.pos.x, Cell.pos.y + smeshenie]);
+                }
             }
-
-            //
-            foundCombination = true;
-
-            //Поставить новый обьект на место
-
-        }
-
-
-        //Проверить ячейку на совпадение цвета
-        bool TestCellColor(CellCTRL SecondCell) {
-
-            //Отмена если
-            if (
-                !SecondCell || //если самой ячейки нет
-                !SecondCell.cellInternal ||
-                !Cell.cellInternal || //если объекта в ячейке нет
-                SecondCell.cellInternal.isMove || //если эти внутренности находятся в движении
-                SecondCell.cellInternal.color != Cell.cellInternal.color)
+            void TestSquare()
             {
-                //На этом заканчиваем перебор
-                return true;
+                //Проверка на квадрат
+
+                //Справа сверху
+                if (cellLineRight.Count > 0 && cellLineUp.Count > 0 && !TestCellColor(cellCTRLs[Cell.pos.x + 1, Cell.pos.y + 1]))
+                {
+                    cellSquare.Add(cellLineRight[0]);
+                    cellSquare.Add(cellLineUp[0]);
+                    cellSquare.Add(cellCTRLs[Cell.pos.x + 1, Cell.pos.y + 1]);
+                }
+
+                //Справа снизу
+                else if (cellLineRight.Count > 0 && cellLineDown.Count > 0 && !TestCellColor(cellCTRLs[Cell.pos.x + 1, Cell.pos.y - 1]))
+                {
+                    cellSquare.Add(cellLineRight[0]);
+                    cellSquare.Add(cellLineDown[0]);
+                    cellSquare.Add(cellCTRLs[Cell.pos.x + 1, Cell.pos.y - 1]);
+                }
+
+                //Слева снизу
+                else if (cellLineLeft.Count > 0 && cellLineDown.Count > 0 && !TestCellColor(cellCTRLs[Cell.pos.x - 1, Cell.pos.y - 1]))
+                {
+                    cellSquare.Add(cellLineLeft[0]);
+                    cellSquare.Add(cellLineDown[0]);
+                    cellSquare.Add(cellCTRLs[Cell.pos.x - 1, Cell.pos.y - 1]);
+                }
+
+                //Слева сверху
+                else if (cellLineLeft.Count > 0 && cellLineUp.Count > 0 && !TestCellColor(cellCTRLs[Cell.pos.x - 1, Cell.pos.y + 1]))
+                {
+                    cellSquare.Add(cellLineLeft[0]);
+                    cellSquare.Add(cellLineUp[0]);
+                    cellSquare.Add(cellCTRLs[Cell.pos.x - 1, Cell.pos.y + 1]);
+                }
+            }
+
+            void CalcResult()
+            {
+
+                Line5();
+                Line4();
+                Line3();
+                Square();
+                Cross();
+
+                //Собралась ли линия из 5
+                void Line5()
+                {
+                    if (cellLineRight.Count + cellLineLeft.Count == 4)
+                    {
+                        horizontal = true;
+                        line5 = true;
+
+                        AddDamage(Cell);
+                        foreach (CellCTRL c in cellLineRight) AddDamage(c);
+                        foreach (CellCTRL c in cellLineLeft) AddDamage(c);
+                    }
+
+                    if (cellLineDown.Count + cellLineUp.Count == 4)
+                    {
+                        vertical = true;
+                        line5 = true;
+
+                        AddDamage(Cell);
+                        foreach (CellCTRL c in cellLineDown) AddDamage(c);
+                        foreach (CellCTRL c in cellLineUp) AddDamage(c);
+                    }
+                }
+
+                //Собралась ли линия из 4
+                void Line4()
+                {
+                    if (cellLineRight.Count + cellLineLeft.Count == 3)
+                    {
+                        horizontal = true;
+                        line4 = true;
+
+                        AddDamage(Cell);
+                        foreach (CellCTRL c in cellLineRight) AddDamage(c);
+                        foreach (CellCTRL c in cellLineLeft) AddDamage(c);
+                    }
+
+                    if (cellLineDown.Count + cellLineUp.Count == 3)
+                    {
+                        vertical = true;
+                        line4 = true;
+
+                        AddDamage(Cell);
+                        foreach (CellCTRL c in cellLineDown) AddDamage(c);
+                        foreach (CellCTRL c in cellLineUp) AddDamage(c);
+                    }
+                }
+
+                //Собралась ли линия из 3
+                void Line3()
+                {
+                    if (cellLineRight.Count + cellLineLeft.Count == 2)
+                    {
+                        horizontal = true;
+
+                        AddDamage(Cell);
+                        foreach (CellCTRL c in cellLineRight) AddDamage(c);
+                        foreach (CellCTRL c in cellLineLeft) AddDamage(c);
+                    }
+
+                    if (cellLineDown.Count + cellLineUp.Count == 2)
+                    {
+                        vertical = true;
+
+                        AddDamage(Cell);
+                        foreach (CellCTRL c in cellLineDown) AddDamage(c);
+                        foreach (CellCTRL c in cellLineUp) AddDamage(c);
+                    }
+                }
+
+                //Собрался ли квадрат
+                void Square()
+                {
+                    if (cellSquare.Count >= 3)
+                    {
+                        square = true;
+
+                        AddDamage(Cell);
+                        foreach (CellCTRL c in cellSquare) AddDamage(c);
+                    }
+                }
+
+                //Собрался ли крест
+                void Cross()
+                {
+                    if (horizontal && vertical)
+                    {
+                        cross = true;
+                    }
+                }
+            }
+
+            //Раздать урон всем обьектам которые в списке
+            void Damage()
+            {
+                //Если комбинаций не было, выходим
+                if (cellDamage.Count == 0)
+                {
+                    return;
+                }
+
+                //Запоминаем ячейку с наибольшим перемещением
+                CellCTRL cellLast = cellDamage[0];
+                CellInternalObject.InternalColor internalColor = CellInternalObject.InternalColor.Red;
+                if (cellLast.cellInternal) internalColor = cellLast.cellInternal.color;
+
+                //Раздать ячейкам урон или перемешать если игра еще не началась
+                foreach (CellCTRL c in cellDamage)
+                {
+                    //если эта ячейка последняя перемещаемая
+                    if (cellLast.myInternalNum < c.myInternalNum)
+                    {
+                        //Запоминаем
+                        cellLast = c;
+                        if (cellLast.cellInternal && cellLast.cellInternal.type == CellInternalObject.Type.color) {
+                            internalColor = cellLast.cellInternal.color;
+                        }
+                    }
+
+
+                    //Наносим урон по клетке
+                    c.Damage();
+
+                    //Отнимаем ход если комбинация получилась благодаря перемещениям игрока
+                    List<Swap> BufferSwapNew = new List<Swap>();
+                    foreach (Swap swap in BufferSwap)
+                    {
+                        if (swap.first == c || swap.second == c)
+                        {
+                            Gameplay.main.movingCount++;
+                            Gameplay.main.movingCan--;
+
+                            continue;
+                        }
+                        BufferSwapNew.Add(swap);
+                    }
+                    BufferSwap = BufferSwapNew;
+
+                }
+
+                //
+                foundCombination = true;
+
+                //Поставить новый обьект на место
+                //Эсли линия из 5
+                if (line5) {
+                    //Создаем супер цветовую боббу
+                    CreateSuperColor(cellLast, internalColor);
+                }
+                //Если крест
+                else if (cross) {
+                    //Создаем бомбу
+                    CreateBomb(cellLast, internalColor);
+                }
+                //Если горизонтальная из 4
+                else if (line4 && horizontal) {
+                    CreateRocketVertical(cellLast, internalColor);
+                }
+                //Если вертикальная из 3
+                else if (line4 && vertical) {
+                    CreateRocketHorizontal(cellLast, internalColor);
+                }
+                //Если квадрат
+                else if (square) {
+                    //нечто летающее
+                    CreateFly(cellLast, internalColor);
+                }
             }
 
 
-            return false;
-        }
+            //Проверить ячейку на совпадение цвета
+            bool TestCellColor(CellCTRL SecondCell)
+            {
 
-        //Добавить ячейку в список, проверяя что ее там нет
-        void AddDamage(CellCTRL cellDamageNew) {
-            //Проверяем что этого обьекта нет в списке
-            foreach (CellCTRL c in cellDamage) {
-                //Обьект уже есть в списке, выходим
-                if (c == cellDamageNew) return;
+                //Отмена если
+                if (
+                    !SecondCell || //если самой ячейки нет
+                    !SecondCell.cellInternal ||
+                    !Cell.cellInternal || //если объекта в ячейке нет
+                    SecondCell.cellInternal.isMove || //если эти внутренности находятся в движении
+                    SecondCell.cellInternal.color != Cell.cellInternal.color)
+                {
+                    //На этом заканчиваем перебор
+                    return true;
+                }
+
+
+                return false;
             }
 
-            cellDamage.Add(cellDamageNew);
+            //Добавить ячейку в список, проверяя что ее там нет
+            void AddDamage(CellCTRL cellDamageNew)
+            {
+                //Проверяем что этого обьекта нет в списке
+                foreach (CellCTRL c in cellDamage)
+                {
+                    //Обьект уже есть в списке, выходим
+                    if (c == cellDamageNew) return;
+                }
+
+                cellDamage.Add(cellDamageNew);
+            }
+
+            
+            //Создать бомбу на месте другой ячейки
+            CellInternalObject CreateBomb(CellCTRL cellLast, CellInternalObject.InternalColor internalColor) {
+                GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
+                CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
+
+                cellInternal.IniBomb(cellLast, this, internalColor);
+
+
+                return cellInternal;
+            }
+            CellInternalObject CreateFly(CellCTRL cellLast, CellInternalObject.InternalColor internalColor) {
+                GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
+                CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
+
+                cellInternal.IniFly(cellLast, this, internalColor);
+
+
+                return cellInternal;
+            }
+            CellInternalObject CreateSuperColor(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
+            {
+                GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
+                CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
+
+                cellInternal.IniSuperColor(cellLast, this, internalColor);
+
+
+                return cellInternal;
+            }
+            CellInternalObject CreateRocketVertical(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
+            {
+                GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
+                CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
+
+                cellInternal.IniRocketVertical(cellLast, this, internalColor);
+
+
+                return cellInternal;
+            }
+            CellInternalObject CreateRocketHorizontal(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
+            {
+                GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
+                CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
+
+                cellInternal.IniRocketHorizontal(cellLast, this, internalColor);
+
+
+                return cellInternal;
+            }
         }
+
     }
 
     //Проверка на то что нужно поменять местами объекты
