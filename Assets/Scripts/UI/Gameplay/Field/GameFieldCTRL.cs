@@ -226,8 +226,12 @@ public class GameFieldCTRL : MonoBehaviour
         }
     }
 
+    //Список линий которые взорвались
+    List<List<CellCTRL>> listCombinations;
     //Проверяем все ячейки на комбинаци
     void TestFieldCombination() {
+        //Создаем новый список
+        listCombinations = new List<List<CellCTRL>>();
 
         //Начиная сверху проверяем все ячейки на комбинацию
         for (int y = cellCTRLs.GetLength(1) - 1; y >= 0; y--)
@@ -571,9 +575,50 @@ public class GameFieldCTRL : MonoBehaviour
                 CellInternalObject.InternalColor internalColor = CellInternalObject.InternalColor.Red;
                 if (cellLast.cellInternal) internalColor = cellLast.cellInternal.color;
 
+
+                //Проверяем на то что ячейки из этой комбинации нету в списке
+                List<CellCTRL> CombinationFounded = null;
+                foreach (List<CellCTRL> combination in listCombinations) {
+                    if (CombinationFounded != null) break; //Выходим если комбинация была найдена
+
+                    //Проверяем ячейку на то что ее нет в списке этой комбинации
+                    foreach (CellCTRL cellCombOld in combination) {
+                        if (CombinationFounded != null) break; //Выходим если комбинация была найдена
+
+                        foreach (CellCTRL cellCombNow in cellDamage) {
+                            if (CombinationFounded != null) break; //Выходим если комбинация была найдена
+
+                            //Если нашли ячейку в списке комбинаций то значит текущая комбинация является продолжением старой
+                            if (cellCombNow == cellCombOld) {
+                                CombinationFounded = combination;
+                            }
+                        }
+                    }
+                }
+
+                
+
                 //Раздать ячейкам урон или перемешать если игра еще не началась
                 foreach (CellCTRL c in cellDamage)
                 {
+                    bool cellCombinationFound = false;
+                    //Если была обнаружена комбинация то проверяем на то что текущей ячейки в списке той комбинации нет
+                    if (CombinationFounded != null) {
+                        foreach (CellCTRL cellCombOld in CombinationFounded)
+                        {
+                            if (cellCombOld == c) {
+                                cellCombinationFound = true;
+                            }
+                        }
+                    }
+
+                    //Если эта ячейка уже была в списке пропускаем действия над ней
+                    if (cellCombinationFound) continue;
+                    //Если список комбинации есть, добавляем ячейку
+                    else if(CombinationFounded != null) {
+                        CombinationFounded.Add(c);
+                    }
+
                     //если эта ячейка последняя перемещаемая
                     if (cellLast.myInternalNum < c.myInternalNum)
                     {
@@ -607,6 +652,13 @@ public class GameFieldCTRL : MonoBehaviour
 
                     //Наносим урон по клетке
                     c.Damage(partner);
+
+
+                }
+
+                //Если списа комбинации небыло найдено, то значит это произошло в первый раз, добавляем комбинацию в список комбинаций
+                if (CombinationFounded == null) {
+                    listCombinations.Add(cellDamage);
                 }
 
                 //
