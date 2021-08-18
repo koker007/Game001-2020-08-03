@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Семен / алексадр
 /// <summary>
@@ -21,6 +22,21 @@ public class MenuWorld : MonoBehaviour
     GameObject Profile;
     [SerializeField]
     GameObject Arena;
+    [SerializeField]
+    Text Gold;
+    [SerializeField]
+    Text Ticket;
+    [SerializeField]
+    Text Health;
+
+    public enum UIIsOpen
+    {
+        Map,
+        Profile,
+        Arena
+    }
+
+    public UIIsOpen isOpen;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +54,7 @@ public class MenuWorld : MonoBehaviour
     void OnEnable()
     {
         startButtons();
+        SetText();
     }
 
 
@@ -54,6 +71,7 @@ public class MenuWorld : MonoBehaviour
         if (!Map.activeSelf) {
             CloseAllPanels();
             Map.SetActive(true);
+            isOpen = UIIsOpen.Map;
         }
     }
 
@@ -64,6 +82,7 @@ public class MenuWorld : MonoBehaviour
         if (!Profile.activeSelf) {
             CloseAllPanels();
             Profile.SetActive(true);
+            isOpen = UIIsOpen.Profile;
         }
     }
 
@@ -75,6 +94,7 @@ public class MenuWorld : MonoBehaviour
         {
             CloseAllPanels();
             Arena.SetActive(true);
+            isOpen = UIIsOpen.Arena;
         }
     }
 
@@ -121,5 +141,12 @@ public class MenuWorld : MonoBehaviour
     public void ClickButtonMessages()
     {
         GlobalMessage.ComingSoon();
+    }
+
+    public void SetText()
+    {
+        Gold.text = PlayerProfile.main.GoldAmount.ToString();
+        Ticket.text = PlayerProfile.main.Ticket.Amount.ToString();
+        Health.text = PlayerProfile.main.Health.Amount.ToString();
     }
 }

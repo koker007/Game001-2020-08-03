@@ -16,20 +16,25 @@ public class PanelProfile : MonoBehaviour
     GameObject PlayerIcon;
     [SerializeField]
     GameObject Achivements;
-
+    [SerializeField]
+    Slider slider;
+    [SerializeField]
+    Text PlayerScore;
+    [SerializeField]
+    Text PayerLevel;
     [SerializeField]
     Text levelOpen;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateProfile();
     }
 
     private void OnEnable()
@@ -54,17 +59,29 @@ public class PanelProfile : MonoBehaviour
     }
 
     void Inicialize() {
-        //levelOpen.text = System.Convert.ToString(Gameplay.main.levelOpen);
+        levelOpen.text = System.Convert.ToString(PlayerProfile.main.ProfilelevelOpen);
     }
 
     public void ClickPlay()
     {
-        GlobalMessage.LevelInfo(Gameplay.main.levelOpen);
+        GlobalMessage.LevelInfo(PlayerProfile.main.ProfilelevelOpen);
         MenuWorld.main.OpenMapPanel();
     }
 
     public void ClickSave()
     {
         GlobalMessage.ComingSoon();
+    }
+
+    public void UpdateProfile()
+    {
+        int level = PlayerProfile.main.ProfileLevel;
+        int score = PlayerProfile.main.ProfileScore;
+        int nextLevelScore = PlayerProfile.main.nextLevelPoint[level - 1];
+
+        PayerLevel.text = level.ToString();
+        PlayerScore.text = score.ToString() + "/" + nextLevelScore.ToString();
+
+        slider.value = score / nextLevelScore;
     }
 }

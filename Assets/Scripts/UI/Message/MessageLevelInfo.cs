@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//alexandr
+/// <summary>
+/// отвечает за сообщение уровней
+/// </summary>
 public class MessageLevelInfo : MonoBehaviour
 {
 

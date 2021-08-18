@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//alexandr
+/// <summary>
+/// управляет кнопками
+/// </summary>
 public class MainButtonManager : MonoBehaviour
 {
     /// <summary>
@@ -9,7 +12,7 @@ public class MainButtonManager : MonoBehaviour
     /// </summary>
     public void PressButtonSound()
     {
-        MainComponents.soundManager.PlaySound(MainComponents.soundManager.PressButton);
+        SoundManager.main.PlaySound(SoundManager.main.PressButton);
     }
 
 }

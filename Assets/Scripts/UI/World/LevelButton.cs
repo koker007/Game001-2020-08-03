@@ -68,7 +68,7 @@ public class LevelButton : World2Dobject
             {
                 if (hit.collider.transform.tag == "LevelButton")
                 {
-                    MainComponents.soundManager.PlaySound(MainComponents.soundManager.PressButton);
+                    SoundManager.main.PlaySound(SoundManager.main.PressButton);
                     GlobalMessage.LevelInfo(NumLevel);
                 }
             }
