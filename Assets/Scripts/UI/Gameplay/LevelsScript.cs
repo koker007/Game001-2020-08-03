@@ -53,18 +53,14 @@ public class LevelsScript : MonoBehaviour
 
     private Level level;
 
-    public Level Level1 = new Level();
-    public Level Level2 = new Level();
-    public Level Level3 = new Level();
-    public Level Level4 = new Level();
-    public Level Level5 = new Level();
+    public Level[] Levels = new Level[5];
 
     private void Start()
     {
         main = this;
 
         //уровень 1
-        Level1 = CreateLevel(
+        Levels[1] = CreateLevel(
             1, 5, 5, //numLevel, width. long
 
             new int[,] //color
@@ -86,7 +82,7 @@ public class LevelsScript : MonoBehaviour
             });
 
         //уровень 2
-        Level2 = CreateLevel(
+        Levels[2] = CreateLevel(
             2, 8, 8, //numLevel, width. long
 
             new int[,] //color
@@ -132,6 +128,23 @@ public class LevelsScript : MonoBehaviour
 
         return level;
     }
-
-
+    /// <summary>
+    /// возвращает ширину и высоту игрового поля
+    /// </summary>
+    /// <param name="NumLevel"></param>
+    /// <returns></returns>
+    public Vector2Int ReturnLevelSize(int NumLevel)
+    {
+        return new Vector2Int(Levels[NumLevel].Width, Levels[NumLevel].Height);
+    }
+    /// <summary>
+    /// возвращает информацию о клетке
+    /// </summary>
+    /// <param name="NumLevel"></param>
+    /// <param name="PositionOnField"></param>
+    /// <returns></returns>
+    public Cell ReturneCell(int NumLevel, Vector2Int PositionOnField)
+    {
+        return Levels[NumLevel].cells[PositionOnField.x, PositionOnField.y];
+    }
 }

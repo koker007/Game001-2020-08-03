@@ -27,9 +27,11 @@ public class Settings : MonoBehaviour
     private void Awake()
     {
         main = this;
+    }
 
+    private void Start()
+    {
         SetSettings();
-        TranslateManager.main.LoadFile(launguage);
     }
 
     /// <summary>
@@ -139,6 +141,7 @@ public class Settings : MonoBehaviour
         volumeSound = PlayerPrefs.GetFloat("volumeSound", 0);
         volumeMusic = PlayerPrefs.GetFloat("volumeMusic", 0);
         launguage = PlayerPrefs.GetString("Launguage", "English");
+        TranslateManager.main.LoadFile(launguage);
     }
 
     // Update is called once per frame

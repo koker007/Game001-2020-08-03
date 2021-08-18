@@ -41,6 +41,10 @@ public class GlobalMessage : MonoBehaviour
     GameObject PrefabExitLevel;
     [SerializeField]
     GameObject PrefabLose;
+    [SerializeField]
+    GameObject PrefabTickets;
+    [SerializeField]
+    GameObject PrefabComingSoon;
 
     //Ќужно ли закрыть окно
     [SerializeField]
@@ -118,7 +122,11 @@ public class GlobalMessage : MonoBehaviour
     /// ¬сплывающее окно билеты
     /// </summary>
     static public void Tickets() {
-        
+        GameObject messageObj = Instantiate(main.PrefabTickets, main.transform);
+        main.SelectMessanger = messageObj.GetComponent<RectTransform>();
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+
+        main.needClose = false;
     }
     /// <summary>
     /// ¬сплывающее окно магазин
@@ -161,6 +169,18 @@ public class GlobalMessage : MonoBehaviour
     static public void Lose()
     {
         GameObject messageObj = Instantiate(main.PrefabLose, main.transform);
+        main.SelectMessanger = messageObj.GetComponent<RectTransform>();
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+
+        main.needClose = false;
+    }
+
+    /// <summary>
+    /// скоро будет обновлено (не готова€ часть игры)
+    /// </summary>
+    static public void ComingSoon()
+    {
+        GameObject messageObj = Instantiate(main.PrefabComingSoon, main.transform);
         main.SelectMessanger = messageObj.GetComponent<RectTransform>();
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
 

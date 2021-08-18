@@ -56,4 +56,15 @@ public class PanelProfile : MonoBehaviour
     void Inicialize() {
         //levelOpen.text = System.Convert.ToString(Gameplay.main.levelOpen);
     }
+
+    public void ClickPlay()
+    {
+        GlobalMessage.LevelInfo(Gameplay.main.levelOpen);
+        MenuWorld.main.OpenMapPanel();
+    }
+
+    public void ClickSave()
+    {
+        GlobalMessage.ComingSoon();
+    }
 }

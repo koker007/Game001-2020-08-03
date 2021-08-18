@@ -46,7 +46,7 @@ public class MenuHello : MonoBehaviour
     /// Сохранить весь игровой прогресс
     /// </summary>
     public void clickButtonSave() {
-    
+        GlobalMessage.ComingSoon();
     }
 
     /// <summary>
