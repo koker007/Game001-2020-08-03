@@ -46,6 +46,9 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     
     public int myInternalNum = 0;
 
+    public float timeBoomOld = 0;     //Время последнего взрыва
+    public float timeAddInternalOld = 0;     //Время последнего добавления внутренности
+
     public void setInternal(CellInternalObject internalObjectNew) {
         cellInternal = internalObjectNew;
         cellInternal.isMove = true;

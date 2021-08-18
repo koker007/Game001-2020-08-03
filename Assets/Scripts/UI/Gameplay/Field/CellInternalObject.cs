@@ -204,8 +204,8 @@ public class CellInternalObject : MonoBehaviour
             if (myCell.pos.y - minusY >= 0 && //если не вышли за массив
                 myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY] && //Если есть ячейка
                 !myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].cellInternal && //И она свободна
-                myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].dontMoving == 0 //И можно двигаться
-                                                                                  )
+                myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].dontMoving == 0 && //И можно двигаться
+                Time.unscaledTime - myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].timeBoomOld > 0.25f) //Совзрыва прошла секунда                                                                 )
             {
                 //Ставим такую ячейку как нижнюю
                 returnCell = myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY];
@@ -236,6 +236,7 @@ public class CellInternalObject : MonoBehaviour
 
         if (!isMove)
         {
+            cellNew.myInternalNum = cellNew.LastInternalNum;
             MovingSpeed = 0;
             isMove = true;
         }
@@ -254,11 +255,11 @@ public class CellInternalObject : MonoBehaviour
 
         SpawnEffects();
 
-        //myCell.cellInternal = null;
-        //myCell = null;
         Destroy(gameObject);
 
         void SpawnEffects() {
+            myCell.timeBoomOld = Time.unscaledTime; //Ставим время взрыва
+
             if (type == Type.color) {
                 GameObject PrefabDie = Instantiate(myField.PrefabParticleDie, myField.parentOfScore);
                 RectTransform rectDie = PrefabDie.GetComponent<RectTransform>();
@@ -537,7 +538,10 @@ public class CellInternalObject : MonoBehaviour
         PosToCell();
 
         type = Type.bomb;
+        color = internalColor;
         Image.texture = TextureBomb;
+
+        myCellNew.myInternalNum = myCellNew.LastInternalNum;
     }
 
     public void IniFly(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor)
@@ -551,6 +555,7 @@ public class CellInternalObject : MonoBehaviour
         PosToCell();
 
         type = Type.airplane;
+        color = internalColor;
         Image.texture = TextureFly;
     }
 
@@ -565,8 +570,9 @@ public class CellInternalObject : MonoBehaviour
         PosToCell();
 
         type = Type.supercolor;
+        color = internalColor;
         Image.texture = TextureSuperColor;
-        
+        myCellNew.myInternalNum = myCellNew.LastInternalNum;
     }
 
     public void IniRocketVertical(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor)
@@ -580,8 +586,9 @@ public class CellInternalObject : MonoBehaviour
         PosToCell();
 
         type = Type.rocketVertical;
+        color = internalColor;
         Image.texture = TextureRocketVertical;
-
+        myCellNew.myInternalNum = myCellNew.LastInternalNum;
     }
     public void IniRocketHorizontal(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor)
     {
@@ -594,7 +601,8 @@ public class CellInternalObject : MonoBehaviour
         PosToCell();
 
         type = Type.rocketHorizontal;
+        color = internalColor;
         Image.texture = TextureRocketHorizontal;
-
+        myCellNew.myInternalNum = myCellNew.LastInternalNum;
     }
 }
