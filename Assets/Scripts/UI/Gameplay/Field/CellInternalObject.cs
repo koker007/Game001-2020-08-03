@@ -373,20 +373,49 @@ public class CellInternalObject : MonoBehaviour
     bool activate = false;
 
     public void Activate() {
-        Activate(type, this);
+        Activate(type, null);
     }
     public void Activate(Type ActivateType, CellInternalObject partner) {
 
         if (ActivateType == Type.color) return;
 
-        Debug.Log("Activate");
-        if (ActivateType == Type.bomb) ActivateBomb();
-        else if (ActivateType == Type.rocketHorizontal) ActivateRocket(true, false);
-        else if (ActivateType == Type.rocketVertical) ActivateRocket(false, true);
-        else if (ActivateType == Type.supercolor) ActivateSuperColor();
+        //Если партнера нет
+        if (partner == null)
+        {
+            Debug.Log("Activate");
+            if (ActivateType == Type.bomb) ActivateBomb();
+            else if (ActivateType == Type.rocketHorizontal) ActivateRocket(true, false);
+            else if (ActivateType == Type.rocketVertical) ActivateRocket(false, true);
+            else if (ActivateType == Type.supercolor) ActivateSuperColor();
+        }
+        else {
+
+            //супер колор + что угодно
+            if (ActivateType == Type.supercolor) {
+                ActivateSuperColor();
+            }
+            //Бомба + горизонталь
+            else if (ActivateType == Type.bomb && partner.type == Type.rocketHorizontal) {
+                ActivateBombHorizontal();
+            }
+            //Бомба + вертикаль
+            else if (ActivateType == Type.bomb && partner.type == Type.rocketVertical)
+            {
+                ActivateBombVertical();
+            }
+            //ракета + ракета
+            else if ((ActivateType == Type.rocketHorizontal || ActivateType == Type.rocketVertical) &&
+                (partner.type == Type.rocketHorizontal || partner.type == Type.rocketVertical)) {
+                ActivateRocket(true, true);
+            }
+        }
+
 
         void ActivateBomb()
         {
+
+            Debug.Log("ActivateBomb");
+
             //Активируем только если бомба еще не активна
             if (activate) return;
 
@@ -418,13 +447,17 @@ public class CellInternalObject : MonoBehaviour
 
         void ActivateRocket(bool horizontal, bool vertical)
         {
+            Debug.Log("ActivateRocket");
             //Активируем только если бомба еще не активна
             if (activate) return;
             
             //Если совмещаем с другой ракетой
-            if (partner != this && (partner.type == Type.rocketHorizontal || partner.type == Type.rocketVertical)) {
+            if (partner && partner != this && (partner.type == Type.rocketHorizontal || partner.type == Type.rocketVertical)) {
                 horizontal = true;
                 vertical = true;
+
+                //Удаляем партнера
+                Destroy(partner.gameObject);
             }
 
             //Горизонтальный запуск
@@ -473,6 +506,8 @@ public class CellInternalObject : MonoBehaviour
         }
 
         void ActivateSuperColor() {
+            Debug.Log("ActivateSuperColor");
+
             //Активируем только если бомба еще не активна
             if (activate) return;
 
@@ -480,17 +515,23 @@ public class CellInternalObject : MonoBehaviour
 
             int sizeMax = 1;
 
-            //Если партнер я сам себе
-            if (partner == this) {
-                DestroyAllColor(partner.color);
-            }
             //Партнер такая же бомба
-            else if (partner.type == Type.supercolor) {
+            if (partner != null && partner.type == Type.supercolor) {
                 DestroyAll();
             }
             //партнер ракета горизонтальная
-            else if (partner.type == Type.rocketHorizontal) {
+            else if (partner != null && partner.type == Type.rocketHorizontal) {
                 
+            }
+            //Если партнер просто цвет
+            else if (partner != null && partner.type == Type.color)
+            {
+                DestroyAllColor(partner.color);
+            }
+            //Если партнер я сам себе
+            else if (partner == null || partner == this)
+            {
+                DestroyAllColor(color);
             }
 
 
@@ -524,12 +565,22 @@ public class CellInternalObject : MonoBehaviour
                             continue;
                         }
 
+                        //Узнаем растояние от ячейки инициатора
+                        float distance = Vector2.Distance(new Vector2(x,y), myCell.pos);
 
-                        myField.cellCTRLs[x, y].Damage(partner);
+                        myField.cellCTRLs[x, y].DamageInvoke(0.1f * distance);
                     }
                 }
+
             }
 
+        }
+
+        void ActivateBombHorizontal() {
+             Debug.Log("ActivateBombHorizontal");    
+        }
+        void ActivateBombVertical() {
+            Debug.Log("ActivateBombVertical");
         }
     }
 

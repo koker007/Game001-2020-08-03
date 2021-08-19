@@ -292,6 +292,8 @@ public class GameFieldCTRL : MonoBehaviour
 
         TestDamageAndSpawn();
 
+        TestSuperCombination();
+
         ///////////////////////////////////////////////////////////////
         //Проверить ячейку на комбинации
         void TestCellCombination(CellCTRL Cell)
@@ -1164,10 +1166,64 @@ public class GameFieldCTRL : MonoBehaviour
                     continue;
                 }
 
-                //супер колор + супер колор
-                //if () {
-                
-                //}
+
+
+
+                //супер колор + что-то еще
+                if (swap.first.cellInternal.type == CellInternalObject.Type.supercolor ||
+                    swap.second.cellInternal.type == CellInternalObject.Type.supercolor) {
+
+                    if (swap.first.cellInternal.type == CellInternalObject.Type.supercolor) {
+                        swap.first.cellInternal.Activate(CellInternalObject.Type.supercolor, swap.second.cellInternal);
+                    }
+                    else {
+                        swap.second.cellInternal.Activate(CellInternalObject.Type.supercolor, swap.first.cellInternal);
+                    }
+
+                }
+                //Бомба + что-то
+                else if (swap.first.cellInternal.type == CellInternalObject.Type.bomb ||
+                    swap.second.cellInternal.type == CellInternalObject.Type.bomb) {
+
+                    if (swap.first.cellInternal.type == CellInternalObject.Type.bomb)
+                    {
+                        swap.first.cellInternal.Activate(CellInternalObject.Type.bomb, swap.second.cellInternal);
+                    }
+                    else
+                    {
+                        swap.second.cellInternal.Activate(CellInternalObject.Type.bomb, swap.first.cellInternal);
+                    }
+                }
+                //Самолет + что-то
+                else if (swap.first.cellInternal.type == CellInternalObject.Type.airplane ||
+                    swap.second.cellInternal.type == CellInternalObject.Type.airplane) {
+
+                }
+                else if (swap.first.cellInternal.type == CellInternalObject.Type.rocketHorizontal ||
+                    swap.first.cellInternal.type == CellInternalObject.Type.rocketVertical ||
+                    swap.second.cellInternal.type == CellInternalObject.Type.rocketHorizontal ||
+                    swap.second.cellInternal.type == CellInternalObject.Type.rocketVertical) {
+
+                    if (swap.first.cellInternal.type == CellInternalObject.Type.rocketHorizontal)
+                    {
+                        swap.first.cellInternal.Activate(CellInternalObject.Type.rocketHorizontal, swap.second.cellInternal);
+                    }
+                    else if (swap.first.cellInternal.type == CellInternalObject.Type.rocketVertical)
+                    {
+                        swap.first.cellInternal.Activate(CellInternalObject.Type.rocketVertical, swap.second.cellInternal);
+                    }
+                    else if(swap.second.cellInternal.type == CellInternalObject.Type.rocketHorizontal)
+                    {
+                        swap.second.cellInternal.Activate(CellInternalObject.Type.rocketHorizontal, swap.first.cellInternal);
+                    }
+                    else if (swap.second.cellInternal.type == CellInternalObject.Type.rocketVertical)
+                    {
+                        swap.second.cellInternal.Activate(CellInternalObject.Type.rocketVertical, swap.first.cellInternal);
+                    }
+
+                }
+
+
             }
         }
         //Раздать урон комбинациям и заспавнить объекты
@@ -1221,7 +1277,7 @@ public class GameFieldCTRL : MonoBehaviour
                     }
                     //Нанести урон
                     void SetDamage() {
-                        CellInternalObject partner = c.cellInternal;
+                        CellInternalObject partner = null;
                         //Отнимаем ход если комбинация получилась благодаря перемещениям игрока
                         List<Swap> BufferSwapNew = new List<Swap>();
                         foreach (Swap swap in BufferSwap)
@@ -1283,66 +1339,67 @@ public class GameFieldCTRL : MonoBehaviour
                 }
             }
 
-            //////////////////////////////////////////////////////////////////////////////////////////////////////
-            //Создать бомбу на месте другой ячейки
-            void CreateBomb(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
-            {
-                if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
+        }
 
-                GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
-                CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
-                cellLast.timeAddInternalOld = Time.unscaledTime;
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        //Создать бомбу на месте другой ячейки
+        void CreateBomb(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
+        {
+            if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
-                cellInternal.IniBomb(cellLast, this, internalColor);
+            GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
+            CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
+            cellLast.timeAddInternalOld = Time.unscaledTime;
 
-
-            }
-            void CreateFly(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
-            {
-                if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
-
-                GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
-                CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
-                cellLast.timeAddInternalOld = Time.unscaledTime;
-
-                cellInternal.IniFly(cellLast, this, internalColor);
+            cellInternal.IniBomb(cellLast, this, internalColor);
 
 
-            }
-            void CreateSuperColor(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
-            {
-                if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
+        }
+        void CreateFly(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
+        {
+            if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
-                GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
-                CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
-                cellLast.timeAddInternalOld = Time.unscaledTime;
+            GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
+            CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
+            cellLast.timeAddInternalOld = Time.unscaledTime;
 
-                cellInternal.IniSuperColor(cellLast, this, internalColor);
+            cellInternal.IniFly(cellLast, this, internalColor);
 
 
-            }
-            void CreateRocketVertical(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
-            {
-                if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
+        }
+        void CreateSuperColor(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
+        {
+            if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
-                GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
-                CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
-                cellLast.timeAddInternalOld = Time.unscaledTime;
+            GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
+            CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
+            cellLast.timeAddInternalOld = Time.unscaledTime;
 
-                cellInternal.IniRocketVertical(cellLast, this, internalColor);
+            cellInternal.IniSuperColor(cellLast, this, internalColor);
 
-            }
-            void CreateRocketHorizontal(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
-            {
-                if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
-                GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
-                CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
-                cellLast.timeAddInternalOld = Time.unscaledTime;
+        }
+        void CreateRocketVertical(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
+        {
+            if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
-                cellInternal.IniRocketHorizontal(cellLast, this, internalColor);
+            GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
+            CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
+            cellLast.timeAddInternalOld = Time.unscaledTime;
 
-            }
+            cellInternal.IniRocketVertical(cellLast, this, internalColor);
+
+        }
+        void CreateRocketHorizontal(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
+        {
+            if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
+
+            GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
+            CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
+            cellLast.timeAddInternalOld = Time.unscaledTime;
+
+            cellInternal.IniRocketHorizontal(cellLast, this, internalColor);
+
         }
 
     }

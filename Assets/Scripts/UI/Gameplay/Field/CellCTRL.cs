@@ -61,13 +61,14 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     /// </summary>
     public void Damage()
     {
-        Damage(cellInternal);
+        Damage(null);
     }
     public void Damage(CellInternalObject partner)
     {
 
         if (cellInternal)
         {
+
 
             cellInternal.Activate(cellInternal.type, partner);
             //Избавляемся
