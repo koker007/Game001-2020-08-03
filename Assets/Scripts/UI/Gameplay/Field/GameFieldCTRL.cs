@@ -71,6 +71,7 @@ public class GameFieldCTRL : MonoBehaviour
         //Если прекратили двигаться
         if (isMoving && !movingNow) {
             ComboCount = 1;
+            Gameplay.main.CheckEndGame();
         }
 
         isMoving = movingNow;

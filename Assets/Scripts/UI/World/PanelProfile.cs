@@ -82,6 +82,6 @@ public class PanelProfile : MonoBehaviour
         PayerLevel.text = level.ToString();
         PlayerScore.text = score.ToString() + "/" + nextLevelScore.ToString();
 
-        slider.value = score / nextLevelScore;
+        slider.value = (float)score / nextLevelScore;
     }
 }

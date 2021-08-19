@@ -9,6 +9,7 @@ using UnityEngine.UI;
 /// </summary>
 public class MenuGameplay : MonoBehaviour
 {
+    public static MenuGameplay main;
 
     [Header("Panels")]
     [SerializeField]
@@ -28,20 +29,27 @@ public class MenuGameplay : MonoBehaviour
     Text Score;
     [SerializeField]
     Text Move;
+    [SerializeField]
+    Slider ScoreSlider;
 
     public static GameObject GameField;
+
+    private void Awake()
+    {
+        main = this;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         startButtons();
+        updateUI();
     }
 
     // Update is called once per frame
     void Update()
     {
         updateButtons();
-        updateUI();
     }
 
     void startButtons()
@@ -69,6 +77,7 @@ public class MenuGameplay : MonoBehaviour
     private void OnEnable()
     {
         CreateGameField();
+        updateUI();
     }
 
     //Создать игровое поле согласно параметрам игры
@@ -82,14 +91,21 @@ public class MenuGameplay : MonoBehaviour
         Gameplay.main.StartGameplay();
     }
 
-    //Проверка данных интерфейса
+    //обновление данных интерфейса
     void updateUI() {
-
         Level.text = System.Convert.ToString(Gameplay.main.levelSelect);
-        Move.text = System.Convert.ToString(Gameplay.main.movingCan);
+        updateMoving();
+        updateScore();
+    }
+
+    public void updateScore()
+    {
         Score.text = System.Convert.ToString(Gameplay.main.score);
-        
-        
+        ScoreSlider.value = (float)Gameplay.main.score / LevelsScript.main.ReturnMaxScore();
+    }
+    public void updateMoving()
+    {
+        Move.text = System.Convert.ToString(Gameplay.main.movingCan);
     }
 
     /// <summary>

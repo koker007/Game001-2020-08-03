@@ -42,6 +42,8 @@ public class GlobalMessage : MonoBehaviour
     [SerializeField]
     GameObject PrefabLose;
     [SerializeField]
+    GameObject PrefabResults;
+    [SerializeField]
     GameObject PrefabTickets;
     [SerializeField]
     GameObject PrefabComingSoon;
@@ -162,13 +164,24 @@ public class GlobalMessage : MonoBehaviour
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
 
         main.needClose = false;
-    } 
+    }
     /// <summary>
     /// прогигрышь
     /// </summary>
     static public void Lose()
     {
         GameObject messageObj = Instantiate(main.PrefabLose, main.transform);
+        main.SelectMessanger = messageObj.GetComponent<RectTransform>();
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+
+        main.needClose = false;
+    }
+    /// <summary>
+    /// результаты при победе
+    /// </summary>
+    static public void Results()
+    {
+        GameObject messageObj = Instantiate(main.PrefabResults, main.transform);
         main.SelectMessanger = messageObj.GetComponent<RectTransform>();
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
 

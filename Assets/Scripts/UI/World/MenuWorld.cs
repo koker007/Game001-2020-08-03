@@ -29,6 +29,7 @@ public class MenuWorld : MonoBehaviour
     [SerializeField]
     Text Health;
 
+    [HideInInspector]
     public enum UIIsOpen
     {
         Map,

@@ -22,6 +22,7 @@ public class Gameplay : MonoBehaviour
     public int tickets = 0;
 
     public bool isGameplay = false;
+    public bool GameplayEnd = false;
 
     [Header("Level parameters")]
     public int score = 0;
@@ -45,16 +46,33 @@ public class Gameplay : MonoBehaviour
     public void StartGameplay() {
         //Если уровень выбран
         score = 0;
-        movingCan = 30;
+        movingCan = LevelsScript.main.ReturnMove();
     }
     //вычитает ход и делает проверку на 0 ходов
     public void MinusMoving()
     {
         //movingCount++;
         movingCan--;
-        if (movingCan <= 0 && isGameplay)
+        MenuGameplay.main.updateMoving();
+    }
+
+    public void ScoreUpdate(int PlusScore)
+    {
+        score += PlusScore;
+        MenuGameplay.main.updateScore();
+    }
+
+    public void CheckEndGame()
+    {
+        if (score >= LevelsScript.main.ReturnMaxScore() && GameplayEnd == false)
+        {
+            GlobalMessage.Results();
+            GameplayEnd = true;
+        }
+        else if (movingCan <= 0 && isGameplay && GameplayEnd == false)
         {
             GlobalMessage.Lose();
+            GameplayEnd = true;
         }
     }
 }
