@@ -23,8 +23,6 @@ public class MessageCTRL : MonoBehaviour
     [SerializeField]
     Text button;
 
-    private bool WorlUIWasClose;
-
     RectTransform rectTransform;
 
     // Start is called before the first frame update
@@ -67,14 +65,10 @@ public class MessageCTRL : MonoBehaviour
             rectTransform.pivot = new Vector2(rectTransform.pivot.x, y);
 
             //деактивация worldUI при появлении сообщения
-            if(WorlUIClose)
+            if (WorlUIClose && MenuWorld.main.isOpen == MenuWorld.UIIsOpen.Map)
             {
                 MainComponents.Vertical.SetActive(false);
-                if (MainComponents.PanelMap.activeSelf)
-                {
-                    WorlUIWasClose = true;
-                    MainComponents.PanelMap.SetActive(false);
-                }
+                MainComponents.PanelMap.SetActive(false);
             }
         }
         //Исчезание
@@ -97,12 +91,12 @@ public class MessageCTRL : MonoBehaviour
             //активация worldUI
             if (WorlUIClose)
             {
-                MainComponents.Vertical.SetActive(true);
-                if (WorlUIWasClose)
+                if(MenuWorld.main.isOpen == MenuWorld.UIIsOpen.Map)
                 {
                     MainComponents.PanelMap.SetActive(true);
-                    WorlUIClose = false;
                 }
+                MainComponents.Vertical.SetActive(true);
+                WorlUIClose = false;
             }
 
             //Удаление префаба

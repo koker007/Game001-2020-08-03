@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
+//alexandr
 /// <summary>
 /// Содержит основные компоненты и обьекты находщиеся на сцене
 /// </summary>
@@ -21,8 +21,6 @@ public class MainComponents : MonoBehaviour
     public static EventSystem eventSystem;
     [SerializeField]
     public static GraphicRaycaster graphicRaycaster;
-    [SerializeField]
-    public static SoundManager soundManager;
 
     private void Awake()
     {
@@ -32,7 +30,6 @@ public class MainComponents : MonoBehaviour
         PanelMap = GameObject.Find("PanelMap");
         eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
         graphicRaycaster = GameObject.Find("UI").GetComponent<GraphicRaycaster>();
-        soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
     }
 
 }

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//alexandr
 /// <summary>
 /// управляет звуками и музыкой
 /// </summary>
@@ -18,13 +18,10 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
+        main = this;
+
         Sound = GameObject.Find("Sound").GetComponent<AudioSource>();
         Music = GameObject.Find("Music").GetComponent<AudioSource>();
-    }
-
-    private void Start()
-    {
-        main = this;
     }
 
     /// <summary>

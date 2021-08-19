@@ -4,17 +4,14 @@ using UnityEngine;
 
 //Семен
 /// <summary>
-/// Глобальные игровые параметры, деньги, номер последнего пройденного уровня и прочее.
+/// Глобальные игровые параметры
 /// </summary>
 public class Gameplay : MonoBehaviour
 {
 
     static public Gameplay main;
 
-    /// <summary>
-    /// Последний открытый доступный уровень
-    /// </summary>
-    public int levelOpen = 0;
+    
     /// <summary>
     /// Текущий выбранный уровень
     /// </summary>
@@ -43,8 +40,7 @@ public class Gameplay : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-    }
+    {    }
 
     public void StartGameplay() {
         //Если уровень выбран
