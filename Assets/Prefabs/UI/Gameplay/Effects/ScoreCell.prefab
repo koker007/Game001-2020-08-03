@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6268549530330161712}
   - component: {fileID: 6268549530330161715}
   - component: {fileID: 6268549530330161714}
-  - component: {fileID: 6268549530330161713}
   m_Layer: 5
   m_Name: ScoreText
   m_TagString: Untagged
@@ -100,19 +99,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &6268549530330161713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6268549530330161676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3901c420618e6a54bb80e23684b4d37a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parent: {fileID: 7951196449721417352}
 --- !u!1 &7951196449721417352
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,6 +109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7951196449721417351}
   - component: {fileID: 7951196449721417349}
+  - component: {fileID: 1259727288613485206}
   m_Layer: 5
   m_Name: ScoreCell
   m_TagString: Untagged
@@ -158,3 +145,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7951196449721417352}
   m_CullTransparentMesh: 1
+--- !u!114 &1259727288613485206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7951196449721417352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3901c420618e6a54bb80e23684b4d37a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rTransform: {fileID: 6268549530330161677}
+  ScoreText: {fileID: 6268549530330161715}

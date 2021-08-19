@@ -46,6 +46,14 @@ public class LevelsScript : MonoBehaviour
         /// </summary>
         public int NumLevel;
         /// <summary>
+        /// количество очков
+        /// </summary>
+        public int MaxScore;
+        /// <summary>
+        /// количество ходов
+        /// </summary>
+        public int Move;
+        /// <summary>
         /// массив ячеек на поле
         /// </summary>
         public Cell[,] cells;
@@ -61,7 +69,8 @@ public class LevelsScript : MonoBehaviour
 
         //уровень 1
         Levels[1] = CreateLevel(
-            1, 5, 5, //numLevel, width. long
+            //numLevel, width, long, max score, move
+            1, 5, 5, 20000, 10,
 
             new int[,] //color
             {
@@ -83,7 +92,8 @@ public class LevelsScript : MonoBehaviour
 
         //уровень 2
         Levels[2] = CreateLevel(
-            2, 8, 8, //numLevel, width. long
+            //numLevel, width, long, max score, move
+            2, 8, 8, 50000, 20,
 
             new int[,] //color
             {
@@ -112,11 +122,18 @@ public class LevelsScript : MonoBehaviour
     }
 
     //создание уровня (метод существует для зрительного упрощения схемы уровня в Start)
-    private Level CreateLevel(int NumLevel, int Width, int Height, int[,] internalColors, int[,] type)
+    private Level CreateLevel(int NumLevel, int Width, int Height, int maxScore, int move, int[,] internalColors, int[,] type)
     {
         level = new Level();
 
-        level = new Level { NumLevel = NumLevel, Width = Width, Height = Height };
+        level = new Level { 
+            NumLevel = NumLevel, 
+            Width = Width, 
+            Height = Height,
+            MaxScore = maxScore,
+            Move = move
+        };
+
         level.cells = new Cell[Width, Height];
         for (int i = 0; i < Width; i++)
         {
@@ -129,22 +146,61 @@ public class LevelsScript : MonoBehaviour
         return level;
     }
     /// <summary>
-    /// возвращает ширину и высоту игрового поля
+    /// возвращает ширину и высоту игрового поля текущего уровня
     /// </summary>
-    /// <param name="NumLevel"></param>
-    /// <returns></returns>
-    public Vector2Int ReturnLevelSize(int NumLevel)
+    public Vector2Int ReturnLevelSize()
     {
-        return new Vector2Int(Levels[NumLevel].Width, Levels[NumLevel].Height);
+        try
+        {
+            return new Vector2Int(Levels[Gameplay.main.levelSelect].Width, Levels[Gameplay.main.levelSelect].Height);
+        }
+        catch
+        {
+            return new Vector2Int(Levels[1].Width, Levels[1].Height);
+        }
     }
     /// <summary>
-    /// возвращает информацию о клетке
+    /// возвращает информацию о клетке на текущем уровне
     /// </summary>
-    /// <param name="NumLevel"></param>
-    /// <param name="PositionOnField"></param>
-    /// <returns></returns>
-    public Cell ReturneCell(int NumLevel, Vector2Int PositionOnField)
+    public Cell ReturneCell(Vector2Int PositionOnField)
     {
-        return Levels[NumLevel].cells[PositionOnField.x, PositionOnField.y];
+        try
+        {
+            return Levels[Gameplay.main.levelSelect].cells[PositionOnField.x, PositionOnField.y];
+        }
+        catch
+        {
+            return Levels[1].cells[PositionOnField.x, PositionOnField.y];
+        }
+    }
+
+    /// <summary>
+    /// возвращает стартовое количество ходов текущего уровня
+    /// </summary>
+    public int ReturnMove()
+    {
+        try
+        {
+            return Levels[Gameplay.main.levelSelect].Move;
+        }
+        catch
+        {
+            return Levels[1].Move;
+        }
+    }
+
+    /// <summary>
+    /// возвращает максимальное необходимое количество очков текущего уровня
+    /// </summary>
+    public int ReturnMaxScore()
+    {
+        try
+        {
+            return Levels[Gameplay.main.levelSelect].MaxScore;
+        }
+        catch
+        {
+            return Levels[1].MaxScore;
+        }
     }
 }

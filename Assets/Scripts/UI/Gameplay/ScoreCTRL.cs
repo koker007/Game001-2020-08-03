@@ -6,24 +6,19 @@ using UnityEngine.UI;
 /// <summary>
 /// очки вылетающие при разрушении игровых обьектов
 /// </summary>
-public class ScorePrefab : MonoBehaviour
+public class ScoreCTRL : MonoBehaviour
 {
-    private Text ScoreText;
     private const float TimeLife = 2f;
     private Vector2 movePosition;
+    [SerializeField]
     private RectTransform rTransform;
-    public GameObject parent;
+    [SerializeField]
+    private Text ScoreText;
 
-    private void Awake()
-    {
-        ScoreText = GetComponent<Text>();
-        rTransform = GetComponent<RectTransform>();
-    }
 
     private void Start()
     {
-        Destroy(parent, TimeLife);
-
+        Destroy(gameObject, TimeLife);
         movePosition = new Vector2(rTransform.position.x, rTransform.position.y + Random.Range(100f, 200f));
     }
 
@@ -36,8 +31,9 @@ public class ScorePrefab : MonoBehaviour
     /// при создании обьекта необходимо задать ему значение очков
     /// </summary>
     /// <param name="score"></param>
-    public void SetText(int score)
+    public void Inicialize(int score, Color color)
     {
         ScoreText.text = score.ToString();
+        ScoreText.color = color;
     }
 }

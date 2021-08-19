@@ -269,6 +269,8 @@ public class CellInternalObject : MonoBehaviour
                 RectTransform rectDie = PrefabDie.GetComponent<RectTransform>();
 
                 GameObject PrefabScore = Instantiate(myField.PrefabParticleScore, myField.parentOfScore);
+                PrefabScore.GetComponent<ScoreCTRL>().Inicialize(score, ConvertEnumColor());
+                Gameplay.main.ScoreUpdate(score);
                 RectTransform rectScore = PrefabScore.GetComponent<RectTransform>();
 
                 //Изменить количество очков
@@ -361,6 +363,31 @@ public class CellInternalObject : MonoBehaviour
         }
 
         return colorReturn;
+    }
+
+    public Color ConvertEnumColor()
+    {
+        switch (color)
+        {
+            case InternalColor.Blue:
+                return Color.blue;
+                break;
+            case InternalColor.Green:
+                return Color.green;
+                break;
+            case InternalColor.Red:
+                return Color.red;
+                break;
+            case InternalColor.Violet:
+                return Color.white;
+                break;
+            case InternalColor.Yellow:
+                return Color.yellow;
+                break;
+            default:
+                return Color.black;
+                break;
+        }
     }
 
     public void PosToCell() {

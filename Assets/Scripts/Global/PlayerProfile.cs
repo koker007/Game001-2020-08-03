@@ -52,11 +52,11 @@ public class PlayerProfile : MonoBehaviour
     private void Awake()
     {
         main = this;
+        LoadProfie();
     }
 
     private void Start()
     {
-        LoadProfie();
     }
 
     private void LoadProfie()

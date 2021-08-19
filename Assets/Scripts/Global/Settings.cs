@@ -138,8 +138,11 @@ public class Settings : MonoBehaviour
     private void SetSettings()
     {
         volumeAll = PlayerPrefs.GetFloat("volumeAll", 0);
+        VolumeAll = volumeAll;
         volumeSound = PlayerPrefs.GetFloat("volumeSound", 0);
+        VolumeSound = volumeSound;
         volumeMusic = PlayerPrefs.GetFloat("volumeMusic", 0);
+        VolumeMusic = volumeMusic;
         launguage = PlayerPrefs.GetString("Launguage", "English");
         TranslateManager.main.LoadFile(launguage);
     }

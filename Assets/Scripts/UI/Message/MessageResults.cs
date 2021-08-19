@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 //alexandr
 /// <summary>
-/// отвечает за сообщение проигрыша
+/// отвечает за сообщение результатов игры при победе
 /// </summary>
-public class MessageYouLose : MonoBehaviour
+
+public class MessageResults : MonoBehaviour
 {
     [SerializeField]
     Text ScoreText;
@@ -16,14 +16,6 @@ public class MessageYouLose : MonoBehaviour
     public void OnEnable()
     {
         ScoreText.text = "Score:\n" + Gameplay.main.score.ToString();
-    }
-
-    public void Restart()
-    {
-        Gameplay.main.GameplayEnd = false;
-        Destroy(MenuGameplay.GameField);
-        UICTRL.main.OpenWorld();
-        UICTRL.main.OpenGameplay();
     }
 
     public void ExitGameplay()
