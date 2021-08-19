@@ -1154,9 +1154,22 @@ public class GameFieldCTRL : MonoBehaviour
                 return false;
             }
 
-
         }
 
+        //Проверить ячейки на супер комбинацию
+        void TestSuperCombination() {
+            foreach (Swap swap in BufferSwap) {
+                //Пропускаем если они в движении
+                if (swap.first.cellInternal.isMove || swap.second.cellInternal.isMove) {
+                    continue;
+                }
+
+                //супер колор + супер колор
+                //if () {
+                
+                //}
+            }
+        }
         //Раздать урон комбинациям и заспавнить объекты
         void TestDamageAndSpawn() {
             //Перебираем комбинации
