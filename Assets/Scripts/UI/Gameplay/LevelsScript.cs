@@ -11,7 +11,7 @@ public class LevelsScript : MonoBehaviour
     /// <summary>
     /// хранит данные о €чейке
     /// </summary>
-    public class Cell
+    public class CellInfo
     {
         /// <summary>
         /// цвет обьекта в €чейке
@@ -21,7 +21,7 @@ public class LevelsScript : MonoBehaviour
         /// тип обькта €чейке 
         /// </summary>
         public CellInternalObject.Type typeCell;
-        public Cell(int color, int type)
+        public CellInfo(int color, int type)
         {
             colorCell = (CellInternalObject.InternalColor)color;
             typeCell = (CellInternalObject.Type)type;
@@ -56,7 +56,7 @@ public class LevelsScript : MonoBehaviour
         /// <summary>
         /// массив €чеек на поле
         /// </summary>
-        public Cell[,] cells;
+        public CellInfo[,] cells;
     }
 
     private Level level;
@@ -70,7 +70,7 @@ public class LevelsScript : MonoBehaviour
         //уровень 1
         Levels[1] = CreateLevel(
             //numLevel, width, long, max score, move
-            1, 5, 5, 20000, 10,
+            1, 5, 5, 2000000, 50,
 
             new int[,] //color
             {
@@ -134,12 +134,12 @@ public class LevelsScript : MonoBehaviour
             Move = move
         };
 
-        level.cells = new Cell[Width, Height];
+        level.cells = new CellInfo[Width, Height];
         for (int i = 0; i < Width; i++)
         {
             for (int j = 0; j < Height; j++)
             {
-                level.cells[i, j] = new Cell(internalColors[i,j], type[i,j]);
+                level.cells[i, j] = new CellInfo(internalColors[i,j], type[i,j]);
             }
         }
 
@@ -162,7 +162,7 @@ public class LevelsScript : MonoBehaviour
     /// <summary>
     /// возвращает информацию о клетке на текущем уровне
     /// </summary>
-    public Cell ReturneCell(Vector2Int PositionOnField)
+    public CellInfo ReturneCell(Vector2Int PositionOnField)
     {
         try
         {

@@ -41,7 +41,9 @@ public class Gameplay : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {    }
+    {  
+    
+    }
 
     public void StartGameplay() {
         //Если уровень выбран

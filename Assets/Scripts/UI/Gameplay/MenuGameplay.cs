@@ -85,6 +85,7 @@ public class MenuGameplay : MonoBehaviour
         //Создание игрового поля
         GameField = Instantiate(GameFieldPrefab, GameFieldParent);
         GameFieldCTRL gameFieldCTRL = GameField.GetComponent<GameFieldCTRL>();
+
         gameFieldCTRL.inicializeField(10,10);
 
         //Обнуление счета игры

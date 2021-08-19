@@ -252,7 +252,7 @@ public class CellInternalObject : MonoBehaviour
     /// Удалить объект
     /// </summary>
     public void DestroyObj() {
-        int score = 100 * myField.ComboCount;
+        int score = 100 + 10 * (myField.ComboCount-1);
 
 
         SpawnEffects();
@@ -578,6 +578,8 @@ public class CellInternalObject : MonoBehaviour
                         }
                     }
                 }
+
+                myCell.Damage(null);
             }
 
             void DestroyAll()
