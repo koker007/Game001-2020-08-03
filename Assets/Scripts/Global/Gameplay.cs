@@ -54,7 +54,7 @@ public class Gameplay : MonoBehaviour
     //вычитает ход и делает проверку на 0 ходов
     public void MinusMoving()
     {
-        movingCount++;
+        //movingCount++;
         movingCan--;
         if (movingCan <= 0 && isGameplay)
         {

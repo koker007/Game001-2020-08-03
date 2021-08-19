@@ -252,10 +252,14 @@ public class CellInternalObject : MonoBehaviour
     /// Удалить объект
     /// </summary>
     public void DestroyObj() {
+        int score = 100 * myField.ComboCount;
+
 
         SpawnEffects();
 
         Destroy(gameObject);
+
+        
 
         void SpawnEffects() {
             myCell.timeBoomOld = Time.unscaledTime; //Ставим время взрыва
@@ -266,6 +270,8 @@ public class CellInternalObject : MonoBehaviour
 
                 GameObject PrefabScore = Instantiate(myField.PrefabParticleScore, myField.parentOfScore);
                 RectTransform rectScore = PrefabScore.GetComponent<RectTransform>();
+
+                //Изменить количество очков
 
                 rectDie.pivot = rectMy.pivot;
                 rectScore.pivot = rectMy.pivot;

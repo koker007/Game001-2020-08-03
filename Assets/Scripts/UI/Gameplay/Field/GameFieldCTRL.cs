@@ -44,6 +44,38 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     RectTransform rectParticleSelect;
 
+    public int ComboCount = 1; 
+    bool isMoving = false; //находятся ли в движении объекты наполе
+    //паходятся ли в движении какие либо объекты на поле
+    void TestMoving() {
+        bool movingNow = false;
+        for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
+            if (movingNow) break;
+
+            for (int y = 0; y < cellCTRLs.GetLength(1); y++) {
+                if (movingNow) break;
+
+                //Если ячейки нет, смотрим дальше
+                if (!cellCTRLs[x,y]) continue;
+
+                if (!cellCTRLs[x,y].cellInternal && Time.unscaledTime - cellCTRLs[x, y].timeBoomOld > 0.5f) {
+                    movingNow = true;
+                }
+
+                else if (cellCTRLs[x, y].cellInternal && cellCTRLs[x, y].cellInternal.isMove) {
+                    movingNow = true;
+                }
+            }
+        }
+
+        //Если прекратили двигаться
+        if (isMoving && !movingNow) {
+            ComboCount = 1;
+        }
+
+        isMoving = movingNow;
+    }
+
     //Меняемые ячейки
     class Swap {
         public CellCTRL first;
@@ -109,10 +141,13 @@ public class GameFieldCTRL : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TestSpawn();
-        TestFieldCombination();
-        TestStartSwap();
-        TestReturnSwap();
+
+        TestSpawn(); //Спавним
+        TestMoving(); //Проверяем наличие движения для отмены комбо
+        TestFieldCombination(); //Тестим комбинации
+
+        TestStartSwap(); //Начинаем обмен
+        TestReturnSwap(); //Возвращяем обмен
     }
 
     void StartInicialize() {
@@ -227,7 +262,6 @@ public class GameFieldCTRL : MonoBehaviour
     }
 
     //Список линий которые взорвались
-    //List<List<CellCTRL>> listCombinations;
     List<Combination> listCombinations;
     //Проверяем все ячейки на комбинаци
 
@@ -245,7 +279,6 @@ public class GameFieldCTRL : MonoBehaviour
     }
     void TestFieldCombination() {
         //Создаем новый список комбинаций
-        //listCombinations = new List<List<CellCTRL>>();
         listCombinations = new List<Combination>();
 
         //Начиная сверху проверяем все ячейки на комбинацию
@@ -1161,62 +1194,79 @@ public class GameFieldCTRL : MonoBehaviour
                 foreach (CellCTRL c in comb.cells)
                 {
 
-
-                    CellInternalObject partner = c.cellInternal;
-                    //Отнимаем ход если комбинация получилась благодаря перемещениям игрока
-                    List<Swap> BufferSwapNew = new List<Swap>();
-                    foreach (Swap swap in BufferSwap)
+                    if (Gameplay.main.movingCount <= 0)
                     {
-                        if (swap.first == c || swap.second == c)
-                        {
-
-                            Gameplay.main.MinusMoving();
-
-                            //Запомнить  партнера по перемещениям
-                            if (swap.first != c) partner = c.cellInternal;
-                            else if (swap.second != c) partner = c.cellInternal;
-
-                            continue;
-                        }
-                        BufferSwapNew.Add(swap);
+                        mixColor();
                     }
-                    BufferSwap = BufferSwapNew;
+                    else {
+                        SetDamage();
+                    }
 
-                    //Наносим урон по клетке
-                    c.Damage(partner);
+                    //перемешать цвет
+                    void mixColor() {
+                        c.cellInternal.randColor();
+                    }
+                    //Нанести урон
+                    void SetDamage() {
+                        CellInternalObject partner = c.cellInternal;
+                        //Отнимаем ход если комбинация получилась благодаря перемещениям игрока
+                        List<Swap> BufferSwapNew = new List<Swap>();
+                        foreach (Swap swap in BufferSwap)
+                        {
+                            if (swap.first == c || swap.second == c)
+                            {
 
+                                Gameplay.main.MinusMoving();
 
+                                //Запомнить  партнера по перемещениям
+                                if (swap.first != c) partner = c.cellInternal;
+                                else if (swap.second != c) partner = c.cellInternal;
+
+                                continue;
+                            }
+                            BufferSwapNew.Add(swap);
+                        }
+                        BufferSwap = BufferSwapNew;
+
+                        //Наносим урон по клетке
+                        c.Damage(partner);
+                    }
                 }
 
                 //Точка спавна есть, теперь проверяем что нужно спавнить
                 //Поставить новый обьект на место
-                //если линия из 5
-                if (comb.line5)
-                {
-                    //Создаем супер цветовую боббу
-                    CreateSuperColor(CellSpawn, color);
-                }
-                //Если крест
-                else if (comb.cross)
-                {
-                    //Создаем бомбу
-                    CreateBomb(CellSpawn, color);
-                }
-                //Если горизонтальная из 4
-                else if (comb.line4 && comb.horizontal)
-                {
-                    CreateRocketVertical(CellSpawn, color);
-                }
-                //Если вертикальная из 3
-                else if (comb.line4 && comb.vertical)
-                {
-                    CreateRocketHorizontal(CellSpawn, color);
-                }
-                //Если квадрат
-                else if (comb.square)
-                {
-                    //нечто летающее
-                    CreateFly(CellSpawn, color);
+                if (Gameplay.main.movingCount > 0) {
+                    //если линия из 5
+                    if (comb.line5)
+                    {
+                        //Создаем супер цветовую боббу
+                        CreateSuperColor(CellSpawn, color);
+                    }
+                    //Если крест
+                    else if (comb.cross)
+                    {
+                        //Создаем бомбу
+                        CreateBomb(CellSpawn, color);
+                    }
+                    //Если горизонтальная из 4
+                    else if (comb.line4 && comb.horizontal)
+                    {
+                        CreateRocketVertical(CellSpawn, color);
+                    }
+                    //Если вертикальная из 3
+                    else if (comb.line4 && comb.vertical)
+                    {
+                        CreateRocketHorizontal(CellSpawn, color);
+                    }
+                    //Если квадрат
+                    else if (comb.square)
+                    {
+                        //нечто летающее
+                        CreateFly(CellSpawn, color);
+                    }
+
+                    //Комбинация завершена повышаем комбо
+                    ComboCount++;
                 }
             }
 
@@ -1369,7 +1419,7 @@ public class GameFieldCTRL : MonoBehaviour
         swap.second = CellSwap;
         BufferSwap.Add(swap);
 
-        //Gameplay.main.movingCount++;
+        Gameplay.main.movingCount++;
         //Gameplay.main.movingCan--;
     }
 
@@ -1401,6 +1451,8 @@ public class GameFieldCTRL : MonoBehaviour
 
                 InternalFirst.StartMove(swap.second);
                 InternalSecond.StartMove(swap.first);
+
+                Gameplay.main.movingCount--;
 
                 continue;
             }
