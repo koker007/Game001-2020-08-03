@@ -189,14 +189,7 @@ public class LevelsScript : MonoBehaviour
     }
     public Level ReturnLevel()
     {
-        try
-        {
-            return Levels[Gameplay.main.levelSelect];
-        }
-        catch
-        {
-            return null;
-        }
+        return ReturnLevel(Gameplay.main.levelSelect);
     }
 
 }

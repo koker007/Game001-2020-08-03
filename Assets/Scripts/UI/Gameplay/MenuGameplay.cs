@@ -86,7 +86,7 @@ public class MenuGameplay : MonoBehaviour
         GameField = Instantiate(GameFieldPrefab, GameFieldParent);
         GameFieldCTRL gameFieldCTRL = GameField.GetComponent<GameFieldCTRL>();
 
-        gameFieldCTRL.inicializeField(10,10);
+        gameFieldCTRL.inicializeField(LevelsScript.main.ReturnLevel());
 
         //Обнуление счета игры
         Gameplay.main.StartGameplay();

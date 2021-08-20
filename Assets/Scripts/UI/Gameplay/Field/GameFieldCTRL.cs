@@ -97,21 +97,29 @@ public class GameFieldCTRL : MonoBehaviour
     public BoxBlockCTRL[,] BoxBlockCTRLs; //препятствия движения
 
     //Инициализировать игровое поле
-    public void inicializeField(int sizeX, int sizeY) {
+    public void inicializeField(LevelsScript.Level level) {
         
 
         //Перемещаем поле в центр
         RectTransform rect = gameObject.GetComponent<RectTransform>();
         rect.pivot = new Vector2(0.5f,0.5f);
 
-        //Создаем пространство игрового поля
-        cellCTRLs = new CellCTRL[sizeX, sizeY];
+        //Если уровень есть в базе
+        if (level != null)
+        {
 
-        AddAllCells();
+        }
+        else {
+            AddAllCellsRandom();
+        }
+
 
         //Заполняем все поля ячейками
-        void AddAllCells() {
-            for(int x = 0; x < cellCTRLs.GetLength(0); x++) {
+        void AddAllCellsRandom() {
+            //Создаем пространство игрового поля
+            cellCTRLs = new CellCTRL[10, 10];
+
+            for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
                 for (int y = 0; y < cellCTRLs.GetLength(1); y++) {
                     if (!cellCTRLs[x,y]) {
                         GameObject cellObj = Instantiate(prefabCell, parentOfCells);
@@ -134,6 +142,8 @@ public class GameFieldCTRL : MonoBehaviour
                 }
             }
         }
+
+        //
 
 
     }
