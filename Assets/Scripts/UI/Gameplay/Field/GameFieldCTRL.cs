@@ -15,6 +15,8 @@ public class GameFieldCTRL : MonoBehaviour
     GameObject prefabCell;
     [SerializeField]
     GameObject prefabInternal;
+    [SerializeField]
+    GameObject prefabBoxBlock;
 
     [Header("Particles")]
     [SerializeField]
@@ -92,7 +94,7 @@ public class GameFieldCTRL : MonoBehaviour
 
 
     public CellCTRL[,] cellCTRLs; //ячейки
-    List<CellInternalObject> cellInternalObjects; //¬нутренности €чеек
+    public BoxBlockCTRL[,] BoxBlockCTRLs; //преп€тстви€ движени€
 
     //»нициализировать игровое поле
     public void inicializeField(int sizeX, int sizeY) {
@@ -104,7 +106,6 @@ public class GameFieldCTRL : MonoBehaviour
 
         //—оздаем пространство игрового пол€
         cellCTRLs = new CellCTRL[sizeX, sizeY];
-        cellInternalObjects = new List<CellInternalObject>();
 
         AddAllCells();
 
