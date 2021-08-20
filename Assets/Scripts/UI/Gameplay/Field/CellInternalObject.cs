@@ -330,27 +330,27 @@ public class CellInternalObject : MonoBehaviour
     public void setColor(InternalColor internalColor) {
         if (type == Type.color)
         {
-            if (color == InternalColor.Red)
+            if (internalColor == InternalColor.Red)
             {
                 Image.texture = TextureRed;
                 Image.color = red;
             }
-            else if (color == InternalColor.Green)
+            else if (internalColor == InternalColor.Green)
             {
                 Image.texture = TextureGreen;
                 Image.color = green;
             }
-            else if (color == InternalColor.Blue)
+            else if (internalColor == InternalColor.Blue)
             {
                 Image.texture = TextureBlue;
                 Image.color = blue;
             }
-            else if (color == InternalColor.Yellow)
+            else if (internalColor == InternalColor.Yellow)
             {
                 Image.texture = TextureYellow;
                 Image.color = yellow;
             }
-            else if (color == InternalColor.Violet)
+            else if (internalColor == InternalColor.Violet)
             {
                 Image.texture = TextureViolet;
                 Image.color = violet;

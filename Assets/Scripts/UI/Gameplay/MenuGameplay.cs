@@ -78,8 +78,13 @@ public class MenuGameplay : MonoBehaviour
 
     private void OnEnable()
     {
+        DestroyAllField();
         CreateGameField();
         updateUI();
+    }
+    private void OnDisable()
+    {
+        DestroyAllField();
     }
 
     //Создать игровое поле согласно параметрам игры
@@ -92,6 +97,14 @@ public class MenuGameplay : MonoBehaviour
 
         //Обнуление счета игры
         Gameplay.main.StartGameplay();
+    }
+
+    //Очисть все игровое поле
+    void DestroyAllField() {
+        GameFieldCTRL[] fields = GameFieldParent.GetComponentsInChildren<GameFieldCTRL>();
+        foreach (GameFieldCTRL field in fields) {
+            Destroy(field.gameObject);
+        }
     }
 
     //обновление данных интерфейса

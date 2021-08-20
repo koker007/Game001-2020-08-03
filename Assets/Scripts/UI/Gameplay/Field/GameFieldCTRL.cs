@@ -190,6 +190,7 @@ public class GameFieldCTRL : MonoBehaviour
 
                         //Меняем тип объекта
                         internalCtrl.setColorAndType(cellInfo.colorCell, cellInfo.typeCell);
+                        internalCtrl.color = cellInfo.colorCell;
 
                     }
 
