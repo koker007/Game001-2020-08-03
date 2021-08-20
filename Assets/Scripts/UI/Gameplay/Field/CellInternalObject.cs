@@ -67,7 +67,8 @@ public class CellInternalObject : MonoBehaviour
         rocketHorizontal,
         rocketVertical,
         bomb,
-        airplane
+        airplane,
+        none
     }
 
     public InternalColor color;

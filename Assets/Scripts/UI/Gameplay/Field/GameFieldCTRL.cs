@@ -114,7 +114,7 @@ public class GameFieldCTRL : MonoBehaviour
         }
 
 
-        //Заполняем все поля ячейками
+        //Заполняем все поля ячейками рандомно
         void AddAllCellsRandom() {
             //Создаем пространство игрового поля
             cellCTRLs = new CellCTRL[10, 10];
@@ -143,7 +143,53 @@ public class GameFieldCTRL : MonoBehaviour
             }
         }
 
-        //
+        //заполняем все поля ячейками по шаблону уровня
+        void AddAllCellLevel() {
+            //Создаем пространство игрового поля
+            cellCTRLs = new CellCTRL[level.Width, level.Height];
+
+            for (int x = 0; x < cellCTRLs.GetLength(0); x++)
+            {
+                for (int y = 0; y < cellCTRLs.GetLength(1); y++)
+                {
+                    //Нужно ли создавать ячейку
+                    LevelsScript.CellInfo cellInfo = level.ReturneCell(new Vector2Int(x,y));
+                    
+                    //Если этой ячейки не существует
+                    if (cellInfo == null)
+                    {
+                        continue;
+                    }
+
+                    //Если ячейки нет, создаем
+                    if (!cellCTRLs[x, y]) {
+                        GameObject cellObj = Instantiate(prefabCell, parentOfCells);
+                        //ищем компонент
+                        cellCTRLs[x, y] = cellObj.GetComponent<CellCTRL>();
+                        if (!cellCTRLs[x, y])
+                        {
+                            Destroy(cellObj);
+                            break;
+                        }
+
+                        cellCTRLs[x, y].pos = new Vector2Int(x, y);
+                        cellCTRLs[x, y].myField = this;
+                        //Перемещаем объект на свою позицию
+                        RectTransform rect = cellObj.GetComponent<RectTransform>();
+                        rect.pivot = new Vector2(-x, -y);
+                    }
+
+                    //Создаем подвижные объекты
+                    if (true) {
+                        //GameObject interralObj =
+                    }
+
+                    //Нужно ли создать ящик
+
+
+                }
+            }
+        }
 
 
     }
