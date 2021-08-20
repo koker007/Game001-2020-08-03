@@ -38,11 +38,11 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     /// <summary>
     /// Степень запрета на перемещение объекта
     /// </summary>
-    public int dontMoving;
+    public int BlockingMove;
     /// <summary>
-    /// Степень гели
+    /// Степень плесени
     /// </summary>
-    public int gel;
+    public int mold;
     
     public int myInternalNum = 0;
 

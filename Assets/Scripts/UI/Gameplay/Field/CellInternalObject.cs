@@ -81,6 +81,7 @@ public class CellInternalObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        timeCreate = Time.unscaledTime;
         IniRect();
     }
 
@@ -90,6 +91,8 @@ public class CellInternalObject : MonoBehaviour
         Moving();
     }
 
+    public float timeCreate = 0;
+    public float timeLastMoving = 0;
 
     public float MovingSpeed = 0;
     void Moving() {
@@ -186,6 +189,9 @@ public class CellInternalObject : MonoBehaviour
 
             //Присваиваем изменения
             rectMy.pivot = new Vector2(posXnew, posYnew);
+
+            //Обновляем время последнего перемещения
+            timeLastMoving = Time.unscaledTime;
         }
 
         //Проверяем снизу наличие свободной ячейки
@@ -204,7 +210,7 @@ public class CellInternalObject : MonoBehaviour
             if (myCell.pos.y - minusY >= 0 && //если не вышли за массив
                 myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY] && //Если есть ячейка
                 !myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].cellInternal && //И она свободна
-                myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].dontMoving == 0 && //И можно двигаться
+                myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].BlockingMove == 0 && //И можно двигаться
                 Time.unscaledTime - myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].timeBoomOld > 0.25f) //Совзрыва прошла секунда                                                                 )
             {
                 //Ставим такую ячейку как нижнюю
@@ -437,6 +443,7 @@ public class CellInternalObject : MonoBehaviour
             }
         }
 
+        DestroyObj();
 
         void ActivateBomb()
         {
@@ -484,7 +491,8 @@ public class CellInternalObject : MonoBehaviour
                 vertical = true;
 
                 //Удаляем партнера
-                Destroy(partner.gameObject);
+                partner.activate = false;
+                partner.DestroyObj();
             }
 
             //Горизонтальный запуск
@@ -529,7 +537,6 @@ public class CellInternalObject : MonoBehaviour
                 }
             }
 
-            DestroyObj();
         }
 
         void ActivateSuperColor() {

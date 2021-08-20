@@ -214,7 +214,7 @@ public class GameFieldCTRL : MonoBehaviour
             for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
 
                 //Если эта ячейка есть, пустая и без блокировки движения и на ней сейчас нет движения
-                if (cellCTRLs[x,y] && !cellCTRLs[x, y].cellInternal && cellCTRLs[x,y].dontMoving == 0) {
+                if (cellCTRLs[x,y] && !cellCTRLs[x, y].cellInternal && cellCTRLs[x,y].BlockingMove == 0) {
 
                     //Проверяем сверху на то есть ли там что-то что может упасть
                     for (int plusY = 0; plusY <= cellCTRLs.GetLength(1); plusY++) {
@@ -257,7 +257,7 @@ public class GameFieldCTRL : MonoBehaviour
                         //За перемещение ниже отвечает сам перемещаемый объект
 
                         //Если сверху есть ячейка с внутренностью и она не блокирована
-                        else if (cellCTRLs[x, y + plusY].dontMoving <= 0 && cellCTRLs[x, y + plusY].cellInternal) {
+                        else if (cellCTRLs[x, y + plusY].BlockingMove <= 0 && cellCTRLs[x, y + plusY].cellInternal) {
 
                             break;
                         }
@@ -662,26 +662,25 @@ public class GameFieldCTRL : MonoBehaviour
                     swap.second.cellInternal.type == CellInternalObject.Type.airplane) {
 
                 }
-                else if (swap.first.cellInternal.type == CellInternalObject.Type.rocketHorizontal ||
-                    swap.first.cellInternal.type == CellInternalObject.Type.rocketVertical ||
-                    swap.second.cellInternal.type == CellInternalObject.Type.rocketHorizontal ||
-                    swap.second.cellInternal.type == CellInternalObject.Type.rocketVertical) {
+                //Ракета + ракета
+                else if ((swap.first.cellInternal.type == CellInternalObject.Type.rocketHorizontal || swap.first.cellInternal.type == CellInternalObject.Type.rocketVertical) &&
+                    (swap.second.cellInternal.type == CellInternalObject.Type.rocketHorizontal || swap.second.cellInternal.type == CellInternalObject.Type.rocketVertical)) {
 
                     if (swap.first.cellInternal.type == CellInternalObject.Type.rocketHorizontal)
                     {
-                        swap.first.cellInternal.Activate(CellInternalObject.Type.rocketHorizontal, swap.second.cellInternal);
+                        swap.second.cellInternal.Activate(CellInternalObject.Type.rocketHorizontal, swap.first.cellInternal);
                     }
                     else if (swap.first.cellInternal.type == CellInternalObject.Type.rocketVertical)
                     {
-                        swap.first.cellInternal.Activate(CellInternalObject.Type.rocketVertical, swap.second.cellInternal);
+                        swap.second.cellInternal.Activate(CellInternalObject.Type.rocketVertical, swap.first.cellInternal);
                     }
                     else if(swap.second.cellInternal.type == CellInternalObject.Type.rocketHorizontal)
                     {
-                        swap.second.cellInternal.Activate(CellInternalObject.Type.rocketHorizontal, swap.first.cellInternal);
+                        swap.first.cellInternal.Activate(CellInternalObject.Type.rocketHorizontal, swap.second.cellInternal);
                     }
                     else if (swap.second.cellInternal.type == CellInternalObject.Type.rocketVertical)
                     {
-                        swap.second.cellInternal.Activate(CellInternalObject.Type.rocketVertical, swap.first.cellInternal);
+                        swap.first.cellInternal.Activate(CellInternalObject.Type.rocketVertical, swap.second.cellInternal);
                     }
 
                 }
@@ -705,6 +704,7 @@ public class GameFieldCTRL : MonoBehaviour
 
                 //Ищем наиболее подходяшую ячейку для спавна и запоминаем цвет
                 CellCTRL CellSpawn = comb.cells[0];
+                float timelastMove = 0;
                 CellInternalObject.InternalColor color = CellInternalObject.InternalColor.Red;
 
                 foreach (CellCTRL cell in comb.cells) {
@@ -713,9 +713,15 @@ public class GameFieldCTRL : MonoBehaviour
 
                         if (cell.cellInternal) {
                             color = cell.cellInternal.color;
+
+                            //Ищем как давно существует этот стак
+                            if (timelastMove < cell.cellInternal.timeLastMoving) {
+                                timelastMove = cell.cellInternal.timeLastMoving;
+                            }
                         }
                     }
                 }
+
 
                 if (CellSpawn.cellInternal) {
                     color = CellSpawn.cellInternal.color;
@@ -920,8 +926,8 @@ public class GameFieldCTRL : MonoBehaviour
             !CellSwap.cellInternal ||
             CellSelect.cellInternal.isMove || //Если в ячейки происходит движение
             CellSwap.cellInternal.isMove ||
-            CellSelect.dontMoving > 0 || //Если ячейка заморожена
-            CellSwap.dontMoving > 0 ||
+            CellSelect.BlockingMove > 0 || //Если ячейка заморожена
+            CellSwap.BlockingMove > 0 ||
             Gameplay.main.movingCan <= 0 //Если есть ходы
             )
         {
