@@ -11,7 +11,7 @@ public class Gameplay : MonoBehaviour
 
     static public Gameplay main;
 
-    
+
     /// <summary>
     /// Текущий выбранный уровень
     /// </summary>
@@ -31,7 +31,9 @@ public class Gameplay : MonoBehaviour
     public int movingCount = 0;
     public int colors = 3;
     public int combo = 0;
-    
+
+    private const float threeStartFactor = 2f;
+    private const float twoStartFactor = 1.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -41,11 +43,12 @@ public class Gameplay : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {  
-    
+    {
+
     }
 
-    public void StartGameplay() {
+    public void StartGameplay()
+    {
         //Если уровень выбран
         score = 0;
         movingCan = LevelsScript.main.ReturnLevel().Move;
@@ -76,5 +79,29 @@ public class Gameplay : MonoBehaviour
             GlobalMessage.Lose();
             GameplayEnd = true;
         }
+    }
+
+    public int CountStars(int score)
+    {
+        if (score >= LevelsScript.main.ReturnLevel().NeedScore * threeStartFactor)
+        {
+            return 3;
+        }
+        else if (score >= LevelsScript.main.ReturnLevel().NeedScore * twoStartFactor)
+        {
+            return 2;
+        }
+        else if (score >= LevelsScript.main.ReturnLevel().NeedScore)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    public int CountStars()
+    {
+        return CountStars(score);
     }
 }
