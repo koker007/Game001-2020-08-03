@@ -7,14 +7,18 @@ public class BoxBlockCTRL : MonoBehaviour
 {
 
     [SerializeField]
-    Texture[] Textures;
+    Texture[] textures;
     [SerializeField]
-    Image image;
+    RawImage image;
 
     CellCTRL myCell;
 
     int healthOld = 0;
-    void Inicialize(CellCTRL cellNew) {
+
+    /// <summary>
+    /// Инициализация обьекта сразу после создания
+    /// </summary>
+    public void Inicialize(CellCTRL cellNew) {
         myCell = cellNew;
 
     }
@@ -28,12 +32,37 @@ public class BoxBlockCTRL : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        testLive();
     }
 
-    void testImage() {
-        if (image) {
-        
+    //Проверка состояния обьекта
+    void testLive() {
+        if (healthOld != myCell.BlockingMove) {
+
+            //Поменять изображение
+            testImage();
+            //Если жизни кончелись, самоуничтожаемся
+            testDestroy();
+
+            void testImage() {
+                Texture textureNow;
+                if (myCell.BlockingMove < textures.Length)
+                {
+                    textureNow = textures[myCell.BlockingMove];
+                }
+                else {
+                    textureNow = textures[textures.Length-1];
+                }
+
+                image.texture = textureNow;
+            }
+
+
+            void testDestroy() {
+                if (myCell.BlockingMove <= 0) {
+                    Destroy(gameObject);
+                }
+            }
         }
     }
 }
