@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Семен
 /// <summary>
@@ -47,11 +48,12 @@ public class Gameplay : MonoBehaviour
 
     }
 
-    public void StartGameplay()
+    public void StartGameplay(ref Image[] stars)
     {
         //Если уровень выбран
         score = 0;
         movingCan = LevelsScript.main.ReturnLevel().Move;
+        CountStars(ref stars);
     }
     //вычитает ход и делает проверку на 0 ходов
     public void MinusMoving()
@@ -69,39 +71,50 @@ public class Gameplay : MonoBehaviour
 
     public void CheckEndGame()
     {
-        if (score >= LevelsScript.main.ReturnLevel().NeedScore && GameplayEnd == false)
+        if (movingCan <= 0 && isGameplay && GameplayEnd == false)
         {
-            GlobalMessage.Results();
-            GameplayEnd = true;
-        }
-        else if (movingCan <= 0 && isGameplay && GameplayEnd == false)
-        {
-            GlobalMessage.Lose();
+            if (score >= LevelsScript.main.ReturnLevel().NeedScore)
+            {
+                GlobalMessage.Results();
+            }
+            else
+            {
+                GlobalMessage.Lose();
+            }
+            LevelsScript.main.ReturnLevel().MaxScore = score;
             GameplayEnd = true;
         }
     }
 
-    public int CountStars(int score)
+    public void CountStars(int score, ref Image[] stars)
     {
         if (score >= LevelsScript.main.ReturnLevel().NeedScore * threeStartFactor)
         {
-            return 3;
+            stars[0].color = Color.yellow;
+            stars[1].color = Color.yellow;
+            stars[2].color = Color.yellow;
         }
         else if (score >= LevelsScript.main.ReturnLevel().NeedScore * twoStartFactor)
         {
-            return 2;
+            stars[0].color = Color.yellow;
+            stars[1].color = Color.yellow;
+            stars[2].color = new Color32(140, 140, 60, 255);
         }
         else if (score >= LevelsScript.main.ReturnLevel().NeedScore)
         {
-            return 1;
+            stars[0].color = Color.yellow;
+            stars[1].color = new Color32(140, 140, 60, 255);
+            stars[2].color = new Color32(140, 140, 60, 255);
         }
         else
         {
-            return 0;
+            stars[0].color = new Color32(140, 140, 60, 255);
+            stars[1].color = new Color32(140, 140, 60, 255);
+            stars[2].color = new Color32(140, 140, 60, 255);
         }
     }
-    public int CountStars()
+    public void CountStars(ref Image[] stars)
     {
-        return CountStars(score);
+        CountStars(score,ref stars);
     }
 }

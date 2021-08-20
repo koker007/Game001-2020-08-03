@@ -91,7 +91,7 @@ public class MenuGameplay : MonoBehaviour
         gameFieldCTRL.inicializeField(LevelsScript.main.ReturnLevel());
 
         //Обнуление счета игры
-        Gameplay.main.StartGameplay();
+        Gameplay.main.StartGameplay(ref Stars);
     }
 
     //обновление данных интерфейса
@@ -105,7 +105,7 @@ public class MenuGameplay : MonoBehaviour
     {
         Score.text = System.Convert.ToString(Gameplay.main.score);
         ScoreSlider.value = (float)Gameplay.main.score / LevelsScript.main.ReturnLevel().NeedScore;
-        int star = Gameplay.main.CountStars();
+        Gameplay.main.CountStars(ref Stars);
     }
     public void updateMoving()
     {

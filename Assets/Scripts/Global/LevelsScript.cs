@@ -21,11 +21,18 @@ public class LevelsScript : MonoBehaviour
         /// тип обькта €чейке 
         /// </summary>
         public CellInternalObject.Type typeCell;
+        /// <summary>
+        /// коробка с жизн€ми
+        /// </summary>
+        public int boxHealth;
         public CellInfo(int color, int type)
         {
             colorCell = (CellInternalObject.InternalColor)color;
             typeCell = (CellInternalObject.Type)type;
-
+        }
+        public CellInfo(int boxhealth)
+        {
+            boxHealth = boxhealth;
         }
     }
     /// <summary>
@@ -99,7 +106,7 @@ public class LevelsScript : MonoBehaviour
             //numLevel, width, long, max score, move
             1, 5, 5, 2000000, 50,
 
-            new byte[,] //color
+            new byte[,] //exist
             {
                 { 1,1,1,1,1 },
                 { 1,1,1,1,1 },
@@ -107,6 +114,16 @@ public class LevelsScript : MonoBehaviour
                 { 1,1,1,1,1 },
                 { 1,1,1,1,1 }
             },
+
+            new int[,] //box
+            {
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 }
+            },
+
             new int[,] //color
             {
                 { 0,3,2,3,0 },
@@ -131,7 +148,7 @@ public class LevelsScript : MonoBehaviour
             2, 8, 8, 2000000, 1000,
 
 
-            new byte[,] //type
+            new byte[,] //exist
             {
                 { 1,1,1,1,1,1,1,1 },
                 { 1,1,0,1,1,0,1,1 },
@@ -141,6 +158,18 @@ public class LevelsScript : MonoBehaviour
                 { 1,0,1,1,1,1,0,1 },
                 { 1,1,0,1,1,0,1,1 },
                 { 1,1,1,1,1,1,1,1 }
+            },
+
+            new int[,] //box
+            {
+                { 0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0 }
             },
 
             new int[,] //color
@@ -166,10 +195,83 @@ public class LevelsScript : MonoBehaviour
                 { 0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0 }
             });
+
+        //уровень 3
+        Levels[3] = CreateLevel(
+            //numLevel, width, long, max score, move
+            3, 10, 10, 10000, 10,
+
+
+            new byte[,] //exist
+            {
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 }
+            }, 
+            
+            new int[,] //box
+            {
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 }
+            },
+
+            new int[,] //color
+            {
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 }
+            },
+
+            new int[,] //type
+            {
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 }
+            });
     }
 
     //создание уровн€ (метод существует дл€ зрительного упрощени€ схемы уровн€ в Start)
-    private Level CreateLevel(int NumLevel, int Width, int Height, int NeedScore, int move, byte[,] exist, int[,] internalColors, int[,] type)
+    private Level CreateLevel
+        (
+        int NumLevel, 
+        int Width, 
+        int Height, 
+        int NeedScore, 
+        int move, 
+        byte[,] exist, 
+        int[,] box,
+        int[,] internalColors, 
+        int[,] type
+        )
     {
         level = new Level();
 
@@ -189,6 +291,10 @@ public class LevelsScript : MonoBehaviour
                 if(exist[i,j] == 0)
                 {
                     level.cells[i, j] = null;
+                }
+                else if (box[i, j] != 0)
+                {
+                    level.cells[i, j] = new CellInfo(box[i,j]);
                 }
                 else
                 {
@@ -220,3 +326,33 @@ public class LevelsScript : MonoBehaviour
     }
 
 }
+
+/*
+ 
+
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0 },
+                { 0,0,0,0,0 },
+                { 0,0,0,0 },
+                { 0,0,0 },
+                { 0,0 },
+                { 0 },
+
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1 },
+                { 1,1,1,1,1 },
+                { 1,1,1,1 },
+                { 1,1,1 },
+                { 1,1 },
+                { 1 },
+
+
+
+
+*/

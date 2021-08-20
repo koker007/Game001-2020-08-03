@@ -14,6 +14,9 @@ public class MessageLevelInfo : MonoBehaviour
     Text LevelText;
     [SerializeField]
     Text LevelInfoText;
+    [SerializeField]
+    Image[] LevelStars = new Image[3];
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +36,7 @@ public class MessageLevelInfo : MonoBehaviour
         try
         {
             LevelInfoText.text = "Required number of points:" + LevelsScript.main.ReturnLevel().NeedScore.ToString() + "\nRecord:\n" + LevelsScript.main.ReturnLevel().MaxScore.ToString();
+            Gameplay.main.CountStars(LevelsScript.main.ReturnLevel().MaxScore, ref LevelStars);
         }
         catch { }
     }
