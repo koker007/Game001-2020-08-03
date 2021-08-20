@@ -12,7 +12,9 @@ public class MessageLevelInfo : MonoBehaviour
 
     [SerializeField]
     Text LevelText;
-    
+    [SerializeField]
+    Text LevelInfoText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,12 @@ public class MessageLevelInfo : MonoBehaviour
 
     void Inicialize() {
         LevelText.text = System.Convert.ToString(Gameplay.main.levelSelect);
+
+        try
+        {
+            LevelInfoText.text = "Required number of points:" + LevelsScript.main.ReturnLevel().NeedScore.ToString() + "\nRecord:\n" + LevelsScript.main.ReturnLevel().MaxScore.ToString();
+        }
+        catch { }
     }
 
     public void ClickButtonStartLevel() {

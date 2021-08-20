@@ -99,6 +99,14 @@ public class LevelsScript : MonoBehaviour
             //numLevel, width, long, max score, move
             1, 5, 5, 2000000, 50,
 
+            new byte[,] //color
+            {
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 }
+            },
             new int[,] //color
             {
                 { 0,3,2,3,0 },
@@ -120,7 +128,20 @@ public class LevelsScript : MonoBehaviour
         //уровень 2
         Levels[2] = CreateLevel(
             //numLevel, width, long, max score, move
-            2, 8, 8, 20000, 10,
+            2, 8, 8, 2000000, 1000,
+
+
+            new byte[,] //type
+            {
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,0,1,1,0,1,1 },
+                { 1,0,1,1,1,1,0,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,0,1,1,1,1,0,1 },
+                { 1,1,0,1,1,0,1,1 },
+                { 1,1,1,1,1,1,1,1 }
+            },
 
             new int[,] //color
             {
@@ -144,12 +165,11 @@ public class LevelsScript : MonoBehaviour
                 { 0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0 }
-
             });
     }
 
     //создание уровня (метод существует для зрительного упрощения схемы уровня в Start)
-    private Level CreateLevel(int NumLevel, int Width, int Height, int NeedScore, int move, int[,] internalColors, int[,] type)
+    private Level CreateLevel(int NumLevel, int Width, int Height, int NeedScore, int move, byte[,] exist, int[,] internalColors, int[,] type)
     {
         level = new Level();
 
@@ -166,7 +186,14 @@ public class LevelsScript : MonoBehaviour
         {
             for (int j = 0; j < Height; j++)
             {
-                level.cells[i, j] = new CellInfo(internalColors[i,j], type[i,j]);
+                if(exist[i,j] == 0)
+                {
+                    level.cells[i, j] = null;
+                }
+                else
+                {
+                    level.cells[i, j] = new CellInfo(internalColors[i, j], type[i, j]);
+                }
             }
         }
 

@@ -31,6 +31,8 @@ public class MenuGameplay : MonoBehaviour
     Text Move;
     [SerializeField]
     Slider ScoreSlider;
+    [SerializeField]
+    Image[] Stars = new Image[3];
 
     public static GameObject GameField;
 
@@ -103,6 +105,7 @@ public class MenuGameplay : MonoBehaviour
     {
         Score.text = System.Convert.ToString(Gameplay.main.score);
         ScoreSlider.value = (float)Gameplay.main.score / LevelsScript.main.ReturnLevel().NeedScore;
+        int star = Gameplay.main.CountStars();
     }
     public void updateMoving()
     {
