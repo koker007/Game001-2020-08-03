@@ -48,7 +48,7 @@ public class Gameplay : MonoBehaviour
     public void StartGameplay() {
         //Если уровень выбран
         score = 0;
-        movingCan = LevelsScript.main.ReturnMove();
+        movingCan = LevelsScript.main.ReturnLevel().Move;
     }
     //вычитает ход и делает проверку на 0 ходов
     public void MinusMoving()
@@ -66,7 +66,7 @@ public class Gameplay : MonoBehaviour
 
     public void CheckEndGame()
     {
-        if (score >= LevelsScript.main.ReturnMaxScore() && GameplayEnd == false)
+        if (score >= LevelsScript.main.ReturnLevel().NeedScore && GameplayEnd == false)
         {
             GlobalMessage.Results();
             GameplayEnd = true;

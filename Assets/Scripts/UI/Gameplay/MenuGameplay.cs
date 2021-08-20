@@ -102,7 +102,7 @@ public class MenuGameplay : MonoBehaviour
     public void updateScore()
     {
         Score.text = System.Convert.ToString(Gameplay.main.score);
-        ScoreSlider.value = (float)Gameplay.main.score / LevelsScript.main.ReturnMaxScore();
+        ScoreSlider.value = (float)Gameplay.main.score / LevelsScript.main.ReturnLevel().NeedScore;
     }
     public void updateMoving()
     {

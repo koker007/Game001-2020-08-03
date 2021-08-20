@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// рандомная генерация обьектов на цилиндре
+/// </summary>
 public class WorldRandomGenerator : MonoBehaviour
 {
     public GameObject Prefab;

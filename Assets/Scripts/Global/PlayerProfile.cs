@@ -28,8 +28,14 @@ public class PlayerProfile : MonoBehaviour
     [HideInInspector]
     public int[] nextLevelPoint = new int[] { 1000 , 5000 , 10000 };
 
+    /// <summary>
+    /// количество игровой валюты
+    /// </summary>
     public int GoldAmount;
 
+    /// <summary>
+    /// покупаемые предметы 
+    /// </summary>
     public struct Item
     {
         public int Cost;
@@ -41,7 +47,7 @@ public class PlayerProfile : MonoBehaviour
             Amount = 0;
         }
     }
-
+    //покупаемые предметы
     public Item Health = new Item(1);
     public Item Ticket = new Item(1);
 
@@ -58,7 +64,7 @@ public class PlayerProfile : MonoBehaviour
     private void Start()
     {
     }
-
+    //загрузка данных
     private void LoadProfie()
     {
         ProfileLevel = PlayerPrefs.GetInt("ProfileLevel", 1);
@@ -73,6 +79,10 @@ public class PlayerProfile : MonoBehaviour
         SuperColor.Amount = PlayerPrefs.GetInt("SuperColorAmount", 3);
     }
 
+    /// <summary>
+    /// увеличение очков уровня игрока
+    /// </summary>
+    /// <param name="plus"></param>
     public void ScorePlus(int plus)
     {
         ProfileScore += plus;
@@ -85,6 +95,10 @@ public class PlayerProfile : MonoBehaviour
         PlayerPrefs.SetInt("ProfileScore", ProfileScore);
     }
 
+    /// <summary>
+    /// покупка редмета
+    /// </summary>
+    /// <param name="item"></param>
     public void PurchaseItem(ref Item item)
     {
         if(GoldAmount < item.Cost)
@@ -101,7 +115,10 @@ public class PlayerProfile : MonoBehaviour
         }
     }
 
-    public void SaveItemAmount()
+    /// <summary>
+    /// сохранение количества предметов
+    /// </summary>
+    private void SaveItemAmount()
     {
         PlayerPrefs.SetInt("GoldAmount", GoldAmount);
         PlayerPrefs.SetInt("HealthAmount", Health.Amount);

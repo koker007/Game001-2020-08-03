@@ -12,7 +12,7 @@ public class MessageExitLevel : MonoBehaviour
     {
         if(Gameplay.main.GameplayEnd == true)
         {
-            //gameObject.GetComponent<MessageCTRL>().ClickButtonClose();
+            gameObject.GetComponent<MessageCTRL>().ClickButtonClose();
         }
     }
     public void ExitLevelYes()

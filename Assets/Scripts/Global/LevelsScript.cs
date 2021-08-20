@@ -46,7 +46,11 @@ public class LevelsScript : MonoBehaviour
         /// </summary>
         public int NumLevel;
         /// <summary>
-        /// количество очков
+        /// необходимое количество очков
+        /// </summary>
+        public int NeedScore;
+        /// <summary>
+        /// максимально набранное количество очков
         /// </summary>
         public int MaxScore;
         /// <summary>
@@ -57,6 +61,29 @@ public class LevelsScript : MonoBehaviour
         /// массив ячеек на поле
         /// </summary>
         public CellInfo[,] cells;
+
+        /// <summary>
+        /// возвращает информацию о клетке на текущем уровне
+        /// </summary>
+        public CellInfo ReturneCell(Vector2Int PositionOnField)
+        {
+            try
+            {
+                return cells[PositionOnField.x, PositionOnField.y];
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public void NewMaxScore(int score)
+        {
+            if(score > MaxScore)
+            {
+                MaxScore = score;
+            }
+        }
     }
 
     private Level level;
@@ -93,7 +120,7 @@ public class LevelsScript : MonoBehaviour
         //уровень 2
         Levels[2] = CreateLevel(
             //numLevel, width, long, max score, move
-            2, 8, 8, 50000, 20,
+            2, 8, 8, 20000, 10,
 
             new int[,] //color
             {
@@ -122,7 +149,7 @@ public class LevelsScript : MonoBehaviour
     }
 
     //создание уровня (метод существует для зрительного упрощения схемы уровня в Start)
-    private Level CreateLevel(int NumLevel, int Width, int Height, int maxScore, int move, int[,] internalColors, int[,] type)
+    private Level CreateLevel(int NumLevel, int Width, int Height, int NeedScore, int move, int[,] internalColors, int[,] type)
     {
         level = new Level();
 
@@ -130,7 +157,7 @@ public class LevelsScript : MonoBehaviour
             NumLevel = NumLevel, 
             Width = Width, 
             Height = Height,
-            MaxScore = maxScore,
+            NeedScore = NeedScore,
             Move = move
         };
 
@@ -145,62 +172,31 @@ public class LevelsScript : MonoBehaviour
 
         return level;
     }
-    /// <summary>
-    /// возвращает ширину и высоту игрового поля текущего уровня
-    /// </summary>
-    public Vector2Int ReturnLevelSize()
-    {
-        try
-        {
-            return new Vector2Int(Levels[Gameplay.main.levelSelect].Width, Levels[Gameplay.main.levelSelect].Height);
-        }
-        catch
-        {
-            return new Vector2Int(Levels[1].Width, Levels[1].Height);
-        }
-    }
-    /// <summary>
-    /// возвращает информацию о клетке на текущем уровне
-    /// </summary>
-    public CellInfo ReturneCell(Vector2Int PositionOnField)
-    {
-        try
-        {
-            return Levels[Gameplay.main.levelSelect].cells[PositionOnField.x, PositionOnField.y];
-        }
-        catch
-        {
-            return Levels[1].cells[PositionOnField.x, PositionOnField.y];
-        }
-    }
 
     /// <summary>
     /// возвращает стартовое количество ходов текущего уровня
     /// </summary>
-    public int ReturnMove()
+    public Level ReturnLevel(int NumLevel)
     {
         try
         {
-            return Levels[Gameplay.main.levelSelect].Move;
+            return Levels[NumLevel];
         }
         catch
         {
-            return Levels[1].Move;
+            return null;
+        }
+    }
+    public Level ReturnLevel()
+    {
+        try
+        {
+            return Levels[Gameplay.main.levelSelect];
+        }
+        catch
+        {
+            return null;
         }
     }
 
-    /// <summary>
-    /// возвращает максимальное необходимое количество очков текущего уровня
-    /// </summary>
-    public int ReturnMaxScore()
-    {
-        try
-        {
-            return Levels[Gameplay.main.levelSelect].MaxScore;
-        }
-        catch
-        {
-            return Levels[1].MaxScore;
-        }
-    }
 }
