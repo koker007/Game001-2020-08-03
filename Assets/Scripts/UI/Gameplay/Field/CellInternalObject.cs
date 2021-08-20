@@ -254,6 +254,16 @@ public class CellInternalObject : MonoBehaviour
 
         IniRect();
     }
+    public void EndMove() {
+        if (!myCell) {
+            return;
+        }
+
+        IniRect();
+
+        rectMy.pivot = rectCell.pivot;
+
+    }
 
     /// <summary>
     /// Удалить объект
@@ -320,6 +330,33 @@ public class CellInternalObject : MonoBehaviour
     public void setColor(InternalColor internalColor) {
         if (type == Type.color)
         {
+            if (color == InternalColor.Red)
+            {
+                Image.texture = TextureRed;
+                Image.color = red;
+            }
+            else if (color == InternalColor.Green)
+            {
+                Image.texture = TextureGreen;
+                Image.color = green;
+            }
+            else if (color == InternalColor.Blue)
+            {
+                Image.texture = TextureBlue;
+                Image.color = blue;
+            }
+            else if (color == InternalColor.Yellow)
+            {
+                Image.texture = TextureYellow;
+                Image.color = yellow;
+            }
+            else if (color == InternalColor.Violet)
+            {
+                Image.texture = TextureViolet;
+                Image.color = violet;
+            }
+        }
+        else {
             if (internalColor == InternalColor.Red)
             {
                 Image.color = red;
@@ -341,6 +378,30 @@ public class CellInternalObject : MonoBehaviour
                 Image.color = violet;
             }
         }
+
+        if (type == Type.airplane) {
+            Image.texture = TextureFly;
+        }
+        else if (type == Type.bomb)
+        {
+            Image.texture = TextureBomb;
+        }
+        else if (type == Type.rocketHorizontal)
+        {
+            Image.texture = TextureRocketHorizontal;
+        }
+        else if (type == Type.rocketVertical)
+        {
+            Image.texture = TextureRocketVertical;
+        }
+        else if (type == Type.supercolor)
+        {
+            Image.texture = TextureSuperColor;
+        }
+    }
+    public void setColorAndType(InternalColor internalColor, Type typeNew) {
+        type = typeNew;
+        setColor(internalColor);
     }
 
     InternalColor GetRandomColor()

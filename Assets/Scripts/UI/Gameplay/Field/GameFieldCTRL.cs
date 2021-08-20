@@ -107,7 +107,7 @@ public class GameFieldCTRL : MonoBehaviour
         //Если уровень есть в базе
         if (level != null)
         {
-
+            AddAllCellLevel();
         }
         else {
             AddAllCellsRandom();
@@ -181,11 +181,20 @@ public class GameFieldCTRL : MonoBehaviour
 
                     //Создаем подвижные объекты
                     if (true) {
-                        //GameObject interralObj =
+                        //Создаем объект и перемещаем
+                        GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
+                        CellInternalObject internalCtrl = internalObj.GetComponent<CellInternalObject>();
+                        internalCtrl.myField = this;
+                        internalCtrl.StartMove(cellCTRLs[x, y]);
+                        internalCtrl.EndMove();
+
+                        //Меняем тип объекта
+                        internalCtrl.setColorAndType(cellInfo.colorCell, cellInfo.typeCell);
+
                     }
 
                     //Нужно ли создать ящик
-
+                    
 
                 }
             }
