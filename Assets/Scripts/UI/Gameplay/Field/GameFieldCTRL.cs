@@ -14,7 +14,7 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     GameObject prefabCell;
     [SerializeField]
-    GameObject prefabInternal;
+    public GameObject prefabInternal;
     [SerializeField]
     GameObject prefabBoxBlock;
 
@@ -30,7 +30,7 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     Transform parentOfCells;
     [SerializeField]
-    Transform parentOfInternals;
+    public Transform parentOfInternals;
     [SerializeField]
     public Transform parentOfParticles;
     [SerializeField]

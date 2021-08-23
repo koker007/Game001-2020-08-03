@@ -93,10 +93,23 @@ public class MenuGameplay : MonoBehaviour
         GameField = Instantiate(GameFieldPrefab, GameFieldParent);
         GameFieldCTRL gameFieldCTRL = GameField.GetComponent<GameFieldCTRL>();
 
-        gameFieldCTRL.inicializeField(LevelsScript.main.ReturnLevel());
+        if (LevelsScript.main)
+        {
+            gameFieldCTRL.inicializeField(LevelsScript.main.ReturnLevel());
+        }
+        else {
+            Destroy(GameField);
+        }
 
         //Обнуление счета игры
-        Gameplay.main.StartGameplay();
+        if (Gameplay.main)
+        {
+            Gameplay.main.StartGameplay();
+        }
+        else
+        {
+            Destroy(GameField);
+        }
     }
 
     //Очисть все игровое поле
@@ -109,9 +122,11 @@ public class MenuGameplay : MonoBehaviour
 
     //обновление данных интерфейса
     void updateUI() {
-        Level.text = System.Convert.ToString(Gameplay.main.levelSelect);
-        updateMoving();
-        updateScore();
+        if (Gameplay.main) {
+            Level.text = System.Convert.ToString(Gameplay.main.levelSelect);
+            updateMoving();
+            updateScore();
+        }
     }
 
     public void updateScore()

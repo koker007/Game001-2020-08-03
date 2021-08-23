@@ -12,10 +12,19 @@ using UnityEngine.EventSystems;
 public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerUpHandler
 {
     static int lastInternalNum = 0; //нужно чтобы ячека знала насколько давно в ней происходило какое либо действие
-    public int LastInternalNum {
+    public int GetNextLastInternalNum {
         get {
             int num = lastInternalNum;
             lastInternalNum++;
+
+            return num;
+        }
+    }
+    static public int GetNowLastInternalNum
+    {
+        get
+        {
+            int num = lastInternalNum;
 
             return num;
         }
@@ -72,7 +81,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
             cellInternal.Activate(cellInternal.type, partner);
             //Избавляемся
-            cellInternal.DestroyObj();
+            //cellInternal.DestroyObj();
         }
     }
 

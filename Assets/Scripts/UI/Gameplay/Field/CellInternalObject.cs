@@ -90,6 +90,7 @@ public class CellInternalObject : MonoBehaviour
     void Update()
     {
         Moving();
+        UpdateActivate();
     }
 
     public float timeCreate = 0;
@@ -207,6 +208,8 @@ public class CellInternalObject : MonoBehaviour
     //Получить свободную ячейку снизу
     CellCTRL GetFreeCellDown() {
         CellCTRL returnCell = null;
+
+        //Получить свободную ячейку снизу
         for (int minusY = 1; minusY < myField.cellCTRLs.GetLength(1); minusY++) {
             if (myCell.pos.y - minusY >= 0 && //если не вышли за массив
                 myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY] && //Если есть ячейка
@@ -223,7 +226,103 @@ public class CellInternalObject : MonoBehaviour
                 break;
             }
         }
+
+        //Если ячеки снизу нет свободных
+        //Получить свободную ячейку справа или слева ниже
+        if (returnCell == null) {
+            //Проверяем относительно высоты
+
+
+            bool canTestingRight = true;
+            bool canTestingLeft = true;
+
+            //Общая проверка по высоте
+            int smeshenie = 1;
+            if (myCell.pos.y - smeshenie >= 0 //если не вышли за массив
+                ) {
+
+                //Если перемещение четное, то провека справа
+                //int internalNum = CellCTRL.GetNowLastInternalNum;
+                //Справа
+                if (
+                    myCell.pos.x + smeshenie < myField.cellCTRLs.GetLength(0) && //если не вышли за массив
+                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie] && //Если есть ячейка
+                    !myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].cellInternal && //И она свободна
+                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].BlockingMove == 0 && //И можно двигаться
+                    Time.unscaledTime - myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.25f &&
+                    isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie]) //В этом столбце нет потенциального вертикального движения
+                    ) {
+                    //Ставим такую ячейку как целевую
+                    returnCell = myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie];
+                }
+                //Слева
+                else if (
+                    myCell.pos.x - smeshenie >= 0 && //если не вышли за массив
+                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie] && //Если есть ячейка
+                    !myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].cellInternal && //И она свободна
+                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].BlockingMove == 0 && //И можно двигаться
+                    Time.unscaledTime - myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.25f &&
+                    isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie]) //В этом столбце нет потенциального вертикального движения
+                    ) {
+                    //Ставим такую ячейку как целевую
+                    returnCell = myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie];
+                }
+            }
+        }
+
         return returnCell;
+
+        //Проверка можно ли двигаться боком в эту 
+        bool isCanMoveToThisColum(CellCTRL cellFunc) {
+            bool result = true; //Изначально двигаться разрешено
+
+            //Проверяем низ на то что никто не движется в ячейки снизу
+            for (int minus = 0; minus < myField.cellCTRLs.GetLength(1) && result; minus++) {
+                if (cellFunc.pos.y - minus >= 0 &&//Если не вышли за пределы массива
+                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus] && //есть ячейка
+                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].BlockingMove <= 0//ячейка находится без блокировки движения
+                    ) {
+                    //Блокируем если
+                    if (
+                        (myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].cellInternal && myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].cellInternal.isMove) || // Внутри есть ячейка которая находится в движении
+                        Time.unscaledTime - myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].timeBoomOld < 0.25f //Время ожидания после взрыва не вышло
+                        ) {
+                        result = false;
+                    }
+
+                }
+                else {
+                    break;
+                }
+            }
+
+            //Проверка сверху
+            for (int plus = 0; plus < myField.cellCTRLs.GetLength(1) && result; plus++) {
+                //Проверяем верх на то что нету предметов которые могли бы упасть
+                if (
+                    cellFunc.pos.y + plus < myField.cellCTRLs.GetLength(1) &&//Если не вышли за пределы массива
+                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus] && //есть ячейка
+                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus].BlockingMove <= 0//ячейка находится без блокировки движения
+
+                    )
+                {
+                    //Блокируем если
+                    if (
+                        (myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus].cellInternal) || // Внутри есть ячейка Которая вероятно скоро начнет движение
+                        Time.unscaledTime - myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus].timeBoomOld < 0.25f //Время ожидания после взрыва не вышло
+                        )
+                    {
+                        result = false;
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+
+
+            return result;
+        }
     }
 
     /// <summary>
@@ -243,14 +342,14 @@ public class CellInternalObject : MonoBehaviour
 
         if (!isMove)
         {
-            cellNew.myInternalNum = cellNew.LastInternalNum;
+            cellNew.myInternalNum = cellNew.GetNextLastInternalNum;
             MovingSpeed = 0;
             isMove = true;
         }
 
         //присваиваем ячейке обьект
         myCell.cellInternal = this;
-        myCell.myInternalNum = myCell.LastInternalNum; //Запоминаем действие
+        myCell.myInternalNum = myCell.GetNextLastInternalNum; //Запоминаем действие
 
         IniRect();
     }
@@ -274,7 +373,8 @@ public class CellInternalObject : MonoBehaviour
 
         SpawnEffects();
 
-        Destroy(gameObject);
+        if(gameObject)
+            Destroy(gameObject);
 
         
 
@@ -466,13 +566,25 @@ public class CellInternalObject : MonoBehaviour
 
     //Активируем врутренность ячейки
     bool activate = false;
+    bool activateNeed = false;
+    public bool needInstantDamage = true;
 
-    public void Activate() {
-        Activate(type, null);
-    }
+
+
+    public Type BufferActivateType;
+    public CellInternalObject BufferPartner = null;
     public void Activate(Type ActivateType, CellInternalObject partner) {
 
-        if (ActivateType == Type.color) return;
+        activateNeed = true;
+        BufferActivateType = ActivateType;
+        BufferPartner = partner;
+
+        if (!needInstantDamage)
+        {
+            if (isMove || Time.unscaledTime - timeLastMoving < 0.25f) return;
+        }
+
+        //if (ActivateType == Type.color) return;
 
         //Если партнера нет
         if (partner == null)
@@ -533,7 +645,7 @@ public class CellInternalObject : MonoBehaviour
                     //Если вышли за пределы массива
                     if (myCell.pos.y + y < 0 || myCell.pos.y + y >= myField.cellCTRLs.GetLength(1)) continue;
                     //Если нету ячейки или внутренности
-                    if (!myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y] && !myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].cellInternal) continue;
+                    if (!myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y] || !myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].cellInternal) continue;
 
                     myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].Damage(this);
 
@@ -566,13 +678,15 @@ public class CellInternalObject : MonoBehaviour
                     float time = num *0.05f;
 
                     //Слева
-                    if (myCell.pos.x - num >= 0)
+                    if (myCell.pos.x - num >= 0 &&
+                        myField.cellCTRLs[myCell.pos.x - num, myCell.pos.y])
                     {
                         myField.cellCTRLs[myCell.pos.x - num, myCell.pos.y].DamageInvoke(time);
                     }
 
                     //Справа
-                    if (myCell.pos.x + num < myField.cellCTRLs.GetLength(0))
+                    if (myCell.pos.x + num < myField.cellCTRLs.GetLength(0) &&
+                        myField.cellCTRLs[myCell.pos.x + num, myCell.pos.y])
                     {
                         myField.cellCTRLs[myCell.pos.x + num, myCell.pos.y].DamageInvoke(time);
                     }
@@ -586,13 +700,15 @@ public class CellInternalObject : MonoBehaviour
                     float time = num * 0.05f;
 
                     //Вниз
-                    if (myCell.pos.y - num >= 0)
+                    if (myCell.pos.y - num >= 0 && 
+                        myField.cellCTRLs[myCell.pos.x, myCell.pos.y - num])
                     {
                         myField.cellCTRLs[myCell.pos.x, myCell.pos.y - num].DamageInvoke(time);
                     }
 
                     //вверх
-                    if (myCell.pos.y + num < myField.cellCTRLs.GetLength(1))
+                    if (myCell.pos.y + num < myField.cellCTRLs.GetLength(1) && 
+                        myField.cellCTRLs[myCell.pos.x, myCell.pos.y + num])
                     {
                         myField.cellCTRLs[myCell.pos.x, myCell.pos.y + num].DamageInvoke(time);
                     }
@@ -615,9 +731,9 @@ public class CellInternalObject : MonoBehaviour
             if (partner != null && partner.type == Type.supercolor) {
                 DestroyAll();
             }
-            //партнер ракета горизонтальная
-            else if (partner != null && partner.type == Type.rocketHorizontal) {
-                
+            //партнер ракета
+            else if (partner != null && (partner.type == Type.rocketHorizontal || partner.type == Type.rocketVertical)) {
+                DestroyAllRocket(partner.color);
             }
             //Если партнер просто цвет
             else if (partner != null && partner.type == Type.color)
@@ -630,6 +746,50 @@ public class CellInternalObject : MonoBehaviour
                 DestroyAllColor(color);
             }
 
+            void DestroyAllRocket(InternalColor internalColor)
+            {
+
+                int destroyNum = 0;
+                //Проверяем все ячейки на совпадение цветов
+                for (int x = 0; x < myField.cellCTRLs.GetLength(0); x++)
+                {
+                    for (int y = 0; y < myField.cellCTRLs.GetLength(1); y++)
+                    {
+                        if (!myField.cellCTRLs[x, y] || !myField.cellCTRLs[x, y].cellInternal)
+                        {
+                            continue;
+                        }
+
+
+                        if (myField.cellCTRLs[x, y].cellInternal.color == internalColor)
+                        {
+                            //Удаляем старый объект
+                            Destroy(myField.cellCTRLs[x, y].cellInternal.gameObject);
+
+                            //Сперва создаем новый обьект ракету
+                            GameObject internalObj = Instantiate(myField.prefabInternal, myField.parentOfInternals);
+                            CellInternalObject cellInternalObject = internalObj.GetComponent<CellInternalObject>();
+                            cellInternalObject.myField = myField;
+
+                            if (Random.Range(0, 100) < 50) {
+                                cellInternalObject.setColorAndType(internalColor, Type.rocketVertical);
+                            }
+                            else {
+                                cellInternalObject.setColorAndType(internalColor, Type.rocketHorizontal);
+                            }
+                            //Перемещаем объект на место старого
+                            cellInternalObject.StartMove(myField.cellCTRLs[x, y]);
+                            cellInternalObject.EndMove();
+
+                            needInstantDamage = false;
+                            cellInternalObject.ActivateInvoke(destroyNum);
+                            destroyNum++;
+                        }
+                    }
+                }
+
+                myCell.Damage(null);
+            }
 
             void DestroyAllColor(InternalColor internalColor) {
                 //Проверяем все ячейки на совпадение цветов
@@ -682,6 +842,15 @@ public class CellInternalObject : MonoBehaviour
         }
     }
 
+    public void ActivateInvoke(float timeInvoke) {
+        Invoke("Activate", timeInvoke);
+    }
+
+    void UpdateActivate() {
+        if (activateNeed && !activate) {
+            Activate(BufferActivateType, BufferPartner);
+        }
+    }
 
     public void IniBomb(CellCTRL myCellNew, GameFieldCTRL gameField ,InternalColor internalColor) {
 
@@ -696,7 +865,7 @@ public class CellInternalObject : MonoBehaviour
         color = internalColor;
         Image.texture = TextureBomb;
 
-        myCellNew.myInternalNum = myCellNew.LastInternalNum;
+        myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
     }
 
     public void IniFly(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor)
@@ -727,7 +896,7 @@ public class CellInternalObject : MonoBehaviour
         type = Type.supercolor;
         color = internalColor;
         Image.texture = TextureSuperColor;
-        myCellNew.myInternalNum = myCellNew.LastInternalNum;
+        myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
     }
 
     public void IniRocketVertical(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor)
@@ -743,7 +912,7 @@ public class CellInternalObject : MonoBehaviour
         type = Type.rocketVertical;
         color = internalColor;
         Image.texture = TextureRocketVertical;
-        myCellNew.myInternalNum = myCellNew.LastInternalNum;
+        myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
     }
     public void IniRocketHorizontal(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor)
     {
@@ -758,6 +927,6 @@ public class CellInternalObject : MonoBehaviour
         type = Type.rocketHorizontal;
         color = internalColor;
         Image.texture = TextureRocketHorizontal;
-        myCellNew.myInternalNum = myCellNew.LastInternalNum;
+        myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
     }
 }
