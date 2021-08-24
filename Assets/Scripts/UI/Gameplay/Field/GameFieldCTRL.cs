@@ -185,13 +185,16 @@ public class GameFieldCTRL : MonoBehaviour
                         //Перемещаем объект на свою позицию
                         RectTransform rect = cellObj.GetComponent<RectTransform>();
                         rect.pivot = new Vector2(-x, -y);
+                        cellCTRLs[x, y].BlockingMove = level.cells[x, y].boxHealth;
+                        cellCTRLs[x, y].mold = level.cells[x, y].moldHealth;
 
-                        if (Random.Range(0,100) > 90) {
-                            cellCTRLs[x, y].BlockingMove = 5;
-                        }
-                        if (Random.Range(0, 100) > 90) {
-                            cellCTRLs[x, y].mold = 5;
-                        }
+                        //рандомизация для тестирования
+                        //if (Random.Range(0,100) > 90) {
+                        //    cellCTRLs[x, y].BlockingMove = 5;
+                        //}
+                        //if (Random.Range(0, 100) > 90) {
+                        //    cellCTRLs[x, y].mold = 5;
+                        //}
                     }
 
                     //Создаем подвижные объекты
