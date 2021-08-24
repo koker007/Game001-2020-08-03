@@ -25,8 +25,15 @@ public class LevelsScript : MonoBehaviour
         /// коробка с жизнями
         /// </summary>
         public int boxHealth;
+        public int moldHealth;
         public CellInfo(int color, int type)
         {
+            colorCell = (CellInternalObject.InternalColor)color;
+            typeCell = (CellInternalObject.Type)type;
+        }
+        public CellInfo(int color, int type , int mold)
+        {
+            moldHealth = mold;
             colorCell = (CellInternalObject.InternalColor)color;
             typeCell = (CellInternalObject.Type)type;
         }
@@ -34,6 +41,7 @@ public class LevelsScript : MonoBehaviour
         {
             boxHealth = boxhealth;
         }
+
     }
     /// <summary>
     /// хранит данные о уровне
@@ -95,7 +103,7 @@ public class LevelsScript : MonoBehaviour
 
     private Level level;
 
-    public Level[] Levels = new Level[5];
+    public Level[] Levels = new Level[1000];
 
     private void Start()
     {
@@ -113,15 +121,6 @@ public class LevelsScript : MonoBehaviour
                 { 1,1,1,1,1 },
                 { 1,1,1,1,1 },
                 { 1,1,1,1,1 }
-            },
-
-            new int[,] //box
-            {
-                { 0,0,0,0,0 },
-                { 0,0,0,0,0 },
-                { 0,0,0,0,0 },
-                { 0,0,0,0,0 },
-                { 0,0,0,0,0 }
             },
 
             new int[,] //color
@@ -158,18 +157,6 @@ public class LevelsScript : MonoBehaviour
                 { 1,0,1,1,1,1,0,1 },
                 { 1,1,0,1,1,0,1,1 },
                 { 1,1,1,1,1,1,1,1 }
-            },
-
-            new int[,] //box
-            {
-                { 0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0 }
             },
 
             new int[,] //color
@@ -215,20 +202,6 @@ public class LevelsScript : MonoBehaviour
                 { 1,1,1,1,1,1,1,1,1,1 },
                 { 1,1,1,1,1,1,1,1,1,1 }
             }, 
-            
-            new int[,] //box
-            {
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 }
-            },
 
             new int[,] //color
             {
@@ -260,7 +233,7 @@ public class LevelsScript : MonoBehaviour
     }
 
     //создание уровня (метод существует для зрительного упрощения схемы уровня в Start)
-    private Level CreateLevel
+    public Level CreateLevel
         (
         int NumLevel, 
         int Width, 
@@ -269,6 +242,7 @@ public class LevelsScript : MonoBehaviour
         int move, 
         byte[,] exist, 
         int[,] box,
+        int[,] mold,
         int[,] internalColors, 
         int[,] type
         )
@@ -296,6 +270,10 @@ public class LevelsScript : MonoBehaviour
                 {
                     level.cells[i, j] = new CellInfo(box[i,j]);
                 }
+                else if (mold[i, j] != 0)
+                {
+                    level.cells[i, j] = new CellInfo(internalColors[i, j], type[i, j], mold[i, j]);
+                }
                 else
                 {
                     level.cells[i, j] = new CellInfo(internalColors[i, j], type[i, j]);
@@ -304,6 +282,30 @@ public class LevelsScript : MonoBehaviour
         }
 
         return level;
+    }
+    public Level CreateLevel
+       (
+       int NumLevel,
+       int Width,
+       int Height,
+       int NeedScore,
+       int move,
+       byte[,] exist,
+       int[,] internalColors,
+       int[,] type
+       )
+    {
+        int[,] box = new int[Width, Height];
+        int[,] mold = new int[Width, Height];
+        for (int i = 0; i < Width; i++)
+        {
+            for (int j = 0; j < Height; j++)
+            {
+                box[i, j] = 0;
+                mold[i, j] = 0;
+            }
+        }
+        return CreateLevel(NumLevel, Width, Height, NeedScore, move, exist, box, mold, internalColors, type);
     }
 
     /// <summary>
@@ -317,12 +319,17 @@ public class LevelsScript : MonoBehaviour
         }
         catch
         {
-            return null;
+            return LevelGenerator.main.GenerateLevel(NumLevel);
         }
     }
     public Level ReturnLevel()
     {
         return ReturnLevel(Gameplay.main.levelSelect);
+    }
+
+
+    private void Update()
+    {
     }
 
 }

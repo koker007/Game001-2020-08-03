@@ -33,8 +33,8 @@ public class Gameplay : MonoBehaviour
     public int colors = 3;
     public int combo = 0;
 
-    private const float threeStartFactor = 2f;
-    private const float twoStartFactor = 1.5f;
+    public float threeStartFactor = 2f;
+    public float twoStartFactor = 1.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -75,6 +75,7 @@ public class Gameplay : MonoBehaviour
         {
             if (score >= LevelsScript.main.ReturnLevel().NeedScore)
             {
+                PlayerProfile.main.LevelPassed(levelSelect);
                 GlobalMessage.Results();
             }
             else

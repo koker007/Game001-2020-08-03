@@ -146,8 +146,11 @@ public class MenuWorld : MonoBehaviour
 
     public void SetText()
     {
-        Gold.text = PlayerProfile.main.GoldAmount.ToString();
-        Ticket.text = PlayerProfile.main.Ticket.Amount.ToString();
-        Health.text = PlayerProfile.main.Health.Amount.ToString();
+        try{
+            Gold.text = PlayerProfile.main.GoldAmount.ToString();
+            Ticket.text = PlayerProfile.main.Ticket.Amount.ToString();
+            Health.text = PlayerProfile.main.Health.Amount.ToString();
+        }
+        catch { }
     }
 }

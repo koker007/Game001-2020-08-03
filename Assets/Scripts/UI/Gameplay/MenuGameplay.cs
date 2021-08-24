@@ -102,12 +102,9 @@ public class MenuGameplay : MonoBehaviour
         }
 
         //Обнуление счета игры
-<<<<<<< HEAD
-        Gameplay.main.StartGameplay(ref Stars);
-=======
         if (Gameplay.main)
         {
-            Gameplay.main.StartGameplay();
+            Gameplay.main.StartGameplay(ref Stars);
         }
         else
         {
@@ -121,7 +118,6 @@ public class MenuGameplay : MonoBehaviour
         foreach (GameFieldCTRL field in fields) {
             Destroy(field.gameObject);
         }
->>>>>>> merge-016
     }
 
     //обновление данных интерфейса
@@ -136,7 +132,7 @@ public class MenuGameplay : MonoBehaviour
     public void updateScore()
     {
         Score.text = System.Convert.ToString(Gameplay.main.score);
-        ScoreSlider.value = (float)Gameplay.main.score / LevelsScript.main.ReturnLevel().NeedScore;
+        ScoreSlider.value = (float)Gameplay.main.score / (LevelsScript.main.ReturnLevel().NeedScore * Gameplay.main.threeStartFactor);
         Gameplay.main.CountStars(ref Stars);
     }
     public void updateMoving()
