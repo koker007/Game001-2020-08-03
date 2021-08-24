@@ -43,6 +43,8 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     /// Внутренность ячейки
     /// </summary>
     public CellInternalObject cellInternal;
+    public BoxBlockCTRL BoxBlockCTRL;
+    public MoldCTRL moldCTRL;
 
     /// <summary>
     /// Степень запрета на перемещение объекта
@@ -75,6 +77,10 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     public void Damage(CellInternalObject partner)
     {
 
+        if (mold > 0) {
+            mold--;
+        }
+
         if (cellInternal)
         {
 
@@ -83,10 +89,43 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             //Избавляемся
             //cellInternal.DestroyObj();
         }
+
+        //наносим соседним ячейкам урон по блокираторам движения
+        DamageNearCells();
+
+        void DamageNearCells() {
+            //Самому себе
+            DamageNear();
+
+            //Слева
+            if (pos.x - 1 >= 0 && myField.cellCTRLs[pos.x - 1, pos.y]) {
+                myField.cellCTRLs[pos.x - 1, pos.y].DamageNear();
+            }
+            //Справа
+            if (pos.x + 1 < myField.cellCTRLs.GetLength(0) && myField.cellCTRLs[pos.x + 1, pos.y]) {
+                myField.cellCTRLs[pos.x + 1, pos.y].DamageNear();
+            }
+            //снизу
+            if (pos.y - 1 >= 0 && myField.cellCTRLs[pos.x, pos.y - 1]) {
+                myField.cellCTRLs[pos.x, pos.y - 1].DamageNear();
+            }
+            //Сверху
+            if (pos.y + 1 < myField.cellCTRLs.GetLength(1) && myField.cellCTRLs[pos.x, pos.y + 1]) {
+                myField.cellCTRLs[pos.x, pos.y + 1].DamageNear();
+            }
+        }
     }
 
     public void DamageInvoke(float time) {
         Invoke("Damage", time);
+    }
+
+    public void DamageNear() {
+        //Нанести урон ящику
+        if (BlockingMove > 0)
+        {
+            BlockingMove--;
+        }
     }
 
     // Start is called before the first frame update
@@ -99,6 +138,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     void Update()
     {
         TestInternal();
+        TestBoxBlock();
     }
 
     //Проверка если внутренний обьект не ссылается на эту ячейку, мы забываем про нее
@@ -106,6 +146,14 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         if (cellInternal && cellInternal.myCell != this) {
             cellInternal = null;
         }
+    }
+    void TestBoxBlock() {
+        //Если у ячейки нету блокиратора движения, забываем про нее
+        if (!BoxBlockCTRL) {
+            return;
+        }
+
+        
     }
 
 

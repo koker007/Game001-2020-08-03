@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4587531264786618296}
   - component: {fileID: 1399501584136338744}
+  - component: {fileID: 3217443810916819395}
   m_Layer: 5
   m_Name: Box
   m_TagString: Untagged
@@ -44,6 +45,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 830414217398043823}
   m_CullTransparentMesh: 1
+--- !u!114 &3217443810916819395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830414217398043823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: ff5f08ac20a681c4eb25ac2fbe98110f, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &8239414827059056365
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,8 +361,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166d2501c1345364c8f5c5fa9d46a5a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textures: []
-  image: {fileID: 0}
+  textures:
+  - {fileID: 2800000, guid: 0cb2c859a208deb40bbc90870c13ee19, type: 3}
+  - {fileID: 2800000, guid: 3e0a63cfcd74efc478f722f917958528, type: 3}
+  - {fileID: 2800000, guid: 5f8e1fba2ef455c45ae19c2964023f64, type: 3}
+  - {fileID: 2800000, guid: 14997a6ca10188a4489f90ce2beca356, type: 3}
+  - {fileID: 2800000, guid: ff5f08ac20a681c4eb25ac2fbe98110f, type: 3}
+  image: {fileID: 3217443810916819395}
 --- !u!114 &8239414828004230183
 MonoBehaviour:
   m_ObjectHideFlags: 0

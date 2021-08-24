@@ -17,6 +17,8 @@ public class GameFieldCTRL : MonoBehaviour
     public GameObject prefabInternal;
     [SerializeField]
     GameObject prefabBoxBlock;
+    [SerializeField]
+    GameObject prefabMold;
 
     [Header("Particles")]
     [SerializeField]
@@ -31,6 +33,10 @@ public class GameFieldCTRL : MonoBehaviour
     Transform parentOfCells;
     [SerializeField]
     public Transform parentOfInternals;
+    [SerializeField]
+    public Transform parentOfBoxBlock;
+    [SerializeField]
+    public Transform parentOfMold;
     [SerializeField]
     public Transform parentOfParticles;
     [SerializeField]
@@ -47,6 +53,7 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     RectTransform rectParticleSelect;
 
+    RectTransform myRect;
 
     public int ComboCount = 1; 
     bool isMoving = false; //находятся ли в движении объекты наполе
@@ -113,6 +120,7 @@ public class GameFieldCTRL : MonoBehaviour
             AddAllCellsRandom();
         }
 
+        ScaleField();
 
         //Заполняем все поля ячейками рандомно
         void AddAllCellsRandom() {
@@ -177,10 +185,19 @@ public class GameFieldCTRL : MonoBehaviour
                         //Перемещаем объект на свою позицию
                         RectTransform rect = cellObj.GetComponent<RectTransform>();
                         rect.pivot = new Vector2(-x, -y);
+
+                        if (Random.Range(0,100) > 90) {
+                            cellCTRLs[x, y].BlockingMove = 5;
+                        }
+                        if (Random.Range(0, 100) > 90) {
+                            cellCTRLs[x, y].mold = 5;
+                        }
                     }
 
                     //Создаем подвижные объекты
-                    if (true) {
+                    if (cellCTRLs[x, y].BlockingMove == 0 //Если нету ящика
+
+                        ) {
                         //Создаем объект и перемещаем
                         GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
                         CellInternalObject internalCtrl = internalObj.GetComponent<CellInternalObject>();
@@ -195,10 +212,43 @@ public class GameFieldCTRL : MonoBehaviour
                     }
 
                     //Нужно ли создать ящик
-                    
+                    if (cellCTRLs[x, y].BlockingMove > 0) {
+                        GameObject BoxBlockObj = Instantiate(prefabBoxBlock, parentOfBoxBlock);
+                        BoxBlockCTRL boxBlockCTRL = BoxBlockObj.GetComponent<BoxBlockCTRL>();
+                        cellCTRLs[x, y].BoxBlockCTRL = boxBlockCTRL;
+
+                        //Инициализируем коробку
+                        boxBlockCTRL.Inicialize(cellCTRLs[x, y]);
+                    }
+
+                    //Нужно ли создать плесень
+                    if (cellCTRLs[x, y].mold > 0) {
+                        GameObject MoldObj = Instantiate(prefabMold, parentOfMold);
+                        MoldCTRL moldCTRL = MoldObj.GetComponent<MoldCTRL>();
+                        cellCTRLs[x, y].moldCTRL = moldCTRL;
+
+                        //Инициализация плесени
+                        moldCTRL.inicialize(cellCTRLs[x, y]);
+                    }
 
                 }
             }
+        }
+
+        //Подогнать размер поля в зависимости от количества ячеек
+        void ScaleField() {
+            //100% размер это поле с 10-ю ячейками
+
+            if (!myRect) myRect = GetComponent<RectTransform>();
+
+            //вычисляем какого размера должно быть поле
+            float cellsWeight = (float)cellCTRLs.GetLength(0);
+
+            float sizeNeed = 10 / cellsWeight;
+
+            //Устанавливаем размер поля
+            myRect.localScale = new Vector3(sizeNeed, sizeNeed, 1);
+            myRect.sizeDelta = new Vector2(100 * cellCTRLs.GetLength(0), 100 * cellCTRLs.GetLength(1));
         }
 
 
@@ -285,6 +335,7 @@ public class GameFieldCTRL : MonoBehaviour
 
                     //Проверяем сверху на то есть ли там что-то что может упасть
                     for (int plusY = 0; plusY <= cellCTRLs.GetLength(1); plusY++) {
+
                         //Если достигли самого верха поля
                         if (y + plusY >= cellCTRLs.GetLength(1))
                         {
@@ -316,7 +367,10 @@ public class GameFieldCTRL : MonoBehaviour
                             break;
                         }
                         //или дошли до несуществующей йчейки, выходим
-                        else if (y + plusY < cellCTRLs.GetLength(1) && !cellCTRLs[x, y + plusY])
+                        else if (y + plusY < cellCTRLs.GetLength(1) && (
+                            !cellCTRLs[x, y + plusY] ||
+                            cellCTRLs[x, y + plusY].BlockingMove > 0
+                            ))
                         {
                             break;
                         }
@@ -1120,5 +1174,5 @@ public class GameFieldCTRL : MonoBehaviour
         }
     }
 
-
+    public int CountBoxBlocker = 0;
 }

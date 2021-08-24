@@ -11,15 +11,30 @@ public class BoxBlockCTRL : MonoBehaviour
     [SerializeField]
     RawImage image;
 
+    RectTransform myRect;
+
     CellCTRL myCell;
 
     int healthOld = 0;
 
+    bool isInicialized = false;
     /// <summary>
     /// Инициализация обьекта сразу после создания
     /// </summary>
     public void Inicialize(CellCTRL cellNew) {
+        if (isInicialized) return;
+
         myCell = cellNew;
+        myCell.myField.CountBoxBlocker++;
+
+        SetPos(-myCell.pos.x, -myCell.pos.y);
+
+        isInicialized = true;
+    }
+
+    void SetPos(int x, int y) {
+        myRect = GetComponent<RectTransform>();
+        myRect.pivot = new Vector2(x,y);
 
     }
 
@@ -41,25 +56,37 @@ public class BoxBlockCTRL : MonoBehaviour
 
             //Поменять изображение
             testImage();
+
+
             //Если жизни кончелись, самоуничтожаемся
             testDestroy();
 
+            healthOld = myCell.BlockingMove;
+            myCell.timeBoomOld = Time.unscaledTime;
+
             void testImage() {
                 Texture textureNow;
-                if (myCell.BlockingMove < textures.Length)
+                int array = myCell.BlockingMove - 1;
+                if (myCell.BlockingMove < textures.Length && array >= 0)
                 {
-                    textureNow = textures[myCell.BlockingMove];
+                    textureNow = textures[array];
                 }
-                else {
-                    textureNow = textures[textures.Length-1];
+                else if(array < 0) {
+                    textureNow = textures[0];
+                }
+                else
+                {
+                    textureNow = textures[textures.Length - 1];
                 }
 
                 image.texture = textureNow;
             }
-
+            
 
             void testDestroy() {
                 if (myCell.BlockingMove <= 0) {
+                    //myCell.BoxBlock = null;
+                    myCell.myField.CountBoxBlocker--;
                     Destroy(gameObject);
                 }
             }
