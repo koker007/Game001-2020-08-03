@@ -78,8 +78,13 @@ public class MenuGameplay : MonoBehaviour
 
     private void OnEnable()
     {
+        DestroyAllField();
         CreateGameField();
         updateUI();
+    }
+    private void OnDisable()
+    {
+        DestroyAllField();
     }
 
     //Создать игровое поле согласно параметрам игры
@@ -88,17 +93,44 @@ public class MenuGameplay : MonoBehaviour
         GameField = Instantiate(GameFieldPrefab, GameFieldParent);
         GameFieldCTRL gameFieldCTRL = GameField.GetComponent<GameFieldCTRL>();
 
-        gameFieldCTRL.inicializeField(LevelsScript.main.ReturnLevel());
+        if (LevelsScript.main)
+        {
+            gameFieldCTRL.inicializeField(LevelsScript.main.ReturnLevel());
+        }
+        else {
+            Destroy(GameField);
+        }
 
         //Обнуление счета игры
+<<<<<<< HEAD
         Gameplay.main.StartGameplay(ref Stars);
+=======
+        if (Gameplay.main)
+        {
+            Gameplay.main.StartGameplay();
+        }
+        else
+        {
+            Destroy(GameField);
+        }
+    }
+
+    //Очисть все игровое поле
+    void DestroyAllField() {
+        GameFieldCTRL[] fields = GameFieldParent.GetComponentsInChildren<GameFieldCTRL>();
+        foreach (GameFieldCTRL field in fields) {
+            Destroy(field.gameObject);
+        }
+>>>>>>> merge-016
     }
 
     //обновление данных интерфейса
     void updateUI() {
-        Level.text = System.Convert.ToString(Gameplay.main.levelSelect);
-        updateMoving();
-        updateScore();
+        if (Gameplay.main) {
+            Level.text = System.Convert.ToString(Gameplay.main.levelSelect);
+            updateMoving();
+            updateScore();
+        }
     }
 
     public void updateScore()

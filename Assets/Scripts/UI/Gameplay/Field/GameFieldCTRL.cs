@@ -14,7 +14,7 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     GameObject prefabCell;
     [SerializeField]
-    GameObject prefabInternal;
+    public GameObject prefabInternal;
     [SerializeField]
     GameObject prefabBoxBlock;
 
@@ -30,7 +30,7 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     Transform parentOfCells;
     [SerializeField]
-    Transform parentOfInternals;
+    public Transform parentOfInternals;
     [SerializeField]
     public Transform parentOfParticles;
     [SerializeField]
@@ -190,6 +190,7 @@ public class GameFieldCTRL : MonoBehaviour
 
                         //Меняем тип объекта
                         internalCtrl.setColorAndType(cellInfo.colorCell, cellInfo.typeCell);
+                        internalCtrl.color = cellInfo.colorCell;
 
                     }
 

@@ -1,49 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &830414217398043823
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4587531264786618296}
-  - component: {fileID: 1399501584136338744}
-  m_Layer: 5
-  m_Name: Box
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &4587531264786618296
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830414217398043823}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8239414828004230182}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &1399501584136338744
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830414217398043823}
-  m_CullTransparentMesh: 1
 --- !u!1 &8239414827059056365
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,10 +239,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8239414828004230182}
   - component: {fileID: 8239414828004230180}
-  - component: {fileID: 7461475595392208711}
+  - component: {fileID: 8239414828004230181}
   - component: {fileID: 8239414828004230183}
   m_Layer: 5
-  m_Name: BoxBlock
+  m_Name: Cell 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -304,7 +260,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8239414827880284968}
-  - {fileID: 4587531264786618296}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -321,7 +276,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8239414828004230185}
   m_CullTransparentMesh: 1
---- !u!114 &7461475595392208711
+--- !u!114 &8239414828004230181
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -330,11 +285,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 8239414828004230185}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 166d2501c1345364c8f5c5fa9d46a5a8, type: 3}
+  m_Script: {fileID: 11500000, guid: 3c24d27d3d21c5642aea840b3755a29d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textures: []
-  image: {fileID: 0}
+  myField: {fileID: 0}
+  ramka:
+  - {fileID: 8239414827059056363}
+  - {fileID: 8239414828278009166}
+  - {fileID: 8239414827639080480}
+  - {fileID: 8239414828297749405}
+  pos: {x: 0, y: 0}
+  cellInternal: {fileID: 0}
+  BlockingMove: 0
+  mold: 0
+  myInternalNum: 0
+  timeBoomOld: 0
+  timeAddInternalOld: 0
 --- !u!114 &8239414828004230183
 MonoBehaviour:
   m_ObjectHideFlags: 0
