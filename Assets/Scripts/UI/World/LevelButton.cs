@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// Скрипт кнопок уровней
 /// </summary>
-public class LevelButton : World2Dobject
+public class LevelButton : MonoBehaviour
 {
 
     public Animator LevelAnim;
@@ -16,6 +16,8 @@ public class LevelButton : World2Dobject
     public GraphicRaycaster raycaster;
     private PointerEventData eventData;
     private EventSystem eventSystem;
+    [SerializeField]
+    private SpriteRenderer sprite;
     List<RaycastResult> result;
 
     private Collider2D butCollider;
@@ -24,6 +26,8 @@ public class LevelButton : World2Dobject
     /// </summary>
     public int NumLevel = 0;
 
+    public bool isActive = true;
+
     private void Awake()
     {
         butCollider = gameObject.GetComponent<Collider2D>();
@@ -31,9 +35,29 @@ public class LevelButton : World2Dobject
         eventData = new PointerEventData(eventSystem);
     }
 
+    public void Update()
+    {
+        transform.LookAt(MainComponents.MainCamera.transform);
+
+        if (NumLevel > PlayerProfile.main.ProfilelevelOpen)
+        {
+            isActive = false;
+            sprite.color = Color.gray;
+        }
+        else
+        {
+            sprite.color = Color.white;
+            isActive = true;
+        }
+    }
+
     //нажатие на кнопку
     private void OnMouseDown()
     {
+        if(isActive == false)
+        {
+            return;
+        }
         RayCast();
         if (result.Count <= 1)
         {
@@ -57,6 +81,10 @@ public class LevelButton : World2Dobject
     //отпускание конпки
     private void OnMouseUpAsButton()
     {
+        if(isActive == false)
+        {
+            return;
+        }
         LevelAnim.SetBool("Touch", false);
 
         RayCast();
@@ -69,6 +97,7 @@ public class LevelButton : World2Dobject
                 if (hit.collider.transform.tag == "LevelButton")
                 {
                     SoundManager.main.PlaySound(SoundManager.main.PressButton);
+                    LevelGenerator.main.GenerateLevel(NumLevel);
                     GlobalMessage.LevelInfo(NumLevel);
                 }
             }

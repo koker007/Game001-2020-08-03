@@ -1578,7 +1578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5368276, g: 0.5566038, b: 0.2546725, a: 1}
+  m_Color: {r: 0.54901963, g: 0.54901963, b: 0.23529412, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1853,7 +1853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5368276, g: 0.5566038, b: 0.2546725, a: 1}
+  m_Color: {r: 0.54901963, g: 0.54901963, b: 0.23529412, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7273,6 +7273,7 @@ GameObject:
   - component: {fileID: 1319929786}
   - component: {fileID: 1319929788}
   - component: {fileID: 1319929789}
+  - component: {fileID: 1319929790}
   m_Layer: 0
   m_Name: _Gameplay / Profile
   m_TagString: Untagged
@@ -7302,6 +7303,8 @@ MonoBehaviour:
   movingCount: 0
   colors: 4
   combo: 0
+  threeStartFactor: 2
+  twoStartFactor: 1.5
 --- !u!4 &1319929787
 Transform:
   m_ObjectHideFlags: 0
@@ -7345,6 +7348,18 @@ MonoBehaviour:
   ProfilelevelOpen: 0
   nextLevelPoint: e80300008813000010270000
   GoldAmount: 0
+--- !u!114 &1319929790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319929785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecf5bd8ff68bee747b5485a1efdde608, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1358233568
 GameObject:
   m_ObjectHideFlags: 0
@@ -8393,7 +8408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5368276, g: 0.5566038, b: 0.2546725, a: 1}
+  m_Color: {r: 0.54901963, g: 0.54901963, b: 0.23529412, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

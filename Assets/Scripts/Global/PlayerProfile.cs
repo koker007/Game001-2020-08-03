@@ -70,6 +70,7 @@ public class PlayerProfile : MonoBehaviour
         ProfileLevel = PlayerPrefs.GetInt("ProfileLevel", 1);
         ProfileScore = PlayerPrefs.GetInt("ProfileScore", 0);
         ProfilelevelOpen = PlayerPrefs.GetInt("ProfielevelOpen", 1);
+        ProfilelevelOpen = 1000;
 
         GoldAmount = PlayerPrefs.GetInt("GoldAmount", 10);
 
@@ -127,4 +128,12 @@ public class PlayerProfile : MonoBehaviour
         PlayerPrefs.SetInt("SuperColorAmount", SuperColor.Amount);
     }
 
+    public void LevelPassed(int Level)
+    {
+        if(ProfilelevelOpen > Level + 1)
+        {
+            ProfilelevelOpen = Level + 1;
+        }
+        PlayerPrefs.SetInt("ProfilelevelOpen", ProfilelevelOpen);
+    }
 }
