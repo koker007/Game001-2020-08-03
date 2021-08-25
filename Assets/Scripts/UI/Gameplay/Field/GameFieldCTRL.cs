@@ -55,6 +55,52 @@ public class GameFieldCTRL : MonoBehaviour
 
     RectTransform myRect;
 
+    /// <summary>
+    /// Список плесени
+    /// </summary>
+    public List<MoldCTRL> moldCTRLs = new List<MoldCTRL>();
+
+    /// <summary>
+    /// Получить рандомную ячейку с боков этой, может возвратить Null
+    /// </summary>
+    static public CellCTRL GetRandomCellNearest(CellCTRL cellFrom)
+    {
+        //Выбираем место
+        int place = Random.Range(0, 4);
+
+        CellCTRL result = null;
+        //Сверху
+        if (place == 0)
+        {
+            //Если не вышли за пределы и ячейка существует
+            if (cellFrom.pos.y < cellFrom.myField.cellCTRLs.GetLength(1))
+                result = cellFrom.myField.cellCTRLs[cellFrom.pos.x, cellFrom.pos.y - 1];
+        }
+        //Снизу
+        else if (place == 1)
+        {
+            //Если не вышли за пределы и ячейка существует
+            if (cellFrom.pos.y >= 0)
+                result = cellFrom.myField.cellCTRLs[cellFrom.pos.x, cellFrom.pos.y + 1];
+        }
+        //Справа
+        else if (place == 2)
+        {
+            //Если не вышли за пределы и ячейка существует
+            if (cellFrom.pos.x < cellFrom.myField.cellCTRLs.GetLength(0))
+                result = cellFrom.myField.cellCTRLs[cellFrom.pos.x - 1, cellFrom.pos.y];
+        }
+        //Снизу
+        else if (place == 3)
+        {
+            //Если не вышли за пределы и ячейка существует
+            if (cellFrom.pos.x >= 0)
+                result = cellFrom.myField.cellCTRLs[cellFrom.pos.x + 1, cellFrom.pos.y];
+        }
+
+        return result;
+    }
+
     public int ComboCount = 1; 
     bool isMoving = false; //находятся ли в движении объекты наполе
     //паходятся ли в движении какие либо объекты на поле
@@ -273,6 +319,8 @@ public class GameFieldCTRL : MonoBehaviour
 
         TestStartSwap(); //Начинаем обмен
         TestReturnSwap(); //Возвращяем обмен
+
+        TestStepsCount(); //Выполняем действия после хода
     }
 
     //Стартовая инициализация игрового поля
@@ -1123,6 +1171,28 @@ public class GameFieldCTRL : MonoBehaviour
 
         }
         BufferSwap = BufferSwapNew;
+    }
+
+    int lastStepCount = 0;
+    //Если количетсво ходов изменилось
+    void TestStepsCount() {
+        if (Gameplay.main.movingCount <= lastStepCount) {
+            return;
+        }
+
+        //прибавляем ход
+        lastStepCount++;
+
+        StepMold();
+
+        //Ход плесени
+        void StepMold() {
+            //Выбираем рандомную плесень из всего списка
+            int num = Random.Range(0, moldCTRLs.Count);
+            if (moldCTRLs.Count > 0 && moldCTRLs[num]) {
+                moldCTRLs[num].TestSpawn();
+            }
+        }
     }
 
     //Сделать ячейку выделенной или целевой для перемещения

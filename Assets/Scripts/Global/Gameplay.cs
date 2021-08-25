@@ -28,7 +28,13 @@ public class Gameplay : MonoBehaviour
     [Header("Level parameters")]
     public int score = 0;
     public int scoreMax = 0;
+    /// <summary>
+    /// Оставшиеся количество ходов
+    /// </summary>
     public int movingCan = 0;
+    /// <summary>
+    /// общее количество выполненых ходов
+    /// </summary>
     public int movingCount = 0;
     public int colors = 3;
     public int combo = 0;

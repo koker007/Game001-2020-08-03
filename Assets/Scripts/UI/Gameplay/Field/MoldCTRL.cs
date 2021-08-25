@@ -9,6 +9,9 @@ public class MoldCTRL : MonoBehaviour
     RectTransform myRect;
 
     [SerializeField]
+    GameObject myPrefab;
+
+    [SerializeField]
     RawImage image;
 
 
@@ -17,6 +20,9 @@ public class MoldCTRL : MonoBehaviour
         if (isInicialize) return;
 
         myCell = cellIni;
+
+        //Добавляем в список эту плесень
+        myCell.myField.moldCTRLs.Add(this);
         IniRect();
 
         isInicialize = true;
@@ -29,7 +35,7 @@ public class MoldCTRL : MonoBehaviour
 
 
     int HealthOld = -1;
-    void TestLife() {
+    void UpdateLife() {
         //Если здоровье не менялось
         if (HealthOld == myCell.mold)
             return;
@@ -51,6 +57,34 @@ public class MoldCTRL : MonoBehaviour
         }
     }
 
+    //Спавним плесень в ближайщих точках
+    public void TestSpawn() {
+        
+        //3 проверки подряд если ближайшая ячейка выдается пустой
+        CellCTRL cellTarget = GameFieldCTRL.GetRandomCellNearest(myCell);
+        if (cellTarget == null || cellTarget.mold > 0) {
+            cellTarget = GameFieldCTRL.GetRandomCellNearest(myCell);
+            if (cellTarget == null || cellTarget.mold > 0) {
+                cellTarget = GameFieldCTRL.GetRandomCellNearest(myCell);
+            }
+        }
+
+        //Если этой ячейки нет, или если ячейка оказывается уже занята
+        if (cellTarget == null || cellTarget.mold > 0)
+            return;
+
+        //Делаем здоровье если оно меньше 5-ти
+        if(cellTarget.mold < 5)
+            cellTarget.mold++;
+
+        //Спавним на выбранной ячейке если еще нету
+        if (cellTarget.moldCTRL == null) {
+            GameObject moldObj = Instantiate(myPrefab, myCell.myField.parentOfMold);
+            cellTarget.moldCTRL = moldObj.GetComponent<MoldCTRL>();
+            cellTarget.moldCTRL.inicialize(cellTarget);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +94,6 @@ public class MoldCTRL : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TestLife();
+        UpdateLife();
     }
 }
