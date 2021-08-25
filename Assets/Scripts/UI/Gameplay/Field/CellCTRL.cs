@@ -45,6 +45,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     public CellInternalObject cellInternal;
     public BoxBlockCTRL BoxBlockCTRL;
     public MoldCTRL moldCTRL;
+    public PanelSpreadCTRL panelCTRL;
 
     /// <summary>
     /// Степень запрета на перемещение объекта
@@ -54,6 +55,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     /// Степень плесени
     /// </summary>
     public int mold;
+    public bool panel;
     
     public int myInternalNum = 0;
 
@@ -67,14 +69,17 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         lastInternalNum++;
     }
 
+    public GameFieldCTRL.Combination BufferCombination;
+
     /// <summary>
     /// получить очки и избавиться от внутренности
     /// </summary>
     public void Damage()
     {
-        Damage(null);
+        Damage(null, BufferCombination);
+        BufferCombination = null;
     }
-    public void Damage(CellInternalObject partner)
+    public void Damage(CellInternalObject partner, GameFieldCTRL.Combination combination)
     {
 
         if (mold > 0) {
@@ -85,9 +90,14 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         {
 
 
-            cellInternal.Activate(cellInternal.type, partner);
+            cellInternal.Activate(cellInternal.type, partner, combination);
             //Избавляемся
             //cellInternal.DestroyObj();
+        }
+
+        //Создаем панель если плесени нет и нужно создать панель
+        if (combination != null && mold <= 0 && combination.foundPanel && !panel) {
+            CreatePanel();
         }
 
         //наносим соседним ячейкам урон по блокираторам движения
@@ -113,6 +123,16 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             if (pos.y + 1 < myField.cellCTRLs.GetLength(1) && myField.cellCTRLs[pos.x, pos.y + 1]) {
                 myField.cellCTRLs[pos.x, pos.y + 1].DamageNear();
             }
+        }
+        
+        void CreatePanel() {
+            panel = true;
+
+            GameObject panelObj = Instantiate(myField.prefabPanel, myField.parentOfPanels);
+            panelCTRL = panelObj.GetComponent<PanelSpreadCTRL>();
+
+            //Инициализация плесени
+            panelCTRL.inicialize(this);
         }
     }
 

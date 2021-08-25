@@ -573,11 +573,13 @@ public class CellInternalObject : MonoBehaviour
 
     public Type BufferActivateType;
     public CellInternalObject BufferPartner = null;
-    public void Activate(Type ActivateType, CellInternalObject partner) {
+    public GameFieldCTRL.Combination BufferCombination = null;
+    public void Activate(Type ActivateType, CellInternalObject partner, GameFieldCTRL.Combination combination) {
 
         activateNeed = true;
         BufferActivateType = ActivateType;
         BufferPartner = partner;
+        BufferCombination = combination;
 
         if (!needInstantDamage)
         {
@@ -647,7 +649,7 @@ public class CellInternalObject : MonoBehaviour
                     //Если нету ячейки или внутренности
                     if (!myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y] || !myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].cellInternal) continue;
 
-                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].Damage(this);
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].Damage(this, combination);
 
                 }
             }
@@ -681,6 +683,7 @@ public class CellInternalObject : MonoBehaviour
                     if (myCell.pos.x - num >= 0 &&
                         myField.cellCTRLs[myCell.pos.x - num, myCell.pos.y])
                     {
+                        myField.cellCTRLs[myCell.pos.x - num, myCell.pos.y].BufferCombination = combination;
                         myField.cellCTRLs[myCell.pos.x - num, myCell.pos.y].DamageInvoke(time);
                     }
 
@@ -688,6 +691,7 @@ public class CellInternalObject : MonoBehaviour
                     if (myCell.pos.x + num < myField.cellCTRLs.GetLength(0) &&
                         myField.cellCTRLs[myCell.pos.x + num, myCell.pos.y])
                     {
+                        myField.cellCTRLs[myCell.pos.x + num, myCell.pos.y].BufferCombination = combination;
                         myField.cellCTRLs[myCell.pos.x + num, myCell.pos.y].DamageInvoke(time);
                     }
                 }
@@ -703,6 +707,7 @@ public class CellInternalObject : MonoBehaviour
                     if (myCell.pos.y - num >= 0 && 
                         myField.cellCTRLs[myCell.pos.x, myCell.pos.y - num])
                     {
+                        myField.cellCTRLs[myCell.pos.x, myCell.pos.y - num].BufferCombination = combination;
                         myField.cellCTRLs[myCell.pos.x, myCell.pos.y - num].DamageInvoke(time);
                     }
 
@@ -710,6 +715,7 @@ public class CellInternalObject : MonoBehaviour
                     if (myCell.pos.y + num < myField.cellCTRLs.GetLength(1) && 
                         myField.cellCTRLs[myCell.pos.x, myCell.pos.y + num])
                     {
+                        myField.cellCTRLs[myCell.pos.x, myCell.pos.y + num].BufferCombination = combination;
                         myField.cellCTRLs[myCell.pos.x, myCell.pos.y + num].DamageInvoke(time);
                     }
                 }
@@ -788,7 +794,7 @@ public class CellInternalObject : MonoBehaviour
                     }
                 }
 
-                myCell.Damage(null);
+                myCell.Damage(null, combination);
             }
 
             void DestroyAllColor(InternalColor internalColor) {
@@ -803,12 +809,12 @@ public class CellInternalObject : MonoBehaviour
 
                         if (myField.cellCTRLs[x, y].cellInternal.color == internalColor)
                         {
-                            myField.cellCTRLs[x, y].Damage(partner);
+                            myField.cellCTRLs[x, y].Damage(partner, combination);
                         }
                     }
                 }
 
-                myCell.Damage(null);
+                myCell.Damage(null, combination);
             }
 
             void DestroyAll()
@@ -848,7 +854,7 @@ public class CellInternalObject : MonoBehaviour
 
     void UpdateActivate() {
         if (activateNeed && !activate) {
-            Activate(BufferActivateType, BufferPartner);
+            Activate(BufferActivateType, BufferPartner, BufferCombination);
         }
     }
 

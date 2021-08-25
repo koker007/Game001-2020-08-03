@@ -73,12 +73,12 @@ public class MoldCTRL : MonoBehaviour
         if (cellTarget == null || cellTarget.mold > 0)
             return;
 
-        //ƒелаем здоровье если оно меньше 5-ти
-        if(cellTarget.mold < 5)
+        //ƒелаем здоровье если оно меньше 5-ти и там нет панели.
+        if(cellTarget.mold < 5 && !cellTarget.panel)
             cellTarget.mold++;
 
-        //—павним на выбранной €чейке если еще нету
-        if (cellTarget.moldCTRL == null) {
+        //≈сли плесень должна быть но ее нет, —павним на выбранной €чейке
+        if (cellTarget.mold > 0 && cellTarget.moldCTRL == null) {
             GameObject moldObj = Instantiate(myPrefab, myCell.myField.parentOfMold);
             cellTarget.moldCTRL = moldObj.GetComponent<MoldCTRL>();
             cellTarget.moldCTRL.inicialize(cellTarget);
