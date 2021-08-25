@@ -130,7 +130,7 @@ public class PlayerProfile : MonoBehaviour
 
     public void LevelPassed(int Level)
     {
-        if(ProfilelevelOpen > Level + 1)
+        if(ProfilelevelOpen < Level + 1)
         {
             ProfilelevelOpen = Level + 1;
         }

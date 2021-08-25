@@ -52,7 +52,7 @@ public class MoldCTRL : MonoBehaviour
         //”ничтожить если жизни кончились
         void DestroyMold() {
             if (myCell.mold > 0) return;
-
+            Gameplay.main.MoldUpdate();
             Destroy(gameObject);
         }
     }

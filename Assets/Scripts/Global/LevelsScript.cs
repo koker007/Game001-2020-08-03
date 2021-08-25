@@ -11,6 +11,12 @@ public class LevelsScript : MonoBehaviour
     /// <summary>
     /// хранит данные о ячейке
     /// </summary>
+    public enum PassedType
+    {
+        score,
+        box,
+        mold
+    }
     public class CellInfo
     {
         /// <summary>
@@ -26,18 +32,28 @@ public class LevelsScript : MonoBehaviour
         /// </summary>
         public int boxHealth;
         public int moldHealth;
-        public CellInfo(int color, int type)
+        public CellInfo(int box, int mold, int color, int type)
         {
-            colorCell = (CellInternalObject.InternalColor)color;
-            typeCell = (CellInternalObject.Type)type;
+            if (box != 0)
+            {
+                boxHealth = box;
+            }
+            else
+            {
+                colorCell = (CellInternalObject.InternalColor)color;
+                typeCell = (CellInternalObject.Type)type;
+            }
+
+            if (mold != 0)
+            {
+                moldHealth = mold;
+            }
         }
-        public CellInfo(int color, int type , int mold)
+        public void Cell(int mold)
         {
             moldHealth = mold;
-            colorCell = (CellInternalObject.InternalColor)color;
-            typeCell = (CellInternalObject.Type)type;
         }
-        public CellInfo(int boxhealth)
+        public void CellBox(int boxhealth)
         {
             boxHealth = boxhealth;
         }
@@ -77,6 +93,12 @@ public class LevelsScript : MonoBehaviour
         /// </summary>
         public CellInfo[,] cells;
 
+        public PassedType pasType;
+
+        public int NeedBox;
+        public int NeedMold;
+
+
         /// <summary>
         /// возвращает информацию о клетке на текущем уровне
         /// </summary>
@@ -111,8 +133,17 @@ public class LevelsScript : MonoBehaviour
 
         //уровень 1
         Levels[1] = CreateLevel(
-            //numLevel, width, long, max score, move
-            1, 5, 5, 2000000, 50,
+            //numLevel, width, long, max score, move, passType
+            1, 5, 5, 2000000, 50, PassedType.mold,
+
+            new int[,] //mold
+            {
+                { 1,0,1,0,1 },
+                { 0,1,1,1,0 },
+                { 1,1,1,1,1 },
+                { 0,1,1,1,0 },
+                { 1,0,1,0,1 }
+            },
 
             new byte[,] //exist
             {
@@ -143,8 +174,8 @@ public class LevelsScript : MonoBehaviour
 
         //уровень 2
         Levels[2] = CreateLevel(
-            //numLevel, width, long, max score, move
-            2, 8, 8, 2000000, 1000,
+            //numLevel, width, long, max score, move, passType
+            2, 8, 8, 2000000, 1000, PassedType.box,
 
 
             new byte[,] //exist
@@ -157,7 +188,7 @@ public class LevelsScript : MonoBehaviour
                 { 1,0,1,1,1,1,0,1 },
                 { 1,1,0,1,1,0,1,1 },
                 { 1,1,1,1,1,1,1,1 }
-            },
+            }, 
 
             new int[,] //color
             {
@@ -181,12 +212,13 @@ public class LevelsScript : MonoBehaviour
                 { 0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0 }
-            });
+            }
+            );
 
         //уровень 3
         Levels[3] = CreateLevel(
-            //numLevel, width, long, max score, move
-            3, 10, 10, 10000, 10,
+            //numLevel, width, long, max score, move, passType
+            3, 10, 10, 10000, 10, PassedType.score,
 
 
             new byte[,] //exist
@@ -229,6 +261,20 @@ public class LevelsScript : MonoBehaviour
                 { 0,0,0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0,0,0 }
+            },
+
+            new int[,] //box
+            {
+                { 0,0,0,5,5,0,0,0,0,0 },
+                { 0,0,0,5,5,0,0,0,0,0 },
+                { 0,0,0,5,5,0,0,0,0,0 },
+                { 0,0,0,5,5,0,0,0,0,0 },
+                { 0,0,0,5,5,0,0,0,0,0 },
+                { 0,0,0,5,5,0,0,0,0,0 },
+                { 0,0,0,5,5,0,0,0,0,0 },
+                { 0,0,0,5,5,0,0,0,0,0 },
+                { 0,0,0,5,5,0,0,0,0,0 },
+                { 0,0,0,5,5,0,0,0,0,0 }
             });
     }
 
@@ -240,6 +286,7 @@ public class LevelsScript : MonoBehaviour
         int Height, 
         int NeedScore, 
         int move, 
+        PassedType pasType,
         byte[,] exist, 
         int[,] box,
         int[,] mold,
@@ -254,29 +301,22 @@ public class LevelsScript : MonoBehaviour
             Width = Width, 
             Height = Height,
             NeedScore = NeedScore,
-            Move = move
+            Move = move,
+            pasType = pasType
         };
 
-        level.cells = new CellInfo[Width, Height];
-        for (int i = 0; i < Width; i++)
+        level.cells = new CellInfo[Height, Width];
+        for (int i = 0; i < Height; i++)
         {
-            for (int j = 0; j < Height; j++)
+            for (int j = 0; j < Width; j++)
             {
-                if(exist[i,j] == 0)
+                if (exist[j, i] == 0)
                 {
                     level.cells[i, j] = null;
                 }
-                else if (box[i, j] != 0)
-                {
-                    level.cells[i, j] = new CellInfo(box[i,j]);
-                }
-                else if (mold[i, j] != 0)
-                {
-                    level.cells[i, j] = new CellInfo(internalColors[i, j], type[i, j], mold[i, j]);
-                }
                 else
                 {
-                    level.cells[i, j] = new CellInfo(internalColors[i, j], type[i, j]);
+                    level.cells[i, j] = new CellInfo(box[j, i], mold[j, i], internalColors[j, i], type[j, i]);
                 }
             }
         }
@@ -290,6 +330,7 @@ public class LevelsScript : MonoBehaviour
        int Height,
        int NeedScore,
        int move,
+       PassedType pasType,
        byte[,] exist,
        int[,] internalColors,
        int[,] type
@@ -297,15 +338,64 @@ public class LevelsScript : MonoBehaviour
     {
         int[,] box = new int[Width, Height];
         int[,] mold = new int[Width, Height];
-        for (int i = 0; i < Width; i++)
+        for (int i = 0; i < Height; i++)
         {
-            for (int j = 0; j < Height; j++)
+            for (int j = 0; j < Width; j++)
             {
-                box[i, j] = 0;
-                mold[i, j] = 0;
+                box[j, i] = 0;
+                mold[j, i] = 0;
             }
         }
-        return CreateLevel(NumLevel, Width, Height, NeedScore, move, exist, box, mold, internalColors, type);
+        return CreateLevel(NumLevel, Width, Height, NeedScore, move, pasType, exist, box, mold, internalColors, type);
+    }
+
+    public Level CreateLevel
+       (
+       int NumLevel,
+       int Width,
+       int Height,
+       int NeedScore,
+       int move,
+       PassedType pasType,
+       byte[,] exist,
+       int[,] internalColors,
+       int[,] type,
+       int[,] box
+       )
+    {
+        int[,] mold = new int[Width, Height];
+        for (int i = 0; i < Height; i++)
+        {
+            for (int j = 0; j < Width; j++)
+            {
+                mold[j, i] = 0;
+            }
+        }
+        return CreateLevel(NumLevel, Width, Height, NeedScore, move, pasType, exist, box, mold, internalColors, type);
+    }
+    public Level CreateLevel
+       (
+       int NumLevel,
+       int Width,
+       int Height,
+       int NeedScore,
+       int move,
+       PassedType pasType,
+       int[,] mold,
+       byte[,] exist,
+       int[,] internalColors,
+       int[,] type
+       )
+    {
+        int[,] box = new int[Width, Height];
+        for (int i = 0; i < Height; i++)
+        {
+            for (int j = 0; j < Width; j++)
+            {
+                box[j, i] = 0;
+            }
+        }
+        return CreateLevel(NumLevel, Width, Height, NeedScore, move, pasType, exist, box, mold, internalColors, type);
     }
 
     /// <summary>
@@ -325,11 +415,6 @@ public class LevelsScript : MonoBehaviour
     public Level ReturnLevel()
     {
         return ReturnLevel(Gameplay.main.levelSelect);
-    }
-
-
-    private void Update()
-    {
     }
 
 }

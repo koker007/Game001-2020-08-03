@@ -38,6 +38,8 @@ public class Gameplay : MonoBehaviour
     public int movingCount = 0;
     public int colors = 3;
     public int combo = 0;
+    public int boxCount;
+    public int moldCount;
 
     public float threeStartFactor = 2f;
     public float twoStartFactor = 1.5f;
@@ -58,6 +60,8 @@ public class Gameplay : MonoBehaviour
     {
         //Если уровень выбран
         score = 0;
+        boxCount = LevelsScript.main.ReturnLevel().NeedBox;
+        moldCount = LevelsScript.main.ReturnLevel().NeedMold;
         movingCan = LevelsScript.main.ReturnLevel().Move;
         CountStars(ref stars);
     }
@@ -75,11 +79,31 @@ public class Gameplay : MonoBehaviour
         MenuGameplay.main.updateScore();
     }
 
+    public void MoldUpdate()
+    {
+        moldCount--;
+    }
+
+    public void BoxUpdate()
+    {
+        boxCount--;
+    }
+
     public void CheckEndGame()
     {
         if (movingCan <= 0 && isGameplay && GameplayEnd == false)
         {
-            if (score >= LevelsScript.main.ReturnLevel().NeedScore)
+            if (LevelsScript.main.ReturnLevel().pasType == LevelsScript.PassedType.score && score >= LevelsScript.main.ReturnLevel().NeedScore)
+            {
+                PlayerProfile.main.LevelPassed(levelSelect);
+                GlobalMessage.Results();
+            }
+            else if (LevelsScript.main.ReturnLevel().pasType == LevelsScript.PassedType.box && boxCount <= 0)
+            {
+                PlayerProfile.main.LevelPassed(levelSelect);
+                GlobalMessage.Results();
+            }
+            else if (LevelsScript.main.ReturnLevel().pasType == LevelsScript.PassedType.mold && boxCount <= 0)
             {
                 PlayerProfile.main.LevelPassed(levelSelect);
                 GlobalMessage.Results();

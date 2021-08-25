@@ -87,6 +87,7 @@ public class BoxBlockCTRL : MonoBehaviour
                 if (myCell.BlockingMove <= 0) {
                     //myCell.BoxBlock = null;
                     myCell.myField.CountBoxBlocker--;
+                    Gameplay.main.BoxUpdate();
                     Destroy(gameObject);
                 }
             }
