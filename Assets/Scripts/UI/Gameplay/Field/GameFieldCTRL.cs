@@ -18,6 +18,8 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     GameObject prefabBoxBlock;
     [SerializeField]
+    public GameObject prefabPanel;
+    [SerializeField]
     GameObject prefabMold;
 
     [Header("Particles")]
@@ -35,6 +37,8 @@ public class GameFieldCTRL : MonoBehaviour
     public Transform parentOfInternals;
     [SerializeField]
     public Transform parentOfBoxBlock;
+    [SerializeField]
+    public Transform parentOfPanels;
     [SerializeField]
     public Transform parentOfMold;
     [SerializeField]
@@ -73,29 +77,29 @@ public class GameFieldCTRL : MonoBehaviour
         if (place == 0)
         {
             //Если не вышли за пределы и ячейка существует
-            if (cellFrom.pos.y < cellFrom.myField.cellCTRLs.GetLength(1))
-                result = cellFrom.myField.cellCTRLs[cellFrom.pos.x, cellFrom.pos.y - 1];
+            if (cellFrom.pos.y + 1 < cellFrom.myField.cellCTRLs.GetLength(1) && cellFrom.myField.cellCTRLs[cellFrom.pos.x, cellFrom.pos.y])
+                result = cellFrom.myField.cellCTRLs[cellFrom.pos.x, cellFrom.pos.y + 1];
         }
         //Снизу
         else if (place == 1)
         {
             //Если не вышли за пределы и ячейка существует
-            if (cellFrom.pos.y >= 0)
-                result = cellFrom.myField.cellCTRLs[cellFrom.pos.x, cellFrom.pos.y + 1];
+            if (cellFrom.pos.y - 1 >= 0 && cellFrom.myField.cellCTRLs[cellFrom.pos.x, cellFrom.pos.y])
+                result = cellFrom.myField.cellCTRLs[cellFrom.pos.x, cellFrom.pos.y - 1];
         }
         //Справа
         else if (place == 2)
         {
             //Если не вышли за пределы и ячейка существует
-            if (cellFrom.pos.x < cellFrom.myField.cellCTRLs.GetLength(0))
-                result = cellFrom.myField.cellCTRLs[cellFrom.pos.x - 1, cellFrom.pos.y];
+            if (cellFrom.pos.x + 1 < cellFrom.myField.cellCTRLs.GetLength(0) && cellFrom.myField.cellCTRLs[cellFrom.pos.x, cellFrom.pos.y])
+                result = cellFrom.myField.cellCTRLs[cellFrom.pos.x + 1, cellFrom.pos.y];
         }
-        //Снизу
+        //слева
         else if (place == 3)
         {
             //Если не вышли за пределы и ячейка существует
-            if (cellFrom.pos.x >= 0)
-                result = cellFrom.myField.cellCTRLs[cellFrom.pos.x + 1, cellFrom.pos.y];
+            if (cellFrom.pos.x - 1 >= 0 && cellFrom.myField.cellCTRLs[cellFrom.pos.x, cellFrom.pos.y])
+                result = cellFrom.myField.cellCTRLs[cellFrom.pos.x - 1, cellFrom.pos.y];
         }
 
         return result;
@@ -232,15 +236,18 @@ public class GameFieldCTRL : MonoBehaviour
                         RectTransform rect = cellObj.GetComponent<RectTransform>();
                         rect.pivot = new Vector2(-x, -y);
                         cellCTRLs[x, y].BlockingMove = level.cells[x, y].boxHealth;
-                        cellCTRLs[x, y].mold = level.cells[x, y].moldHealth;
+                        //cellCTRLs[x, y].mold = level.cells[x, y].moldHealth;
 
                         //рандомизация для тестирования
                         //if (Random.Range(0,100) > 90) {
                         //    cellCTRLs[x, y].BlockingMove = 5;
                         //}
-                        //if (Random.Range(0, 100) > 90) {
-                        //    cellCTRLs[x, y].mold = 5;
-                        //}
+                        if (Random.Range(0, 100) > 90) {
+                            cellCTRLs[x, y].mold = 5;
+                        }
+                        if (Random.Range(0, 100) > 90) {
+                            cellCTRLs[x, y].panel = true;
+                        }
                     }
 
                     //Создаем подвижные объекты
@@ -278,6 +285,14 @@ public class GameFieldCTRL : MonoBehaviour
 
                         //Инициализация плесени
                         moldCTRL.inicialize(cellCTRLs[x, y]);
+                    }
+                    //Нужно ли создать панель
+                    if (cellCTRLs[x,y].panel) {
+                        GameObject panelObj = Instantiate(prefabPanel, parentOfPanels);
+                        cellCTRLs[x, y].panelCTRL = panelObj.GetComponent<PanelSpreadCTRL>();
+
+                        //Инициализация плесени
+                        cellCTRLs[x, y].panelCTRL.inicialize(cellCTRLs[x, y]);
                     }
 
                 }
@@ -446,7 +461,10 @@ public class GameFieldCTRL : MonoBehaviour
     //Проверяем все ячейки на комбинаци
 
     //Класс комбинации, для отслеживания что собралось
-    class Combination {
+    /// <summary>
+    /// Класс комбинации для отслеживания что 
+    /// </summary>
+    public class Combination {
         public List<CellCTRL> cells = new List<CellCTRL>();
 
         public bool horizontal = false;
@@ -456,6 +474,8 @@ public class GameFieldCTRL : MonoBehaviour
         public bool square = false;
         public bool line4 = false;
         public bool cross = false;
+
+        public bool foundPanel = false;
     }
     void TestFieldCombination() {
         //Создаем новый список комбинаций
@@ -801,18 +821,21 @@ public class GameFieldCTRL : MonoBehaviour
                     continue;
                 }
 
-
-
+                Combination comb = new Combination();
+                comb.cells.Add(swap.first);
+                comb.cells.Add(swap.second);
+                if (swap.first.panel || swap.second.panel)
+                    comb.foundPanel = true;
 
                 //супер колор + что-то еще
                 if (swap.first.cellInternal.type == CellInternalObject.Type.supercolor ||
                     swap.second.cellInternal.type == CellInternalObject.Type.supercolor) {
 
                     if (swap.first.cellInternal.type == CellInternalObject.Type.supercolor) {
-                        swap.first.cellInternal.Activate(CellInternalObject.Type.supercolor, swap.second.cellInternal);
+                        swap.first.cellInternal.Activate(CellInternalObject.Type.supercolor, swap.second.cellInternal, comb);
                     }
                     else {
-                        swap.second.cellInternal.Activate(CellInternalObject.Type.supercolor, swap.first.cellInternal);
+                        swap.second.cellInternal.Activate(CellInternalObject.Type.supercolor, swap.first.cellInternal, comb);
                     }
 
                 }
@@ -822,11 +845,11 @@ public class GameFieldCTRL : MonoBehaviour
 
                     if (swap.first.cellInternal.type == CellInternalObject.Type.bomb)
                     {
-                        swap.first.cellInternal.Activate(CellInternalObject.Type.bomb, swap.second.cellInternal);
+                        swap.first.cellInternal.Activate(CellInternalObject.Type.bomb, swap.second.cellInternal, comb);
                     }
                     else
                     {
-                        swap.second.cellInternal.Activate(CellInternalObject.Type.bomb, swap.first.cellInternal);
+                        swap.second.cellInternal.Activate(CellInternalObject.Type.bomb, swap.first.cellInternal, comb);
                     }
                 }
                 //Самолет + что-то
@@ -840,19 +863,19 @@ public class GameFieldCTRL : MonoBehaviour
 
                     if (swap.first.cellInternal.type == CellInternalObject.Type.rocketHorizontal)
                     {
-                        swap.second.cellInternal.Activate(CellInternalObject.Type.rocketHorizontal, swap.first.cellInternal);
+                        swap.second.cellInternal.Activate(CellInternalObject.Type.rocketHorizontal, swap.first.cellInternal, comb);
                     }
                     else if (swap.first.cellInternal.type == CellInternalObject.Type.rocketVertical)
                     {
-                        swap.second.cellInternal.Activate(CellInternalObject.Type.rocketVertical, swap.first.cellInternal);
+                        swap.second.cellInternal.Activate(CellInternalObject.Type.rocketVertical, swap.first.cellInternal, comb);
                     }
                     else if(swap.second.cellInternal.type == CellInternalObject.Type.rocketHorizontal)
                     {
-                        swap.first.cellInternal.Activate(CellInternalObject.Type.rocketHorizontal, swap.second.cellInternal);
+                        swap.first.cellInternal.Activate(CellInternalObject.Type.rocketHorizontal, swap.second.cellInternal, comb);
                     }
                     else if (swap.second.cellInternal.type == CellInternalObject.Type.rocketVertical)
                     {
-                        swap.first.cellInternal.Activate(CellInternalObject.Type.rocketVertical, swap.second.cellInternal);
+                        swap.first.cellInternal.Activate(CellInternalObject.Type.rocketVertical, swap.second.cellInternal, comb);
                     }
 
                 }
@@ -874,11 +897,13 @@ public class GameFieldCTRL : MonoBehaviour
             //Выполнить комбинацию
             void CalcCombination(Combination comb) {
 
+
                 //Ищем наиболее подходяшую ячейку для спавна и запоминаем цвет
                 CellCTRL CellSpawn = comb.cells[0];
                 float timelastMove = 0;
                 CellInternalObject.InternalColor color = CellInternalObject.InternalColor.Red;
 
+                //Перебираем все ячейки чтобы получить общую информацию об комбинации
                 foreach (CellCTRL cell in comb.cells) {
                     if (CellSpawn.myInternalNum < cell.myInternalNum) {
                         CellSpawn = cell;
@@ -891,7 +916,12 @@ public class GameFieldCTRL : MonoBehaviour
                                 timelastMove = cell.cellInternal.timeLastMoving;
                             }
                         }
+
                     }
+
+                    //Если нашли панель
+                    if (cell.panel)
+                        comb.foundPanel = true;
                 }
 
 
@@ -939,7 +969,7 @@ public class GameFieldCTRL : MonoBehaviour
                         BufferSwap = BufferSwapNew;
 
                         //Наносим урон по клетке
-                        c.Damage(partner);
+                        c.Damage(partner, comb);
                     }
                 }
 
