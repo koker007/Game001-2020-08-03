@@ -61,6 +61,7 @@ public class Gameplay : MonoBehaviour
         //Если уровень выбран
         score = 0;
         boxCount = LevelsScript.main.ReturnLevel().NeedBox;
+        movingCount = 0;
         moldCount = LevelsScript.main.ReturnLevel().NeedMold;
         movingCan = LevelsScript.main.ReturnLevel().Move;
         CountStars(ref stars);
@@ -68,7 +69,7 @@ public class Gameplay : MonoBehaviour
     //вычитает ход и делает проверку на 0 ходов
     public void MinusMoving()
     {
-        //movingCount++;
+        movingCount++;
         movingCan--;
         MenuGameplay.main.updateMoving();
     }
