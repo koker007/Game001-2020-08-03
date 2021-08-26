@@ -50,6 +50,10 @@ public class MenuWorld : MonoBehaviour
     void Update()
     {
         updateButtons();
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            GlobalMessage.ExitGame();
+        }
     }
 
     void OnEnable()

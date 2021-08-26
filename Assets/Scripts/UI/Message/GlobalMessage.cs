@@ -47,10 +47,14 @@ public class GlobalMessage : MonoBehaviour
     GameObject PrefabTickets;
     [SerializeField]
     GameObject PrefabComingSoon;
+    [SerializeField]
+    GameObject PrefabExitGame;
 
     //Нужно ли закрыть окно
     [SerializeField]
     bool needClose = true;
+    [SerializeField]
+    bool openMessage = false;
 
     // Start is called before the first frame update
     void Start()
@@ -76,6 +80,8 @@ public class GlobalMessage : MonoBehaviour
         MessageCTRL message = main.SelectMessanger.GetComponent<MessageCTRL>();
         if (message)
         {
+
+            main.openMessage = false;
             //Говорим сообщению выпилиться
             message.NeedClose = true;
             //Говорим фону осветлиться
@@ -90,7 +96,13 @@ public class GlobalMessage : MonoBehaviour
     /// Отправить сообщение в сплывающем окне
     /// </summary>
     /// <param name="text"></param>
-    static public void Message(string title, string message, string button){
+    static public void Message(string title, string message, string button)
+    {
+        if (main.openMessage)
+        {
+            return;
+        }
+        main.openMessage = true;
         GameObject messageObj = Instantiate(main.PrefabMessanger, main.transform);
         main.SelectMessanger = messageObj.GetComponent<RectTransform>();
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
@@ -102,7 +114,13 @@ public class GlobalMessage : MonoBehaviour
         Message(title, message, "Ok");
     }
 
-    static public void Settings() {
+    static public void Settings()
+    {
+        if (main.openMessage)
+        {
+            return;
+        }
+        main.openMessage = true;
         GameObject messageObj = Instantiate(main.PrefabSettings, main.transform);
         main.SelectMessanger = messageObj.GetComponent<RectTransform>();
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
@@ -113,7 +131,13 @@ public class GlobalMessage : MonoBehaviour
     /// <summary>
     /// Всплывающее окно здоровье
     /// </summary>
-    static public void Health() {
+    static public void Health()
+    {
+        if (main.openMessage)
+        {
+            return;
+        }
+        main.openMessage = true;
         GameObject messageObj = Instantiate(main.PrefabHealth, main.transform);
         main.SelectMessanger = messageObj.GetComponent<RectTransform>();
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
@@ -123,7 +147,13 @@ public class GlobalMessage : MonoBehaviour
     /// <summary>
     /// Всплывающее окно билеты
     /// </summary>
-    static public void Tickets() {
+    static public void Tickets()
+    {
+        if (main.openMessage)
+        {
+            return;
+        }
+        main.openMessage = true;
         GameObject messageObj = Instantiate(main.PrefabTickets, main.transform);
         main.SelectMessanger = messageObj.GetComponent<RectTransform>();
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
@@ -135,6 +165,11 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void Shop()
     {
+        if (main.openMessage)
+        {
+            return;
+        }
+        main.openMessage = true;
         GameObject messageObj = Instantiate(main.PrefabShop, main.transform);
         main.SelectMessanger = messageObj.GetComponent<RectTransform>();
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
@@ -146,6 +181,11 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void Events()
     {
+        if (main.openMessage)
+        {
+            return;
+        }
+        main.openMessage = true;
         GameObject messageObj = Instantiate(main.PrefabEvents, main.transform);
         main.SelectMessanger = messageObj.GetComponent<RectTransform>();
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
@@ -159,6 +199,11 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void ExitLevel()
     {
+        if (main.openMessage)
+        {
+            return;
+        }
+        main.openMessage = true;
         GameObject messageObj = Instantiate(main.PrefabExitLevel, main.transform);
         main.SelectMessanger = messageObj.GetComponent<RectTransform>();
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
@@ -170,6 +215,11 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void Lose()
     {
+        if (main.openMessage)
+        {
+            return;
+        }
+        main.openMessage = true;
         GameObject messageObj = Instantiate(main.PrefabLose, main.transform);
         main.SelectMessanger = messageObj.GetComponent<RectTransform>();
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
@@ -181,6 +231,11 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void Results()
     {
+        if (main.openMessage)
+        {
+            return;
+        }
+        main.openMessage = true;
         GameObject messageObj = Instantiate(main.PrefabResults, main.transform);
         main.SelectMessanger = messageObj.GetComponent<RectTransform>();
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
@@ -193,6 +248,11 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void ComingSoon()
     {
+        if (main.openMessage)
+        {
+            return;
+        }
+        main.openMessage = true;
         GameObject messageObj = Instantiate(main.PrefabComingSoon, main.transform);
         main.SelectMessanger = messageObj.GetComponent<RectTransform>();
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
@@ -204,10 +264,34 @@ public class GlobalMessage : MonoBehaviour
     /// Выбрать уровень и показать информацию о нем
     /// </summary>
     /// <param name="SelectLevel"></param>
-    static public void LevelInfo(int levelSelect) {
+    static public void LevelInfo(int levelSelect)
+    {
+        if (main.openMessage)
+        {
+            return;
+        }
+        main.openMessage = true;
         Gameplay.main.levelSelect = levelSelect;
 
         GameObject messageObj = Instantiate(main.PrefabLVLInfo, main.transform);
+        main.SelectMessanger = messageObj.GetComponent<RectTransform>();
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+
+        main.needClose = false;
+    }
+
+    /// <summary>
+    /// выход из игры
+    /// </summary>
+    static public void ExitGame()
+    {
+        if (main.openMessage)
+        {
+            return;
+        }
+        main.openMessage = true;
+
+        GameObject messageObj = Instantiate(main.PrefabExitGame, main.transform);
         main.SelectMessanger = messageObj.GetComponent<RectTransform>();
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
 

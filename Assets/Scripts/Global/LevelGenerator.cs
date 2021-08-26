@@ -13,6 +13,7 @@ public class LevelGenerator : MonoBehaviour
     private float existChance = 0.3f;
     private float boxChance = 0.4f;
     private float moldChance = 0.5f;
+    private float noizeScale = 0.04f;
 
     private void Start()
     {
@@ -40,10 +41,11 @@ public class LevelGenerator : MonoBehaviour
         {
             for (int x = 0; x < Width; x++)
             {
-                float randExist = Mathf.PerlinNoise(x * NumLevel * Mathf.PI * 0.005f, y * NumLevel * Mathf.PI * 0.008f);
-                float randBox = Mathf.PerlinNoise(x * (NumLevel + 1) * Mathf.PI * 0.005f, y * NumLevel * Mathf.PI * 0.008f);
-                float randMold = Mathf.PerlinNoise(x * (NumLevel + 2) * Mathf.PI * 0.008f, y * NumLevel * Mathf.PI * 0.008f);
-                if (randExist < existChance)
+                float randExist = Mathf.PerlinNoise((x + NumLevel * 100) * Mathf.PI * noizeScale * 3, (y + NumLevel) * Mathf.PI * noizeScale);
+                float randBox = Mathf.PerlinNoise((x + (NumLevel * 2000)) * Mathf.PI * noizeScale * 2, (y + NumLevel) * Mathf.PI * noizeScale);
+                float randMold = Mathf.PerlinNoise((x + (NumLevel * 30000)) * Mathf.PI * noizeScale, (y + NumLevel) * Mathf.PI * noizeScale);
+
+                if (randBox > 1 - existChance)
                 {
                     exist[x, y] = 0;
                 }
@@ -56,7 +58,7 @@ public class LevelGenerator : MonoBehaviour
                 {
                     for(int k = 5; k > 0; k--)
                     {
-                        if (randBox < boxChance / k)
+                        if (randBox < boxChance - 0.04 * (k - 1))
                         {
                             box[x, y] = k;
                             break;
@@ -72,7 +74,7 @@ public class LevelGenerator : MonoBehaviour
                 {
                     for (int k = 5; k > 0; k--)
                     {
-                        if (randMold < boxChance / k)
+                        if (randMold < moldChance / k)
                         {
                             mold[x, y] = k;
                             break;
@@ -90,39 +92,21 @@ public class LevelGenerator : MonoBehaviour
             }
         }
         /*
-        for (int i = 0; i < Height; i++)
+        for (int y = 0; y < Height; y++)
         {
-            for (int j = Width - 1; j >= 0; j--)
-            { 
-                if(exist[j, i] == 0)
+            for (int x = Width - 1; x >= 0; x--)
+            {
+                if (x + 1 < Width)
                 {
-                    try
+                    if (exist[x, y] == 0 && exist[x + 1, y] == 1)
                     {
-                        if (exist[j - 1, i] == 1)
-                        {
-                            try
-                            {
-                                if (exist[j, i - 1] == 0 && exist[j, i + 1] == 0)
-                                {
-                                    exist[j, i] = 1;
-                                    Debug.Log("exist");
-                                }
-                            }
-                            catch
-                            {
-                                exist[j, i] = 1;
-                                Debug.Log("exist");
-                            }
-                        }
-                    }
-                    catch
-                    {
-                        Debug.Log("error");
+                        exist[x, y] = 1;
+                        Debug.Log("exist" + x.ToString() + y.ToString());
                     }
                 }
             }
-        }
-        */
+        }*/
+        
         LevelsScript.main.Levels[NumLevel] = LevelsScript.main.CreateLevel(NumLevel, Width, Height, NeedScore, (int)move, passedType, exist, box, mold, IColors, Type);
         return LevelsScript.main.Levels[NumLevel];
     }
