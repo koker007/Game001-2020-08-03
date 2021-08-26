@@ -592,7 +592,7 @@ public class CellInternalObject : MonoBehaviour
         if (partner == null)
         {
             Debug.Log("Activate");
-            if (ActivateType == Type.bomb) ActivateBomb();
+            if (ActivateType == Type.bomb) ActivateBomb(1);
             else if (ActivateType == Type.rocketHorizontal) ActivateRocket(true, false);
             else if (ActivateType == Type.rocketVertical) ActivateRocket(false, true);
             else if (ActivateType == Type.supercolor) ActivateSuperColor();
@@ -603,14 +603,16 @@ public class CellInternalObject : MonoBehaviour
             if (ActivateType == Type.supercolor) {
                 ActivateSuperColor();
             }
-            //Бомба + горизонталь
-            else if (ActivateType == Type.bomb && partner.type == Type.rocketHorizontal) {
-                ActivateBombHorizontal();
+            //Бомба + ракета
+            else if ((ActivateType == Type.bomb && partner.type == Type.rocketHorizontal) ||
+                (ActivateType == Type.rocketHorizontal && partner.type == Type.bomb) ||
+                (ActivateType == Type.bomb && partner.type == Type.rocketVertical) ||
+                (ActivateType == Type.rocketVertical && partner.type == Type.bomb)) {
+                ActivateBombAndRocket();
             }
-            //Бомба + вертикаль
-            else if (ActivateType == Type.bomb && partner.type == Type.rocketVertical)
-            {
-                ActivateBombVertical();
+            //Бомба + бомба
+            else if (ActivateType == Type.bomb && partner.type == Type.bomb) {
+                ActivateBomb(2);
             }
             //ракета + ракета
             else if ((ActivateType == Type.rocketHorizontal || ActivateType == Type.rocketVertical) &&
@@ -621,6 +623,7 @@ public class CellInternalObject : MonoBehaviour
 
         DestroyObj();
 
+        /*
         void ActivateBomb()
         {
 
@@ -649,11 +652,12 @@ public class CellInternalObject : MonoBehaviour
                     //Если нету ячейки или внутренности
                     if (!myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y] || !myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].cellInternal) continue;
 
-                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].Damage(this, combination);
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].Damage(this, combination, false);
 
                 }
             }
         }
+        */
 
         void ActivateRocket(bool horizontal, bool vertical)
         {
@@ -741,9 +745,19 @@ public class CellInternalObject : MonoBehaviour
             if (partner != null && partner.type == Type.supercolor) {
                 DestroyAll();
             }
+            //Если партнер бомба, ракета или самолет
+            else if (partner != null && 
+                (partner.type == Type.bomb ||
+                partner.type == Type.rocketHorizontal ||
+                partner.type == Type.rocketVertical ||
+                partner.type == Type.airplane)
+                ) {
+                replacementColorAndActivate();
+            }
             //партнер ракета
             else if (partner != null && (partner.type == Type.rocketHorizontal || partner.type == Type.rocketVertical)) {
-                DestroyAllRocket(partner.color);
+                replacementColorAndActivate();
+                //DestroyAllRocket(partner.color);
             }
             //Если партнер просто цвет
             else if (partner != null && partner.type == Type.color)
@@ -759,7 +773,7 @@ public class CellInternalObject : MonoBehaviour
             void DestroyAllRocket(InternalColor internalColor)
             {
 
-                int destroyNum = 0;
+                float destroyNum = 0;
                 //Проверяем все ячейки на совпадение цветов
                 for (int x = 0; x < myField.cellCTRLs.GetLength(0); x++)
                 {
@@ -792,6 +806,7 @@ public class CellInternalObject : MonoBehaviour
                             cellInternalObject.EndMove();
 
                             needInstantDamage = false;
+                            cellInternalObject.BufferActivateType = cellInternalObject.type;
                             cellInternalObject.ActivateInvoke(destroyNum);
                             destroyNum++;
                         }
@@ -799,6 +814,71 @@ public class CellInternalObject : MonoBehaviour
                 }
 
                 myCell.Damage(null, combination);
+            }
+
+            void replacementColorAndActivate() {
+                //Проверяем все поле на цвета
+                for (int x = 0; x < myField.cellCTRLs.GetLength(0); x++)
+                {
+                    for (int y = 0; y < myField.cellCTRLs.GetLength(1); y++)
+                    {
+                        SpawnAndActivate(myField.cellCTRLs[x,y]);
+                    }
+                }
+            }
+            void SpawnAndActivate(CellCTRL ActCell) {
+                //Проверяем что ячейка есть
+                if (!ActCell)
+                {
+                    return;
+                }
+
+                float dist = Vector2.Distance(ActCell.pos, myCell.pos);
+
+                //Удаляем старый объект
+                Destroy(ActCell.cellInternal.gameObject);
+
+
+
+                //создаем новый обьект
+                GameObject internalObj = Instantiate(myField.prefabInternal, myField.parentOfInternals);
+                CellInternalObject cellInternalObject = internalObj.GetComponent<CellInternalObject>();
+                cellInternalObject.myField = myField;
+
+                //Если партнер ракета
+                if (partner.type == Type.rocketHorizontal || partner.type == Type.rocketVertical)
+                {
+                    if (Random.Range(0, 100) < 50)
+                    {
+                        cellInternalObject.setColorAndType(partner.color, Type.rocketVertical);
+                    }
+                    else
+                    {
+                        cellInternalObject.setColorAndType(partner.color, Type.rocketHorizontal);
+                    }
+                }
+                //Если бомба
+                else if (partner.type == Type.bomb)
+                {
+                    cellInternalObject.setColorAndType(partner.color, Type.bomb);
+                }
+                //Если самолет
+                else if (partner.type == Type.airplane)
+                {
+                    cellInternalObject.setColorAndType(partner.color, Type.airplane);
+                
+                }
+                else {
+                
+                }
+
+                //Перемещаем объект на место старого
+                cellInternalObject.StartMove(ActCell);
+                cellInternalObject.EndMove();
+
+                needInstantDamage = false;
+                cellInternalObject.BufferActivateType = cellInternalObject.type;
+                cellInternalObject.ActivateInvoke(dist * 0.1f);
             }
 
             void DestroyAllColor(InternalColor internalColor) {
@@ -844,11 +924,81 @@ public class CellInternalObject : MonoBehaviour
 
         }
 
-        void ActivateBombHorizontal() {
-             Debug.Log("ActivateBombHorizontal");    
-        }
-        void ActivateBombVertical() {
+        void ActivateBombAndRocket() {
             Debug.Log("ActivateBombVertical");
+
+            if (partner) {
+                //Удаляем партнера
+                partner.activate = false;
+                partner.DestroyObj();
+            }
+            //Берем позицию бомбы
+            Vector2Int pos = myCell.pos;
+
+            bool[,] activated = new bool[myField.cellCTRLs.GetLength(0), myField.cellCTRLs.GetLength(1)];
+            //перебираем все ячейки на карте
+            for (int x = 0; x < myField.cellCTRLs.GetLength(0); x++)
+            {
+                for (int y = 0; y < myField.cellCTRLs.GetLength(1); y++)
+                {
+                    int absX = Mathf.Abs(x - pos.x);
+                    int absY = Mathf.Abs(y - pos.y);
+
+                    
+
+                    //Идем дальще, если
+                    if (!myField.cellCTRLs[x, y] ||
+                        activated[x,y] || // Ячейки нет
+                        (absX > 1 && //Вышли за 3 клетки по х
+                        absY > 1) //Вышли за 3 клетки по y
+                        ) {
+                        continue;
+                    }
+
+                    activated[x, y] = true;
+
+                    //Считаем время задержки взрыва этой ячейки
+                    float time = Vector2.Distance(pos, new Vector2(x, y)) * 0.1f;
+                    //
+                    myField.cellCTRLs[x, y].BufferCombination = combination;
+                    myField.cellCTRLs[x, y].BufferNearDamage = false;
+                    myField.cellCTRLs[x, y].DamageInvoke(time);
+                }
+            }
+        }
+
+        void ActivateBomb(int radius) {
+
+            //Удаляем партнера
+            if (partner)
+            {
+                //Удаляем партнера
+                partner.activate = false;
+                partner.DestroyObj();
+            }
+
+            //Перебираем поле 5 на 5
+            for (int x = -radius; x <= radius; x++) {
+                for (int y = -radius; y <= radius; y++) {
+                    int fieldPosX = myCell.pos.x + x;
+                    int fieldPosY = myCell.pos.y + y;
+                    //Если вышли за пределы карты или этой ячейки нету
+                    if (fieldPosX < 0 || fieldPosX >= myField.cellCTRLs.GetLength(0) ||
+                        fieldPosY < 0 || fieldPosY >= myField.cellCTRLs.GetLength(1) ||
+                        !myField.cellCTRLs[fieldPosX, fieldPosY]
+                        )
+                    {
+                        continue;
+                    }
+
+                    //Считаем время задержки взрыва этой ячейки
+                    float time = Vector2.Distance(new Vector2(), new Vector2(x, y)) * 0.05f;
+                    //
+                    myField.cellCTRLs[fieldPosX, fieldPosY].BufferCombination = combination;
+                    myField.cellCTRLs[fieldPosX, fieldPosY].BufferNearDamage = false;
+                    myField.cellCTRLs[fieldPosX, fieldPosY].DamageInvoke(time);
+                }
+            }
         }
     }
 

@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Семен
+
+/// <summary>
+/// Контролирует префаб плесени
+/// </summary>
 public class MoldCTRL : MonoBehaviour
 {
     CellCTRL myCell;
