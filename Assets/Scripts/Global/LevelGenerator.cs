@@ -26,8 +26,8 @@ public class LevelGenerator : MonoBehaviour
             return LevelsScript.main.ReturnLevel(NumLevel);
         }
         float NoizeResult = Mathf.PerlinNoise(Mathf.Cos(NumLevel), 0f) * Mathf.PerlinNoise(Mathf.Sin(NumLevel), 0f) * Mathf.PerlinNoise(Mathf.Tan(NumLevel), 0f) * 1000000;
-        int Width = (int)NoizeResult % 5 + 5;
-        int Height = (int)NoizeResult * 123 % 5 + 5;
+        int Width = (int)NoizeResult % 5 + 8;
+        int Height = (int)NoizeResult * 123 % 5 + 8;
         int NeedScore = Width * Height * ((int)NoizeResult % Score—oefficient + Score—oefficient / 2);
         float move = (float)30 / (Width * Height * Score—oefficient) * NeedScore;
         LevelsScript.PassedType passedType = (LevelsScript.PassedType)(NoizeResult % 3);
@@ -36,59 +36,93 @@ public class LevelGenerator : MonoBehaviour
         int[,] mold = new int[Width, Height];
         int[,] IColors = new int[Width, Height];
         int[,] Type = new int[Width, Height];
-        for (int i = 0; i < Height; i++)
+        for (int y = 0; y < Height; y++)
         {
-            for (int j = 0; j < Width; j++)
+            for (int x = 0; x < Width; x++)
             {
-                float rand = Mathf.PerlinNoise(j * NumLevel * Mathf.PI * 0.005f, i * NumLevel * Mathf.PI * 0.008f);
-                if(rand < existChance)
+                float randExist = Mathf.PerlinNoise(x * NumLevel * Mathf.PI * 0.005f, y * NumLevel * Mathf.PI * 0.008f);
+                float randBox = Mathf.PerlinNoise(x * (NumLevel + 1) * Mathf.PI * 0.005f, y * NumLevel * Mathf.PI * 0.008f);
+                float randMold = Mathf.PerlinNoise(x * (NumLevel + 2) * Mathf.PI * 0.008f, y * NumLevel * Mathf.PI * 0.008f);
+                if (randExist < existChance)
                 {
-                    exist[j, i] = 0;
+                    exist[x, y] = 0;
                 }
                 else
                 {
-                    exist[j, i] = 1;
+                    exist[x, y] = 1;
                 }
 
-                rand = Mathf.PerlinNoise(j * (NumLevel+1) * Mathf.PI * 0.005f, i * NumLevel * Mathf.PI * 0.008f);
-                if (rand < boxChance)
+                if (randBox < boxChance)
                 {
                     for(int k = 5; k > 0; k--)
                     {
-                        if (rand < boxChance / k)
+                        if (randBox < boxChance / k)
                         {
-                            box[j, i] = k;
+                            box[x, y] = k;
                             break;
                         }
                     }
                 }
                 else
                 {
-                    box[j, i] = 0;
+                    box[x, y] = 0;
                 }
 
-                rand = Mathf.PerlinNoise(j * (NumLevel + 2) * Mathf.PI * 0.008f, i * NumLevel * Mathf.PI * 0.008f);
-                if (passedType == LevelsScript.PassedType.mold && rand < moldChance)
+                if (passedType == LevelsScript.PassedType.mold && randMold < moldChance)
                 {
                     for (int k = 5; k > 0; k--)
                     {
-                        if (rand < boxChance / k)
+                        if (randMold < boxChance / k)
                         {
-                            mold[j, i] = k;
+                            mold[x, y] = k;
                             break;
                         }
                     }
                 }
                 else
                 {
-                    mold[j, i] = 0;
+                    mold[x, y] = 0;
                 }
 
 
-                IColors[j, i] = (int)(Mathf.PerlinNoise(j * NumLevel * Mathf.Deg2Rad, i * NumLevel * Mathf.Deg2Rad) * 1000000) % 4;
-                Type[j, i] = 0;
+                IColors[x, y] = (int)(Mathf.PerlinNoise(x * NumLevel * Mathf.Deg2Rad, y * NumLevel * Mathf.Deg2Rad) * 1000000) % 4;
+                Type[x, y] = 0;
             }
         }
+        /*
+        for (int i = 0; i < Height; i++)
+        {
+            for (int j = Width - 1; j >= 0; j--)
+            { 
+                if(exist[j, i] == 0)
+                {
+                    try
+                    {
+                        if (exist[j - 1, i] == 1)
+                        {
+                            try
+                            {
+                                if (exist[j, i - 1] == 0 && exist[j, i + 1] == 0)
+                                {
+                                    exist[j, i] = 1;
+                                    Debug.Log("exist");
+                                }
+                            }
+                            catch
+                            {
+                                exist[j, i] = 1;
+                                Debug.Log("exist");
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        Debug.Log("error");
+                    }
+                }
+            }
+        }
+        */
         LevelsScript.main.Levels[NumLevel] = LevelsScript.main.CreateLevel(NumLevel, Width, Height, NeedScore, (int)move, passedType, exist, box, mold, IColors, Type);
         return LevelsScript.main.Levels[NumLevel];
     }
