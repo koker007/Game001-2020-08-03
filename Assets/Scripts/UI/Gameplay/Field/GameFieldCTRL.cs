@@ -116,8 +116,11 @@ public class GameFieldCTRL : MonoBehaviour
             for (int y = 0; y < cellCTRLs.GetLength(1); y++) {
                 if (movingNow) break;
 
-                //Если ячейки нет, смотрим дальше
-                if (!cellCTRLs[x,y]) continue;
+                //смотрим дальше
+                if (!cellCTRLs[x, y] || //Нет ячейки
+                    !cellCTRLs[x, y].cellInternal || //Нет внутреннего объекта
+                    cellCTRLs[x, y].BlockingMove > 0 //присутствует коробка
+                    ) continue;
 
                 if (!cellCTRLs[x,y].cellInternal && Time.unscaledTime - cellCTRLs[x, y].timeBoomOld > 0.5f) {
                     movingNow = true;
@@ -291,7 +294,7 @@ public class GameFieldCTRL : MonoBehaviour
                         internalCtrl.EndMove();
 
                         //Меняем тип объекта
-                        internalCtrl.setColorAndType(cellInfo.colorCell, cellInfo.typeCell);
+                        internalCtrl.setColorAndType(cellInfo.colorCell, level.cells[x,y].typeCell);
                         internalCtrl.color = cellInfo.colorCell;
 
                     }

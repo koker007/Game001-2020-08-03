@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Семен
+
+/// <summary>
+/// Контролирует префаб Коробки блокирующего движение
+/// </summary>
 public class BoxBlockCTRL : MonoBehaviour
 {
 
