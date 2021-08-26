@@ -684,6 +684,7 @@ public class CellInternalObject : MonoBehaviour
                         myField.cellCTRLs[myCell.pos.x - num, myCell.pos.y])
                     {
                         myField.cellCTRLs[myCell.pos.x - num, myCell.pos.y].BufferCombination = combination;
+                        myField.cellCTRLs[myCell.pos.x - num, myCell.pos.y].BufferNearDamage = false;
                         myField.cellCTRLs[myCell.pos.x - num, myCell.pos.y].DamageInvoke(time);
                     }
 
@@ -692,6 +693,7 @@ public class CellInternalObject : MonoBehaviour
                         myField.cellCTRLs[myCell.pos.x + num, myCell.pos.y])
                     {
                         myField.cellCTRLs[myCell.pos.x + num, myCell.pos.y].BufferCombination = combination;
+                        myField.cellCTRLs[myCell.pos.x + num, myCell.pos.y].BufferNearDamage = false;
                         myField.cellCTRLs[myCell.pos.x + num, myCell.pos.y].DamageInvoke(time);
                     }
                 }
@@ -708,6 +710,7 @@ public class CellInternalObject : MonoBehaviour
                         myField.cellCTRLs[myCell.pos.x, myCell.pos.y - num])
                     {
                         myField.cellCTRLs[myCell.pos.x, myCell.pos.y - num].BufferCombination = combination;
+                        myField.cellCTRLs[myCell.pos.x, myCell.pos.y - num].BufferNearDamage = false;
                         myField.cellCTRLs[myCell.pos.x, myCell.pos.y - num].DamageInvoke(time);
                     }
 
@@ -716,6 +719,7 @@ public class CellInternalObject : MonoBehaviour
                         myField.cellCTRLs[myCell.pos.x, myCell.pos.y + num])
                     {
                         myField.cellCTRLs[myCell.pos.x, myCell.pos.y + num].BufferCombination = combination;
+                        myField.cellCTRLs[myCell.pos.x, myCell.pos.y + num].BufferNearDamage = false;
                         myField.cellCTRLs[myCell.pos.x, myCell.pos.y + num].DamageInvoke(time);
                     }
                 }

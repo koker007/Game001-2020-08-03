@@ -250,23 +250,6 @@ public class GameFieldCTRL : MonoBehaviour
                         }
                     }
 
-                    //Создаем подвижные объекты
-                    if (cellCTRLs[x, y].BlockingMove == 0 //Если нету ящика
-
-                        ) {
-                        //Создаем объект и перемещаем
-                        GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
-                        CellInternalObject internalCtrl = internalObj.GetComponent<CellInternalObject>();
-                        internalCtrl.myField = this;
-                        internalCtrl.StartMove(cellCTRLs[x, y]);
-                        internalCtrl.EndMove();
-
-                        //Меняем тип объекта
-                        internalCtrl.setColorAndType(cellInfo.colorCell, cellInfo.typeCell);
-                        internalCtrl.color = cellInfo.colorCell;
-
-                    }
-
                     //Нужно ли создать ящик
                     if (cellCTRLs[x, y].BlockingMove > 0) {
                         GameObject BoxBlockObj = Instantiate(prefabBoxBlock, parentOfBoxBlock);
@@ -293,6 +276,24 @@ public class GameFieldCTRL : MonoBehaviour
 
                         //Инициализация плесени
                         cellCTRLs[x, y].panelCTRL.inicialize(cellCTRLs[x, y]);
+                    }
+
+                    //Создаем подвижные объекты
+                    if (cellCTRLs[x, y].BlockingMove == 0 //Если нету ящика
+
+                        )
+                    {
+                        //Создаем объект и перемещаем
+                        GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
+                        CellInternalObject internalCtrl = internalObj.GetComponent<CellInternalObject>();
+                        internalCtrl.myField = this;
+                        internalCtrl.StartMove(cellCTRLs[x, y]);
+                        internalCtrl.EndMove();
+
+                        //Меняем тип объекта
+                        internalCtrl.setColorAndType(cellInfo.colorCell, cellInfo.typeCell);
+                        internalCtrl.color = cellInfo.colorCell;
+
                     }
 
                 }
@@ -358,8 +359,8 @@ public class GameFieldCTRL : MonoBehaviour
                             break;
                         }
 
-                        //если ячейка пустая добавляем внутренность
-                        if (!cellCTRLs[x,y].cellInternal) {
+                        //если ячейка пустая добавляем внутренность и без коробки
+                        if (!cellCTRLs[x,y].cellInternal && cellCTRLs[x,y].BlockingMove <= 0) {
                             //создаем внутренность
                             GameObject InternalObj = Instantiate(prefabInternal, parentOfInternals);
                             CellInternalObject Internal = InternalObj.GetComponent<CellInternalObject>();
