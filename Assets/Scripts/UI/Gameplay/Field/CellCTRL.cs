@@ -70,16 +70,22 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     }
 
     public GameFieldCTRL.Combination BufferCombination;
+    public bool BufferNearDamage = true;
 
     /// <summary>
     /// получить очки и избавиться от внутренности
     /// </summary>
     public void Damage()
     {
-        Damage(null, BufferCombination);
+        Damage(null, BufferCombination, BufferNearDamage);
         BufferCombination = null;
+        BufferNearDamage = true;
     }
-    public void Damage(CellInternalObject partner, GameFieldCTRL.Combination combination)
+
+    public void Damage(CellInternalObject partner, GameFieldCTRL.Combination combination) {
+        Damage(partner, combination, true);
+    }
+    public void Damage(CellInternalObject partner, GameFieldCTRL.Combination combination, bool nearDamage)
     {
 
         if (mold > 0) {
@@ -101,11 +107,14 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         }
 
         //наносим соседним ячейкам урон по блокираторам движения
-        DamageNearCells();
+        if (nearDamage)
+            DamageNearCells();
+
+        //Самому себе
+        DamageNear();
+
 
         void DamageNearCells() {
-            //Самому себе
-            DamageNear();
 
             //Слева
             if (pos.x - 1 >= 0 && myField.cellCTRLs[pos.x - 1, pos.y]) {
