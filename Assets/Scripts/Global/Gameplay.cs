@@ -40,6 +40,7 @@ public class Gameplay : MonoBehaviour
     public int combo = 0;
     public int boxCount;
     public int moldCount;
+    public int panelCount;
 
     public float threeStartFactor = 2f;
     public float twoStartFactor = 1.5f;
@@ -90,32 +91,41 @@ public class Gameplay : MonoBehaviour
         boxCount--;
     }
 
+    public void PanelUpdate()
+    {
+        panelCount--;
+    }
+
     public void CheckEndGame()
     {
         if (movingCan <= 0 && isGameplay && GameplayEnd == false)
         {
-            if (LevelsScript.main.ReturnLevel().pasType == LevelsScript.PassedType.score && score >= LevelsScript.main.ReturnLevel().NeedScore)
+            LevelsScript.Level level = LevelsScript.main.ReturnLevel();
+            if (level.PassedWitScore && score >= level.NeedScore || !level.PassedWitScore)
             {
-                PlayerProfile.main.LevelPassed(levelSelect);
-                GlobalMessage.Results();
+                if (level.PassedWitMold && moldCount >= level.NeedMold || !level.PassedWitMold)
+                {
+                    if (level.PassedWithBox && boxCount >= level.NeedBox || !level.PassedWithBox)
+                    {
+                        if (level.PassedWitPanel && panelCount >= level.NeedPanel || !level.PassedWitScore)
+                        {
+                            PlayerProfile.main.LevelPassed(levelSelect);
+                            GlobalMessage.Results();
+                            LevelsScript.main.ReturnLevel().MaxScore = score;
+                            GameplayEnd = true;
+                            return;
+                        }
+                    }
+                }
             }
-            else if (LevelsScript.main.ReturnLevel().pasType == LevelsScript.PassedType.box && boxCount <= 0)
-            {
-                PlayerProfile.main.LevelPassed(levelSelect);
-                GlobalMessage.Results();
-            }
-            else if (LevelsScript.main.ReturnLevel().pasType == LevelsScript.PassedType.mold && boxCount <= 0)
-            {
-                PlayerProfile.main.LevelPassed(levelSelect);
-                GlobalMessage.Results();
-            }
-            else
-            {
-                GlobalMessage.Lose();
-            }
+
+            PlayerProfile.main.LevelPassed(levelSelect);
+            GlobalMessage.Results();
+            GlobalMessage.Lose();
             LevelsScript.main.ReturnLevel().MaxScore = score;
             GameplayEnd = true;
         }
+
     }
 
     public void CountStars(int score, ref Image[] stars)

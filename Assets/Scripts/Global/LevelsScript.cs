@@ -11,12 +11,6 @@ public class LevelsScript : MonoBehaviour
     /// <summary>
     /// хранит данные о ячейке
     /// </summary>
-    public enum PassedType
-    {
-        score,
-        box,
-        mold
-    }
     public class CellInfo
     {
         /// <summary>
@@ -32,7 +26,8 @@ public class LevelsScript : MonoBehaviour
         /// </summary>
         public int boxHealth;
         public int moldHealth;
-        public CellInfo(int box, int mold, int color, int type)
+        public int Panel;
+        public CellInfo(int box, int mold, int color, int type, int panel)
         {
             if (box != 0)
             {
@@ -44,7 +39,11 @@ public class LevelsScript : MonoBehaviour
                 typeCell = (CellInternalObject.Type)type;
             }
 
-            if (mold != 0)
+            if (panel != 0)
+            {
+                Panel = panel;
+            }
+            else if (mold != 0)
             {
                 moldHealth = mold;
             }
@@ -85,11 +84,22 @@ public class LevelsScript : MonoBehaviour
         /// </summary>
         public CellInfo[,] cells;
 
-        public PassedType pasType;
+        public bool PassedWitScore;
+        public bool PassedWithCrystal;
+        public bool PassedWithBox;
+        public bool PassedWitMold;
+        public bool PassedWitPanel;
 
         public int NeedBox;
         public int NeedMold;
+        public int NeedPanel;
 
+        int[,] exist;
+        int[,] box;
+        int[,] mold;
+        int[,] panel;
+        int[,] internalColors;
+        int[,] type;
 
         /// <summary>
         /// возвращает информацию о клетке на текущем уровне
@@ -113,6 +123,86 @@ public class LevelsScript : MonoBehaviour
                 MaxScore = score;
             }
         }
+
+        public void SetMass(int[,] values, string massName)
+        {
+            switch (massName)
+            {
+                case "box":
+                    box = values;
+                    break;
+                case "mold":
+                    mold = values;
+                    break;
+                case "type":
+                    type = values;
+                    break;
+                case "color":
+                    internalColors = values;
+                    break;
+                case "panel":
+                    panel = values;
+                    break;
+                case "exist":
+                    exist = values;
+                    break;
+            }
+        }
+
+        public void SetCells()
+        {
+            if(exist == null)
+            {
+                massNull(ref exist, 1);
+            }
+            if (internalColors == null)
+            {
+                massNull(ref internalColors, 0);
+            }
+            if (type == null)
+            {
+                massNull(ref type, 0);
+            }
+            if (box == null)
+            {
+                massNull(ref box, 0);
+            }
+            if (mold == null)
+            {
+                massNull(ref mold, 0);
+            }
+            if (panel == null)
+            {
+                massNull(ref panel, 0);
+            }
+
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    if (exist[y, x] == 0)
+                    {
+                        cells[x, y] = null;
+                    }
+                    else
+                    {
+                        cells[x, cells.GetLength(1) - 1 - y] = new CellInfo(box[y, x], mold[y, x], internalColors[y, x], type[y, x], panel[y, x]);
+                    }
+                }
+            }
+        }
+
+        private void massNull(ref int[,] mas, int value)
+        {
+            mas = new int[Height,Width];
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    mas[y, x] = value;
+                }
+            }
+        }
     }
 
     private Level level;
@@ -126,19 +216,13 @@ public class LevelsScript : MonoBehaviour
         //уровень 1
         Levels[1] = CreateLevel(
             //numLevel, width, height, max score, move, passType
-            1, 6, 5, 2000000, 50, PassedType.mold,
+            1, 6, 5, 2000000, 50,
+            //score, crystal, box, mold, panel
+            false, false, false, true, true
+            );
 
-            new int[,] //mold
-            {
-                { 1,0,1,0,1 },
-                { 1,0,1,0,1 },
-                { 0,1,1,1,0 },
-                { 1,1,1,1,1 },
-                { 0,1,1,1,0 },
-                { 1,0,1,0,1 }
-            },
-
-            new byte[,] //exist
+        Levels[1].SetMass(
+        new int[,] //exist
             {
                 { 0,1,1,1,1 },
                 { 1,1,1,1,1 },
@@ -147,7 +231,9 @@ public class LevelsScript : MonoBehaviour
                 { 1,1,1,1,1 },
                 { 1,1,1,1,1 }
             },
-
+            "exist"
+            );
+        Levels[1].SetMass(
             new int[,] //color
             {
                 { 0,3,0,3,0 },
@@ -157,7 +243,9 @@ public class LevelsScript : MonoBehaviour
                 { 3,1,2,1,3 },
                 { 0,3,2,3,0 }
             },
-
+            "color"
+            );
+        Levels[1].SetMass(
             new int[,] //type
             {
                 { 0,0,0,0,0 },
@@ -166,15 +254,45 @@ public class LevelsScript : MonoBehaviour
                 { 0,0,0,0,0 },
                 { 0,0,0,0,0 },
                 { 0,0,0,0,0 }
-            });
+            },
+            "type"
+            );
+        Levels[1].SetMass(
+            new int[,] //mold
+            {
+                { 1,0,1,0,1 },
+                { 1,0,1,0,1 },
+                { 0,1,1,1,0 },
+                { 1,1,1,1,1 },
+                { 0,1,1,1,0 },
+                { 1,0,1,0,1 }
+            },
+            "mold"
+            );
+        Levels[1].SetMass(
+           new int[,]
+           {
+                { 0,1,0,1,0 },
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 }
+           },
+           "panel"
+           );
+        Levels[1].SetCells();
 
         //уровень 2
         Levels[2] = CreateLevel(
             //numLevel, width, height, max score, move, passType
-            2, 8, 8, 2000000, 1000, PassedType.box,
+            2, 8, 8, 2000000, 1000,
+            //score, crystal, box, mold, panel
+            true, false, false, false, false
+            );
 
-
-            new byte[,] //exist
+        Levels[2].SetMass(
+        new int[,] //exist
             {
                 { 1,1,1,1,1,1,1,1 },
                 { 1,1,0,1,1,0,1,1 },
@@ -184,8 +302,10 @@ public class LevelsScript : MonoBehaviour
                 { 1,0,1,1,1,1,0,1 },
                 { 1,1,0,1,1,0,1,1 },
                 { 1,1,1,1,1,1,1,1 }
-            }, 
-
+            },
+            "exist"
+            );
+        Levels[2].SetMass(
             new int[,] //color
             {
                 { 1,0,3,0,0,3,0,2 },
@@ -197,7 +317,9 @@ public class LevelsScript : MonoBehaviour
                 { 0,2,0,3,3,0,1,0 },
                 { 2,0,3,0,0,3,0,1 }
             },
-
+            "color"
+            );
+        Levels[2].SetMass(
             new int[,] //type
             {
                 { 0,0,0,0,0,0,0,0 },
@@ -208,16 +330,21 @@ public class LevelsScript : MonoBehaviour
                 { 0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0 }
-            }
+            },
+            "type"
             );
+        Levels[2].SetCells();
 
         //уровень 3
         Levels[3] = CreateLevel(
             //numLevel, width, height, max score, move, passType
-            3, 10, 10, 10000, 99, PassedType.score,
+            3, 10, 10, 10000, 99,
+            //score, crystal, box, mold, panel
+            false, false, true, false, false
+            );
 
-
-            new byte[,] //exist
+        Levels[3].SetMass(
+        new int[,] //exist
             {
                 { 1,1,1,1,1,1,1,1,1,1 },
                 { 1,1,1,1,1,1,1,1,1,1 },
@@ -229,8 +356,10 @@ public class LevelsScript : MonoBehaviour
                 { 1,1,1,1,1,1,1,1,1,1 },
                 { 1,1,1,1,1,1,1,1,1,1 },
                 { 1,1,1,1,1,1,1,1,1,1 }
-            }, 
-
+            },
+            "exist"
+            );
+        Levels[3].SetMass(
             new int[,] //color
             {
                 { 1,1,1,1,1,1,1,1,1,1 },
@@ -244,7 +373,9 @@ public class LevelsScript : MonoBehaviour
                 { 1,1,1,1,1,1,1,1,1,1 },
                 { 2,1,3,1,2,3,1,2,3,1 }
             },
-
+            "color"
+            );
+        Levels[3].SetMass(
             new int[,] //type
             {
                 { 0,0,0,0,0,0,0,0,0,0 },
@@ -258,20 +389,25 @@ public class LevelsScript : MonoBehaviour
                 { 0,0,0,0,0,0,0,0,0,0 },
                 { 1,1,2,2,3,3,4,4,1,5 }
             },
-
-            new int[,] //box
-            {
+            "type"
+            ); 
+        Levels[3].SetMass(
+             new int[,] //box
+             {
                 { 0,0,0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0,0,0 },
-                { 5,0,5,5,5,5,5,5,5,5 },
-                { 5,0,0,5,5,5,5,5,5,0 },
-                { 5,1,5,5,0,0,5,5,1,5 },
-                { 5,0,0,5,5,5,5,5,5,5 },
-                { 5,0,5,5,5,5,5,5,5,5 },
-                { 5,0,5,5,5,5,5,0,0,5 },
-                { 5,0,5,5,5,5,5,5,5,5 },
-                { 5,0,5,5,5,5,5,5,5,5 }
-            });
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 }
+             },
+             "box"
+             );
+        Levels[3].SetCells();
     }
 
     //создание уровня (метод существует для зрительного упрощения схемы уровня в Start)
@@ -281,117 +417,30 @@ public class LevelsScript : MonoBehaviour
         int Width, 
         int Height, 
         int NeedScore, 
-        int move, 
-        PassedType pasType,
-        byte[,] exist, 
-        int[,] box,
-        int[,] mold,
-        int[,] internalColors, 
-        int[,] type
+        int move,
+        bool passedWitScore,
+        bool passedWithCrystal,
+        bool passedWithBox,
+        bool passedWitMold,
+        bool passedWitPanel
         )
     {
-        level = new Level();
-
-        level = new Level { 
-            NumLevel = NumLevel, 
-            Width = Height, 
+        level = new Level {
+            NumLevel = NumLevel,
+            Width = Height,
             Height = Width,
             NeedScore = NeedScore,
             Move = move,
-            pasType = pasType
+            PassedWitScore = passedWitScore,
+            PassedWithCrystal = passedWithCrystal,
+            PassedWithBox = passedWithBox,
+            PassedWitMold = passedWitMold,
+            PassedWitPanel = passedWitPanel
         };
 
         level.cells = new CellInfo[Height, Width];
-        for (int y = 0; y < Height; y++)
-        {
-            for (int x = 0; x < Width; x++)
-            {
-                if (exist[x, y] == 0)
-                {
-                    level.cells[y, x] = null;
-                }
-                else
-                {
-                    level.cells[y, level.cells.GetLength(1) - 1 - x] = new CellInfo(box[x, y], mold[x, y], internalColors[x, y], type[x, y]);
-                }
-            }
-        }
 
         return level;
-    }
-    public Level CreateLevel
-       (
-       int NumLevel,
-       int Width,
-       int Height,
-       int NeedScore,
-       int move,
-       PassedType pasType,
-       byte[,] exist,
-       int[,] internalColors,
-       int[,] type
-       )
-    {
-        int[,] box = new int[Width, Height];
-        int[,] mold = new int[Width, Height];
-        for (int y = 0; y < Height; y++)
-        {
-            for (int x = 0; x < Width; x++)
-            {
-                box[x, y] = 0;
-                mold[x, y] = 0;
-            }
-        }
-        return CreateLevel(NumLevel, Width, Height, NeedScore, move, pasType, exist, box, mold, internalColors, type);
-    }
-
-    public Level CreateLevel
-       (
-       int NumLevel,
-       int Width,
-       int Height,
-       int NeedScore,
-       int move,
-       PassedType pasType,
-       byte[,] exist,
-       int[,] internalColors,
-       int[,] type,
-       int[,] box
-       )
-    {
-        int[,] mold = new int[Width, Height];
-        for (int y = 0; y < Height; y++)
-        {
-            for (int x = 0; x < Width; x++)
-            {
-                mold[x, y] = 0;
-            }
-        }
-        return CreateLevel(NumLevel, Width, Height, NeedScore, move, pasType, exist, box, mold, internalColors, type);
-    }
-    public Level CreateLevel
-       (
-       int NumLevel,
-       int Width,
-       int Height,
-       int NeedScore,
-       int move,
-       PassedType pasType,
-       int[,] mold,
-       byte[,] exist,
-       int[,] internalColors,
-       int[,] type
-       )
-    {
-        int[,] box = new int[Width, Height];
-        for (int y = 0; y < Height; y++)
-        {
-            for (int x = 0; x < Width; x++)
-            {
-                box[x, y] = 0;
-            }
-        }
-        return CreateLevel(NumLevel, Width, Height, NeedScore, move, pasType, exist, box, mold, internalColors, type);
     }
 
     /// <summary>

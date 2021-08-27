@@ -27,12 +27,20 @@ public class LevelGenerator : MonoBehaviour
             return LevelsScript.main.ReturnLevel(NumLevel);
         }
         float NoizeResult = Mathf.PerlinNoise(Mathf.Cos(NumLevel), 0f) * Mathf.PerlinNoise(Mathf.Sin(NumLevel), 0f) * Mathf.PerlinNoise(Mathf.Tan(NumLevel), 0f) * 1000000;
+
         int Width = (int)NoizeResult % 5 + 8;
         int Height = (int)NoizeResult * 123 % 5 + 8;
+
         int NeedScore = Width * Height * ((int)NoizeResult % Score—oefficient + Score—oefficient / 2);
         float move = (float)30 / (Width * Height * Score—oefficient) * NeedScore;
-        LevelsScript.PassedType passedType = (LevelsScript.PassedType)(NoizeResult % 3);
-        byte[,] exist = new byte[Width, Height];
+
+        bool passedWitScore = false;
+        bool passedWithCrystal = false;
+        bool passedWithBox = false;
+        bool passedWitMold = false;
+        bool passedWitPanel = false;
+
+        int[,] exist = new int[Width, Height];
         int[,] box = new int[Width, Height];
         int[,] mold = new int[Width, Height];
         int[,] IColors = new int[Width, Height];
@@ -70,7 +78,7 @@ public class LevelGenerator : MonoBehaviour
                     box[x, y] = 0;
                 }
 
-                if (passedType == LevelsScript.PassedType.mold && randMold < moldChance)
+                if (passedWitMold && randMold < moldChance)
                 {
                     for (int k = 5; k > 0; k--)
                     {
@@ -91,23 +99,17 @@ public class LevelGenerator : MonoBehaviour
                 Type[x, y] = 0;
             }
         }
-        /*
-        for (int y = 0; y < Height; y++)
-        {
-            for (int x = Width - 1; x >= 0; x--)
-            {
-                if (x + 1 < Width)
-                {
-                    if (exist[x, y] == 0 && exist[x + 1, y] == 1)
-                    {
-                        exist[x, y] = 1;
-                        Debug.Log("exist" + x.ToString() + y.ToString());
-                    }
-                }
-            }
-        }*/
-        
-        LevelsScript.main.Levels[NumLevel] = LevelsScript.main.CreateLevel(NumLevel, Width, Height, NeedScore, (int)move, passedType, exist, box, mold, IColors, Type);
+        LevelsScript.Level level = LevelsScript.main.Levels[NumLevel];
+        level = LevelsScript.main.CreateLevel(NumLevel, Width, Height, NeedScore, (int)move, passedWitScore, passedWithCrystal, passedWithBox, passedWitMold, passedWitPanel);
+        level.SetMass(exist, "exist");
+        level.SetMass(IColors, "color");
+        level.SetMass(Type, "type");
+        level.SetMass(box, "box");
+        level.SetMass(mold, "mold");
+        //level.SetMass(panel, "panel");
+        level.SetCells();
+        LevelsScript.main.Levels[NumLevel] = level;
+
         return LevelsScript.main.Levels[NumLevel];
     }
 }
