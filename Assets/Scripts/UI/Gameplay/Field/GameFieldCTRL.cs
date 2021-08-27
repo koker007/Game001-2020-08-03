@@ -9,6 +9,22 @@ using UnityEngine.UI;
 /// </summary>
 public class GameFieldCTRL : MonoBehaviour
 {
+    [Header("Counters")]
+    /// <summary>
+    /// Текущее количество коробок блокирующее движение на карте
+    /// </summary>
+    [SerializeField]
+    public int CountBoxBlocker = 0;
+    /// <summary>
+    /// Текущее количество плесени на карте
+    /// </summary>
+    [SerializeField]
+    public int CountMold = 0;
+    /// <summary>
+    /// Текущее количество распространяемой панели на карте
+    /// </summary>
+    [SerializeField]
+    public int CountPanelSpread = 0;
 
     [Header("Prefabs")]
     [SerializeField]
@@ -30,6 +46,7 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     public GameObject PrefabParticleSelect;
 
+    //Родительские позиции для спавна внутри игровых объектов
     [Header("Parents")]
     [SerializeField]
     Transform parentOfCells;
@@ -48,11 +65,12 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     public Transform parentOfSelect;
 
+
     [Header("Other")]
     [SerializeField]
-    CellCTRL CellSelect;
+    CellCTRL CellSelect; //Первый выделенный пользователем объект
     [SerializeField]
-    CellCTRL CellSwap;
+    CellCTRL CellSwap; //Второй выделенный пользователем объект
 
     [SerializeField]
     RectTransform rectParticleSelect;
@@ -60,9 +78,25 @@ public class GameFieldCTRL : MonoBehaviour
     RectTransform myRect;
 
     /// <summary>
-    /// Список плесени
+    /// Список контроллеров плесени
     /// </summary>
     public List<MoldCTRL> moldCTRLs = new List<MoldCTRL>();
+
+    /// <summary>
+    /// Пересчитать текущее количество плесени, исключить удаленные из списка
+    /// </summary>
+    public void ReCalcMoldList() {
+        List<MoldCTRL> moldCTRLsNew = new List<MoldCTRL>();
+
+        foreach (MoldCTRL moldCTRL in moldCTRLs) {
+            if (moldCTRL) {
+                moldCTRLsNew.Add(moldCTRL);
+            }
+        }
+
+        moldCTRLs = moldCTRLsNew;
+        CountMold = moldCTRLs.Count;
+    }
 
     /// <summary>
     /// Получить рандомную ячейку с боков этой, может возвратить Null
@@ -149,14 +183,21 @@ public class GameFieldCTRL : MonoBehaviour
         public int stopSwap = 1;
     }
 
-    //Хранит ячейки которые были недавно обменяны
+    //Хранит ячейки которые были недавно обменяны, пользователем
     List<Swap> BufferSwap = new List<Swap>();
 
+    /// <summary>
+    /// Ячейки
+    /// </summary>
+    public CellCTRL[,] cellCTRLs;
+    /// <summary>
+    /// препятствия движения
+    /// </summary>
+    public BoxBlockCTRL[,] BoxBlockCTRLs;
 
-    public CellCTRL[,] cellCTRLs; //Ячейки
-    public BoxBlockCTRL[,] BoxBlockCTRLs; //препятствия движения
-
-    //Инициализировать игровое поле
+    /// <summary>
+    /// Инициализировать игровое поле, на основе данных уровня, или рандомно, если уровня нет
+    /// </summary>
     public void inicializeField(LevelsScript.Level level) {
         
 
@@ -340,6 +381,8 @@ public class GameFieldCTRL : MonoBehaviour
         TestReturnSwap(); //Возвращяем обмен
 
         TestStepsCount(); //Выполняем действия после хода
+
+        
     }
 
     //Стартовая инициализация игрового поля
@@ -795,17 +838,19 @@ public class GameFieldCTRL : MonoBehaviour
             }
 
 
-            //Проверить ячейку на совпадение цвета
+            //Проверить ячейку на совпадение цвета и возможность добавления в комбинацию
             bool TestCellColor(CellCTRL SecondCell)
             {
 
                 //Отмена если
                 if (
                     !SecondCell || //если самой ячейки нет
-                    !SecondCell.cellInternal ||
+                    !SecondCell.cellInternal || //В ячейке нет внутренности
                     !Cell.cellInternal || //если объекта в ячейке нет
                     SecondCell.cellInternal.isMove || //если эти внутренности находятся в движении
-                    SecondCell.cellInternal.color != Cell.cellInternal.color)
+                    SecondCell.cellInternal.color != Cell.cellInternal.color || //Цвет не совпал
+                    SecondCell.cellInternal.type == CellInternalObject.Type.supercolor //Тип ячейки супер кристал, он не должет сам активироваться оп этому его в комбинации нет
+                    )
                 {
                     //На этом заканчиваем перебор
                     return true;
@@ -1229,7 +1274,9 @@ public class GameFieldCTRL : MonoBehaviour
         }
     }
 
-    //Сделать ячейку выделенной или целевой для перемещения
+    /// <summary>
+    /// Сделать ячейку выделенной или целевой для перемещения
+    /// </summary>
     public void SetSelectCell(CellCTRL CellClick) {
         if (!CellSelect) {
             CellSelect = CellClick;
@@ -1281,5 +1328,4 @@ public class GameFieldCTRL : MonoBehaviour
         }
     }
 
-    public int CountBoxBlocker = 0;
 }

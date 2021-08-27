@@ -361,7 +361,7 @@ public class CellInternalObject : MonoBehaviour
         IniRect();
 
         rectMy.pivot = rectCell.pivot;
-
+        isMove = false;
     }
 
     /// <summary>
@@ -498,6 +498,8 @@ public class CellInternalObject : MonoBehaviour
         {
             Image.texture = TextureSuperColor;
         }
+
+        color = internalColor;
     }
     public void setColorAndType(InternalColor internalColor, Type typeNew) {
         type = typeNew;
@@ -822,63 +824,71 @@ public class CellInternalObject : MonoBehaviour
                 {
                     for (int y = 0; y < myField.cellCTRLs.GetLength(1); y++)
                     {
-                        SpawnAndActivate(myField.cellCTRLs[x,y]);
+                        //Проверяем что ячейка есть
+                        if (!myField.cellCTRLs[x, y] || //Если ячейки нет
+                            !myField.cellCTRLs[x,y].cellInternal || //Если нет внутренности
+                            myField.cellCTRLs[x,y].cellInternal.color != partner.color || //Если цвет не совпадает с цветом партнера
+                            myField.cellCTRLs[x,y].cellInternal.type == Type.supercolor
+                            )
+                        {
+                            continue;
+                        }
+
+                        float dist = Vector2.Distance(myField.cellCTRLs[x, y].pos, myCell.pos);
+
+                        //Удаляем старый объект
+                        if (myField.cellCTRLs[x, y].cellInternal)
+                        {
+                            Destroy(myField.cellCTRLs[x, y].cellInternal.gameObject);
+                        }
+
+
+                        //создаем новый обьект
+                        GameObject internalObj = Instantiate(myField.prefabInternal, myField.parentOfInternals);
+                        CellInternalObject cellInternalObject = internalObj.GetComponent<CellInternalObject>();
+                        cellInternalObject.myField = myField;
+
+                        //Если партнер ракета
+                        if (partner.type == Type.rocketHorizontal || partner.type == Type.rocketVertical)
+                        {
+                            if (Random.Range(0, 100) < 50)
+                            {
+                                cellInternalObject.setColorAndType(partner.color, Type.rocketVertical);
+                            }
+                            else
+                            {
+                                cellInternalObject.setColorAndType(partner.color, Type.rocketHorizontal);
+                            }
+                        }
+                        //Если бомба
+                        else if (partner.type == Type.bomb)
+                        {
+                            cellInternalObject.setColorAndType(partner.color, Type.bomb);
+                        }
+                        //Если самолет
+                        else if (partner.type == Type.airplane)
+                        {
+                            cellInternalObject.setColorAndType(partner.color, Type.airplane);
+
+                        }
+                        else
+                        {
+
+                        }
+
+                        //Перемещаем объект на место старого
+                        cellInternalObject.StartMove(myField.cellCTRLs[x, y]);
+                        cellInternalObject.EndMove();
+
+                        //needInstantDamage = false;
+                        cellInternalObject.BufferActivateType = cellInternalObject.type;
+                        cellInternalObject.BufferPartner = null;
+                        cellInternalObject.BufferCombination = combination;
+                        //cellInternalObject.Activate(cellInternalObject.type, null, combination);
+                        cellInternalObject.ActivateInvoke(dist * 0.1f);
+
                     }
                 }
-            }
-            void SpawnAndActivate(CellCTRL ActCell) {
-                //Проверяем что ячейка есть
-                if (!ActCell)
-                {
-                    return;
-                }
-
-                float dist = Vector2.Distance(ActCell.pos, myCell.pos);
-
-                //Удаляем старый объект
-                Destroy(ActCell.cellInternal.gameObject);
-
-
-
-                //создаем новый обьект
-                GameObject internalObj = Instantiate(myField.prefabInternal, myField.parentOfInternals);
-                CellInternalObject cellInternalObject = internalObj.GetComponent<CellInternalObject>();
-                cellInternalObject.myField = myField;
-
-                //Если партнер ракета
-                if (partner.type == Type.rocketHorizontal || partner.type == Type.rocketVertical)
-                {
-                    if (Random.Range(0, 100) < 50)
-                    {
-                        cellInternalObject.setColorAndType(partner.color, Type.rocketVertical);
-                    }
-                    else
-                    {
-                        cellInternalObject.setColorAndType(partner.color, Type.rocketHorizontal);
-                    }
-                }
-                //Если бомба
-                else if (partner.type == Type.bomb)
-                {
-                    cellInternalObject.setColorAndType(partner.color, Type.bomb);
-                }
-                //Если самолет
-                else if (partner.type == Type.airplane)
-                {
-                    cellInternalObject.setColorAndType(partner.color, Type.airplane);
-                
-                }
-                else {
-                
-                }
-
-                //Перемещаем объект на место старого
-                cellInternalObject.StartMove(ActCell);
-                cellInternalObject.EndMove();
-
-                needInstantDamage = false;
-                cellInternalObject.BufferActivateType = cellInternalObject.type;
-                cellInternalObject.ActivateInvoke(dist * 0.1f);
             }
 
             void DestroyAllColor(InternalColor internalColor) {
@@ -1001,12 +1011,17 @@ public class CellInternalObject : MonoBehaviour
             }
         }
     }
+    void Activate() {
+        Activate(BufferActivateType, BufferPartner, BufferCombination);
+    }
 
     public void ActivateInvoke(float timeInvoke) {
         Invoke("Activate", timeInvoke);
+
     }
 
     void UpdateActivate() {
+
         if (activateNeed && !activate) {
             Activate(BufferActivateType, BufferPartner, BufferCombination);
         }
