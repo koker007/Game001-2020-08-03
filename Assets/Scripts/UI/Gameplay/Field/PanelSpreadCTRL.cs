@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Семен
+
+/// <summary>
+/// Управляем поведением распространяющейся панели
+/// </summary>
 public class PanelSpreadCTRL : MonoBehaviour
 {
     CellCTRL myCell;
@@ -13,6 +18,8 @@ public class PanelSpreadCTRL : MonoBehaviour
 
     public void inicialize(CellCTRL cell) {
         myCell = cell;
+
+        myCell.myField.CountPanelSpread++;
 
         myRect = GetComponent<RectTransform>();
         myRect.pivot = new Vector2(-myCell.pos.x, -myCell.pos.y);
@@ -28,5 +35,10 @@ public class PanelSpreadCTRL : MonoBehaviour
     void Update()
     {
         
+    }
+
+    //Если панель по какой-то причине будет удалена, уменьшаем счетчик
+    ~PanelSpreadCTRL() {
+        myCell.myField.CountPanelSpread--;
     }
 }

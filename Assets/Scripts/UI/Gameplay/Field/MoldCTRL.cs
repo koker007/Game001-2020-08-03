@@ -28,6 +28,7 @@ public class MoldCTRL : MonoBehaviour
 
         //Добавляем в список эту плесень
         myCell.myField.moldCTRLs.Add(this);
+        myCell.myField.CountMold = myCell.myField.moldCTRLs.Count;
         IniRect();
 
         isInicialize = true;
@@ -58,7 +59,12 @@ public class MoldCTRL : MonoBehaviour
         void DestroyMold() {
             if (myCell.mold > 0) return;
             Gameplay.main.MoldUpdate();
+
+            myCell.myField.ReCalcMoldList();
+
             Destroy(gameObject);
+
+            //Пересоздать список плесени исключая отсутствующиие
         }
     }
 
