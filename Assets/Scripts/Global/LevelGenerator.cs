@@ -34,11 +34,14 @@ public class LevelGenerator : MonoBehaviour
         int NeedScore = Width * Height * ((int)NoizeResult % Score—oefficient + Score—oefficient / 2);
         float move = (float)30 / (Width * Height * Score—oefficient) * NeedScore;
 
-        bool passedWitScore = false;
-        bool passedWithCrystal = false;
-        bool passedWithBox = false;
-        bool passedWitMold = false;
-        bool passedWitPanel = false;
+        LevelsScript.Level level = LevelsScript.main.Levels[NumLevel];
+        level = LevelsScript.main.CreateLevel(NumLevel, Width, Height, NeedScore, (int)move);
+
+        int numPass = (int)NoizeResult % 3;
+
+        ///
+        ///
+        ///
 
         int[,] exist = new int[Width, Height];
         int[,] box = new int[Width, Height];
@@ -78,7 +81,7 @@ public class LevelGenerator : MonoBehaviour
                     box[x, y] = 0;
                 }
 
-                if (passedWitMold && randMold < moldChance)
+                if (level.PassedWitMold && randMold < moldChance)
                 {
                     for (int k = 5; k > 0; k--)
                     {
@@ -99,8 +102,6 @@ public class LevelGenerator : MonoBehaviour
                 Type[x, y] = 0;
             }
         }
-        LevelsScript.Level level = LevelsScript.main.Levels[NumLevel];
-        level = LevelsScript.main.CreateLevel(NumLevel, Width, Height, NeedScore, (int)move, passedWitScore, passedWithCrystal, passedWithBox, passedWitMold, passedWitPanel);
         level.SetMass(exist, "exist");
         level.SetMass(IColors, "color");
         level.SetMass(Type, "type");

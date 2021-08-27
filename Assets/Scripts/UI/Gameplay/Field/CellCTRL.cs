@@ -133,7 +133,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 myField.cellCTRLs[pos.x, pos.y + 1].DamageNear();
             }
         }
-        
+
         void CreatePanel() {
             panel = true;
 

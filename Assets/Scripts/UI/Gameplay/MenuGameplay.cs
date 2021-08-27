@@ -22,6 +22,8 @@ public class MenuGameplay : MonoBehaviour
     [SerializeField]
     Transform GameFieldParent;
 
+    GameFieldCTRL gameFieldCTRL;
+
     [Header("Score")]
     [SerializeField]
     Text Level;
@@ -33,12 +35,21 @@ public class MenuGameplay : MonoBehaviour
     Slider ScoreSlider;
     [SerializeField]
     Image[] Stars = new Image[3];
+    [SerializeField]
+    GameObject[] Goal = new GameObject[3];
+    Text[] GoalText = new Text[3];
 
     public static GameObject GameField;
+
+    private LevelsScript.Level level;
 
     private void Awake()
     {
         main = this;
+        for (int i = 0; i < Goal.Length; i++)
+        {
+            GoalText[i] = Goal[i].GetComponentInChildren<Text>();
+        }
     }
 
     // Start is called before the first frame update
@@ -52,6 +63,7 @@ public class MenuGameplay : MonoBehaviour
     void Update()
     {
         updateButtons();
+        updateGoal();
     }
 
     void startButtons()
@@ -91,11 +103,12 @@ public class MenuGameplay : MonoBehaviour
     void CreateGameField() {
         //Создание игрового поля
         GameField = Instantiate(GameFieldPrefab, GameFieldParent);
-        GameFieldCTRL gameFieldCTRL = GameField.GetComponent<GameFieldCTRL>();
+        gameFieldCTRL = GameField.GetComponent<GameFieldCTRL>();
 
         if (LevelsScript.main)
         {
-            gameFieldCTRL.inicializeField(LevelsScript.main.ReturnLevel());
+            level = LevelsScript.main.ReturnLevel();
+            gameFieldCTRL.inicializeField(level);
         }
         else {
             Destroy(GameField);
@@ -126,13 +139,53 @@ public class MenuGameplay : MonoBehaviour
             Level.text = System.Convert.ToString(Gameplay.main.levelSelect);
             updateMoving();
             updateScore();
+            updateGoal();
+        }
+    }
+
+    public void updateGoal()
+    {
+        int i = 0;
+        if (level.PassedWitScore)
+        {
+            GoalText[i].text = "S " + level.NeedScore.ToString();
+            i++;
+        }
+        if (level.PassedWithCrystal)
+        {
+            GoalText[i].text = "C " + level.NeedCrystal.ToString();
+            i++;
+        }
+        if (level.PassedWithBox)
+        {
+            GoalText[i].text = "B " + gameFieldCTRL.CountBoxBlocker.ToString();
+            i++;
+        }
+        if (level.PassedWitMold)
+        {
+            GoalText[i].text = "M " + gameFieldCTRL.CountMold.ToString();
+            i++;
+        }
+        if (level.PassedWitPanel)
+        {
+            GoalText[i].text = "P " + gameFieldCTRL.CountPanelSpread.ToString();
+            i++;
+        }
+
+        for (int j = 0; j < Goal.Length; j++)
+        {
+            Goal[j].SetActive(false);
+        }
+        for (int j = 0; j < i; j++)
+        {
+            Goal[j].SetActive(true);
         }
     }
 
     public void updateScore()
     {
         Score.text = System.Convert.ToString(Gameplay.main.score);
-        ScoreSlider.value = (float)Gameplay.main.score / (LevelsScript.main.ReturnLevel().NeedScore * Gameplay.main.threeStartFactor);
+        ScoreSlider.value = (float)Gameplay.main.score / (level.NeedScore * Gameplay.main.threeStartFactor);
         Gameplay.main.CountStars(ref Stars);
     }
     public void updateMoving()

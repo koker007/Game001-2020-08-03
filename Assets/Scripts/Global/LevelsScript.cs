@@ -84,15 +84,18 @@ public class LevelsScript : MonoBehaviour
         /// </summary>
         public CellInfo[,] cells;
 
-        public bool PassedWitScore;
-        public bool PassedWithCrystal;
-        public bool PassedWithBox;
-        public bool PassedWitMold;
-        public bool PassedWitPanel;
+        public bool PassedWitScore = false;
+        public bool PassedWithCrystal = false;
+        public bool PassedWithBox = false;
+        public bool PassedWitMold = false;
+        public bool PassedWitPanel = false;
 
         public int NeedBox;
         public int NeedMold;
         public int NeedPanel;
+        public int NeedCrystal;
+        public CellInternalObject.InternalColor NeedColor;
+
 
         int[,] exist;
         int[,] box;
@@ -216,10 +219,11 @@ public class LevelsScript : MonoBehaviour
         //уровень 1
         Levels[1] = CreateLevel(
             //numLevel, width, height, max score, move, passType
-            1, 6, 5, 2000000, 50,
-            //score, crystal, box, mold, panel
-            false, false, false, true, true
+            1, 6, 5, 2000000, 50
             );
+
+        Levels[1].PassedWitMold = true;
+        Levels[1].PassedWitPanel = true;
 
         Levels[1].SetMass(
         new int[,] //exist
@@ -286,10 +290,10 @@ public class LevelsScript : MonoBehaviour
         //уровень 2
         Levels[2] = CreateLevel(
             //numLevel, width, height, max score, move, passType
-            2, 8, 8, 2000000, 1000,
-            //score, crystal, box, mold, panel
-            true, false, false, false, false
+            2, 8, 8, 2000000, 1000
             );
+
+        Levels[2].PassedWitScore = true;
 
         Levels[2].SetMass(
         new int[,] //exist
@@ -338,10 +342,10 @@ public class LevelsScript : MonoBehaviour
         //уровень 3
         Levels[3] = CreateLevel(
             //numLevel, width, height, max score, move, passType
-            3, 10, 10, 10000, 99,
-            //score, crystal, box, mold, panel
-            false, false, true, false, false
+            3, 10, 10, 10000, 99
             );
+
+        Levels[3].PassedWitScore = true;
 
         Levels[3].SetMass(
         new int[,] //exist
@@ -417,12 +421,7 @@ public class LevelsScript : MonoBehaviour
         int Width, 
         int Height, 
         int NeedScore, 
-        int move,
-        bool passedWitScore,
-        bool passedWithCrystal,
-        bool passedWithBox,
-        bool passedWitMold,
-        bool passedWitPanel
+        int move
         )
     {
         level = new Level {
@@ -430,12 +429,7 @@ public class LevelsScript : MonoBehaviour
             Width = Height,
             Height = Width,
             NeedScore = NeedScore,
-            Move = move,
-            PassedWitScore = passedWitScore,
-            PassedWithCrystal = passedWithCrystal,
-            PassedWithBox = passedWithBox,
-            PassedWitMold = passedWitMold,
-            PassedWitPanel = passedWitPanel
+            Move = move
         };
 
         level.cells = new CellInfo[Height, Width];
