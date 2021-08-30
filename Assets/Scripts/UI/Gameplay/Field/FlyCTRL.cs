@@ -9,26 +9,54 @@ using UnityEngine.UI;
 /// </summary>
 public class FlyCTRL : MonoBehaviour
 {
-    [SerializeField]
-    Image image;
 
+    float DistMinForHitTarget = 0.25f;
+    [SerializeField]
+    RawImage image;
+
+    [SerializeField]
     Vector2 PivotTarget;
 
+    [SerializeField]
+    GameObject RotateVectorMove;
+    [SerializeField]
+    GameObject RotateObj;
+
+    [SerializeField]
     float SpeedRotate = 0;
+    [SerializeField]
     float SpeedMove = 0;
 
     RectTransform myRect;
     Vector2 PivotStart;
 
+    [Header("Test Data")]
+    [SerializeField]
+    float rotNow;
+    [SerializeField]
+    float rotNeed;
+    [SerializeField]
+    float raznica;
+    [SerializeField]
+    Vector2 vectorMove;
+    [SerializeField]
+    float radianAngleNow;
+
     // Start is called before the first frame update
     void Start()
     {
         inicialize();
+
+        RandomTarget();
     }
 
     void inicialize() {
         myRect = GetComponent<RectTransform>();
         myRect.pivot = PivotStart;
+    }
+
+    void RandomTarget() {
+        PivotTarget = new Vector2Int(Random.Range(0, -5), Random.Range(0,-5));
     }
 
     // Update is called once per frame
@@ -39,12 +67,15 @@ public class FlyCTRL : MonoBehaviour
 
     void CalcTransform() {
 
+        float distToTarget = Vector2.Distance(PivotTarget, myRect.pivot);
+
         Rotate();
         Move();
 
         void Rotate() {
-            //ищем какой угл нужен чтобы повернутьс€ к цели
-            float angleTarget = 0;
+
+            if (distToTarget < DistMinForHitTarget) { return; }
+
 
             //Ќаправление к цели относительно объекта
             Vector2 vectorTarget = PivotTarget - myRect.pivot;
@@ -54,18 +85,89 @@ public class FlyCTRL : MonoBehaviour
             //float radianSin = Mathf.Asin(vectorTargetNormalized.x);
             //Ќа основе арк косинуса находим угл на который наобходимо повернуть
             float radianCos = Mathf.Acos(vectorTargetNormalized.y);
-            //на основе того отрицательный или положительный X узнаем положительный или отрицательный поворот
+            //на основе того отрицательный или положительный X узнаем положительный или отрицательный градус нужен
 
+            if (vectorTargetNormalized.x < 0)
+            {
+                radianCos = Mathf.PI + (Mathf.PI - radianCos);
+            }
             //Ќашли угол в радианах
             //Ќашли вектор до цели
             //”знаем какой это угл поворота
+
+            //ѕереводим из радиан в градусы
+            float gradTarget = radianCos / Calculate.PIinOnegrad;
+            //ѕолучили угл на который нужно повернуть обьект чтобы он смотрел на цель
+
+            //≈сли разница в угле больше чем на 180 значит необходимо отн€ть 360 либо прибавить чтобы уравн€ть
+            raznica = gradTarget - RotateVectorMove.transform.localRotation.eulerAngles.z;
+
+            //≈сли вдруг разница стала больше чем на 180 градусов то смещаем угл цели на один круг.
+            if (raznica > 180) {
+                gradTarget = gradTarget - 360;
+            }
+            else if (raznica < -180) {
+                gradTarget = gradTarget + 360;
+            }
+
+            //ѕрибав€лем угловую скорость
+            SpeedRotate += Time.deltaTime * 40 * (4/distToTarget); //¬ скобках углова€ скорость в зависимости от расто€ни€
+            //вычисл€ем коофицент угловой скорости
+            float coofRotSpeed = SpeedRotate * SpeedMove * Time.deltaTime;
+            //≈сли коофицент стал больше 1 приравниваем к 1. 1 это моментальное вращение в сторону цели;
+            if (coofRotSpeed > 1)
+                coofRotSpeed = 1;
             
 
 
+            //ѕолучаем угл дл€ текущего кадра
+            float gradNow = RotateVectorMove.transform.localRotation.eulerAngles.z + (gradTarget - RotateVectorMove.transform.localRotation.eulerAngles.z) * coofRotSpeed;
+
+            //
+
+            //ѕримен€ем новое вращение на вектор
+            Quaternion rotateVectorNew = RotateVectorMove.transform.rotation;
+            rotateVectorNew.eulerAngles = new Vector3(0,0, gradNow);
+            RotateVectorMove.transform.rotation = rotateVectorNew;
+
+            //ѕримен€ем прмен€ем новое вращение на визуальную часть относительно вектора
+            Quaternion rotateObjNew = RotateVectorMove.transform.rotation;
+            rotateObjNew.eulerAngles = new Vector3(0, 0, (-gradNow) + 180);
+            RotateObj.transform.rotation = rotateObjNew;
+
+            rotNeed = gradTarget;
+            rotNow = RotateVectorMove.transform.localRotation.eulerAngles.z;
+
+            
+            //
 
         }
         void Move() {
-        
+
+            if (distToTarget < DistMinForHitTarget) { return; }
+
+            //ѕолучаем вектор направлени€ взгл€да
+            //узнаем угл поворота
+            rotNow = RotateVectorMove.transform.localRotation.eulerAngles.z;
+
+            //ѕереводим угл в радианы
+            radianAngleNow = RotateVectorMove.transform.localRotation.eulerAngles.z * Calculate.PIinOnegrad;
+            //”знаем вертор движени€ и перемещаем в соответсвии со скоростью
+            vectorMove = new Vector2(Mathf.Sin(radianAngleNow), Mathf.Cos(radianAngleNow));
+
+            //Ќормальное быстрое далекое движение
+            if (distToTarget > 0.75f) {
+                SpeedMove += (0.1f - SpeedMove) * Time.deltaTime * 2f;
+            }
+            //ƒвижение с замедлением в близи
+            else {
+                SpeedMove += (0.01f - SpeedMove) * Time.deltaTime * 15f;
+            }
+            Vector2 moving = vectorMove * SpeedMove;
+            //–асчет новой позиции
+            myRect.pivot = new Vector2(myRect.pivot.x + moving.x, myRect.pivot.y + moving.y);
+            
+
         }
     }
 }
