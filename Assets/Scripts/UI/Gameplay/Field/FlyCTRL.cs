@@ -45,14 +45,19 @@ public class FlyCTRL : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        inicialize();
-
-        RandomTarget();
+        
     }
 
-    void inicialize() {
+    bool isInicialized = false;
+    public void inicialize(CellCTRL CellStart, CellCTRL CellTarget) {
+        
         myRect = GetComponent<RectTransform>();
-        myRect.pivot = PivotStart;
+        myRect.pivot = new Vector2(-CellStart.pos.x, -CellStart.pos.y);
+
+        PivotTarget = new Vector2(-CellTarget.pos.x, -CellTarget.pos.y);
+
+        isInicialized = true;
+
     }
 
     void RandomTarget() {
@@ -66,6 +71,8 @@ public class FlyCTRL : MonoBehaviour
     }
 
     void CalcTransform() {
+        //Если не инициализировано, выходим
+        if (!isInicialized) return;
 
         float distToTarget = Vector2.Distance(PivotTarget, myRect.pivot);
 
@@ -111,7 +118,7 @@ public class FlyCTRL : MonoBehaviour
             }
 
             //Прибавялем угловую скорость
-            SpeedRotate += Time.deltaTime * 40 * (4/distToTarget); //В скобках угловая скорость в зависимости от растояния
+            SpeedRotate += Time.deltaTime * 60 * (6/distToTarget); //В скобках угловая скорость в зависимости от растояния
             //вычисляем коофицент угловой скорости
             float coofRotSpeed = SpeedRotate * SpeedMove * Time.deltaTime;
             //Если коофицент стал больше 1 приравниваем к 1. 1 это моментальное вращение в сторону цели;
@@ -138,7 +145,6 @@ public class FlyCTRL : MonoBehaviour
             rotNeed = gradTarget;
             rotNow = RotateVectorMove.transform.localRotation.eulerAngles.z;
 
-            
             //
 
         }

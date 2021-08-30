@@ -59,6 +59,8 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     public Transform parentOfMold;
     [SerializeField]
+    public Transform parentOfFly;
+    [SerializeField]
     public Transform parentOfParticles;
     [SerializeField]
     public Transform parentOfScore;
@@ -1328,4 +1330,12 @@ public class GameFieldCTRL : MonoBehaviour
         }
     }
 
+    public List<CellCTRL> GetCellsPriority() {
+
+        List<CellCTRL> cellCTRLs = new List<CellCTRL>();
+
+
+
+        return cellCTRLs;
+    }
 }

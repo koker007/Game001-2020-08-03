@@ -54,6 +54,10 @@ public class CellInternalObject : MonoBehaviour
     [SerializeField]
     Texture2D TextureRocketVertical;
 
+    [Header("Prefabs")]
+    [SerializeField]
+    GameObject FlyPrefab;
+
     public enum InternalColor {
         Red,
         Green,
@@ -71,6 +75,8 @@ public class CellInternalObject : MonoBehaviour
         none
     }
 
+
+    [Header("Other")]
     public InternalColor color;
     public Type type;
 
@@ -598,6 +604,7 @@ public class CellInternalObject : MonoBehaviour
             else if (ActivateType == Type.rocketHorizontal) ActivateRocket(true, false);
             else if (ActivateType == Type.rocketVertical) ActivateRocket(false, true);
             else if (ActivateType == Type.supercolor) ActivateSuperColor();
+            else if (ActivateType == Type.airplane) ActivateFly();
         }
         else {
 
@@ -621,6 +628,7 @@ public class CellInternalObject : MonoBehaviour
                 (partner.type == Type.rocketHorizontal || partner.type == Type.rocketVertical)) {
                 ActivateRocket(true, true);
             }
+
         }
 
         DestroyObj();
@@ -1009,6 +1017,18 @@ public class CellInternalObject : MonoBehaviour
                     myField.cellCTRLs[fieldPosX, fieldPosY].DamageInvoke(time);
                 }
             }
+        }
+
+        void ActivateFly() {
+            //Создаем объкт
+            GameObject flyObj = Instantiate(FlyPrefab, myField.parentOfFly);
+            FlyCTRL flyCTRL = flyObj.GetComponent<FlyCTRL>();
+
+            //Выбираем ячейку с наибольщим приоритетом
+            List<CellCTRL> cellsPriority = myField.GetCellsPriority();
+
+            //инициализируем
+            //flyCTRL.inicialize(myCell, );
         }
     }
     void Activate() {
