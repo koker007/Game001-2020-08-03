@@ -80,6 +80,10 @@ public class LevelsScript : MonoBehaviour
         /// </summary>
         public int Move;
         /// <summary>
+        /// количество цветов
+        /// </summary>
+        public int NumColors;
+        /// <summary>
         /// массив €чеек на поле
         /// </summary>
         public CellInfo[,] cells;
@@ -185,7 +189,7 @@ public class LevelsScript : MonoBehaviour
                 {
                     if (exist[y, x] == 0)
                     {
-                        cells[x, y] = null;
+                        cells[x, cells.GetLength(1) - 1 - y] = null;
                     }
                     else
                     {
@@ -217,10 +221,7 @@ public class LevelsScript : MonoBehaviour
         main = this;
 
         //уровень 1
-        Levels[1] = CreateLevel(
-            //numLevel, width, height, max score, move, passType
-            1, 6, 5, 2000000, 50
-            );
+        Levels[1] = CreateLevel(1, 6, 5, 2000000, 50, 4);
 
         Levels[1].PassedWitMold = true;
         Levels[1].PassedWitPanel = true;
@@ -233,7 +234,7 @@ public class LevelsScript : MonoBehaviour
                 { 1,1,1,1,1 },
                 { 1,1,1,1,1 },
                 { 1,1,1,1,1 },
-                { 1,1,1,1,1 }
+                { 1,1,1,1,0 }
             },
             "exist"
             );
@@ -288,10 +289,7 @@ public class LevelsScript : MonoBehaviour
         Levels[1].SetCells();
 
         //уровень 2
-        Levels[2] = CreateLevel(
-            //numLevel, width, height, max score, move, passType
-            2, 8, 8, 2000000, 1000
-            );
+        Levels[2] = CreateLevel(2, 8, 8, 2000000, 1000, 4);
 
         Levels[2].PassedWitScore = true;
 
@@ -340,10 +338,7 @@ public class LevelsScript : MonoBehaviour
         Levels[2].SetCells();
 
         //уровень 3
-        Levels[3] = CreateLevel(
-            //numLevel, width, height, max score, move, passType
-            3, 10, 10, 10000, 99
-            );
+        Levels[3] = CreateLevel(3, 10, 10, 10000, 99, 4);
 
         Levels[3].PassedWitScore = true;
 
@@ -421,7 +416,8 @@ public class LevelsScript : MonoBehaviour
         int Width, 
         int Height, 
         int NeedScore, 
-        int move
+        int move,
+        int numColors
         )
     {
         level = new Level {
@@ -429,7 +425,8 @@ public class LevelsScript : MonoBehaviour
             Width = Height,
             Height = Width,
             NeedScore = NeedScore,
-            Move = move
+            Move = move,
+            NumColors = numColors
         };
 
         level.cells = new CellInfo[Height, Width];
