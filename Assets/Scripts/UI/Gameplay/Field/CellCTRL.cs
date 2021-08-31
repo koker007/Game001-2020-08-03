@@ -31,6 +31,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     }
 
     public GameFieldCTRL myField;
+    public int MyPriority = 0;
 
     static CellCTRL CellClickOld;
     static CellCTRL CellEnterOld;
@@ -114,6 +115,10 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         DamageNear();
 
 
+        //Перенасчет приоритета
+        CalcMyPriority();
+
+
         void DamageNearCells() {
 
             //Слева
@@ -155,6 +160,9 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         {
             BlockingMove--;
         }
+
+        //Перенасчет приоритета
+        CalcMyPriority();
     }
 
     // Start is called before the first frame update
@@ -185,6 +193,64 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         
     }
 
+
+    /// <summary>
+    /// Расчет приоритера данной ячейки
+    /// </summary>
+    public void CalcMyPriority() {
+
+        const int PriorityBox = 10; //Приоритет ящика
+        const int PriorityMold = 5; //приоритет плесени
+        const int PriorityPanel = 5; //Приоритет отсутствия панели
+
+
+        MyPriority = GetPriorityNow();
+
+
+        //Расчитать и получить текущий приоритет
+        int GetPriorityNow() {
+            int result = 0;
+
+            //расчитываем приоритеты
+            //ящика
+            if (BlockingMove > 0)
+            {
+                result += (5 - BlockingMove) * PriorityBox; //Чем меньше жизней, тем желательнее ее сломать
+            }
+            //Плесени
+            if (mold > 0)
+            {
+                result += (5 - mold) * PriorityMold; //Чем меньше жизней, тем желательнее ее сломать
+            }
+            //отсутствия панели
+            if (!panel)
+            {
+                result += PriorityPanel;
+            }
+
+            return result;
+        }
+
+        //Переместить эту ячеку в массиве приоритетов в правильное место
+        void CalcPriorityArray() {
+            //ищем эту ячейку в массиве
+            bool found = false;
+
+            //Ищем свою текущую позицию
+            for (int myNum = 0; myNum < myField.cellsPriority.Length && !found; myNum++) {
+                //Пропускаем если это не наша ячейка
+                if (myField.cellsPriority[myNum] != this) continue;
+
+                //Сравниваем приоритеты ячеек передней стоящих
+                for (int minus = 0; minus < myNum; minus++) {
+                    //если приоритет текущей ячейки больше то продвигаем ее вперед
+                    if (MyPriority > myField.cellsPriority[myNum].MyPriority) {
+                        
+                    }
+                }
+            }
+        }
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {

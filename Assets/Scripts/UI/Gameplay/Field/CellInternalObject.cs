@@ -54,6 +54,10 @@ public class CellInternalObject : MonoBehaviour
     [SerializeField]
     Texture2D TextureRocketVertical;
 
+    [Header("Prefabs")]
+    [SerializeField]
+    GameObject FlyPrefab;
+
     public enum InternalColor {
         Red,
         Green,
@@ -71,6 +75,8 @@ public class CellInternalObject : MonoBehaviour
         none
     }
 
+
+    [Header("Other")]
     public InternalColor color;
     public Type type;
 
@@ -186,6 +192,7 @@ public class CellInternalObject : MonoBehaviour
                 {
                     //ƒвижение окончено
                     isMove = false;
+                    myCell.CalcMyPriority();
                 }
             }
 
@@ -598,6 +605,7 @@ public class CellInternalObject : MonoBehaviour
             else if (ActivateType == Type.rocketHorizontal) ActivateRocket(true, false);
             else if (ActivateType == Type.rocketVertical) ActivateRocket(false, true);
             else if (ActivateType == Type.supercolor) ActivateSuperColor();
+            else if (ActivateType == Type.airplane) ActivateFly();
         }
         else {
 
@@ -621,6 +629,12 @@ public class CellInternalObject : MonoBehaviour
                 (partner.type == Type.rocketHorizontal || partner.type == Type.rocketVertical)) {
                 ActivateRocket(true, true);
             }
+
+            //—амолет + самолет
+            else if (ActivateType == Type.airplane) {
+                ActivateFly();
+            }
+
         }
 
         DestroyObj();
@@ -1007,6 +1021,80 @@ public class CellInternalObject : MonoBehaviour
                     myField.cellCTRLs[fieldPosX, fieldPosY].BufferCombination = combination;
                     myField.cellCTRLs[fieldPosX, fieldPosY].BufferNearDamage = false;
                     myField.cellCTRLs[fieldPosX, fieldPosY].DamageInvoke(time);
+                }
+            }
+        }
+
+        void ActivateFly() {
+
+            CreateThis();
+
+            if (partner != null && partner.type == Type.airplane) {
+                CreatePartner();
+                CreatePartner();
+            }
+
+            void CreateThis() {
+                //—оздаем объкт
+                GameObject flyObj = Instantiate(FlyPrefab, myField.parentOfFly);
+                FlyCTRL flyCTRL = flyObj.GetComponent<FlyCTRL>();
+
+
+                //ищем €чейку к которой еще никто не летит
+                foreach (CellCTRL cellPriority in myField.cellsPriority)
+                {
+                    //≈сли нашли эту €чейку в списке целей то завершаем перебор и переключаемс€ далее
+                    bool found = false;
+                    foreach (FlyCTRL fly in FlyCTRL.flyCTRLs)
+                    {
+                        if (fly.CellTarget == cellPriority)
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    //≈сли закончили перебор и не нашли €чейку в списке, значит это то что нужно выбрать в качестве новой цели
+                    if (!found)
+                    {
+                        flyCTRL.inicialize(myCell, cellPriority, partner, combination);
+
+                        break;
+                    }
+
+
+                }
+            }
+
+            void CreatePartner() {
+                //—оздаем объкт
+                GameObject flyObj = Instantiate(FlyPrefab, myField.parentOfFly);
+                FlyCTRL flyCTRL = flyObj.GetComponent<FlyCTRL>();
+
+
+                //ищем €чейку к которой еще никто не летит
+                foreach (CellCTRL cellPriority in myField.cellsPriority)
+                {
+                    //≈сли нашли эту €чейку в списке целей то завершаем перебор и переключаемс€ далее
+                    bool found = false;
+                    foreach (FlyCTRL fly in FlyCTRL.flyCTRLs)
+                    {
+                        if (fly.CellTarget == cellPriority)
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    //≈сли закончили перебор и не нашли €чейку в списке, значит это то что нужно выбрать в качестве новой цели
+                    if (!found)
+                    {
+                        flyCTRL.inicialize(partner.myCell, cellPriority, null, combination);
+
+                        break;
+                    }
+
+
                 }
             }
         }
