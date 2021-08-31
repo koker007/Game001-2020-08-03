@@ -10,12 +10,19 @@ using UnityEngine.UI;
 public class FlyCTRL : MonoBehaviour
 {
 
+    static public List<FlyCTRL> flyCTRLs = new List<FlyCTRL>();
+
     float DistMinForHitTarget = 0.25f;
     [SerializeField]
     RawImage image;
 
     [SerializeField]
+    GameFieldCTRL myField;
+
+    [SerializeField]
     Vector2 PivotTarget;
+    [SerializeField]
+    public CellCTRL CellTarget;
 
     [SerializeField]
     GameObject RotateVectorMove;
@@ -42,6 +49,13 @@ public class FlyCTRL : MonoBehaviour
     [SerializeField]
     float radianAngleNow;
 
+    //Был ли активирован самолет
+    [SerializeField]
+    bool Activated = false;
+    float ActivatedTime = 0;
+    CellInternalObject partner; //Данные партнера
+    GameFieldCTRL.Combination comb; //Данные комбинации
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,15 +63,24 @@ public class FlyCTRL : MonoBehaviour
     }
 
     bool isInicialized = false;
-    public void inicialize(CellCTRL CellStart, CellCTRL CellTarget) {
-        
+    public void inicialize(CellCTRL CellStart, CellCTRL CellTargetFunc, CellInternalObject partnerFunc, GameFieldCTRL.Combination combFunc) {
+
+        //Выйти если раннее уже проинициализированно
+        if (isInicialized) return;
+
+        partner = partnerFunc;
+        comb = combFunc;
+
         myRect = GetComponent<RectTransform>();
         myRect.pivot = new Vector2(-CellStart.pos.x, -CellStart.pos.y);
 
+        myField = CellStart.myField;
+        CellTarget = CellTargetFunc;
         PivotTarget = new Vector2(-CellTarget.pos.x, -CellTarget.pos.y);
 
-        isInicialized = true;
+        flyCTRLs.Add(this);
 
+        isInicialized = true;
     }
 
     void RandomTarget() {
@@ -78,6 +101,10 @@ public class FlyCTRL : MonoBehaviour
 
         Rotate();
         Move();
+        Damage();
+
+        //Уничтожение со временем
+        Destroying();
 
         void Rotate() {
 
@@ -174,6 +201,69 @@ public class FlyCTRL : MonoBehaviour
             myRect.pivot = new Vector2(myRect.pivot.x + moving.x, myRect.pivot.y + moving.y);
             
 
+        }
+
+        void Damage() {
+            //Выходим, если уже активировано либо растояние больше чем нужно
+            if (Activated || distToTarget >= DistMinForHitTarget) return;
+
+            //Сперва наносим самый обычный урон
+            CellTarget.Damage(null, comb, false);
+
+            if (partner != null) {
+                //Если партнер самолета была бомба
+                if (partner.type == CellInternalObject.Type.bomb) {
+                    myField.CreateBomb(CellTarget, CellInternalObject.InternalColor.Red);
+                    CellTarget.Damage();
+                }
+                //Если партнер самолета была ракета
+                else if (partner.type == CellInternalObject.Type.rocketHorizontal || partner.type == CellInternalObject.Type.rocketVertical) {
+                    //выбираем тип ракеты
+                    if (Random.Range(0, 100) < 50) {
+                        myField.CreateRocketHorizontal(CellTarget, CellInternalObject.InternalColor.Red);
+                        CellTarget.Damage();
+                    }
+                    else {
+                        myField.CreateRocketVertical(CellTarget, CellInternalObject.InternalColor.Red);
+                        CellTarget.Damage();
+                    }
+                }
+            }
+
+            Activated = true;
+            //ActivatedTime = Time.unscaledTime; //Время активации
+        }
+
+        void Destroying() {
+            if (Activated)
+            {
+                float alpha = image.color.a - Time.deltaTime;
+                image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
+
+                if (alpha < 0)
+                {
+                    Destroy(gameObject);
+                }
+            }
+        }
+    }
+
+    //Деструктор
+    ~FlyCTRL() {
+
+        reCalcList();
+
+
+        void reCalcList() {
+            List<FlyCTRL> flyCTRLsNew = new List<FlyCTRL>();
+
+            //Создаем новый список пропуская только этот и пустые экземпляры
+            foreach (FlyCTRL flyCTRL in flyCTRLs) {
+                
+                if (flyCTRL != null && flyCTRL != this) {
+                    flyCTRLsNew.Add(flyCTRL);
+                }
+            }
         }
     }
 }

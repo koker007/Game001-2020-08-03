@@ -192,6 +192,7 @@ public class CellInternalObject : MonoBehaviour
                 {
                     //ƒвижение окончено
                     isMove = false;
+                    myCell.CalcMyPriority();
                 }
             }
 
@@ -629,6 +630,11 @@ public class CellInternalObject : MonoBehaviour
                 ActivateRocket(true, true);
             }
 
+            //—амолет + самолет
+            else if (ActivateType == Type.airplane) {
+                ActivateFly();
+            }
+
         }
 
         DestroyObj();
@@ -1020,15 +1026,77 @@ public class CellInternalObject : MonoBehaviour
         }
 
         void ActivateFly() {
-            //—оздаем объкт
-            GameObject flyObj = Instantiate(FlyPrefab, myField.parentOfFly);
-            FlyCTRL flyCTRL = flyObj.GetComponent<FlyCTRL>();
 
-            //¬ыбираем €чейку с наибольщим приоритетом
-            List<CellCTRL> cellsPriority = myField.GetCellsPriority();
+            CreateThis();
 
-            //инициализируем
-            //flyCTRL.inicialize(myCell, );
+            if (partner != null && partner.type == Type.airplane) {
+                CreatePartner();
+                CreatePartner();
+            }
+
+            void CreateThis() {
+                //—оздаем объкт
+                GameObject flyObj = Instantiate(FlyPrefab, myField.parentOfFly);
+                FlyCTRL flyCTRL = flyObj.GetComponent<FlyCTRL>();
+
+
+                //ищем €чейку к которой еще никто не летит
+                foreach (CellCTRL cellPriority in myField.cellsPriority)
+                {
+                    //≈сли нашли эту €чейку в списке целей то завершаем перебор и переключаемс€ далее
+                    bool found = false;
+                    foreach (FlyCTRL fly in FlyCTRL.flyCTRLs)
+                    {
+                        if (fly.CellTarget == cellPriority)
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    //≈сли закончили перебор и не нашли €чейку в списке, значит это то что нужно выбрать в качестве новой цели
+                    if (!found)
+                    {
+                        flyCTRL.inicialize(myCell, cellPriority, partner, combination);
+
+                        break;
+                    }
+
+
+                }
+            }
+
+            void CreatePartner() {
+                //—оздаем объкт
+                GameObject flyObj = Instantiate(FlyPrefab, myField.parentOfFly);
+                FlyCTRL flyCTRL = flyObj.GetComponent<FlyCTRL>();
+
+
+                //ищем €чейку к которой еще никто не летит
+                foreach (CellCTRL cellPriority in myField.cellsPriority)
+                {
+                    //≈сли нашли эту €чейку в списке целей то завершаем перебор и переключаемс€ далее
+                    bool found = false;
+                    foreach (FlyCTRL fly in FlyCTRL.flyCTRLs)
+                    {
+                        if (fly.CellTarget == cellPriority)
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    //≈сли закончили перебор и не нашли €чейку в списке, значит это то что нужно выбрать в качестве новой цели
+                    if (!found)
+                    {
+                        flyCTRL.inicialize(partner.myCell, cellPriority, null, combination);
+
+                        break;
+                    }
+
+
+                }
+            }
         }
     }
     void Activate() {
