@@ -36,6 +36,7 @@ public class Gameplay : MonoBehaviour
     /// общее количество выполненых ходов
     /// </summary>
     public int movingCount = 0;
+
     public int colors = 3;
     public int combo = 0;
     public int boxCount;
@@ -74,7 +75,7 @@ public class Gameplay : MonoBehaviour
         movingCan--;
         MenuGameplay.main.updateMoving();
     }
-
+    //обновление количества очков
     public void ScoreUpdate(int PlusScore)
     {
         score += PlusScore;
@@ -96,6 +97,9 @@ public class Gameplay : MonoBehaviour
         panelCount--;
     }
 
+    /// <summary>
+    /// проверка игры на выполненые цели
+    /// </summary>
     public void CheckEndGame()
     {
         if (movingCan <= 0 && isGameplay && GameplayEnd == false)
@@ -127,7 +131,9 @@ public class Gameplay : MonoBehaviour
         }
 
     }
-
+    /// <summary>
+    /// считает и меняет цвет звезд выбранного уровня
+    /// </summary>
     public void CountStars(int score, ref Image[] stars)
     {
         if (score >= LevelsScript.main.ReturnLevel().NeedScore * threeStartFactor)
@@ -155,6 +161,9 @@ public class Gameplay : MonoBehaviour
             stars[2].color = new Color32(140, 140, 60, 255);
         }
     }
+    /// <summary>
+    /// считает и меняет цвет звезд выбранного уровня
+    /// </summary>
     public void CountStars(ref Image[] stars)
     {
         CountStars(score,ref stars);
