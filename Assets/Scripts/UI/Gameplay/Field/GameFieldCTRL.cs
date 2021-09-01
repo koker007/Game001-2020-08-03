@@ -902,6 +902,38 @@ public class GameFieldCTRL : MonoBehaviour
                     }
 
                 }
+
+                //Самолет + самолет
+                else if (swap.first.cellInternal.type == CellInternalObject.Type.airplane &&
+                    swap.second.cellInternal.type == CellInternalObject.Type.airplane)
+                {
+                    swap.first.cellInternal.Activate(CellInternalObject.Type.airplane, swap.second.cellInternal, comb);
+                }
+
+
+                //Самолет + бомба
+                else if (swap.first.cellInternal.type == CellInternalObject.Type.airplane && swap.second.cellInternal.type == CellInternalObject.Type.bomb)
+                {
+                    swap.first.cellInternal.Activate(CellInternalObject.Type.airplane, swap.second.cellInternal, comb);
+                }
+                //бомба + самолет
+                else if (swap.second.cellInternal.type == CellInternalObject.Type.airplane && swap.first.cellInternal.type == CellInternalObject.Type.bomb)
+                {
+                    swap.second.cellInternal.Activate(CellInternalObject.Type.airplane, swap.first.cellInternal, comb);
+                }
+
+
+                //самолет + ракета
+                else if (swap.first.cellInternal.type == CellInternalObject.Type.airplane && (swap.second.cellInternal.type == CellInternalObject.Type.rocketVertical || swap.second.cellInternal.type == CellInternalObject.Type.rocketHorizontal))
+                {
+                    swap.first.cellInternal.Activate(CellInternalObject.Type.airplane, swap.second.cellInternal, comb);
+                }
+                //Ракета + самолет
+                else if (swap.second.cellInternal.type == CellInternalObject.Type.airplane && (swap.first.cellInternal.type == CellInternalObject.Type.rocketVertical || swap.first.cellInternal.type == CellInternalObject.Type.rocketHorizontal))
+                {
+                    swap.second.cellInternal.Activate(CellInternalObject.Type.airplane, swap.first.cellInternal, comb);
+                }
+
                 //Бомба + что-то
                 else if (swap.first.cellInternal.type == CellInternalObject.Type.bomb ||
                     swap.second.cellInternal.type == CellInternalObject.Type.bomb)
@@ -917,35 +949,6 @@ public class GameFieldCTRL : MonoBehaviour
                     }
                 }
 
-
-                //Самолет + самолет
-                else if (swap.first.cellInternal.type == CellInternalObject.Type.airplane &&
-                    swap.second.cellInternal.type == CellInternalObject.Type.airplane)
-                {
-                    swap.first.cellInternal.Activate(CellInternalObject.Type.airplane, swap.second.cellInternal, comb);
-                }
-
-
-                //Самолет + бомба
-                else if (swap.first.cellInternal.type == CellInternalObject.Type.airplane && swap.second.cellInternal.type == CellInternalObject.Type.bomb) {
-                    swap.first.cellInternal.Activate(CellInternalObject.Type.airplane, swap.second.cellInternal, comb);
-                }
-                //бомба + самолет
-                else if (swap.second.cellInternal.type == CellInternalObject.Type.airplane && swap.first.cellInternal.type == CellInternalObject.Type.bomb) {
-                    swap.second.cellInternal.Activate(CellInternalObject.Type.airplane, swap.first.cellInternal, comb);
-                }
-
-
-                //самолет + ракета
-                else if (swap.first.cellInternal.type == CellInternalObject.Type.airplane && (swap.second.cellInternal.type == CellInternalObject.Type.rocketVertical || swap.second.cellInternal.type == CellInternalObject.Type.rocketHorizontal))
-                {
-                    swap.first.cellInternal.Activate(CellInternalObject.Type.airplane, swap.second.cellInternal, comb);
-                }
-                //Ракета + самолет
-                else if (swap.second.cellInternal.type == CellInternalObject.Type.airplane && (swap.first.cellInternal.type == CellInternalObject.Type.rocketVertical || swap.first.cellInternal.type == CellInternalObject.Type.rocketHorizontal))
-                {
-                    swap.second.cellInternal.Activate(CellInternalObject.Type.airplane, swap.first.cellInternal, comb);
-                }
 
                 //Ракета + ракета
                 else if ((swap.first.cellInternal.type == CellInternalObject.Type.rocketHorizontal || swap.first.cellInternal.type == CellInternalObject.Type.rocketVertical) &&

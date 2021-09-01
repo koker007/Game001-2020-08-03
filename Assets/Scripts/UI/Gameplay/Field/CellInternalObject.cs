@@ -1034,6 +1034,10 @@ public class CellInternalObject : MonoBehaviour
                 CreatePartner();
             }
 
+            
+            if(partner != null)
+                Destroy(partner.gameObject);
+
             void CreateThis() {
                 //Создаем объкт
                 GameObject flyObj = Instantiate(FlyPrefab, myField.parentOfFly);

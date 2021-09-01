@@ -53,7 +53,9 @@ public class FlyCTRL : MonoBehaviour
     [SerializeField]
     bool Activated = false;
     float ActivatedTime = 0;
-    CellInternalObject partner; //Данные партнера
+
+    bool partnerHave = false;
+    CellInternalObject.Type partnerType; //Данные партнера
     GameFieldCTRL.Combination comb; //Данные комбинации
 
     // Start is called before the first frame update
@@ -63,12 +65,17 @@ public class FlyCTRL : MonoBehaviour
     }
 
     bool isInicialized = false;
-    public void inicialize(CellCTRL CellStart, CellCTRL CellTargetFunc, CellInternalObject partnerFunc, GameFieldCTRL.Combination combFunc) {
+    public void inicialize(CellCTRL CellStart, CellCTRL CellTargetFunc, CellInternalObject partner, GameFieldCTRL.Combination combFunc) {
 
         //Выйти если раннее уже проинициализированно
         if (isInicialized) return;
 
-        partner = partnerFunc;
+        //Если партнер есть
+        if (partner != null)
+        {
+            partnerHave = true;
+            partnerType = partner.type;
+        }
         comb = combFunc;
 
         myRect = GetComponent<RectTransform>();
@@ -210,14 +217,14 @@ public class FlyCTRL : MonoBehaviour
             //Сперва наносим самый обычный урон
             CellTarget.Damage(null, comb, false);
 
-            if (partner != null) {
+            if (partnerHave) {
                 //Если партнер самолета была бомба
-                if (partner.type == CellInternalObject.Type.bomb) {
+                if (partnerType == CellInternalObject.Type.bomb) {
                     myField.CreateBomb(CellTarget, CellInternalObject.InternalColor.Red);
                     CellTarget.Damage();
                 }
                 //Если партнер самолета была ракета
-                else if (partner.type == CellInternalObject.Type.rocketHorizontal || partner.type == CellInternalObject.Type.rocketVertical) {
+                else if (partnerType == CellInternalObject.Type.rocketHorizontal || partnerType == CellInternalObject.Type.rocketVertical) {
                     //выбираем тип ракеты
                     if (Random.Range(0, 100) < 50) {
                         myField.CreateRocketHorizontal(CellTarget, CellInternalObject.InternalColor.Red);
