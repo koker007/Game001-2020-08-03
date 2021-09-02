@@ -220,20 +220,18 @@ public class FlyCTRL : MonoBehaviour
             if (partnerHave) {
                 //≈сли партнер самолета была бомба
                 if (partnerType == CellInternalObject.Type.bomb) {
-                    myField.CreateBomb(CellTarget, CellInternalObject.InternalColor.Red);
+                    myField.CreateBomb(CellTarget, CellInternalObject.InternalColor.Red, 0);
                     CellTarget.Damage();
                 }
-                //≈сли партнер самолета была ракета
-                else if (partnerType == CellInternalObject.Type.rocketHorizontal || partnerType == CellInternalObject.Type.rocketVertical) {
-                    //выбираем тип ракеты
-                    if (Random.Range(0, 100) < 50) {
-                        myField.CreateRocketHorizontal(CellTarget, CellInternalObject.InternalColor.Red);
-                        CellTarget.Damage();
-                    }
-                    else {
-                        myField.CreateRocketVertical(CellTarget, CellInternalObject.InternalColor.Red);
-                        CellTarget.Damage();
-                    }
+                //≈сли партнер самолета была ракета горизонтальна€
+                else if (partnerType == CellInternalObject.Type.rocketHorizontal) {
+                    myField.CreateRocketHorizontal(CellTarget, CellInternalObject.InternalColor.Red, 0);
+                    CellTarget.Damage();
+                }
+                //≈сли партнер самолета была ракета вертикальна€
+                else if (partnerType == CellInternalObject.Type.rocketVertical) {
+                    myField.CreateRocketVertical(CellTarget, CellInternalObject.InternalColor.Red, 0);
+                    CellTarget.Damage();
                 }
             }
 

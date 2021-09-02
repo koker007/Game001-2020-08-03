@@ -36,6 +36,10 @@ public class Gameplay : MonoBehaviour
     /// общее количество выполненых ходов
     /// </summary>
     public int movingCount = 0;
+    /// <summary>
+    /// Общее количество требуемых ходов плесени
+    /// </summary>
+    public int movingMoldCount = 0;
     public int colors = 3;
     public int combo = 0;
     public int boxCount;
@@ -68,11 +72,15 @@ public class Gameplay : MonoBehaviour
         CountStars(ref stars);
     }
     //вычитает ход и делает проверку на 0 ходов
-    public void MinusMoving()
+    public void MinusMoving(GameFieldCTRL.Combination combination)
     {
         movingCount++;
         movingCan--;
         MenuGameplay.main.updateMoving();
+
+        if (!combination.foundMold) movingMoldCount++;
+
+        
     }
 
     public void ScoreUpdate(int PlusScore)

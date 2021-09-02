@@ -391,7 +391,7 @@ public class GameFieldCTRL : MonoBehaviour
         TestStartSwap(); //Начинаем обмен
         TestReturnSwap(); //Возвращяем обмен
 
-        TestStepsCount(); //Выполняем действия после хода
+        TestMold(); //Выполняем действия после хода
 
         TestCalcPriorityCells(); //Вычисление приоритета ячеек
     }
@@ -523,7 +523,11 @@ public class GameFieldCTRL : MonoBehaviour
     /// Класс комбинации для отслеживания что 
     /// </summary>
     public class Combination {
+        static int IDLast = 0; //последняя созданная комбинация
+
         public List<CellCTRL> cells = new List<CellCTRL>();
+
+        public int ID = 0;
 
         public bool horizontal = false;
         public bool vertical = false;
@@ -534,6 +538,12 @@ public class GameFieldCTRL : MonoBehaviour
         public bool cross = false;
 
         public bool foundPanel = false;
+        public bool foundMold = false;
+
+        public Combination(){
+            IDLast++; //Прибавляем id комбинации
+            ID = IDLast; //Это наш номер
+        }
     }
     void TestFieldCombination() {
         //Создаем новый список комбинаций
@@ -548,6 +558,7 @@ public class GameFieldCTRL : MonoBehaviour
             }
         }
 
+        DestroyDuplicateCombinations();
         TestDamageAndSpawn();
 
         TestSuperCombination();
@@ -730,6 +741,11 @@ public class GameFieldCTRL : MonoBehaviour
 
             void CalcResult()
             {
+                bool test = false;
+                if (cellLineRight.Count + cellLineLeft.Count > 2 ||
+                    cellLineDown.Count + cellLineUp.Count > 2) {
+                    test = true;
+                }
 
                 Line5();
                 Line4();
@@ -934,9 +950,9 @@ public class GameFieldCTRL : MonoBehaviour
                     swap.second.cellInternal.Activate(CellInternalObject.Type.airplane, swap.first.cellInternal, comb);
                 }
 
-                //Бомба + что-то
-                else if (swap.first.cellInternal.type == CellInternalObject.Type.bomb ||
-                    swap.second.cellInternal.type == CellInternalObject.Type.bomb)
+                //Бомба + что-то но не цвет
+                else if ((swap.first.cellInternal.type == CellInternalObject.Type.bomb && swap.second.cellInternal.type != CellInternalObject.Type.color) ||
+                    (swap.second.cellInternal.type == CellInternalObject.Type.bomb && swap.first.cellInternal.type != CellInternalObject.Type.color))
                 {
 
                     if (swap.first.cellInternal.type == CellInternalObject.Type.bomb)
@@ -1016,6 +1032,8 @@ public class GameFieldCTRL : MonoBehaviour
                     //Если нашли панель
                     if (cell.panel)
                         comb.foundPanel = true;
+                    if (cell.mold > 0)
+                        comb.foundMold = true;
                 }
 
 
@@ -1050,11 +1068,11 @@ public class GameFieldCTRL : MonoBehaviour
                             if (swap.first == c || swap.second == c)
                             {
 
-                                Gameplay.main.MinusMoving();
+                                Gameplay.main.MinusMoving(comb);
 
                                 //Запомнить  партнера по перемещениям
-                                if (swap.first != c) partner = c.cellInternal;
-                                else if (swap.second != c) partner = c.cellInternal;
+                                //if (swap.first != c) partner = c.cellInternal;
+                                //else if (swap.second != c) partner = c.cellInternal;
 
                                 continue;
                             }
@@ -1073,36 +1091,107 @@ public class GameFieldCTRL : MonoBehaviour
                     //если линия из 5
                     if (comb.line5)
                     {
-                        //Создаем супер цветовую боббу
-                        CreateSuperColor(CellSpawn, color);
+                        //Создаем супер цветовую бомбу
+                        CreateSuperColor(CellSpawn, color, comb.ID);
                     }
                     //Если крест
                     else if (comb.cross)
                     {
                         //Создаем бомбу
-                        CreateBomb(CellSpawn, color);
+                        CreateBomb(CellSpawn, color, comb.ID);
                     }
                     //Если горизонтальная из 4
                     else if (comb.line4 && comb.horizontal)
                     {
-                        CreateRocketVertical(CellSpawn, color);
+                        CreateRocketVertical(CellSpawn, color, comb.ID);
                     }
                     //Если вертикальная из 3
                     else if (comb.line4 && comb.vertical)
                     {
-                        CreateRocketHorizontal(CellSpawn, color);
+                        CreateRocketHorizontal(CellSpawn, color, comb.ID);
                     }
                     //Если квадрат
                     else if (comb.square)
                     {
                         //нечто летающее
-                        CreateFly(CellSpawn, color);
+                        CreateFly(CellSpawn, color, comb.ID);
                     }
 
                     //Комбинация завершена повышаем комбо
                     ComboCount++;
                 }
             }
+
+        }
+        
+        //Уничтожить повторяющиеся комбинации
+        void DestroyDuplicateCombinations() {
+
+            //Если списка нет сразу выходим
+            if (listCombinations.Count == 0) return;
+
+
+            //список комбинаций на удаление из списка так как повтряющиеся
+            List<Combination> listCombinationsDelete = new List<Combination>();
+
+            //Перебираем текущие комбинации в поисках совпадений
+            foreach (Combination combinationFirst in listCombinations) {
+
+                foreach (Combination combinationSecond in listCombinations)
+                {
+                    //переключаемся если это таже самая комбинация
+                    if (combinationFirst == combinationSecond) continue;
+
+
+                    bool foundIdenticalCells = false;
+                    //Перебираем ячейки здесь и там в поисках совпадения
+                    foreach (CellCTRL cell in combinationFirst.cells) {
+                        if (foundIdenticalCells) break;
+                        foreach (CellCTRL cellNew in combinationSecond.cells) {
+                            //Если ячейка из прошлого списка совпадает с ячейкой из другого
+                            if (cell == cellNew) {
+                                //То это значит что это должна была быть одна комбинация но она разделилась
+                                foundIdenticalCells = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    //Если было найденно ячеистое совпадение
+                    if (foundIdenticalCells)
+                    {
+                        //Если в первой ячеек меньше добавляем на удаление
+                        if (combinationFirst.cells.Count < combinationSecond.cells.Count)
+                        {
+                            listCombinationsDelete.Add(combinationFirst);
+                        }
+                        //Если во второй ячеек меньше, добавляем ее на удаление
+                        else if(combinationFirst.cells.Count > combinationSecond.cells.Count) {
+                            listCombinationsDelete.Add(combinationSecond);
+                        }
+                    }
+                }
+            }
+
+            //Создаем новый список ячеек и заполняем только комбинациями без повторений
+            List<Combination> combinationsNew = new List<Combination>();
+            foreach (Combination combTest in listCombinations) {
+                bool needAdd = true;
+                foreach (Combination combIgnore in listCombinationsDelete) {
+                    //Если это комбинация которой нужно избежать
+                    if (combTest == combIgnore) {
+                        needAdd = false;
+                        break;
+                    }
+                }
+
+                //Добавляем если можно
+                if (needAdd) combinationsNew.Add(combTest);
+
+            }
+
+            //Заменяем старый лист новым
+            listCombinations = combinationsNew;
 
         }
 
@@ -1112,7 +1201,7 @@ public class GameFieldCTRL : MonoBehaviour
     /// <summary>
     /// Создать бомбу на месте другой ячейки
     /// </summary>
-    public void CreateBomb(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
+    public void CreateBomb(CellCTRL cellLast, CellInternalObject.InternalColor internalColor, int combID)
     {
         if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
@@ -1120,14 +1209,14 @@ public class GameFieldCTRL : MonoBehaviour
         CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
         cellLast.timeAddInternalOld = Time.unscaledTime;
 
-        cellInternal.IniBomb(cellLast, this, internalColor);
+        cellInternal.IniBomb(cellLast, this, internalColor, combID);
 
 
     }
     /// <summary>
     /// Создать самолет на месте другой ячейки
     /// </summary>
-    public void CreateFly(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
+    public void CreateFly(CellCTRL cellLast, CellInternalObject.InternalColor internalColor, int combID)
     {
         if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
@@ -1135,14 +1224,14 @@ public class GameFieldCTRL : MonoBehaviour
         CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
         cellLast.timeAddInternalOld = Time.unscaledTime;
 
-        cellInternal.IniFly(cellLast, this, internalColor);
+        cellInternal.IniFly(cellLast, this, internalColor, combID);
 
 
     }
     /// <summary>
     /// Создать СуперЦветовую на месте другой ячейки
     /// </summary>
-    public void CreateSuperColor(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
+    public void CreateSuperColor(CellCTRL cellLast, CellInternalObject.InternalColor internalColor, int combID)
     {
         if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
@@ -1150,14 +1239,14 @@ public class GameFieldCTRL : MonoBehaviour
         CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
         cellLast.timeAddInternalOld = Time.unscaledTime;
 
-        cellInternal.IniSuperColor(cellLast, this, internalColor);
+        cellInternal.IniSuperColor(cellLast, this, internalColor, combID);
 
 
     }
     /// <summary>
     /// Создать вертикальную ракету на месте другой ячейки
     /// </summary>
-    public void CreateRocketVertical(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
+    public void CreateRocketVertical(CellCTRL cellLast, CellInternalObject.InternalColor internalColor, int combID)
     {
         if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
@@ -1165,13 +1254,13 @@ public class GameFieldCTRL : MonoBehaviour
         CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
         cellLast.timeAddInternalOld = Time.unscaledTime;
 
-        cellInternal.IniRocketVertical(cellLast, this, internalColor);
+        cellInternal.IniRocketVertical(cellLast, this, internalColor, combID);
 
     }
     /// <summary>
     /// Создать горизонтальную ракету на месте другой ячейки
     /// </summary>
-    public void CreateRocketHorizontal(CellCTRL cellLast, CellInternalObject.InternalColor internalColor)
+    public void CreateRocketHorizontal(CellCTRL cellLast, CellInternalObject.InternalColor internalColor, int combID)
     {
         if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
@@ -1179,7 +1268,7 @@ public class GameFieldCTRL : MonoBehaviour
         CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
         cellLast.timeAddInternalOld = Time.unscaledTime;
 
-        cellInternal.IniRocketHorizontal(cellLast, this, internalColor);
+        cellInternal.IniRocketHorizontal(cellLast, this, internalColor, combID);
 
     }
 
@@ -1312,9 +1401,20 @@ public class GameFieldCTRL : MonoBehaviour
     }
 
     int lastStepCount = 0;
+    float lastTime = 0;
     //Если количетсво ходов изменилось
-    void TestStepsCount() {
-        if (Gameplay.main.movingCount <= lastStepCount) {
+    void TestMold() {
+
+        if (Gameplay.main.movingMoldCount <= lastStepCount || //если количество ходов игрока меньше чем сделала плесень
+            Gameplay.main.combo > 0 || //Если идет набор комбинации и ход не закончен
+            isMoving
+            ) {
+            lastTime = Time.unscaledTime; //Запоминаем последнее пропущенное время
+            return;
+        }
+
+        //Если ожидание меньше секунды выходим
+        if (Time.unscaledTime - lastTime < 0.5f) {
             return;
         }
 

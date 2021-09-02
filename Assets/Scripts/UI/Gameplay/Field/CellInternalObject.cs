@@ -13,6 +13,7 @@ public class CellInternalObject : MonoBehaviour
     public GameFieldCTRL myField;
     //Моя ячейка
     public CellCTRL myCell;
+    public int MyCombID = 0;
 
 
     RectTransform rectMy;
@@ -585,6 +586,10 @@ public class CellInternalObject : MonoBehaviour
     public GameFieldCTRL.Combination BufferCombination = null;
     public void Activate(Type ActivateType, CellInternalObject partner, GameFieldCTRL.Combination combination) {
 
+        //Активация срабатывает только если это не таже самая комбинация которой был созданн этот объект
+        if (combination != null &&
+            combination.ID == MyCombID) return;
+
         activateNeed = true;
         BufferActivateType = ActivateType;
         BufferPartner = partner;
@@ -1119,10 +1124,11 @@ public class CellInternalObject : MonoBehaviour
         }
     }
 
-    public void IniBomb(CellCTRL myCellNew, GameFieldCTRL gameField ,InternalColor internalColor) {
+    public void IniBomb(CellCTRL myCellNew, GameFieldCTRL gameField ,InternalColor internalColor, int myCombIDFunc) {
 
         myCell = myCellNew;
         myField = gameField;
+        MyCombID = myCombIDFunc;
         setColor(internalColor);
 
         myCell.cellInternal = this;
@@ -1135,11 +1141,12 @@ public class CellInternalObject : MonoBehaviour
         myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
     }
 
-    public void IniFly(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor)
+    public void IniFly(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor, int myCombIDFunc)
     {
 
         myCell = myCellNew;
         myField = gameField;
+        MyCombID = myCombIDFunc;
         setColor(internalColor);
 
         myCell.cellInternal = this;
@@ -1150,11 +1157,12 @@ public class CellInternalObject : MonoBehaviour
         Image.texture = TextureFly;
     }
 
-    public void IniSuperColor(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor)
+    public void IniSuperColor(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor, int myCombIDFunc)
     {
 
         myCell = myCellNew;
         myField = gameField;
+        MyCombID = myCombIDFunc;
         setColor(internalColor);
 
         myCell.cellInternal = this;
@@ -1166,11 +1174,12 @@ public class CellInternalObject : MonoBehaviour
         myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
     }
 
-    public void IniRocketVertical(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor)
+    public void IniRocketVertical(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor, int myCombIDFunc)
     {
 
         myCell = myCellNew;
         myField = gameField;
+        MyCombID = myCombIDFunc;
         setColor(internalColor);
 
         myCell.cellInternal = this;
@@ -1181,11 +1190,12 @@ public class CellInternalObject : MonoBehaviour
         Image.texture = TextureRocketVertical;
         myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
     }
-    public void IniRocketHorizontal(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor)
+    public void IniRocketHorizontal(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor, int myCombIDFunc)
     {
 
         myCell = myCellNew;
         myField = gameField;
+        MyCombID = myCombIDFunc;
         setColor(internalColor);
 
         myCell.cellInternal = this;
