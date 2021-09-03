@@ -223,7 +223,7 @@ public class CellInternalObject : MonoBehaviour
                 myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY] && //Если есть ячейка
                 !myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].cellInternal && //И она свободна
                 myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].BlockingMove == 0 && //И можно двигаться
-                Time.unscaledTime - myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].timeBoomOld > 0.25f) //Совзрыва прошла секунда                                                                 )
+                Time.unscaledTime - myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].timeBoomOld > 0.35f) //Совзрыва прошла секунда                                                                 )
             {
                 //Ставим такую ячейку как нижнюю
                 returnCell = myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY];
@@ -434,6 +434,28 @@ public class CellInternalObject : MonoBehaviour
                 Image.color = violet;
             }
         }
+        else {
+            if (color == InternalColor.Red)
+            {
+                Image.color = red;
+            }
+            else if (color == InternalColor.Green)
+            {
+                Image.color = green;
+            }
+            else if (color == InternalColor.Blue)
+            {
+                Image.color = blue;
+            }
+            else if (color == InternalColor.Yellow)
+            {
+                Image.color = yellow;
+            }
+            else if (color == InternalColor.Violet)
+            {
+                Image.color = violet;
+            }
+        }
     }
     public void setColor(InternalColor internalColor) {
         if (type == Type.color)
@@ -576,8 +598,11 @@ public class CellInternalObject : MonoBehaviour
 
     //Активируем врутренность ячейки
     bool activate = false;
+    public int activateNum = 1;
     bool activateNeed = false;
+
     public bool needInstantDamage = true;
+    public int BoombRadius = 1;
 
 
 
@@ -588,7 +613,11 @@ public class CellInternalObject : MonoBehaviour
 
         //Активация срабатывает только если это не таже самая комбинация которой был созданн этот объект
         if (combination != null &&
-            combination.ID == MyCombID) return;
+            combination.ID == MyCombID &&
+            !isMove //если объект не в движении
+            ) return;
+
+
 
         activateNeed = true;
         BufferActivateType = ActivateType;
@@ -597,8 +626,11 @@ public class CellInternalObject : MonoBehaviour
 
         if (!needInstantDamage)
         {
-            if (isMove || Time.unscaledTime - timeLastMoving < 0.25f) return;
+            if (isMove || Time.unscaledTime - timeLastMoving < 1f) return;
         }
+        //Отключаем мнгновенный урон
+        needInstantDamage = false;
+        timeLastMoving = Time.unscaledTime;
 
         //if (ActivateType == Type.color) return;
 
@@ -606,7 +638,7 @@ public class CellInternalObject : MonoBehaviour
         if (partner == null)
         {
             Debug.Log("Activate");
-            if (ActivateType == Type.bomb) ActivateBomb(1);
+            if (ActivateType == Type.bomb) ActivateBomb(BoombRadius);
             else if (ActivateType == Type.rocketHorizontal) ActivateRocket(true, false);
             else if (ActivateType == Type.rocketVertical) ActivateRocket(false, true);
             else if (ActivateType == Type.supercolor) ActivateSuperColor();
@@ -627,6 +659,8 @@ public class CellInternalObject : MonoBehaviour
             }
             //Бомба + бомба
             else if (ActivateType == Type.bomb && partner.type == Type.bomb) {
+                activateNum = 2;
+                BoombRadius = 2;
                 ActivateBomb(2);
             }
             //ракета + ракета
@@ -642,7 +676,10 @@ public class CellInternalObject : MonoBehaviour
 
         }
 
-        DestroyObj();
+        activateNum--;
+        if (activateNum == 0) {
+            DestroyObj();
+        }
 
         /*
         void ActivateBomb()
@@ -769,8 +806,6 @@ public class CellInternalObject : MonoBehaviour
             //Если партнер бомба, ракета или самолет
             else if (partner != null && 
                 (partner.type == Type.bomb ||
-                partner.type == Type.rocketHorizontal ||
-                partner.type == Type.rocketVertical ||
                 partner.type == Type.airplane)
                 ) {
                 replacementColorAndActivate();
@@ -919,11 +954,20 @@ public class CellInternalObject : MonoBehaviour
                             continue;
                         }
 
+                        float dist = Vector2.Distance(myField.cellCTRLs[x, y].pos, myCell.pos);
+
 
                         if (myField.cellCTRLs[x, y].cellInternal.color == internalColor)
                         {
-                            myField.cellCTRLs[x, y].Damage(partner, combination);
+                            myField.cellCTRLs[x, y].cellInternal.BufferPartner = partner;
+                            myField.cellCTRLs[x, y].cellInternal.BufferCombination = combination;
+                            myField.cellCTRLs[x, y].DamageInvoke(dist * 0.1f);
                         }
+
+                        //Удаляем обьект партнера
+                        if(partner)
+                            Destroy(partner.gameObject);
+
                     }
                 }
 
@@ -945,6 +989,8 @@ public class CellInternalObject : MonoBehaviour
                         //Узнаем растояние от ячейки инициатора
                         float distance = Vector2.Distance(new Vector2(x,y), myCell.pos);
 
+                        myField.cellCTRLs[x, y].cellInternal.BufferPartner = partner;
+                        myField.cellCTRLs[x, y].cellInternal.BufferCombination = combination;
                         myField.cellCTRLs[x, y].DamageInvoke(0.1f * distance);
                     }
                 }

@@ -103,7 +103,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         }
 
         //Создаем панель если плесени нет и нужно создать панель
-        if (combination != null && mold <= 0 && combination.foundPanel && !panel) {
+        if (combination != null && BlockingMove <= 0 && mold <= 0 && combination.foundPanel && !panel) {
             CreatePanel();
         }
 

@@ -290,6 +290,9 @@ public class GameFieldCTRL : MonoBehaviour
                         rect.pivot = new Vector2(-x, -y);
                         cellCTRLs[x, y].BlockingMove = level.cells[x, y].boxHealth;
                         cellCTRLs[x, y].mold = level.cells[x, y].moldHealth;
+                        
+                        if(level.cells[x, y].Panel > 0)
+                            cellCTRLs[x, y].panel = true;
 
                         //рандомизация для тестирования
                         //if (Random.Range(0,100) > 90) {
@@ -554,6 +557,10 @@ public class GameFieldCTRL : MonoBehaviour
         {
             for (int x = 0; x < cellCTRLs.GetLength(0); x++)
             {
+                bool test = false;
+                if (x == 2 && y == 1) {
+                    test = true;
+                }
                 TestCellCombination(cellCTRLs[x, y]);
             }
         }
@@ -568,8 +575,8 @@ public class GameFieldCTRL : MonoBehaviour
         void TestCellCombination(CellCTRL Cell)
         {
 
-            //Выходим если ячейки нет, или нет внутренности, или внутренность в движении, или это просто эффект
-            if (!Cell || !Cell.cellInternal || Cell.cellInternal.isMove)
+            //Выходим если ячейки нет, или нет внутренности, или внутренность в движении, или это кристал, который не должен собираться в комбинации
+            if (!Cell || !Cell.cellInternal || Cell.cellInternal.isMove || Cell.cellInternal.type == CellInternalObject.Type.supercolor)
             {
                 return;
             }
@@ -742,8 +749,8 @@ public class GameFieldCTRL : MonoBehaviour
             void CalcResult()
             {
                 bool test = false;
-                if (cellLineRight.Count + cellLineLeft.Count > 2 ||
-                    cellLineDown.Count + cellLineUp.Count > 2) {
+                if (cellLineRight.Count + cellLineLeft.Count > 1 ||
+                    cellLineDown.Count + cellLineUp.Count > 1) {
                     test = true;
                 }
 
@@ -868,6 +875,10 @@ public class GameFieldCTRL : MonoBehaviour
             //Проверить ячейку на совпадение цвета и возможность добавления в комбинацию
             bool TestCellColor(CellCTRL SecondCell)
             {
+                bool test = false;
+                if (SecondCell && SecondCell.cellInternal != null && SecondCell.cellInternal.type == CellInternalObject.Type.supercolor) {
+                    test = true;
+                }
 
                 //Отмена если
                 if (
@@ -955,13 +966,13 @@ public class GameFieldCTRL : MonoBehaviour
                     (swap.second.cellInternal.type == CellInternalObject.Type.bomb && swap.first.cellInternal.type != CellInternalObject.Type.color))
                 {
 
-                    if (swap.first.cellInternal.type == CellInternalObject.Type.bomb)
+                    if (swap.second.cellInternal.type == CellInternalObject.Type.bomb)
                     {
-                        swap.first.cellInternal.Activate(CellInternalObject.Type.bomb, swap.second.cellInternal, comb);
+                        swap.second.cellInternal.Activate(CellInternalObject.Type.bomb, swap.first.cellInternal, comb);
                     }
                     else
                     {
-                        swap.second.cellInternal.Activate(CellInternalObject.Type.bomb, swap.first.cellInternal, comb);
+                        swap.second.cellInternal.Activate(CellInternalObject.Type.bomb, swap.second.cellInternal, comb);
                     }
                 }
 
@@ -1060,11 +1071,13 @@ public class GameFieldCTRL : MonoBehaviour
                     }
                     //Нанести урон
                     void SetDamage() {
+
                         CellInternalObject partner = null;
                         //Отнимаем ход если комбинация получилась благодаря перемещениям игрока
                         List<Swap> BufferSwapNew = new List<Swap>();
                         foreach (Swap swap in BufferSwap)
                         {
+                            //Если комбинация получилась благодаря перемещению игрока
                             if (swap.first == c || swap.second == c)
                             {
 
@@ -1208,6 +1221,7 @@ public class GameFieldCTRL : MonoBehaviour
         GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
         CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
         cellLast.timeAddInternalOld = Time.unscaledTime;
+        cellInternal.activateNum = 2;
 
         cellInternal.IniBomb(cellLast, this, internalColor, combID);
 
