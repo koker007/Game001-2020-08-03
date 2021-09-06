@@ -276,10 +276,12 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     }
     public void OnPointerEnter(PointerEventData eventData) {
 
-        if (CellClickOld != this && CellEnterOld != this) {
-            myField.SetSelectCell(this);
+        if (Input.GetMouseButton(0)) {
+            if (CellClickOld != this && CellEnterOld != this) {
+                myField.SetSelectCell(this);
+            }
+            CellEnterOld = this;
         }
-        CellEnterOld = this;
     }
     public void OnPointerUp( PointerEventData eventData)
     {

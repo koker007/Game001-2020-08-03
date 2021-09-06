@@ -221,6 +221,8 @@ public class FlyCTRL : MonoBehaviour
                 //Если партнер самолета была бомба
                 if (partnerType == CellInternalObject.Type.bomb) {
                     myField.CreateBomb(CellTarget, CellInternalObject.InternalColor.Red, 0);
+                    CellTarget.cellInternal.activateNum = 1; //бомба с самолета активируется всего 1 раз
+                    CellTarget.cellInternal.activateCount = 2;
                     CellTarget.Damage();
                 }
                 //Если партнер самолета была ракета горизонтальная

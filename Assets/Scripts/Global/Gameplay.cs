@@ -67,6 +67,7 @@ public class Gameplay : MonoBehaviour
         score = 0;
         boxCount = LevelsScript.main.ReturnLevel().NeedBox;
         movingCount = 0;
+        movingMoldCount = 0;
         moldCount = LevelsScript.main.ReturnLevel().NeedMold;
         movingCan = LevelsScript.main.ReturnLevel().Move;
         CountStars(ref stars);
@@ -106,8 +107,10 @@ public class Gameplay : MonoBehaviour
 
     public void CheckEndGame()
     {
+        //Если есть ходы, идет игра, и игра не закончена
         if (movingCan <= 0 && isGameplay && GameplayEnd == false)
         {
+            //Если
             LevelsScript.Level level = LevelsScript.main.ReturnLevel();
             if (level.PassedWitScore && score >= level.NeedScore || !level.PassedWitScore)
             {

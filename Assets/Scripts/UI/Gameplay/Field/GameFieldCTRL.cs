@@ -258,6 +258,8 @@ public class GameFieldCTRL : MonoBehaviour
             cellCTRLs = new CellCTRL[level.Width, level.Height];
             cellsPriority = new CellCTRL[cellCTRLs.GetLength(0) * cellCTRLs.GetLength(1)];
 
+            Gameplay.main.colors = level.NumColors;
+
             for (int x = 0; x < cellCTRLs.GetLength(0); x++)
             {
                 for (int y = 0; y < cellCTRLs.GetLength(1); y++)
@@ -338,17 +340,36 @@ public class GameFieldCTRL : MonoBehaviour
                     if (cellCTRLs[x, y].BlockingMove == 0 //Если нету ящика
                         )
                     {
-                        //Создаем объект и перемещаем
-                        GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
-                        CellInternalObject internalCtrl = internalObj.GetComponent<CellInternalObject>();
-                        internalCtrl.myField = this;
-                        internalCtrl.StartMove(cellCTRLs[x, y]);
-                        internalCtrl.EndMove();
+                        if (level.cells[x, y].typeCell == CellInternalObject.Type.color) {
+                            //Создаем объект и перемещаем
+                            GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
+                            CellInternalObject internalCtrl = internalObj.GetComponent<CellInternalObject>();
+                            internalCtrl.myField = this;
+                            internalCtrl.StartMove(cellCTRLs[x, y]);
+                            internalCtrl.EndMove();
 
-                        //Меняем тип объекта
-                        internalCtrl.setColorAndType(cellInfo.colorCell, level.cells[x,y].typeCell);
-                        internalCtrl.color = cellInfo.colorCell;
+                            //Меняем тип объекта
+                            internalCtrl.setColorAndType(cellInfo.colorCell, level.cells[x, y].typeCell);
 
+                            internalCtrl.color = cellInfo.colorCell;
+
+                        }
+                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.airplane) {
+                            CreateFly(cellCTRLs[x, y], cellInfo.colorCell, 0);
+                        }
+                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.bomb) {
+                            CreateBomb(cellCTRLs[x, y], cellInfo.colorCell, 0);
+                        }
+                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.rocketHorizontal) {
+                            CreateRocketHorizontal(cellCTRLs[x, y], cellInfo.colorCell, 0);
+                        }
+                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.rocketVertical) {
+                            CreateRocketVertical(cellCTRLs[x, y], cellInfo.colorCell, 0);
+                        }
+                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.supercolor) {
+                            CreateSuperColor(cellCTRLs[x, y], cellInfo.colorCell, 0);
+                        }
+                        
                     }
 
                     //Перерасчет приоритера
@@ -972,7 +993,7 @@ public class GameFieldCTRL : MonoBehaviour
                     }
                     else
                     {
-                        swap.second.cellInternal.Activate(CellInternalObject.Type.bomb, swap.second.cellInternal, comb);
+                        swap.second.cellInternal.Activate(CellInternalObject.Type.rocketHorizontal, swap.first.cellInternal, comb);
                     }
                 }
 
@@ -1026,7 +1047,13 @@ public class GameFieldCTRL : MonoBehaviour
 
                 //Перебираем все ячейки чтобы получить общую информацию об комбинации
                 foreach (CellCTRL cell in comb.cells) {
-                    if (CellSpawn.myInternalNum < cell.myInternalNum) {
+
+                    //Выбираем текущую ячейку как место для спавна, выбираем среди цветом потому что эти ячейки исчезнут 100%
+                    //Если последняя выбранная ячейка не типа цвет
+                    //Или
+                    //Если номер проверяемой ячейки больще чем выбранной и тип ячейки цвет
+                    if ((CellSpawn.cellInternal.type != CellInternalObject.Type.color && cell.cellInternal.type == CellInternalObject.Type.color) ||
+                        (CellSpawn.myInternalNum < cell.myInternalNum && cell.cellInternal.type == CellInternalObject.Type.color)) {
                         CellSpawn = cell;
 
                         if (cell.cellInternal) {
@@ -1221,7 +1248,6 @@ public class GameFieldCTRL : MonoBehaviour
         GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
         CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
         cellLast.timeAddInternalOld = Time.unscaledTime;
-        cellInternal.activateNum = 2;
 
         cellInternal.IniBomb(cellLast, this, internalColor, combID);
 

@@ -9,6 +9,11 @@ using UnityEngine.UI;
 /// </summary>
 public class CellInternalObject : MonoBehaviour
 {
+    [SerializeField]
+    Animator animatorMove;
+    [SerializeField]
+    Animator animatorExplose;
+
     //мое поле
     public GameFieldCTRL myField;
     //Моя ячейка
@@ -194,6 +199,8 @@ public class CellInternalObject : MonoBehaviour
                     //Движение окончено
                     isMove = false;
                     myCell.CalcMyPriority();
+                    //Запустить анимацию остановки
+                    AnimationDroppedDown(true);
                 }
             }
 
@@ -599,6 +606,7 @@ public class CellInternalObject : MonoBehaviour
     //Активируем врутренность ячейки
     bool activate = false;
     public int activateNum = 1;
+    public int activateCount = 0;
     bool activateNeed = false;
 
     public bool needInstantDamage = true;
@@ -618,8 +626,13 @@ public class CellInternalObject : MonoBehaviour
             ) return;
 
 
-
         activateNeed = true;
+        activateCount++;
+        if (activateCount == 1 && ActivateType == Type.bomb &&
+            (partner == null || (partner.type != Type.rocketHorizontal && partner.type != Type.rocketVertical))) {
+            activateNum = 2;
+        }
+
         BufferActivateType = ActivateType;
         BufferPartner = partner;
         BufferCombination = combination;
@@ -631,6 +644,7 @@ public class CellInternalObject : MonoBehaviour
         //Отключаем мнгновенный урон
         needInstantDamage = false;
         timeLastMoving = Time.unscaledTime;
+
 
         //if (ActivateType == Type.color) return;
 
@@ -659,8 +673,6 @@ public class CellInternalObject : MonoBehaviour
             }
             //Бомба + бомба
             else if (ActivateType == Type.bomb && partner.type == Type.bomb) {
-                activateNum = 2;
-                BoombRadius = 2;
                 ActivateBomb(2);
             }
             //ракета + ракета
@@ -677,45 +689,11 @@ public class CellInternalObject : MonoBehaviour
         }
 
         activateNum--;
-        if (activateNum == 0) {
+        if (activateNum <= 0) {
             DestroyObj();
         }
 
-        /*
-        void ActivateBomb()
-        {
 
-            Debug.Log("ActivateBomb");
-
-            //Активируем только если бомба еще не активна
-            if (activate) return;
-
-            activate = true;
-
-            int sizeMax = 1;
-            //проверяем по x
-            for (int x = -sizeMax; x <= sizeMax; x++)
-            {
-                //Если вышли за пределы массива
-                if (myCell.pos.x + x < 0 || myCell.pos.x + x >= myField.cellCTRLs.GetLength(0)) continue;
-
-                //проверяем по y
-                for (int y = -sizeMax; y <= sizeMax; y++)
-                {
-                    //Если крайние
-                    //if((Mathf.Abs(x)+Mathf.Abs(y)) == sizeMax*2) continue;
-
-                    //Если вышли за пределы массива
-                    if (myCell.pos.y + y < 0 || myCell.pos.y + y >= myField.cellCTRLs.GetLength(1)) continue;
-                    //Если нету ячейки или внутренности
-                    if (!myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y] || !myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].cellInternal) continue;
-
-                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].Damage(this, combination, false);
-
-                }
-            }
-        }
-        */
 
         void ActivateRocket(bool horizontal, bool vertical)
         {
@@ -1010,6 +988,7 @@ public class CellInternalObject : MonoBehaviour
             //Берем позицию бомбы
             Vector2Int pos = myCell.pos;
 
+
             bool[,] activated = new bool[myField.cellCTRLs.GetLength(0), myField.cellCTRLs.GetLength(1)];
             //перебираем все ячейки на карте
             for (int x = 0; x < myField.cellCTRLs.GetLength(0); x++)
@@ -1040,9 +1019,15 @@ public class CellInternalObject : MonoBehaviour
                     myField.cellCTRLs[x, y].DamageInvoke(time);
                 }
             }
+
+            Destroy(gameObject);
         }
 
         void ActivateBomb(int radius) {
+
+            AnimationBombActivated();
+
+            BoombRadius = radius;
 
             //Удаляем партнера
             if (partner)
@@ -1098,6 +1083,10 @@ public class CellInternalObject : MonoBehaviour
                 //ищем ячейку к которой еще никто не летит
                 foreach (CellCTRL cellPriority in myField.cellsPriority)
                 {
+                    if (cellPriority == myCell) { 
+                        continue; 
+                    }
+
                     //Если нашли эту ячейку в списке целей то завершаем перебор и переключаемся далее
                     bool found = false;
                     foreach (FlyCTRL fly in FlyCTRL.flyCTRLs)
@@ -1251,5 +1240,34 @@ public class CellInternalObject : MonoBehaviour
         color = internalColor;
         Image.texture = TextureRocketHorizontal;
         myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
+    }
+
+
+    void AnimationDroppedDown(bool dropped) {
+        animatorMove.SetBool("DroppedDown" , dropped);
+    }
+    public void StopAnimationDroppedDown() {
+        AnimationDroppedDown(false);
+    }
+
+    void AnimationDroppedLeft(bool dropped) {
+        animatorMove.SetBool("DroppedLeft", dropped);
+    }
+    public void StopAnimationDroppedLeft()
+    {
+        AnimationDroppedLeft(false);
+    }
+
+    void AnimationDroppedRight(bool dropped) {
+        animatorMove.SetBool("DroppedRight", dropped);
+    }
+    public void StopAnimationDroppedRight()
+    {
+        AnimationDroppedRight(false);
+    }
+
+
+    public void AnimationBombActivated() {
+        animatorExplose.SetBool("ActiveBomb", true);
     }
 }

@@ -68,8 +68,8 @@ public class MenuGameplay : MonoBehaviour
 
     void startButtons()
     {
-        PanelDown.pivot = new Vector2(PanelDown.pivot.x, -3);
-        PanelUp.pivot = new Vector2(PanelUp.pivot.x, 3);
+        PanelDown.pivot = new Vector2(PanelDown.pivot.x, 3);
+        PanelUp.pivot = new Vector2(PanelUp.pivot.x, -3);
     }
 
     void updateButtons()
@@ -80,10 +80,14 @@ public class MenuGameplay : MonoBehaviour
         {
             float downY = PanelDown.pivot.y;
             downY += (0 - downY) * Time.unscaledDeltaTime * 4;
+            if (downY < 0) downY = 0;
+
             PanelDown.pivot = new Vector2(PanelDown.pivot.x, downY);
 
             float upY = PanelUp.pivot.y;
             upY += (1 - upY) * Time.unscaledDeltaTime * 4;
+            if (upY > 1) upY = 1; 
+
             PanelUp.pivot = new Vector2(PanelUp.pivot.x, upY);
         }
     }
