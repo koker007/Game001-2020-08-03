@@ -229,7 +229,8 @@ public class CellInternalObject : MonoBehaviour
             if (myCell.pos.y - minusY >= 0 && //если не вышли за массив
                 myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY] && //Если есть ячейка
                 !myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].cellInternal && //И она свободна
-                myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].BlockingMove == 0 && //И можно двигаться
+                myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].BlockingMove == 0 && //И нет яшика
+                myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].rock == 0 && //и нет камня
                 Time.unscaledTime - myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].timeBoomOld > 0.35f) //Совзрыва прошла секунда                                                                 )
             {
                 //Ставим такую ячейку как нижнюю
@@ -263,7 +264,8 @@ public class CellInternalObject : MonoBehaviour
                     myCell.pos.x + smeshenie < myField.cellCTRLs.GetLength(0) && //если не вышли за массив
                     myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie] && //Если есть ячейка
                     !myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].cellInternal && //И она свободна
-                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].BlockingMove == 0 && //И можно двигаться
+                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].BlockingMove == 0 && //и нет ящика
+                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].rock == 0 && //и нет камня
                     Time.unscaledTime - myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.25f &&
                     isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie]) //В этом столбце нет потенциального вертикального движения
                     ) {
@@ -276,6 +278,7 @@ public class CellInternalObject : MonoBehaviour
                     myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie] && //Если есть ячейка
                     !myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].cellInternal && //И она свободна
                     myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].BlockingMove == 0 && //И можно двигаться
+                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].rock == 0 && //и нет камня
                     Time.unscaledTime - myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.25f &&
                     isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie]) //В этом столбце нет потенциального вертикального движения
                     ) {
@@ -295,7 +298,8 @@ public class CellInternalObject : MonoBehaviour
             for (int minus = 0; minus < myField.cellCTRLs.GetLength(1) && result; minus++) {
                 if (cellFunc.pos.y - minus >= 0 &&//Если не вышли за пределы массива
                     myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus] && //есть ячейка
-                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].BlockingMove <= 0//ячейка находится без блокировки движения
+                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].BlockingMove <= 0 &&//ячейка находится без блокировки движения
+                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].rock <= 0
                     ) {
                     //Блокируем если
                     if (
@@ -317,8 +321,8 @@ public class CellInternalObject : MonoBehaviour
                 if (
                     cellFunc.pos.y + plus < myField.cellCTRLs.GetLength(1) &&//Если не вышли за пределы массива
                     myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus] && //есть ячейка
-                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus].BlockingMove <= 0//ячейка находится без блокировки движения
-
+                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus].BlockingMove <= 0 &&//ячейка находится без блокировки движения
+                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus].rock <= 0
                     )
                 {
                     //Блокируем если
@@ -711,58 +715,26 @@ public class CellInternalObject : MonoBehaviour
                 partner.DestroyObj();
             }
 
-            //Горизонтальный запуск
-            if (horizontal)
-            {
-                //Номер проверки
-                for (int num = 1; num <= myField.cellCTRLs.GetLength(0); num++)
-                {
-                    float time = num *0.05f;
-
-                    //Слева
-                    if (myCell.pos.x - num >= 0 &&
-                        myField.cellCTRLs[myCell.pos.x - num, myCell.pos.y])
-                    {
-                        myField.cellCTRLs[myCell.pos.x - num, myCell.pos.y].BufferCombination = combination;
-                        myField.cellCTRLs[myCell.pos.x - num, myCell.pos.y].BufferNearDamage = false;
-                        myField.cellCTRLs[myCell.pos.x - num, myCell.pos.y].DamageInvoke(time);
-                    }
-
-                    //Справа
-                    if (myCell.pos.x + num < myField.cellCTRLs.GetLength(0) &&
-                        myField.cellCTRLs[myCell.pos.x + num, myCell.pos.y])
-                    {
-                        myField.cellCTRLs[myCell.pos.x + num, myCell.pos.y].BufferCombination = combination;
-                        myField.cellCTRLs[myCell.pos.x + num, myCell.pos.y].BufferNearDamage = false;
-                        myField.cellCTRLs[myCell.pos.x + num, myCell.pos.y].DamageInvoke(time);
-                    }
-                }
+            //во все стороны
+            if (horizontal && vertical) {
+                myCell.explosion = new CellCTRL.Explosion(true, true, true, true, 0.05f, BufferCombination);
+                myCell.BufferCombination = combination;
+                myCell.BufferNearDamage = false;
+                myCell.ExplosionBoomInvoke(myCell.explosion);
             }
-            //Вертикальный запуск
-            if(vertical) {
-                //Номер проверки
-                for (int num = 1; num <= myField.cellCTRLs.GetLength(1); num++)
-                {
-                    float time = num * 0.05f;
-
-                    //Вниз
-                    if (myCell.pos.y - num >= 0 && 
-                        myField.cellCTRLs[myCell.pos.x, myCell.pos.y - num])
-                    {
-                        myField.cellCTRLs[myCell.pos.x, myCell.pos.y - num].BufferCombination = combination;
-                        myField.cellCTRLs[myCell.pos.x, myCell.pos.y - num].BufferNearDamage = false;
-                        myField.cellCTRLs[myCell.pos.x, myCell.pos.y - num].DamageInvoke(time);
-                    }
-
-                    //вверх
-                    if (myCell.pos.y + num < myField.cellCTRLs.GetLength(1) && 
-                        myField.cellCTRLs[myCell.pos.x, myCell.pos.y + num])
-                    {
-                        myField.cellCTRLs[myCell.pos.x, myCell.pos.y + num].BufferCombination = combination;
-                        myField.cellCTRLs[myCell.pos.x, myCell.pos.y + num].BufferNearDamage = false;
-                        myField.cellCTRLs[myCell.pos.x, myCell.pos.y + num].DamageInvoke(time);
-                    }
-                }
+            //горизонтальный
+            else if (horizontal) {
+                myCell.explosion = new CellCTRL.Explosion(true, true, false, false, 0.05f, BufferCombination);
+                myCell.BufferCombination = combination;
+                myCell.BufferNearDamage = false;
+                myCell.ExplosionBoomInvoke(myCell.explosion);
+            }
+            //вертикальный
+            else if (vertical) {
+                myCell.explosion = new CellCTRL.Explosion(false, false, true, true, 0.05f, BufferCombination);
+                myCell.BufferCombination = combination;
+                myCell.BufferNearDamage = false;
+                myCell.ExplosionBoomInvoke(myCell.explosion);
             }
 
         }
@@ -990,6 +962,34 @@ public class CellInternalObject : MonoBehaviour
 
 
             bool[,] activated = new bool[myField.cellCTRLs.GetLength(0), myField.cellCTRLs.GetLength(1)];
+
+            //перебираем 9 ячеек
+            for (int x = -1; x <= 1; x++) {
+                if (myCell.pos.x + x < 0 || myCell.pos.x > myField.cellCTRLs.GetLength(0) - 1)
+                    continue;
+
+                for (int y = -1; y <= 1; y++) {
+                    //Если вышли за пределы смотрим дальше
+                    if (myCell.pos.y + y < 0 || myCell.pos.y > myField.cellCTRLs.GetLength(1) - 1)
+                        continue;
+
+                    //Если этой ячейки нет, смотрим дальше
+                    if (myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y] == null) {
+                        continue;
+                    }
+
+                    //ячейка есть, создаем взрыв
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(true, true, true, true, 0.05f, BufferCombination);
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].BufferCombination = combination;
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].BufferNearDamage = false;
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].ExplosionBoomInvoke(myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion);
+                }
+            }
+
+           
+
+
+            /*
             //перебираем все ячейки на карте
             for (int x = 0; x < myField.cellCTRLs.GetLength(0); x++)
             {
@@ -1019,6 +1019,7 @@ public class CellInternalObject : MonoBehaviour
                     myField.cellCTRLs[x, y].DamageInvoke(time);
                 }
             }
+            */
 
             Destroy(gameObject);
         }

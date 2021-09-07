@@ -34,6 +34,8 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     GameObject prefabBoxBlock;
     [SerializeField]
+    GameObject prefabRock;
+    [SerializeField]
     public GameObject prefabPanel;
     [SerializeField]
     GameObject prefabMold;
@@ -62,6 +64,8 @@ public class GameFieldCTRL : MonoBehaviour
     public Transform parentOfFly;
     [SerializeField]
     public Transform parentOfParticles;
+    [SerializeField]
+    public Transform parentOfRock;
     [SerializeField]
     public Transform parentOfScore;
     [SerializeField]
@@ -155,7 +159,8 @@ public class GameFieldCTRL : MonoBehaviour
                 //смотрим дальше
                 if (!cellCTRLs[x, y] || //Нет ячейки
                     !cellCTRLs[x, y].cellInternal || //Нет внутреннего объекта
-                    cellCTRLs[x, y].BlockingMove > 0 //присутствует коробка
+                    cellCTRLs[x, y].BlockingMove > 0 || //присутствует коробка
+                    cellCTRLs[x, y].rock > 0 //Или есть камень
                     ) continue;
 
                 if (!cellCTRLs[x,y].cellInternal && Time.unscaledTime - cellCTRLs[x, y].timeBoomOld > 0.5f) {
@@ -196,6 +201,11 @@ public class GameFieldCTRL : MonoBehaviour
     /// препятствия движения
     /// </summary>
     public BoxBlockCTRL[,] BoxBlockCTRLs;
+
+    /// <summary>
+    /// контроллеры камня
+    /// </summary>
+    public RockCTRL[,] rockCTRLs;
 
     /// <summary>
     /// Инициализировать игровое поле, на основе данных уровня, или рандомно, если уровня нет
@@ -291,6 +301,7 @@ public class GameFieldCTRL : MonoBehaviour
                         RectTransform rect = cellObj.GetComponent<RectTransform>();
                         rect.pivot = new Vector2(-x, -y);
                         cellCTRLs[x, y].BlockingMove = level.cells[x, y].boxHealth;
+                        cellCTRLs[x, y].rock = 0;
                         cellCTRLs[x, y].mold = level.cells[x, y].moldHealth;
                         
                         if(level.cells[x, y].Panel > 0)
@@ -334,6 +345,14 @@ public class GameFieldCTRL : MonoBehaviour
 
                         //Инициализация плесени
                         cellCTRLs[x, y].panelCTRL.inicialize(cellCTRLs[x, y]);
+                    }
+                    //Нужно ли создать камень
+                    if (cellCTRLs[x, y].rock > 0) {
+                        GameObject rockObj = Instantiate(prefabRock, parentOfRock);
+                        cellCTRLs[x, y].rockCTRL = rockObj.GetComponent<RockCTRL>();
+
+                        //Инициализация камня
+                        cellCTRLs[x, y].rockCTRL.inicialize(cellCTRLs[x, y]);
                     }
 
                     //Создаем подвижные объекты
@@ -479,7 +498,9 @@ public class GameFieldCTRL : MonoBehaviour
             for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
 
                 //Если эта ячейка есть, пустая и без блокировки движения и на ней сейчас нет движения
-                if (cellCTRLs[x,y] && !cellCTRLs[x, y].cellInternal && cellCTRLs[x,y].BlockingMove == 0) {
+                if (cellCTRLs[x,y] && !cellCTRLs[x, y].cellInternal && 
+                    cellCTRLs[x,y].BlockingMove == 0 &&
+                    cellCTRLs[x,y].rock == 0) {
 
                     //Проверяем сверху на то есть ли там что-то что может упасть
                     for (int plusY = 0; plusY <= cellCTRLs.GetLength(1); plusY++) {
@@ -517,7 +538,8 @@ public class GameFieldCTRL : MonoBehaviour
                         //или дошли до несуществующей йчейки, выходим
                         else if (y + plusY < cellCTRLs.GetLength(1) && (
                             !cellCTRLs[x, y + plusY] ||
-                            cellCTRLs[x, y + plusY].BlockingMove > 0
+                            cellCTRLs[x, y + plusY].BlockingMove > 0 ||
+                            cellCTRLs[x, y + plusY].rock > 0
                             ))
                         {
                             break;
@@ -526,7 +548,7 @@ public class GameFieldCTRL : MonoBehaviour
                         //За перемещение ниже отвечает сам перемещаемый объект
 
                         //Если сверху есть ячейка с внутренностью и она не блокирована
-                        else if (cellCTRLs[x, y + plusY].BlockingMove <= 0 && cellCTRLs[x, y + plusY].cellInternal) {
+                        else if (cellCTRLs[x, y + plusY].BlockingMove <= 0 && cellCTRLs[x, y + plusY].cellInternal && cellCTRLs[x, y + plusY].rock <= 0) {
 
                             break;
                         }
@@ -537,6 +559,8 @@ public class GameFieldCTRL : MonoBehaviour
             }
         }
     }
+
+
 
     //Список линий которые взорвались
     List<Combination> listCombinations;
@@ -1365,8 +1389,10 @@ public class GameFieldCTRL : MonoBehaviour
             !CellSwap.cellInternal ||
             CellSelect.cellInternal.isMove || //Если в ячейки происходит движение
             CellSwap.cellInternal.isMove ||
-            CellSelect.BlockingMove > 0 || //Если ячейка заморожена
+            CellSelect.BlockingMove > 0 || //Если в ячейке коробка
             CellSwap.BlockingMove > 0 ||
+            CellSelect.rock > 0 || //Если в ячейке камень
+            CellSwap.rock > 0 ||
             Gameplay.main.movingCan <= 0 //Если есть ходы
             )
         {
@@ -1552,5 +1578,18 @@ public class GameFieldCTRL : MonoBehaviour
         }
     }
 
+    //Проверить ячейку на блокирувку распространения взрыва
+    public bool isBlockingBoomDamage(CellCTRL cell) {
+        bool result = false;
 
+        if (cell == null) return result;
+
+
+        if (cell.BlockingMove > 0 || 
+            cell.rock > 0) {
+            result = true;
+        }
+
+        return result;
+    }
 }

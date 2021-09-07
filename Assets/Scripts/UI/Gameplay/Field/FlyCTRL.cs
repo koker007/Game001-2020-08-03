@@ -214,31 +214,80 @@ public class FlyCTRL : MonoBehaviour
             //Выходим, если уже активировано либо растояние больше чем нужно
             if (Activated || distToTarget >= DistMinForHitTarget) return;
 
-            //Сперва наносим самый обычный урон
-            CellTarget.Damage(null, comb, false);
 
-            if (partnerHave) {
+            if (partnerHave)
+            {
                 //Если партнер самолета была бомба
-                if (partnerType == CellInternalObject.Type.bomb) {
-                    myField.CreateBomb(CellTarget, CellInternalObject.InternalColor.Red, 0);
-                    CellTarget.cellInternal.activateNum = 1; //бомба с самолета активируется всего 1 раз
-                    CellTarget.cellInternal.activateCount = 2;
-                    CellTarget.Damage();
+                if (partnerType == CellInternalObject.Type.bomb)
+                {
+                    BombDamage();
                 }
                 //Если партнер самолета была ракета горизонтальная
-                else if (partnerType == CellInternalObject.Type.rocketHorizontal) {
-                    myField.CreateRocketHorizontal(CellTarget, CellInternalObject.InternalColor.Red, 0);
-                    CellTarget.Damage();
+                else if (partnerType == CellInternalObject.Type.rocketHorizontal)
+                {
+                    //myField.CreateRocketHorizontal(CellTarget, CellInternalObject.InternalColor.Red, 0);
+                    //CellTarget.Damage();
+
+                    CellTarget.explosion = new CellCTRL.Explosion(true, true, false, false, 0.05f, comb);
+                    CellTarget.BufferCombination = comb;
+                    CellTarget.BufferNearDamage = false;
+                    CellTarget.ExplosionBoomInvoke(CellTarget.explosion);
                 }
                 //Если партнер самолета была ракета вертикальная
-                else if (partnerType == CellInternalObject.Type.rocketVertical) {
-                    myField.CreateRocketVertical(CellTarget, CellInternalObject.InternalColor.Red, 0);
-                    CellTarget.Damage();
+                else if (partnerType == CellInternalObject.Type.rocketVertical)
+                {
+                    CellTarget.explosion = new CellCTRL.Explosion(false, false, true, true, 0.05f, comb);
+                    CellTarget.BufferCombination = comb;
+                    CellTarget.BufferNearDamage = false;
+                    CellTarget.ExplosionBoomInvoke(CellTarget.explosion);
+
+                    //myField.CreateRocketVertical(CellTarget, CellInternalObject.InternalColor.Red, 0);
+                    //CellTarget.Damage();
                 }
+            }
+            else {
+                //наносим самый обычный урон
+                CellTarget.Damage(null, comb, false);
             }
 
             Activated = true;
             //ActivatedTime = Time.unscaledTime; //Время активации
+
+            void BombDamage() {
+                //Наносим урон по области 3х3
+
+                CellTarget.explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, comb);
+                CellTarget.BufferCombination = comb;
+                CellTarget.BufferNearDamage = false;
+                CellTarget.ExplosionBoomInvoke(CellTarget.explosion);
+
+                int radius = 1;
+                //Перебираем поле 3 на 3
+                for (int x = -radius; x <= radius; x++)
+                {
+                    for (int y = -radius; y <= radius; y++)
+                    {
+                        int fieldPosX = CellTarget.pos.x + x;
+                        int fieldPosY = CellTarget.pos.y + y;
+                        //Если вышли за пределы карты или этой ячейки нету
+                        if (fieldPosX < 0 || fieldPosX >= myField.cellCTRLs.GetLength(0) ||
+                            fieldPosY < 0 || fieldPosY >= myField.cellCTRLs.GetLength(1) ||
+                            !myField.cellCTRLs[fieldPosX, fieldPosY]
+                            )
+                        {
+                            continue;
+                        }
+
+                        //Считаем время задержки взрыва этой ячейки
+                        float time = Vector2.Distance(new Vector2(), new Vector2(x, y)) * 0.05f;
+                        //
+                        myField.cellCTRLs[fieldPosX, fieldPosY].explosion = new CellCTRL.Explosion(false, false, false, false, time, comb);
+                        myField.cellCTRLs[fieldPosX, fieldPosY].BufferCombination = comb;
+                        myField.cellCTRLs[fieldPosX, fieldPosY].BufferNearDamage = false;
+                        myField.cellCTRLs[fieldPosX, fieldPosY].ExplosionBoomInvoke(CellTarget.explosion);
+                    }
+                }
+            }
         }
 
         void Destroying() {

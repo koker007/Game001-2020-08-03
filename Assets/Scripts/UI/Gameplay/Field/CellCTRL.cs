@@ -46,6 +46,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     public CellInternalObject cellInternal;
     public BoxBlockCTRL BoxBlockCTRL;
     public MoldCTRL moldCTRL;
+    public RockCTRL rockCTRL;
     public PanelSpreadCTRL panelCTRL;
 
     /// <summary>
@@ -56,12 +57,189 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     /// Степень плесени
     /// </summary>
     public int mold;
+    /// <summary>
+    /// Степень камня
+    /// </summary>
+    public int rock;
+
     public bool panel;
     
     public int myInternalNum = 0;
 
     public float timeBoomOld = 0;     //Время последнего взрыва
     public float timeAddInternalOld = 0;     //Время последнего добавления внутренности
+
+    // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Класс распространяющегося взрыва
+    public class Explosion
+    {
+        public bool left = false;
+        public bool right = false;
+        public bool up = false;
+        public bool down = false;
+
+        public GameFieldCTRL.Combination comb;
+        public float timer = 0;
+
+        //Создаем параметры взрыва
+        public Explosion(bool leftf, bool rightf, bool upf, bool downf, float timerF, GameFieldCTRL.Combination combf)
+        {
+            left = leftf;
+            right = rightf;
+            up = upf;
+            down = downf;
+
+            timer = timerF;
+            comb = combf;
+        }
+
+        /// <summary>
+        /// Активировать взрыв это нанесет урон текущей ячейке и удалит взрыв
+        /// </summary>
+        public void Activate(CellCTRL cell) {
+            cell.BufferCombination = comb;
+            cell.BufferNearDamage = false;
+            cell.Damage();
+        }
+    }
+    //Взрыв который ожидает своей активации
+    public Explosion explosion = null;
+
+    void ExplosionBoom() {
+        //ВЫйти если взрыва нет
+        if (explosion == null) return;
+
+        //активируем сам взрыв
+        explosion.Activate(this);
+
+        //Распространяемся на лево
+        if (explosion.left)
+        {
+            for (int minus = 1; minus < myField.cellCTRLs.GetLength(0); minus++) {
+                //Если ячейку нашли
+                if (pos.x - minus >= 0 && myField.cellCTRLs[pos.x - minus, pos.y] != null)
+                {
+
+                    //Если на ячейке есть взрыв, взрываем, удалем
+                    if (myField.cellCTRLs[pos.x - minus, pos.y].explosion != null) {
+                        //Сразу говорим ему взорваться
+                        myField.cellCTRLs[pos.x - minus, pos.y].explosion.Activate(myField.cellCTRLs[pos.x - minus, pos.y]);
+                        myField.cellCTRLs[pos.x - minus, pos.y].explosion = null;
+                    }
+
+                    //Если в ячейке есть стойкий к взрыву предмет
+                    if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x - minus, pos.y])) {
+                        myField.cellCTRLs[pos.x - minus, pos.y].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, explosion.comb));
+                    }
+                    //Иначе просто взрываем с таймером
+                    else
+                        //Создаем взрыв и взрываем с таймером
+                        myField.cellCTRLs[pos.x - minus, pos.y].ExplosionBoomInvoke(new Explosion(true, false, false, false, explosion.timer, explosion.comb));
+
+                    break;
+                }
+            }
+        }
+        //распространяемся на право
+        if (explosion.right)
+        {
+            for (int plus = 1; plus < myField.cellCTRLs.GetLength(0); plus++)
+            {
+                //Если ячейку нашли
+                if (pos.x + plus < myField.cellCTRLs.GetLength(0) && myField.cellCTRLs[pos.x + plus, pos.y] != null)
+                {
+                    //Если на ячейке есть взрыв, взрываем, удалем
+                    if (myField.cellCTRLs[pos.x + plus, pos.y].explosion != null)
+                    {
+                        //Сразу говорим ему взорваться
+                        myField.cellCTRLs[pos.x + plus, pos.y].explosion.Activate(myField.cellCTRLs[pos.x + plus, pos.y]);
+                        myField.cellCTRLs[pos.x + plus, pos.y].explosion = null;
+                    }
+
+                    //Если в ячейке есть стойкий к взрыву предмет
+                    if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x + plus, pos.y]))
+                    {
+                        myField.cellCTRLs[pos.x + plus, pos.y].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, explosion.comb));
+                    }
+                    //Иначе просто взрываем с таймером
+                    else
+                        //Создаем взрыв и взрываем с таймером
+                        myField.cellCTRLs[pos.x + plus, pos.y].ExplosionBoomInvoke(new Explosion(false, true, false, false, explosion.timer, explosion.comb));
+
+                    break;
+                }
+            }
+        }
+        //Распространяемся на верх
+        if (explosion.up)
+        {
+            for (int plus = 1; plus < myField.cellCTRLs.GetLength(0); plus++)
+            {
+                //Если ячейку нашли
+                if (pos.y + plus < myField.cellCTRLs.GetLength(1) && myField.cellCTRLs[pos.x, pos.y + plus] != null)
+                {
+                    //Если на ячейке есть взрыв, взрываем, удалем
+                    if (myField.cellCTRLs[pos.x, pos.y + plus].explosion != null)
+                    {
+                        //Сразу говорим ему взорваться
+                        myField.cellCTRLs[pos.x, pos.y + plus].explosion.Activate(myField.cellCTRLs[pos.x, pos.y + plus]);
+                        myField.cellCTRLs[pos.x, pos.y + plus].explosion = null;
+                    }
+
+                    //Если в ячейке есть стойкий к взрыву предмет
+                    if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x, pos.y + plus]))
+                    {
+                        myField.cellCTRLs[pos.x, pos.y + plus].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, explosion.comb));
+                    }
+                    //Иначе просто взрываем с таймером
+                    else
+                        //Создаем взрыв и взрываем с таймером
+                        myField.cellCTRLs[pos.x, pos.y + plus].ExplosionBoomInvoke(new Explosion(false, false, true, false, explosion.timer, explosion.comb));
+
+                    break;
+                }
+            }
+        }
+        //Распространяемся на вниз
+        if (explosion.down)
+        {
+            for (int minus = 1; minus < myField.cellCTRLs.GetLength(0); minus++)
+            {
+                //Если ячейку нашли
+                if (pos.y - minus >= 0 && myField.cellCTRLs[pos.x, pos.y - minus] != null)
+                {
+                    //Если на ячейке есть взрыв, взрываем, удалем
+                    if (myField.cellCTRLs[pos.x, pos.y - minus].explosion != null)
+                    {
+                        //Сразу говорим ему взорваться
+                        myField.cellCTRLs[pos.x, pos.y - minus].explosion.Activate(myField.cellCTRLs[pos.x, pos.y - minus]);
+                        myField.cellCTRLs[pos.x, pos.y - minus].explosion = null;
+                    }
+
+                    //Если в ячейке есть стойкий к взрыву предмет
+                    if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x, pos.y - minus]))
+                    {
+                        myField.cellCTRLs[pos.x, pos.y - minus].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, explosion.comb));
+                    }
+                    //Иначе просто взрываем с таймером
+                    else
+                        //Создаем взрыв и взрываем с таймером
+                        myField.cellCTRLs[pos.x, pos.y - minus].ExplosionBoomInvoke(new Explosion(false, false, false, true, explosion.timer, explosion.comb));
+
+                    break;
+                }
+            }
+        }
+
+        //Взрыв выполнен
+        explosion = null;
+
+    }
+    public void ExplosionBoomInvoke(Explosion explosionNew) {
+        explosion = explosionNew;
+        Invoke("ExplosionBoom", explosion.timer);
+    }
+    // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void setInternal(CellInternalObject internalObjectNew) {
         cellInternal = internalObjectNew;
@@ -89,30 +267,52 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     public void Damage(CellInternalObject partner, GameFieldCTRL.Combination combination, bool nearDamage)
     {
 
-        if (mold > 0) {
-            mold--;
-        }
-
-        if (cellInternal)
+        //Если камня нету
+        if (rock <= 0)
         {
+            //Если ящика нету
+            if (BlockingMove <= 0)
+            {
 
+                //Если нет плесени
+                if (mold <= 0)
+                {
+                    if (!panel && combination != null && combination.foundPanel) {
+                        CreatePanel();
+                    }
+                }
+                else {
+                    mold--;
+                }
 
-            cellInternal.Activate(cellInternal.type, partner, combination);
-            //Избавляемся
-            //cellInternal.DestroyObj();
+                //Если есть внутренность
+                if (cellInternal)
+                {
+
+                    cellInternal.Activate(cellInternal.type, partner, combination);
+                }
+
+                //наносим соседним ячейкам урон по блокираторам движения
+                if (nearDamage)
+                    DamageNearCells();
+            }
+            else {
+                //Самому себе
+                DamageNear();
+            }
         }
+        else {
+            rock--;
+        }
+        
 
         //Создаем панель если плесени нет и нужно создать панель
         if (combination != null && BlockingMove <= 0 && mold <= 0 && combination.foundPanel && !panel) {
             CreatePanel();
         }
 
-        //наносим соседним ячейкам урон по блокираторам движения
-        if (nearDamage)
-            DamageNearCells();
 
-        //Самому себе
-        DamageNear();
+
 
 
         //Перенасчет приоритета
