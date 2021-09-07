@@ -611,9 +611,12 @@ public class GameFieldCTRL : MonoBehaviour
         }
 
         DestroyDuplicateCombinations();
-        TestDamageAndSpawn();
 
         TestSuperCombination();
+
+        TestDamageAndSpawn();
+
+        //TestSuperCombination();
 
         ///////////////////////////////////////////////////////////////
         //Проверить ячейку на комбинации. вариант 2021.08.18
@@ -1049,6 +1052,7 @@ public class GameFieldCTRL : MonoBehaviour
 
             }
         }
+        
         //Раздать урон комбинациям и заспавнить объекты
         void TestDamageAndSpawn() {
             //Перебираем комбинации
