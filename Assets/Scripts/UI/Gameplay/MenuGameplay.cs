@@ -43,6 +43,7 @@ public class MenuGameplay : MonoBehaviour
 
     private LevelsScript.Level level;
 
+
     private void Awake()
     {
         main = this;
@@ -212,4 +213,32 @@ public class MenuGameplay : MonoBehaviour
     {
         GlobalMessage.ExitLevel();
     }
+
+
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    ///Кнопки платных ударов
+    public enum SuperHitType {
+        none,
+        internalObj,
+        rosket2x,
+        superColor
+    }
+
+    public SuperHitType SuperHitSelected = SuperHitType.none;
+
+    public void ButtonClickDestroyInternal() {
+        SuperHitSelected = SuperHitType.internalObj;
+    }
+    public void ButtonClickRosket() {
+        SuperHitSelected = SuperHitType.rosket2x;
+    }
+    public void ButtonClickSuperColor() {
+        SuperHitSelected = SuperHitType.superColor;
+    }
+    //Конец зоны кнопок платных ударов
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
 }

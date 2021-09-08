@@ -462,6 +462,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1537194983}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1537194983}
@@ -470,8 +474,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ButtonClickRosket
+      objectReference: {fileID: 0}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: clickButtoSettings
+      objectReference: {fileID: 0}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuGameplay, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -7620,6 +7632,9 @@ MonoBehaviour:
   panelCount: 0
   threeStartFactor: 2
   twoStartFactor: 1.5
+  buttonDestroyInternal: 10
+  buttonRosket: 10
+  buttonSuperColor: 10
 --- !u!4 &1319929787
 Transform:
   m_ObjectHideFlags: 0
@@ -8554,6 +8569,7 @@ MonoBehaviour:
   - {fileID: 814599445}
   - {fileID: 332569474}
   - {fileID: 77273663}
+  SuperHitSelected: 0
 --- !u!1 &1623671797
 GameObject:
   m_ObjectHideFlags: 0
@@ -10853,6 +10869,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1537194983}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1537194983}
@@ -10861,8 +10881,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ButtonClickDestroyInternal
+      objectReference: {fileID: 0}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: clickButtoSettings
+      objectReference: {fileID: 0}
+    - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuGameplay, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 673353667184756081, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName

@@ -97,6 +97,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         /// Активировать взрыв это нанесет урон текущей ячейке и удалит взрыв
         /// </summary>
         public void Activate(CellCTRL cell) {
+            //Применить взрыв к ячейке
             cell.BufferCombination = comb;
             cell.BufferNearDamage = false;
             cell.Damage();
@@ -266,6 +267,14 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     }
     public void Damage(CellInternalObject partner, GameFieldCTRL.Combination combination, bool nearDamage)
     {
+
+        if (Time.unscaledTime - myField.timeLastBoom > 0.2f)
+        {
+            myField.timeLastBoom = Time.unscaledTime;
+        }
+        else {
+            myField.timeLastBoom += 0.025f;
+        }
 
         //Если камня нету
         if (rock <= 0)

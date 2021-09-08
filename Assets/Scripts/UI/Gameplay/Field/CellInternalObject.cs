@@ -224,6 +224,7 @@ public class CellInternalObject : MonoBehaviour
     CellCTRL GetFreeCellDown() {
         CellCTRL returnCell = null;
 
+
         //Получить свободную ячейку снизу
         for (int minusY = 1; minusY < myField.cellCTRLs.GetLength(1); minusY++) {
             if (myCell.pos.y - minusY >= 0 && //если не вышли за массив
@@ -231,7 +232,9 @@ public class CellInternalObject : MonoBehaviour
                 !myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].cellInternal && //И она свободна
                 myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].BlockingMove == 0 && //И нет яшика
                 myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].rock == 0 && //и нет камня
-                Time.unscaledTime - myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].timeBoomOld > 0.35f) //Совзрыва прошла секунда                                                                 )
+                Time.unscaledTime - myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].timeBoomOld > 0.35f && //c уничтожения ячеек снизу
+                Time.unscaledTime - myField.timeLastBoom > 0
+                ) 
             {
                 //Ставим такую ячейку как нижнюю
                 returnCell = myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY];
@@ -266,7 +269,8 @@ public class CellInternalObject : MonoBehaviour
                     !myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].cellInternal && //И она свободна
                     myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].BlockingMove == 0 && //и нет ящика
                     myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].rock == 0 && //и нет камня
-                    Time.unscaledTime - myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.25f &&
+                    Time.unscaledTime - myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.35f &&
+                    Time.unscaledTime - myField.timeLastBoom > 0 &&
                     isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie]) //В этом столбце нет потенциального вертикального движения
                     ) {
                     //Ставим такую ячейку как целевую
@@ -279,7 +283,8 @@ public class CellInternalObject : MonoBehaviour
                     !myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].cellInternal && //И она свободна
                     myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].BlockingMove == 0 && //И можно двигаться
                     myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].rock == 0 && //и нет камня
-                    Time.unscaledTime - myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.25f &&
+                    Time.unscaledTime - myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.35f &&
+                    Time.unscaledTime - myField.timeLastBoom > 0 &&
                     isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie]) //В этом столбце нет потенциального вертикального движения
                     ) {
                     //Ставим такую ячейку как целевую
@@ -1149,8 +1154,11 @@ public class CellInternalObject : MonoBehaviour
     }
 
     public void ActivateInvoke(float timeInvoke) {
-        Invoke("Activate", timeInvoke);
-
+        //Invoke("Activate", timeInvoke);
+        Invoke("DamageMyCell", timeInvoke);
+    }
+    public void DamageMyCell() {
+        myCell.Damage(BufferPartner, BufferCombination);
     }
 
     void UpdateActivate() {

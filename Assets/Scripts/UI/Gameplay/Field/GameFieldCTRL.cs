@@ -74,12 +74,14 @@ public class GameFieldCTRL : MonoBehaviour
 
     [Header("Other")]
     [SerializeField]
-    CellCTRL CellSelect; //Первый выделенный пользователем объект
+    public CellCTRL CellSelect; //Первый выделенный пользователем объект
     [SerializeField]
     CellCTRL CellSwap; //Второй выделенный пользователем объект
 
     [SerializeField]
     RectTransform rectParticleSelect;
+
+    public float timeLastBoom = 0;
 
     RectTransform myRect;
 
@@ -506,7 +508,8 @@ public class GameFieldCTRL : MonoBehaviour
                     for (int plusY = 0; plusY <= cellCTRLs.GetLength(1); plusY++) {
 
                         //Если достигли самого верха поля
-                        if (y + plusY >= cellCTRLs.GetLength(1))
+                        if (y + plusY >= cellCTRLs.GetLength(1) &&
+                            Time.unscaledTime - timeLastBoom > 0.1f)
                         {
                             //Создаем префаб перемещаемого объекта
                             GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
@@ -548,7 +551,7 @@ public class GameFieldCTRL : MonoBehaviour
                         //За перемещение ниже отвечает сам перемещаемый объект
 
                         //Если сверху есть ячейка с внутренностью и она не блокирована
-                        else if (cellCTRLs[x, y + plusY].BlockingMove <= 0 && cellCTRLs[x, y + plusY].cellInternal && cellCTRLs[x, y + plusY].rock <= 0) {
+                        else if (y + plusY < cellCTRLs.GetLength(1) && cellCTRLs[x, y + plusY].BlockingMove <= 0 && cellCTRLs[x, y + plusY].cellInternal && cellCTRLs[x, y + plusY].rock <= 0) {
 
                             break;
                         }
@@ -612,6 +615,8 @@ public class GameFieldCTRL : MonoBehaviour
 
         DestroyDuplicateCombinations();
 
+        TestHitShop();
+
         TestSuperCombination();
 
         TestDamageAndSpawn();
@@ -619,7 +624,7 @@ public class GameFieldCTRL : MonoBehaviour
         //TestSuperCombination();
 
         ///////////////////////////////////////////////////////////////
-        //Проверить ячейку на комбинации. вариант 2021.08.18
+        //Проверить ячейку на комбинации. вариант 2 2021.08.18
         void TestCellCombination(CellCTRL Cell)
         {
 
@@ -1263,7 +1268,66 @@ public class GameFieldCTRL : MonoBehaviour
 
         }
 
+        //Проверка на использование платного супер удара
+        void TestHitShop() {
+            //Если только что поменялся супер удар
+            if (buffer.superHit != MenuGameplay.main.SuperHitSelected) {
+                //Снимаем выделение с ячейки
+                CellSelect = null;
+
+                buffer.superHit = MenuGameplay.main.SuperHitSelected;
+            }
+
+            //Если сейчас активен супер удар
+            if (buffer.superHit != MenuGameplay.SuperHitType.none) {
+                //Если не выбранна, выходим
+                if (CellSelect == null) {
+                    return;
+                }
+
+                if (buffer.superHit == MenuGameplay.SuperHitType.internalObj)
+                    TestShopInternal();
+                else if (buffer.superHit == MenuGameplay.SuperHitType.rosket2x)
+                    TestShopRocket();
+                else if(buffer.superHit == MenuGameplay.SuperHitType.superColor)
+                    TestShopSuperColor();
+
+                //Активировали, возвращаем ничего
+                MenuGameplay.main.SuperHitSelected = MenuGameplay.SuperHitType.none;
+            }
+
+            void TestShopInternal() {
+                if (Gameplay.main.buttonDestroyInternal > 0) {
+                    Gameplay.main.buttonDestroyInternal--;
+
+                    CellSelect.DamageInvoke(0.25f);
+                    MenuGameplay.main.SuperHitSelected = MenuGameplay.SuperHitType.none;
+                }
+            }
+            void TestShopRocket() {
+                if (Gameplay.main.buttonRosket > 0) {
+                    Gameplay.main.buttonRosket--;
+
+                    
+                    CellSelect.explosion = new CellCTRL.Explosion(true, true, true, true, 0.05f, null);
+                    CellSelect.ExplosionBoomInvoke(CellSelect.explosion);
+
+                    MenuGameplay.main.SuperHitSelected = MenuGameplay.SuperHitType.none;
+                }
+
+            }
+            void TestShopSuperColor() {
+
+            }
+        }
+
     }
+
+    //Для групировки данных
+    public struct Buffer{
+        public MenuGameplay.SuperHitType superHit;
+    }
+    Buffer buffer;
 
 
     /// <summary>
