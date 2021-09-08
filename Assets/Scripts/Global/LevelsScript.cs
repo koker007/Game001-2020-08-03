@@ -27,7 +27,8 @@ public class LevelsScript : MonoBehaviour
         public int boxHealth;
         public int moldHealth;
         public int Panel;
-        public CellInfo(int box, int mold, int color, int type, int panel)
+        public int rock;
+        public CellInfo(int box, int mold, int color, int type, int panel, int rockF)
         {
             if (box != 0)
             {
@@ -38,6 +39,8 @@ public class LevelsScript : MonoBehaviour
                 colorCell = (CellInternalObject.InternalColor)color;
                 typeCell = (CellInternalObject.Type)type;
             }
+
+            rock = rockF;
 
             if (panel != 0)
             {
@@ -93,11 +96,13 @@ public class LevelsScript : MonoBehaviour
         public bool PassedWithBox = false;
         public bool PassedWitMold = false;
         public bool PassedWitPanel = false;
+        public bool PassedWitRock = false;
 
         public int NeedBox;
         public int NeedMold;
         public int NeedPanel;
         public int NeedCrystal;
+        public int NeedRock;
         public CellInternalObject.InternalColor NeedColor;
 
 
@@ -107,6 +112,7 @@ public class LevelsScript : MonoBehaviour
         int[,] panel;
         int[,] internalColors;
         int[,] type;
+        int[,] rock;
 
         /// <summary>
         /// возвращает информацию о клетке на текущем уровне
@@ -153,6 +159,9 @@ public class LevelsScript : MonoBehaviour
                 case "exist":
                     exist = values;
                     break;
+                case "rock":
+                    rock = values;
+                    break;
             }
         }
 
@@ -182,6 +191,9 @@ public class LevelsScript : MonoBehaviour
             {
                 massNull(ref panel, 0);
             }
+            if (rock == null) {
+                massNull(ref rock, 0);
+            }
 
             for (int y = 0; y < Height; y++)
             {
@@ -193,7 +205,7 @@ public class LevelsScript : MonoBehaviour
                     }
                     else
                     {
-                        cells[x, cells.GetLength(1) - 1 - y] = new CellInfo(box[y, x], mold[y, x], internalColors[y, x], type[y, x], panel[y, x]);
+                        cells[x, cells.GetLength(1) - 1 - y] = new CellInfo(box[y, x], mold[y, x], internalColors[y, x], type[y, x], panel[y, x], rock[y,x]);
                     }
                 }
             }
@@ -438,6 +450,23 @@ public class LevelsScript : MonoBehaviour
      },
             "panel"
      );
+        Levels[3].SetCells();
+        Levels[3].SetMass(
+new int[,] //rock
+{
+                { 1,0,1,1,1,1,1,1,0,1 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,1,1,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 }
+},
+    "rock"
+);
         Levels[3].SetCells();
     }
 
