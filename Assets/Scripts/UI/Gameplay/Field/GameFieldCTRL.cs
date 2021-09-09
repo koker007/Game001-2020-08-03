@@ -1113,86 +1113,174 @@ public class GameFieldCTRL : MonoBehaviour
                     color = CellSpawn.cellInternal.color;
                 }
 
-                //Удаляем ячейки комбинации
-                //Раздать ячейкам урон или перемешать если игра еще не началась
-                foreach (CellCTRL c in comb.cells)
-                {
 
-                    if (Gameplay.main.movingCount <= 0)
+                //Если цвет ультимативный
+                if (comb.cells[0].cellInternal.color == CellInternalObject.InternalColor.Violet) {
+                    ActivateCombUltimate();
+                }
+                //Иначе обычное поведение
+                else {
+                    ActivateCombNormal();
+                }
+
+                void ActivateCombNormal() {
+                    //Удаляем ячейки комбинации
+                    //Раздать ячейкам урон или перемешать если игра еще не началась
+                    foreach (CellCTRL c in comb.cells)
                     {
-                        mixColor();
-                    }
-                    else {
-                        SetDamage();
-                    }
 
-                    //перемешать цвет
-                    void mixColor() {
-                        c.cellInternal.randColor();
-                    }
-                    //Нанести урон
-                    void SetDamage() {
-
-                        CellInternalObject partner = null;
-                        //Отнимаем ход если комбинация получилась благодаря перемещениям игрока
-                        List<Swap> BufferSwapNew = new List<Swap>();
-                        foreach (Swap swap in BufferSwap)
+                        if (Gameplay.main.movingCount <= 0)
                         {
-                            //Если комбинация получилась благодаря перемещению игрока
-                            if (swap.first == c || swap.second == c)
-                            {
-
-                                Gameplay.main.MinusMoving(comb);
-
-                                //Запомнить  партнера по перемещениям
-                                //if (swap.first != c) partner = c.cellInternal;
-                                //else if (swap.second != c) partner = c.cellInternal;
-
-                                continue;
-                            }
-                            BufferSwapNew.Add(swap);
+                            mixColor();
                         }
-                        BufferSwap = BufferSwapNew;
+                        else
+                        {
+                            SetDamage();
+                        }
 
-                        //Наносим урон по клетке
-                        c.Damage(partner, comb);
+                        //перемешать цвет
+                        void mixColor()
+                        {
+                            c.cellInternal.randColor();
+                        }
+                        //Нанести урон
+                        void SetDamage()
+                        {
+
+                            CellInternalObject partner = null;
+                            //Отнимаем ход если комбинация получилась благодаря перемещениям игрока
+                            List<Swap> BufferSwapNew = new List<Swap>();
+                            foreach (Swap swap in BufferSwap)
+                            {
+                                //Если комбинация получилась благодаря перемещению игрока
+                                if (swap.first == c || swap.second == c)
+                                {
+
+                                    Gameplay.main.MinusMoving(comb);
+
+                                    //Запомнить  партнера по перемещениям
+                                    //if (swap.first != c) partner = c.cellInternal;
+                                    //else if (swap.second != c) partner = c.cellInternal;
+
+                                    continue;
+                                }
+                                BufferSwapNew.Add(swap);
+                            }
+                            BufferSwap = BufferSwapNew;
+
+                            //Наносим урон по клетке
+                            c.Damage(partner, comb);
+                        }
+                    }
+
+                    //Точка спавна есть, теперь проверяем что нужно спавнить
+                    //Поставить новый обьект на место
+                    if (Gameplay.main.movingCount > 0)
+                    {
+                        //если линия из 5
+                        if (comb.line5)
+                        {
+                            //Создаем супер цветовую бомбу
+                            CreateSuperColor(CellSpawn, color, comb.ID);
+                        }
+                        //Если крест
+                        else if (comb.cross)
+                        {
+                            //Создаем бомбу
+                            CreateBomb(CellSpawn, color, comb.ID);
+                        }
+                        //Если горизонтальная из 4
+                        else if (comb.line4 && comb.horizontal)
+                        {
+                            CreateRocketVertical(CellSpawn, color, comb.ID);
+                        }
+                        //Если вертикальная из 3
+                        else if (comb.line4 && comb.vertical)
+                        {
+                            CreateRocketHorizontal(CellSpawn, color, comb.ID);
+                        }
+                        //Если квадрат
+                        else if (comb.square)
+                        {
+                            //нечто летающее
+                            CreateFly(CellSpawn, color, comb.ID);
+                        }
+
+                        //Комбинация завершена повышаем комбо
+                        ComboCount++;
                     }
                 }
 
-                //Точка спавна есть, теперь проверяем что нужно спавнить
-                //Поставить новый обьект на место
-                if (Gameplay.main.movingCount > 0) {
-                    //если линия из 5
-                    if (comb.line5)
+                void ActivateCombUltimate() {
+                    //Удаляем ячейки комбинации
+                    //Раздать ячейкам урон или перемешать если игра еще не началась
+                    foreach (CellCTRL c in comb.cells)
                     {
-                        //Создаем супер цветовую бомбу
-                        CreateSuperColor(CellSpawn, color, comb.ID);
-                    }
-                    //Если крест
-                    else if (comb.cross)
-                    {
-                        //Создаем бомбу
-                        CreateBomb(CellSpawn, color, comb.ID);
-                    }
-                    //Если горизонтальная из 4
-                    else if (comb.line4 && comb.horizontal)
-                    {
-                        CreateRocketVertical(CellSpawn, color, comb.ID);
-                    }
-                    //Если вертикальная из 3
-                    else if (comb.line4 && comb.vertical)
-                    {
-                        CreateRocketHorizontal(CellSpawn, color, comb.ID);
-                    }
-                    //Если квадрат
-                    else if (comb.square)
-                    {
-                        //нечто летающее
-                        CreateFly(CellSpawn, color, comb.ID);
+
+                        if (Gameplay.main.movingCount <= 0)
+                        {
+                            mixColor();
+                        }
+                        else
+                        {
+                            SetDamage();
+                        }
+
+                        //перемешать цвет
+                        void mixColor()
+                        {
+                            c.cellInternal.randColor();
+                        }
+                        //Нанести урон
+                        void SetDamage()
+                        {
+
+                            CellInternalObject partner = null;
+                            //Отнимаем ход если комбинация получилась благодаря перемещениям игрока
+                            List<Swap> BufferSwapNew = new List<Swap>();
+                            foreach (Swap swap in BufferSwap)
+                            {
+                                //Если комбинация получилась благодаря перемещению игрока
+                                if (swap.first == c || swap.second == c)
+                                {
+
+                                    Gameplay.main.MinusMoving(comb);
+
+                                    //Запомнить  партнера по перемещениям
+                                    //if (swap.first != c) partner = c.cellInternal;
+                                    //else if (swap.second != c) partner = c.cellInternal;
+
+                                    continue;
+                                }
+                                BufferSwapNew.Add(swap);
+                            }
+                            BufferSwap = BufferSwapNew;
+
+                            //Наносим урон по клетке
+                            c.Damage(partner, comb);
+                        }
                     }
 
-                    //Комбинация завершена повышаем комбо
-                    ComboCount++;
+                    //Перебираем ячейки и раздаем указанный урон
+                    foreach (CellCTRL c in comb.cells) {
+                        //Если собралась горизонталь
+                        if (comb.horizontal && comb.line4) {
+                            //Вертикально запускаем взрыв
+                            c.explosion = new CellCTRL.Explosion(false, false, true, true, 0.1f, comb);
+                            c.BufferCombination = comb;
+                            c.BufferNearDamage = false;
+                            c.ExplosionBoomInvoke(c.explosion);
+                        }
+                        //Если собралась вертикаль
+                        if (comb.vertical && comb.line4)
+                        {
+                            //Вертикально запускаем взрыв
+                            c.explosion = new CellCTRL.Explosion(true, true, false, false, 0.1f, comb);
+                            c.BufferCombination = comb;
+                            c.BufferNearDamage = false;
+                            c.ExplosionBoomInvoke(c.explosion);
+                        }
+                    }
                 }
             }
 
@@ -1653,8 +1741,7 @@ public class GameFieldCTRL : MonoBehaviour
         if (cell == null) return result;
 
 
-        if (cell.BlockingMove > 0 || 
-            cell.rock > 0) {
+        if (cell.rock > 0) {
             result = true;
         }
 

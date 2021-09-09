@@ -97,6 +97,7 @@ public class FlyCTRL : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        TestTarget();
         CalcTransform();
     }
 
@@ -301,6 +302,62 @@ public class FlyCTRL : MonoBehaviour
                     Destroy(gameObject);
                 }
             }
+        }
+    }
+
+    bool isRecalcTarget = false;
+    void TestTarget() {
+        //Если оказалось что внутреннего объекта нет, или нет ящика, или нет 
+        if (!isRecalcTarget && isBadTarget()) {
+            CellTarget = getNewCellPrioryty();
+            PivotTarget = new Vector2(-CellTarget.pos.x, -CellTarget.pos.y);
+        }
+
+        bool isBadTarget() {
+            bool result = false;
+
+            if (!Activated && CellTarget.cellInternal == null && CellTarget.BlockingMove == 0 && CellTarget.mold == 0 && CellTarget.rock == 0) {
+                result = true;
+            }
+
+            return result;
+        }
+
+        CellCTRL getNewCellPrioryty() {
+            CellCTRL result = null;
+
+            isRecalcTarget = true;
+
+            //ищем ячейку к которой еще никто не летит
+            foreach (CellCTRL cellPriority in myField.cellsPriority)
+            {
+                //В любом случае задать текушую чейку как целевую, у самолета должна быть цель
+                result = cellPriority;
+
+                //Если нашли эту ячейку в списке целей то завершаем перебор и переключаемся далее
+                bool found = false;
+                foreach (FlyCTRL fly in flyCTRLs)
+                {
+                    if (fly.CellTarget == cellPriority)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                //Если закончили перебор и не нашли ячейку в списке, значит это то что нужно выбрать в качестве новой цели
+                if (!found)
+                {
+                    break;
+                }
+
+
+            }
+
+
+            return result;
+
+
         }
     }
 

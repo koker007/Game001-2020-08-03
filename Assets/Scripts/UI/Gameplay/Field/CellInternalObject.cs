@@ -69,7 +69,8 @@ public class CellInternalObject : MonoBehaviour
         Green,
         Blue,
         Yellow,
-        Violet
+        Violet,
+        Ultimate
     }
     public enum Type {
         color,
