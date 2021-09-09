@@ -61,11 +61,11 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     public Transform parentOfMold;
     [SerializeField]
-    public Transform parentOfRock;
-    [SerializeField]
     public Transform parentOfFly;
     [SerializeField]
     public Transform parentOfParticles;
+    [SerializeField]
+    public Transform parentOfRock;
     [SerializeField]
     public Transform parentOfScore;
     [SerializeField]
@@ -268,7 +268,6 @@ public class GameFieldCTRL : MonoBehaviour
         void AddAllCellLevel() {
             //Создаем пространство игрового поля
             cellCTRLs = new CellCTRL[level.Width, level.Height];
-            rockCTRLs = new RockCTRL[level.Width, level.Height];
             cellsPriority = new CellCTRL[cellCTRLs.GetLength(0) * cellCTRLs.GetLength(1)];
 
             Gameplay.main.colors = level.NumColors;
@@ -304,7 +303,7 @@ public class GameFieldCTRL : MonoBehaviour
                         RectTransform rect = cellObj.GetComponent<RectTransform>();
                         rect.pivot = new Vector2(-x, -y);
                         cellCTRLs[x, y].BlockingMove = level.cells[x, y].boxHealth;
-                        cellCTRLs[x, y].rock = level.cells[x, y].rock;
+                        cellCTRLs[x, y].rock = 0;
                         cellCTRLs[x, y].mold = level.cells[x, y].moldHealth;
                         
                         if(level.cells[x, y].Panel > 0)

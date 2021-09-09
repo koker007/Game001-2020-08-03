@@ -93,7 +93,11 @@ public class LevelsScript : MonoBehaviour
         public bool PassedWithBox = false;
         public bool PassedWitMold = false;
         public bool PassedWitPanel = false;
+<<<<<<< HEAD
         //количество необходимых целей
+=======
+
+>>>>>>> parent of e437ba2d (save)
         public int NeedBox;
         public int NeedMold;
         public int NeedPanel;
@@ -420,9 +424,15 @@ public class LevelsScript : MonoBehaviour
                 { 0,0,0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0,0,0 }
+<<<<<<< HEAD
              },
              "box"
              );
+=======
+     },
+            "panel"
+     );
+>>>>>>> parent of e437ba2d (save)
         Levels[3].SetCells();
     }
 
