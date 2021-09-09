@@ -65,6 +65,14 @@ public class MenuGameplay : MonoBehaviour
     {
         updateButtons();
         updateGoal();
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                clickButtonExitLevel();
+            }
+        }
     }
 
     void startButtons()

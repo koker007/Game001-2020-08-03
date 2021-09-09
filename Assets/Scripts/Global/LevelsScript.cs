@@ -27,7 +27,16 @@ public class LevelsScript : MonoBehaviour
         public int boxHealth;
         public int moldHealth;
         public int Panel;
+<<<<<<< Updated upstream
         public CellInfo(int box, int mold, int color, int type, int panel)
+=======
+        public int rock;
+        public bool upWall;
+        public bool downWall;
+        public bool leftWall;
+        public bool rightWall;
+        public CellInfo(int box, int mold, int color, int type, int panel, int rockF, char[] walls)
+>>>>>>> Stashed changes
         {
             if (box != 0)
             {
@@ -46,6 +55,25 @@ public class LevelsScript : MonoBehaviour
             else if (mold != 0)
             {
                 moldHealth = mold;
+            }
+
+            for(int i = 0; i < walls.Length; i++)
+            {
+                switch (walls[i])
+                {
+                    case 'U':
+                        upWall = true;
+                        break;
+                    case 'D':
+                        downWall = true;
+                        break;
+                    case 'R':
+                        rightWall = true;
+                        break;
+                    case 'L':
+                        leftWall = true;
+                        break;
+                }
             }
         }
 
@@ -111,6 +139,11 @@ public class LevelsScript : MonoBehaviour
         int[,] panel;
         int[,] internalColors;
         int[,] type;
+<<<<<<< Updated upstream
+=======
+        int[,] rock;
+        string[,] walls;
+>>>>>>> Stashed changes
 
         /// <summary>
         /// возвращает информацию о клетке на текущем уровне
@@ -168,6 +201,15 @@ public class LevelsScript : MonoBehaviour
                     break;
             }
         }
+        public void SetMass(string[,] values, string massName)
+        {
+            switch (massName)
+            {
+                case "walls":
+                    walls = values;
+                    break;
+            }
+        }
 
         /// <summary>
         /// заносит в каждую ячейку информацию о ней из массивов
@@ -198,6 +240,16 @@ public class LevelsScript : MonoBehaviour
             {
                 massNull(ref panel, 0);
             }
+<<<<<<< Updated upstream
+=======
+            if (rock == null) {
+                massNull(ref rock, 0);
+            }
+            if (walls == null)
+            {
+                massNull(ref walls);
+            }
+>>>>>>> Stashed changes
 
             for (int y = 0; y < Height; y++)
             {
@@ -209,7 +261,11 @@ public class LevelsScript : MonoBehaviour
                     }
                     else
                     {
+<<<<<<< Updated upstream
                         cells[x, cells.GetLength(1) - 1 - y] = new CellInfo(box[y, x], mold[y, x], internalColors[y, x], type[y, x], panel[y, x]);
+=======
+                        cells[x, cells.GetLength(1) - 1 - y] = new CellInfo(box[y, x], mold[y, x], internalColors[y, x], type[y, x], panel[y, x], rock[y,x], walls[y,x].ToCharArray());
+>>>>>>> Stashed changes
                     }
                 }
             }
@@ -231,6 +287,17 @@ public class LevelsScript : MonoBehaviour
                 }
             }
         }
+        private void massNull(ref string[,] mas)
+        {
+            mas = new string[Height, Width];
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    mas[y, x] = " ";
+                }
+            }
+        }
     }
 
     private Level level;
@@ -241,6 +308,7 @@ public class LevelsScript : MonoBehaviour
     {
         main = this;
 
+<<<<<<< Updated upstream
         //уровень 1
         Levels[1] = CreateLevel(1, 6, 5, 2000000, 50, 4);
 
@@ -434,6 +502,9 @@ public class LevelsScript : MonoBehaviour
      );
 >>>>>>> parent of e437ba2d (save)
         Levels[3].SetCells();
+=======
+        
+>>>>>>> Stashed changes
     }
 
     //заполнение основных параметров уровня
