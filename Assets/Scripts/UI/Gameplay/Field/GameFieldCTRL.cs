@@ -388,7 +388,7 @@ public class GameFieldCTRL : MonoBehaviour
                         else if (level.cells[x, y].typeCell == CellInternalObject.Type.rocketVertical) {
                             CreateRocketVertical(cellCTRLs[x, y], cellInfo.colorCell, 0);
                         }
-                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.supercolor) {
+                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.color5) {
                             CreateSuperColor(cellCTRLs[x, y], cellInfo.colorCell, 0);
                         }
                         
@@ -630,7 +630,7 @@ public class GameFieldCTRL : MonoBehaviour
         {
 
             //¬ыходим если €чейки нет, или нет внутренности, или внутренность в движении, или это кристал, который не должен собиратьс€ в комбинации
-            if (!Cell || !Cell.cellInternal || Cell.cellInternal.isMove || Cell.cellInternal.type == CellInternalObject.Type.supercolor)
+            if (!Cell || !Cell.cellInternal || Cell.cellInternal.isMove || Cell.cellInternal.type == CellInternalObject.Type.color5)
             {
                 return;
             }
@@ -930,7 +930,7 @@ public class GameFieldCTRL : MonoBehaviour
             bool TestCellColor(CellCTRL SecondCell)
             {
                 bool test = false;
-                if (SecondCell && SecondCell.cellInternal != null && SecondCell.cellInternal.type == CellInternalObject.Type.supercolor) {
+                if (SecondCell && SecondCell.cellInternal != null && SecondCell.cellInternal.type == CellInternalObject.Type.color5) {
                     test = true;
                 }
 
@@ -941,7 +941,7 @@ public class GameFieldCTRL : MonoBehaviour
                     !Cell.cellInternal || //если объекта в €чейке нет
                     SecondCell.cellInternal.isMove || //если эти внутренности наход€тс€ в движении
                     SecondCell.cellInternal.color != Cell.cellInternal.color || //÷вет не совпал
-                    SecondCell.cellInternal.type == CellInternalObject.Type.supercolor //“ип €чейки супер кристал, он не должет сам активироватьс€ оп этому его в комбинации нет
+                    SecondCell.cellInternal.type == CellInternalObject.Type.color5 //“ип €чейки супер кристал, он не должет сам активироватьс€ оп этому его в комбинации нет
                     )
                 {
                     //Ќа этом заканчиваем перебор
@@ -969,17 +969,17 @@ public class GameFieldCTRL : MonoBehaviour
                     comb.foundPanel = true;
 
                 //супер колор + что-то еще
-                if (swap.first.cellInternal.type == CellInternalObject.Type.supercolor ||
-                    swap.second.cellInternal.type == CellInternalObject.Type.supercolor)
+                if (swap.first.cellInternal.type == CellInternalObject.Type.color5 ||
+                    swap.second.cellInternal.type == CellInternalObject.Type.color5)
                 {
 
-                    if (swap.first.cellInternal.type == CellInternalObject.Type.supercolor)
+                    if (swap.first.cellInternal.type == CellInternalObject.Type.color5)
                     {
-                        swap.first.cellInternal.Activate(CellInternalObject.Type.supercolor, swap.second.cellInternal, comb);
+                        swap.first.cellInternal.Activate(CellInternalObject.Type.color5, swap.second.cellInternal, comb);
                     }
                     else
                     {
-                        swap.second.cellInternal.Activate(CellInternalObject.Type.supercolor, swap.first.cellInternal, comb);
+                        swap.second.cellInternal.Activate(CellInternalObject.Type.color5, swap.first.cellInternal, comb);
                     }
 
                 }
