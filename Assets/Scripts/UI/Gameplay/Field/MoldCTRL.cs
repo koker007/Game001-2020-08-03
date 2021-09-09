@@ -69,20 +69,24 @@ public class MoldCTRL : MonoBehaviour
     }
 
     //—павним плесень в ближайщих точках
-    public void TestSpawn() {
+    public bool TestSpawn() {
+
+        bool isSpawned = false;
         
         //3 проверки подр€д если ближайша€ €чейка выдаетс€ пустой
         CellCTRL cellTarget = GameFieldCTRL.GetRandomCellNearest(myCell);
-        if (cellTarget == null || cellTarget.mold > 0) {
+
+        //≈сли €чейки нет, или плесень уже есть
+        if (cellTarget == null || cellTarget.mold > 0 || cellTarget.panel) {
             cellTarget = GameFieldCTRL.GetRandomCellNearest(myCell);
-            if (cellTarget == null || cellTarget.mold > 0) {
+            if (cellTarget == null || cellTarget.mold > 0 || cellTarget.panel) {
                 cellTarget = GameFieldCTRL.GetRandomCellNearest(myCell);
             }
         }
 
-        //≈сли этой €чейки нет, или если €чейка оказываетс€ уже зан€та
-        if (cellTarget == null || cellTarget.mold > 0)
-            return;
+        //≈сли этой €чейки нет, или если €чейка оказываетс€ уже зан€та или на €чейке панель
+        if (cellTarget == null || cellTarget.mold > 0 || cellTarget.panel)
+            return isSpawned;
 
         //ƒелаем здоровье если оно меньше 5-ти и там нет панели.
         if(cellTarget.mold < 5 && !cellTarget.panel)
@@ -94,6 +98,9 @@ public class MoldCTRL : MonoBehaviour
             cellTarget.moldCTRL = moldObj.GetComponent<MoldCTRL>();
             cellTarget.moldCTRL.inicialize(cellTarget);
         }
+        
+        //≈сли дошли до конца значит выполнили
+        return true;
     }
 
     // Start is called before the first frame update

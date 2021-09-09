@@ -224,6 +224,10 @@ public class CellInternalObject : MonoBehaviour
     CellCTRL GetFreeCellDown() {
         CellCTRL returnCell = null;
 
+        //выходим если предмет в этой €чейке находитс€ в камне
+        if (myField.cellCTRLs[myCell.pos.x, myCell.pos.y].rock > 0)
+            return null;
+
 
         //ѕолучить свободную €чейку снизу
         for (int minusY = 1; minusY < myField.cellCTRLs.GetLength(1); minusY++) {

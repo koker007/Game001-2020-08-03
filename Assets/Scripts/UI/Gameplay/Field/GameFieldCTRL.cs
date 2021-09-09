@@ -1553,17 +1553,16 @@ public class GameFieldCTRL : MonoBehaviour
             return;
         }
 
-        //прибавляем ход
-        lastStepCount++;
-
         StepMold();
 
         //Ход плесени
         void StepMold() {
             //Выбираем рандомную плесень из всего списка
             int num = Random.Range(0, moldCTRLs.Count);
-            if (moldCTRLs.Count > 0 && moldCTRLs[num]) {
-                moldCTRLs[num].TestSpawn();
+            //Если плесень существует, если выбранна конкретная плесень, если спавн удачный
+            if (moldCTRLs.Count > 0 && moldCTRLs[num] && moldCTRLs[num].TestSpawn()) {
+                //прибавляем ход плесени
+                lastStepCount++;
             }
         }
     }
