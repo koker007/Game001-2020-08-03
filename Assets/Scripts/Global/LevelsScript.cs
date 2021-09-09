@@ -27,7 +27,8 @@ public class LevelsScript : MonoBehaviour
         public int boxHealth;
         public int moldHealth;
         public int Panel;
-        public CellInfo(int box, int mold, int color, int type, int panel)
+        public int rock;
+        public CellInfo(int box, int mold, int color, int type, int panel, int rockF)
         {
             if (box != 0)
             {
@@ -38,6 +39,8 @@ public class LevelsScript : MonoBehaviour
                 colorCell = (CellInternalObject.InternalColor)color;
                 typeCell = (CellInternalObject.Type)type;
             }
+
+            rock = rockF;
 
             if (panel != 0)
             {
@@ -93,11 +96,17 @@ public class LevelsScript : MonoBehaviour
         public bool PassedWithBox = false;
         public bool PassedWitMold = false;
         public bool PassedWitPanel = false;
+<<<<<<< HEAD
         //количество необходимых целей
+=======
+        public bool PassedWitRock = false;
+
+>>>>>>> merge-016
         public int NeedBox;
         public int NeedMold;
         public int NeedPanel;
         public int NeedCrystal;
+        public int NeedRock;
         public CellInternalObject.InternalColor NeedColor;
 
         //массивы обьектов
@@ -107,6 +116,7 @@ public class LevelsScript : MonoBehaviour
         int[,] panel;
         int[,] internalColors;
         int[,] type;
+        int[,] rock;
 
         /// <summary>
         /// возвращает информацию о клетке на текущем уровне
@@ -162,6 +172,9 @@ public class LevelsScript : MonoBehaviour
                 case "exist":
                     exist = values;
                     break;
+                case "rock":
+                    rock = values;
+                    break;
             }
         }
 
@@ -194,6 +207,9 @@ public class LevelsScript : MonoBehaviour
             {
                 massNull(ref panel, 0);
             }
+            if (rock == null) {
+                massNull(ref rock, 0);
+            }
 
             for (int y = 0; y < Height; y++)
             {
@@ -205,7 +221,7 @@ public class LevelsScript : MonoBehaviour
                     }
                     else
                     {
-                        cells[x, cells.GetLength(1) - 1 - y] = new CellInfo(box[y, x], mold[y, x], internalColors[y, x], type[y, x], panel[y, x]);
+                        cells[x, cells.GetLength(1) - 1 - y] = new CellInfo(box[y, x], mold[y, x], internalColors[y, x], type[y, x], panel[y, x], rock[y,x]);
                     }
                 }
             }
@@ -246,8 +262,8 @@ public class LevelsScript : MonoBehaviour
         Levels[1].SetMass(
         new int[,] //exist
             {
-                { 0,1,1,1,1 },
-                { 1,1,1,1,1 },
+                { 0,0,1,0,0 },
+                { 0,0,1,0,0 },
                 { 1,1,1,1,1 },
                 { 1,1,1,1,1 },
                 { 1,1,1,1,1 },
@@ -258,12 +274,12 @@ public class LevelsScript : MonoBehaviour
         Levels[1].SetMass(
             new int[,] //color
             {
-                { 0,3,0,3,0 },
-                { 0,3,2,3,0 },
-                { 3,1,2,1,3 },
-                { 1,0,1,0,1 },
-                { 3,1,2,1,3 },
-                { 0,3,2,3,0 }
+                { 4,3,0,3,0 },
+                { 4,1,2,3,0 },
+                { 0,1,3,1,3 },
+                { 0,4,0,1,0 },
+                { 1,1,2,0,0 },
+                { 0,1,2,3,0 }
             },
             "color"
             );
@@ -272,8 +288,8 @@ public class LevelsScript : MonoBehaviour
             {
                 { 0,0,0,0,0 },
                 { 0,0,0,0,0 },
-                { 0,0,0,0,0 },
-                { 0,0,0,0,0 },
+                { 0,0,5,0,0 },
+                { 0,0,4,0,0 },
                 { 0,0,0,0,0 },
                 { 0,0,0,0,0 }
             },
@@ -355,7 +371,7 @@ public class LevelsScript : MonoBehaviour
         Levels[2].SetCells();
 
         //уровень 3
-        Levels[3] = CreateLevel(3, 10, 10, 10000, 99, 4);
+        Levels[3] = CreateLevel(3, 10, 10, 10000, 99, 5);
 
         Levels[3].PassedWitScore = true;
 
@@ -366,9 +382,9 @@ public class LevelsScript : MonoBehaviour
                 { 1,1,1,1,1,1,1,1,1,1 },
                 { 1,1,1,1,1,1,1,1,1,1 },
                 { 1,1,1,1,1,1,1,1,1,1 },
-                { 1,1,1,1,1,1,1,1,1,1 },
-                { 1,1,1,1,1,1,1,1,1,1 },
-                { 1,1,1,1,1,1,1,1,1,1 },
+                { 0,1,1,1,1,1,1,1,1,0 },
+                { 0,0,1,1,1,1,1,1,0,0 },
+                { 0,1,1,1,1,1,1,1,1,0 },
                 { 1,1,1,1,1,1,1,1,1,1 },
                 { 1,1,1,1,1,1,1,1,1,1 },
                 { 1,1,1,1,1,1,1,1,1,1 }
@@ -382,7 +398,7 @@ public class LevelsScript : MonoBehaviour
                 { 1,1,1,1,1,1,1,1,1,1 },
                 { 1,1,1,1,1,1,1,1,1,1 },
                 { 1,1,1,1,1,1,1,1,1,1 },
-                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,5,5,1,1,1,1 },
                 { 1,1,1,1,1,1,1,1,1,1 },
                 { 1,1,1,1,1,1,1,1,1,1 },
                 { 1,1,1,1,1,1,1,1,1,1 },
@@ -394,19 +410,19 @@ public class LevelsScript : MonoBehaviour
         Levels[3].SetMass(
             new int[,] //type
             {
+                { 5,4,0,0,0,0,0,0,0,0 },
+                { 3,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,3,3,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,1,3,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,1,4,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 1,1,2,2,3,3,4,4,1,5 }
+                { 0,0,0,0,0,0,0,0,0,0 }
             },
             "type"
-            ); 
+            );
         Levels[3].SetMass(
              new int[,] //box
              {
@@ -417,12 +433,61 @@ public class LevelsScript : MonoBehaviour
                 { 0,0,0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 }
+                { 5,5,5,5,5,5,5,5,5,5 },
+                { 5,5,5,5,5,5,5,5,5,5 },
+                { 5,5,5,5,5,5,5,5,5,5 }
              },
              "box"
              );
+        Levels[3].SetMass(
+     new int[,] //mold
+     {
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 2,2,2,2,2,2,2,2,2,2 },
+                { 3,3,3,3,3,3,3,3,3,3 },
+                { 4,4,4,4,4,4,4,4,4,4 },
+                { 5,5,5,5,5,5,5,5,5,5 }
+     },
+            "mold"
+     );
+        Levels[3].SetMass(
+        new int[,] //panel
+        {
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 }
+     },
+            "panel"
+     );
+        Levels[3].SetCells();
+        Levels[3].SetMass(
+new int[,] //rock
+{
+                { 1,0,1,1,1,1,1,1,0,1 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,1,1,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0,0,0 }
+},
+    "rock"
+);
         Levels[3].SetCells();
     }
 

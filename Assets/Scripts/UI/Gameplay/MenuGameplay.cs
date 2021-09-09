@@ -43,6 +43,7 @@ public class MenuGameplay : MonoBehaviour
 
     private LevelsScript.Level level;
 
+
     private void Awake()
     {
         main = this;
@@ -68,8 +69,8 @@ public class MenuGameplay : MonoBehaviour
 
     void startButtons()
     {
-        PanelDown.pivot = new Vector2(PanelDown.pivot.x, -3);
-        PanelUp.pivot = new Vector2(PanelUp.pivot.x, 3);
+        PanelDown.pivot = new Vector2(PanelDown.pivot.x, 3);
+        PanelUp.pivot = new Vector2(PanelUp.pivot.x, -3);
     }
 
     void updateButtons()
@@ -80,10 +81,14 @@ public class MenuGameplay : MonoBehaviour
         {
             float downY = PanelDown.pivot.y;
             downY += (0 - downY) * Time.unscaledDeltaTime * 4;
+            if (downY < 0) downY = 0;
+
             PanelDown.pivot = new Vector2(PanelDown.pivot.x, downY);
 
             float upY = PanelUp.pivot.y;
             upY += (1 - upY) * Time.unscaledDeltaTime * 4;
+            if (upY > 1) upY = 1; 
+
             PanelUp.pivot = new Vector2(PanelUp.pivot.x, upY);
         }
     }
@@ -211,4 +216,32 @@ public class MenuGameplay : MonoBehaviour
     {
         GlobalMessage.ExitLevel();
     }
+
+
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    ///Кнопки платных ударов
+    public enum SuperHitType {
+        none,
+        internalObj,
+        rosket2x,
+        superColor
+    }
+
+    public SuperHitType SuperHitSelected = SuperHitType.none;
+
+    public void ButtonClickDestroyInternal() {
+        SuperHitSelected = SuperHitType.internalObj;
+    }
+    public void ButtonClickRosket() {
+        SuperHitSelected = SuperHitType.rosket2x;
+    }
+    public void ButtonClickSuperColor() {
+        SuperHitSelected = SuperHitType.superColor;
+    }
+    //Конец зоны кнопок платных ударов
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
 }
