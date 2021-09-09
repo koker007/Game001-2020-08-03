@@ -35,6 +35,34 @@ public class RockCTRL : MonoBehaviour
         myRect.pivot = new Vector2(-myCell.pos.x, -myCell.pos.y);
     }
 
+    int HealthOld = -1;
+    void UpdateLife()
+    {
+        //Если здоровье не менялось
+        if (HealthOld == myCell.rock)
+            return;
+
+        ChangeImage();
+
+        DestroyRock();
+        HealthOld = myCell.rock;
+
+        void ChangeImage()
+        {
+
+        }
+
+        //Уничтожить если жизни кончились
+        void DestroyRock()
+        {
+            if (myCell.rock > 0) return;
+
+            Destroy(gameObject);
+
+            //Пересоздать список плесени исключая отсутствующиие
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,7 +72,7 @@ public class RockCTRL : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateLife();
     }
 
 

@@ -36,6 +36,10 @@ public class Gameplay : MonoBehaviour
     /// общее количество выполненых ходов
     /// </summary>
     public int movingCount = 0;
+    /// <summary>
+    /// Общее количество требуемых ходов плесени
+    /// </summary>
+    public int movingMoldCount = 0;
     public int colors = 3;
     public int combo = 0;
     public int boxCount;
@@ -44,6 +48,10 @@ public class Gameplay : MonoBehaviour
 
     public float threeStartFactor = 2f;
     public float twoStartFactor = 1.5f;
+
+    public int buttonDestroyInternal = 10;
+    public int buttonRosket = 10;
+    public int buttonSuperColor = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -63,16 +71,21 @@ public class Gameplay : MonoBehaviour
         score = 0;
         boxCount = LevelsScript.main.ReturnLevel().NeedBox;
         movingCount = 0;
+        movingMoldCount = 0;
         moldCount = LevelsScript.main.ReturnLevel().NeedMold;
         movingCan = LevelsScript.main.ReturnLevel().Move;
         CountStars(ref stars);
     }
     //вычитает ход и делает проверку на 0 ходов
-    public void MinusMoving()
+    public void MinusMoving(GameFieldCTRL.Combination combination)
     {
         movingCount++;
         movingCan--;
         MenuGameplay.main.updateMoving();
+
+        if (!combination.foundMold) movingMoldCount++;
+
+        
     }
 
     public void ScoreUpdate(int PlusScore)
@@ -98,8 +111,10 @@ public class Gameplay : MonoBehaviour
 
     public void CheckEndGame()
     {
+        //Если есть ходы, идет игра, и игра не закончена
         if (movingCan <= 0 && isGameplay && GameplayEnd == false)
         {
+            //Если
             LevelsScript.Level level = LevelsScript.main.ReturnLevel();
             if (level.PassedWitScore && score >= level.NeedScore || !level.PassedWitScore)
             {
