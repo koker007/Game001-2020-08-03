@@ -148,9 +148,6 @@ public class MenuGameplay : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// обновляет отображение целей уровня
-    /// </summary>
     public void updateGoal()
     {
         int i = 0;
