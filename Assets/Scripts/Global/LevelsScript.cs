@@ -87,20 +87,24 @@ public class LevelsScript : MonoBehaviour
         /// массив ячеек на поле
         /// </summary>
         public CellInfo[,] cells;
-
+        ///цели для прохождения уровня
         public bool PassedWitScore = false;
         public bool PassedWithCrystal = false;
         public bool PassedWithBox = false;
         public bool PassedWitMold = false;
         public bool PassedWitPanel = false;
+<<<<<<< HEAD
+        //количество необходимых целей
+=======
 
+>>>>>>> parent of e437ba2d (save)
         public int NeedBox;
         public int NeedMold;
         public int NeedPanel;
         public int NeedCrystal;
         public CellInternalObject.InternalColor NeedColor;
 
-
+        //массивы обьектов
         int[,] exist;
         int[,] box;
         int[,] mold;
@@ -123,6 +127,10 @@ public class LevelsScript : MonoBehaviour
             }
         }
 
+        /// <summary>
+        /// новый рекорд
+        /// </summary>
+        /// <param name="score"></param>
         public void NewMaxScore(int score)
         {
             if(score > MaxScore)
@@ -131,6 +139,11 @@ public class LevelsScript : MonoBehaviour
             }
         }
 
+        /// <summary>
+        /// устанавливает значения определенного массива уровня
+        /// </summary>
+        /// <param name="values"></param>
+        /// <param name="massName"></param>
         public void SetMass(int[,] values, string massName)
         {
             switch (massName)
@@ -156,6 +169,9 @@ public class LevelsScript : MonoBehaviour
             }
         }
 
+        /// <summary>
+        /// заносит в каждую ячейку информацию о ней из массивов
+        /// </summary>
         public void SetCells()
         {
             if(exist == null)
@@ -199,6 +215,11 @@ public class LevelsScript : MonoBehaviour
             }
         }
 
+        /// <summary>
+        /// заполняет массив указанным значением
+        /// </summary>
+        /// <param name="mas"></param>
+        /// <param name="value"></param>
         private void massNull(ref int[,] mas, int value)
         {
             mas = new int[Height,Width];
@@ -213,7 +234,7 @@ public class LevelsScript : MonoBehaviour
     }
 
     private Level level;
-
+    //все уровни
     public Level[] Levels = new Level[1000];
 
     private void Start()
@@ -403,13 +424,19 @@ public class LevelsScript : MonoBehaviour
                 { 0,0,0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0,0,0 }
+<<<<<<< HEAD
              },
              "box"
              );
+=======
+     },
+            "panel"
+     );
+>>>>>>> parent of e437ba2d (save)
         Levels[3].SetCells();
     }
 
-    //создание уровня (метод существует для зрительного упрощения схемы уровня в Start)
+    //заполнение основных параметров уровня
     public Level CreateLevel
         (
         int NumLevel, 
@@ -448,6 +475,9 @@ public class LevelsScript : MonoBehaviour
             return LevelGenerator.main.GenerateLevel(NumLevel);
         }
     }
+    /// <summary>
+    /// возвращает стартовое количество ходов текущего уровня
+    /// </summary>
     public Level ReturnLevel()
     {
         return ReturnLevel(Gameplay.main.levelSelect);
