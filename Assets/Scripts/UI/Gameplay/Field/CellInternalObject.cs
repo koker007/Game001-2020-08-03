@@ -73,7 +73,7 @@ public class CellInternalObject : MonoBehaviour
     }
     public enum Type {
         color,
-        supercolor,
+        color5,
         rocketHorizontal,
         rocketVertical,
         bomb,
@@ -544,7 +544,7 @@ public class CellInternalObject : MonoBehaviour
         {
             Image.texture = TextureRocketVertical;
         }
-        else if (type == Type.supercolor)
+        else if (type == Type.color5)
         {
             Image.texture = TextureSuperColor;
         }
@@ -668,13 +668,13 @@ public class CellInternalObject : MonoBehaviour
             if (ActivateType == Type.bomb) ActivateBomb(BoombRadius);
             else if (ActivateType == Type.rocketHorizontal) ActivateRocket(true, false);
             else if (ActivateType == Type.rocketVertical) ActivateRocket(false, true);
-            else if (ActivateType == Type.supercolor) ActivateSuperColor();
+            else if (ActivateType == Type.color5) ActivateSuperColor();
             else if (ActivateType == Type.airplane) ActivateFly();
         }
         else {
 
             //супер колор + что угодно
-            if (ActivateType == Type.supercolor) {
+            if (ActivateType == Type.color5) {
                 ActivateSuperColor();
             }
             //Бомба + ракета
@@ -759,7 +759,7 @@ public class CellInternalObject : MonoBehaviour
             int sizeMax = 1;
 
             //Партнер такая же бомба
-            if (partner != null && partner.type == Type.supercolor) {
+            if (partner != null && partner.type == Type.color5) {
                 DestroyAll();
             }
             //Если партнер бомба, ракета или самолет
@@ -841,7 +841,7 @@ public class CellInternalObject : MonoBehaviour
                         if (!myField.cellCTRLs[x, y] || //Если ячейки нет
                             !myField.cellCTRLs[x,y].cellInternal || //Если нет внутренности
                             myField.cellCTRLs[x,y].cellInternal.color != partner.color || //Если цвет не совпадает с цветом партнера
-                            myField.cellCTRLs[x,y].cellInternal.type == Type.supercolor
+                            myField.cellCTRLs[x,y].cellInternal.type == Type.color5
                             )
                         {
                             continue;
@@ -1216,7 +1216,7 @@ public class CellInternalObject : MonoBehaviour
         myCell.cellInternal = this;
         PosToCell();
 
-        type = Type.supercolor;
+        type = Type.color5;
         color = internalColor;
         Image.texture = TextureSuperColor;
         myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
