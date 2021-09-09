@@ -96,12 +96,8 @@ public class LevelsScript : MonoBehaviour
         public bool PassedWithBox = false;
         public bool PassedWitMold = false;
         public bool PassedWitPanel = false;
-<<<<<<< HEAD
-        //количество необходимых целей
-=======
         public bool PassedWitRock = false;
 
->>>>>>> merge-016
         public int NeedBox;
         public int NeedMold;
         public int NeedPanel;

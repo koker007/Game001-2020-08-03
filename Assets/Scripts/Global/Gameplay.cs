@@ -36,14 +36,10 @@ public class Gameplay : MonoBehaviour
     /// общее количество выполненых ходов
     /// </summary>
     public int movingCount = 0;
-<<<<<<< HEAD
-
-=======
     /// <summary>
     /// Общее количество требуемых ходов плесени
     /// </summary>
     public int movingMoldCount = 0;
->>>>>>> merge-016
     public int colors = 3;
     public int combo = 0;
     public int boxCount;
