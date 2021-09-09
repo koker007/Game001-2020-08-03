@@ -87,7 +87,7 @@ public class Gameplay : MonoBehaviour
 
         
     }
-    //обновление количества очков
+
     public void ScoreUpdate(int PlusScore)
     {
         score += PlusScore;
@@ -109,9 +109,6 @@ public class Gameplay : MonoBehaviour
         panelCount--;
     }
 
-    /// <summary>
-    /// проверка игры на выполненые цели
-    /// </summary>
     public void CheckEndGame()
     {
         //Если есть ходы, идет игра, и игра не закончена
@@ -145,9 +142,7 @@ public class Gameplay : MonoBehaviour
         }
 
     }
-    /// <summary>
-    /// считает и меняет цвет звезд выбранного уровня
-    /// </summary>
+
     public void CountStars(int score, ref Image[] stars)
     {
         if (score >= LevelsScript.main.ReturnLevel().NeedScore * threeStartFactor)
@@ -175,9 +170,6 @@ public class Gameplay : MonoBehaviour
             stars[2].color = new Color32(140, 140, 60, 255);
         }
     }
-    /// <summary>
-    /// считает и меняет цвет звезд выбранного уровня
-    /// </summary>
     public void CountStars(ref Image[] stars)
     {
         CountStars(score,ref stars);

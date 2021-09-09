@@ -50,9 +50,17 @@ public class MenuWorld : MonoBehaviour
     void Update()
     {
         updateButtons();
-        if (Input.GetKey(KeyCode.Escape))
+        ExitGame();
+    }
+
+    void ExitGame()
+    {
+        if (Application.platform == RuntimePlatform.Android)
         {
-            GlobalMessage.ExitGame();
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                GlobalMessage.ExitGame();
+            }
         }
     }
 
