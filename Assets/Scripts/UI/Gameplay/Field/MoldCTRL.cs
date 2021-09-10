@@ -10,6 +10,10 @@ using UnityEngine.UI;
 /// </summary>
 public class MoldCTRL : MonoBehaviour
 {
+
+    [SerializeField]
+    AnimatorCTRL animator;
+
     CellCTRL myCell;
     RectTransform myRect;
 
@@ -58,14 +62,18 @@ public class MoldCTRL : MonoBehaviour
         //Уничтожить если жизни кончились
         void DestroyMold() {
             if (myCell.mold > 0) return;
-            Gameplay.main.MoldUpdate();
 
-            myCell.myField.ReCalcMoldList();
+            animator.PlayAnimation("Destroy");
 
-            Destroy(gameObject);
-
-            //Пересоздать список плесени исключая отсутствующиие
         }
+    }
+
+    void Destroy()
+    {
+        Gameplay.main.MoldUpdate();
+        myCell.myField.ReCalcMoldList();
+        myCell.moldCTRL = null;
+        Destroy(gameObject);
     }
 
     //Спавним плесень в ближайщих точках
@@ -114,4 +122,5 @@ public class MoldCTRL : MonoBehaviour
     {
         UpdateLife();
     }
+
 }

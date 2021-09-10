@@ -11,8 +11,6 @@ public class CellInternalObject : MonoBehaviour
 {
     [SerializeField]
     AnimatorCTRL animatorObject;
-    [SerializeField]
-    Animator animatorExplose;
 
     //мое поле
     public GameFieldCTRL myField;

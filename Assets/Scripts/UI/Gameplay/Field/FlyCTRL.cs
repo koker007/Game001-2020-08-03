@@ -12,6 +12,9 @@ public class FlyCTRL : MonoBehaviour
 
     static public List<FlyCTRL> flyCTRLs = new List<FlyCTRL>();
 
+    [SerializeField]
+    AnimatorCTRL animator;
+
     float DistMinForHitTarget = 0.25f;
     [SerializeField]
     RawImage image;
@@ -295,7 +298,9 @@ public class FlyCTRL : MonoBehaviour
             if (Activated)
             {
                 float alpha = image.color.a - Time.deltaTime;
-                image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
+                //image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
+
+                animator.PlayAnimation("Destroy");
 
                 if (alpha < 0)
                 {
