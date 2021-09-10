@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class CellInternalObject : MonoBehaviour
 {
     [SerializeField]
-    Animator animatorMove;
+    AnimatorCTRL animatorObject;
     [SerializeField]
     Animator animatorExplose;
 
@@ -201,7 +201,7 @@ public class CellInternalObject : MonoBehaviour
                     isMove = false;
                     myCell.CalcMyPriority();
                     //Запустить анимацию остановки
-                    AnimationDroppedDown(true);
+                    animatorObject.PlayAnimation("DroppedDown");
                 }
             }
 
@@ -1036,7 +1036,7 @@ public class CellInternalObject : MonoBehaviour
 
         void ActivateBomb(int radius) {
 
-            AnimationBombActivated();
+            animatorObject.PlayAnimation("BombActivated");
 
             BoombRadius = radius;
 
@@ -1254,34 +1254,5 @@ public class CellInternalObject : MonoBehaviour
         color = internalColor;
         Image.texture = TextureRocketHorizontal;
         myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
-    }
-
-
-    void AnimationDroppedDown(bool dropped) {
-        animatorMove.SetBool("DroppedDown" , dropped);
-    }
-    public void StopAnimationDroppedDown() {
-        AnimationDroppedDown(false);
-    }
-
-    void AnimationDroppedLeft(bool dropped) {
-        animatorMove.SetBool("DroppedLeft", dropped);
-    }
-    public void StopAnimationDroppedLeft()
-    {
-        AnimationDroppedLeft(false);
-    }
-
-    void AnimationDroppedRight(bool dropped) {
-        animatorMove.SetBool("DroppedRight", dropped);
-    }
-    public void StopAnimationDroppedRight()
-    {
-        AnimationDroppedRight(false);
-    }
-
-
-    public void AnimationBombActivated() {
-        animatorExplose.SetBool("ActiveBomb", true);
     }
 }

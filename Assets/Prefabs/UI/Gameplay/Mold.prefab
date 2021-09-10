@@ -83,6 +83,8 @@ GameObject:
   - component: {fileID: 5948291591618426788}
   - component: {fileID: 5948291591618426790}
   - component: {fileID: 7334892891796711476}
+  - component: {fileID: 8018941535533648140}
+  - component: {fileID: 464337487484232575}
   m_Layer: 5
   m_Name: Mold
   m_TagString: Untagged
@@ -132,3 +134,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myPrefab: {fileID: 5948291591618426795}
   image: {fileID: 896906369199067713}
+--- !u!95 &8018941535533648140
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5948291591618426795}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f3a5b6c522316564abbbdf5423ab28f1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &464337487484232575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5948291591618426795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a416bb3db8b25b4cbebaf7916c7fbc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameterNameInt: parameter
+  animations:
+  - num: 1
+    key: Destroy

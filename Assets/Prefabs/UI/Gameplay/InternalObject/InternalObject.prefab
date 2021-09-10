@@ -84,6 +84,7 @@ GameObject:
   - component: {fileID: 1515285975908226111}
   - component: {fileID: 1515285975908226110}
   - component: {fileID: 785928088036544592}
+  - component: {fileID: 7853739379585473240}
   m_Layer: 5
   m_Name: InternalObject
   m_TagString: Untagged
@@ -131,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd709b982b9ab44297969c8357e0e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animatorMove: {fileID: 785928088036544592}
+  animatorObject: {fileID: 7853739379585473240}
   animatorExplose: {fileID: 1869684850792468100}
   myField: {fileID: 0}
   myCell: {fileID: 0}
@@ -160,6 +161,7 @@ MonoBehaviour:
   MovingSpeed: 0
   isMove: 0
   activateNum: 1
+  activateCount: 0
   needInstantDamage: 1
   BoombRadius: 1
   BufferActivateType: 0
@@ -183,6 +185,46 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7853739379585473240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515285975908226051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a416bb3db8b25b4cbebaf7916c7fbc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameterNameInt: parameter
+  animations:
+  - num: 1
+    key: BombActivated
+  - num: 2
+    key: PlayerMove
+  - num: 3
+    key: ShakingGorizontal
+  - num: 4
+    key: ShakingVertical
+  - num: 5
+    key: HintRight
+  - num: 6
+    key: HintUp
+  - num: 7
+    key: HintDown
+  - num: 8
+    key: HintLeft
+  - num: 9
+    key: ShakingHint
+  - num: 10
+    key: DroppedLeft
+  - num: 11
+    key: DroppedDown
+  - num: 12
+    key: DrppedRight
+  - num: 13
+    key: ApperanceCombinationObject
 --- !u!1 &6426277730314088829
 GameObject:
   m_ObjectHideFlags: 0
