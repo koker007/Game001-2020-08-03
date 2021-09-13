@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Семен
 /// <summary>
@@ -19,7 +20,7 @@ public class GameplayParticles3D : MonoBehaviour
     [SerializeField]
     Camera camera;
     [SerializeField]
-    RenderTexture texture;
+    public RenderTexture texture;
 
     [Header("Prefabs")]
     [SerializeField]
@@ -32,7 +33,26 @@ public class GameplayParticles3D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        iniRenderTexture();
+    }
+
+    //инициализация рендер текстуры
+    Vector2 sizeOld = new Vector2();
+    void iniRenderTexture() {
+
+        if (sizeOld.x != Screen.width || sizeOld.y != Screen.height) {
+            sizeOld = new Vector2(Screen.width, Screen.height);
+
+            //Создаем новую текстуру для рендеинга изображений
+            texture = new RenderTexture(Screen.width, Screen.height, 1);
+            camera.targetTexture = texture;
+        }
         
+    }
+
+    public void SetCameraPos(float scaleX, float scaleY) {
+        camera.orthographicSize = scaleX;
+        camera.transform.localPosition = new Vector3(scaleX / 2, scaleY / 2, camera.transform.localPosition.z);
     }
 
     // Update is called once per frame

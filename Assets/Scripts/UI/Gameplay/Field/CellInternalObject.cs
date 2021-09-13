@@ -85,6 +85,28 @@ public class CellInternalObject : MonoBehaviour
     public InternalColor color;
     public Type type;
 
+    public Color GetColor(InternalColor internalColor) {
+        Color result = new Color(1,1,1);
+
+        if (internalColor == InternalColor.Red) {
+            result = red;
+        }
+        else if (internalColor == InternalColor.Green) {
+            result = green;
+        }
+        else if (internalColor == InternalColor.Blue) {
+            result = blue;
+        }
+        else if (internalColor == InternalColor.Yellow) {
+            result = yellow;
+        }
+        else if (internalColor == InternalColor.Violet) {
+            result = violet;
+        }
+
+        return result;
+    }
+
     public void IniRect() {
         rectMy = GetComponent<RectTransform>();
         rectCell = myCell.GetComponent<RectTransform>();
@@ -1061,13 +1083,19 @@ public class CellInternalObject : MonoBehaviour
                     }
 
                     //—читаем врем€ задержки взрыва этой €чейки
-                    float time = Vector2.Distance(new Vector2(), new Vector2(x, y)) * 0.05f;
+                    float time = Vector2.Distance(new Vector2(), new Vector2(x, y)) * 0.1f;
                     //
                     myField.cellCTRLs[fieldPosX, fieldPosY].BufferCombination = combination;
                     myField.cellCTRLs[fieldPosX, fieldPosY].BufferNearDamage = false;
                     myField.cellCTRLs[fieldPosX, fieldPosY].DamageInvoke(time);
                 }
             }
+
+            //—оздаем частицы взрыва
+            Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomBomb(myField.gameObject, myCell, radius);
+            particle3DCTRL.SetSpeed(radius);
+            particle3DCTRL.SetSize(radius * 3);
+            particle3DCTRL.SetColor(GetColor(color) * 0.5f);
         }
 
         void ActivateFly() {

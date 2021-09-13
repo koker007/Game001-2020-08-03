@@ -21,6 +21,8 @@ public class MenuGameplay : MonoBehaviour
     GameObject GameFieldPrefab;
     [SerializeField]
     Transform GameFieldParent;
+    [SerializeField]
+    RawImage Particles3D;
 
     GameFieldCTRL gameFieldCTRL;
 
@@ -106,6 +108,8 @@ public class MenuGameplay : MonoBehaviour
         DestroyAllField();
         CreateGameField();
         updateUI();
+
+
     }
     private void OnDisable()
     {
@@ -153,6 +157,13 @@ public class MenuGameplay : MonoBehaviour
             updateMoving();
             updateScore();
             updateGoal();
+
+            //«агрузить текстуру частиц из камеры
+            if (!Particles3D.texture || Particles3D.texture.texelSize.x != Screen.width || Particles3D.texture.texelSize.y != Screen.height)
+            {
+                Particles3D.texture = GameplayParticles3D.main.texture;
+                GameplayParticles3D.main.SetCameraPos(gameFieldCTRL.cellCTRLs.GetLength(0), gameFieldCTRL.cellCTRLs.GetLength(1));
+            }
         }
     }
 

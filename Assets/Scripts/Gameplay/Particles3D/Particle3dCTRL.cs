@@ -44,9 +44,26 @@ public class Particle3dCTRL : MonoBehaviour
 
         float scaleMove = 1;
         //Перемещаем частицу на стартовую позицию
-        transform.localPosition = new Vector3((field.pivot.x - 0.5f) * scaleMove + posOnField.x, (field.pivot.x - 0.5f) * scaleMove + posOnField.y, 0);
+        transform.localPosition = new Vector3((field.pivot.x - 0.5f) * scaleMove + posOnField.x + 0.5f, (field.pivot.x - 0.5f) * scaleMove + posOnField.y + 0.5f, 0);
 
         particles = GetComponentsInChildren<ParticleSystem>();
+    }
+    public void SetSpeed(float speed) {
+        foreach (ParticleSystem particleSystem in particles) {
+            particleSystem.startSpeed = particleSystem.startSpeed * speed;
+        }
+    }
+    public void SetSize(float size) {
+        foreach (ParticleSystem particleSystem in particles)
+        {
+            particleSystem.startSize = particleSystem.startSize * size;
+        }
+    }
+    public void SetColor(Color color) {
+        foreach (ParticleSystem particleSystem in particles)
+        {
+            particleSystem.startColor = color;
+        }
     }
 
     void TestMove() {
@@ -77,7 +94,7 @@ public class Particle3dCTRL : MonoBehaviour
     /// <summary>
     /// Создать эффект взрыва бомбы и получить ссылку на нее
     /// </summary>
-    static Particle3dCTRL CreateBoomBomb(GameObject field, CellCTRL cellStartExplose)
+    public static Particle3dCTRL CreateBoomBomb(GameObject field, CellCTRL cellStartExplose, float Radius)
     {
 
         GameObject ParticleObj = Instantiate(GameplayParticles3D.main.prefabBoomBomb, GameplayParticles3D.main.transform);

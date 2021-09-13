@@ -1261,18 +1261,139 @@ public class GameFieldCTRL : MonoBehaviour
                         }
                     }
 
+
                     //Перебираем ячейки и раздаем указанный урон
-                    foreach (CellCTRL c in comb.cells) {
-                        //Если собралась горизонталь
-                        if (comb.horizontal && comb.line4) {
+                    //если линия из 5 уничтожить все
+                    if (comb.line5)
+                    {
+                        //ищем
+                        //Перебираем ячейки в поисках переклестной ячейки
+                        CellCTRL cellCross = comb.cells[0];
+                        foreach (CellCTRL cell in comb.cells)
+                        {
+                            if (cell.myInternalNum > cellCross.myInternalNum)
+                            {
+                                cellCross = cell;
+                            }
+                        }
+
+                        //Перебираем всю карту
+                        for (int x = 0; x < cellCTRLs.GetLength(0); x++)
+                        {
+                            for (int y = 0; y < cellCTRLs.GetLength(1); y++)
+                            {
+                                //Если ячейки нет выходим
+                                if (!cellCTRLs[x, y])
+                                {
+                                    continue;
+                                }
+
+                                //находим растояние от ячейки от куда должен распространяться взрыв
+                                float dist = Vector2.Distance(cellCross.pos, cellCTRLs[x, y].pos);
+
+                                cellCross.myField.cellCTRLs[x, y].BufferCombination = comb;
+                                cellCross.myField.cellCTRLs[x, y].BufferNearDamage = false;
+                                cellCTRLs[x, y].DamageInvoke(dist * 0.05f);
+                            }
+                        }
+
+                    }
+                    //Если собрался крест
+                    else if (comb.cross)
+                    {
+                        //Перебираем ячейки в поисках переклестной ячейки
+                        //Крест собирается только в месте куда переместили последнюю ячейку
+                        CellCTRL cellCross = comb.cells[0];
+                        foreach (CellCTRL cell in comb.cells)
+                        {
+                            if (cell.myInternalNum > cellCross.myInternalNum)
+                            {
+                                cellCross = cell;
+                            }
+                        }
+
+                        int radius = 3;
+                        //Ячейку выбрали.. Взрываем на 3 ячейки влево вправо вверх вниз
+                        for (int x = -radius; x <= radius; x++)
+                        {
+                            for (int y = -radius; y <= radius; y++)
+                            {
+                                int fieldPosX = cellCross.pos.x + x;
+                                int fieldPosY = cellCross.pos.y + y;
+                                //Если вышли за пределы карты или этой ячейки нету
+                                if (fieldPosX < 0 || fieldPosX >= cellCross.myField.cellCTRLs.GetLength(0) ||
+                                    fieldPosY < 0 || fieldPosY >= cellCross.myField.cellCTRLs.GetLength(1) ||
+                                    !cellCross.myField.cellCTRLs[fieldPosX, fieldPosY]
+                                    )
+                                {
+                                    continue;
+                                }
+
+                                //Считаем время задержки взрыва этой ячейки
+                                float time = Vector2.Distance(new Vector2(), new Vector2(x, y)) * 0.1f;
+                                //
+                                cellCTRLs[fieldPosX, fieldPosY].BufferCombination = comb;
+                                cellCTRLs[fieldPosX, fieldPosY].BufferNearDamage = false;
+                                cellCTRLs[fieldPosX, fieldPosY].DamageInvoke(time);
+                            }
+                        }
+
+                        //Создаем частицы взрыва
+                        Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomBomb(gameObject, cellCross, radius);
+                        particle3DCTRL.SetSpeed(radius);
+                        particle3DCTRL.SetSize(radius * 3);
+                        particle3DCTRL.SetColor(cellCross.cellInternal.GetColor(color) * 0.5f);
+
+                    }
+                    //Если собрался квадрат
+                    else if (comb.square)
+                    {
+                        //Проверяем ячейки
+                        int count = 0;
+                        foreach (CellCTRL cellCTRL in comb.cells)
+                        {
+                            if (cellCTRL)
+                            {
+                                count++;
+                                //Если было больще 4 запусков выходим
+                                if (count > 4)
+                                {
+                                    break;
+                                }
+
+                                //если там уже есть самолет, запускаем
+                                if (cellCTRL.cellInternal && cellCTRL.cellInternal.type == CellInternalObject.Type.airplane)
+                                {
+                                    cellCTRL.cellInternal.Activate(CellInternalObject.Type.airplane, null, comb);
+                                    break;
+                                }
+
+                                //Удаляем внутренний объект
+                                Destroy(cellCTRL.cellInternal.gameObject);
+
+                                //Запускаем с этой ячейки самолет
+                                //Создаем самолет
+                                CreateFly(cellCTRL, cellCTRL.cellInternal.color, comb.ID);
+                                //Запускаем замолет
+                                cellCTRL.cellInternal.Activate(CellInternalObject.Type.airplane, null, comb);
+                            }
+                        }
+                    }
+                    //Если собралась горизонталь
+                    else if (comb.horizontal && comb.line4)
+                    {
+                        foreach (CellCTRL c in comb.cells)
+                        {
                             //Вертикально запускаем взрыв
                             c.explosion = new CellCTRL.Explosion(false, false, true, true, 0.1f, comb);
                             c.BufferCombination = comb;
                             c.BufferNearDamage = false;
                             c.ExplosionBoomInvoke(c.explosion);
                         }
-                        //Если собралась вертикаль
-                        if (comb.vertical && comb.line4)
+                    }
+                    //Если собралась вертикаль
+                    else if (comb.vertical && comb.line4) {
+                        foreach (CellCTRL c in comb.cells)
                         {
                             //Вертикально запускаем взрыв
                             c.explosion = new CellCTRL.Explosion(true, true, false, false, 0.1f, comb);
@@ -1281,6 +1402,7 @@ public class GameFieldCTRL : MonoBehaviour
                             c.ExplosionBoomInvoke(c.explosion);
                         }
                     }
+
                 }
             }
 
@@ -1493,9 +1615,15 @@ public class GameFieldCTRL : MonoBehaviour
 
     }
 
+    float timeCellSelect = 0;
     //Проверка на то что нужно поменять местами объекты
     void TestStartSwap()
     {
+        //Если выделенная ячейка есть и прошло больще 5 секунд снимаем выделение
+        if (CellSelect && Time.unscaledTime - timeCellSelect > 4) {
+            CellSelect = null;
+        }
+
         //Если есть выбранная ячейка
         if (CellSelect)
         {
@@ -1585,6 +1713,8 @@ public class GameFieldCTRL : MonoBehaviour
     }
 
     void TestReturnSwap() {
+
+
 
         List<Swap> BufferSwapNew = new List<Swap>();
 
@@ -1686,6 +1816,7 @@ public class GameFieldCTRL : MonoBehaviour
     public void SetSelectCell(CellCTRL CellClick) {
         if (!CellSelect) {
             CellSelect = CellClick;
+            timeCellSelect = Time.unscaledTime;
         }
         else {
             //проверяем ячейку на соседство
