@@ -81,6 +81,11 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         public GameFieldCTRL.Combination comb;
         public float timer = 0;
 
+        public Particle3dCTRL LeftParticleEffect;
+        public Particle3dCTRL RightParticleEffect;
+        public Particle3dCTRL UpParticleEffect;
+        public Particle3dCTRL DownParticleEffect;
+
         //Создаем параметры взрыва
         public Explosion(bool leftf, bool rightf, bool upf, bool downf, float timerF, GameFieldCTRL.Combination combf)
         {
@@ -91,6 +96,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
             timer = timerF;
             comb = combf;
+
         }
 
         /// <summary>
@@ -116,6 +122,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         //Распространяемся на лево
         if (explosion.left)
         {
+            bool found = false;
             for (int minus = 1; minus < myField.cellCTRLs.GetLength(0); minus++) {
                 //Если ячейку нашли
                 if (pos.x - minus >= 0 && myField.cellCTRLs[pos.x - minus, pos.y] != null)
@@ -129,21 +136,42 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     }
 
                     //Если в ячейке есть стойкий к взрыву предмет
-                    if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x - minus, pos.y])) {
+                    if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x - minus, pos.y]))
+                    {
                         myField.cellCTRLs[pos.x - minus, pos.y].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, explosion.comb));
                     }
                     //Иначе просто взрываем с таймером
                     else
+                    {  
+
                         //Создаем взрыв и взрываем с таймером
                         myField.cellCTRLs[pos.x - minus, pos.y].ExplosionBoomInvoke(new Explosion(true, false, false, false, explosion.timer, explosion.comb));
 
+                        //Если нету частиц взрыва то создаем
+                        if (explosion.LeftParticleEffect == null)
+                        {
+                            explosion.LeftParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
+                            explosion.LeftParticleEffect.SetTransformSpeed(1 / explosion.timer);
+
+                            Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
+                        }
+                        myField.cellCTRLs[pos.x - minus, pos.y].explosion.LeftParticleEffect = explosion.LeftParticleEffect;
+                        myField.cellCTRLs[pos.x - minus, pos.y].explosion.LeftParticleEffect.SetTransformTarget(new Vector2(pos.x - minus + 0.5f, pos.y + 0.5f));
+                    }
+
+                    found = true;
                     break;
                 }
+            }
+
+            if (!found && explosion.LeftParticleEffect) {
+                explosion.LeftParticleEffect.SetTransformTarget(new Vector2(pos.x + 0.5f - 5, pos.y + 0.5f));
             }
         }
         //распространяемся на право
         if (explosion.right)
         {
+            bool found = false;
             for (int plus = 1; plus < myField.cellCTRLs.GetLength(0); plus++)
             {
                 //Если ячейку нашли
@@ -164,16 +192,35 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     }
                     //Иначе просто взрываем с таймером
                     else
+                    {
                         //Создаем взрыв и взрываем с таймером
                         myField.cellCTRLs[pos.x + plus, pos.y].ExplosionBoomInvoke(new Explosion(false, true, false, false, explosion.timer, explosion.comb));
 
+                        //Если нету частиц взрыва то создаем
+                        if (explosion.RightParticleEffect == null)
+                        {
+                            explosion.RightParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
+                            explosion.RightParticleEffect.SetTransformSpeed(1 / explosion.timer);
+                            Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
+                        }
+                        myField.cellCTRLs[pos.x + plus, pos.y].explosion.RightParticleEffect = explosion.RightParticleEffect;
+                        myField.cellCTRLs[pos.x + plus, pos.y].explosion.RightParticleEffect.SetTransformTarget(new Vector2(pos.x + plus + 0.5f, pos.y + 0.5f));
+                    }
+
+                    found = true;
                     break;
                 }
+            }
+
+            if (!found && explosion.RightParticleEffect)
+            {
+                explosion.RightParticleEffect.SetTransformTarget(new Vector2(pos.x + 0.5f + 5, pos.y + 0.5f));
             }
         }
         //Распространяемся на верх
         if (explosion.up)
         {
+            bool found = false;
             for (int plus = 1; plus < myField.cellCTRLs.GetLength(0); plus++)
             {
                 //Если ячейку нашли
@@ -194,16 +241,38 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     }
                     //Иначе просто взрываем с таймером
                     else
+                    {
+
                         //Создаем взрыв и взрываем с таймером
                         myField.cellCTRLs[pos.x, pos.y + plus].ExplosionBoomInvoke(new Explosion(false, false, true, false, explosion.timer, explosion.comb));
 
+                        //Если нету частиц взрыва то создаем
+                        if (explosion.UpParticleEffect == null)
+                        {
+                            explosion.UpParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
+                            explosion.UpParticleEffect.SetTransformSpeed(1 / explosion.timer);
+                            Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
+                        }
+                        myField.cellCTRLs[pos.x, pos.y + plus].explosion.UpParticleEffect = explosion.UpParticleEffect;
+                        myField.cellCTRLs[pos.x, pos.y + plus].explosion.UpParticleEffect.SetTransformTarget(new Vector2(pos.x + 0.5f, pos.y + plus + 0.5f));
+                    }
+
+                    found = true;
                     break;
                 }
             }
+
+            if (!found && explosion.UpParticleEffect)
+            {
+                explosion.UpParticleEffect.SetTransformTarget(new Vector2(pos.x + 0.5f, pos.y + 0.5f + 5));
+            }
+
+
         }
         //Распространяемся на вниз
         if (explosion.down)
         {
+            bool found = false;
             for (int minus = 1; minus < myField.cellCTRLs.GetLength(0); minus++)
             {
                 //Если ячейку нашли
@@ -224,11 +293,31 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     }
                     //Иначе просто взрываем с таймером
                     else
+                    {
+
                         //Создаем взрыв и взрываем с таймером
                         myField.cellCTRLs[pos.x, pos.y - minus].ExplosionBoomInvoke(new Explosion(false, false, false, true, explosion.timer, explosion.comb));
 
+                        //Если нету частиц взрыва то создаем
+                        if (explosion.DownParticleEffect == null)
+                        {
+                            explosion.DownParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
+                            explosion.DownParticleEffect.SetTransformSpeed(1 / explosion.timer);
+                            Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
+                        }
+                        myField.cellCTRLs[pos.x, pos.y - minus].explosion.DownParticleEffect = explosion.DownParticleEffect;
+                        myField.cellCTRLs[pos.x, pos.y - minus].explosion.DownParticleEffect.SetTransformTarget(new Vector2(pos.x + 0.5f, pos.y - minus + 0.5f));
+                    }
+
+
+                    found = true;
                     break;
                 }
+            }
+
+            if (!found && explosion.DownParticleEffect)
+            {
+                explosion.DownParticleEffect.SetTransformTarget(new Vector2(pos.x + 0.5f, pos.y + 0.5f - 5));
             }
         }
 

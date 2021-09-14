@@ -28,12 +28,12 @@ public class GameplayParticles3D : MonoBehaviour
     [SerializeField]
     public GameObject prefabBoomRocket;
     [SerializeField]
-    public GameObject prefabBoomCrystal;
+    public GameObject prefabBoomSuperColor;
 
     // Start is called before the first frame update
     void Start()
     {
-        iniRenderTexture();
+
     }
 
     //инициализация рендер текстуры
@@ -46,21 +46,22 @@ public class GameplayParticles3D : MonoBehaviour
             //Создаем новую текстуру для рендеинга изображений
             texture = new RenderTexture(Screen.width, Screen.height, 1);
             camera.targetTexture = texture;
+
+            MenuGameplay.main.Particles3D.texture = camera.targetTexture;
         }
         
     }
 
     public void SetCameraPos(float scaleX, float scaleY) {
-        camera.orthographicSize = scaleX;
+        camera.orthographicSize = scaleX-0.5f;
         camera.transform.localPosition = new Vector3(scaleX / 2, scaleY / 2, camera.transform.localPosition.z);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        iniRenderTexture();
     }
-
-
 
 }

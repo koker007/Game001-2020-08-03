@@ -291,6 +291,12 @@ public class FlyCTRL : MonoBehaviour
                         myField.cellCTRLs[fieldPosX, fieldPosY].ExplosionBoomInvoke(CellTarget.explosion);
                     }
                 }
+
+                //Создаем частицы взрыва
+                Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomBomb(myField.gameObject, CellTarget, radius);
+                particle3DCTRL.SetSpeed(radius);
+                particle3DCTRL.SetSize(radius * 3);
+                particle3DCTRL.SetColor(new Color(1,1,1) * 0.5f);
             }
         }
 

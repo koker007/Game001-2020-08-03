@@ -241,7 +241,9 @@ public class CellInternalObject : MonoBehaviour
         
     }
 
-    //Получить свободную ячейку снизу
+    /// <summary>
+    /// Получить свободную ячейку снизу
+    /// </summary>
     CellCTRL GetFreeCellDown() {
         CellCTRL returnCell = null;
 
@@ -659,6 +661,10 @@ public class CellInternalObject : MonoBehaviour
             !isMove //если объект не в движении
             ) return;
 
+        //Бомба должна активироваться только когда упала, с низу не должно быть свободных ячеек
+        if (activateNeed && type == Type.bomb && myCell.rock == 0 && GetFreeCellDown()) {
+            return;
+        }
 
         activateNeed = true;
         activateCount++;
@@ -853,6 +859,8 @@ public class CellInternalObject : MonoBehaviour
             }
 
             void replacementColorAndActivate() {
+
+                float speedPerCell = 0.1f;
                 //Проверяем все поле на цвета
                 for (int x = 0; x < myField.cellCTRLs.GetLength(0); x++)
                 {
@@ -910,6 +918,10 @@ public class CellInternalObject : MonoBehaviour
 
                         }
 
+                        Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomSuperColor(myField.transform, myCell);
+                        particle3DCTRL.SetTransformTarget(new Vector2(x + 0.5f, y + 0.5f));
+                        particle3DCTRL.SetTransformSpeed(1 / speedPerCell);
+
                         //Перемещаем объект на место старого
                         cellInternalObject.StartMove(myField.cellCTRLs[x, y]);
                         cellInternalObject.EndMove();
@@ -919,13 +931,14 @@ public class CellInternalObject : MonoBehaviour
                         cellInternalObject.BufferPartner = null;
                         cellInternalObject.BufferCombination = combination;
                         //cellInternalObject.Activate(cellInternalObject.type, null, combination);
-                        cellInternalObject.ActivateInvoke(dist * 0.1f);
+                        cellInternalObject.ActivateInvoke(dist * speedPerCell);
 
                     }
                 }
             }
 
             void DestroyAllColor(InternalColor internalColor) {
+                float speedPerCell = 0.1f;
                 //Проверяем все ячейки на совпадение цветов
                 for (int x = 0; x < myField.cellCTRLs.GetLength(0); x++) {
                     for (int y = 0; y < myField.cellCTRLs.GetLength(1); y++)
@@ -941,11 +954,15 @@ public class CellInternalObject : MonoBehaviour
                         {
                             myField.cellCTRLs[x, y].cellInternal.BufferPartner = partner;
                             myField.cellCTRLs[x, y].cellInternal.BufferCombination = combination;
-                            myField.cellCTRLs[x, y].DamageInvoke(dist * 0.1f);
+                            myField.cellCTRLs[x, y].DamageInvoke(dist * speedPerCell + 0.5f);
+
+                            Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomSuperColor(myField.transform, myCell);
+                            particle3DCTRL.SetTransformTarget(new Vector2(x + 0.5f, y + 0.5f));
+                            particle3DCTRL.SetTransformSpeed(1 / speedPerCell);
                         }
 
                         //Удаляем обьект партнера
-                        if(partner)
+                        if (partner)
                             Destroy(partner.gameObject);
 
                     }
@@ -956,6 +973,7 @@ public class CellInternalObject : MonoBehaviour
 
             void DestroyAll()
             {
+                float speed = 0.1f;
                 //Проверяем все ячейки на совпадение цветов
                 for (int x = 0; x < myField.cellCTRLs.GetLength(0); x++)
                 {
@@ -972,6 +990,10 @@ public class CellInternalObject : MonoBehaviour
                         myField.cellCTRLs[x, y].cellInternal.BufferPartner = partner;
                         myField.cellCTRLs[x, y].cellInternal.BufferCombination = combination;
                         myField.cellCTRLs[x, y].DamageInvoke(0.1f * distance);
+
+                        Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomSuperColor(myField.transform, myCell);
+                        particle3DCTRL.SetTransformTarget(new Vector2(x + 0.5f, y + 0.5f));
+                        particle3DCTRL.SetTransformSpeed(1 / speed);
                     }
                 }
 
@@ -1083,7 +1105,7 @@ public class CellInternalObject : MonoBehaviour
                     }
 
                     //Считаем время задержки взрыва этой ячейки
-                    float time = Vector2.Distance(new Vector2(), new Vector2(x, y)) * 0.1f;
+                    float time = Vector2.Distance(new Vector2(), new Vector2(x, y)) * 0.2f;
                     //
                     myField.cellCTRLs[fieldPosX, fieldPosY].BufferCombination = combination;
                     myField.cellCTRLs[fieldPosX, fieldPosY].BufferNearDamage = false;

@@ -22,7 +22,7 @@ public class MenuGameplay : MonoBehaviour
     [SerializeField]
     Transform GameFieldParent;
     [SerializeField]
-    RawImage Particles3D;
+    public RawImage Particles3D;
 
     GameFieldCTRL gameFieldCTRL;
 
