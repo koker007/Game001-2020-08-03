@@ -82,6 +82,7 @@ public class GameFieldCTRL : MonoBehaviour
     RectTransform rectParticleSelect;
 
     public float timeLastBoom = 0;
+    public float timeLastMove = 0;
 
     RectTransform myRect;
 
@@ -173,6 +174,11 @@ public class GameFieldCTRL : MonoBehaviour
                     movingNow = true;
                 }
             }
+        }
+
+        //Обновляем время движения
+        if (movingNow) {
+            timeLastMove = Time.unscaledTime;
         }
 
         //Если прекратили двигаться
@@ -433,6 +439,7 @@ public class GameFieldCTRL : MonoBehaviour
         TestSpawn(); //Спавним
         TestMoving(); //Проверяем наличие движения для отмены комбо
         TestFieldCombination(); //Тестим комбинации
+        TestFieldPotencial(); //ищем потенциальные ходы
 
         TestStartSwap(); //Начинаем обмен
         TestReturnSwap(); //Возвращяем обмен
@@ -564,7 +571,8 @@ public class GameFieldCTRL : MonoBehaviour
         }
     }
 
-
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///Поиск и анализ комбинаций
 
     //Список линий которые взорвались
     List<Combination> listCombinations;
@@ -1534,12 +1542,384 @@ public class GameFieldCTRL : MonoBehaviour
 
     }
 
+
+    List<PotencialComb> listPotencial = new List<PotencialComb>();
+    PotencialComb potencialBest = null;
+    public class PotencialComb {
+        public CellCTRL Moving = null; //Ячейка которую необходимо передвинуть
+        public CellCTRL Target = null; //Ячейка относитенльно которой проверяем комбинации
+
+        public List<CellCTRL> cells = new List<CellCTRL>();
+
+        public int priority = 0;
+        
+        public bool line5 = false;
+        public bool square = false;
+        public bool line4 = false;
+        public bool cross = false;
+
+        public bool foundPanel = false;
+        public bool foundMold = false;
+        public bool foundRock = false;
+
+        public void CalcPriority() {
+            //Проверяем приоритет ячеек
+            foreach (CellCTRL cell in cells) {
+                PlusPriority(cell);
+            }
+
+            if (foundPanel) {
+                priority += 90;
+            }
+            if (foundMold) {
+                priority += 80;
+            }
+            if (foundRock) {
+                priority += 100;
+            }
+
+            void PlusPriority(CellCTRL cell) {
+                priority += cell.MyPriority;
+                if (cell.panel)
+                {
+                    foundPanel = true;
+                }
+                if (cell.mold > 0)
+                {
+                    foundMold = true;
+                }
+                if (cell.rock > 0)
+                {
+                    foundRock = true;
+                }
+
+            }
+        }
+    }
+
+    [SerializeField]
+    Vector2Int testCell = new Vector2Int();
+    /// <summary>
+    /// Поиск потенциальных комбинаций
+    /// </summary>
+    /// 
+    void TestFieldPotencial() {
+
+        //Воспроизводим анимацию на ячейках с потенциалом
+        AnimationPlayPotencial();
+
+        float timeToTest = 2;
+        //Если недавно было движение то обнуляем лист
+        if (Time.unscaledTime - timeLastMove < timeToTest) {
+            listPotencial = new List<PotencialComb>();
+            potencialBest = null;
+
+            Debug.Log("Waiting Time " + Time.unscaledTime);
+
+            return;
+        }
+
+        //ВЫходим если список уже есть
+        if (listPotencial.Count > 0) {
+            return;
+        }
+
+        //Начинаем поиск потенциальных комбинаций
+        for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
+            for (int y = 0; y < cellCTRLs.GetLength(1); y++) {
+                testPotencialCell(cellCTRLs[x, y]);
+            }
+        }
+
+        //Если комбинации нашлись
+        if (listPotencial.Count > 0) {
+            //ВЫбираем лучшую
+            if (potencialBest == null) {
+                potencialBest = listPotencial[0];
+
+                foreach (PotencialComb potencial in listPotencial) {
+                    if (potencialBest.priority < potencial.priority) {
+                        potencialBest = potencial;
+                    }
+                }
+            }
+
+            Debug.Log("Found potencial: " + potencialBest.priority + " Pos: " + potencialBest.Target.pos);
+        }
+        //если комбинаций не нашлось
+        else{
+            Debug.Log("Not Found potencial comb " + Time.unscaledTime);
+        }
+
+
+        void testPotencialCell(CellCTRL cell) {
+
+            bool test = false;
+            if (cell != null &&
+                cell.pos == testCell)
+            {
+                test = true;
+            }
+
+            //Выходим если этой ячейки нет или она заморожена
+            if (cell == null ||
+                cell.cellInternal == null ||
+                cell.rock > 0) {
+                return;
+            }
+
+            PotencialComb potencialLeft = new PotencialComb();
+            PotencialComb potencialRight = new PotencialComb();
+            PotencialComb potencialUp = new PotencialComb();
+            PotencialComb potencialDown = new PotencialComb();
+
+
+
+            //Поиск ряда
+            //слева
+            if (isCellOK(new Vector2Int(cell.pos.x - 1, cell.pos.y))) {
+
+                potencialLeft.Target = cell;
+                potencialLeft.cells.Add(cellCTRLs[cell.pos.x - 1, cell.pos.y]);
+
+
+                //Запоминаем цвет
+                CellInternalObject.InternalColor color = cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.color;
+
+                //Двигаем дальше пока данный цвет не пропадет
+                for (int n = 1; n < cellCTRLs.GetLength(0); n++) {
+                    //если условия соблюдены и цвет ячейки совпадает
+                    if (isCellOK(new Vector2Int(cell.pos.x - 1 - n, cell.pos.y)) &&
+                        cellCTRLs[cell.pos.x - 1 - n, cell.pos.y].cellInternal.color == color)
+                    {
+                        //Добавляем ячейку в список
+                        potencialLeft.cells.Add(cellCTRLs[cell.pos.x - 1 - n, cell.pos.y]);
+                    }
+                    //Иначе заверша ем цикл поиска ряда
+                    else {
+                        break;
+                    }
+                }
+            }
+            //Права
+            if (isCellOK(new Vector2Int(cell.pos.x + 1, cell.pos.y))) {
+
+                potencialRight.Target = cell;
+                potencialRight.cells.Add(cellCTRLs[cell.pos.x + 1, cell.pos.y]);
+
+                //Запоминаем цвет
+                CellInternalObject.InternalColor color = cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.color;
+
+                //Двигаем дальше пока данный цвет не пропадет
+                for (int n = 1; n < cellCTRLs.GetLength(0); n++)
+                {
+                    //если условия соблюдены и цвет ячейки совпадает
+                    if (isCellOK(new Vector2Int(cell.pos.x + 1 + n, cell.pos.y)) &&
+                        cellCTRLs[cell.pos.x + 1 + n, cell.pos.y].cellInternal.color == color)
+                    {
+                        //Добавляем ячейку в список
+                        potencialRight.cells.Add(cellCTRLs[cell.pos.x + 1 + n, cell.pos.y]);
+                    }
+                    //Иначе заверша ем цикл поиска ряда
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            //Сверху
+            if (isCellOK(new Vector2Int(cell.pos.x, cell.pos.y + 1))) {
+
+                potencialUp.Target = cell;
+                potencialUp.cells.Add(cellCTRLs[cell.pos.x, cell.pos.y + 1]);
+
+                //Запоминаем цвет
+                CellInternalObject.InternalColor color = cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.color;
+
+                //Двигаем дальше пока данный цвет не пропадет
+                for (int n = 1; n < cellCTRLs.GetLength(0); n++)
+                {
+                    //если условия соблюдены и цвет ячейки совпадает
+                    if (isCellOK(new Vector2Int(cell.pos.x, cell.pos.y + 1 + n)) &&
+                        cellCTRLs[cell.pos.x, cell.pos.y + 1 + n].cellInternal.color == color)
+                    {
+                        //Добавляем ячейку в список
+                        potencialUp.cells.Add(cellCTRLs[cell.pos.x, cell.pos.y + 1 + n]);
+                    }
+                    //Иначе заверша ем цикл поиска ряда
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            //Снизу
+            if (isCellOK(new Vector2Int(cell.pos.x, cell.pos.y - 1))) {
+
+                potencialDown.Target = cell;
+                potencialDown.cells.Add(cellCTRLs[cell.pos.x, cell.pos.y - 1]);
+
+                //Запоминаем цвет
+                CellInternalObject.InternalColor color = cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.color;
+
+                //Двигаем дальше пока данный цвет не пропадет
+                for (int n = 1; n < cellCTRLs.GetLength(0); n++)
+                {
+                    //если условия соблюдены и цвет ячейки совпадает
+                    if (isCellOK(new Vector2Int(cell.pos.x, cell.pos.y - 1 - n)) &&
+                        cellCTRLs[cell.pos.x, cell.pos.y - 1 - n].cellInternal.color == color)
+                    {
+                        //Добавляем ячейку в список
+                        potencialDown.cells.Add(cellCTRLs[cell.pos.x, cell.pos.y - 1 - n]);
+                    }
+                    //Иначе заверша ем цикл поиска ряда
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+
+            //Теперь проверяем соседние ячейки
+            //Если обнаружен потенциал, добавляем в список потенциалов
+            if (isHavePotencial(potencialLeft)) {
+                potencialLeft.CalcPriority();
+                listPotencial.Add(potencialLeft);
+            }
+            if (isHavePotencial(potencialRight)) {
+                potencialRight.CalcPriority();
+                listPotencial.Add(potencialRight);
+            }
+            if (isHavePotencial(potencialUp)) {
+                potencialUp.CalcPriority();
+                listPotencial.Add(potencialUp);
+            }
+            if (isHavePotencial(potencialDown)) {
+                potencialDown.CalcPriority();
+                listPotencial.Add(potencialDown);
+            }
+
+            
+            
+            //Проверить ячейку на ее существование
+            bool isCellOK(Vector2Int cellPos) {
+                bool result = false;
+
+                //Если ячейка не вышла за пределы
+                //Она существует
+                //Есть внутренность
+                //Внутренность не равна супер цвету
+                if (cellPos.x >= 0 && cellPos.x < cellCTRLs.GetLength(0) && cellPos.y >= 0 && cellPos.y < cellCTRLs.GetLength(1) &&
+                    cellCTRLs[cellPos.x, cellPos.y] != null &&
+                    cellCTRLs[cellPos.x, cellPos.y].cellInternal != null &&
+                    cellCTRLs[cellPos.x, cellPos.y].cellInternal.type != CellInternalObject.Type.color5) {
+                    result = true;
+                }
+
+                return result;
+            }
+
+            //проверяем комбинацию на потенциал
+            bool isHavePotencial(PotencialComb potTest) {
+                bool result = false;
+
+                //Если ряд больше или равно 2
+                if (potTest.cells.Count >= 2) {
+                    //Проверяем наличие одинаковых цветов по сторонам
+
+                    //Если я чейка есть
+                    //Если это не таже самая ячейка из ряда
+                    //Если у ячейки есть внутренность
+                    //Если у внутренности совпадает цвет
+                    //Если внутренность не супер цвет
+
+                    //Слева
+                    if (potTest.Target.pos.x - 1 >= 0 &&
+                        cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y] != null &&
+                        cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y] != potTest.cells[0] &&
+                        cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal != null &&
+                        cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal.color == potTest.cells[0].cellInternal.color &&
+                        cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal.type != CellInternalObject.Type.color5) {
+
+                        potTest.Moving = cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y];
+
+                    }
+                    //Справа
+                    else if (potTest.Target.pos.x + 1 < cellCTRLs.GetLength(0) &&
+                        cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y] != null &&
+                        cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y] != potTest.cells[0] &&
+                        cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal != null &&
+                        cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal.color == potTest.cells[0].cellInternal.color &&
+                        cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal.type != CellInternalObject.Type.color5) {
+
+                        potTest.Moving = cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y];
+
+                    }
+                    //Сверху
+                    else if (potTest.Target.pos.y + 1 < cellCTRLs.GetLength(0) &&
+                        cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1] != null &&
+                        cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1] != potTest.cells[0] &&
+                        cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal != null &&
+                        cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal.color == potTest.cells[0].cellInternal.color &&
+                        cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal.type != CellInternalObject.Type.color5) {
+
+                        potTest.Moving = cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1];
+
+                    }
+                    //Снизу
+                    else if (potTest.Target.pos.y - 1 >= 0 &&
+                        cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1] != null &&
+                        cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1] != potTest.cells[0] &&
+                        cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal != null &&
+                        cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal.color == potTest.cells[0].cellInternal.color &&
+                        cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal.type != CellInternalObject.Type.color5) {
+
+                        potTest.Moving = cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1];
+
+                    }
+                }
+
+                //
+                if (potTest.Moving != null) {
+                    result = true;
+                }
+
+                return result;
+
+            }
+
+        }
+
+        //Воспроизвести анимацию потенциала если есть
+        void AnimationPlayPotencial()
+        {
+            if (potencialBest == null)
+                return;
+
+            //Если потенциал есть
+            //Перебираем ячейки и воспроизводим анимацию
+            foreach (CellCTRL potencialCell in potencialBest.cells)
+            {
+                potencialCell.cellInternal.animatorObject.PlayAnimation("ApperanceCombinationObject");
+            }
+            potencialBest.Moving.cellInternal.animatorObject.PlayAnimation("ApperanceCombinationObject");
+        }
+    }
+
     //Для групировки данных
     public struct Buffer{
         public MenuGameplay.SuperHitType superHit;
     }
     Buffer buffer;
 
+    //Конец комбинаций
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+    // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Создание перемещаемых объектов
 
     /// <summary>
     /// Создать бомбу на месте другой ячейки

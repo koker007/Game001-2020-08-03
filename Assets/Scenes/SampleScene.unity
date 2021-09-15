@@ -947,10 +947,10 @@ Transform:
   m_LocalPosition: {x: -1000, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1846711427}
   - {fileID: 199942067}
   - {fileID: 1143592177}
   - {fileID: 1915673648}
-  - {fileID: 1846711427}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -971,6 +971,7 @@ MonoBehaviour:
   prefabBoomBomb: {fileID: 7152441974353673500, guid: 839bd9e11e857664d901f579776d2e49, type: 3}
   prefabBoomRocket: {fileID: 5465227033849158860, guid: 58bed9d16785b1645b1f6c990f3e2e7b, type: 3}
   prefabBoomSuperColor: {fileID: 8755036546508243800, guid: db4153982f0acc34e89de0fc9682ccbc, type: 3}
+  prefabCellDamage: {fileID: 3426763928085079207, guid: b68b57bb18680ed448a4235885dd9906, type: 3}
 --- !u!1 &170145354
 GameObject:
   m_ObjectHideFlags: 0
@@ -7142,9 +7143,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: PrefabBoomBomb (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7152441974353673500, guid: 839bd9e11e857664d901f579776d2e49, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7977274942525559586, guid: 839bd9e11e857664d901f579776d2e49, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7977274942525559586, guid: 839bd9e11e857664d901f579776d2e49, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7892,9 +7897,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: PrefabBoomBomb
       objectReference: {fileID: 0}
+    - target: {fileID: 7152441974353673500, guid: 839bd9e11e857664d901f579776d2e49, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7977274942525559586, guid: 839bd9e11e857664d901f579776d2e49, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7977274942525559586, guid: 839bd9e11e857664d901f579776d2e49, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8879,9 +8888,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: PrefabBoomBomb (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7152441974353673500, guid: 839bd9e11e857664d901f579776d2e49, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7977274942525559586, guid: 839bd9e11e857664d901f579776d2e49, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7977274942525559586, guid: 839bd9e11e857664d901f579776d2e49, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9917,7 +9930,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 160232581}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1852767263
 GameObject:

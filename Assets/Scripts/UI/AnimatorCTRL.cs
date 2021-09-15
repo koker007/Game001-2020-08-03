@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //александр
+//Семен
 /// <summary>
 /// контролирует анимации обьектов
 /// </summary>

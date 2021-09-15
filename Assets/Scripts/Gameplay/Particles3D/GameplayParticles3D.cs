@@ -29,6 +29,8 @@ public class GameplayParticles3D : MonoBehaviour
     public GameObject prefabBoomRocket;
     [SerializeField]
     public GameObject prefabBoomSuperColor;
+    [SerializeField]
+    public GameObject prefabCellDamage;
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +41,8 @@ public class GameplayParticles3D : MonoBehaviour
     //инициализация рендер текстуры
     Vector2 sizeOld = new Vector2();
     void iniRenderTexture() {
-
+        float coof = (float)Screen.height / (float)Screen.width;
+        //Debug.Log("window size X" + Screen.width + " Y" + Screen.height + " Coof" + coof);
         if (sizeOld.x != Screen.width || sizeOld.y != Screen.height) {
             sizeOld = new Vector2(Screen.width, Screen.height);
 
@@ -53,7 +56,10 @@ public class GameplayParticles3D : MonoBehaviour
     }
 
     public void SetCameraPos(float scaleX, float scaleY) {
-        camera.orthographicSize = scaleX-0.5f;
+
+        float coof = (float)Screen.height / (float)Screen.width;
+
+        camera.orthographicSize = ((scaleX/2)+0.5f) * coof;
         camera.transform.localPosition = new Vector3(scaleX / 2, scaleY / 2, camera.transform.localPosition.z);
 
     }

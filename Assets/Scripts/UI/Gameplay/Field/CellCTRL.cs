@@ -153,7 +153,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                             explosion.LeftParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
                             explosion.LeftParticleEffect.SetTransformSpeed(1 / explosion.timer);
 
-                            Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
+                            //Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
                         }
                         myField.cellCTRLs[pos.x - minus, pos.y].explosion.LeftParticleEffect = explosion.LeftParticleEffect;
                         myField.cellCTRLs[pos.x - minus, pos.y].explosion.LeftParticleEffect.SetTransformTarget(new Vector2(pos.x - minus + 0.5f, pos.y + 0.5f));
@@ -201,7 +201,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                         {
                             explosion.RightParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
                             explosion.RightParticleEffect.SetTransformSpeed(1 / explosion.timer);
-                            Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
+                            //Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
                         }
                         myField.cellCTRLs[pos.x + plus, pos.y].explosion.RightParticleEffect = explosion.RightParticleEffect;
                         myField.cellCTRLs[pos.x + plus, pos.y].explosion.RightParticleEffect.SetTransformTarget(new Vector2(pos.x + plus + 0.5f, pos.y + 0.5f));
@@ -251,7 +251,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                         {
                             explosion.UpParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
                             explosion.UpParticleEffect.SetTransformSpeed(1 / explosion.timer);
-                            Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
+                            //Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
                         }
                         myField.cellCTRLs[pos.x, pos.y + plus].explosion.UpParticleEffect = explosion.UpParticleEffect;
                         myField.cellCTRLs[pos.x, pos.y + plus].explosion.UpParticleEffect.SetTransformTarget(new Vector2(pos.x + 0.5f, pos.y + plus + 0.5f));
@@ -303,7 +303,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                         {
                             explosion.DownParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
                             explosion.DownParticleEffect.SetTransformSpeed(1 / explosion.timer);
-                            Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
+                            //Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
                         }
                         myField.cellCTRLs[pos.x, pos.y - minus].explosion.DownParticleEffect = explosion.DownParticleEffect;
                         myField.cellCTRLs[pos.x, pos.y - minus].explosion.DownParticleEffect.SetTransformTarget(new Vector2(pos.x + 0.5f, pos.y - minus + 0.5f));

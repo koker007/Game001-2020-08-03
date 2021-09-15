@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class CellInternalObject : MonoBehaviour
 {
     [SerializeField]
-    AnimatorCTRL animatorObject;
+    public AnimatorCTRL animatorObject;
 
     //мое поле
     public GameFieldCTRL myField;
@@ -85,6 +85,7 @@ public class CellInternalObject : MonoBehaviour
     public InternalColor color;
     public Type type;
 
+
     public Color GetColor(InternalColor internalColor) {
         Color result = new Color(1,1,1);
 
@@ -125,6 +126,8 @@ public class CellInternalObject : MonoBehaviour
         Moving();
         UpdateActivate();
     }
+
+    float timeOldStopAnimations = Time.unscaledTime;
 
     public float timeCreate = 0;
     public float timeLastMoving = 0;
@@ -441,8 +444,11 @@ public class CellInternalObject : MonoBehaviour
                 Gameplay.main.ScoreUpdate(score);
                 RectTransform rectScore = PrefabScore.GetComponent<RectTransform>();
 
-                //Изменить количество очков
+                //Нарисовать частицы
+                Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateCellDamage(myField.transform, myCell);
+                particle3DCTRL.SetColor(GetColor(color));
 
+                //Изменить количество очков
                 rectDie.pivot = rectMy.pivot;
                 rectScore.pivot = rectMy.pivot;
             }
@@ -647,7 +653,6 @@ public class CellInternalObject : MonoBehaviour
 
     public bool needInstantDamage = true;
     public int BoombRadius = 1;
-
 
 
     public Type BufferActivateType;
@@ -1038,40 +1043,6 @@ public class CellInternalObject : MonoBehaviour
                 }
             }
 
-           
-
-
-            /*
-            //перебираем все ячейки на карте
-            for (int x = 0; x < myField.cellCTRLs.GetLength(0); x++)
-            {
-                for (int y = 0; y < myField.cellCTRLs.GetLength(1); y++)
-                {
-                    int absX = Mathf.Abs(x - pos.x);
-                    int absY = Mathf.Abs(y - pos.y);
-
-                    
-
-                    //Идем дальще, если
-                    if (!myField.cellCTRLs[x, y] ||
-                        activated[x,y] || // Ячейки нет
-                        (absX > 1 && //Вышли за 3 клетки по х
-                        absY > 1) //Вышли за 3 клетки по y
-                        ) {
-                        continue;
-                    }
-
-                    activated[x, y] = true;
-
-                    //Считаем время задержки взрыва этой ячейки
-                    float time = Vector2.Distance(pos, new Vector2(x, y)) * 0.1f;
-                    //
-                    myField.cellCTRLs[x, y].BufferCombination = combination;
-                    myField.cellCTRLs[x, y].BufferNearDamage = false;
-                    myField.cellCTRLs[x, y].DamageInvoke(time);
-                }
-            }
-            */
 
             Destroy(gameObject);
         }

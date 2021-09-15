@@ -102,7 +102,7 @@ public class Particle3dCTRL : MonoBehaviour
     
     void TestDestroy() {
         //Удаляем только если вышло время жизни, или если все частицы остановились
-        if (Time.unscaledTime - timeInicialize > 99999999 || isAllParticlesStoped() || isStoppedMoveDestroy()) {
+        if (Time.unscaledTime - timeInicialize > 10 || isAllParticlesStoped() || isStoppedMoveDestroy()) {
             Destroy(gameObject);
         }
         
@@ -182,6 +182,24 @@ public class Particle3dCTRL : MonoBehaviour
     public static Particle3dCTRL CreateBoomSuperColor(Transform field, CellCTRL cellStartExplose)
     {
         GameObject ParticleObj = Instantiate(GameplayParticles3D.main.prefabBoomSuperColor, GameplayParticles3D.main.transform);
+        Particle3dCTRL particle3DCTRL = ParticleObj.GetComponent<Particle3dCTRL>();
+
+        RectTransform rectField = field.GetComponent<RectTransform>();
+
+        if (particle3DCTRL == null)
+        {
+            Destroy(ParticleObj);
+            return particle3DCTRL;
+        }
+
+        //Инициализируем данными частицу
+        particle3DCTRL.Inizialize(rectField, cellStartExplose.pos);
+
+        return particle3DCTRL;
+    }
+
+    public static Particle3dCTRL CreateCellDamage(Transform field, CellCTRL cellStartExplose) {
+        GameObject ParticleObj = Instantiate(GameplayParticles3D.main.prefabCellDamage, GameplayParticles3D.main.transform);
         Particle3dCTRL particle3DCTRL = ParticleObj.GetComponent<Particle3dCTRL>();
 
         RectTransform rectField = field.GetComponent<RectTransform>();
