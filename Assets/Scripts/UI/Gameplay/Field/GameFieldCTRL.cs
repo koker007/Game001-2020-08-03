@@ -278,6 +278,7 @@ public class GameFieldCTRL : MonoBehaviour
             cellsPriority = new CellCTRL[cellCTRLs.GetLength(0) * cellCTRLs.GetLength(1)];
 
             Gameplay.main.colors = level.NumColors;
+            Gameplay.main.superColorPercent = level.SuperColorPercent;
 
             for (int x = 0; x < cellCTRLs.GetLength(0); x++)
             {
@@ -626,10 +627,12 @@ public class GameFieldCTRL : MonoBehaviour
 
         TestHitShop();
 
+        bool isFoundSuperComb = false;
         TestSuperCombination();
 
-        TestDamageAndSpawn();
-
+        if (!isFoundSuperComb) {
+            TestDamageAndSpawn();
+        }
         //TestSuperCombination();
 
         ///////////////////////////////////////////////////////////////
@@ -984,10 +987,12 @@ public class GameFieldCTRL : MonoBehaviour
                     if (swap.first.cellInternal.type == CellInternalObject.Type.color5)
                     {
                         swap.first.cellInternal.Activate(CellInternalObject.Type.color5, swap.second.cellInternal, comb);
+                        isFoundSuperComb = true;
                     }
                     else
                     {
                         swap.second.cellInternal.Activate(CellInternalObject.Type.color5, swap.first.cellInternal, comb);
+                        isFoundSuperComb = true;
                     }
 
                 }
@@ -997,6 +1002,7 @@ public class GameFieldCTRL : MonoBehaviour
                     swap.second.cellInternal.type == CellInternalObject.Type.airplane)
                 {
                     swap.first.cellInternal.Activate(CellInternalObject.Type.airplane, swap.second.cellInternal, comb);
+                    isFoundSuperComb = true;
                 }
 
 
@@ -1004,11 +1010,13 @@ public class GameFieldCTRL : MonoBehaviour
                 else if (swap.first.cellInternal.type == CellInternalObject.Type.airplane && swap.second.cellInternal.type == CellInternalObject.Type.bomb)
                 {
                     swap.first.cellInternal.Activate(CellInternalObject.Type.airplane, swap.second.cellInternal, comb);
+                    isFoundSuperComb = true;
                 }
                 //бомба + самолет
                 else if (swap.second.cellInternal.type == CellInternalObject.Type.airplane && swap.first.cellInternal.type == CellInternalObject.Type.bomb)
                 {
                     swap.second.cellInternal.Activate(CellInternalObject.Type.airplane, swap.first.cellInternal, comb);
+                    isFoundSuperComb = true;
                 }
 
 
@@ -1016,11 +1024,13 @@ public class GameFieldCTRL : MonoBehaviour
                 else if (swap.first.cellInternal.type == CellInternalObject.Type.airplane && (swap.second.cellInternal.type == CellInternalObject.Type.rocketVertical || swap.second.cellInternal.type == CellInternalObject.Type.rocketHorizontal))
                 {
                     swap.first.cellInternal.Activate(CellInternalObject.Type.airplane, swap.second.cellInternal, comb);
+                    isFoundSuperComb = true;
                 }
                 //Ракета + самолет
                 else if (swap.second.cellInternal.type == CellInternalObject.Type.airplane && (swap.first.cellInternal.type == CellInternalObject.Type.rocketVertical || swap.first.cellInternal.type == CellInternalObject.Type.rocketHorizontal))
                 {
                     swap.second.cellInternal.Activate(CellInternalObject.Type.airplane, swap.first.cellInternal, comb);
+                    isFoundSuperComb = true;
                 }
 
                 //Бомба + что-то но не цвет
@@ -1031,10 +1041,12 @@ public class GameFieldCTRL : MonoBehaviour
                     if (swap.second.cellInternal.type == CellInternalObject.Type.bomb)
                     {
                         swap.second.cellInternal.Activate(CellInternalObject.Type.bomb, swap.first.cellInternal, comb);
+                        isFoundSuperComb = true;
                     }
                     else
                     {
                         swap.second.cellInternal.Activate(CellInternalObject.Type.rocketHorizontal, swap.first.cellInternal, comb);
+                        isFoundSuperComb = true;
                     }
                 }
 
@@ -1047,18 +1059,22 @@ public class GameFieldCTRL : MonoBehaviour
                     if (swap.first.cellInternal.type == CellInternalObject.Type.rocketHorizontal)
                     {
                         swap.second.cellInternal.Activate(CellInternalObject.Type.rocketHorizontal, swap.first.cellInternal, comb);
+                        isFoundSuperComb = true;
                     }
                     else if (swap.first.cellInternal.type == CellInternalObject.Type.rocketVertical)
                     {
                         swap.second.cellInternal.Activate(CellInternalObject.Type.rocketVertical, swap.first.cellInternal, comb);
+                        isFoundSuperComb = true;
                     }
                     else if (swap.second.cellInternal.type == CellInternalObject.Type.rocketHorizontal)
                     {
                         swap.first.cellInternal.Activate(CellInternalObject.Type.rocketHorizontal, swap.second.cellInternal, comb);
+                        isFoundSuperComb = true;
                     }
                     else if (swap.second.cellInternal.type == CellInternalObject.Type.rocketVertical)
                     {
                         swap.first.cellInternal.Activate(CellInternalObject.Type.rocketVertical, swap.second.cellInternal, comb);
+                        isFoundSuperComb = true;
                     }
 
                 }
@@ -1066,7 +1082,7 @@ public class GameFieldCTRL : MonoBehaviour
 
             }
         }
-        
+
         //Раздать урон комбинациям и заспавнить объекты
         void TestDamageAndSpawn() {
             //Перебираем комбинации
@@ -1123,7 +1139,7 @@ public class GameFieldCTRL : MonoBehaviour
 
 
                 //Если цвет ультимативный
-                if (comb.cells[0].cellInternal.color == CellInternalObject.InternalColor.Violet) {
+                if (comb.cells[0].cellInternal.color == CellInternalObject.InternalColor.Ultimate) {
                     ActivateCombUltimate();
                 }
                 //Иначе обычное поведение
@@ -1416,6 +1432,7 @@ public class GameFieldCTRL : MonoBehaviour
 
         }
         
+
         //Уничтожить повторяющиеся комбинации
         void DestroyDuplicateCombinations() {
 
@@ -1558,6 +1575,7 @@ public class GameFieldCTRL : MonoBehaviour
         public bool line4 = false;
         public bool cross = false;
 
+        public bool foundNotPanel = false;
         public bool foundPanel = false;
         public bool foundMold = false;
         public bool foundRock = false;
@@ -1567,10 +1585,15 @@ public class GameFieldCTRL : MonoBehaviour
             foreach (CellCTRL cell in cells) {
                 PlusPriority(cell);
             }
+            PlusPriority(Target);
 
             if (foundPanel) {
                 priority += 90;
             }
+            else if (foundPanel && foundNotPanel) {
+                priority += 110;
+            }
+
             if (foundMold) {
                 priority += 80;
             }
@@ -1578,12 +1601,19 @@ public class GameFieldCTRL : MonoBehaviour
                 priority += 100;
             }
 
+            if (cells.Count == 4)
+                priority += 100;
+            if (cells.Count == 3)
+                priority += 90;
+
             void PlusPriority(CellCTRL cell) {
                 priority += cell.MyPriority;
                 if (cell.panel)
                 {
                     foundPanel = true;
                 }
+                else foundNotPanel = true;
+
                 if (cell.mold > 0)
                 {
                     foundMold = true;
@@ -1644,14 +1674,15 @@ public class GameFieldCTRL : MonoBehaviour
                 }
             }
 
-            Debug.Log("Found potencial: " + potencialBest.priority + " Pos: " + potencialBest.Target.pos);
+            Debug.Log("Found potencial: " + potencialBest.priority + " Pos: " + potencialBest.Target.pos + " Target:" + potencialBest.Target.pos + " Moving:" + potencialBest.Moving.pos);
         }
         //если комбинаций не нашлось
         else{
             Debug.Log("Not Found potencial comb " + Time.unscaledTime);
         }
 
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///
         void testPotencialCell(CellCTRL cell) {
 
             bool test = false;
@@ -1782,25 +1813,21 @@ public class GameFieldCTRL : MonoBehaviour
 
             //Теперь проверяем соседние ячейки
             //Если обнаружен потенциал, добавляем в список потенциалов
-            if (isHavePotencial(potencialLeft)) {
-                potencialLeft.CalcPriority();
-                listPotencial.Add(potencialLeft);
-            }
-            if (isHavePotencial(potencialRight)) {
-                potencialRight.CalcPriority();
-                listPotencial.Add(potencialRight);
-            }
-            if (isHavePotencial(potencialUp)) {
-                potencialUp.CalcPriority();
-                listPotencial.Add(potencialUp);
-            }
-            if (isHavePotencial(potencialDown)) {
-                potencialDown.CalcPriority();
-                listPotencial.Add(potencialDown);
-            }
+            isHavePotencial(potencialLeft);
+            isHavePotencial(potencialRight);
+            isHavePotencial(potencialUp);
+            isHavePotencial(potencialDown);
 
-            
-            
+
+            //Теперь проверяем на супер потенциалы
+            CombinatePotencialsLine(potencialLeft, potencialRight);
+            CombinatePotencialsLine(potencialUp, potencialDown);
+
+            CombinatePotencialsAngle(potencialLeft, potencialUp); //Лево верх
+            CombinatePotencialsAngle(potencialRight, potencialUp); //Право верх
+            CombinatePotencialsAngle(potencialRight, potencialDown); //Право низ
+            CombinatePotencialsAngle(potencialLeft, potencialDown); //Лево низ
+
             //Проверить ячейку на ее существование
             bool isCellOK(Vector2Int cellPos) {
                 bool result = false;
@@ -1823,11 +1850,11 @@ public class GameFieldCTRL : MonoBehaviour
             bool isHavePotencial(PotencialComb potTest) {
                 bool result = false;
 
-                //Если ряд больше или равно 2
-                if (potTest.cells.Count >= 2) {
+                //Если ряд больше или равно 1
+                if (potTest.cells.Count >= 1) {
                     //Проверяем наличие одинаковых цветов по сторонам
 
-                    //Если я чейка есть
+                    //Если ячейка есть
                     //Если это не таже самая ячейка из ряда
                     //Если у ячейки есть внутренность
                     //Если у внутренности совпадает цвет
@@ -1837,6 +1864,7 @@ public class GameFieldCTRL : MonoBehaviour
                     if (potTest.Target.pos.x - 1 >= 0 &&
                         cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y] != null &&
                         cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y] != potTest.cells[0] &&
+                        cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].rock == 0 &&
                         cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal != null &&
                         cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal.color == potTest.cells[0].cellInternal.color &&
                         cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal.type != CellInternalObject.Type.color5) {
@@ -1848,6 +1876,7 @@ public class GameFieldCTRL : MonoBehaviour
                     else if (potTest.Target.pos.x + 1 < cellCTRLs.GetLength(0) &&
                         cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y] != null &&
                         cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y] != potTest.cells[0] &&
+                        cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].rock == 0 &&
                         cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal != null &&
                         cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal.color == potTest.cells[0].cellInternal.color &&
                         cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal.type != CellInternalObject.Type.color5) {
@@ -1856,9 +1885,10 @@ public class GameFieldCTRL : MonoBehaviour
 
                     }
                     //Сверху
-                    else if (potTest.Target.pos.y + 1 < cellCTRLs.GetLength(0) &&
+                    else if (potTest.Target.pos.y + 1 < cellCTRLs.GetLength(1) &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1] != null &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1] != potTest.cells[0] &&
+                        cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].rock == 0 &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal != null &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal.color == potTest.cells[0].cellInternal.color &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal.type != CellInternalObject.Type.color5) {
@@ -1870,6 +1900,7 @@ public class GameFieldCTRL : MonoBehaviour
                     else if (potTest.Target.pos.y - 1 >= 0 &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1] != null &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1] != potTest.cells[0] &&
+                        cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].rock == 0 &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal != null &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal.color == potTest.cells[0].cellInternal.color &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal.type != CellInternalObject.Type.color5) {
@@ -1880,14 +1911,88 @@ public class GameFieldCTRL : MonoBehaviour
                 }
 
                 //
-                if (potTest.Moving != null) {
+                if (potTest.Moving != null && potTest.cells.Count == 2) {
+                    listPotencial.Add(potTest);
                     result = true;
+                }
+
+                if (potTest.Moving) {
+                    potTest.CalcPriority();
                 }
 
                 return result;
 
             }
 
+            void CombinatePotencialsLine(PotencialComb first, PotencialComb second) {
+                PotencialComb potencialNew = new PotencialComb();
+
+                //У комбинаций должны совпадать целевые ячейки,
+                //у комбинаций должна быть хотябы одна ячейка
+                //первые ячейки должны быть одного цвета
+                //Долна быть определена перемещаемая ячейка
+                if (first.Target == second.Target &&
+                    first.cells.Count >= 1 && second.cells.Count >= 1 &&
+                    first.cells[0] != second.Moving && second.cells[0] != first.Moving &&
+                    first.cells[0].cellInternal.color == second.cells[0].cellInternal.color &&
+                    first.Moving && second.Moving) {
+
+                    foreach (CellCTRL c in first.cells)
+                        potencialNew.cells.Add(c);
+
+                    foreach (CellCTRL c in second.cells)
+                        potencialNew.cells.Add(c);
+
+                    potencialNew.Target = first.Target;
+
+                    if (first.Moving.MyPriority > second.Moving.MyPriority)
+                        potencialNew.Moving = first.Moving;
+                    else
+                        potencialNew.Moving = second.Moving;
+
+
+                    //Теперь комбинация собрана, считаем ее приоритет
+                    potencialNew.CalcPriority();
+
+                    listPotencial.Add(potencialNew);
+                }
+
+            }
+
+            void CombinatePotencialsAngle(PotencialComb first, PotencialComb second) {
+                PotencialComb potencialNew = new PotencialComb();
+
+                //У комбинаций должны совпадать целевые ячейки,
+                //у комбинаций должна быть по 2 ячейки
+                //первые ячейки должны быть одного цвета
+                //Долна быть определена перемещаемая ячейка
+                if (first.Target == second.Target &&
+                    first.cells.Count >= 2 && second.cells.Count >= 2 &&
+                    first.cells[0] != second.Moving && second.cells[0] != first.Moving &&
+                    first.cells[0].cellInternal.color == second.cells[0].cellInternal.color &&
+                    (first.Moving || second.Moving))
+                {
+
+                    foreach (CellCTRL c in first.cells)
+                        potencialNew.cells.Add(c);
+
+                    foreach (CellCTRL c in second.cells)
+                        potencialNew.cells.Add(c);
+
+                    potencialNew.Target = first.Target;
+
+                    if (first.Moving.MyPriority > second.Moving.MyPriority)
+                        potencialNew.Moving = first.Moving;
+                    else
+                        potencialNew.Moving = second.Moving;
+
+
+                    //Теперь комбинация собрана, считаем ее приоритет
+                    potencialNew.CalcPriority();
+
+                    listPotencial.Add(potencialNew);
+                }
+            }
         }
 
         //Воспроизвести анимацию потенциала если есть
@@ -2171,6 +2276,32 @@ public class GameFieldCTRL : MonoBehaviour
     public CellCTRL[] cellsPriority;
     void TestCalcPriorityCells() {
         //Вычисление приоритетов
+        bool isComplite = false;
+        for (int testCount = 0; testCount < 50 && !isComplite; testCount++) {
+
+            //Если этот цикл пройдет без смещений то значит навершено
+            isComplite = true;
+
+            //Перебираем все ячейки и перемещаем поплавком на одну позицию
+            for (int num = 1; num < cellsPriority.Length; num++)
+            {
+                //если ячейки нет, то пропускаем
+                if (cellsPriority[num] == null) continue;
+
+                //Меняем местами с предыдущим если, предыдущей ячейки нет или ее приориет ниже
+                if (cellsPriority[num - 1] == null || cellsPriority[num - 1].MyPriority < cellsPriority[num].MyPriority)
+                {
+                    //CellCTRL Now = cellsPriority[num];
+                    CellCTRL Previously = cellsPriority[num - 1];
+
+                    cellsPriority[num - 1] = cellsPriority[num];
+                    cellsPriority[num] = Previously;
+
+                    //Произошло смещение, рано завершать перебор
+                    isComplite = false;
+                }
+            }
+        }
 
         //Перебираем все ячейки и перемещаем поплавком на одну позицию
         for (int num = 1; num < cellsPriority.Length; num++) {

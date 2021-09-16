@@ -36,6 +36,9 @@ public class CellInternalObject : MonoBehaviour
     [SerializeField]
     Color violet = Color.white;
 
+    [SerializeField]
+    Color Ultimative = Color.white;
+
 
     [SerializeField]
     Texture2D TextureRed;
@@ -48,7 +51,9 @@ public class CellInternalObject : MonoBehaviour
     [SerializeField]
     Texture2D TextureViolet;
     [SerializeField]
-    Texture2D TextureSuperColor;
+    Texture2D TextureColor5;
+    [SerializeField]
+    Texture2D TextureUltimative;
     [SerializeField]
     Texture2D TextureBomb;
     [SerializeField]
@@ -127,7 +132,6 @@ public class CellInternalObject : MonoBehaviour
         UpdateActivate();
     }
 
-    float timeOldStopAnimations = Time.unscaledTime;
 
     public float timeCreate = 0;
     public float timeLastMoving = 0;
@@ -459,11 +463,13 @@ public class CellInternalObject : MonoBehaviour
     public void randColor() {
         color = GetRandomColor();
         if (type == Type.color) {
-            if (color == InternalColor.Red) {
+            if (color == InternalColor.Red)
+            {
                 Image.texture = TextureRed;
                 Image.color = red;
             }
-            else if (color == InternalColor.Green) {
+            else if (color == InternalColor.Green)
+            {
                 Image.texture = TextureGreen;
                 Image.color = green;
             }
@@ -481,6 +487,10 @@ public class CellInternalObject : MonoBehaviour
             {
                 Image.texture = TextureViolet;
                 Image.color = violet;
+            }
+            else if (color == InternalColor.Ultimate) {
+                Image.texture = TextureUltimative;
+                Image.color = Ultimative;
             }
         }
         else {
@@ -575,7 +585,7 @@ public class CellInternalObject : MonoBehaviour
         }
         else if (type == Type.color5)
         {
-            Image.texture = TextureSuperColor;
+            Image.texture = TextureColor5;
         }
 
         color = internalColor;
@@ -587,31 +597,66 @@ public class CellInternalObject : MonoBehaviour
 
     InternalColor GetRandomColor()
     {
-        InternalColor colorReturn = InternalColor.Red;
+        InternalColor colorResult = InternalColor.Red;
 
-        int random = Random.Range(0, Gameplay.main.colors);
+        int random = Random.Range(0, Gameplay.main.colors + 1);
+        //Супер цвет
         if (random == 0)
         {
-            colorReturn = InternalColor.Red;
-        }
-        else if (random == 1)
-        {
-            colorReturn = InternalColor.Green;
-        }
-        else if (random == 2)
-        {
-            colorReturn = InternalColor.Blue;
-        }
-        else if (random == 3)
-        {
-            colorReturn = InternalColor.Yellow;
-        }
-        else if (random == 4)
-        {
-            colorReturn = InternalColor.Violet;
+            //Если выпал шанс заспавнить ультимативный цвет то спавним
+            if (Random.Range(0, 100) < Gameplay.main.superColorPercent)
+                colorResult = InternalColor.Ultimate;
+
+            //Иначе обычный
+            else
+                colorResult = GetColorBasic();
+
         }
 
-        return colorReturn;
+        //Иначе обычный цвет
+        else {
+            colorResult = GetColorBasic();
+        }
+
+
+        
+
+        return colorResult;
+
+
+        //Получить любой базовый цвет
+        InternalColor GetColorBasic() {
+            InternalColor colorReturn = InternalColor.Red;
+
+            int random = Random.Range(0, Gameplay.main.colors);
+            //Супе
+            if (random == 0)
+            {
+                colorReturn = InternalColor.Red;
+            }
+            else if (random == 1)
+            {
+                colorReturn = InternalColor.Green;
+            }
+            else if (random == 2)
+            {
+                colorReturn = InternalColor.Blue;
+            }
+            else if (random == 3)
+            {
+                colorReturn = InternalColor.Yellow;
+            }
+            else if (random == 4)
+            {
+                colorReturn = InternalColor.Violet;
+            }
+
+
+
+
+            return colorReturn;
+
+        }
     }
 
     public Color ConvertEnumColor()
@@ -1238,7 +1283,7 @@ public class CellInternalObject : MonoBehaviour
 
         type = Type.color5;
         color = internalColor;
-        Image.texture = TextureSuperColor;
+        Image.texture = TextureColor5;
         myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
     }
 

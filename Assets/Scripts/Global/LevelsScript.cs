@@ -110,6 +110,10 @@ public class LevelsScript : MonoBehaviour
         /// </summary>
         public int NumColors;
         /// <summary>
+        /// Процент выпадения супер цвета от 0 до 100
+        /// </summary>
+        public int SuperColorPercent;
+        /// <summary>
         /// массив ячеек на поле
         /// </summary>
         public CellInfo[,] cells;
@@ -286,12 +290,13 @@ public class LevelsScript : MonoBehaviour
     //создание уровня (метод существует для зрительного упрощения схемы уровня в Start)
     public Level CreateLevel
         (
-        int NumLevel, 
-        int Width, 
-        int Height, 
-        int NeedScore, 
+        int NumLevel,
+        int Width,
+        int Height,
+        int NeedScore,
         int move,
-        int numColors
+        int numColors,
+        int superColorPercent
         )
     {
         level = new Level {
@@ -300,7 +305,8 @@ public class LevelsScript : MonoBehaviour
             Height = Width,
             NeedScore = NeedScore,
             Move = move,
-            NumColors = numColors
+            NumColors = numColors,
+            SuperColorPercent = superColorPercent
         };
 
         level.cells = new CellInfo[Height, Width];

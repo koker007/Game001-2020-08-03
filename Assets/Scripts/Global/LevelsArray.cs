@@ -13,7 +13,7 @@ public class LevelsArray : LevelsScript
         main = this;
 
         //уровень 1
-        Levels[1] = CreateLevel(1, 6, 5, 2000000, 50, 4);
+        Levels[1] = CreateLevel(1, 6, 5, 2000000, 50, 4, 0);
 
         Levels[1].PassedWitMold = true;
         Levels[1].PassedWitPanel = true;
@@ -81,7 +81,7 @@ public class LevelsArray : LevelsScript
         Levels[1].SetCells();
 
         //уровень 2
-        Levels[2] = CreateLevel(2, 8, 8, 2000000, 1000, 4);
+        Levels[2] = CreateLevel(2, 8, 8, 2000000, 1000, 4, 0);
 
         Levels[2].PassedWitScore = true;
 
@@ -130,7 +130,7 @@ public class LevelsArray : LevelsScript
         Levels[2].SetCells();
 
         //уровень 3
-        Levels[3] = CreateLevel(3, 10, 10, 10000, 99, 5);
+        Levels[3] = CreateLevel(3, 10, 10, 10000, 99, 5, 30);
 
         Levels[3].PassedWitScore = true;
 

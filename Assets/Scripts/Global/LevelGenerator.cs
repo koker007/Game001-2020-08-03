@@ -48,8 +48,9 @@ public class LevelGenerator : MonoBehaviour
             numColors = 4;
         }
 
+
         LevelsScript.Level level = LevelsScript.main.Levels[NumLevel];
-        level = LevelsScript.main.CreateLevel(NumLevel, Height, Width, NeedScore, (int)move, numColors);
+        level = LevelsScript.main.CreateLevel(NumLevel, Height, Width, NeedScore, (int)move, numColors, (int)(NoizeResult * 100));
 
         PassRandom();
 

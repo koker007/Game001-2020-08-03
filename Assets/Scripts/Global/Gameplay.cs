@@ -41,6 +41,7 @@ public class Gameplay : MonoBehaviour
     /// </summary>
     public int movingMoldCount = 0;
     public int colors = 3;
+    public int superColorPercent = 0;
     public int combo = 0;
     public int boxCount;
     public int moldCount;

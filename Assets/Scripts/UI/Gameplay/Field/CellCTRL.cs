@@ -498,6 +498,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     public void CalcMyPriority() {
 
         const int PriorityBox = 10; //Приоритет ящика
+        const int PriorityRock = 10;
         const int PriorityMold = 5; //приоритет плесени
         const int PriorityPanel = 5; //Приоритет отсутствия панели
 
@@ -514,6 +515,10 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             if (BlockingMove > 0)
             {
                 result += (5 - BlockingMove) * PriorityBox; //Чем меньше жизней, тем желательнее ее сломать
+            }
+            //Камня
+            if (rock > 0) {
+                result += (5 - rock) * PriorityRock; //Чем меньше жизней, тем желательнее ее сломать
             }
             //Плесени
             if (mold > 0)
