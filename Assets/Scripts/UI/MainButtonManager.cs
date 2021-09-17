@@ -12,7 +12,7 @@ public class MainButtonManager : MonoBehaviour
     /// </summary>
     public void PressButtonSound()
     {
-        SoundManager.main.PlaySound(SoundManager.main.PressButton);
+        SoundCTRL.main.PlaySound(SoundCTRL.main.clipPressButton);
     }
 
 }

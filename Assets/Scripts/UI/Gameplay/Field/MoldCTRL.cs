@@ -105,6 +105,9 @@ public class MoldCTRL : MonoBehaviour
             GameObject moldObj = Instantiate(myPrefab, myCell.myField.parentOfMold);
             cellTarget.moldCTRL = moldObj.GetComponent<MoldCTRL>();
             cellTarget.moldCTRL.inicialize(cellTarget);
+
+            //Звук спавна плесени
+            SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipAddMold, 0.5f, Random.Range(0.9f, 1.1f));
         }
         
         //Если дошли до конца значит выполнили

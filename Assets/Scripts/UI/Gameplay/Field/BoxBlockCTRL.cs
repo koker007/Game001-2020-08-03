@@ -58,6 +58,12 @@ public class BoxBlockCTRL : MonoBehaviour
     //Проверка состояния обьекта
     void testLive() {
         if (healthOld != myCell.BlockingMove) {
+            //Если жизней стало меньше
+            if (healthOld > myCell.BlockingMove) {
+                //Воспроизводим звук поломки
+                SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipDamageAcne);
+            }
+
 
             //Поменять изображение
             testImage();
@@ -86,7 +92,7 @@ public class BoxBlockCTRL : MonoBehaviour
 
                 image.texture = textureNow;
             }
-            
+
 
             void testDestroy() {
                 if (myCell.BlockingMove <= 0) {

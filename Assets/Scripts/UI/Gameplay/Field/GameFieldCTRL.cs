@@ -186,6 +186,9 @@ public class GameFieldCTRL : MonoBehaviour
             ComboCount = 1;
             Gameplay.main.CheckEndGame();
         }
+        else if (!isMoving && movingNow) {
+            SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipMoveCrystal, 0.75f, Random.Range(0.9f, 1.1f));            
+        }
 
         isMoving = movingNow;
     }
@@ -1194,6 +1197,7 @@ public class GameFieldCTRL : MonoBehaviour
 
                             //Наносим урон по клетке
                             c.Damage(partner, comb);
+
                         }
                     }
 

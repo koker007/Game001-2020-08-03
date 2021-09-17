@@ -18,7 +18,6 @@ public class CellInternalObject : MonoBehaviour
     public CellCTRL myCell;
     public int MyCombID = 0;
 
-
     RectTransform rectMy;
     RectTransform rectCell;
 
@@ -135,6 +134,8 @@ public class CellInternalObject : MonoBehaviour
 
     public float timeCreate = 0;
     public float timeLastMoving = 0;
+
+    static public float timeLastPlayDestroy = 0; // ак давно был воиспроизведен звук уничтожени€
 
     public float MovingSpeed = 0;
     void Moving() {
@@ -428,12 +429,12 @@ public class CellInternalObject : MonoBehaviour
     public void DestroyObj() {
         int score = 100 + 10 * (myField.ComboCount-1);
 
-
         SpawnEffects();
 
         if(gameObject)
             Destroy(gameObject);
 
+        SoundCTRL.main.PlaySoundDestroyInvoke();
         
 
         void SpawnEffects() {
@@ -862,6 +863,8 @@ public class CellInternalObject : MonoBehaviour
                 DestroyAllColor(color);
             }
 
+            SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipExploseColor5);
+
             void DestroyAllRocket(InternalColor internalColor)
             {
 
@@ -1048,6 +1051,7 @@ public class CellInternalObject : MonoBehaviour
                 }
 
             }
+
 
         }
 
@@ -1319,4 +1323,5 @@ public class CellInternalObject : MonoBehaviour
         Image.texture = TextureRocketHorizontal;
         myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
     }
+
 }

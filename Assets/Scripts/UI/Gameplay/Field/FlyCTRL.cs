@@ -11,6 +11,8 @@ public class FlyCTRL : MonoBehaviour
 {
 
     static public List<FlyCTRL> flyCTRLs = new List<FlyCTRL>();
+    static float timeLastPlayStart = 0;
+    static float timeLastPlayEnd = 0;
 
     [SerializeField]
     AnimatorCTRL animator;
@@ -372,6 +374,26 @@ public class FlyCTRL : MonoBehaviour
         }
     }
 
+    float zaderzka = 0.1f;
+    //Ќемедленно воспроизвести звук
+    void PlaySoundStart() {
+        float timePlay = Time.unscaledTime - timeLastPlayStart;
+        SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipFlyStart, 1, 0.9f + (timePlay/zaderzka) * 0.05f);
+        Debug.Log("Fly time play " + timePlay);
+    }
+    public void PlaySoundStartInvoke() {
+
+        //если врем€ последнего запуска меньше текущего
+        if (timeLastPlayStart < Time.unscaledTime)
+            timeLastPlayStart = Time.unscaledTime;
+
+        //прибавл€ем немного задержки
+        timeLastPlayStart += 0.1f;
+
+        //—читаем врем€ с момента последнего запуска
+        Invoke("PlaySoundStart", timeLastPlayStart - Time.unscaledTime);
+    }
+
     //ƒеструктор
     ~FlyCTRL() {
 
@@ -388,6 +410,8 @@ public class FlyCTRL : MonoBehaviour
                     flyCTRLsNew.Add(flyCTRL);
                 }
             }
+
+            flyCTRLs = flyCTRLsNew;
         }
     }
 }

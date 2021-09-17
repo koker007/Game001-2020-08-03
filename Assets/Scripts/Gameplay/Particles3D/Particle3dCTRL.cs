@@ -18,6 +18,11 @@ public class Particle3dCTRL : MonoBehaviour
 
     RectTransform Myfield;
 
+    [Header("Audio")]
+    [SerializeField]
+    AudioClip audioClip;
+    [SerializeField]
+    Vector2 PitchDiapazone = new Vector2(1,1);
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +55,10 @@ public class Particle3dCTRL : MonoBehaviour
             (field.pivot.y - 0.5f) * scaleMove + posOnField.y + 0.5f, 0);
 
         particles = GetComponentsInChildren<ParticleSystem>();
+
+        if (audioClip) {
+            SoundCTRL.main.SmartPlaySound(audioClip, 1, Random.Range(PitchDiapazone.x, PitchDiapazone.y));
+        }
     }
     public void SetSpeed(float speed) {
         foreach (ParticleSystem particleSystem in particles) {

@@ -61,6 +61,14 @@ public class Settings : MonoBehaviour
             audioMixer.SetFloat("Master", volumeAll);
         }
     }
+    public float VolumeAllFrom0To1 {
+
+        get
+        {
+            float volume = (80 - volumeAll) / 80;
+            return volume;
+        }
+    }
     /// <summary>
     ///Громкость звуков от 0 до 1
     /// </summary>
@@ -82,6 +90,13 @@ public class Settings : MonoBehaviour
             }
             PlayerPrefs.SetFloat("volumeSound", volumeSound);
             audioMixer.SetFloat("Sound", volumeSound);
+        }
+    }
+    public float VolumeSoundFrom0To1 {
+        get
+        {
+            float volume = (80 - volumeSound) / 80;
+            return volume;
         }
     }
     /// <summary>
