@@ -444,6 +444,7 @@ public class GameFieldCTRL : MonoBehaviour
         TestMoving(); //Проверяем наличие движения для отмены комбо
         TestFieldCombination(); //Тестим комбинации
         TestFieldPotencial(); //ищем потенциальные ходы
+        //TestRandomNotPotencial(); //Рандомизируем если ходов не обнаружено
 
         TestStartSwap(); //Начинаем обмен
         TestReturnSwap(); //Возвращяем обмен
@@ -1632,7 +1633,7 @@ public class GameFieldCTRL : MonoBehaviour
     }
 
     [SerializeField]
-    Vector2Int testCell = new Vector2Int();
+    public Vector2Int testCell = new Vector2Int();
     /// <summary>
     /// Поиск потенциальных комбинаций
     /// </summary>
@@ -2012,6 +2013,63 @@ public class GameFieldCTRL : MonoBehaviour
                 potencialCell.cellInternal.animatorObject.PlayAnimation("ApperanceCombinationObject");
             }
             potencialBest.Moving.cellInternal.animatorObject.PlayAnimation("ApperanceCombinationObject");
+        }
+
+    }
+
+    //Список ячеек ожидающих перемешивание
+    List<CellInternalObject> ListWaitingInternals = new List<CellInternalObject>();
+    void TestRandomNotPotencial() {
+        //выходим если нет ячеек для перемешивания
+        if (ListWaitingInternals.Count == 0)
+            return;
+
+        //Двигаем к центру и если кто-то не достиг центра, выходим
+        if (!isDoneTransformToCenter()) {
+            return;
+        }
+
+        //Рандомизируем новые позиции
+        RandomizadeNewPos();
+
+
+        bool isDoneTransformToCenter() {
+
+            Vector2 pivotNeed = new Vector2(cellCTRLs.GetLength(0)/2, cellCTRLs.GetLength(1)/2);
+
+            foreach (CellInternalObject cellInternal in ListWaitingInternals) {
+
+                cellInternal.rectMy.pivot += (pivotNeed - cellInternal.rectMy.pivot) * Time.deltaTime;
+
+            }
+            
+
+            //проверяем все внутренние на близость к центру
+            foreach (CellInternalObject cellInternal in ListWaitingInternals) {
+                if (Vector2.Distance(pivotNeed, myRect.pivot) > 0.01f) {
+                    return false;
+                }
+            }
+
+            //Если все объекты достаточно близко, прошли проверку
+            return true;
+
+        }
+        
+        //Перемешиваем
+        void RandomizadeNewPos() {
+            //Запоминаем ячейки этих внутренностей
+            List<CellCTRL> cellsList = new List<CellCTRL>();
+            foreach (CellInternalObject cellInternal in ListWaitingInternals) {
+                cellsList.Add(cellInternal.myCell);
+            }
+
+            //Запомнили ячейки
+
+            //Теперь открепляем связь внутренности с ячейкой
+            foreach (CellCTRL cell in cellsList) {
+                cell.cellInternal = null;
+            }
         }
     }
 

@@ -65,7 +65,7 @@ public class Settings : MonoBehaviour
 
         get
         {
-            float volume = (80 - volumeAll) / 80;
+            float volume = (80 + volumeAll) / 80;
             return volume;
         }
     }
@@ -95,7 +95,7 @@ public class Settings : MonoBehaviour
     public float VolumeSoundFrom0To1 {
         get
         {
-            float volume = (80 - volumeSound) / 80;
+            float volume = (80 + volumeSound) / 80;
             return volume;
         }
     }

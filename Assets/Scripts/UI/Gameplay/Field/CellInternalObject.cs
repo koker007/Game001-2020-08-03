@@ -18,7 +18,7 @@ public class CellInternalObject : MonoBehaviour
     public CellCTRL myCell;
     public int MyCombID = 0;
 
-    RectTransform rectMy;
+    public RectTransform rectMy;
     RectTransform rectCell;
 
     [SerializeField]
@@ -712,8 +712,17 @@ public class CellInternalObject : MonoBehaviour
             !isMove //если объект не в движении
             ) return;
 
+        bool bomb = false;
+        if (type == Type.bomb && activateNeed) {
+            bomb = true;
+        }
+
         //Бомба должна активироваться только когда упала, с низу не должно быть свободных ячеек
-        if (activateNeed && type == Type.bomb && myCell.rock == 0 && GetFreeCellDown()) {
+        if (activateNeed && type == Type.bomb && myCell.rock == 0 &&
+            myCell.pos.y > 0 && 
+            myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1] != null &&
+            myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1].cellInternal == null &&
+            myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1].BlockingMove == 0) {
             return;
         }
 
@@ -1027,12 +1036,13 @@ public class CellInternalObject : MonoBehaviour
             void DestroyAll()
             {
                 float speed = 0.1f;
+
                 //Проверяем все ячейки на совпадение цветов
                 for (int x = 0; x < myField.cellCTRLs.GetLength(0); x++)
                 {
                     for (int y = 0; y < myField.cellCTRLs.GetLength(1); y++)
                     {
-                        if (!myField.cellCTRLs[x, y] || !myField.cellCTRLs[x, y].cellInternal)
+                        if (!myField.cellCTRLs[x, y])
                         {
                             continue;
                         }
@@ -1040,8 +1050,9 @@ public class CellInternalObject : MonoBehaviour
                         //Узнаем растояние от ячейки инициатора
                         float distance = Vector2.Distance(new Vector2(x,y), myCell.pos);
 
-                        myField.cellCTRLs[x, y].cellInternal.BufferPartner = partner;
-                        myField.cellCTRLs[x, y].cellInternal.BufferCombination = combination;
+                        //myField.cellCTRLs[x, y].cellInternal.BufferPartner = partner;
+                        myField.cellCTRLs[x, y].BufferCombination = combination;
+                        myField.cellCTRLs[x, y].BufferNearDamage = false;
                         myField.cellCTRLs[x, y].DamageInvoke(0.1f * distance);
 
                         Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomSuperColor(myField.transform, myCell);
@@ -1049,6 +1060,10 @@ public class CellInternalObject : MonoBehaviour
                         particle3DCTRL.SetTransformSpeed(1 / speed);
                     }
                 }
+
+                //Удаляем обьект партнера
+                if (partner)
+                    Destroy(partner.gameObject);
 
             }
 
@@ -1069,6 +1084,7 @@ public class CellInternalObject : MonoBehaviour
 
             bool[,] activated = new bool[myField.cellCTRLs.GetLength(0), myField.cellCTRLs.GetLength(1)];
 
+            //Моментальный взрыв
             //перебираем 9 ячеек
             for (int x = -1; x <= 1; x++) {
                 if (myCell.pos.x + x < 0 || myCell.pos.x > myField.cellCTRLs.GetLength(0) - 1)
@@ -1084,16 +1100,169 @@ public class CellInternalObject : MonoBehaviour
                         continue;
                     }
 
-                    //ячейка есть, создаем взрыв
-                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(true, true, true, true, 0.05f, BufferCombination);
-                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].BufferCombination = combination;
-                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].BufferNearDamage = false;
-                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].ExplosionBoomInvoke(myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion);
+
                 }
             }
 
+            List<CellCTRL> expCells = new List<CellCTRL>();
+
+            //Создаем взрывные волны
+            //Горизонтальные
+            for (int y = -1; y <= 1; y++) {
+                //Если вышли за пределы массива //По у
+                if (myCell.pos.y + y < 0 || myCell.pos.y > myField.cellCTRLs.GetLength(1) - 1)
+                    continue;
+
+                //влево
+                for (int x = -1; x > myField.cellCTRLs.GetLength(0) * -1; x--) {
+                    //Если вышли за пределы массива //По x
+                    if (myCell.pos.x + x < 0 || myCell.pos.x > myField.cellCTRLs.GetLength(0) - 1)
+                        continue;
+
+                    //Если ячейки нет
+                    if (myCell.myField.cellCTRLs[myCell.pos.x + x,myCell.pos.y + y] == null) {
+                        continue;
+                    }
+
+                    //создаем взрыв если на этой ячейке нет взрыва
+                    if (myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion == null) {
+                        myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, BufferCombination);
+                    }
+
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion.left = true;
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].BufferCombination = combination;
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].BufferNearDamage = false;
+
+                    //Добавляем в список
+                    AddExplosionToList(myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y]);
+
+                    break;
+                }
+
+                //вправо
+                for (int x = 1; x < myField.cellCTRLs.GetLength(0); x++) {
+                    //Если вышли за пределы массива //По x
+                    if (myCell.pos.x + x < 0 || myCell.pos.x > myField.cellCTRLs.GetLength(0) - 1)
+                        continue;
+
+                    //Если ячейки нет
+                    if (myCell.myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y] == null)
+                    {
+                        continue;
+                    }
+
+                    //создаем взрыв если на этой ячейке нет взрыва
+                    if (myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion == null)
+                    {
+                        myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, BufferCombination);
+                    }
+
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion.right = true;
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].BufferCombination = combination;
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].BufferNearDamage = false;
+
+                    //Добавляем в список
+                    AddExplosionToList(myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y]);
+
+                    break;
+                }
+            }
+
+            //вертикальные
+            for (int x = -1; x <= 1; x++)
+            {
+                //Если вышли за пределы массива //По x
+                if (myCell.pos.x + x < 0 || myCell.pos.x > myField.cellCTRLs.GetLength(0) - 1)
+                    continue;
+
+                //вниз
+                for (int y = -1; y > myField.cellCTRLs.GetLength(1) * -1; y--)
+                {
+                    //Если вышли за пределы массива //По y
+                    if (myCell.pos.y + y < 0 || myCell.pos.y > myField.cellCTRLs.GetLength(1) - 1)
+                        continue;
+
+                    //Если ячейки нет
+                    if (myCell.myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y] == null)
+                    {
+                        continue;
+                    }
+
+                    //создаем взрыв если на этой ячейке нет взрыва
+                    if (myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion == null)
+                    {
+                        myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, BufferCombination);
+                    }
+
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion.down = true;
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].BufferCombination = combination;
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].BufferNearDamage = false;
+
+                    //Добавляем в список
+                    AddExplosionToList(myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y]);
+
+                    break;
+                }
+
+                //вверх
+                for (int y = 1; y < myField.cellCTRLs.GetLength(1); y++)
+                {
+                    //Если вышли за пределы массива //По y
+                    if (myCell.pos.y + y < 0 || myCell.pos.y > myField.cellCTRLs.GetLength(1) - 1)
+                        continue;
+
+                    //Если ячейки нет
+                    if (myCell.myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y] == null)
+                    {
+                        continue;
+                    }
+
+                    //создаем взрыв если на этой ячейке нет взрыва
+                    if (myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion == null)
+                    {
+                        myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, BufferCombination);
+                    }
+
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion.up = true;
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].BufferCombination = combination;
+                    myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].BufferNearDamage = false;
+
+                    //Добавляем в список
+                    AddExplosionToList(myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y]);
+
+                    break;
+                }
+            }
+
+            //Взрываем
+            foreach (CellCTRL expCell in expCells) {
+                expCell.ExplosionBoomInvoke(expCell.explosion);
+            }
+
+            float radius = 1;
+            //Создаем частицы взрыва
+            Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomBomb(myField.gameObject, myCell, radius);
+            particle3DCTRL.SetSpeed(radius);
+            particle3DCTRL.SetSize(radius * 3);
+            particle3DCTRL.SetColor(GetColor(color) * 0.5f);
+
 
             Destroy(gameObject);
+
+            void AddExplosionToList(CellCTRL explosionNew) {
+
+                //если нашли этот взрыв в списке, то выходим
+                foreach (CellCTRL explosion in expCells) {
+                    if (explosion == explosionNew) {
+                        return;
+                    }
+                }
+
+                //Добавляем взрыв
+                expCells.Add(explosionNew);
+
+
+            }
         }
 
         void ActivateBomb(int radius) {

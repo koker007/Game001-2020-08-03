@@ -164,8 +164,18 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 }
             }
 
-            if (!found && explosion.LeftParticleEffect) {
-                explosion.LeftParticleEffect.SetTransformTarget(new Vector2(pos.x + 0.5f - 5, pos.y + 0.5f));
+
+            if (!found)
+            {
+                //≈сли нету частиц взрыва то создаем
+                if (explosion.LeftParticleEffect == null)
+                {
+                    explosion.LeftParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
+                    explosion.LeftParticleEffect.SetTransformSpeed(1 / explosion.timer);
+                    //Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
+                }
+
+                explosion.LeftParticleEffect.SetTransformTarget(new Vector2(pos.x + 0.5f - 15, pos.y + 0.5f));
             }
         }
         //распростран€емс€ на право
@@ -212,10 +222,20 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 }
             }
 
-            if (!found && explosion.RightParticleEffect)
+
+            if (!found)
             {
-                explosion.RightParticleEffect.SetTransformTarget(new Vector2(pos.x + 0.5f + 5, pos.y + 0.5f));
+                //≈сли нету частиц взрыва то создаем
+                if (explosion.RightParticleEffect == null)
+                {
+                    explosion.RightParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
+                    explosion.RightParticleEffect.SetTransformSpeed(1 / explosion.timer);
+                    //Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
+                }
+
+                explosion.RightParticleEffect.SetTransformTarget(new Vector2(pos.x + 0.5f + 15, pos.y + 0.5f));
             }
+
         }
         //–аспростран€емс€ на верх
         if (explosion.up)
@@ -262,9 +282,17 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 }
             }
 
-            if (!found && explosion.UpParticleEffect)
+            if (!found)
             {
-                explosion.UpParticleEffect.SetTransformTarget(new Vector2(pos.x + 0.5f, pos.y + 0.5f + 5));
+                //≈сли нету частиц взрыва то создаем
+                if (explosion.UpParticleEffect == null)
+                {
+                    explosion.UpParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
+                    explosion.UpParticleEffect.SetTransformSpeed(1 / explosion.timer);
+                    //Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
+                }
+
+                explosion.UpParticleEffect.SetTransformTarget(new Vector2(pos.x + 0.5f, pos.y + 0.5f + 15));
             }
 
 
@@ -315,9 +343,17 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 }
             }
 
-            if (!found && explosion.DownParticleEffect)
+            if (!found)
             {
-                explosion.DownParticleEffect.SetTransformTarget(new Vector2(pos.x + 0.5f, pos.y + 0.5f - 5));
+                //≈сли нету частиц взрыва то создаем
+                if (explosion.DownParticleEffect == null)
+                {
+                    explosion.DownParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
+                    explosion.DownParticleEffect.SetTransformSpeed(1 / explosion.timer);
+                    //Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
+                }
+
+                explosion.DownParticleEffect.SetTransformTarget(new Vector2(pos.x + 0.5f, pos.y + 0.5f - 15));
             }
         }
 
@@ -341,11 +377,13 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     public GameFieldCTRL.Combination BufferCombination;
     public bool BufferNearDamage = true;
 
+
     /// <summary>
     /// получить очки и избавитьс€ от внутренности
     /// </summary>
     public void Damage()
     {
+
         Damage(null, BufferCombination, BufferNearDamage);
         BufferCombination = null;
         BufferNearDamage = true;
@@ -356,6 +394,11 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     }
     public void Damage(CellInternalObject partner, GameFieldCTRL.Combination combination, bool nearDamage)
     {
+        bool test = false;
+        if (myField.testCell.x == pos.x && myField.testCell.y == pos.y) {
+            test = true;
+        }
+
 
         if (Time.unscaledTime - myField.timeLastBoom > 0.2f)
         {
@@ -453,6 +496,12 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     }
 
     public void DamageNear() {
+
+        bool test = false;
+        if (myField.testCell.x == pos.x && myField.testCell.y == pos.y) {
+            test = true;
+        }
+
         //Ќанести урон €щику
         if (BlockingMove > 0)
         {
