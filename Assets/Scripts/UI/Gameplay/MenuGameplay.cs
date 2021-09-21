@@ -40,7 +40,22 @@ public class MenuGameplay : MonoBehaviour
     [SerializeField]
     GameObject[] Goal = new GameObject[3];
     Text[] GoalText = new Text[3];
+    Image[] GoalImage = new Image[3];
 
+
+    [Header("PassedImages")]
+    [SerializeField]
+    Sprite[] PassedCrystalImage = new Sprite[5];
+    [SerializeField]
+    Sprite PassedBoxImage;
+    [SerializeField]
+    Sprite PassedPanelImage;
+    [SerializeField]
+    Sprite PassedMoldImage;
+    [SerializeField]
+    Sprite PassedRockImage;
+
+    [HideInInspector]
     public static GameObject GameField;
 
     private LevelsScript.Level level;
@@ -52,6 +67,7 @@ public class MenuGameplay : MonoBehaviour
         for (int i = 0; i < Goal.Length; i++)
         {
             GoalText[i] = Goal[i].GetComponentInChildren<Text>();
+            GoalImage[i] = Goal[i].GetComponentInChildren<Image>();
         }
     }
 
@@ -172,31 +188,37 @@ public class MenuGameplay : MonoBehaviour
         int i = 0;
         if (level.PassedWithScore)
         {
+            GoalImage[i].sprite = PassedPanelImage;
             GoalText[i].text = "S " + level.NeedScore.ToString();
             i++;
         }
         if (level.PassedWithCrystal)
         {
+            GoalImage[i].sprite = PassedCrystalImage[(int)level.NeedColor];
             GoalText[i].text = "C " + (level.NeedCrystal - gameFieldCTRL.CountDestroyCrystals[(int)level.NeedColor]).ToString();
             i++;
         }
         if (level.PassedWithBox)
         {
+            GoalImage[i].sprite = PassedBoxImage;
             GoalText[i].text = "B " + gameFieldCTRL.CountBoxBlocker.ToString();
             i++;
         }
         if (level.PassedWithMold)
         {
+            GoalImage[i].sprite = PassedMoldImage;
             GoalText[i].text = "M " + gameFieldCTRL.CountMold.ToString();
             i++;
         }
         if (level.PassedWithPanel)
         {
+            GoalImage[i].sprite = PassedPanelImage;
             GoalText[i].text = "P " + (gameFieldCTRL.CountInteractiveCells - gameFieldCTRL.CountPanelSpread).ToString();
             i++;
         }
         if (level.PassedWithRock)
         {
+            GoalImage[i].sprite = PassedRockImage;
             GoalText[i].text = "R " + gameFieldCTRL.CountRockBlocker.ToString();
             i++;
         }
