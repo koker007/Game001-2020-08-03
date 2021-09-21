@@ -452,7 +452,7 @@ public class GameFieldCTRL : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //StartInicialize();
+        StartInicialize();
     }
 
     // Update is called once per frame
@@ -476,7 +476,10 @@ public class GameFieldCTRL : MonoBehaviour
     //Стартовая инициализация игрового поля
     void StartInicialize() {
         //Добавляем в поле все ячейки
-        RandomInicialize();
+
+        timeLastMove = Time.unscaledTime;
+
+        //RandomInicialize();
 
         void RandomInicialize() {
 
@@ -1845,8 +1848,8 @@ public class GameFieldCTRL : MonoBehaviour
 
 
             //Теперь проверяем на супер потенциалы
-            CombinatePotencialsLine(potencialLeft, potencialRight);
-            CombinatePotencialsLine(potencialUp, potencialDown);
+            CombinatePotencialHorizontal(potencialLeft, potencialRight);
+            CombinatePotencialVertical(potencialUp, potencialDown);
 
             CombinatePotencialsAngle(potencialLeft, potencialUp); //Лево верх
             CombinatePotencialsAngle(potencialRight, potencialUp); //Право верх
@@ -1949,7 +1952,7 @@ public class GameFieldCTRL : MonoBehaviour
 
             }
 
-            void CombinatePotencialsLine(PotencialComb first, PotencialComb second) {
+            void CombinatePotencialHorizontal(PotencialComb first, PotencialComb second) {
                 PotencialComb potencialNew = new PotencialComb();
 
                 //У комбинаций должны совпадать целевые ячейки,
@@ -1958,9 +1961,47 @@ public class GameFieldCTRL : MonoBehaviour
                 //Долна быть определена перемещаемая ячейка
                 if (first.Target == second.Target &&
                     first.cells.Count >= 1 && second.cells.Count >= 1 &&
-                    first.cells[0] != second.Moving && second.cells[0] != first.Moving &&
                     first.cells[0].cellInternal.color == second.cells[0].cellInternal.color &&
                     first.Moving && second.Moving) {
+
+                    CellCTRL moving = null;
+
+                    CellCTRL up = null;
+                    CellCTRL down = null;
+                    //проверка сверху
+                    if (first.Target.pos.y + 1 < cellCTRLs.GetLength(1) &&
+                        cellCTRLs[first.Target.pos.x, first.Target.pos.y + 1] != null &&
+                        cellCTRLs[first.Target.pos.x, first.Target.pos.y + 1] != first.cells[0] &&
+                        cellCTRLs[first.Target.pos.x, first.Target.pos.y + 1].rock == 0 &&
+                        cellCTRLs[first.Target.pos.x, first.Target.pos.y + 1].cellInternal != null &&
+                        cellCTRLs[first.Target.pos.x, first.Target.pos.y + 1].cellInternal.color == first.cells[0].cellInternal.color &&
+                        cellCTRLs[first.Target.pos.x, first.Target.pos.y + 1].cellInternal.type != CellInternalObject.Type.color5) {
+
+                        up = cellCTRLs[first.Target.pos.x, first.Target.pos.y + 1];
+                    }
+                    if (first.Target.pos.y - 1 >= 0 &&
+                        cellCTRLs[first.Target.pos.x, first.Target.pos.y - 1] != null &&
+                        cellCTRLs[first.Target.pos.x, first.Target.pos.y - 1] != first.cells[0] &&
+                        cellCTRLs[first.Target.pos.x, first.Target.pos.y - 1].rock == 0 &&
+                        cellCTRLs[first.Target.pos.x, first.Target.pos.y - 1].cellInternal != null &&
+                        cellCTRLs[first.Target.pos.x, first.Target.pos.y - 1].cellInternal.color == first.cells[0].cellInternal.color &&
+                        cellCTRLs[first.Target.pos.x, first.Target.pos.y - 1].cellInternal.type != CellInternalObject.Type.color5) {
+                        down = cellCTRLs[first.Target.pos.x, first.Target.pos.y - 1];
+                    }
+
+                    if (down != null && up != null)
+                    {
+                        if (up.MyPriority < down.MyPriority)
+                            moving = down;
+                        else moving = up;
+                    }
+                    else if (up != null) moving = up;
+                    else if (down != null) moving = down;
+
+                    //Если нет перемещаемой ячейки выходим
+                    if (moving == null) return;
+
+
 
                     foreach (CellCTRL c in first.cells)
                         potencialNew.cells.Add(c);
@@ -1974,6 +2015,79 @@ public class GameFieldCTRL : MonoBehaviour
                         potencialNew.Moving = first.Moving;
                     else
                         potencialNew.Moving = second.Moving;
+
+                    potencialNew.Moving = moving;
+
+                    //Теперь комбинация собрана, считаем ее приоритет
+                    potencialNew.CalcPriority();
+
+                    listPotencial.Add(potencialNew);
+                }
+
+            }
+
+            void CombinatePotencialVertical(PotencialComb first, PotencialComb second)
+            {
+                PotencialComb potencialNew = new PotencialComb();
+
+                //У комбинаций должны совпадать целевые ячейки,
+                //у комбинаций должна быть хотябы одна ячейка
+                //первые ячейки должны быть одного цвета
+                //Долна быть определена перемещаемая ячейка
+                if (first.Target == second.Target &&
+                    first.cells.Count >= 1 && second.cells.Count >= 1 &&
+                    first.cells[0].cellInternal.color == second.cells[0].cellInternal.color &&
+                    first.Moving && second.Moving)
+                {
+
+                    CellCTRL moving = null;
+
+                    CellCTRL right = null;
+                    CellCTRL left = null;
+                    //проверка сверху
+                    if (first.Target.pos.x + 1 < cellCTRLs.GetLength(0) &&
+                        cellCTRLs[first.Target.pos.x + 1, first.Target.pos.y] != null &&
+                        cellCTRLs[first.Target.pos.x + 1, first.Target.pos.y] != first.cells[0] &&
+                        cellCTRLs[first.Target.pos.x + 1, first.Target.pos.y].rock == 0 &&
+                        cellCTRLs[first.Target.pos.x + 1, first.Target.pos.y].cellInternal != null &&
+                        cellCTRLs[first.Target.pos.x + 1, first.Target.pos.y].cellInternal.color == first.cells[0].cellInternal.color &&
+                        cellCTRLs[first.Target.pos.x + 1, first.Target.pos.y].cellInternal.type != CellInternalObject.Type.color5)
+                    {
+
+                        right = cellCTRLs[first.Target.pos.x + 1, first.Target.pos.y];
+                    }
+                    if (first.Target.pos.x - 1 >= 0 &&
+                        cellCTRLs[first.Target.pos.x - 1, first.Target.pos.y] != null &&
+                        cellCTRLs[first.Target.pos.x - 1, first.Target.pos.y] != first.cells[0] &&
+                        cellCTRLs[first.Target.pos.x - 1, first.Target.pos.y].rock == 0 &&
+                        cellCTRLs[first.Target.pos.x - 1, first.Target.pos.y].cellInternal != null &&
+                        cellCTRLs[first.Target.pos.x - 1, first.Target.pos.y].cellInternal.color == first.cells[0].cellInternal.color &&
+                        cellCTRLs[first.Target.pos.x - 1, first.Target.pos.y].cellInternal.type != CellInternalObject.Type.color5)
+                    {
+                        left = cellCTRLs[first.Target.pos.x - 1, first.Target.pos.y];
+                    }
+
+                    if (left != null && right != null)
+                    {
+                        if (right.MyPriority < left.MyPriority)
+                            moving = left;
+                        else moving = right;
+                    }
+                    else if (right != null) moving = right;
+                    else if (left != null) moving = left;
+
+                    //Если нет перемещаемой ячейки выходим
+                    if (moving == null) return;
+
+                    foreach (CellCTRL c in first.cells)
+                        potencialNew.cells.Add(c);
+
+                    foreach (CellCTRL c in second.cells)
+                        potencialNew.cells.Add(c);
+
+                    potencialNew.Target = first.Target;
+
+                    potencialNew.Moving = moving;
 
 
                     //Теперь комбинация собрана, считаем ее приоритет
@@ -1997,6 +2111,7 @@ public class GameFieldCTRL : MonoBehaviour
                     first.cells[0].cellInternal.color == second.cells[0].cellInternal.color &&
                     (first.Moving || second.Moving))
                 {
+
 
                     foreach (CellCTRL c in first.cells)
                         potencialNew.cells.Add(c);
@@ -2060,6 +2175,8 @@ public class GameFieldCTRL : MonoBehaviour
 
     //Список ячеек ожидающих перемешивание
     List<CellInternalObject> ListWaitingInternals = new List<CellInternalObject>();
+
+    //Перемешиваем ячейки которые ожидают перемешивания
     void TestRandomNotPotencial() {
         //выходим если нет ячеек для перемешивания
         if (ListWaitingInternals.Count == 0)

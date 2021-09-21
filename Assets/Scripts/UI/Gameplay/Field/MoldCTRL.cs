@@ -75,6 +75,11 @@ public class MoldCTRL : MonoBehaviour
         Destroy(gameObject);
     }
 
+    ~MoldCTRL() {
+        Destroy();
+    }
+
+
     //Спавним плесень в ближайщих точках
     public bool TestSpawn() {
 

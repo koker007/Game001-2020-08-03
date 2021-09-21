@@ -429,12 +429,14 @@ public class CellInternalObject : MonoBehaviour
     public void DestroyObj() {
         int score = 100 + 10 * (myField.ComboCount-1);
 
+        AddCountColor();
         SpawnEffects();
 
-        if(gameObject)
+        if (gameObject)
             Destroy(gameObject);
 
         SoundCTRL.main.PlaySoundDestroyInvoke();
+        
         
 
         void SpawnEffects() {
@@ -457,6 +459,10 @@ public class CellInternalObject : MonoBehaviour
                 rectDie.pivot = rectMy.pivot;
                 rectScore.pivot = rectMy.pivot;
             }
+        }
+
+        void AddCountColor() {
+            
         }
 
     }
@@ -790,6 +796,7 @@ public class CellInternalObject : MonoBehaviour
 
         activateNum--;
         if (activateNum <= 0) {
+            
             DestroyObj();
         }
 

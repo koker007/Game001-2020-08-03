@@ -28,6 +28,13 @@ public class Gameplay : MonoBehaviour
     [Header("Level parameters")]
     public int score = 0;
     public int scoreMax = 0;
+
+    /// <summary>
+    /// Цель окончания игры
+    /// </summary>
+    public int[] colorsTarget = new int[10];
+
+
     /// <summary>
     /// Оставшиеся количество ходов
     /// </summary>
@@ -71,6 +78,18 @@ public class Gameplay : MonoBehaviour
         movingMoldCount = 0;
         movingCan = LevelsScript.main.ReturnLevel().Move;
         CountStars(ref stars);
+
+        colorsTarget[0] = 0;
+        colorsTarget[1] = 0;
+        colorsTarget[2] = 0;
+        colorsTarget[3] = 0;
+        colorsTarget[4] = 0;
+        colorsTarget[5] = 0;
+        colorsTarget[6] = 0;
+        colorsTarget[7] = 0;
+        colorsTarget[8] = 0;
+        colorsTarget[9] = 0;
+
     }
     //вычитает ход и делает проверку на 0 ходов
     public void MinusMoving(GameFieldCTRL.Combination combination)
