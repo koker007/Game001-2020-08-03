@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657892, g: 0.4964128, b: 0.5748173, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10297,6 +10297,7 @@ GameObject:
   - component: {fileID: 1319929789}
   - component: {fileID: 1319929790}
   - component: {fileID: 1319929788}
+  - component: {fileID: 1319929791}
   m_Layer: 0
   m_Name: _Gameplay / Profile
   m_TagString: Untagged
@@ -10328,9 +10329,6 @@ MonoBehaviour:
   colors: 4
   superColorPercent: 0
   combo: 0
-  boxCount: 0
-  moldCount: 0
-  panelCount: 0
   threeStartFactor: 2
   twoStartFactor: 1.5
   buttonDestroyInternal: 10
@@ -10389,6 +10387,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ecf5bd8ff68bee747b5485a1efdde608, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1319929791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319929785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48de76f66f7cdd0479227396eda54054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1331405710
@@ -11575,6 +11585,7 @@ MonoBehaviour:
   GameFieldPrefab: {fileID: 7182278835875313947, guid: 80f4821f131eaa845bbaf3dd8f45e070, type: 3}
   GameFieldParent: {fileID: 171384276}
   Particles3D: {fileID: 985059387}
+  gameFieldCTRL: {fileID: 0}
   Level: {fileID: 1375218793}
   Score: {fileID: 1159563553}
   Move: {fileID: 51972848}

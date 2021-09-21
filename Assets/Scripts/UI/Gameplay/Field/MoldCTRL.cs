@@ -70,7 +70,6 @@ public class MoldCTRL : MonoBehaviour
 
     void Destroy()
     {
-        Gameplay.main.MoldUpdate();
         myCell.myField.ReCalcMoldList();
         myCell.moldCTRL = null;
         Destroy(gameObject);

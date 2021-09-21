@@ -15,75 +15,64 @@ public class LevelsArray : LevelsScript
         //уровень 1
         Levels[1] = CreateLevel(1, 6, 5, 2000000, 50, 4, 0);
 
-        Levels[1].PassedWitMold = true;
-        Levels[1].PassedWitPanel = true;
-
+        Levels[1].PassedWithCrystal = true;
+        Levels[1].NeedColor = (CellInternalObject.InternalColor)0;
+        Levels[1].NeedCrystal = 20;
+        Debug.Log((int)Levels[1].NeedColor);
         Levels[1].SetMass(
         new int[,] //exist
             {
-                { 0,0,1,0,0 },
-                { 0,0,1,0,0 },
                 { 1,1,1,1,1 },
                 { 1,1,1,1,1 },
                 { 1,1,1,1,1 },
-                { 1,1,1,1,0 }
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 }
             },
             "exist"
             );
         Levels[1].SetMass(
             new int[,] //color
             {
-                { 4,3,0,3,0 },
-                { 4,1,1,3,0 },
-                { 0,1,3,1,3 },
-                { 0,4,0,1,0 },
-                { 1,1,2,0,0 },
-                { 0,1,2,3,0 }
+                { 3,0,3,0,1 },
+                { 0,3,1,1,0 },
+                { 0,3,3,1,0 },
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 }
             },
             "color"
             );
         Levels[1].SetMass(
             new int[,] //type
             {
-                { 0,0,1,0,0 },
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 },
                 { 0,0,0,0,0 },
-                { 0,0,5,0,0 },
-                { 0,0,4,0,0 },
                 { 0,0,0,0,0 },
                 { 0,0,0,0,0 }
             },
             "type"
             );
         Levels[1].SetMass(
-            new int[,] //mold
-            {
-                { 1,0,1,0,1 },
-                { 1,0,1,0,1 },
-                { 0,1,1,1,0 },
-                { 1,1,1,1,1 },
-                { 0,1,1,1,0 },
-                { 1,0,1,0,1 }
-            },
-            "mold"
-            );
-        Levels[1].SetMass(
            new int[,]
            {
-                { 0,1,0,1,0 },
-                { 0,0,0,0,0 },
-                { 0,0,0,0,0 },
+                { 0,0,1,0,0 },
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 },
                 { 0,0,0,0,0 },
                 { 0,0,0,0,0 },
                 { 0,0,0,0,0 }
            },
-           "panel"
+           "rock"
            );
         Levels[1].SetCells();
 
         //уровень 2
         Levels[2] = CreateLevel(2, 8, 8, 2000000, 1000, 4, 0);
 
-        Levels[2].PassedWitScore = true;
+        Levels[2].PassedWithScore = true;
 
         Levels[2].SetMass(
         new int[,] //exist
@@ -116,14 +105,14 @@ public class LevelsArray : LevelsScript
         Levels[2].SetMass(
             new int[,] //type
             {
-                { 0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0 },
-                { 0,0,0,1,1,0,0,0 },
-                { 0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0 }
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 }
             },
             "type"
             );
@@ -132,7 +121,7 @@ public class LevelsArray : LevelsScript
         //уровень 3
         Levels[3] = CreateLevel(3, 10, 10, 10000, 99, 5, 30);
 
-        Levels[3].PassedWitScore = true;
+        Levels[3].PassedWithScore = true;
 
         Levels[3].SetMass(
         new int[,] //exist
@@ -169,16 +158,16 @@ public class LevelsArray : LevelsScript
         Levels[3].SetMass(
             new int[,] //type
             {
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,4,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,4,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,4,0,0,0,0,0,0 },
-                { 0,4,0,0,1,1,0,0,4,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0,0,0,0 }
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1,1,1 }
             },
             "type"
             );
@@ -194,7 +183,7 @@ public class LevelsArray : LevelsScript
                 { 0,0,0,0,0,0,0,0,0,0 },
                 { 5,5,5,5,5,5,5,5,5,5 },
                 { 5,5,5,5,5,5,5,5,5,5 },
-                { 5,5,5,5,5,5,5,5,5,5 }
+                { 0,0,5,5,5,5,5,5,5,5 }
              },
              "box"
              );
@@ -233,7 +222,7 @@ public class LevelsArray : LevelsScript
         Levels[3].SetCells();
         Levels[3].SetMass(
     new int[,] //rock
-{
+    {
                 { 1,0,1,1,1,1,1,1,0,1 },
                 { 0,0,0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0,0,0 },
@@ -244,9 +233,75 @@ public class LevelsArray : LevelsScript
                 { 0,0,0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0,0,0 }
-},
+    },
     "rock"
-);
+    );
         Levels[3].SetCells();
     }
 }
+
+/*
+
+//уровень 1
+        Levels[1] = CreateLevel(1, 6, 5, 2000000, 50, 4, 0);
+
+        Levels[1].PassedWithCrystal = true;
+        Levels[1].NeedColor = (CellInternalObject.InternalColor)0;
+        Levels[1].NeedCrystal = 20;
+        Debug.Log((int)Levels[1].NeedColor);
+        Levels[1].SetMass(
+        new int[,] //exist
+            {
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 }
+            },
+            "exist"
+            );
+        Levels[1].SetMass(
+            new int[,] //color
+            {
+                { 3,0,3,0,1 },
+                { 0,3,1,1,0 },
+                { 0,3,3,1,0 },
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 }
+            },
+            "color"
+            );
+        Levels[1].SetMass(
+            new int[,] //type
+            {
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 },
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 }
+            },
+            "type"
+            );
+        Levels[1].SetMass(
+           new int[,]
+           {
+                { 0,0,1,0,0 },
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 },
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 }
+           },
+           "rock"
+           );
+        Levels[1].SetCells();
+
+
+
+
+
+
+ */

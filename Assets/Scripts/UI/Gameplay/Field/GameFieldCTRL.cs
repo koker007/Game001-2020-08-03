@@ -16,6 +16,11 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     public int CountBoxBlocker = 0;
     /// <summary>
+    /// Текущее количество камней блокирующее движение на карте
+    /// </summary>
+    [SerializeField]
+    public int CountRockBlocker = 0;
+    /// <summary>
     /// Текущее количество плесени на карте
     /// </summary>
     [SerializeField]
@@ -25,6 +30,13 @@ public class GameFieldCTRL : MonoBehaviour
     /// </summary>
     [SerializeField]
     public int CountPanelSpread = 0;
+    /// <summary>
+    /// Количество игровых клеток в которых могут быть обьекты
+    /// </summary>
+    [SerializeField]
+    public int CountInteractiveCells = 0;
+    [SerializeField]
+    public int[] CountDestroyCrystals;
 
     [Header("Prefabs")]
     [SerializeField]
@@ -275,6 +287,9 @@ public class GameFieldCTRL : MonoBehaviour
 
         //заполняем все поля ячейками по шаблону уровня
         void AddAllCellLevel() {
+
+            CountDestroyCrystals = new int[level.NumColors];
+
             //Создаем пространство игрового поля
             cellCTRLs = new CellCTRL[level.Width, level.Height];
             rockCTRLs = new RockCTRL[level.Width, level.Height];
@@ -294,6 +309,9 @@ public class GameFieldCTRL : MonoBehaviour
                     if (cellInfo == null)
                     {
                         continue;
+                    }
+                    else {
+                        CountInteractiveCells++;
                     }
 
                     //Если ячейки нет, создаем

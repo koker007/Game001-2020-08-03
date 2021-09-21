@@ -75,13 +75,13 @@ public class CellInternalObject : MonoBehaviour
         Ultimate
     }
     public enum Type {
+        none,
         color,
         color5,
         rocketHorizontal,
         rocketVertical,
         bomb,
-        airplane,
-        none
+        airplane
     }
 
 

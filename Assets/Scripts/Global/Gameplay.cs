@@ -43,9 +43,6 @@ public class Gameplay : MonoBehaviour
     public int colors = 3;
     public int superColorPercent = 0;
     public int combo = 0;
-    public int boxCount;
-    public int moldCount;
-    public int panelCount;
 
     public float threeStartFactor = 2f;
     public float twoStartFactor = 1.5f;
@@ -70,10 +67,8 @@ public class Gameplay : MonoBehaviour
     {
         //Если уровень выбран
         score = 0;
-        boxCount = LevelsScript.main.ReturnLevel().NeedBox;
         movingCount = 0;
         movingMoldCount = 0;
-        moldCount = LevelsScript.main.ReturnLevel().NeedMold;
         movingCan = LevelsScript.main.ReturnLevel().Move;
         CountStars(ref stars);
     }
@@ -95,51 +90,36 @@ public class Gameplay : MonoBehaviour
         MenuGameplay.main.updateScore();
     }
 
-    public void MoldUpdate()
-    {
-        moldCount--;
-    }
-
-    public void BoxUpdate()
-    {
-        boxCount--;
-    }
-
-    public void PanelUpdate()
-    {
-        panelCount--;
-    }
-
     public void CheckEndGame()
     {
         //Если есть ходы, идет игра, и игра не закончена
-        if (movingCan <= 0 && isGameplay && GameplayEnd == false)
+        if (isGameplay && GameplayEnd == false)
         {
             //Если
             LevelsScript.Level level = LevelsScript.main.ReturnLevel();
-            if (level.PassedWitScore && score >= level.NeedScore || !level.PassedWitScore)
+            if (score >= level.NeedScore || !level.PassedWithScore)
             {
-                if (level.PassedWitMold && moldCount >= level.NeedMold || !level.PassedWitMold)
+                if (MenuGameplay.main.gameFieldCTRL.CountMold <= 0 || !level.PassedWithMold)
                 {
-                    if (level.PassedWithBox && boxCount >= level.NeedBox || !level.PassedWithBox)
+                    if (MenuGameplay.main.gameFieldCTRL.CountBoxBlocker <= 0 || !level.PassedWithBox)
                     {
-                        if (level.PassedWitPanel && panelCount >= level.NeedPanel || !level.PassedWitScore)
+                        if (MenuGameplay.main.gameFieldCTRL.CountRockBlocker <= 0 || !level.PassedWithRock)
                         {
-                            PlayerProfile.main.LevelPassed(levelSelect);
-                            GlobalMessage.Results();
-                            LevelsScript.main.ReturnLevel().MaxScore = score;
-                            GameplayEnd = true;
-                            return;
+                            if (MenuGameplay.main.gameFieldCTRL.CountInteractiveCells <= MenuGameplay.main.gameFieldCTRL.CountPanelSpread || !level.PassedWithPanel)
+                            {
+                                if (level.NeedCrystal <= MenuGameplay.main.gameFieldCTRL.CountDestroyCrystals[(int)level.NeedColor] || !level.PassedWithCrystal)
+                                {
+                                    PlayerProfile.main.LevelPassed(levelSelect);
+                                    GlobalMessage.Results();
+                                    LevelsScript.main.ReturnLevel().MaxScore = score;
+                                    GameplayEnd = true;
+                                    return;
+                                }
+                            }
                         }
                     }
                 }
             }
-
-            PlayerProfile.main.LevelPassed(levelSelect);
-            GlobalMessage.Results();
-            GlobalMessage.Lose();
-            LevelsScript.main.ReturnLevel().MaxScore = score;
-            GameplayEnd = true;
         }
 
     }

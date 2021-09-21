@@ -24,7 +24,7 @@ public class MenuGameplay : MonoBehaviour
     [SerializeField]
     public RawImage Particles3D;
 
-    GameFieldCTRL gameFieldCTRL;
+    public GameFieldCTRL gameFieldCTRL;
 
     [Header("Score")]
     [SerializeField]
@@ -170,14 +170,14 @@ public class MenuGameplay : MonoBehaviour
     public void updateGoal()
     {
         int i = 0;
-        if (level.PassedWitScore)
+        if (level.PassedWithScore)
         {
             GoalText[i].text = "S " + level.NeedScore.ToString();
             i++;
         }
         if (level.PassedWithCrystal)
         {
-            GoalText[i].text = "C " + level.NeedCrystal.ToString();
+            GoalText[i].text = "C " + (level.NeedCrystal - gameFieldCTRL.CountDestroyCrystals[(int)level.NeedColor]).ToString();
             i++;
         }
         if (level.PassedWithBox)
@@ -185,14 +185,19 @@ public class MenuGameplay : MonoBehaviour
             GoalText[i].text = "B " + gameFieldCTRL.CountBoxBlocker.ToString();
             i++;
         }
-        if (level.PassedWitMold)
+        if (level.PassedWithMold)
         {
             GoalText[i].text = "M " + gameFieldCTRL.CountMold.ToString();
             i++;
         }
-        if (level.PassedWitPanel)
+        if (level.PassedWithPanel)
         {
-            GoalText[i].text = "P " + gameFieldCTRL.CountPanelSpread.ToString();
+            GoalText[i].text = "P " + (gameFieldCTRL.CountInteractiveCells - gameFieldCTRL.CountPanelSpread).ToString();
+            i++;
+        }
+        if (level.PassedWithRock)
+        {
+            GoalText[i].text = "R " + gameFieldCTRL.CountRockBlocker.ToString();
             i++;
         }
 

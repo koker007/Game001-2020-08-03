@@ -112,26 +112,21 @@ public class LevelsScript : MonoBehaviour
         /// <summary>
         /// Процент выпадения супер цвета от 0 до 100
         /// </summary>
-        public int SuperColorPercent;
+        public int SuperColorPercent = 0;
         /// <summary>
         /// массив ячеек на поле
         /// </summary>
         public CellInfo[,] cells;
 
-        public bool PassedWitScore = false;
+        public bool PassedWithScore = false;
         public bool PassedWithCrystal = false;
         public bool PassedWithBox = false;
-        public bool PassedWitMold = false;
-        public bool PassedWitPanel = false;
-        public bool PassedWitRock = false;
+        public bool PassedWithMold = false;
+        public bool PassedWithPanel = false;
+        public bool PassedWithRock = false;
 
-        public int NeedBox;
-        public int NeedMold;
-        public int NeedPanel;
         public int NeedCrystal;
-        public int NeedRock;
         public CellInternalObject.InternalColor NeedColor;
-
 
         int[,] exist;
         int[,] box;
@@ -214,7 +209,7 @@ public class LevelsScript : MonoBehaviour
             }
             if (type == null)
             {
-                massNull(ref type, 0);
+                massNull(ref type, 1);
             }
             if (box == null)
             {

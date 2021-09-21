@@ -70,27 +70,27 @@ public class LevelGenerator : MonoBehaviour
             {
                 k++;
                 int rand = (int)NoizeResult * k % 5;
-                if (rand == 0 && i == 0)
+                if (rand == 0 && !level.PassedWithBox)
                 {
-                    level.PassedWitScore = true;
+                    level.PassedWithRock = true;
                 }
-                else if (rand == 1 && !level.PassedWitScore)
+                else if (rand == 1 && !level.PassedWithScore)
                 {
                     level.PassedWithCrystal = true;
                     level.NeedCrystal = (int)NoizeResult % 15 + 15;
                     level.NeedColor = (CellInternalObject.InternalColor)(int)(NoizeResult % 5);
                 }
-                else if (rand == 2 && !level.PassedWitScore)
+                else if (rand == 2 && !level.PassedWithScore && !level.PassedWithRock)
                 {
                     level.PassedWithBox = true;
                 }
-                else if (rand == 3 && !level.PassedWitScore && !level.PassedWitPanel)
+                else if (rand == 3 && !level.PassedWithScore && !level.PassedWithPanel)
                 {
-                    level.PassedWitMold = true;
+                    level.PassedWithMold = true;
                 }
-                else if (rand == 4 && !level.PassedWitScore && !level.PassedWitMold)
+                else if (rand == 4 && !level.PassedWithScore && !level.PassedWithMold)
                 {
-                    level.PassedWitPanel = true;
+                    level.PassedWithPanel = true;
                 }
             }
         }
@@ -129,7 +129,7 @@ public class LevelGenerator : MonoBehaviour
                     for (int x = 0; x < Width; x++)
                     {
                         IColors[y, x] = (int)(Mathf.PerlinNoise(x * NumLevel * Mathf.Deg2Rad, y * NumLevel * Mathf.Deg2Rad) * 1000000) % numColors;
-                        Type[y, x] = 0;
+                        Type[y, x] = 1;
                     }
                 }
             }
@@ -336,7 +336,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 SetArray(ref mold, 0);
 
-                if (!level.PassedWitMold)
+                if (!level.PassedWithMold)
                 {
                     return;
                 }
@@ -365,7 +365,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 SetArray(ref panel, 0);
 
-                if (!level.PassedWitPanel)
+                if (!level.PassedWithPanel)
                 {
                     return;
                 }
@@ -464,7 +464,7 @@ public class LevelGenerator : MonoBehaviour
                             box[y, x] = y;
                         }
 
-                        if (level.PassedWitMold && randMold < moldChance)
+                        if (level.PassedWithMold && randMold < moldChance)
                         {
                             for (int k = 5; k > 0; k--)
                             {
@@ -483,7 +483,7 @@ public class LevelGenerator : MonoBehaviour
                         panel[y, x] = 0;
 
                         IColors[y, x] = (int)(Mathf.PerlinNoise(x * NumLevel * Mathf.Deg2Rad, y * NumLevel * Mathf.Deg2Rad) * 1000000) % numColors;
-                        Type[y, x] = 0;
+                        Type[y, x] = 1;
                     }
                 }
             }
