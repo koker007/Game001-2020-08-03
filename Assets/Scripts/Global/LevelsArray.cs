@@ -13,7 +13,7 @@ public class LevelsArray : LevelsScript
         main = this;
 
         //уровень 1
-        Levels[1] = CreateLevel(1, 6, 5, 2000000, 50, 4, 0);
+        Levels[1] = CreateLevel(1, 6, 5, 2000000, 50, 5, 0);
 
         Levels[1].PassedWitMold = true;
         Levels[1].PassedWitPanel = true;

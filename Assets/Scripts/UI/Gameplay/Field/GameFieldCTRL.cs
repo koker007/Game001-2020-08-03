@@ -444,7 +444,7 @@ public class GameFieldCTRL : MonoBehaviour
         TestMoving(); //Проверяем наличие движения для отмены комбо
         TestFieldCombination(); //Тестим комбинации
         TestFieldPotencial(); //ищем потенциальные ходы
-        //TestRandomNotPotencial(); //Рандомизируем если ходов не обнаружено
+        TestRandomNotPotencial(); //Рандомизируем если ходов не обнаружено
 
         TestStartSwap(); //Начинаем обмен
         TestReturnSwap(); //Возвращяем обмен
@@ -1681,8 +1681,9 @@ public class GameFieldCTRL : MonoBehaviour
 
             Debug.Log("Found potencial: " + potencialBest.priority + " Pos: " + potencialBest.Target.pos + " Target:" + potencialBest.Target.pos + " Moving:" + potencialBest.Moving.pos);
         }
-        //если комбинаций не нашлось
-        else{
+        //если комбинаций не нашлось и лист нужных к перемещению объектов еще не создан
+        else if(ListWaitingInternals.Count <= 0){
+            CreateRandomInternalList();
             Debug.Log("Not Found potencial comb " + Time.unscaledTime);
         }
 
@@ -2015,6 +2016,27 @@ public class GameFieldCTRL : MonoBehaviour
             potencialBest.Moving.cellInternal.animatorObject.PlayAnimation("ApperanceCombinationObject");
         }
 
+        void CreateRandomInternalList() {
+            //перебираем все ячейки
+            for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
+                for (int y = 0; y < cellCTRLs.GetLength(1); y++) {
+                    if (isCellCanRandomizade(cellCTRLs[x,y])) {
+                        ListWaitingInternals.Add(cellCTRLs[x, y].cellInternal);
+                    }
+                }
+            }
+
+            bool isCellCanRandomizade(CellCTRL select) {
+                bool result = false;
+
+                if (select != null && select.cellInternal &&
+                    select.rock == 0) {
+                    result = true;
+                }
+
+                return result;
+            }
+        }
     }
 
     //Список ячеек ожидающих перемешивание
@@ -2035,18 +2057,18 @@ public class GameFieldCTRL : MonoBehaviour
 
         bool isDoneTransformToCenter() {
 
-            Vector2 pivotNeed = new Vector2(cellCTRLs.GetLength(0)/2, cellCTRLs.GetLength(1)/2);
+            Vector2 pivotNeed = new Vector2((cellCTRLs.GetLength(0)/2)*-1, (cellCTRLs.GetLength(1)/2)*-1);
 
             foreach (CellInternalObject cellInternal in ListWaitingInternals) {
 
-                cellInternal.rectMy.pivot += (pivotNeed - cellInternal.rectMy.pivot) * Time.deltaTime;
+                cellInternal.rectMy.pivot += (pivotNeed - cellInternal.rectMy.pivot) * Time.deltaTime * 4;
 
             }
             
 
             //проверяем все внутренние на близость к центру
             foreach (CellInternalObject cellInternal in ListWaitingInternals) {
-                if (Vector2.Distance(pivotNeed, myRect.pivot) > 0.01f) {
+                if (Vector2.Distance(pivotNeed, cellInternal.rectMy.pivot) > 0.1f) {
                     return false;
                 }
             }
@@ -2066,9 +2088,65 @@ public class GameFieldCTRL : MonoBehaviour
 
             //Запомнили ячейки
 
-            //Теперь открепляем связь внутренности с ячейкой
-            foreach (CellCTRL cell in cellsList) {
-                cell.cellInternal = null;
+
+            while (ListWaitingInternals.Count > 0) {
+                SetAllCellInternal();
+            }
+
+            void SetAllCellNull() {
+                foreach (CellCTRL cell in cellsList)
+                {
+                    cell.cellInternal = null;
+                }
+            }
+
+            //Установить всем внутренностям по ячейке
+            void SetAllCellInternal() {
+
+                //открепляем связь внутренности с ячейкой
+                SetAllCellNull();
+
+                for (int x = 0; x < ListWaitingInternals.Count; x++) {
+                    CellCTRL selectedCell = null;
+
+                    //Удаляем память о ячейке в перемещаемом объекте
+                    ListWaitingInternals[x].myCell = null;
+
+                    while (!selectedCell) {
+                        CellCTRL randomCell = cellsList[Random.Range(0, cellsList.Count)];
+
+                        //Если ячейка существует и у нее нету внутренности
+                        if (randomCell && randomCell.cellInternal == null) {
+                            selectedCell = randomCell;
+                        }
+                    }
+
+
+                    //Выбрали ячейку указываем путь
+                    ListWaitingInternals[x].StartMove(selectedCell);
+                    
+                }
+
+                
+
+                //Очищаем список
+                ListWaitingInternals = new List<CellInternalObject>();
+
+                //Проверяем текушую растановку ячеек на комбинации
+                bool isCombinationFound() {
+                    bool result = false;
+
+                    //Перебираем каждую ячейку
+                    for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
+                        for (int y = 0; y < cellCTRLs.GetLength(1); y++) {
+                        
+                        }
+                    }
+
+
+
+                    return result;
+                }
             }
         }
     }
