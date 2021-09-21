@@ -387,7 +387,8 @@ public class GameFieldCTRL : MonoBehaviour
                     }
 
                     //Создаем подвижные объекты
-                    if (cellCTRLs[x, y].BlockingMove == 0 //Если нету ящика
+                    if (level.cells[x, y].typeCell != CellInternalObject.Type.none &&
+                        cellCTRLs[x, y].BlockingMove == 0 //Если нету ящика
                         )
                     {
                         if (level.cells[x, y].typeCell == CellInternalObject.Type.color) {
@@ -451,7 +452,7 @@ public class GameFieldCTRL : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartInicialize();
+        //StartInicialize();
     }
 
     // Update is called once per frame
