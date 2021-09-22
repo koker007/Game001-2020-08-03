@@ -32,7 +32,7 @@ public class Gameplay : MonoBehaviour
     /// <summary>
     /// Цель окончания игры
     /// </summary>
-    public int[] colorsTarget = new int[10];
+    public int[] colorsCount = new int[10];
 
 
     /// <summary>
@@ -79,16 +79,10 @@ public class Gameplay : MonoBehaviour
         movingCan = LevelsScript.main.ReturnLevel().Move;
         CountStars(ref stars);
 
-        colorsTarget[0] = 0;
-        colorsTarget[1] = 0;
-        colorsTarget[2] = 0;
-        colorsTarget[3] = 0;
-        colorsTarget[4] = 0;
-        colorsTarget[5] = 0;
-        colorsTarget[6] = 0;
-        colorsTarget[7] = 0;
-        colorsTarget[8] = 0;
-        colorsTarget[9] = 0;
+
+        for (int x = 0; x < colorsCount.Length; x++) {
+            colorsCount[x] = 0;
+        }
 
     }
     //вычитает ход и делает проверку на 0 ходов
@@ -126,7 +120,7 @@ public class Gameplay : MonoBehaviour
                         {
                             if (MenuGameplay.main.gameFieldCTRL.CountInteractiveCells <= MenuGameplay.main.gameFieldCTRL.CountPanelSpread || !level.PassedWithPanel)
                             {
-                                if (level.NeedCrystal <= MenuGameplay.main.gameFieldCTRL.CountDestroyCrystals[(int)level.NeedColor] || !level.PassedWithCrystal)
+                                if (level.NeedCrystal <= main.colorsCount[(int)level.NeedColor] || !level.PassedWithCrystal)
                                 {
                                     PlayerProfile.main.LevelPassed(levelSelect);
                                     GlobalMessage.Results();

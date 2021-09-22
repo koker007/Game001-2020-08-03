@@ -462,7 +462,7 @@ public class CellInternalObject : MonoBehaviour
         }
 
         void AddCountColor() {
-            
+            Gameplay.main.colorsCount[(int)color]++;
         }
 
     }
@@ -551,6 +551,11 @@ public class CellInternalObject : MonoBehaviour
                 Image.texture = TextureViolet;
                 Image.color = violet;
             }
+            else if (internalColor == InternalColor.Ultimate) {
+                Image.texture = TextureUltimative;
+                Image.color = Ultimative;
+            }
+
         }
         else {
             if (internalColor == InternalColor.Red)
@@ -1023,10 +1028,10 @@ public class CellInternalObject : MonoBehaviour
                         {
                             myField.cellCTRLs[x, y].cellInternal.BufferPartner = partner;
                             myField.cellCTRLs[x, y].cellInternal.BufferCombination = combination;
-                            myField.cellCTRLs[x, y].DamageInvoke(dist * speedPerCell + 0.5f);
+                            //myField.cellCTRLs[x, y].DamageInvoke(dist * speedPerCell + 0.5f);
 
                             Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomSuperColor(myField.transform, myCell);
-                            particle3DCTRL.SetTransformTarget(new Vector2(x + 0.5f, y + 0.5f));
+                            particle3DCTRL.SetTransformTarget(myField.cellCTRLs[x,y].cellInternal, combination);
                             particle3DCTRL.SetTransformSpeed(1 / speedPerCell);
                         }
 

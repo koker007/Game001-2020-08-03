@@ -656,7 +656,8 @@ public class GameFieldCTRL : MonoBehaviour
         bool isFoundSuperComb = false;
         TestSuperCombination();
 
-        if (!isFoundSuperComb) {
+        if (!isFoundSuperComb)
+        {
             TestDamageAndSpawn();
         }
         //TestSuperCombination();
@@ -1105,6 +1106,11 @@ public class GameFieldCTRL : MonoBehaviour
 
                 }
 
+
+                //Прибавляем счетчик если нашласть комбинация
+                if (isFoundSuperComb) {
+                    Gameplay.main.MinusMoving(comb);
+                }
 
             }
         }
@@ -1845,7 +1851,12 @@ public class GameFieldCTRL : MonoBehaviour
             isHavePotencial(potencialRight);
             isHavePotencial(potencialUp);
             isHavePotencial(potencialDown);
+            
+            //Проверяем на супер комбинацию
+            //CombinatePotencialSuper();
 
+            //проверка квадрата
+            CombinatePotencialSquare();
 
             //Теперь проверяем на супер потенциалы
             CombinatePotencialHorizontal(potencialLeft, potencialRight);
@@ -1952,6 +1963,280 @@ public class GameFieldCTRL : MonoBehaviour
 
             }
 
+            //Проверка соседних ячеек на супер комбинацию
+            void CombinatePotencialSuper() {
+                //если текущая ячейка не цвет
+                if (cell.cellInternal.type == CellInternalObject.Type.color) {
+                    //выходим
+                    return;
+                }
+
+                CellCTRL left = null;
+                CellCTRL right = null;
+                CellCTRL up = null;
+                CellCTRL down = null;
+
+                //Проверяем соседние ячейки
+                //Слева
+                if (cell.pos.x - 1 >= 0 &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y] != null &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y].rock == 0 &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal != null &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.type != CellInternalObject.Type.color)
+                {
+
+                    left = cellCTRLs[cell.pos.x - 1, cell.pos.y];
+
+                }
+                //Справа
+                if (cell.pos.x + 1 < cellCTRLs.GetLength(0) &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y] != null &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y].rock == 0 &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal != null &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.type != CellInternalObject.Type.color)
+                {
+
+                    right = cellCTRLs[cell.pos.x + 1, cell.pos.y];
+
+                }
+                //Сверху
+                if (cell.pos.y + 1 < cellCTRLs.GetLength(1) &&
+                    cellCTRLs[cell.pos.x, cell.pos.y + 1] != null &&
+                    cellCTRLs[cell.pos.x, cell.pos.y + 1].rock == 0 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal != null &&
+                    cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.type != CellInternalObject.Type.color)
+                {
+
+                    up = cellCTRLs[cell.pos.x, cell.pos.y + 1];
+
+                }
+                //Снизу
+                if (cell.pos.y - 1 >= 0 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y - 1] != null &&
+                    cellCTRLs[cell.pos.x, cell.pos.y - 1] != null &&
+                    cellCTRLs[cell.pos.x, cell.pos.y - 1].rock == 0 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal != null &&
+                    cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.type != CellInternalObject.Type.color)
+                {
+
+                    down = cellCTRLs[cell.pos.x, cell.pos.y - 1];
+                }
+                
+                //если сбоку обнаружена подходящая ячейка
+                if (left != null) {
+                    PotencialComb super = new PotencialComb();
+                    
+                    super.Moving = cell;
+                    super.cells.Add(left);
+                    super.Target = left;
+
+                    //Теперь комбинация собрана, считаем ее приоритет
+                    super.CalcPriority();
+                    super.priority += 100;
+
+                    listPotencial.Add(super);
+                }
+                if (right != null) {
+                    PotencialComb super = new PotencialComb();
+
+                    super.Moving = cell;
+                    super.cells.Add(right);
+                    super.Target = right;
+
+                    //Теперь комбинация собрана, считаем ее приоритет
+                    super.CalcPriority();
+
+                    listPotencial.Add(super);
+                }
+                if (up != null) {
+                    PotencialComb super = new PotencialComb();
+
+                    super.Moving = cell;
+                    super.cells.Add(up);
+                    super.Target = up;
+
+                    //Теперь комбинация собрана, считаем ее приоритет
+                    super.CalcPriority();
+                    super.priority += 100;
+
+                    listPotencial.Add(super);
+                }
+                if (down != null) {
+                    PotencialComb super = new PotencialComb();
+
+                    super.Moving = cell;
+                    super.cells.Add(down);
+                    super.Target = down;
+
+                    //Теперь комбинация собрана, считаем ее приоритет
+                    super.CalcPriority();
+
+                    listPotencial.Add(super);
+                }
+            }
+
+            //Потенциальный квадрат
+            void CombinatePotencialSquare() {
+
+
+                //верх лево
+                if (potencialUp.cells.Count > 0 && potencialLeft.cells.Count > 0 &&
+                    potencialUp.cells[0].cellInternal.color == potencialLeft.cells[0].cellInternal.color &&
+                    ((potencialUp.cells[0] != potencialLeft.Moving && potencialLeft.Moving) || (potencialUp.Moving != potencialLeft.cells[0] && potencialUp.Moving)) &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1] != null &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].rock == 0 &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].cellInternal != null &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].cellInternal.color == potencialLeft.cells[0].cellInternal.color
+                    ) {
+
+                    PotencialComb super = new PotencialComb();
+
+                    foreach (CellCTRL cellAdd in potencialLeft.cells)
+                        super.cells.Add(cellAdd);
+
+                    foreach (CellCTRL cellAdd in potencialUp.cells)
+                        super.cells.Add(cellAdd);
+
+
+                    //Добавляем крайнюю
+                    super.cells.Add(cellCTRLs[cell.pos.x - 1, cell.pos.y + 1]);
+
+                    super.Target = cell;
+
+                    if (potencialUp.cells[0] != potencialLeft.Moving && potencialLeft.Moving)
+                    {
+                        super.Moving = potencialLeft.Moving;
+                    }
+                    else {
+                        super.Moving = potencialUp.Moving;
+                    }
+
+                    //Теперь комбинация собрана, считаем ее приоритет
+                    super.CalcPriority();
+                    super.priority += 20;
+
+                    listPotencial.Add(super);
+                }
+
+                //верх право
+                if (potencialUp.cells.Count > 0 && potencialRight.cells.Count > 0 &&
+                    potencialUp.cells[0].cellInternal.color == potencialRight.cells[0].cellInternal.color &&
+                    ((potencialUp.cells[0] != potencialRight.Moving && potencialRight.Moving) || (potencialUp.Moving != potencialRight.cells[0] && potencialUp.Moving)) &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1] != null &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].rock == 0 &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].cellInternal != null &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].cellInternal.color == potencialRight.cells[0].cellInternal.color) {
+
+                    PotencialComb super = new PotencialComb();
+
+                    foreach (CellCTRL cellAdd in potencialRight.cells)
+                        super.cells.Add(cellAdd);
+
+                    foreach (CellCTRL cellAdd in potencialUp.cells)
+                        super.cells.Add(cellAdd);
+
+
+                    //Добавляем крайнюю
+                    super.cells.Add(cellCTRLs[cell.pos.x + 1, cell.pos.y + 1]);
+
+                    super.Target = cell;
+
+                    if (potencialUp.cells[0] != potencialRight.Moving && potencialRight.Moving)
+                    {
+                        super.Moving = potencialRight.Moving;
+                    }
+                    else
+                    {
+                        super.Moving = potencialUp.Moving;
+                    }
+
+                    //Теперь комбинация собрана, считаем ее приоритет
+                    super.CalcPriority();
+                    super.priority += 20;
+
+                    listPotencial.Add(super);
+                }
+
+                //низ право
+                if (potencialDown.cells.Count > 0 && potencialRight.cells.Count > 0 &&
+                    potencialDown.cells[0].cellInternal.color == potencialRight.cells[0].cellInternal.color &&
+                    ((potencialDown.cells[0] != potencialRight.Moving && potencialRight.Moving) || (potencialDown.Moving != potencialRight.cells[0] && potencialDown.Moving)) &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1] != null &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].rock == 0 &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].cellInternal != null &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].cellInternal.color == potencialRight.cells[0].cellInternal.color) {
+
+                    PotencialComb super = new PotencialComb();
+
+                    foreach (CellCTRL cellAdd in potencialRight.cells)
+                        super.cells.Add(cellAdd);
+
+                    foreach (CellCTRL cellAdd in potencialDown.cells)
+                        super.cells.Add(cellAdd);
+
+
+                    //Добавляем крайнюю
+                    super.cells.Add(cellCTRLs[cell.pos.x + 1, cell.pos.y - 1]);
+
+                    super.Target = cell;
+
+                    if (potencialDown.cells[0] != potencialRight.Moving && potencialRight.Moving)
+                    {
+                        super.Moving = potencialRight.Moving;
+                    }
+                    else
+                    {
+                        super.Moving = potencialDown.Moving;
+                    }
+
+                    //Теперь комбинация собрана, считаем ее приоритет
+                    super.CalcPriority();
+                    super.priority += 20;
+
+                    listPotencial.Add(super);
+                }
+
+                //низ лево
+                if (potencialDown.cells.Count > 0 && potencialLeft.cells.Count > 0 &&
+                    potencialDown.cells[0].cellInternal.color == potencialLeft.cells[0].cellInternal.color &&
+                    ((potencialDown.cells[0] != potencialLeft.Moving && potencialLeft.Moving) || (potencialDown.Moving != potencialLeft.cells[0] && potencialDown.Moving)) &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1] != null &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].rock == 0 &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].cellInternal != null &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].cellInternal.color == potencialLeft.cells[0].cellInternal.color) {
+
+                    PotencialComb super = new PotencialComb();
+
+                    foreach (CellCTRL cellAdd in potencialLeft.cells)
+                        super.cells.Add(cellAdd);
+
+                    foreach (CellCTRL cellAdd in potencialDown.cells)
+                        super.cells.Add(cellAdd);
+
+
+                    //Добавляем крайнюю
+                    super.cells.Add(cellCTRLs[cell.pos.x - 1, cell.pos.y - 1]);
+
+                    super.Target = cell;
+
+                    if (potencialDown.cells[0] != potencialLeft.Moving && potencialLeft.Moving)
+                    {
+                        super.Moving = potencialLeft.Moving;
+                    }
+                    else
+                    {
+                        super.Moving = potencialDown.Moving;
+                    }
+
+                    //Теперь комбинация собрана, считаем ее приоритет
+                    super.CalcPriority();
+                    super.priority += 20;
+
+                    listPotencial.Add(super);
+                }
+
+            }
+
             void CombinatePotencialHorizontal(PotencialComb first, PotencialComb second) {
                 PotencialComb potencialNew = new PotencialComb();
 
@@ -2020,6 +2305,9 @@ public class GameFieldCTRL : MonoBehaviour
 
                     //Теперь комбинация собрана, считаем ее приоритет
                     potencialNew.CalcPriority();
+
+                    if (potencialNew.cells.Count >= 4)
+                        potencialNew.priority += 80;
 
                     listPotencial.Add(potencialNew);
                 }
@@ -2093,6 +2381,9 @@ public class GameFieldCTRL : MonoBehaviour
                     //Теперь комбинация собрана, считаем ее приоритет
                     potencialNew.CalcPriority();
 
+                    if (potencialNew.cells.Count >= 4)
+                        potencialNew.priority += 80;
+
                     listPotencial.Add(potencialNew);
                 }
 
@@ -2129,6 +2420,7 @@ public class GameFieldCTRL : MonoBehaviour
 
                     //Теперь комбинация собрана, считаем ее приоритет
                     potencialNew.CalcPriority();
+                    potencialNew.priority += 30;
 
                     listPotencial.Add(potencialNew);
                 }

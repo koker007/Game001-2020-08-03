@@ -12,14 +12,16 @@ public class LevelsArray : LevelsScript
     {
         main = this;
 
+        ////////////////////////////////////////////////////////////////////////////
         //уровень 1
-        Levels[1] = CreateLevel(1, 6, 5, 15000, 15, 3, 0);
+        int lvl = 1;
+        Levels[lvl] = CreateLevel(1, 6, 5, 15000, 15, 3, 0);
 
-        Levels[1].PassedWithCrystal = true;
-        Levels[1].NeedColor = (CellInternalObject.InternalColor)0;
-        Levels[1].NeedCrystal = 20;
+        Levels[lvl].PassedWithCrystal = true;
+        Levels[lvl].NeedColor = (CellInternalObject.InternalColor)0;
+        Levels[lvl].NeedCrystal = 20;
         Debug.Log((int)Levels[1].NeedColor);
-        Levels[1].SetMass(
+        Levels[lvl].SetMass(
         new int[,] //exist
             {
                 { 1,1,1,1,1 },
@@ -31,7 +33,7 @@ public class LevelsArray : LevelsScript
             },
             "exist"
             );
-        Levels[1].SetMass(
+        Levels[lvl].SetMass(
             new int[,] //color
             {
                 { 3,0,3,0,1 },
@@ -43,7 +45,7 @@ public class LevelsArray : LevelsScript
             },
             "color"
             );
-        Levels[1].SetMass(
+        Levels[lvl].SetMass(
             new int[,] //type
             {
                 { 1,1,1,1,1 },
@@ -55,7 +57,7 @@ public class LevelsArray : LevelsScript
             },
             "type"
             );
-        Levels[1].SetMass(
+        Levels[lvl].SetMass(
            new int[,]
            {
                 { 0,0,1,0,0 },
@@ -67,14 +69,16 @@ public class LevelsArray : LevelsScript
            },
            "rock"
            );
-        Levels[1].SetCells();
+        Levels[lvl].SetCells();
 
+        ////////////////////////////////////////////////////////////////////////////
         //уровень 2
-        Levels[2] = CreateLevel(2, 7, 7, 2000000, 1000, 3, 0);
+        lvl = 2;
+        Levels[lvl] = CreateLevel(2, 7, 7, 2000000, 1000, 3, 0);
 
-        Levels[2].PassedWithCrystal = true;
-        Levels[2].NeedColor = (CellInternalObject.InternalColor)1;
-        Levels[2].NeedCrystal = 25;
+        Levels[lvl].PassedWithCrystal = true;
+        Levels[lvl].NeedColor = (CellInternalObject.InternalColor)1;
+        Levels[lvl].NeedCrystal = 25;
 
         Levels[2].SetMass(
             new int[,] //exist
@@ -89,7 +93,7 @@ public class LevelsArray : LevelsScript
             },
             "exist"
             );
-        Levels[2].SetMass(
+        Levels[lvl].SetMass(
             new int[,] //color
             {
                 { 0,2,0,0,0,1,0 },
@@ -102,7 +106,7 @@ public class LevelsArray : LevelsScript
             },
             "color"
             );
-        Levels[2].SetMass(
+        Levels[lvl].SetMass(
             new int[,] //type
             {
                 { 0,0,0,0,0,0,0 },
@@ -115,7 +119,7 @@ public class LevelsArray : LevelsScript
             },
             "type"
             );
-        Levels[2].SetMass(
+        Levels[lvl].SetMass(
             new int[,] //rock
             {
                 { 0,1,0,0,0,1,0 },
@@ -128,14 +132,16 @@ public class LevelsArray : LevelsScript
             },
             "rock"
             );
-        Levels[2].SetCells();
+        Levels[lvl].SetCells();
 
+        ////////////////////////////////////////////////////////////////////////////
         //уровень 3
-        Levels[3] = CreateLevel(3, 8, 8, 100000, 99, 3, 0);
+        lvl = 3;
+        Levels[lvl] = CreateLevel(3, 8, 8, 100000, 99, 3, 0);
 
-        Levels[3].PassedWithPanel = true;
+        Levels[lvl].PassedWithPanel = true;
 
-        Levels[3].SetMass(
+        Levels[lvl].SetMass(
             new int[,] //exist
             {
                 { 1,1,1,1,1,1,1,1 },
@@ -163,7 +169,7 @@ public class LevelsArray : LevelsScript
             },
             "color"
             );
-        Levels[3].SetMass(
+        Levels[lvl].SetMass(
             new int[,] //type
             
             {
@@ -178,7 +184,7 @@ public class LevelsArray : LevelsScript
             },
             "type"
             );
-        Levels[3].SetMass(
+        Levels[lvl].SetMass(
              new int[,] //panel
              {
                 { 0,0,0,0,0,0,0,0 },
@@ -192,7 +198,7 @@ public class LevelsArray : LevelsScript
             },
              "panel"
              );
-        Levels[3].SetMass(
+        Levels[lvl].SetMass(
             new int[,] //rock
             {
                 { 0,1,1,1,1,1,1,0 },
@@ -200,14 +206,146 @@ public class LevelsArray : LevelsScript
                 { 1,0,0,0,0,0,0,1 },
                 { 1,0,0,0,0,0,0,1 },
                 { 1,0,0,0,0,0,0,1 },
-                { 1,1,0,0,0,0,1,1 },
-                { 0,0,1,0,0,1,0,0 },
+                { 0,1,0,0,0,0,1,0 },
+                { 0,0,0,0,0,0,0,0 },
                 { 0,1,1,1,1,1,1,0 },
+            },
+            "box"
+            );
+        Levels[lvl].SetCells();
+
+        //////////////////////////////////////////////////////////////////////////////
+        //уровень 4
+        lvl = 4;
+        Levels[lvl] = CreateLevel(3, 8, 8, 100000, 99, 3, 0);
+
+        Levels[lvl].PassedWithPanel = true;
+
+        Levels[lvl].SetMass(
+            new int[,] //exist
+            {
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+            },
+            "exist"
+            );
+        Levels[lvl].SetMass(
+            new int[,] //color
+            {
+                { 2,4,5,4,4,5,4,1 },
+                { 4,1,4,5,5,4,1,4 },
+                { 4,4,1,4,4,1,4,4 },
+                { 5,5,4,1,1,4,5,5 },
+                { 4,4,1,4,4,1,4,4 },
+                { 4,1,4,1,1,4,1,4 },
+                { 2,1,1,1,1,1,2,1 },
+                { 1,2,1,2,1,2,1,2 },
+            },
+            "color"
+            );
+        Levels[lvl].SetMass(
+            new int[,] //type
+            
+            {
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,1,1,1,1,1 },
+                { 1,1,1,2,1,1,1,1 },
+            },
+            "type"
+            );
+        Levels[lvl].SetMass(
+             new int[,] //panel
+             {
+                { 0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0 },
+                { 1,0,0,0,0,0,0,1 },
+            },
+             "panel"
+             );
+        Levels[lvl].SetMass(
+            new int[,] //rock
+            {
+                { 0,1,1,1,1,1,1,0 },
+                { 1,0,1,1,1,1,0,1 },
+                { 1,1,0,1,1,0,1,1 },
+                { 1,1,1,0,0,1,1,1 },
+                { 1,1,0,1,1,0,1,1 },
+                { 1,0,1,0,0,1,0,1 },
+                { 0,0,0,0,0,0,0,0 },
+                { 0,0,0,0,0,0,0,0 },
             },
             "rock"
             );
-        Levels[3].SetCells();
+        Levels[lvl].SetCells();
+
+        //////////////////////////////////////////////////////////////////////////////
+        //уровень 5
+        lvl = 5;
+        Levels[lvl] = CreateLevel(3, 2, 3, 100000, 99, 3, 0);
+
+        Levels[lvl].PassedWithPanel = true;
+
+        Levels[lvl].SetMass(
+            new int[,] //exist
+            {
+                { 1,1,1 },
+                { 1,1,1 },
+            },
+            "exist"
+            );
+        Levels[lvl].SetMass(
+            new int[,] //color
+            {
+                { 3,2,3 },
+                { 1,3,3 },
+            },
+            "color"
+            );
+        Levels[lvl].SetMass(
+            new int[,] //type
+            
+            {
+                { 1,1,1},
+                { 1,1,1 },
+            },
+            "type"
+            );
+        Levels[lvl].SetMass(
+             new int[,] //panel
+             {
+                { 0,0,0},
+                { 0,0,0},
+            },
+             "panel"
+             );
+        Levels[lvl].SetMass(
+            new int[,] //rock
+            {
+                { 0,0,0 },
+                { 0,0,0},
+            },
+            "rock"
+            );
+        Levels[lvl].SetCells();
     }
+
+
 }
 
 /*

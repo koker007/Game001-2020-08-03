@@ -195,7 +195,9 @@ public class MenuGameplay : MonoBehaviour
         if (level.PassedWithCrystal)
         {
             GoalImage[i].sprite = PassedCrystalImage[(int)level.NeedColor];
-            GoalText[i].text = "C " + (level.NeedCrystal - gameFieldCTRL.CountDestroyCrystals[(int)level.NeedColor]).ToString();
+            int countColor = level.NeedCrystal - Gameplay.main.colorsCount[(int)level.NeedColor];
+            if (countColor < 0) countColor = 0;
+            GoalText[i].text = "C " + (countColor).ToString();
             i++;
         }
         if (level.PassedWithBox)

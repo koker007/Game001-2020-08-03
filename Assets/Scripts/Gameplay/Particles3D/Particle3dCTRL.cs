@@ -15,6 +15,10 @@ public class Particle3dCTRL : MonoBehaviour
     float SpeedMove = 0;
     [SerializeField]
     Vector2 TargetMove = new Vector2();
+    [SerializeField]
+    CellInternalObject targetInternalObject;
+    [SerializeField]
+    GameFieldCTRL.Combination comb;
 
     RectTransform Myfield;
 
@@ -81,6 +85,12 @@ public class Particle3dCTRL : MonoBehaviour
     public void SetTransformTarget(Vector2 target) {
         TargetMove = target;
     }
+
+    //Установить цель, внутренний объект
+    public void SetTransformTarget(CellInternalObject internalObject, GameFieldCTRL.Combination combNew) {
+        targetInternalObject = internalObject;
+        comb = combNew;
+    }
     public void SetTransformSpeed(float speed) {
         SpeedMove = speed;
     }
@@ -89,6 +99,12 @@ public class Particle3dCTRL : MonoBehaviour
     float timeLastMove = 0;
     void TestMove() {
         if (SpeedMove <= 0) return;
+
+        //Если есть внутренний объект в качестве цели, двигаем к нему
+        if (targetInternalObject != null) {
+            //Берем в качестве цели позицию внутреннего объекта
+            TargetMove = (targetInternalObject.rectMy.pivot * -1) + new Vector2(0.5f, 0.5f);
+        }
 
         //Перемешяемся если есть скорость и растояние до цели не ноль
         float dist = Vector2.Distance(TargetMove, gameObject.transform.localPosition);
@@ -107,11 +123,21 @@ public class Particle3dCTRL : MonoBehaviour
 
             timeLastMove = Time.unscaledTime;
         }
+
+        //Активируем внутреннию частицу
+        if (targetInternalObject && Vector2.Distance(TargetMove, new Vector2(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y)) < 0.01f)
+        {
+            targetInternalObject.myCell.Damage(null, comb);
+
+            //Наносим урон и забываем о внутреннем объекте
+            targetInternalObject = null;
+        }
     }
     
     void TestDestroy() {
         //Удаляем только если вышло время жизни, или если все частицы остановились
         if (Time.unscaledTime - timeInicialize > 10 || isAllParticlesStoped() || isStoppedMoveDestroy()) {
+
             Destroy(gameObject);
         }
         
@@ -133,7 +159,7 @@ public class Particle3dCTRL : MonoBehaviour
 
         bool isStoppedMoveDestroy() {
             bool result = false;
-            if (SpeedMove > 0.01f && Vector2.Distance(TargetMove, new Vector2(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y)) > 0.01f && Time.unscaledTime - timeLastMove > 5f) {
+            if (SpeedMove > 0.01f && Vector2.Distance(TargetMove, new Vector2(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y)) < 0.01f && Time.unscaledTime - timeLastMove > 5f) {
                 result = true;
             }
 

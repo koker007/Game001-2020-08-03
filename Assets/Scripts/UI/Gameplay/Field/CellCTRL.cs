@@ -568,6 +568,36 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             //Камня
             if (rock > 0) {
                 result += (5 - rock) * PriorityRock; //Чем меньше жизней, тем желательнее ее сломать
+
+                //проверка соседей
+                //Слева
+                if (pos.x - 1 >= 0 &&
+                    myField.cellCTRLs[pos.x - 1, pos.y] != null &&
+                    myField.cellCTRLs[pos.x - 1, pos.y].rock == 0)
+                {
+                    result += 5;
+                }
+                //справа
+                if (pos.x + 1 < myField.cellCTRLs.GetLength(0) &&
+                    myField.cellCTRLs[pos.x + 1, pos.y] != null &&
+                    myField.cellCTRLs[pos.x + 1, pos.y].rock == 0)
+                {
+                    result += 5;
+                }
+                //сверху
+                if (pos.y + 1 < myField.cellCTRLs.GetLength(1) &&
+                    myField.cellCTRLs[pos.x, pos.y + 1] != null &&
+                    myField.cellCTRLs[pos.x, pos.y + 1].rock == 0)
+                {
+                    result += 5;
+                }
+                //снизу
+                if (pos.y - 1 >= 0 &&
+                    myField.cellCTRLs[pos.x, pos.y - 1] != null &&
+                    myField.cellCTRLs[pos.x, pos.y - 1].rock == 0)
+                {
+                    result += 5;
+                }
             }
             //Плесени
             if (mold > 0)
