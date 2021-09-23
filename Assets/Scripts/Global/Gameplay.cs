@@ -142,6 +142,8 @@ public class Gameplay : MonoBehaviour
         }
 
     }
+
+
     /// <summary>
     /// считает сколько звезд игрок получил на уровне
     /// </summary>

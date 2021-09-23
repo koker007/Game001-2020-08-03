@@ -3236,7 +3236,10 @@ public class GameFieldCTRL : MonoBehaviour
 
         return isMovingOld;
     }
+
     //паходятся ли в движении какие либо объекты на поле
+
+    float movingLastTime = 0;
     void TestMoveInternalObj()
     {
         bool movingNow = false;
@@ -3273,6 +3276,10 @@ public class GameFieldCTRL : MonoBehaviour
                 else if (cellCTRLs[x, y].cellInternal && cellCTRLs[x, y].cellInternal.isMove)
                 {
                     movingNow = true;
+                }
+
+                if (movingNow) {
+                    movingLastTime = Time.unscaledTime;
                 }
             }
         }
