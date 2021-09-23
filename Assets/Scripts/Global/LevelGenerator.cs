@@ -31,13 +31,13 @@ public class LevelGenerator : MonoBehaviour
             return LevelsScript.main.ReturnLevel(NumLevel);
         }
         float NoizeResult = Mathf.PerlinNoise(Mathf.Cos(NumLevel), 0f) * Mathf.PerlinNoise(Mathf.Sin(NumLevel), 0f) * Mathf.PerlinNoise(Mathf.Tan(NumLevel), 0f) * 1000000;
-
+        //устанавливаем размер уровня
         int Width = (int)NoizeResult % 8 + 6;
         int Height = (int)NoizeResult * 123 % (int)(Width / 2) + 6;
-
+        //основные параметры уровня
         int NeedScore = Width * Height * ((int)NoizeResult % ScoreСoefficient + ScoreСoefficient / 2);
         float move = (float)30 / (Width * Height * ScoreСoefficient) * NeedScore;
-
+        //выюираем количество цветов
         int numColors;
         if (Width > 10)
         {
@@ -48,7 +48,7 @@ public class LevelGenerator : MonoBehaviour
             numColors = 4;
         }
 
-
+        //создаем уровень без массивов
         LevelsScript.Level level = LevelsScript.main.Levels[NumLevel];
         level = LevelsScript.main.CreateLevel(NumLevel, Height, Width, NeedScore, (int)move, numColors, (int)(NoizeResult * 100));
 
@@ -60,7 +60,7 @@ public class LevelGenerator : MonoBehaviour
 
         return LevelsScript.main.Levels[NumLevel];
 
-
+        //выбираем цели уровня
         void PassRandom()
         {
             int numPass = (int)NoizeResult % 2 + 1;
@@ -94,7 +94,7 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
         }
-
+        //заносим значения клеток
         void ArraysRandom()
         {
             int[,] exist = new int[Height, Width];
@@ -122,6 +122,7 @@ public class LevelGenerator : MonoBehaviour
             level.SetMass(rock, "rock");
             level.SetCells();
 
+            //генерация кристаллов
             void CrystalRandom()
             {
                 for (int y = 0; y < Height; y++)
@@ -134,6 +135,7 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
 
+            //алгоритм генерации отверстий
             void ExistRandom()
             {
                 SetArray(ref exist, 1);
@@ -266,6 +268,7 @@ public class LevelGenerator : MonoBehaviour
                 SymmetryArrayForGorizontal(ref exist);
             }
 
+            //алгоритм генерации коробок
             void BoxRandom()
             {
                 SetArray(ref box, 0);
@@ -331,7 +334,7 @@ public class LevelGenerator : MonoBehaviour
                     }
                 }
             }
-
+            //алгоритм генерации плесени
             void MoldRandom()
             {
                 SetArray(ref mold, 0);
@@ -360,7 +363,7 @@ public class LevelGenerator : MonoBehaviour
 
                 SymmetryArrayForGorizontal(ref mold);
             }
-
+            //алгоритм генерации панелей
             void PanelRandom()
             {
                 SetArray(ref panel, 0);
@@ -406,7 +409,7 @@ public class LevelGenerator : MonoBehaviour
 
                 SymmetryArrayForGorizontal(ref panel);
             }
-
+            //отзеркаливает массив по горизонтали
             void SymmetryArrayForGorizontal(ref int[,] arr)
             {
                 for (int y = 0; y < Height; y++)
@@ -417,7 +420,7 @@ public class LevelGenerator : MonoBehaviour
                     }
                 }
             }
-
+            //заносит значения в массив
             void SetArray(ref int[,] arr, int value)
             {
                 for (int y = 0; y < Height; y++)
@@ -428,7 +431,7 @@ public class LevelGenerator : MonoBehaviour
                     }
                 }
             }
-
+            //генерация с помощью шума перлина
             void PerlinAllRandom()
             {
                 for (int y = 0; y < Height; y++)
@@ -488,6 +491,7 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
         }
+        //выдает случайное значение от 0 до указонного
         int RandomInt(int maxValue)
         {
             if(maxValue <= 0)
@@ -497,6 +501,7 @@ public class LevelGenerator : MonoBehaviour
             RandomFactor = Mathf.PerlinNoise(0, RandomFactor * 100) + 1;
             return Mathf.Abs((int)(NoizeResult * RandomFactor) % (maxValue + 1));
         }
+        //случайное логическое значение
         bool RandomBool(float chance)
         {
             RandomFactor = Mathf.PerlinNoise(0, RandomFactor * 100) + 1;
