@@ -825,21 +825,51 @@ public class CellInternalObject : MonoBehaviour
 
             //во все стороны
             if (horizontal && vertical) {
-                myCell.explosion = new CellCTRL.Explosion(true, true, true, true, 0.05f, BufferCombination);
+                if (myCell.explosion == null)
+                {
+                    myCell.explosion = new CellCTRL.Explosion(true, true, true, true, 0.05f, BufferCombination);
+                }
+                else {
+                    myCell.explosion.left = true;
+                    myCell.explosion.right = true;
+                    myCell.explosion.up = true;
+                    myCell.explosion.down = true;
+                }
+
                 myCell.BufferCombination = combination;
                 myCell.BufferNearDamage = false;
                 myCell.ExplosionBoomInvoke(myCell.explosion);
             }
             //горизонтальный
             else if (horizontal) {
-                myCell.explosion = new CellCTRL.Explosion(true, true, false, false, 0.05f, BufferCombination);
+
+                if (myCell.explosion == null)
+                {
+                    myCell.explosion = new CellCTRL.Explosion(true, true, false, false, 0.05f, BufferCombination);
+                }
+                else
+                {
+                    myCell.explosion.left = true;
+                    myCell.explosion.right = true;
+                }
+
                 myCell.BufferCombination = combination;
                 myCell.BufferNearDamage = false;
                 myCell.ExplosionBoomInvoke(myCell.explosion);
             }
             //вертикальный
             else if (vertical) {
-                myCell.explosion = new CellCTRL.Explosion(false, false, true, true, 0.05f, BufferCombination);
+
+                if (myCell.explosion == null)
+                {
+                    myCell.explosion = new CellCTRL.Explosion(false, false, true, true, 0.05f, BufferCombination);
+                }
+                else
+                {
+                    myCell.explosion.up = true;
+                    myCell.explosion.down = true;
+                }
+
                 myCell.BufferCombination = combination;
                 myCell.BufferNearDamage = false;
                 myCell.ExplosionBoomInvoke(myCell.explosion);
@@ -1137,8 +1167,12 @@ public class CellInternalObject : MonoBehaviour
                     }
 
                     //создаем взрыв если на этой ячейке нет взрыва
-                    if (myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion == null) {
+                    if (myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion == null)
+                    {
                         myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, BufferCombination);
+                    }
+                    else {
+                    
                     }
 
                     myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion.left = true;
@@ -1167,6 +1201,9 @@ public class CellInternalObject : MonoBehaviour
                     if (myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion == null)
                     {
                         myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, BufferCombination);
+                    }
+                    else {
+                    
                     }
 
                     myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion.right = true;
@@ -1205,6 +1242,9 @@ public class CellInternalObject : MonoBehaviour
                     {
                         myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, BufferCombination);
                     }
+                    else {
+                    
+                    }
 
                     myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion.down = true;
                     myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].BufferCombination = combination;
@@ -1233,6 +1273,9 @@ public class CellInternalObject : MonoBehaviour
                     if (myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion == null)
                     {
                         myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, BufferCombination);
+                    }
+                    else {
+                    
                     }
 
                     myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion.up = true;
