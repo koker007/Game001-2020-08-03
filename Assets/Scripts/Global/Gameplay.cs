@@ -133,10 +133,20 @@ public class Gameplay : MonoBehaviour
                     }
                 }
             }
+            //если ходов нет проигрышь
+            if (movingCan <= 0)
+            {
+                GlobalMessage.Lose();
+                LevelsScript.main.ReturnLevel().MaxScore = score;
+            }
         }
 
     }
-
+    /// <summary>
+    /// считает сколько звезд игрок получил на уровне
+    /// </summary>
+    /// <param name="score"></param>
+    /// <param name="stars"></param>
     public void CountStars(int score, ref Image[] stars)
     {
         if (score >= LevelsScript.main.ReturnLevel().NeedScore * threeStartFactor)
@@ -164,6 +174,11 @@ public class Gameplay : MonoBehaviour
             stars[2].color = new Color32(140, 140, 60, 255);
         }
     }
+    /// <summary>
+    /// считает сколько звезд игрок получил на уровне
+    /// </summary>
+    /// <param name="score"></param>
+    /// <param name="stars"></param>
     public void CountStars(ref Image[] stars)
     {
         CountStars(score,ref stars);

@@ -182,7 +182,9 @@ public class MenuGameplay : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// обновляет информацию о цели уровня
+    /// </summary>
     public void updateGoal()
     {
         int i = 0;
@@ -234,7 +236,9 @@ public class MenuGameplay : MonoBehaviour
             Goal[j].SetActive(true);
         }
     }
-
+    /// <summary>
+    /// обновляет счет очков
+    /// </summary>
     public void updateScore()
     {
         Score.text = System.Convert.ToString(Gameplay.main.score);
