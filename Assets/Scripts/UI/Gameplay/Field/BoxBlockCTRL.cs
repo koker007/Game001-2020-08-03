@@ -34,6 +34,9 @@ public class BoxBlockCTRL : MonoBehaviour
 
         SetPos(-myCell.pos.x, -myCell.pos.y);
 
+        myCell.myField.BoxBlockCTRLs[myCell.pos.x, myCell.pos.y] = this;
+        ReCalcBoxCount();
+
         isInicialized = true;
     }
 
@@ -97,10 +100,37 @@ public class BoxBlockCTRL : MonoBehaviour
             void testDestroy() {
                 if (myCell.BlockingMove <= 0) {
                     //myCell.BoxBlock = null;
-                    myCell.myField.CountBoxBlocker--;
+
+
+                    //myCell.myField.CountBoxBlocker--;
+
+                    myCell.myField.BoxBlockCTRLs[myCell.pos.x, myCell.pos.y] = null;
+                    ReCalcBoxCount();
+
                     Destroy(gameObject);
                 }
             }
         }
+    }
+
+
+    void ReCalcBoxCount()
+    {
+
+        int count = 0;
+
+        //Перебираем все игровое поле
+        for (int x = 0; x < myCell.myField.BoxBlockCTRLs.GetLength(0); x++)
+        {
+            for (int y = 0; y < myCell.myField.BoxBlockCTRLs.GetLength(1); y++)
+            {
+                if (myCell.myField.BoxBlockCTRLs[x, y])
+                {
+                    count++;
+                }
+            }
+        }
+
+        myCell.myField.CountBoxBlocker = count;
     }
 }

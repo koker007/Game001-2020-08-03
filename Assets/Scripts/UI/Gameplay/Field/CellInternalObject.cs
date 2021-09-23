@@ -523,6 +523,31 @@ public class CellInternalObject : MonoBehaviour
             }
         }
     }
+    public void randType() {
+        int rand = Random.Range(1, 6+1);
+
+        if (rand == 1)
+        {
+            type = Type.color;
+        }
+        else if (rand == 2)
+        {
+            type = Type.color5;
+        }
+        else if (rand == 3)
+        {
+            type = Type.rocketHorizontal;
+        }
+        else if (rand == 4) {
+            type = Type.rocketVertical;
+        }
+        else if (rand == 5) {
+            type = Type.bomb;
+        }
+        else if (rand == 6) {
+            type = Type.airplane;
+        } 
+    }
     public void setColor(InternalColor internalColor) {
         if (type == Type.color)
         {

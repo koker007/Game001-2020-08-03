@@ -24,6 +24,7 @@ public class RockCTRL : MonoBehaviour
 
         //Добавляем в список эту плесень
         myCell.myField.rockCTRLs[cellIni.pos.x, cellIni.pos.y] = this;
+        ReCalcRockCount();
         IniRect();
 
         isInicialize = true;
@@ -57,11 +58,15 @@ public class RockCTRL : MonoBehaviour
         {
             if (myCell.rock > 0) return;
 
+            myCell.myField.rockCTRLs[myCell.pos.x, myCell.pos.y] = null;
+            ReCalcRockCount();
+
             Destroy(gameObject);
 
             //Пересоздать список плесени исключая отсутствующиие
         }
     }
+
 
     // Start is called before the first frame update
     void Start()
@@ -75,5 +80,20 @@ public class RockCTRL : MonoBehaviour
         UpdateLife();
     }
 
+    void ReCalcRockCount() {
+
+        int count = 0;
+
+        //Перебираем все игровое поле
+        for (int x = 0; x < myCell.myField.rockCTRLs.GetLength(0); x++) {
+            for (int y = 0; y < myCell.myField.rockCTRLs.GetLength(1); y++) {
+                if (myCell.myField.rockCTRLs[x,y]) {
+                    count++;
+                }
+            }
+        }
+
+        myCell.myField.CountRockBlocker = count;
+    }
 
 }

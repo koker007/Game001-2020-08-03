@@ -329,6 +329,11 @@ public class FlyCTRL : MonoBehaviour
         bool isBadTarget() {
             bool result = false;
 
+            //Если цели впринцепе нет, это плохо
+            if (CellTarget == null) {
+                return true;
+            }
+
             if (!Activated && CellTarget.cellInternal == null && CellTarget.BlockingMove == 0 && CellTarget.mold == 0 && CellTarget.rock == 0) {
                 result = true;
             }
@@ -339,7 +344,11 @@ public class FlyCTRL : MonoBehaviour
         CellCTRL getNewCellPrioryty() {
             CellCTRL result = null;
 
-            isRecalcTarget = true;
+            if(CellTarget)
+                isRecalcTarget = true;
+
+            if (!myField && CellTarget)
+                myField = CellTarget.myField;
 
             //ищем ячейку к которой еще никто не летит
             foreach (CellCTRL cellPriority in myField.cellsPriority)
