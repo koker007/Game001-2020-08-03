@@ -31,7 +31,17 @@ public class MoldCTRL : MonoBehaviour
         myCell = cellIni;
 
         //Добавляем в список эту плесень
-        myCell.myField.moldCTRLs.Add(this);
+        bool found = false;
+        foreach (MoldCTRL moldCTRL in myCell.myField.moldCTRLs)
+        {
+            if (moldCTRL == this) {
+                found = true;
+                break;
+            }
+        }
+        if(!found)
+            myCell.myField.moldCTRLs.Add(this);
+
         myCell.myField.CountMold = myCell.myField.moldCTRLs.Count;
         IniRect();
 
@@ -70,6 +80,13 @@ public class MoldCTRL : MonoBehaviour
 
     void Destroy()
     {
+        //ищем себя и удаляем из списка
+        for (int x = 0; x < myCell.myField.moldCTRLs.Count; x++) {
+            if (myCell.myField.moldCTRLs[x] == this) {
+                myCell.myField.moldCTRLs[x] = null;
+                break;
+            }
+        }
         myCell.myField.ReCalcMoldList();
         myCell.moldCTRL = null;
         Destroy(gameObject);

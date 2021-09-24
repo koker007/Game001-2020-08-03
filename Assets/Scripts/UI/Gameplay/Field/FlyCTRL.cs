@@ -78,8 +78,10 @@ public class FlyCTRL : MonoBehaviour
         //Если партнер есть
         if (partner != null)
         {
-            partnerHave = true;
-            partnerType = partner.type;
+            if (partner.type != CellInternalObject.Type.airplane) {
+                partnerHave = true;
+                partnerType = partner.type;
+            }
         }
         comb = combFunc;
 

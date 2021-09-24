@@ -481,8 +481,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CountBoxBlocker: 0
+  CountRockBlocker: 0
   CountMold: 0
   CountPanelSpread: 0
+  CountInteractiveCells: 0
+  CountDestroyCrystals: 
   prefabCell: {fileID: 4113693801544523261, guid: 61007bd67adfd6f44a98435f34970566, type: 3}
   prefabInternal: {fileID: 1515285975908226051, guid: 5904676681b63c144b0044448c25fd67, type: 3}
   prefabBoxBlock: {fileID: 8239414828004230185, guid: 0a43a798e16507d47824363aa5efdbc7, type: 3}
@@ -506,8 +509,10 @@ MonoBehaviour:
   CellSwap: {fileID: 0}
   rectParticleSelect: {fileID: 0}
   timeLastBoom: 0
+  timeLastMove: 0
   moldCTRLs: []
   ComboCount: 1
+  testCell: {x: 1, y: 8}
   cellsPriority: []
 --- !u!114 &7182278835875313941
 MonoBehaviour:

@@ -1183,7 +1183,7 @@ public class CellInternalObject : MonoBehaviour
                 //влево
                 for (int x = -1; x > myField.cellCTRLs.GetLength(0) * -1; x--) {
                     //Если вышли за пределы массива //По x
-                    if (myCell.pos.x + x < 0 || myCell.pos.x > myField.cellCTRLs.GetLength(0) - 1)
+                    if (myCell.pos.x + x < 0 || myCell.pos.x + x > myField.cellCTRLs.GetLength(0) - 1)
                         continue;
 
                     //Если ячейки нет
@@ -1213,7 +1213,7 @@ public class CellInternalObject : MonoBehaviour
                 //вправо
                 for (int x = 1; x < myField.cellCTRLs.GetLength(0); x++) {
                     //Если вышли за пределы массива //По x
-                    if (myCell.pos.x + x < 0 || myCell.pos.x > myField.cellCTRLs.GetLength(0) - 1)
+                    if (myCell.pos.x + x < 0 || myCell.pos.x + x > myField.cellCTRLs.GetLength(0) - 1)
                         continue;
 
                     //Если ячейки нет
@@ -1253,7 +1253,7 @@ public class CellInternalObject : MonoBehaviour
                 for (int y = -1; y > myField.cellCTRLs.GetLength(1) * -1; y--)
                 {
                     //Если вышли за пределы массива //По y
-                    if (myCell.pos.y + y < 0 || myCell.pos.y > myField.cellCTRLs.GetLength(1) - 1)
+                    if (myCell.pos.y + y < 0 || myCell.pos.y + y > myField.cellCTRLs.GetLength(1) - 1)
                         continue;
 
                     //Если ячейки нет
@@ -1285,7 +1285,7 @@ public class CellInternalObject : MonoBehaviour
                 for (int y = 1; y < myField.cellCTRLs.GetLength(1); y++)
                 {
                     //Если вышли за пределы массива //По y
-                    if (myCell.pos.y + y < 0 || myCell.pos.y > myField.cellCTRLs.GetLength(1) - 1)
+                    if (myCell.pos.y + y < 0 || myCell.pos.y + y > myField.cellCTRLs.GetLength(1) - 1)
                         continue;
 
                     //Если ячейки нет

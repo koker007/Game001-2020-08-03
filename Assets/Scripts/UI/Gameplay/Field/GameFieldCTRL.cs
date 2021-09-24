@@ -275,6 +275,7 @@ public class GameFieldCTRL : MonoBehaviour
 
                     //Если ячейки нет, создаем
                     if (!cellCTRLs[x, y]) {
+
                         GameObject cellObj = Instantiate(prefabCell, parentOfCells);
                         //ищем компонент
                         cellCTRLs[x, y] = cellObj.GetComponent<CellCTRL>();
@@ -2537,6 +2538,10 @@ public class GameFieldCTRL : MonoBehaviour
             return;
         }
 
+        //Запретить перемещение игроком, пока идет перемешивание
+        CellSelect = null;
+        CellSwap = null;
+
         //Рандомизируем новые позиции
         RandomizadeNewPos();
 
@@ -2586,12 +2591,12 @@ public class GameFieldCTRL : MonoBehaviour
                 else if (testNow < (testMax / 4) * 2)
                 {
                     //Рандомизировать цвет у цветных
-                    //SetAllCellInternalRandomColor(testNow - (testMax / 4));
+                    SetAllCellInternalRandomColor(testNow - (testMax / 4));
                 }
                 else if (testNow < (testMax / 4) * 3)
                 {
                     //Рандомизировать цвет не только у цветных объектов
-                    //SetAllCellInternalRandom(testNow - (testMax / 4) * 2);
+                    SetAllCellInternalRandom(testNow - (testMax / 4) * 2);
                 }
                 else {
                     SetAllCellInternalRandomType(testNow - (testMax / 4) * 3);
@@ -3206,7 +3211,7 @@ public class GameFieldCTRL : MonoBehaviour
             TestMoveFly();
 
             //Если происходит движение
-            if (isMovingInternalObj || isMovingFly) {
+            if (isMovingInternalObj || isMovingFly || Time.unscaledTime - movingObjLastTime < 1 ) {
                 isMovingNow = true;
             }
             else {
@@ -3239,15 +3244,15 @@ public class GameFieldCTRL : MonoBehaviour
 
     //паходятся ли в движении какие либо объекты на поле
 
-    float movingLastTime = 0;
+    float movingObjLastTime = 0;
     void TestMoveInternalObj()
     {
         bool movingNow = false;
-        for (int x = 0; x < cellCTRLs.GetLength(0); x++)
+        for (int x = 0; x < cellCTRLs.GetLength(0) && !movingNow; x++)
         {
             if (movingNow) break;
 
-            for (int y = 0; y < cellCTRLs.GetLength(1); y++)
+            for (int y = 0; y < cellCTRLs.GetLength(1) && !movingNow; y++)
             {
                 if (movingNow) break;
 
@@ -3255,7 +3260,8 @@ public class GameFieldCTRL : MonoBehaviour
                 if (!cellCTRLs[x, y] || //Нет ячейки
                     !cellCTRLs[x, y].cellInternal || //Нет внутреннего объекта
                     cellCTRLs[x, y].BlockingMove > 0 || //присутствует коробка
-                    cellCTRLs[x, y].rock > 0 //Или есть камень
+                    cellCTRLs[x, y].rock > 0 || //Или есть камень
+                    (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[x,y].cellInternal.activateCount > 0) //или есть активированная бомба
                     ) continue;
 
                 //Если снизу есть куда двигаться, то двигаемся
@@ -3279,7 +3285,7 @@ public class GameFieldCTRL : MonoBehaviour
                 }
 
                 if (movingNow) {
-                    movingLastTime = Time.unscaledTime;
+                    movingObjLastTime = Time.unscaledTime;
                 }
             }
         }

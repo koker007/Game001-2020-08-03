@@ -30,6 +30,7 @@ public class SoundCTRL : MonoBehaviour
     public AudioClip clipEventOk;
     public AudioClip clipEventBad;
     public AudioClip clipLVLComplite;
+    public AudioClip clipLVLFailed;
     public AudioClip clipLVL;
 
     [Header("Clip")]
@@ -170,7 +171,7 @@ public class SoundCTRL : MonoBehaviour
             float timePlayNeed = 0;
             
             if(source.clip != null)
-                timePlayNeed = source.clip.length * Mathf.Abs(source.pitch);
+                timePlayNeed = source.clip.length / Mathf.Abs(source.pitch);
 
             //если время воспроизведения около нулевое
             if (timePlayNeed <= 0.001f) 

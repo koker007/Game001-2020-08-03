@@ -405,7 +405,9 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             myField.timeLastBoom = Time.unscaledTime;
         }
         else {
-            myField.timeLastBoom += 0.025f;
+            //Добавляем время взрыва если его мало
+            if(Time.unscaledTime - myField.timeLastBoom < 2.5f)
+                myField.timeLastBoom += 0.025f;
         }
 
         //Если камня нету
