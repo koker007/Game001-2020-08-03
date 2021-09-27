@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3010778764461007471}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 3.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8227752443213284662}
@@ -127,6 +127,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f780bf270d004e4a8ddb7e102b2bdcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distToCamNow: 0
+  mySprite: {fileID: 1903004683631370773}
+  SpeedAngle: {x: 0, y: 0, z: 0}
+  PosStart: {x: 0, y: 0, z: 0}
+  angleStart: 80
+  angleNow: 0
+  speedBasic: {x: 0, y: 0, z: 0}
+  DiapasonMoveX: {x: -10, y: 10}
+  DiapasonMoveY: {x: 0, y: 15}
+  ChangeImageOutDiapasone: 0
+  speedBasicRandomX: {x: 0, y: 0}
+  speedBasicRandomY: {x: 0, y: 0}
+  scaleRandom: {x: 0, y: 0}
+  mirrorRandomX: 1
+  mirrorRandomY: 0
 --- !u!95 &8621179371515012479
 Animator:
   serializedVersion: 3

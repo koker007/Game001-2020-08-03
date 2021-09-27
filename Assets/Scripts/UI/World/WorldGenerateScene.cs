@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //alexandr
+//Семен
 /// <summary>
 /// генерация обьектов в меню уровней
 /// </summary>
 public class WorldGenerateScene : MonoBehaviour
 {
+    static public WorldGenerateScene main;
+
     public GameObject PrefLevelButton;
     public GameObject[] Location = new GameObject[0];
 
@@ -19,7 +22,10 @@ public class WorldGenerateScene : MonoBehaviour
     private const float DistanceSpawnLevelBut = 5f;
     private const float WidthSpawnLevelBut = 8f;
 
-    private float rotation;
+    /// <summary>
+    /// Фактический угл поворота мира
+    /// </summary>
+    public float rotationNow; 
     public static float RealRotation;
     private const float SpeedLerpRotation = 2f;
     private Transform RotatableObj;
@@ -54,6 +60,8 @@ public class WorldGenerateScene : MonoBehaviour
 
     private void Start()
     {
+        main = this;
+
         RealRotation = -100;
 
         SetRotationForWorldUp = 0;
@@ -76,31 +84,31 @@ public class WorldGenerateScene : MonoBehaviour
     //поворот обьекта
     private void RotateMainObject()
     {
-        rotation = Mathf.Lerp(rotation, RealRotation, Time.deltaTime * SpeedLerpRotation);
-        RotatableObj.eulerAngles = new Vector3(rotation, 0, 0);
+        rotationNow = Mathf.Lerp(rotationNow, RealRotation, Time.deltaTime * SpeedLerpRotation);
+        RotatableObj.eulerAngles = new Vector3(rotationNow, 0, 0);
     }
 
     //проверка обновлений цилиндра
     private void UpdateMainObject()
     {
-        if (rotation <= SetRotationForWorldUp - DistanceSpawnLevelBut)
+        if (rotationNow <= SetRotationForWorldUp - DistanceSpawnLevelBut)
         {
             GenerateLevelButtonUp();
             SetRotationForWorldUp -= DistanceSpawnLevelBut;
             UpdateLokations(true);
         }
-        else if (rotation >= SetRotationForWorldUp + DistanceSpawnLevelBut && rotation <= 9)
+        else if (rotationNow >= SetRotationForWorldUp + DistanceSpawnLevelBut && rotationNow <= 9)
         {
             DeleteLevelButtonUp();
             SetRotationForWorldUp += DistanceSpawnLevelBut;
             UpdateLokations(false);
         }
-        if (rotation <= SetRotationForWorldDown - DistanceSpawnLevelBut)
+        if (rotationNow <= SetRotationForWorldDown - DistanceSpawnLevelBut)
         {
             DeleteLevelButtonDown();
             SetRotationForWorldDown -= DistanceSpawnLevelBut;
         }
-        else if (rotation >= SetRotationForWorldDown - DistanceSpawnLevelBut && rotation <= -181)
+        else if (rotationNow >= SetRotationForWorldDown - DistanceSpawnLevelBut && rotationNow <= -181)
         {
             GenerateLevelButtonDown();
             SetRotationForWorldDown += DistanceSpawnLevelBut;
@@ -140,7 +148,7 @@ public class WorldGenerateScene : MonoBehaviour
         MaxLevel++;
         Vector3 position = MainComponents.RotatableObj.transform.position;
         float radian;
-        radian = (Mathf.Abs(rotation) - MaxLevel * DistanceSpawnLevelBut) * Mathf.Deg2Rad;
+        radian = (Mathf.Abs(rotationNow) - MaxLevel * DistanceSpawnLevelBut) * Mathf.Deg2Rad;
         position = new Vector3(position.x + AlorithmX(MaxLevel), position.y + DistanceFromWorldCenter * Mathf.Sin(radian), position.z + DistanceFromWorldCenter * Mathf.Cos(radian));
         LevelButtons.Add(new LButton() { NumLevel = MaxLevel, obj = Instantiate(PrefLevelButton, position, Quaternion.identity, MainComponents.RotatableObj.transform) });
         LevelButtons[LevelButtons.Count - 1].Level();
@@ -151,7 +159,7 @@ public class WorldGenerateScene : MonoBehaviour
         MinLevel--;
         Vector3 position = MainComponents.RotatableObj.transform.position;
         float radian;
-        radian = (Mathf.Abs(rotation) - MinLevel * DistanceSpawnLevelBut) * Mathf.Deg2Rad;
+        radian = (Mathf.Abs(rotationNow) - MinLevel * DistanceSpawnLevelBut) * Mathf.Deg2Rad;
         position = new Vector3(position.x + AlorithmX(MinLevel), position.y + DistanceFromWorldCenter * Mathf.Sin(radian), position.z + DistanceFromWorldCenter * Mathf.Cos(radian));
         LevelButtons.Insert(0, new LButton() { NumLevel = MinLevel, obj = Instantiate(PrefLevelButton, position, Quaternion.identity, MainComponents.RotatableObj.transform) });
         LevelButtons[0].Level();
