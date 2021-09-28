@@ -12,7 +12,7 @@ public class WorldGenerateScene : MonoBehaviour
     static public WorldGenerateScene main;
 
     public GameObject PrefLevelButton;
-    public GameObject[] Location = new GameObject[0];
+    public WorldLocation[] PrefabsLocation = new WorldLocation[0];
 
     private float SetRotationForWorldUp;
     private float SetRotationForWorldDown;
@@ -71,14 +71,16 @@ public class WorldGenerateScene : MonoBehaviour
         MinLevel = 1;
 
         locationCounter = 0;
-        Locations[locationCounter] = Instantiate(Location[1], MainComponents.RotatableObj.transform.position, Quaternion.identity, MainComponents.RotatableObj.transform);
+        //Locations[locationCounter] = Instantiate(PrefabsLocation[1].gameObject, MainComponents.RotatableObj.transform.position, Quaternion.identity, MainComponents.RotatableObj.transform);
         locationCounter++;
     }
 
     private void Update()
     {
         RotateMainObject();
+
         UpdateMainObject();
+        UpdateMainObject2();
     }
 
     //поворот обьекта
@@ -95,13 +97,13 @@ public class WorldGenerateScene : MonoBehaviour
         {
             GenerateLevelButtonUp();
             SetRotationForWorldUp -= DistanceSpawnLevelBut;
-            UpdateLokations(true);
+            //UpdateLokations(true);
         }
         else if (rotationNow >= SetRotationForWorldUp + DistanceSpawnLevelBut && rotationNow <= 9)
         {
             DeleteLevelButtonUp();
             SetRotationForWorldUp += DistanceSpawnLevelBut;
-            UpdateLokations(false);
+            //UpdateLokations(false);
         }
         if (rotationNow <= SetRotationForWorldDown - DistanceSpawnLevelBut)
         {
@@ -115,6 +117,59 @@ public class WorldGenerateScene : MonoBehaviour
         }
     }
 
+    float posStart = -90;
+    List<WorldLocation> bufferLocations = new List<WorldLocation>();
+    /// <summary>
+    /// Проверка генерирования локаций
+    /// </summary>
+    private void UpdateMainObject2() {
+
+
+        //Проверяем буффер на необходимость удаления локаций
+        List<WorldLocation> bufferLocationsNew = new List<WorldLocation>();
+        foreach (WorldLocation bufferLocation in bufferLocations) {
+            //Если локация есть проверяем ее на удаление
+            if (bufferLocation != null) {
+                bufferLocation.TestDelete();
+
+                //Если все еще есть добавляем в новый лист
+                if (bufferLocation != null) {
+                    bufferLocationsNew.Add(bufferLocation);
+                }
+            }
+        }
+        //Заменяем старое, новым
+        bufferLocations = bufferLocationsNew;
+
+        float posNow = posStart;
+        //Идем по списку заранее подготовленных локаций
+        for (int num = 0; num < PrefabsLocation.Length; num++) {
+            
+            
+            //проверяем есть ли локация с текущим углом в буффере
+            bool found = false;
+            foreach (WorldLocation bufferLocation in bufferLocations) {
+                if (bufferLocation.myAngle == posNow) {
+                    found = true;
+                    break;
+                }
+            }
+
+            //Если нету, а растояние маленькое создаем
+            if (!found && Mathf.Abs(posNow - rotationNow) < 180) {
+                GameObject locationObj = Instantiate(PrefabsLocation[num].gameObject, RotatableObj.transform);
+                WorldLocation location = locationObj.GetComponent<WorldLocation>();
+                location.Inicialize(posNow);
+
+                bufferLocations.Add(location);
+            }
+
+            //Вычитаем текущий угл префаба
+            posNow -= PrefabsLocation[num].lenghtAngle;
+        }
+        
+    }
+
     private void UpdateLokations(bool Up)
     {
         if (SetRotationForWorldUp % 180 == 0)
@@ -122,7 +177,7 @@ public class WorldGenerateScene : MonoBehaviour
             if (Up)
             {
                 Destroy(Locations[locationCounter]);
-                Locations[locationCounter] = Instantiate(Location[Random.Range(0, 3)], MainComponents.RotatableObj.transform.position, Quaternion.identity, MainComponents.RotatableObj.transform);
+                Locations[locationCounter] = Instantiate(PrefabsLocation[Random.Range(0, 3)].gameObject, MainComponents.RotatableObj.transform.position, Quaternion.identity, MainComponents.RotatableObj.transform);
                 locationCounter++;
                 if(locationCounter > 1)
                 {
@@ -137,7 +192,7 @@ public class WorldGenerateScene : MonoBehaviour
                     locationCounter = 1;
                 }
                 Destroy(Locations[locationCounter]);
-                Locations[locationCounter] = Instantiate(Location[Random.Range(0, 3)], MainComponents.RotatableObj.transform.position, Quaternion.identity, MainComponents.RotatableObj.transform);
+                Locations[locationCounter] = Instantiate(PrefabsLocation[Random.Range(0, 3)].gameObject, MainComponents.RotatableObj.transform.position, Quaternion.identity, MainComponents.RotatableObj.transform);
             }
         }
     }

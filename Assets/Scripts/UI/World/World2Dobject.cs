@@ -16,6 +16,11 @@ public class World2Dobject : MonoBehaviour
     SpriteRenderer mySprite;
     [SerializeField]
     Sprite[] sprites;
+    [SerializeField]
+    bool isAnimated = false;
+    [SerializeField]
+    float speedAnimation = 0.1f;
+    float offsetAnimationTime = 0;
 
     [Header("SeeOnCamera")]
     [SerializeField]
@@ -40,7 +45,9 @@ public class World2Dobject : MonoBehaviour
     [SerializeField]
     Vector2 DiapasonMoveX = new Vector2(-7, 7);
     [SerializeField]
-    Vector2 DiapasonMoveY = new Vector2(0, 15);
+    Vector2 DiapasonMoveY = new Vector2(10, 15);
+    [SerializeField]
+    Vector2 DiapasonSpawnZ = new Vector2(0, 90);
     [SerializeField]
     bool ChangeImageOutDiapasone = false;
 
@@ -50,7 +57,7 @@ public class World2Dobject : MonoBehaviour
     [SerializeField]
     bool RandomStartPosY = false;
     [SerializeField]
-    bool RandomStartPosZ180 = false; 
+    bool RandomStartPosZ = false; 
     [SerializeField]
     Vector2 speedBasicRandomX = new Vector2();
     [SerializeField]
@@ -73,9 +80,9 @@ public class World2Dobject : MonoBehaviour
         //Получаем начальные позиции
         float startx = transform.localPosition.x;
         float starty = transform.localPosition.y;
-        float startz = transform.parent.rotation.eulerAngles.x;
+        float startz = transform.parent.localRotation.eulerAngles.x;
 
-        if (RandomStartPosX || RandomStartPosY || RandomStartPosZ180) {
+        if (RandomStartPosX || RandomStartPosY || RandomStartPosZ) {
             if (RandomStartPosX && DiapasonMoveX.x - DiapasonMoveX.y != 0) {
                 startx = Random.Range(DiapasonMoveX.x, DiapasonMoveX.y);
             }
@@ -83,8 +90,12 @@ public class World2Dobject : MonoBehaviour
                 starty = Random.Range(DiapasonMoveY.x, DiapasonMoveY.y);
             }
 
-            if (RandomStartPosZ180) {
-                startz += Random.Range(-90, 90);
+            if (RandomStartPosZ) {
+                startz = Random.Range(DiapasonSpawnZ.x, DiapasonSpawnZ.y);
+                //Вращаем
+                Quaternion rotate = transform.parent.localRotation;
+                rotate.eulerAngles = new Vector3(startz, rotate.eulerAngles.y, rotate.eulerAngles.z);
+                transform.parent.localRotation = rotate;
             }
                         
 
@@ -92,10 +103,6 @@ public class World2Dobject : MonoBehaviour
         }
 
         PosStart = new Vector3(startx, starty, startz);
-        //Вращаем
-        Quaternion rotate = transform.parent.localRotation;
-        rotate.eulerAngles = new Vector3(PosStart.z, rotate.eulerAngles.y, rotate.eulerAngles.z);
-        transform.parent.localRotation = rotate;
 
         randomize = true;
 
@@ -115,7 +122,7 @@ public class World2Dobject : MonoBehaviour
         //Отменить поворот по оси Y
         if (DontRotateY) {
             Quaternion rotate = transform.localRotation;
-            rotate.eulerAngles = new Vector3(rotate.eulerAngles.x, 0, rotate.eulerAngles.z);
+            rotate.eulerAngles = new Vector3(rotate.eulerAngles.x, 180, rotate.eulerAngles.z);
             transform.localRotation = rotate;
         }
         //отменить поворот по оси Z
@@ -130,6 +137,7 @@ public class World2Dobject : MonoBehaviour
         MoveBasic();
 
         TestRestart();
+        Animate();
     }
 
     //Движение зависимое от дальности до камеры
@@ -200,6 +208,17 @@ public class World2Dobject : MonoBehaviour
         }
 
         transform.localPosition = positionNew;
+    }
+
+    void Animate() {
+        if (!isAnimated) {
+            return;
+        }
+
+        //считаем текущее время
+        int numSprite = (int)((Time.unscaledTime + offsetAnimationTime)/speedAnimation)%sprites.Length;
+
+        mySprite.sprite = sprites[numSprite];
     }
 
     float GetAngleNow() {
