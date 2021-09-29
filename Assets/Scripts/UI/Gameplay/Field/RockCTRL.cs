@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class RockCTRL : MonoBehaviour
 {
 
+    [SerializeField]
+    AnimatorCTRL animator;
+
     CellCTRL myCell;
     RectTransform myRect;
 
@@ -58,13 +61,22 @@ public class RockCTRL : MonoBehaviour
         {
             if (myCell.rock > 0) return;
 
-            myCell.myField.rockCTRLs[myCell.pos.x, myCell.pos.y] = null;
-            ReCalcRockCount();
+            animator.PlayAnimation("Destroy");
 
-            Destroy(gameObject);
-
-            //Пересоздать список плесени исключая отсутствующиие
+            //Звук разбивания камня
+            SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipDamageRock, 0.5f, Random.Range(0.9f, 1.1f));
         }
+    }
+
+    //Уничтожить если жизни кончились
+    void Destroy()
+    {
+        myCell.myField.rockCTRLs[myCell.pos.x, myCell.pos.y] = null;
+        ReCalcRockCount();
+
+        Destroy(gameObject);
+
+        //Пересоздать список плесени исключая отсутствующиие
     }
 
 

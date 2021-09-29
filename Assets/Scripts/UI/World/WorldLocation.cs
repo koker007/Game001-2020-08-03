@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//семен
+/// <summary>
+/// Представляет из себя данные о текущей локации
+/// </summary>
 public class WorldLocation : MonoBehaviour
 {
     /// <summary>
@@ -14,8 +19,13 @@ public class WorldLocation : MonoBehaviour
     [SerializeField]
     public float myAngle = 0;
 
+    [SerializeField]
+    public int myLvlNumStart = 0;
+    [SerializeField]
+    public Vector3[] LVLButtons;
+
     //Инициализировать локацию
-    public void Inicialize(float myAngleNew) {
+    public void Inicialize(float myAngleNew, int myLVLnumStartNew) {
         myAngle = myAngleNew;
 
         //Вращяем так как того требует наш новый градус
@@ -23,6 +33,7 @@ public class WorldLocation : MonoBehaviour
         rot.eulerAngles = new Vector3(Mathf.Abs(myAngle), rot.eulerAngles.y, rot.eulerAngles.z);
         transform.localRotation = rot;
 
+        myLvlNumStart = myLVLnumStartNew;
     }
     public void TestDelete() {
         rotateNow = WorldGenerateScene.main.rotationNow;

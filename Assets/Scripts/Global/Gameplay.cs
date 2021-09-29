@@ -94,7 +94,7 @@ public class Gameplay : MonoBehaviour
 
         if (!combination.foundMold) movingMoldCount++;
 
-        
+
     }
 
     public void ScoreUpdate(int PlusScore)
@@ -141,6 +141,88 @@ public class Gameplay : MonoBehaviour
             }
         }
 
+    }
+
+    struct Buffer {
+        //Завершена ли миссия
+        public bool missionComplite;
+        public bool missionDefeat;
+        public float missionTestTime;
+        
+        
+    }
+    Buffer buffer;
+
+    //Выполнить проверку состояний текущей миссии
+    void TestMission() {
+        //если в этом кадре не проверяли
+        if (buffer.missionTestTime != Time.unscaledTime)
+        {
+            //Ставим время последней проверки
+            buffer.missionTestTime = Time.unscaledTime;
+
+            //Делаем параметры по умолчанию
+            buffer.missionComplite = false;
+            buffer.missionDefeat = false;
+
+            //Если есть ходы, идет игра, и игра не закончена
+            if (isGameplay && GameplayEnd == false)
+            {
+                //Если
+                LevelsScript.Level level = LevelsScript.main.ReturnLevel();
+                if (score >= level.NeedScore || !level.PassedWithScore)
+                {
+                    if (MenuGameplay.main.gameFieldCTRL.CountMold <= 0 || !level.PassedWithMold)
+                    {
+                        if (MenuGameplay.main.gameFieldCTRL.CountBoxBlocker <= 0 || !level.PassedWithBox)
+                        {
+                            if (MenuGameplay.main.gameFieldCTRL.CountRockBlocker <= 0 || !level.PassedWithRock)
+                            {
+                                if (MenuGameplay.main.gameFieldCTRL.CountInteractiveCells <= MenuGameplay.main.gameFieldCTRL.CountPanelSpread || !level.PassedWithPanel)
+                                {
+                                    if (level.NeedCrystal <= main.colorsCount[(int)level.NeedColor] || !level.PassedWithCrystal)
+                                    {
+                                        buffer.missionComplite = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                //если ходов нет проигрышь
+                if (movingCan <= 0)
+                {
+                    buffer.missionDefeat = true;
+                }
+            }
+        }
+    }
+
+    //Выполнена ли цель задания
+    public bool isMissionComplite() {
+
+        TestMission();
+
+        return buffer.missionComplite;
+    }
+
+    //Не проваленно ли задание
+    public bool isMissionDefeat() {
+        TestMission();
+
+        return buffer.missionDefeat;
+    }
+
+    public void OpenMessageComplite() {
+        PlayerProfile.main.LevelPassed(levelSelect);
+        GlobalMessage.Results();
+        LevelsScript.main.ReturnLevel().MaxScore = score;
+        GameplayEnd = true;
+
+    }
+    public void OpenMessageDefeat() {
+        GlobalMessage.Lose();
+        LevelsScript.main.ReturnLevel().MaxScore = score;
     }
 
 

@@ -24,6 +24,8 @@ public class World2Dobject : MonoBehaviour
 
     [Header("SeeOnCamera")]
     [SerializeField]
+    bool DontRotateX = false;
+    [SerializeField]
     bool DontRotateY = false;
     [SerializeField]
     bool DontRotateZ = false;
@@ -76,6 +78,7 @@ public class World2Dobject : MonoBehaviour
 
     private void Start()
     {
+        GetAngleStart();
 
         //Получаем начальные позиции
         float startx = transform.localPosition.x;
@@ -119,6 +122,11 @@ public class World2Dobject : MonoBehaviour
 
         //поворот обьекта к камере
         transform.LookAt(MainComponents.MainCamera.transform);
+        if (DontRotateX) {
+            Quaternion rotate = transform.localRotation;
+            rotate.eulerAngles = new Vector3(0, rotate.eulerAngles.y, rotate.eulerAngles.z);
+            transform.localRotation = rotate;
+        }
         //Отменить поворот по оси Y
         if (DontRotateY) {
             Quaternion rotate = transform.localRotation;
@@ -153,6 +161,11 @@ public class World2Dobject : MonoBehaviour
 
         //Вычисляем смещение
         float offSet = angleStart - angleNow;
+
+        float test = 0;
+        if (Mathf.Abs((SpeedAngle - new Vector3(0,0,0)).magnitude) > 0.01) {
+            test = 0;
+        }
 
         //Текущее положение
         transform.localPosition = new Vector3(PosStart.x + SpeedAngle.x * offSet, PosStart.y + SpeedAngle.y * offSet, 0);
@@ -259,6 +272,35 @@ public class World2Dobject : MonoBehaviour
         if (!found) angleNow = 0;
 
         return angleNow;
+    }
+    void GetAngleStart() {
+        //Ищем угол текущего объекта для его нулевой позиции //Пока не наткнемся объекта родителя, локация
+        int parentNum = 0;
+        Transform parent = gameObject.transform.parent;
+
+        //Выходим если степень предка слишком большая
+        while (parentNum < 10)
+        {
+            //Если у этого объекта есть компонент локации
+            WorldLocation worldLocation = parent.gameObject.GetComponent<WorldLocation>();
+
+            if (worldLocation != null)
+            {
+                //Значит мы нашли финальный угл
+                angleStart += worldLocation.myAngle;
+                return;
+            }
+
+            //Выходим если дальше предков нет
+            if (parent.parent == null)
+            {
+                return;
+            }
+
+            //Переключаемся на следующего предка
+            parentNum++;
+            parent = parent.parent;
+        }
     }
 
     //моменттально Меняет изображение на другое из предложенных если требуется

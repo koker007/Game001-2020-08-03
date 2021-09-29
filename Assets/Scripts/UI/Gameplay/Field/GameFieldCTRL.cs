@@ -3207,6 +3207,12 @@ public class GameFieldCTRL : MonoBehaviour
 
             timelastMoveTest = Time.unscaledTime;
 
+            //Если мисия уже завершилась включаем все возможные цвета
+            if (Gameplay.main.isMissionComplite()) {
+                Gameplay.main.colors = 6;
+                Gameplay.main.superColorPercent = 20;
+            }
+
             TestMoveInternalObj(); //Проверяем наличие движения для отмены комбо
             TestMoveFly();
 
@@ -3223,7 +3229,62 @@ public class GameFieldCTRL : MonoBehaviour
             if (isMovingOld && !isMovingNow)
             {
                 ComboCount = 1;
-                Gameplay.main.CheckEndGame();
+
+                //Если миссию можно закончить прохождением
+                if (Gameplay.main.isMissionComplite()) {
+                    //Активируем по очереди все доступные супер бомбы ракеты и остальные активационные штуки
+                    List<CellInternalObject> roskets = new List<CellInternalObject>();
+                    List<CellInternalObject> bombs = new List<CellInternalObject>();
+                    List<CellInternalObject> flys = new List<CellInternalObject>();
+                    List<CellInternalObject> color5 = new List<CellInternalObject>();
+
+                    for (int y = 0; y < cellCTRLs.GetLength(1); y++) {
+                        for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
+                            if (cellCTRLs[x,y] != null && cellCTRLs[x,y].cellInternal) {
+
+                                if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.rocketHorizontal ||
+                                    cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.rocketVertical) {
+                                    roskets.Add(cellCTRLs[x, y].cellInternal);
+                                }
+                                else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.bomb) {
+                                    bombs.Add(cellCTRLs[x, y].cellInternal);
+                                }
+                                else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.airplane) {
+                                    flys.Add(cellCTRLs[x, y].cellInternal);
+                                }
+                                else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.color5) {
+                                    color5.Add(cellCTRLs[x, y].cellInternal);
+                                }
+                            }
+                        }
+                    }
+
+                    if (roskets.Count > 0)
+                    {
+                        foreach (CellInternalObject inside in roskets)
+                            inside.myCell.Damage();
+                    }
+                    else if (bombs.Count > 0)
+                    {
+                        foreach (CellInternalObject inside in bombs)
+                            inside.myCell.Damage();
+                    }
+                    else if (flys.Count > 0)
+                    {
+                        foreach (CellInternalObject inside in flys)
+                            inside.myCell.Damage();
+                    }
+                    else if (color5.Count > 0) {
+                        foreach (CellInternalObject inside in color5)
+                            inside.myCell.Damage();
+                    }
+                    else
+                    {
+                        Gameplay.main.OpenMessageComplite();
+                    }
+
+                }
+                else if (Gameplay.main.isMissionDefeat()) Gameplay.main.OpenMessageDefeat();
             }
             else if (!isMovingOld && isMovingNow)
             {

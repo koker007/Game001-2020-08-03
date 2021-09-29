@@ -22,6 +22,7 @@ public class WorldGenerateScene : MonoBehaviour
     private const float DistanceSpawnLevelBut = 5f;
     private const float WidthSpawnLevelBut = 8f;
 
+    public float posStart = -90;
     /// <summary>
     /// Фактический угл поворота мира
     /// </summary>
@@ -117,7 +118,6 @@ public class WorldGenerateScene : MonoBehaviour
         }
     }
 
-    float posStart = -90;
     List<WorldLocation> bufferLocations = new List<WorldLocation>();
     /// <summary>
     /// Проверка генерирования локаций
@@ -142,6 +142,7 @@ public class WorldGenerateScene : MonoBehaviour
         bufferLocations = bufferLocationsNew;
 
         float posNow = posStart;
+        int lvlNow = 1;
         //Идем по списку заранее подготовленных локаций
         for (int num = 0; num < PrefabsLocation.Length; num++) {
             
@@ -159,7 +160,7 @@ public class WorldGenerateScene : MonoBehaviour
             if (!found && Mathf.Abs(posNow - rotationNow) < 180) {
                 GameObject locationObj = Instantiate(PrefabsLocation[num].gameObject, RotatableObj.transform);
                 WorldLocation location = locationObj.GetComponent<WorldLocation>();
-                location.Inicialize(posNow);
+                location.Inicialize(posNow, lvlNow);
 
                 bufferLocations.Add(location);
             }
