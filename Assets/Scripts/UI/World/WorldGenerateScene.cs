@@ -12,6 +12,7 @@ public class WorldGenerateScene : MonoBehaviour
     static public WorldGenerateScene main;
 
     public GameObject PrefLevelButton;
+    public GameObject PrefGroundLoc10Grad;
     public WorldLocation[] PrefabsLocation = new WorldLocation[0];
 
     private float SetRotationForWorldUp;
