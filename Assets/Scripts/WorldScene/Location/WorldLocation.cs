@@ -22,7 +22,7 @@ public class WorldLocation : MonoBehaviour
     [SerializeField]
     public int myLvlNumStart = 0;
     [SerializeField]
-    public Vector3[] LVLButtons;
+    public LevelPosition[] LevelPositions;
 
     public GameObject[] Graunds;
 

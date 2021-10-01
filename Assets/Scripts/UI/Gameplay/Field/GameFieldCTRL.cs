@@ -1630,6 +1630,10 @@ public class GameFieldCTRL : MonoBehaviour
     void TestFieldPotencial() {
 
         //Воспроизводим анимацию на ячейках с потенциалом
+        if (Gameplay.main.isMissionComplite() || Gameplay.main.isMissionDefeat())
+        {
+            potencialBest = null;
+        }
         AnimationPlayPotencial();
 
         float timeToTest = 2;
@@ -1643,8 +1647,8 @@ public class GameFieldCTRL : MonoBehaviour
             return;
         }
 
-        //ВЫходим если список уже есть
-        if (listPotencial.Count > 0) {
+        //ВЫходим если список уже есть или миссия провалена или выполнена
+        if (listPotencial.Count > 0 || Gameplay.main.isMissionComplite() || Gameplay.main.isMissionDefeat()) {
             return;
         }
 
@@ -1715,6 +1719,9 @@ public class GameFieldCTRL : MonoBehaviour
 
     //Перестроить новый список потенциальных комбинаций
     void ReCalcListPotencial() {
+
+        
+
         //Начинаем поиск потенциальных комбинаций
         for (int x = 0; x < cellCTRLs.GetLength(0); x++)
         {
@@ -3211,6 +3218,8 @@ public class GameFieldCTRL : MonoBehaviour
             if (Gameplay.main.isMissionComplite()) {
                 Gameplay.main.colors = 6;
                 Gameplay.main.superColorPercent = 20;
+
+                CellSelect = null;
             }
 
             TestMoveInternalObj(); //Проверяем наличие движения для отмены комбо
