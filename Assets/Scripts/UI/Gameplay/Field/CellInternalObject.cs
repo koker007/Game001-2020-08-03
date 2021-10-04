@@ -863,7 +863,7 @@ public class CellInternalObject : MonoBehaviour
 
                 myCell.BufferCombination = combination;
                 myCell.BufferNearDamage = false;
-                myCell.ExplosionBoomInvoke(myCell.explosion);
+                myCell.ExplosionBoomInvoke(myCell.explosion, 0);
             }
             //горизонтальный
             else if (horizontal) {
@@ -880,7 +880,7 @@ public class CellInternalObject : MonoBehaviour
 
                 myCell.BufferCombination = combination;
                 myCell.BufferNearDamage = false;
-                myCell.ExplosionBoomInvoke(myCell.explosion);
+                myCell.ExplosionBoomInvoke(myCell.explosion, 0);
             }
             //вертикальный
             else if (vertical) {
@@ -897,7 +897,7 @@ public class CellInternalObject : MonoBehaviour
 
                 myCell.BufferCombination = combination;
                 myCell.BufferNearDamage = false;
-                myCell.ExplosionBoomInvoke(myCell.explosion);
+                myCell.ExplosionBoomInvoke(myCell.explosion, 0);
             }
 
         }
@@ -1316,7 +1316,7 @@ public class CellInternalObject : MonoBehaviour
 
             //Взрываем
             foreach (CellCTRL expCell in expCells) {
-                expCell.ExplosionBoomInvoke(expCell.explosion);
+                expCell.ExplosionBoomInvoke(expCell.explosion, 0);
             }
 
             float radius = 1;

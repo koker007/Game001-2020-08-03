@@ -957,7 +957,8 @@ public class GameFieldCTRL : MonoBehaviour
         void TestSuperCombination() {
             foreach (Swap swap in BufferSwap) {
                 //Пропускаем если они в движении
-                if (swap.first.cellInternal.isMove || swap.second.cellInternal.isMove) {
+                if (swap.first.cellInternal == null || swap.second.cellInternal == null || 
+                    swap.first.cellInternal.isMove || swap.second.cellInternal.isMove) {
                     continue;
                 }
 
@@ -1406,7 +1407,7 @@ public class GameFieldCTRL : MonoBehaviour
                             c.explosion = new CellCTRL.Explosion(false, false, true, true, 0.1f, comb);
                             c.BufferCombination = comb;
                             c.BufferNearDamage = false;
-                            c.ExplosionBoomInvoke(c.explosion);
+                            c.ExplosionBoomInvoke(c.explosion, c.explosion.timer);
                         }
                     }
                     //Если собралась вертикаль
@@ -1417,7 +1418,7 @@ public class GameFieldCTRL : MonoBehaviour
                             c.explosion = new CellCTRL.Explosion(true, true, false, false, 0.1f, comb);
                             c.BufferCombination = comb;
                             c.BufferNearDamage = false;
-                            c.ExplosionBoomInvoke(c.explosion);
+                            c.ExplosionBoomInvoke(c.explosion, c.explosion.timer);
                         }
                     }
 
@@ -1530,6 +1531,17 @@ public class GameFieldCTRL : MonoBehaviour
                 if (Gameplay.main.buttonDestroyInternal > 0) {
                     Gameplay.main.buttonDestroyInternal--;
 
+                    //Создаем комбинацию
+                    Combination comb = new Combination();
+                    comb.cells.Add(CellSelect);
+
+                    //если ячейки есть
+                    if (CellSelect.panel)
+                        comb.foundPanel = true;
+                    if (CellSelect.mold > 0)
+                        comb.foundMold = true;
+
+                    CellSelect.BufferCombination = comb;
                     CellSelect.DamageInvoke(0.25f);
                     MenuGameplay.main.SuperHitSelected = MenuGameplay.SuperHitType.none;
                 }
@@ -1538,9 +1550,20 @@ public class GameFieldCTRL : MonoBehaviour
                 if (Gameplay.main.buttonRosket > 0) {
                     Gameplay.main.buttonRosket--;
 
-                    
-                    CellSelect.explosion = new CellCTRL.Explosion(true, true, true, true, 0.05f, null);
-                    CellSelect.ExplosionBoomInvoke(CellSelect.explosion);
+                    //Создаем комбинацию
+                    Combination comb = new Combination();
+                    comb.cells.Add(CellSelect);
+
+                    //если ячейки есть
+                    if (CellSelect.panel)
+                        comb.foundPanel = true;
+                    if (CellSelect.mold > 0)
+                        comb.foundMold = true;
+
+                    CellSelect.BufferCombination = comb;
+
+                    CellSelect.explosion = new CellCTRL.Explosion(true, true, true, true, 0.05f, comb);
+                    CellSelect.ExplosionBoomInvoke(CellSelect.explosion, CellSelect.explosion.timer);
 
                     MenuGameplay.main.SuperHitSelected = MenuGameplay.SuperHitType.none;
                 }

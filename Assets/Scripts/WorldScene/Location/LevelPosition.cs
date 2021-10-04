@@ -11,9 +11,9 @@ public class LevelPosition : MonoBehaviour
 
     //Визуализатор местоположения кнопки
     [SerializeField]
-    GameObject positionVisualizator;
+    public GameObject positionVisualizator;
 
-    GameObject button;
+    public WorldGenerateScene.LButton button = new WorldGenerateScene.LButton();
     
 
     // Start is called before the first frame update
@@ -35,7 +35,8 @@ public class LevelPosition : MonoBehaviour
     public void Inicialize(int level) {
         if (inicialized) return;
 
-        button = Instantiate(WorldGenerateScene.main.PrefLevelButton, positionVisualizator.transform.parent);
-        button.transform.localPosition = positionVisualizator.transform.localPosition;
+        button.NumLevel = level;
+        button.obj = Instantiate(WorldGenerateScene.main.PrefLevelButton, positionVisualizator.transform.parent);
+        button.obj.transform.localPosition = positionVisualizator.transform.localPosition;
     }
 }

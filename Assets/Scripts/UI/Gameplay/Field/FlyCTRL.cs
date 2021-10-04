@@ -239,7 +239,7 @@ public class FlyCTRL : MonoBehaviour
                     CellTarget.explosion = new CellCTRL.Explosion(true, true, false, false, 0.05f, comb);
                     CellTarget.BufferCombination = comb;
                     CellTarget.BufferNearDamage = false;
-                    CellTarget.ExplosionBoomInvoke(CellTarget.explosion);
+                    CellTarget.ExplosionBoomInvoke(CellTarget.explosion, CellTarget.explosion.timer);
                 }
                 //Если партнер самолета была ракета вертикальная
                 else if (partnerType == CellInternalObject.Type.rocketVertical)
@@ -247,7 +247,7 @@ public class FlyCTRL : MonoBehaviour
                     CellTarget.explosion = new CellCTRL.Explosion(false, false, true, true, 0.05f, comb);
                     CellTarget.BufferCombination = comb;
                     CellTarget.BufferNearDamage = false;
-                    CellTarget.ExplosionBoomInvoke(CellTarget.explosion);
+                    CellTarget.ExplosionBoomInvoke(CellTarget.explosion, CellTarget.explosion.timer);
 
                     //myField.CreateRocketVertical(CellTarget, CellInternalObject.InternalColor.Red, 0);
                     //CellTarget.Damage();
@@ -267,7 +267,7 @@ public class FlyCTRL : MonoBehaviour
                 CellTarget.explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, comb);
                 CellTarget.BufferCombination = comb;
                 CellTarget.BufferNearDamage = false;
-                CellTarget.ExplosionBoomInvoke(CellTarget.explosion);
+                CellTarget.ExplosionBoomInvoke(CellTarget.explosion, CellTarget.explosion.timer);
 
                 int radius = 1;
                 //Перебираем поле 3 на 3
@@ -292,7 +292,7 @@ public class FlyCTRL : MonoBehaviour
                         myField.cellCTRLs[fieldPosX, fieldPosY].explosion = new CellCTRL.Explosion(false, false, false, false, time, comb);
                         myField.cellCTRLs[fieldPosX, fieldPosY].BufferCombination = comb;
                         myField.cellCTRLs[fieldPosX, fieldPosY].BufferNearDamage = false;
-                        myField.cellCTRLs[fieldPosX, fieldPosY].ExplosionBoomInvoke(CellTarget.explosion);
+                        myField.cellCTRLs[fieldPosX, fieldPosY].ExplosionBoomInvoke(CellTarget.explosion, CellTarget.explosion.timer);
                     }
                 }
 

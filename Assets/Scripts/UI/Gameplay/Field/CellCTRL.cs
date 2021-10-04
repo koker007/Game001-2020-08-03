@@ -138,14 +138,14 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     //Если в ячейке есть стойкий к взрыву предмет
                     if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x - minus, pos.y]))
                     {
-                        myField.cellCTRLs[pos.x - minus, pos.y].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, explosion.comb));
+                        myField.cellCTRLs[pos.x - minus, pos.y].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, explosion.comb), explosion.timer * minus);
                     }
                     //Иначе просто взрываем с таймером
                     else
                     {  
 
                         //Создаем взрыв и взрываем с таймером
-                        myField.cellCTRLs[pos.x - minus, pos.y].ExplosionBoomInvoke(new Explosion(true, false, false, false, explosion.timer, explosion.comb));
+                        myField.cellCTRLs[pos.x - minus, pos.y].ExplosionBoomInvoke(new Explosion(true, false, false, false, explosion.timer, explosion.comb), explosion.timer * minus);
 
                         //Если нету частиц взрыва то создаем
                         if (explosion.LeftParticleEffect == null)
@@ -198,13 +198,13 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     //Если в ячейке есть стойкий к взрыву предмет
                     if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x + plus, pos.y]))
                     {
-                        myField.cellCTRLs[pos.x + plus, pos.y].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, explosion.comb));
+                        myField.cellCTRLs[pos.x + plus, pos.y].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, explosion.comb), explosion.timer * plus);
                     }
                     //Иначе просто взрываем с таймером
                     else
                     {
                         //Создаем взрыв и взрываем с таймером
-                        myField.cellCTRLs[pos.x + plus, pos.y].ExplosionBoomInvoke(new Explosion(false, true, false, false, explosion.timer, explosion.comb));
+                        myField.cellCTRLs[pos.x + plus, pos.y].ExplosionBoomInvoke(new Explosion(false, true, false, false, explosion.timer, explosion.comb), explosion.timer * plus);
 
                         //Если нету частиц взрыва то создаем
                         if (explosion.RightParticleEffect == null)
@@ -241,7 +241,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         if (explosion.up)
         {
             bool found = false;
-            for (int plus = 1; plus < myField.cellCTRLs.GetLength(0); plus++)
+            for (int plus = 1; plus < myField.cellCTRLs.GetLength(1); plus++)
             {
                 //Если ячейку нашли
                 if (pos.y + plus < myField.cellCTRLs.GetLength(1) && myField.cellCTRLs[pos.x, pos.y + plus] != null)
@@ -257,14 +257,14 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     //Если в ячейке есть стойкий к взрыву предмет
                     if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x, pos.y + plus]))
                     {
-                        myField.cellCTRLs[pos.x, pos.y + plus].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, explosion.comb));
+                        myField.cellCTRLs[pos.x, pos.y + plus].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, explosion.comb), explosion.timer * plus);
                     }
                     //Иначе просто взрываем с таймером
                     else
                     {
 
                         //Создаем взрыв и взрываем с таймером
-                        myField.cellCTRLs[pos.x, pos.y + plus].ExplosionBoomInvoke(new Explosion(false, false, true, false, explosion.timer, explosion.comb));
+                        myField.cellCTRLs[pos.x, pos.y + plus].ExplosionBoomInvoke(new Explosion(false, false, true, false, explosion.timer, explosion.comb), explosion.timer * plus);
 
                         //Если нету частиц взрыва то создаем
                         if (explosion.UpParticleEffect == null)
@@ -301,7 +301,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         if (explosion.down)
         {
             bool found = false;
-            for (int minus = 1; minus < myField.cellCTRLs.GetLength(0); minus++)
+            for (int minus = 1; minus < myField.cellCTRLs.GetLength(1); minus++)
             {
                 //Если ячейку нашли
                 if (pos.y - minus >= 0 && myField.cellCTRLs[pos.x, pos.y - minus] != null)
@@ -317,14 +317,14 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     //Если в ячейке есть стойкий к взрыву предмет
                     if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x, pos.y - minus]))
                     {
-                        myField.cellCTRLs[pos.x, pos.y - minus].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, explosion.comb));
+                        myField.cellCTRLs[pos.x, pos.y - minus].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, explosion.comb), explosion.timer * minus);
                     }
                     //Иначе просто взрываем с таймером
                     else
                     {
 
                         //Создаем взрыв и взрываем с таймером
-                        myField.cellCTRLs[pos.x, pos.y - minus].ExplosionBoomInvoke(new Explosion(false, false, false, true, explosion.timer, explosion.comb));
+                        myField.cellCTRLs[pos.x, pos.y - minus].ExplosionBoomInvoke(new Explosion(false, false, false, true, explosion.timer, explosion.comb), explosion.timer * minus);
 
                         //Если нету частиц взрыва то создаем
                         if (explosion.DownParticleEffect == null)
@@ -361,9 +361,9 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         explosion = null;
 
     }
-    public void ExplosionBoomInvoke(Explosion explosionNew) {
+    public void ExplosionBoomInvoke(Explosion explosionNew, float invokeTime) {
         explosion = explosionNew;
-        Invoke("ExplosionBoom", explosion.timer);
+        Invoke("ExplosionBoom", invokeTime);
     }
     // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -612,6 +612,29 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 result += PriorityPanel;
             }
 
+            /////////////////////////////////////////////
+            //Умножаем за цель миссии на 2.5
+            //ящики
+            if (BlockingMove > 0 && LevelsScript.main.ReturnLevel().PassedWithBox)
+            {
+                result *= 3;
+            }
+            //панель
+            if (rock > 0 && LevelsScript.main.ReturnLevel().PassedWithRock)
+            {
+                result *= 3;
+            }
+            //mold
+            if (mold > 0 && LevelsScript.main.ReturnLevel().PassedWithMold)
+            {
+                result *= 3;
+            }
+            //панель
+            if (!panel && LevelsScript.main.ReturnLevel().PassedWithPanel) { 
+                result *= 3;            
+            }
+
+
             return result;
         }
 
@@ -642,7 +665,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         MouseCTRL.main.click();
 
         //Если внутри есть объект и движения нет
-        if (cellInternal && !cellInternal.isMove) {
+        //if (cellInternal && !cellInternal.isMove) {
 
             //если произошел двойной клик и клик по тойже ячейке
             if (MouseCTRL.main.ClickDouble && CellClickOld == this)
@@ -656,7 +679,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             }
 
             CellClickOld = this;
-        }
+        //}
     }
     public void OnPointerEnter(PointerEventData eventData) {
 
