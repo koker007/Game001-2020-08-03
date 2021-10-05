@@ -421,7 +421,7 @@ public class GameFieldCTRL : MonoBehaviour
 
         TestSpawn(); //Спавним
         isMoving();
-        TestFieldCombination(); //Тестим комбинации
+        TestFieldCombination(true); //Тестим комбинации с применением урона
 
         TestFieldPotencial(); //ищем потенциальные ходы
         TestRandomNotPotencial(); //Рандомизируем если ходов не обнаружено
@@ -592,8 +592,30 @@ public class GameFieldCTRL : MonoBehaviour
             IDLast++; //Прибавляем id комбинации
             ID = IDLast; //Это наш номер
         }
+
+        public Combination(Combination ParentComb) {
+            ID = ParentComb.ID; //Тотже id Поскольку являемся продолжением комбинации родителя
+            cells = ParentComb.cells;
+
+            horizontal = ParentComb.horizontal;
+            vertical = ParentComb.vertical;
+            line5 = ParentComb.line5;
+            square = ParentComb.square;
+            line4 = ParentComb.line4;
+            cross = ParentComb.cross;
+
+
+            if (ParentComb.foundPanel) {
+                foundPanel = ParentComb.foundPanel;
+            }
+            if (ParentComb.foundMold) {
+                foundMold = ParentComb.foundMold;
+            }
+
+            
+        }
     }
-    void TestFieldCombination() {
+    void TestFieldCombination(bool damageOnCombinations) {
         //Создаем новый список комбинаций
         listCombinations = new List<Combination>();
 
@@ -612,6 +634,10 @@ public class GameFieldCTRL : MonoBehaviour
 
         DestroyDuplicateCombinations();
 
+        //Если не нужно раздавать урон выходим
+        if (!damageOnCombinations) return;
+
+
         TestHitShop();
 
         bool isFoundSuperComb = false;
@@ -629,7 +655,7 @@ public class GameFieldCTRL : MonoBehaviour
         {
 
             //Выходим если ячейки нет, или нет внутренности, или внутренность в движении, или это кристал, который не должен собираться в комбинации
-            if (!Cell || !Cell.cellInternal || Cell.cellInternal.isMove || Cell.cellInternal.type == CellInternalObject.Type.color5)
+            if (!Cell || !Cell.cellInternal || (Cell.cellInternal.isMove && damageOnCombinations) || Cell.cellInternal.type == CellInternalObject.Type.color5)
             {
                 return;
             }
@@ -938,9 +964,10 @@ public class GameFieldCTRL : MonoBehaviour
                     !SecondCell || //если самой ячейки нет
                     !SecondCell.cellInternal || //В ячейке нет внутренности
                     !Cell.cellInternal || //если объекта в ячейке нет
-                    SecondCell.cellInternal.isMove || //если эти внутренности находятся в движении
+                    (SecondCell.cellInternal.isMove && damageOnCombinations) || //если эти внутренности находятся в движении
                     SecondCell.cellInternal.color != Cell.cellInternal.color || //Цвет не совпал
-                    SecondCell.cellInternal.type == CellInternalObject.Type.color5 //Тип ячейки супер кристал, он не должет сам активироваться оп этому его в комбинации нет
+                    SecondCell.cellInternal.type == CellInternalObject.Type.color5 || //Тип ячейки супер кристал, он не должет сам активироваться оп этому его в комбинации нет
+                    (SecondCell.cellInternal.type == CellInternalObject.Type.bomb && SecondCell.cellInternal.activateNeed) //Активированаая бомба не участвует в комбинациях
                     )
                 {
                     //На этом заканчиваем перебор
@@ -1106,6 +1133,7 @@ public class GameFieldCTRL : MonoBehaviour
                     //Если номер проверяемой ячейки больще чем выбранной и тип ячейки цвет
                     if ((CellSpawn.cellInternal.type != CellInternalObject.Type.color && cell.cellInternal.type == CellInternalObject.Type.color) ||
                         (CellSpawn.myInternalNum < cell.myInternalNum && cell.cellInternal.type == CellInternalObject.Type.color)) {
+                        
                         CellSpawn = cell;
 
                         if (cell.cellInternal) {
@@ -1924,8 +1952,16 @@ public class GameFieldCTRL : MonoBehaviour
                 if (cellPos.x >= 0 && cellPos.x < cellCTRLs.GetLength(0) && cellPos.y >= 0 && cellPos.y < cellCTRLs.GetLength(1) &&
                     cellCTRLs[cellPos.x, cellPos.y] != null &&
                     cellCTRLs[cellPos.x, cellPos.y].cellInternal != null &&
-                    cellCTRLs[cellPos.x, cellPos.y].cellInternal.type != CellInternalObject.Type.color5)
+                    cellCTRLs[cellPos.x, cellPos.y].cellInternal.type != CellInternalObject.Type.color5
+                    )
                 {
+
+                    //Выходим если это бомба которая готова активироваться
+                    if (cellCTRLs[cellPos.x, cellPos.y].cellInternal.type == CellInternalObject.Type.bomb && 
+                        cellCTRLs[cellPos.x, cellPos.y].cellInternal.activateNeed) {
+                        return false;
+                    }
+
                     result = true;
                 }
 
@@ -1955,7 +1991,9 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].rock == 0 &&
                         cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal != null &&
                         cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal.color == potTest.cells[0].cellInternal.color &&
-                        cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal.type != CellInternalObject.Type.color5)
+                        cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal.type != CellInternalObject.Type.color5 &&
+                        !(cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal.activateNeed)
+                        )
                     {
 
                         potTest.Moving = cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y];
@@ -1968,7 +2006,9 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].rock == 0 &&
                         cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal != null &&
                         cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal.color == potTest.cells[0].cellInternal.color &&
-                        cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal.type != CellInternalObject.Type.color5)
+                        cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal.type != CellInternalObject.Type.color5 &&
+                        !(cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal.activateNeed)
+                        )
                     {
 
                         potTest.Moving = cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y];
@@ -1981,7 +2021,9 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].rock == 0 &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal != null &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal.color == potTest.cells[0].cellInternal.color &&
-                        cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal.type != CellInternalObject.Type.color5)
+                        cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal.type != CellInternalObject.Type.color5 &&
+                        !(cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal.activateNeed)
+                        )
                     {
 
                         potTest.Moving = cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1];
@@ -1994,7 +2036,9 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].rock == 0 &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal != null &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal.color == potTest.cells[0].cellInternal.color &&
-                        cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal.type != CellInternalObject.Type.color5)
+                        cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal.type != CellInternalObject.Type.color5 &&
+                        !(cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal.activateNeed)
+                        )
                     {
 
                         potTest.Moving = cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1];
@@ -2039,7 +2083,9 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x - 1, cell.pos.y] != null &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y].rock == 0 &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal != null &&
-                    cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.type != CellInternalObject.Type.color)
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.type != CellInternalObject.Type.color &&
+                    !(cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.activateNeed)
+                    )
                 {
 
                     left = cellCTRLs[cell.pos.x - 1, cell.pos.y];
@@ -2050,7 +2096,9 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x + 1, cell.pos.y] != null &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y].rock == 0 &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal != null &&
-                    cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.type != CellInternalObject.Type.color)
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.type != CellInternalObject.Type.color &&
+                    !(cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.activateNeed)
+                    )
                 {
 
                     right = cellCTRLs[cell.pos.x + 1, cell.pos.y];
@@ -2061,7 +2109,9 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x, cell.pos.y + 1] != null &&
                     cellCTRLs[cell.pos.x, cell.pos.y + 1].rock == 0 &&
                     cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal != null &&
-                    cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.type != CellInternalObject.Type.color)
+                    cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.type != CellInternalObject.Type.color &&
+                    !(cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.activateNeed)
+                    )
                 {
 
                     up = cellCTRLs[cell.pos.x, cell.pos.y + 1];
@@ -2073,7 +2123,9 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x, cell.pos.y - 1] != null &&
                     cellCTRLs[cell.pos.x, cell.pos.y - 1].rock == 0 &&
                     cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal != null &&
-                    cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.type != CellInternalObject.Type.color)
+                    cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.type != CellInternalObject.Type.color &&
+                    !(cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.activateNeed)
+                                        )
                 {
 
                     down = cellCTRLs[cell.pos.x, cell.pos.y - 1];
@@ -2671,8 +2723,10 @@ public class GameFieldCTRL : MonoBehaviour
                     
                 }
 
+                TestFieldCombination(false);
+
                 //Очищаем список если есть потенциальная комбинация и нет текущей комбинации
-                if (isPotencialFound()) {
+                if (isPotencialFound() && listCombinations.Count <= 0) {
                     //Очищаем список
                     ListWaitingInternals = new List<CellInternalObject>();
                 }
@@ -2713,8 +2767,11 @@ public class GameFieldCTRL : MonoBehaviour
 
                 }
 
-                //Очищаем список если есть потенциальная комбинация и нет текущей комбинации
-                if (isPotencialFound())
+                //проверяем на комбинации сейчас
+                TestFieldCombination(false);
+
+                //Очищаем список есть потенциальная комбинация и нет текущей комбинации
+                if (isPotencialFound() && listCombinations.Count <= 0)
                 {
                     //Очищаем список
                     ListWaitingInternals = new List<CellInternalObject>();
@@ -2757,8 +2814,11 @@ public class GameFieldCTRL : MonoBehaviour
 
                 }
 
+                //проверяем на комбинации сейчас
+                TestFieldCombination(false);
+
                 //Очищаем список если есть потенциальная комбинация и нет текущей комбинации
-                if (isPotencialFound())
+                if (isPotencialFound() && listCombinations.Count <= 0)
                 {
                     //Очищаем список
                     ListWaitingInternals = new List<CellInternalObject>();
@@ -2803,8 +2863,10 @@ public class GameFieldCTRL : MonoBehaviour
 
                 }
 
+                TestFieldCombination(false);
+
                 //Очищаем список если есть потенциальная комбинация и нет текущей комбинации
-                if (isPotencialFound())
+                if (isPotencialFound() && listCombinations.Count <= 0)
                 {
                     //Очищаем список
                     ListWaitingInternals = new List<CellInternalObject>();
@@ -2863,6 +2925,8 @@ public class GameFieldCTRL : MonoBehaviour
     /// </summary>
     public void CreateBomb(CellCTRL cellLast, CellInternalObject.InternalColor internalColor, int combID)
     {
+        cellLast.DeleteInternalNoDamage();
+
         if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
         GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
@@ -2878,6 +2942,8 @@ public class GameFieldCTRL : MonoBehaviour
     /// </summary>
     public void CreateFly(CellCTRL cellLast, CellInternalObject.InternalColor internalColor, int combID)
     {
+        cellLast.DeleteInternalNoDamage();
+
         if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
         GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
@@ -2893,6 +2959,8 @@ public class GameFieldCTRL : MonoBehaviour
     /// </summary>
     public void CreateSuperColor(CellCTRL cellLast, CellInternalObject.InternalColor internalColor, int combID)
     {
+        cellLast.DeleteInternalNoDamage();
+
         if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
         GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
@@ -2908,6 +2976,8 @@ public class GameFieldCTRL : MonoBehaviour
     /// </summary>
     public void CreateRocketVertical(CellCTRL cellLast, CellInternalObject.InternalColor internalColor, int combID)
     {
+        cellLast.DeleteInternalNoDamage();
+
         if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
         GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
@@ -2922,6 +2992,8 @@ public class GameFieldCTRL : MonoBehaviour
     /// </summary>
     public void CreateRocketHorizontal(CellCTRL cellLast, CellInternalObject.InternalColor internalColor, int combID)
     {
+        cellLast.DeleteInternalNoDamage();
+
         if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
         GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
@@ -3335,7 +3407,7 @@ public class GameFieldCTRL : MonoBehaviour
         return isMovingOld;
     }
 
-    //паходятся ли в движении какие либо объекты на поле
+    //находятся ли в движении какие либо объекты на поле
 
     float movingObjLastTime = 0;
     void TestMoveInternalObj()
@@ -3353,8 +3425,8 @@ public class GameFieldCTRL : MonoBehaviour
                 if (!cellCTRLs[x, y] || //Нет ячейки
                     !cellCTRLs[x, y].cellInternal || //Нет внутреннего объекта
                     cellCTRLs[x, y].BlockingMove > 0 || //присутствует коробка
-                    cellCTRLs[x, y].rock > 0 || //Или есть камень
-                    (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[x,y].cellInternal.activateCount > 0) //или есть активированная бомба
+                    cellCTRLs[x, y].rock > 0 //|| //Или есть камень
+                    //(cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[x,y].cellInternal.activateNeed) //или есть активированная бомба
                     ) continue;
 
                 //Если снизу есть куда двигаться, то двигаемся

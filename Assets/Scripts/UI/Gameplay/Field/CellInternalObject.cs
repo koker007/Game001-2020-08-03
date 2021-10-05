@@ -731,7 +731,7 @@ public class CellInternalObject : MonoBehaviour
     bool activate = false;
     public int activateNum = 1;
     public int activateCount = 0;
-    bool activateNeed = false;
+    public bool activateNeed = false;
 
     public bool needInstantDamage = true;
     public int BoombRadius = 1;
