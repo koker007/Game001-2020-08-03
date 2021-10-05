@@ -21,6 +21,18 @@ public class MessageResults : MonoBehaviour
         Gameplay.main.CountStars(ref StarsImage);
     }
 
+    public void NextLVL()
+    {
+        Gameplay.main.levelSelect++;
+
+        GlobalMessage.Close();
+
+        Gameplay.main.GameplayEnd = false;
+        Destroy(MenuGameplay.GameField);
+        UICTRL.main.OpenWorld();
+        UICTRL.main.OpenGameplay();
+    }
+
     public void ExitGameplay()
     {
         Gameplay.main.GameplayEnd = false;

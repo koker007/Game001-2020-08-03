@@ -23,6 +23,7 @@ public class MessageExitLevel : MonoBehaviour
         Destroy(MenuGameplay.GameField);
         UICTRL.main.OpenWorld();
         UICTRL.main.OpenGameplay();
+
     }
 
     public void ExitLevelYes()

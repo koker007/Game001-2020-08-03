@@ -122,11 +122,16 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         //Распространяемся на лево
         if (explosion.left)
         {
+            GameFieldCTRL.Combination comb = new GameFieldCTRL.Combination(explosion.comb);
+
             bool found = false;
             for (int minus = 1; minus < myField.cellCTRLs.GetLength(0); minus++) {
                 //Если ячейку нашли
                 if (pos.x - minus >= 0 && myField.cellCTRLs[pos.x - minus, pos.y] != null)
                 {
+                    //Если в ячейке есть панель
+                    if (myField.cellCTRLs[pos.x - minus, pos.y].panel) comb.foundPanel = true;
+                    if (myField.cellCTRLs[pos.x - minus, pos.y].mold > 0) comb.foundMold = true;
 
                     //Если на ячейке есть взрыв, взрываем, удалем
                     if (myField.cellCTRLs[pos.x - minus, pos.y].explosion != null) {
@@ -138,14 +143,14 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     //Если в ячейке есть стойкий к взрыву предмет
                     if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x - minus, pos.y]))
                     {
-                        myField.cellCTRLs[pos.x - minus, pos.y].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, explosion.comb), explosion.timer * minus);
+                        myField.cellCTRLs[pos.x - minus, pos.y].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, comb), explosion.timer * minus);
                     }
                     //Иначе просто взрываем с таймером
                     else
                     {  
 
                         //Создаем взрыв и взрываем с таймером
-                        myField.cellCTRLs[pos.x - minus, pos.y].ExplosionBoomInvoke(new Explosion(true, false, false, false, explosion.timer, explosion.comb), explosion.timer * minus);
+                        myField.cellCTRLs[pos.x - minus, pos.y].ExplosionBoomInvoke(new Explosion(true, false, false, false, explosion.timer, comb), explosion.timer * minus);
 
                         //Если нету частиц взрыва то создаем
                         if (explosion.LeftParticleEffect == null)
@@ -181,12 +186,20 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         //распространяемся на право
         if (explosion.right)
         {
+
+            GameFieldCTRL.Combination comb = new GameFieldCTRL.Combination(explosion.comb);
+
             bool found = false;
             for (int plus = 1; plus < myField.cellCTRLs.GetLength(0); plus++)
             {
                 //Если ячейку нашли
                 if (pos.x + plus < myField.cellCTRLs.GetLength(0) && myField.cellCTRLs[pos.x + plus, pos.y] != null)
                 {
+
+                    //Если в ячейке есть панель
+                    if (myField.cellCTRLs[pos.x + plus, pos.y].panel) comb.foundPanel = true;
+                    if (myField.cellCTRLs[pos.x + plus, pos.y].mold > 0) comb.foundMold = true;
+
                     //Если на ячейке есть взрыв, взрываем, удалем
                     if (myField.cellCTRLs[pos.x + plus, pos.y].explosion != null)
                     {
@@ -198,13 +211,13 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     //Если в ячейке есть стойкий к взрыву предмет
                     if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x + plus, pos.y]))
                     {
-                        myField.cellCTRLs[pos.x + plus, pos.y].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, explosion.comb), explosion.timer * plus);
+                        myField.cellCTRLs[pos.x + plus, pos.y].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, comb), explosion.timer * plus);
                     }
                     //Иначе просто взрываем с таймером
                     else
                     {
                         //Создаем взрыв и взрываем с таймером
-                        myField.cellCTRLs[pos.x + plus, pos.y].ExplosionBoomInvoke(new Explosion(false, true, false, false, explosion.timer, explosion.comb), explosion.timer * plus);
+                        myField.cellCTRLs[pos.x + plus, pos.y].ExplosionBoomInvoke(new Explosion(false, true, false, false, explosion.timer, comb), explosion.timer * plus);
 
                         //Если нету частиц взрыва то создаем
                         if (explosion.RightParticleEffect == null)
@@ -240,12 +253,20 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         //Распространяемся на верх
         if (explosion.up)
         {
+
+            GameFieldCTRL.Combination comb = new GameFieldCTRL.Combination(explosion.comb);
+
             bool found = false;
             for (int plus = 1; plus < myField.cellCTRLs.GetLength(1); plus++)
             {
                 //Если ячейку нашли
                 if (pos.y + plus < myField.cellCTRLs.GetLength(1) && myField.cellCTRLs[pos.x, pos.y + plus] != null)
                 {
+
+                    //Если в ячейке есть панель
+                    if (myField.cellCTRLs[pos.x, pos.y + plus].panel) comb.foundPanel = true;
+                    if (myField.cellCTRLs[pos.x, pos.y + plus].mold > 0) comb.foundMold = true;
+
                     //Если на ячейке есть взрыв, взрываем, удалем
                     if (myField.cellCTRLs[pos.x, pos.y + plus].explosion != null)
                     {
@@ -257,14 +278,14 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     //Если в ячейке есть стойкий к взрыву предмет
                     if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x, pos.y + plus]))
                     {
-                        myField.cellCTRLs[pos.x, pos.y + plus].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, explosion.comb), explosion.timer * plus);
+                        myField.cellCTRLs[pos.x, pos.y + plus].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, comb), explosion.timer * plus);
                     }
                     //Иначе просто взрываем с таймером
                     else
                     {
 
                         //Создаем взрыв и взрываем с таймером
-                        myField.cellCTRLs[pos.x, pos.y + plus].ExplosionBoomInvoke(new Explosion(false, false, true, false, explosion.timer, explosion.comb), explosion.timer * plus);
+                        myField.cellCTRLs[pos.x, pos.y + plus].ExplosionBoomInvoke(new Explosion(false, false, true, false, explosion.timer, comb), explosion.timer * plus);
 
                         //Если нету частиц взрыва то создаем
                         if (explosion.UpParticleEffect == null)
@@ -300,12 +321,19 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         //Распространяемся на вниз
         if (explosion.down)
         {
+            GameFieldCTRL.Combination comb = new GameFieldCTRL.Combination(explosion.comb);
+
             bool found = false;
             for (int minus = 1; minus < myField.cellCTRLs.GetLength(1); minus++)
             {
                 //Если ячейку нашли
                 if (pos.y - minus >= 0 && myField.cellCTRLs[pos.x, pos.y - minus] != null)
                 {
+
+                    //Если в ячейке есть панель
+                    if (myField.cellCTRLs[pos.x, pos.y - minus].panel) comb.foundPanel = true;
+                    if (myField.cellCTRLs[pos.x, pos.y - minus].mold > 0) comb.foundMold = true;
+
                     //Если на ячейке есть взрыв, взрываем, удалем
                     if (myField.cellCTRLs[pos.x, pos.y - minus].explosion != null)
                     {
@@ -317,14 +345,14 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     //Если в ячейке есть стойкий к взрыву предмет
                     if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x, pos.y - minus]))
                     {
-                        myField.cellCTRLs[pos.x, pos.y - minus].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, explosion.comb), explosion.timer * minus);
+                        myField.cellCTRLs[pos.x, pos.y - minus].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, comb), explosion.timer * minus);
                     }
                     //Иначе просто взрываем с таймером
                     else
                     {
 
                         //Создаем взрыв и взрываем с таймером
-                        myField.cellCTRLs[pos.x, pos.y - minus].ExplosionBoomInvoke(new Explosion(false, false, false, true, explosion.timer, explosion.comb), explosion.timer * minus);
+                        myField.cellCTRLs[pos.x, pos.y - minus].ExplosionBoomInvoke(new Explosion(false, false, false, true, explosion.timer, comb), explosion.timer * minus);
 
                         //Если нету частиц взрыва то создаем
                         if (explosion.DownParticleEffect == null)
@@ -512,6 +540,15 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
         //Перенасчет приоритета
         CalcMyPriority();
+    }
+
+
+    //Удалить внутренность ячейки без спецэфетов, урона и подсчета очков
+    public void DeleteInternalNoDamage() {
+        if (cellInternal != null) {
+            Destroy(cellInternal.gameObject);
+        }
+        cellInternal = null;
     }
 
     // Start is called before the first frame update
