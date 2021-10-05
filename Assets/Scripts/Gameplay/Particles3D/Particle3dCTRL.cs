@@ -101,7 +101,8 @@ public class Particle3dCTRL : MonoBehaviour
         if (SpeedMove <= 0) return;
 
         //Если есть внутренний объект в качестве цели, двигаем к нему
-        if (targetInternalObject != null) {
+        if (targetInternalObject != null)
+        {
             //Берем в качестве цели позицию внутреннего объекта
             TargetMove = (targetInternalObject.rectMy.pivot * -1) + new Vector2(0.5f, 0.5f);
         }

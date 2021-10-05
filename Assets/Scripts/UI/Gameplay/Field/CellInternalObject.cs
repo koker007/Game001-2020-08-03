@@ -1072,7 +1072,8 @@ public class CellInternalObject : MonoBehaviour
                 for (int x = 0; x < myField.cellCTRLs.GetLength(0); x++) {
                     for (int y = 0; y < myField.cellCTRLs.GetLength(1); y++)
                     {
-                        if (!myField.cellCTRLs[x, y] || !myField.cellCTRLs[x, y].cellInternal) {
+                        //Выходим если нет ячейки, нет внутреннего объекта или это моя ячейка или ячейка партнера
+                        if (!myField.cellCTRLs[x, y] || !myField.cellCTRLs[x, y].cellInternal || myField.cellCTRLs[x,y] == myCell || (partner != null && myField.cellCTRLs[x,y] == partner.myCell)) {
                             continue;
                         }
 
