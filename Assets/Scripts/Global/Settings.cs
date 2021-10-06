@@ -127,6 +127,16 @@ public class Settings : MonoBehaviour
         }
     }
 
+    public float VolumeMusicFrom0To1
+    {
+
+        get
+        {
+            float volume = (80 + volumeMusic) / 80;
+            return volume;
+        }
+    }
+
     public void SetLaunguage(string laung)
     {
         if(launguage != laung)

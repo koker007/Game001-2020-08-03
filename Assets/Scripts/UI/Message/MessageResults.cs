@@ -19,6 +19,8 @@ public class MessageResults : MonoBehaviour
     {
         ScoreText.text = "Score:\n" + Gameplay.main.score.ToString();
         Gameplay.main.CountStars(ref StarsImage);
+
+        SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipLVLComplite, Settings.main.VolumeMusicFrom0To1, 1);
     }
 
     public void NextLVL()

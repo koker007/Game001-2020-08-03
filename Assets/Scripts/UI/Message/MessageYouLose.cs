@@ -16,6 +16,8 @@ public class MessageYouLose : MonoBehaviour
     public void OnEnable()
     {
         ScoreText.text = "Score:\n" + Gameplay.main.score.ToString();
+
+        SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipLVLFailed, Settings.main.VolumeMusicFrom0To1, 1);
     }
 
     public void Restart()
