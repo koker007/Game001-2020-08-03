@@ -29,6 +29,10 @@ public class MenuWorld : MonoBehaviour
     [SerializeField]
     Text Health;
 
+    [Header("World")]
+    [SerializeField]
+    GameObject World3D;
+
     [HideInInspector]
     public enum UIIsOpen
     {
@@ -68,6 +72,16 @@ public class MenuWorld : MonoBehaviour
     {
         startButtons();
         SetText();
+
+        if (!World3D.activeSelf) {
+            World3D.SetActive(true);
+        }
+    }
+    void OnDisable()
+    {
+        if (World3D.activeSelf) {
+            World3D.SetActive(false);
+        }
     }
 
 

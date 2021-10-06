@@ -594,24 +594,35 @@ public class GameFieldCTRL : MonoBehaviour
         }
 
         public Combination(Combination ParentComb) {
-            ID = ParentComb.ID; //Тотже id Поскольку являемся продолжением комбинации родителя
-            cells = ParentComb.cells;
 
-            horizontal = ParentComb.horizontal;
-            vertical = ParentComb.vertical;
-            line5 = ParentComb.line5;
-            square = ParentComb.square;
-            line4 = ParentComb.line4;
-            cross = ParentComb.cross;
+            if (ParentComb != null)
+            {
+                ID = ParentComb.ID; //Тотже id Поскольку являемся продолжением комбинации родителя
+                cells = ParentComb.cells;
+
+                horizontal = ParentComb.horizontal;
+                vertical = ParentComb.vertical;
+                line5 = ParentComb.line5;
+                square = ParentComb.square;
+                line4 = ParentComb.line4;
+                cross = ParentComb.cross;
 
 
-            if (ParentComb.foundPanel) {
-                foundPanel = ParentComb.foundPanel;
+                if (ParentComb.foundPanel)
+                {
+                    foundPanel = ParentComb.foundPanel;
+                }
+                if (ParentComb.foundMold)
+                {
+                    foundMold = ParentComb.foundMold;
+                }
             }
-            if (ParentComb.foundMold) {
-                foundMold = ParentComb.foundMold;
-            }
+            else {
 
+                IDLast++; //Прибавляем id комбинации
+                ID = IDLast; //Это наш номер
+
+            }
             
         }
     }
@@ -3381,6 +3392,42 @@ public class GameFieldCTRL : MonoBehaviour
                     else if (color5.Count > 0) {
                         foreach (CellInternalObject inside in color5)
                             inside.myCell.Damage();
+                    }
+                    //Если остались ходы
+                    else if (Gameplay.main.movingCan > 0) {
+                        while (Gameplay.main.movingCan > 0) {
+                            //Выбираем рандомный объект
+                            int x = Random.Range(0, cellCTRLs.GetLength(0));
+                            int y = Random.Range(0, cellCTRLs.GetLength(1));
+
+                            //Есди эта ячейка не подходит выходим
+                            if (cellCTRLs[x,y] == null || cellCTRLs[x,y].cellInternal == null || cellCTRLs[x,y].cellInternal.type != CellInternalObject.Type.color) {
+                                continue;
+                            }
+
+                            //Выбираем тип
+                            CellInternalObject.Type typeNew = CellInternalObject.Type.rocketHorizontal;
+                            if (Random.Range(0, 100) < 50) typeNew = CellInternalObject.Type.rocketVertical;
+                            
+
+                            //применяем изменения
+                            cellCTRLs[x, y].cellInternal.setColorAndType(cellCTRLs[x,y].cellInternal.color, typeNew);
+                            Combination comb = new Combination();
+                            comb.cells.Add(cellCTRLs[x, y]);
+                            if (cellCTRLs[x, y].panel) {
+                                comb.foundPanel = true;
+                            }
+                            //Активируем
+                            cellCTRLs[x, y].cellInternal.Activate(cellCTRLs[x,y].cellInternal.type, null, comb);
+                            
+
+                            //вычитаем ход
+                            Gameplay.main.movingCan--;
+                        }
+
+                        MenuGameplay.main.updateMoving();
+                        isMovingOld = true;
+
                     }
                     else
                     {

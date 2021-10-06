@@ -997,9 +997,10 @@ public class CellInternalObject : MonoBehaviour
                     {
                         //Проверяем что ячейка есть
                         if (!myField.cellCTRLs[x, y] || //Если ячейки нет
-                            !myField.cellCTRLs[x,y].cellInternal || //Если нет внутренности
-                            myField.cellCTRLs[x,y].cellInternal.color != partner.color || //Если цвет не совпадает с цветом партнера
-                            myField.cellCTRLs[x,y].cellInternal.type == Type.color5
+                            !myField.cellCTRLs[x, y].cellInternal || //Если нет внутренности
+                            myField.cellCTRLs[x, y].cellInternal.color != partner.color || //Если цвет не совпадает с цветом партнера
+                            myField.cellCTRLs[x, y].cellInternal.type != Type.color //Если тип объекта особенный
+                            //myField.cellCTRLs[x,y].cellInternal.type == Type.color5
                             )
                         {
                             continue;
@@ -1064,6 +1065,10 @@ public class CellInternalObject : MonoBehaviour
 
                     }
                 }
+
+                //Удаляем обьект партнера
+                if (partner)
+                    Destroy(partner.gameObject);
             }
 
             void DestroyAllColor(InternalColor internalColor) {
@@ -1073,7 +1078,10 @@ public class CellInternalObject : MonoBehaviour
                     for (int y = 0; y < myField.cellCTRLs.GetLength(1); y++)
                     {
                         //Выходим если нет ячейки, нет внутреннего объекта или это моя ячейка или ячейка партнера
-                        if (!myField.cellCTRLs[x, y] || !myField.cellCTRLs[x, y].cellInternal || myField.cellCTRLs[x,y] == myCell || (partner != null && myField.cellCTRLs[x,y] == partner.myCell)) {
+                        if (!myField.cellCTRLs[x, y] || !myField.cellCTRLs[x, y].cellInternal || 
+                            myField.cellCTRLs[x,y].cellInternal == this || 
+                            (partner != null && myField.cellCTRLs[x,y].cellInternal == partner) || 
+                            myField.cellCTRLs[x,y].cellInternal.type == Type.color5) {
                             continue;
                         }
 
