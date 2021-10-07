@@ -73,6 +73,8 @@ public class WorldGenerateScene : MonoBehaviour
         MaxLevel = 0;
         MinLevel = 1;
 
+        rotationNow = posStart;
+
         locationCounter = 0;
         //Locations[locationCounter] = Instantiate(PrefabsLocation[1].gameObject, MainComponents.RotatableObj.transform.position, Quaternion.identity, MainComponents.RotatableObj.transform);
         locationCounter++;
