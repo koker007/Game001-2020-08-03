@@ -67,7 +67,7 @@ public class Gameplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        combWaitingCalc();
     }
 
     public void StartGameplay(ref Image[] stars)
@@ -85,6 +85,33 @@ public class Gameplay : MonoBehaviour
         }
 
     }
+
+    //Список комбинаций которые получились благодаря действиям игрока и ждут пост проверок
+    List<GameFieldCTRL.Combination> combWaiting = new List<GameFieldCTRL.Combination>();
+    
+    //Проверить комбинации на то что их время вышло
+    void combWaitingCalc() {
+
+        //Создаем новый список комбинаций
+        List<GameFieldCTRL.Combination> combWaitingNew = new List<GameFieldCTRL.Combination>();
+
+        //Проверяем комбинации что их время не вышло
+        for (int num = 0; num < combWaiting.Count; num++) {
+            //Если время комбинации не вышло. переключаемся далее
+            if (Time.unscaledTime - combWaiting[num].timeLastAction < 1)
+            {
+                combWaitingNew.Add(combWaiting[num]);
+                continue;
+            }
+
+            //Выполняем действия
+            if (!combWaiting[num].foundBenefit) movingMoldCount++;
+        }
+
+        //Заменяем
+        combWaiting = combWaitingNew;
+    }
+
     //вычитает ход и делает проверку на 0 ходов
     public void MinusMoving(GameFieldCTRL.Combination combination)
     {
@@ -92,8 +119,8 @@ public class Gameplay : MonoBehaviour
         movingCan--;
         MenuGameplay.main.updateMoving();
 
-        if (!combination.foundMold) movingMoldCount++;
-
+        //Добавляем комбинацию для пост проверки
+        combWaiting.Add(combination);
 
     }
 

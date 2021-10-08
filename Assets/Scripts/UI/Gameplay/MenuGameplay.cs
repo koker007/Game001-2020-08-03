@@ -20,7 +20,13 @@ public class MenuGameplay : MonoBehaviour
     [SerializeField]
     GameObject GameFieldPrefab;
     [SerializeField]
+    GameObject MidleTextPrefab;
+
+    [SerializeField]
     Transform GameFieldParent;
+    [SerializeField]
+    Transform MidleTextParent;
+
     [SerializeField]
     public RawImage Particles3D;
 
@@ -266,7 +272,12 @@ public class MenuGameplay : MonoBehaviour
         GlobalMessage.ExitLevel();
     }
 
+    public void CreateMidleMessage(string text) {
+        GameObject MidleTextObj = Instantiate(MidleTextPrefab, MidleTextParent);
+        MidleTextGameplay MidleText = MidleTextObj.GetComponent<MidleTextGameplay>();
+        MidleText.SetText(text);
 
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
     /// нопки платных ударов
