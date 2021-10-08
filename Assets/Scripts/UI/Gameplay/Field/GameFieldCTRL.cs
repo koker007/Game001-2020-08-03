@@ -585,8 +585,10 @@ public class GameFieldCTRL : MonoBehaviour
         public bool line4 = false;
         public bool cross = false;
 
+        public float timeLastAction = 0;
+
         public bool foundPanel = false;
-        public bool foundMold = false;
+        public bool foundBenefit = false;
 
         public Combination(){
             IDLast++; //Прибавляем id комбинации
@@ -612,9 +614,9 @@ public class GameFieldCTRL : MonoBehaviour
                 {
                     foundPanel = ParentComb.foundPanel;
                 }
-                if (ParentComb.foundMold)
+                if (ParentComb.foundBenefit)
                 {
-                    foundMold = ParentComb.foundMold;
+                    foundBenefit = ParentComb.foundBenefit;
                 }
             }
             else {
@@ -1162,7 +1164,7 @@ public class GameFieldCTRL : MonoBehaviour
                     if (cell.panel)
                         comb.foundPanel = true;
                     if (cell.mold > 0)
-                        comb.foundMold = true;
+                        comb.foundBenefit = true;
                 }
 
 
@@ -1578,7 +1580,7 @@ public class GameFieldCTRL : MonoBehaviour
                     if (CellSelect.panel)
                         comb.foundPanel = true;
                     if (CellSelect.mold > 0)
-                        comb.foundMold = true;
+                        comb.foundBenefit = true;
 
                     CellSelect.BufferCombination = comb;
                     CellSelect.DamageInvoke(0.25f);
@@ -1597,7 +1599,7 @@ public class GameFieldCTRL : MonoBehaviour
                     if (CellSelect.panel)
                         comb.foundPanel = true;
                     if (CellSelect.mold > 0)
-                        comb.foundMold = true;
+                        comb.foundBenefit = true;
 
                     CellSelect.BufferCombination = comb;
 
@@ -3343,7 +3345,9 @@ public class GameFieldCTRL : MonoBehaviour
             //Если прекратили двигаться
             if (isMovingOld && !isMovingNow)
             {
-                ComboCount = 1;
+
+                //Вызываем сообжение о комбинации
+                MidleMessageCombo();
 
                 //Если миссию можно закончить прохождением
                 if (Gameplay.main.isMissionComplite()) {
@@ -3452,6 +3456,21 @@ public class GameFieldCTRL : MonoBehaviour
         }
 
         return isMovingOld;
+
+        void MidleMessageCombo() {
+
+            if (ComboCount > 10) {
+                MenuGameplay.main.CreateMidleMessage("Ultimative");
+            }
+            else if (ComboCount > 5) {
+                MenuGameplay.main.CreateMidleMessage("incredible");
+            }
+            else if (ComboCount > 3) {
+                MenuGameplay.main.CreateMidleMessage("Not bad");
+            }
+
+            ComboCount = 1;
+        }
     }
 
     //находятся ли в движении какие либо объекты на поле

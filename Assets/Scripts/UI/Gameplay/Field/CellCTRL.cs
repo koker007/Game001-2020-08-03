@@ -131,7 +131,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 {
                     //Если в ячейке есть панель
                     if (myField.cellCTRLs[pos.x - minus, pos.y].panel) comb.foundPanel = true;
-                    if (myField.cellCTRLs[pos.x - minus, pos.y].mold > 0) comb.foundMold = true;
+                    if (myField.cellCTRLs[pos.x - minus, pos.y].mold > 0) comb.foundBenefit = true;
 
                     //Если на ячейке есть взрыв, взрываем, удалем
                     if (myField.cellCTRLs[pos.x - minus, pos.y].explosion != null) {
@@ -198,7 +198,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
                     //Если в ячейке есть панель
                     if (myField.cellCTRLs[pos.x + plus, pos.y].panel) comb.foundPanel = true;
-                    if (myField.cellCTRLs[pos.x + plus, pos.y].mold > 0) comb.foundMold = true;
+                    if (myField.cellCTRLs[pos.x + plus, pos.y].mold > 0) comb.foundBenefit = true;
 
                     //Если на ячейке есть взрыв, взрываем, удалем
                     if (myField.cellCTRLs[pos.x + plus, pos.y].explosion != null)
@@ -265,7 +265,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
                     //Если в ячейке есть панель
                     if (myField.cellCTRLs[pos.x, pos.y + plus].panel) comb.foundPanel = true;
-                    if (myField.cellCTRLs[pos.x, pos.y + plus].mold > 0) comb.foundMold = true;
+                    if (myField.cellCTRLs[pos.x, pos.y + plus].mold > 0) comb.foundBenefit = true;
 
                     //Если на ячейке есть взрыв, взрываем, удалем
                     if (myField.cellCTRLs[pos.x, pos.y + plus].explosion != null)
@@ -332,7 +332,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
                     //Если в ячейке есть панель
                     if (myField.cellCTRLs[pos.x, pos.y - minus].panel) comb.foundPanel = true;
-                    if (myField.cellCTRLs[pos.x, pos.y - minus].mold > 0) comb.foundMold = true;
+                    if (myField.cellCTRLs[pos.x, pos.y - minus].mold > 0) comb.foundBenefit = true;
 
                     //Если на ячейке есть взрыв, взрываем, удалем
                     if (myField.cellCTRLs[pos.x, pos.y - minus].explosion != null)
@@ -448,11 +448,14 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 //Если нет плесени
                 if (mold <= 0)
                 {
-                    if (!panel && combination != null && combination.foundPanel) {
+                    if (!panel && combination != null && combination.foundPanel)
+                    {
                         CreatePanel();
+                        combination.foundBenefit = true;
                     }
                 }
-                else {
+                else
+                {
                     mold--;
                 }
 
@@ -465,11 +468,21 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
                 //наносим соседним ячейкам урон по блокираторам движения
                 if (nearDamage)
-                    DamageNearCells();
+                {
+                    bool benefit = DamageNearCells();
+                    if (combination != null) {
+                        combination.foundBenefit = benefit;
+                    }
+                }
             }
-            else {
+            else
+            {
                 //Самому себе
-                DamageNear();
+                bool benefit = DamageNear();
+                if (combination != null)
+                {
+                    combination.foundBenefit = benefit;
+                }
             }
         }
         else {
@@ -482,32 +495,42 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             CreatePanel();
         }
 
-
-
+        //Обновляем время последнего действия комбинации
+        if (combination != null) {
+            combination.timeLastAction = Time.unscaledTime;
+        }
 
 
         //Перенасчет приоритета
         CalcMyPriority();
 
 
-        void DamageNearCells() {
+        bool DamageNearCells() {
+
+            bool benefit = false;
+            void setBenefit(bool benefitNew) {
+                if (!benefit && benefitNew)
+                    benefit = benefitNew;
+            }
 
             //Слева
             if (pos.x - 1 >= 0 && myField.cellCTRLs[pos.x - 1, pos.y]) {
-                myField.cellCTRLs[pos.x - 1, pos.y].DamageNear();
+                setBenefit(myField.cellCTRLs[pos.x - 1, pos.y].DamageNear());
             }
             //Справа
             if (pos.x + 1 < myField.cellCTRLs.GetLength(0) && myField.cellCTRLs[pos.x + 1, pos.y]) {
-                myField.cellCTRLs[pos.x + 1, pos.y].DamageNear();
+                setBenefit(myField.cellCTRLs[pos.x + 1, pos.y].DamageNear());
             }
             //снизу
             if (pos.y - 1 >= 0 && myField.cellCTRLs[pos.x, pos.y - 1]) {
-                myField.cellCTRLs[pos.x, pos.y - 1].DamageNear();
+                setBenefit(myField.cellCTRLs[pos.x, pos.y - 1].DamageNear());
             }
             //Сверху
             if (pos.y + 1 < myField.cellCTRLs.GetLength(1) && myField.cellCTRLs[pos.x, pos.y + 1]) {
-                myField.cellCTRLs[pos.x, pos.y + 1].DamageNear();
+                setBenefit(myField.cellCTRLs[pos.x, pos.y + 1].DamageNear());
             }
+
+            return benefit;
         }
 
         void CreatePanel() {
@@ -525,7 +548,9 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         Invoke("Damage", time);
     }
 
-    public void DamageNear() {
+    public bool DamageNear() {
+
+        bool benefit = false;
 
         bool test = false;
         if (myField.testCell.x == pos.x && myField.testCell.y == pos.y) {
@@ -536,10 +561,13 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         if (BlockingMove > 0)
         {
             BlockingMove--;
+            benefit = true;
         }
 
         //Перенасчет приоритета
         CalcMyPriority();
+
+        return benefit;
     }
 
 

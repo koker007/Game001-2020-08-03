@@ -8,16 +8,12 @@ public class MidleTextGameplay: MonoBehaviour
 {
 
     [SerializeField]
-    float WaitingTime = 1;
-    [SerializeField]
-    bool opening = false;
-    [SerializeField]
-    bool closing = false;
-
-    [SerializeField]
     Image fon;
     [SerializeField]
     Text text;
+
+    [SerializeField]
+    AudioClip audioClip;
 
     [SerializeField]
     Animator AnimMigleTextComponent;
@@ -25,6 +21,7 @@ public class MidleTextGameplay: MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
     }
 
     // Update is called once per frame
@@ -33,8 +30,11 @@ public class MidleTextGameplay: MonoBehaviour
 
     }
 
-    void SetText(string testNew) {
+    public void SetText(string testNew) {
         text.text = testNew;
+    }
+    public void SetAudio() {
+        
     }
 
 
