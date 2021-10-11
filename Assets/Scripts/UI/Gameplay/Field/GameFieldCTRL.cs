@@ -161,7 +161,8 @@ public class GameFieldCTRL : MonoBehaviour
         return result;
     }
 
-    public int ComboCount = 1; 
+    public int ComboCount = 1;
+    public int ComboInternal = 0;
 
     //Меняемые ячейки
     class Swap {
@@ -3347,7 +3348,9 @@ public class GameFieldCTRL : MonoBehaviour
             {
 
                 //Вызываем сообжение о комбинации
-                MidleMessageCombo();
+                if (!Gameplay.main.isMissionComplite() && !Gameplay.main.isMissionDefeat()) {
+                    MidleMessageCombo();
+                }
 
                 //Если миссию можно закончить прохождением
                 if (Gameplay.main.isMissionComplite()) {
@@ -3404,7 +3407,7 @@ public class GameFieldCTRL : MonoBehaviour
                             int x = Random.Range(0, cellCTRLs.GetLength(0));
                             int y = Random.Range(0, cellCTRLs.GetLength(1));
 
-                            //Есди эта ячейка не подходит выходим
+                            //Если эта ячейка не подходит выходим
                             if (cellCTRLs[x,y] == null || cellCTRLs[x,y].cellInternal == null || cellCTRLs[x,y].cellInternal.type != CellInternalObject.Type.color) {
                                 continue;
                             }
@@ -3432,6 +3435,10 @@ public class GameFieldCTRL : MonoBehaviour
                         MenuGameplay.main.updateMoving();
                         isMovingOld = true;
 
+                        if (Gameplay.main.isMissionComplite() && Gameplay.main.movingCan > 0)
+                        {
+                            MenuGameplay.main.CreateMidleMessage("Last Move", Color.green);
+                        }
                     }
                     else
                     {
@@ -3460,16 +3467,22 @@ public class GameFieldCTRL : MonoBehaviour
         void MidleMessageCombo() {
 
             if (ComboCount > 10) {
+                MenuGameplay.main.CreateMidleMessage("Crazy Combo");
+            }
+            else if (ComboInternal > 45) {
                 MenuGameplay.main.CreateMidleMessage("Ultimative");
             }
-            else if (ComboCount > 5) {
-                MenuGameplay.main.CreateMidleMessage("incredible");
+            else if (ComboInternal > 30) {
+                MenuGameplay.main.CreateMidleMessage("Incredible");
             }
-            else if (ComboCount > 3) {
+            else if (ComboInternal > 15) {
                 MenuGameplay.main.CreateMidleMessage("Not bad");
             }
 
+
+
             ComboCount = 1;
+            ComboInternal = 0;
         }
     }
 

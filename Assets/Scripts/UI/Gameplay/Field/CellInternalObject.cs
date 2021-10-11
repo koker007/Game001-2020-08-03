@@ -429,6 +429,8 @@ public class CellInternalObject : MonoBehaviour
     public void DestroyObj() {
         int score = 100 + 10 * (myField.ComboCount-1);
 
+        myField.ComboInternal++;
+
         AddCountColor();
         SpawnEffects();
 
