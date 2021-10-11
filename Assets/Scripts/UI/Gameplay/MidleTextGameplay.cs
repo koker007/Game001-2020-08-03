@@ -33,6 +33,11 @@ public class MidleTextGameplay: MonoBehaviour
     public void SetText(string testNew) {
         text.text = testNew;
     }
+
+    public void SetColorFon(Color colorNew) {
+        fon.color = colorNew;
+    }
+
     public void SetAudio() {
         
     }

@@ -129,8 +129,6 @@ public class SoundCTRL : MonoBehaviour
             //≈сли сурса в приритете нет, то дабавим текущий
             if (sourcePrioritet == null) {
                 sourcePrioritet = array;
-                sourcePrioritet.Source.clip = clip;
-                sourcePrioritet.TimeStart = 0;
                 prioritet = calcPrioritet(sourcePrioritet.Source, sourcePrioritet.TimeStart);
             }
 

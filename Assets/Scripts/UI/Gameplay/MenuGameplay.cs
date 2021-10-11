@@ -272,11 +272,16 @@ public class MenuGameplay : MonoBehaviour
         GlobalMessage.ExitLevel();
     }
 
-    public void CreateMidleMessage(string text) {
+    public void CreateMidleMessage(string text, Color color) {
         GameObject MidleTextObj = Instantiate(MidleTextPrefab, MidleTextParent);
         MidleTextGameplay MidleText = MidleTextObj.GetComponent<MidleTextGameplay>();
         MidleText.SetText(text);
 
+        if (color != Color.black)
+            MidleText.SetColorFon(color);
+    }
+    public void CreateMidleMessage(string text) {
+        CreateMidleMessage(text, Color.black);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////

@@ -72,7 +72,7 @@ public class LevelsArray : LevelsScript
 
         ////////////////////////////////////////////////////////////////////////////
         //уровень 2
-        lvl = 2;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 7, 7, 7500, 20, 3, 0);
 
         Levels[lvl].PassedWithCrystal = true;
@@ -135,7 +135,7 @@ public class LevelsArray : LevelsScript
 
         ////////////////////////////////////////////////////////////////////////////
         //уровень 3
-        lvl = 3;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 8, 8, 10000, 20, 3, 0);
 
         Levels[lvl].PassedWithPanel = true;
@@ -281,7 +281,7 @@ public class LevelsArray : LevelsScript
         */
         //////////////////////////////////////////////////////////////////////////////
         //уровень 4
-        lvl = 4;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 8, 9, 15000, 20, 4, 0);
 
         Levels[lvl].PassedWithPanel = true;
@@ -361,7 +361,7 @@ public class LevelsArray : LevelsScript
 
         ////////////////////////////////////////////////////////////////////////////
         //уровень 5
-        lvl = 5;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 6, 6, 10000, 30, 4, 0);
 
         Levels[lvl].PassedWithCrystal = true;
@@ -421,7 +421,7 @@ public class LevelsArray : LevelsScript
 
         ////////////////////////////////////////////////////////////////////////////
         //уровень 6
-        lvl = 6;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 8, 8, 17500, 20, 4, 0);
 
         Levels[lvl].PassedWithPanel = true;
@@ -516,7 +516,7 @@ public class LevelsArray : LevelsScript
 
         ////////////////////////////////////////////////////////////////////////////
         //уровень 7
-        lvl = 7;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 8, 7, 10000, 35, 4, 0);
 
         Levels[lvl].PassedWithBox = true;
@@ -582,7 +582,7 @@ public class LevelsArray : LevelsScript
 
         ////////////////////////////////////////////////////////////////////////////
         //уровень 8
-        lvl = 8;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 8, 8, 15000, 20, 4, 0);
 
         Levels[lvl].PassedWithPanel = true;
@@ -676,7 +676,7 @@ public class LevelsArray : LevelsScript
 
         ////////////////////////////////////////////////////////////////////////////
         //уровень 9
-        lvl = 9;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 9, 8, 15000, 25, 4, 0);
 
         Levels[lvl].PassedWithBox = true;
@@ -761,7 +761,7 @@ public class LevelsArray : LevelsScript
 
         ////////////////////////////////////////////////////////////////////////////
         //уровень 10
-        lvl = 10;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 9, 7, 15000, 20, 4, 0);
 
         Levels[lvl].PassedWithMold = true;
@@ -846,7 +846,7 @@ public class LevelsArray : LevelsScript
 
         ////////////////////////////////////////////////////////////////////////////
         //уровень 11
-        lvl = 11;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 9, 7, 20000, 30, 4, 0);
 
         Levels[lvl].PassedWithMold = true;
@@ -931,7 +931,7 @@ public class LevelsArray : LevelsScript
 
         ////////////////////////////////////////////////////////////////////////////
         //уровень 12
-        lvl = 12;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 7, 10, 32500, 25, 4, 0);
 
         Levels[lvl].PassedWithPanel = true;
@@ -1006,7 +1006,7 @@ public class LevelsArray : LevelsScript
 
         ////////////////////////////////////////////////////////////////////////////
         //уровень 13
-        lvl = 13;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 6, 9, 15000, 20, 4, 0);
 
         Levels[lvl].PassedWithMold = true;
@@ -1088,7 +1088,7 @@ public class LevelsArray : LevelsScript
 
         ////////////////////////////////////////////////////////////////////////////
         //уровень 14
-        lvl = 14;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 7, 8, 17500, 25, 4, 0);
 
         Levels[lvl].PassedWithRock = true;
@@ -1238,7 +1238,7 @@ public class LevelsArray : LevelsScript
 
         ////////////////////////////////////////////////////////////////////////////
         //уровень 16
-        lvl = 16;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 9, 7, 20000, 23, 4, 0);
 
         Levels[lvl].PassedWithPanel = true;
@@ -1338,7 +1338,7 @@ public class LevelsArray : LevelsScript
 
         ////////////////////////////////////////////////////////////////////////////
         //уровень 17
-        lvl = 17;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 6, 7, 12000, 25, 4, 0);
 
         Levels[lvl].PassedWithMold = true;
@@ -1408,7 +1408,7 @@ public class LevelsArray : LevelsScript
 
         ////////////////////////////////////////////////////////////////////////////
         //уровень 18
-        lvl = 18;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 7, 9, 25000, 23, 4, 0);
 
         Levels[lvl].PassedWithPanel = true;
@@ -1483,7 +1483,7 @@ public class LevelsArray : LevelsScript
 
         ////////////////////////////////////////////////////////////////////////////
         //уровень 19
-        lvl = 19;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 7, 8, 25000, 20, 4, 0);
 
         Levels[lvl].PassedWithBox = true;
@@ -1558,7 +1558,7 @@ public class LevelsArray : LevelsScript
 
         ////////////////////////////////////////////////////////////////////////////
         //уровень 20
-        lvl = 20;
+        lvl++;
         Levels[lvl] = CreateLevel(lvl, 6, 8, 25000, 20, 3, 100);
 
         Levels[lvl].PassedWithCrystal = true;
