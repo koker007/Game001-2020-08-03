@@ -760,7 +760,8 @@ public class CellInternalObject : MonoBehaviour
             myCell.pos.y > 0 && 
             myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1] != null &&
             myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1].cellInternal == null &&
-            myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1].BlockingMove == 0) {
+            myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1].BlockingMove == 0 &&
+            myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1].rock == 0) {
             return;
         }
 
@@ -1362,12 +1363,17 @@ public class CellInternalObject : MonoBehaviour
 
             BoombRadius = radius;
 
+            bool partnerBomb = false;
             //Удаляем партнера
             if (partner)
             {
+                if (partner.type == Type.bomb)
+                    partnerBomb = true;
+
                 //Удаляем партнера
                 partner.activate = false;
                 partner.DestroyObj();
+
             }
 
             //Перебираем поле 5 на 5
@@ -1398,6 +1404,10 @@ public class CellInternalObject : MonoBehaviour
             particle3DCTRL.SetSpeed(radius);
             particle3DCTRL.SetSize(radius * 3);
             particle3DCTRL.SetColor(GetColor(color) * 0.5f);
+
+            if (partnerBomb) {
+                activateNum = 1;
+            }
         }
 
         void ActivateFly() {

@@ -9,6 +9,12 @@ using UnityEngine.UI;
 /// </summary>
 public class GameFieldCTRL : MonoBehaviour
 {
+
+    [SerializeField]
+    bool NeedOpenComplite = false;
+    [SerializeField]
+    bool NeedOpenDefeat = false;
+
     [Header("Counters")]
     /// <summary>
     /// Текущее количество коробок блокирующее движение на карте
@@ -433,6 +439,9 @@ public class GameFieldCTRL : MonoBehaviour
         TestMold(); //Выполняем действия после хода
 
         TestCalcPriorityCells(); //Вычисление приоритета ячеек
+
+        //Проверка на завершение игры
+        TestEndMessage();
     }
 
     //Стартовая инициализация игрового поля
@@ -1549,6 +1558,7 @@ public class GameFieldCTRL : MonoBehaviour
                 CellSelect = null;
 
                 buffer.superHit = MenuGameplay.main.SuperHitSelected;
+                Gameplay.main.movingCount++;
             }
 
             //Если сейчас активен супер удар
@@ -1567,6 +1577,7 @@ public class GameFieldCTRL : MonoBehaviour
 
                 //Активировали, возвращаем ничего
                 MenuGameplay.main.SuperHitSelected = MenuGameplay.SuperHitType.none;
+
             }
 
             void TestShopInternal() {
@@ -1612,7 +1623,15 @@ public class GameFieldCTRL : MonoBehaviour
 
             }
             void TestShopSuperColor() {
+                if (Gameplay.main.buttonSuperColor <= 0 || CellSelect.cellInternal == null) {
+                    return;
+                }
 
+                Gameplay.main.buttonSuperColor--;
+
+                CellSelect.cellInternal.Activate(CellInternalObject.Type.color5, CellSelect.cellInternal, null);
+
+                MenuGameplay.main.SuperHitSelected = MenuGameplay.SuperHitType.none;
             }
         }
 
@@ -3353,28 +3372,36 @@ public class GameFieldCTRL : MonoBehaviour
                 }
 
                 //Если миссию можно закончить прохождением
-                if (Gameplay.main.isMissionComplite()) {
+                if (Gameplay.main.isMissionComplite())
+                {
                     //Активируем по очереди все доступные супер бомбы ракеты и остальные активационные штуки
                     List<CellInternalObject> roskets = new List<CellInternalObject>();
                     List<CellInternalObject> bombs = new List<CellInternalObject>();
                     List<CellInternalObject> flys = new List<CellInternalObject>();
                     List<CellInternalObject> color5 = new List<CellInternalObject>();
 
-                    for (int y = 0; y < cellCTRLs.GetLength(1); y++) {
-                        for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
-                            if (cellCTRLs[x,y] != null && cellCTRLs[x,y].cellInternal) {
+                    for (int y = 0; y < cellCTRLs.GetLength(1); y++)
+                    {
+                        for (int x = 0; x < cellCTRLs.GetLength(0); x++)
+                        {
+                            if (cellCTRLs[x, y] != null && cellCTRLs[x, y].cellInternal)
+                            {
 
                                 if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.rocketHorizontal ||
-                                    cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.rocketVertical) {
+                                    cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.rocketVertical)
+                                {
                                     roskets.Add(cellCTRLs[x, y].cellInternal);
                                 }
-                                else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.bomb) {
+                                else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.bomb)
+                                {
                                     bombs.Add(cellCTRLs[x, y].cellInternal);
                                 }
-                                else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.airplane) {
+                                else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.airplane)
+                                {
                                     flys.Add(cellCTRLs[x, y].cellInternal);
                                 }
-                                else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.color5) {
+                                else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.color5)
+                                {
                                     color5.Add(cellCTRLs[x, y].cellInternal);
                                 }
                             }
@@ -3396,37 +3423,42 @@ public class GameFieldCTRL : MonoBehaviour
                         foreach (CellInternalObject inside in flys)
                             inside.myCell.Damage();
                     }
-                    else if (color5.Count > 0) {
+                    else if (color5.Count > 0)
+                    {
                         foreach (CellInternalObject inside in color5)
                             inside.myCell.Damage();
                     }
                     //Если остались ходы
-                    else if (Gameplay.main.movingCan > 0) {
-                        while (Gameplay.main.movingCan > 0) {
+                    else if (Gameplay.main.movingCan > 0)
+                    {
+                        while (Gameplay.main.movingCan > 0)
+                        {
                             //Выбираем рандомный объект
                             int x = Random.Range(0, cellCTRLs.GetLength(0));
                             int y = Random.Range(0, cellCTRLs.GetLength(1));
 
                             //Если эта ячейка не подходит выходим
-                            if (cellCTRLs[x,y] == null || cellCTRLs[x,y].cellInternal == null || cellCTRLs[x,y].cellInternal.type != CellInternalObject.Type.color) {
+                            if (cellCTRLs[x, y] == null || cellCTRLs[x, y].cellInternal == null || cellCTRLs[x, y].cellInternal.type != CellInternalObject.Type.color)
+                            {
                                 continue;
                             }
 
                             //Выбираем тип
                             CellInternalObject.Type typeNew = CellInternalObject.Type.rocketHorizontal;
                             if (Random.Range(0, 100) < 50) typeNew = CellInternalObject.Type.rocketVertical;
-                            
+
 
                             //применяем изменения
-                            cellCTRLs[x, y].cellInternal.setColorAndType(cellCTRLs[x,y].cellInternal.color, typeNew);
+                            cellCTRLs[x, y].cellInternal.setColorAndType(cellCTRLs[x, y].cellInternal.color, typeNew);
                             Combination comb = new Combination();
                             comb.cells.Add(cellCTRLs[x, y]);
-                            if (cellCTRLs[x, y].panel) {
+                            if (cellCTRLs[x, y].panel)
+                            {
                                 comb.foundPanel = true;
                             }
                             //Активируем
-                            cellCTRLs[x, y].cellInternal.Activate(cellCTRLs[x,y].cellInternal.type, null, comb);
-                            
+                            cellCTRLs[x, y].cellInternal.Activate(cellCTRLs[x, y].cellInternal.type, null, comb);
+
 
                             //вычитаем ход
                             Gameplay.main.movingCan--;
@@ -3435,18 +3467,18 @@ public class GameFieldCTRL : MonoBehaviour
                         MenuGameplay.main.updateMoving();
                         isMovingOld = true;
 
-                        if (Gameplay.main.isMissionComplite() && Gameplay.main.movingCan > 0)
+                        if (Gameplay.main.isMissionComplite())
                         {
                             MenuGameplay.main.CreateMidleMessage("Last Move", Color.green);
                         }
                     }
                     else
                     {
-                        Gameplay.main.OpenMessageComplite();
+                        NeedOpenComplite = true;
                     }
 
                 }
-                else if (Gameplay.main.isMissionDefeat()) Gameplay.main.OpenMessageDefeat();
+                else if (Gameplay.main.isMissionDefeat()) NeedOpenDefeat = true;
             }
             else if (!isMovingOld && isMovingNow)
             {
@@ -3486,8 +3518,21 @@ public class GameFieldCTRL : MonoBehaviour
         }
     }
 
-    //находятся ли в движении какие либо объекты на поле
 
+    void TestEndMessage() {
+        if (MessageCTRL.main != null) {
+            return;
+        }
+
+        if (NeedOpenComplite) {
+            Gameplay.main.OpenMessageComplite();
+        }
+        else if(NeedOpenDefeat) {
+            Gameplay.main.OpenMessageDefeat();
+        }
+    }
+
+    //находятся ли в движении какие либо объекты на поле
     float movingObjLastTime = 0;
     void TestMoveInternalObj()
     {

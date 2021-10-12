@@ -10,6 +10,9 @@ using UnityEngine.UI;
 public class MessageCTRL : MonoBehaviour
 {
     [SerializeField]
+    static public MessageCTRL main;
+
+    [SerializeField]
     public bool NeedClose = false;
     [SerializeField]
     public bool WorlUIClose;
@@ -30,6 +33,14 @@ public class MessageCTRL : MonoBehaviour
     {
         rectTransform = gameObject.GetComponent<RectTransform>();
         startPosition();
+
+        if (main == null)
+        {
+            main = this;
+        }
+        else {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
