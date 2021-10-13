@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Семен
 /// <summary>
@@ -12,6 +13,14 @@ public class PanelMap : MonoBehaviour
     [SerializeField]
     RectTransform Up;
 
+    //статистика
+    [SerializeField]
+    Text Health;
+    [SerializeField]
+    Text Ticket;
+    [SerializeField]
+    Text Gold;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +31,14 @@ public class PanelMap : MonoBehaviour
     void Update()
     {
         updateButtons();
+
+        UpdateText();
+    }
+
+    void UpdateText() {
+        Health.text = System.Convert.ToString(PlayerProfile.main.Health.Amount);
+        Ticket.text = System.Convert.ToString(PlayerProfile.main.Ticket.Amount);
+        Gold.text = System.Convert.ToString(PlayerProfile.main.GoldAmount);
     }
 
     void OnEnable()

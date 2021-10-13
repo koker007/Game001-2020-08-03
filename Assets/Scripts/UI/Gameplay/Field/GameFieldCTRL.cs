@@ -1572,7 +1572,7 @@ public class GameFieldCTRL : MonoBehaviour
                     TestShopInternal();
                 else if (buffer.superHit == MenuGameplay.SuperHitType.rosket2x)
                     TestShopRocket();
-                else if(buffer.superHit == MenuGameplay.SuperHitType.superColor)
+                else if(buffer.superHit == MenuGameplay.SuperHitType.Color5)
                     TestShopSuperColor();
 
                 //Активировали, возвращаем ничего
@@ -1581,8 +1581,8 @@ public class GameFieldCTRL : MonoBehaviour
             }
 
             void TestShopInternal() {
-                if (Gameplay.main.buttonDestroyInternal > 0) {
-                    Gameplay.main.buttonDestroyInternal--;
+                if (PlayerProfile.main.ShopBoom.Amount > 0) {
+                    PlayerProfile.main.ShopBoom.Amount--;
 
                     //Создаем комбинацию
                     Combination comb = new Combination();
@@ -1600,8 +1600,8 @@ public class GameFieldCTRL : MonoBehaviour
                 }
             }
             void TestShopRocket() {
-                if (Gameplay.main.buttonRosket > 0) {
-                    Gameplay.main.buttonRosket--;
+                if (PlayerProfile.main.ShopRocket.Amount > 0) {
+                    PlayerProfile.main.ShopRocket.Amount--;
 
                     //Создаем комбинацию
                     Combination comb = new Combination();
@@ -1623,11 +1623,11 @@ public class GameFieldCTRL : MonoBehaviour
 
             }
             void TestShopSuperColor() {
-                if (Gameplay.main.buttonSuperColor <= 0 || CellSelect.cellInternal == null) {
+                if (PlayerProfile.main.ShopColor5.Amount <= 0 || CellSelect.cellInternal == null) {
                     return;
                 }
 
-                Gameplay.main.buttonSuperColor--;
+                PlayerProfile.main.ShopColor5.Amount--;
 
                 CellSelect.cellInternal.Activate(CellInternalObject.Type.color5, CellSelect.cellInternal, null);
 

@@ -54,10 +54,6 @@ public class Gameplay : MonoBehaviour
     public float threeStartFactor = 2f;
     public float twoStartFactor = 1.5f;
 
-    public int buttonDestroyInternal = 10;
-    public int buttonRosket = 10;
-    public int buttonSuperColor = 10;
-
     // Start is called before the first frame update
     void Start()
     {

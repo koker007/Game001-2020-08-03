@@ -9,11 +9,13 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    public static WorldSlider main;
+
     private Vector2 StartTouchPosition;
 
     private const float SpeedRotation = 0.015f;
     private float Srotation;
-    private const float StartRotation = -115;
+    public float StartRotation = -115;
 
     private bool isDown;
 
@@ -21,7 +23,7 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         StartTouchPosition = Input.mousePosition;
-        Srotation = WorldGenerateScene.RealRotation;
+        Srotation = WorldGenerateScene.main.rotationNeed;
         this.isDown = true;
     }
 
@@ -33,7 +35,8 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void Start()
     {
-        WorldGenerateScene.RealRotation = StartRotation;
+        main = this;
+        WorldGenerateScene.main.rotationNeed = StartRotation - (PlayerProfile.main.ProfilelevelOpen * 5);
     }
 
     private void Update()
@@ -41,11 +44,7 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (isDown)
         {
             //изменение переменной поворота
-            WorldGenerateScene.RealRotation = Srotation - (StartTouchPosition.y - Input.mousePosition.y) * SpeedRotation;
-            if (WorldGenerateScene.RealRotation >= StartRotation)
-            {
-                WorldGenerateScene.RealRotation = StartRotation;
-            }
+            WorldGenerateScene.main.rotationNeed = Srotation - (StartTouchPosition.y - Input.mousePosition.y) * SpeedRotation;
         }
     }
 }

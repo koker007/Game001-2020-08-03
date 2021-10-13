@@ -290,19 +290,44 @@ public class MenuGameplay : MonoBehaviour
         none,
         internalObj,
         rosket2x,
-        superColor
+        Color5
     }
 
     public SuperHitType SuperHitSelected = SuperHitType.none;
 
     public void ButtonClickDestroyInternal() {
-        SuperHitSelected = SuperHitType.internalObj;
+        //Иницируем атаку
+        if (PlayerProfile.main.ShopBoom.Amount > 0)
+        {
+            SuperHitSelected = SuperHitType.internalObj;
+        }
+        //Открываем меню покупки
+        else {
+            GlobalMessage.ShopBuyBoom();
+        }
     }
     public void ButtonClickRosket() {
-        SuperHitSelected = SuperHitType.rosket2x;
+        //Инициируем атаку
+        if (PlayerProfile.main.ShopRocket.Amount > 0)
+        {
+            SuperHitSelected = SuperHitType.rosket2x;
+
+        }
+        //Открываем меню покупки
+        else {
+            GlobalMessage.ShopBuyRocket();
+        }
     }
+
     public void ButtonClickSuperColor() {
-        SuperHitSelected = SuperHitType.superColor;
+        //Инициируем атаку
+        if (PlayerProfile.main.ShopColor5.Amount > 0) {
+            SuperHitSelected = SuperHitType.Color5;
+        }
+        //Открываем меню покупки
+        else {
+            GlobalMessage.ShopBuyColor5();
+        }
     }
     //Конец зоны кнопок платных ударов
     ///////////////////////////////////////////////////////////////////////////////////////////////////

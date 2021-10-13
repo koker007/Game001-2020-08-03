@@ -11,9 +11,12 @@ public class MenuWorld : MonoBehaviour
 {
     static public MenuWorld main;
 
+
+
     [Header("Buttons")]
     public RectTransform Up;
     public RectTransform Down;
+    public RectTransform Left;
 
     [Header("Panels")]
     [SerializeField]
@@ -168,6 +171,13 @@ public class MenuWorld : MonoBehaviour
     public void ClickButtonMessages()
     {
         GlobalMessage.ComingSoon();
+    }
+
+    public void ClickButtonRotateForvard() {
+        WorldGenerateScene.main.rotationNeed -= 45;
+    }
+    public void ClickBottonRotateBack() {
+        WorldGenerateScene.main.rotationNeed += 45;
     }
 
     public void SetText()

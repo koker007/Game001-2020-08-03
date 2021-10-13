@@ -34,13 +34,11 @@ public class MessageCTRL : MonoBehaviour
         rectTransform = gameObject.GetComponent<RectTransform>();
         startPosition();
 
-        if (main == null)
-        {
-            main = this;
+        if(main != null) {
+            main.ClickButtonClose();
         }
-        else {
-            Destroy(gameObject);
-        }
+        
+        main = this;
     }
 
     // Update is called once per frame

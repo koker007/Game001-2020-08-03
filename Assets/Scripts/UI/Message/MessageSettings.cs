@@ -55,7 +55,8 @@ public class MessageSettings : MonoBehaviour
         }
     }
     public void ClickButtonSave() {
-
+        //Сохранить прогресс
+        PlayerProfile.main.Save();
     }
 
     public void ClickDropdownLaunguage()

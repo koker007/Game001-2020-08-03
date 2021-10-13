@@ -14,7 +14,7 @@ public class MessageTicket : MonoBehaviour
     }
     public void BuyTicket()
     {
-        PlayerProfile.main.PurchaseItem(ref PlayerProfile.main.Ticket);
+        PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.Ticket);
         SetText();
     }
 

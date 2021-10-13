@@ -33,8 +33,16 @@ public class GlobalMessage : MonoBehaviour
     GameObject PrefabHealth;
     [SerializeField]
     GameObject PrefabLVLInfo;
+
     [SerializeField]
     GameObject PrefabShop;
+    [SerializeField]
+    GameObject PrefabShopBuyBoom;
+    [SerializeField]
+    GameObject PrefabShopBuyRocket;
+    [SerializeField]
+    GameObject PrefabShopBuyColor5;
+
     [SerializeField]
     GameObject PrefabEvents;
     [SerializeField]
@@ -176,6 +184,57 @@ public class GlobalMessage : MonoBehaviour
 
         main.needClose = false;
     }
+
+    /// <summary>
+    /// Всплывающее окно купить первую абилку
+    /// </summary>
+    static public void ShopBuyBoom()
+    {
+        if (main.openMessage)
+        {
+            return;
+        }
+        main.openMessage = true;
+        GameObject messageObj = Instantiate(main.PrefabShopBuyBoom, main.transform);
+        main.SelectMessanger = messageObj.GetComponent<RectTransform>();
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+
+        main.needClose = false;
+    }
+    /// <summary>
+    /// Всплывающее окно купить вторую абилку
+    /// </summary>
+    static public void ShopBuyRocket()
+    {
+        if (main.openMessage)
+        {
+            return;
+        }
+        main.openMessage = true;
+        GameObject messageObj = Instantiate(main.PrefabShopBuyRocket, main.transform);
+        main.SelectMessanger = messageObj.GetComponent<RectTransform>();
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+
+        main.needClose = false;
+    }
+    /// <summary>
+    /// Всплывающее окно купить цвет5
+    /// </summary>
+    static public void ShopBuyColor5()
+    {
+        if (main.openMessage)
+        {
+            return;
+        }
+        main.openMessage = true;
+        GameObject messageObj = Instantiate(main.PrefabShopBuyColor5, main.transform);
+        main.SelectMessanger = messageObj.GetComponent<RectTransform>();
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+
+        main.needClose = false;
+    }
+
+
     /// <summary>
     /// Всплывающее окно события
     /// </summary>

@@ -29,7 +29,7 @@ public class WorldGenerateScene : MonoBehaviour
     /// Фактический угл поворота мира
     /// </summary>
     public float rotationNow; 
-    public static float RealRotation;
+    public float rotationNeed;
     private const float SpeedLerpRotation = 2f;
     private Transform RotatableObj;
 
@@ -65,7 +65,7 @@ public class WorldGenerateScene : MonoBehaviour
     {
         main = this;
 
-        RealRotation = -100;
+        rotationNeed = -100;
 
         SetRotationForWorldUp = 0;
         SetRotationForWorldDown = -180;
@@ -91,7 +91,16 @@ public class WorldGenerateScene : MonoBehaviour
     //поворот обьекта
     private void RotateMainObject()
     {
-        rotationNow = Mathf.Lerp(rotationNow, RealRotation, Time.deltaTime * SpeedLerpRotation);
+        //Проверка границ
+        if (rotationNeed >= WorldSlider.main.StartRotation)
+        {
+            rotationNeed = WorldSlider.main.StartRotation;
+        }
+        else if (rotationNeed <= WorldSlider.main.StartRotation - (PlayerProfile.main.ProfilelevelOpen * 5)) {
+            rotationNeed = WorldSlider.main.StartRotation - (PlayerProfile.main.ProfilelevelOpen * 5);
+        }
+
+        rotationNow = Mathf.Lerp(rotationNow, rotationNeed, Time.deltaTime * SpeedLerpRotation);
         RotatableObj.eulerAngles = new Vector3(rotationNow, 0, 0);
     }
 

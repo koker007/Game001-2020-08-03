@@ -51,8 +51,9 @@ public class PlayerProfile : MonoBehaviour
     public Item Health = new Item(1);
     public Item Ticket = new Item(1);
 
-    public Item Airplane = new Item(1);
-    public Item SuperColor = new Item(1);
+    public Item ShopBoom = new Item(1);
+    public Item ShopRocket = new Item(1);
+    public Item ShopColor5 = new Item(1);
 
 
     private void Awake()
@@ -70,14 +71,24 @@ public class PlayerProfile : MonoBehaviour
         ProfileLevel = PlayerPrefs.GetInt("ProfileLevel", 1);
         ProfileScore = PlayerPrefs.GetInt("ProfileScore", 0);
         ProfilelevelOpen = PlayerPrefs.GetInt("ProfielevelOpen", 1);
-        ProfilelevelOpen = 100;
+        //ProfilelevelOpen = 40;
 
         GoldAmount = PlayerPrefs.GetInt("GoldAmount", 10);
+        GoldAmount = 40;
 
         Health.Amount = PlayerPrefs.GetInt("HealthAmount", 5);
         Ticket.Amount = PlayerPrefs.GetInt("TicketAmount", 5);
-        Airplane.Amount = PlayerPrefs.GetInt("AirplaneAmount", 3);
-        SuperColor.Amount = PlayerPrefs.GetInt("SuperColorAmount", 3);
+        ShopBoom.Amount = PlayerPrefs.GetInt("ShopBoom", 3);
+        ShopRocket.Amount = PlayerPrefs.GetInt("ShopRocket", 3);
+        ShopColor5.Amount = PlayerPrefs.GetInt("ShopColor5", 3);
+        
+    }
+    public void Save() {
+        PlayerPrefs.SetInt("ProfileLevel", ProfileLevel);
+        PlayerPrefs.SetInt("ProfileScore", ProfileScore);
+        PlayerPrefs.SetInt("ProfielevelOpen", ProfilelevelOpen);
+
+        SaveItemAmount();
     }
 
     /// <summary>
@@ -100,11 +111,11 @@ public class PlayerProfile : MonoBehaviour
     /// покупка редмета
     /// </summary>
     /// <param name="item"></param>
-    public void PurchaseItem(ref Item item)
+    public bool isPurchaseItem(ref Item item)
     {
         if(GoldAmount < item.Cost)
         {
-            return;
+            return false;
         }
         else
         {
@@ -113,6 +124,8 @@ public class PlayerProfile : MonoBehaviour
 
             MenuWorld.main.SetText();
             //SaveItemAmount();
+
+            return true;
         }
     }
 
@@ -124,8 +137,10 @@ public class PlayerProfile : MonoBehaviour
         PlayerPrefs.SetInt("GoldAmount", GoldAmount);
         PlayerPrefs.SetInt("HealthAmount", Health.Amount);
         PlayerPrefs.SetInt("TicketAmount", Ticket.Amount);
-        PlayerPrefs.SetInt("AirplaneAmount", Airplane.Amount);
-        PlayerPrefs.SetInt("SuperColorAmount", SuperColor.Amount);
+
+        PlayerPrefs.SetInt("ShopBoom", ShopBoom.Amount);
+        PlayerPrefs.SetInt("ShopRocket", ShopRocket.Amount);
+        PlayerPrefs.SetInt("ShopColor5", ShopColor5.Amount);
     }
 
     public void LevelPassed(int Level)
