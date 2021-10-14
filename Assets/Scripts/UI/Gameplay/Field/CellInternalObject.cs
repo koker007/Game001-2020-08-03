@@ -23,6 +23,8 @@ public class CellInternalObject : MonoBehaviour
 
     [SerializeField]
     RawImage Image;
+    [SerializeField]
+    RawImage LastImage;
 
     [SerializeField]
     Color red = Color.red;
@@ -57,6 +59,9 @@ public class CellInternalObject : MonoBehaviour
     Texture2D TextureBomb;
     [SerializeField]
     Texture2D TextureFly;
+    [SerializeField]
+    Texture2D TextureFlyLast;
+
     [SerializeField]
     Texture2D TextureRocketHorizontal;
     [SerializeField]
@@ -553,6 +558,9 @@ public class CellInternalObject : MonoBehaviour
     public void setColor(InternalColor internalColor) {
         if (type == Type.color)
         {
+            LastImage.texture = null;
+            LastImage.color = new Color(0,0,0,0);
+
             if (internalColor == InternalColor.Red)
             {
                 Image.texture = TextureRed;
@@ -609,22 +617,32 @@ public class CellInternalObject : MonoBehaviour
 
         if (type == Type.airplane) {
             Image.texture = TextureFly;
+            LastImage.texture = TextureFlyLast;
+            LastImage.color = new Color(1, 1, 1);
         }
         else if (type == Type.bomb)
         {
             Image.texture = TextureBomb;
+            LastImage.texture = null;
+            LastImage.color = new Color(1, 1, 1, 0);
         }
         else if (type == Type.rocketHorizontal)
         {
             Image.texture = TextureRocketHorizontal;
+            LastImage.texture = null;
+            LastImage.color = new Color(1, 1, 1, 0);
         }
         else if (type == Type.rocketVertical)
         {
             Image.texture = TextureRocketVertical;
+            LastImage.texture = null;
+            LastImage.color = new Color(1, 1, 1, 0);
         }
         else if (type == Type.color5)
         {
             Image.texture = TextureColor5;
+            LastImage.texture = null;
+            LastImage.color = new Color(1, 1, 1, 0);
         }
 
         color = internalColor;
