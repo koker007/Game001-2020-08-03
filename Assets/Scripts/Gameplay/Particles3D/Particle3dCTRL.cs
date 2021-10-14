@@ -8,6 +8,9 @@ using UnityEngine;
 /// </summary>
 public class Particle3dCTRL : MonoBehaviour
 {
+
+    [SerializeField]
+    float timeLifeMax = 10;
     [SerializeField]
     ParticleSystem[] particles;
 
@@ -79,6 +82,7 @@ public class Particle3dCTRL : MonoBehaviour
         foreach (ParticleSystem particleSystem in particles)
         {
             particleSystem.startColor = color;
+            particleSystem.GetComponent<ParticleSystemRenderer>().material.SetColor("_EmisColor", color);
         }
     }
 
@@ -137,7 +141,7 @@ public class Particle3dCTRL : MonoBehaviour
     
     void TestDestroy() {
         //Удаляем только если вышло время жизни, или если все частицы остановились
-        if (Time.unscaledTime - timeInicialize > 10 || isAllParticlesStoped() || isStoppedMoveDestroy()) {
+        if (Time.unscaledTime - timeInicialize > timeLifeMax || isAllParticlesStoped() || isStoppedMoveDestroy()) {
 
             Destroy(gameObject);
         }

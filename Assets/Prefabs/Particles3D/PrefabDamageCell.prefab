@@ -44,10 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68947b4151e476542b1a81135a562eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeLifeMax: 10
   particles:
   - {fileID: 3426763928085078320}
   SpeedMove: 0
   TargetMove: {x: 0, y: 0}
+  targetInternalObject: {fileID: 0}
+  audioClip: {fileID: 0}
+  PitchDiapazone: {x: 1, y: 1}
 --- !u!1 &3426763928085079724
 GameObject:
   m_ObjectHideFlags: 0

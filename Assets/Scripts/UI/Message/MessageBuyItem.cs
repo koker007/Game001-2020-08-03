@@ -6,6 +6,11 @@ using UnityEngine.UI;
 public class MessageBuyItem : MonoBehaviour
 {
     [SerializeField]
+    int DealPrice = 1;
+    [SerializeField]
+    int DealResult = 1;
+
+    [SerializeField]
     Image From;
     [SerializeField]
     Text FromCount;
@@ -23,7 +28,10 @@ public class MessageBuyItem : MonoBehaviour
     [SerializeField]
     Text TargetPrice;
 
-
+    enum TypePay {
+        Real,
+        Gold
+    }
 
     [SerializeField]
     MenuGameplay.SuperHitType typeBuy;
@@ -37,7 +45,31 @@ public class MessageBuyItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateText();
+    }
+
+    void UpdateText() {
+
+        FromCount.text = System.Convert.ToString(PlayerProfile.main.GoldAmount);
+        FromPrice.text = System.Convert.ToString(DealPrice);
+        TargetPrice.text = System.Convert.ToString(DealResult);
+
+        if (typeBuy == MenuGameplay.SuperHitType.internalObj)
+        {
+            
+            TargetCount.text = System.Convert.ToString(PlayerProfile.main.ShopInternal.Amount);
+        }
+        else if (typeBuy == MenuGameplay.SuperHitType.rosket2x)
+        {
+            TargetCount.text = System.Convert.ToString(PlayerProfile.main.ShopRocket.Amount);
+        }
+        else if (typeBuy == MenuGameplay.SuperHitType.bomb)
+        {
+            TargetCount.text = System.Convert.ToString(PlayerProfile.main.ShopBomb.Amount);
+        }
+        else if (typeBuy == MenuGameplay.SuperHitType.Color5) {
+            TargetCount.text = System.Convert.ToString(PlayerProfile.main.ShopColor5.Amount);
+        }
     }
 
     public void ButtonClickBuy() {
@@ -46,7 +78,7 @@ public class MessageBuyItem : MonoBehaviour
 
         //Если хватает антител
         if (typeBuy == MenuGameplay.SuperHitType.internalObj) {
-            if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopBoom)) {
+            if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopInternal)) {
                 NeedBuyAntigen = true;
             }
         }
@@ -55,9 +87,14 @@ public class MessageBuyItem : MonoBehaviour
                 NeedBuyAntigen = true;
             }
         }
+        else if (typeBuy == MenuGameplay.SuperHitType.bomb) {
+            if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopBomb)) {
+                NeedBuyAntigen = true;
+            }
+        }
         else if (typeBuy == MenuGameplay.SuperHitType.Color5) {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopColor5)) {
-                NeedBuyAntigen = true;            
+                NeedBuyAntigen = true;
             }
         }
 
@@ -66,4 +103,5 @@ public class MessageBuyItem : MonoBehaviour
 
         }
     }
+
 }

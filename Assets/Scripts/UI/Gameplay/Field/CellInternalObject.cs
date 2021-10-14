@@ -460,7 +460,11 @@ public class CellInternalObject : MonoBehaviour
 
                 //Нарисовать частицы
                 Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateCellDamage(myField.transform, myCell);
-                particle3DCTRL.SetColor(GetColor(color));
+                Color color1 = GetColor(color);
+                Vector3 colorVec = new Vector3(color1.r, color1.g, color1.b);
+                colorVec.Normalize();
+                color1 = new Color(color1.r, color1.g, color1.b);
+                particle3DCTRL.SetColor(color1);
 
                 //Изменить количество очков
                 rectDie.pivot = rectMy.pivot;
@@ -618,7 +622,7 @@ public class CellInternalObject : MonoBehaviour
         if (type == Type.airplane) {
             Image.texture = TextureFly;
             LastImage.texture = TextureFlyLast;
-            LastImage.color = new Color(1, 1, 1);
+            LastImage.color = new Color(1, 1, 1, 1);
         }
         else if (type == Type.bomb)
         {
@@ -641,8 +645,10 @@ public class CellInternalObject : MonoBehaviour
         else if (type == Type.color5)
         {
             Image.texture = TextureColor5;
+            Image.color = new Color(1,1,1,1);
             LastImage.texture = null;
             LastImage.color = new Color(1, 1, 1, 0);
+
         }
 
         color = internalColor;
@@ -1353,8 +1359,14 @@ public class CellInternalObject : MonoBehaviour
             //Создаем частицы взрыва
             Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomBomb(myField.gameObject, myCell, radius);
             particle3DCTRL.SetSpeed(radius);
-            particle3DCTRL.SetSize(radius * 3);
-            particle3DCTRL.SetColor(GetColor(color) * 0.5f);
+            particle3DCTRL.SetSize(radius);
+
+            Color color1 = GetColor(color);
+            Vector3 colorVec = new Vector3(color1.r, color1.g, color1.b);
+            colorVec.Normalize();
+            color1 = new Color(color1.r, color1.g, color1.b);
+
+            particle3DCTRL.SetColor(color1);
 
 
             Destroy(gameObject);
@@ -1420,8 +1432,14 @@ public class CellInternalObject : MonoBehaviour
             //Создаем частицы взрыва
             Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomBomb(myField.gameObject, myCell, radius);
             particle3DCTRL.SetSpeed(radius);
-            particle3DCTRL.SetSize(radius * 3);
-            particle3DCTRL.SetColor(GetColor(color) * 0.5f);
+            particle3DCTRL.SetSize(radius);
+
+            Color color1 = GetColor(color);
+            Vector3 colorVec = new Vector3(color1.r, color1.g, color1.b);
+            colorVec.Normalize();
+            color1 = new Color(color1.r, color1.g, color1.b);
+
+            particle3DCTRL.SetColor(color1);
 
             if (partnerBomb) {
                 activateNum = 1;
@@ -1468,7 +1486,7 @@ public class CellInternalObject : MonoBehaviour
                     //Если закончили перебор и не нашли ячейку в списке, значит это то что нужно выбрать в качестве новой цели
                     if (!found)
                     {
-                        flyCTRL.inicialize(myCell, cellPriority, partner, combination);
+                        flyCTRL.inicialize(myCell, cellPriority, partner, combination, Image.color);
 
                         break;
                     }
@@ -1500,7 +1518,7 @@ public class CellInternalObject : MonoBehaviour
                     //Если закончили перебор и не нашли ячейку в списке, значит это то что нужно выбрать в качестве новой цели
                     if (!found)
                     {
-                        flyCTRL.inicialize(partner.myCell, cellPriority, null, combination);
+                        flyCTRL.inicialize(partner.myCell, cellPriority, null, combination, Image.color);
 
                         break;
                     }
@@ -1552,6 +1570,8 @@ public class CellInternalObject : MonoBehaviour
         myCell = myCellNew;
         myField = gameField;
         MyCombID = myCombIDFunc;
+
+        type = Type.airplane;
         setColor(internalColor);
 
         myCell.cellInternal = this;

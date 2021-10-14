@@ -41,6 +41,8 @@ public class GlobalMessage : MonoBehaviour
     [SerializeField]
     GameObject PrefabShopBuyRocket;
     [SerializeField]
+    GameObject PrefabShopBuyBomb;
+    [SerializeField]
     GameObject PrefabShopBuyColor5;
 
     [SerializeField]
@@ -217,6 +219,23 @@ public class GlobalMessage : MonoBehaviour
 
         main.needClose = false;
     }
+
+    /// <summary>
+    /// Всплывающее окно купить бомбу
+    /// </summary>
+    static public void ShopBuyBomb() {
+        if (main.openMessage)
+        {
+            return;
+        }
+        main.openMessage = true;
+        GameObject messageObj = Instantiate(main.PrefabShopBuyBomb, main.transform);
+        main.SelectMessanger = messageObj.GetComponent<RectTransform>();
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+
+        main.needClose = false;
+    }
+
     /// <summary>
     /// Всплывающее окно купить цвет5
     /// </summary>
