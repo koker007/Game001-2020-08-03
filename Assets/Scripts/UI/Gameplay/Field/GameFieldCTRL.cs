@@ -1411,8 +1411,12 @@ public class GameFieldCTRL : MonoBehaviour
                         //Создаем частицы взрыва
                         Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomBomb(gameObject, cellCross, radius);
                         particle3DCTRL.SetSpeed(radius);
-                        particle3DCTRL.SetSize(radius * 3);
-                        particle3DCTRL.SetColor(cellCross.cellInternal.GetColor(color) * 0.5f);
+                        particle3DCTRL.SetSize(radius);
+                        Color color1 = cellCross.cellInternal.GetColor(color);
+                        Vector3 colorVec = new Vector3(color1.r, color1.g, color1.b);
+                        colorVec.Normalize();
+                        color1 = new Color(color1.r, color1.g, color1.b);
+                        particle3DCTRL.SetColor(color1);
 
                     }
                     //Если собрался квадрат
@@ -1572,7 +1576,9 @@ public class GameFieldCTRL : MonoBehaviour
                     TestShopInternal();
                 else if (buffer.superHit == MenuGameplay.SuperHitType.rosket2x)
                     TestShopRocket();
-                else if(buffer.superHit == MenuGameplay.SuperHitType.Color5)
+                else if (buffer.superHit == MenuGameplay.SuperHitType.bomb)
+                    TestShopBomb();
+                else if (buffer.superHit == MenuGameplay.SuperHitType.Color5)
                     TestShopSuperColor();
 
                 //Активировали, возвращаем ничего
@@ -1581,8 +1587,8 @@ public class GameFieldCTRL : MonoBehaviour
             }
 
             void TestShopInternal() {
-                if (PlayerProfile.main.ShopBoom.Amount > 0) {
-                    PlayerProfile.main.ShopBoom.Amount--;
+                if (PlayerProfile.main.ShopInternal.Amount > 0) {
+                    PlayerProfile.main.ShopInternal.Amount--;
 
                     //Создаем комбинацию
                     Combination comb = new Combination();
@@ -1622,6 +1628,37 @@ public class GameFieldCTRL : MonoBehaviour
                 }
 
             }
+            void TestShopBomb() {
+                if (PlayerProfile.main.ShopBomb.Amount <= 0 || CellSelect.BlockingMove > 0) {
+                    return;
+                }
+
+                PlayerProfile.main.ShopBomb.Amount--;
+
+                if (CellSelect.cellInternal != null)
+                {
+                    if (CellSelect.cellInternal.type == CellInternalObject.Type.airplane ||
+                        CellSelect.cellInternal.type == CellInternalObject.Type.bomb ||
+                        CellSelect.cellInternal.type == CellInternalObject.Type.color5 ||
+                        CellSelect.cellInternal.type == CellInternalObject.Type.rocketHorizontal ||
+                        CellSelect.cellInternal.type == CellInternalObject.Type.rocketVertical)
+                    {
+
+                        CellSelect.cellInternal.Activate(CellInternalObject.Type.bomb, CellSelect.cellInternal, null);
+
+                    }
+                    else
+                    {
+                        CellSelect.cellInternal.setColorAndType(CellSelect.cellInternal.color, CellInternalObject.Type.bomb);
+                    }
+                }
+                else {
+                    CreateBomb(CellSelect, CellInternalObject.InternalColor.Red, 0);
+                }
+
+                CellSelect.Damage();
+            }
+
             void TestShopSuperColor() {
                 if (PlayerProfile.main.ShopColor5.Amount <= 0 || CellSelect.cellInternal == null) {
                     return;

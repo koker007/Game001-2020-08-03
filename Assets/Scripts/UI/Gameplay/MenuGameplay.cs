@@ -290,6 +290,7 @@ public class MenuGameplay : MonoBehaviour
         none,
         internalObj,
         rosket2x,
+        bomb,
         Color5
     }
 
@@ -297,7 +298,7 @@ public class MenuGameplay : MonoBehaviour
 
     public void ButtonClickDestroyInternal() {
         //Иницируем атаку
-        if (PlayerProfile.main.ShopBoom.Amount > 0)
+        if (PlayerProfile.main.ShopInternal.Amount > 0)
         {
             SuperHitSelected = SuperHitType.internalObj;
         }
@@ -316,6 +317,20 @@ public class MenuGameplay : MonoBehaviour
         //Открываем меню покупки
         else {
             GlobalMessage.ShopBuyRocket();
+        }
+    }
+
+    public void ButtonClickBomb() {
+        //Инициируем атаку
+        if (PlayerProfile.main.ShopBomb.Amount > 0)
+        {
+            SuperHitSelected = SuperHitType.bomb;
+
+        }
+        //Открываем меню покупки
+        else
+        {
+            GlobalMessage.ShopBuyBomb();
         }
     }
 

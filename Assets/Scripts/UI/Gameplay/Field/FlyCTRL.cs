@@ -70,7 +70,7 @@ public class FlyCTRL : MonoBehaviour
     }
 
     bool isInicialized = false;
-    public void inicialize(CellCTRL CellStart, CellCTRL CellTargetFunc, CellInternalObject partner, GameFieldCTRL.Combination combFunc) {
+    public void inicialize(CellCTRL CellStart, CellCTRL CellTargetFunc, CellInternalObject partner, GameFieldCTRL.Combination combFunc, Color color) {
 
         //Выйти если раннее уже проинициализированно
         if (isInicialized) return;
@@ -84,6 +84,8 @@ public class FlyCTRL : MonoBehaviour
             }
         }
         comb = combFunc;
+
+        image.color = color;
 
         myRect = GetComponent<RectTransform>();
         myRect.pivot = new Vector2(-CellStart.pos.x, -CellStart.pos.y);
@@ -299,8 +301,10 @@ public class FlyCTRL : MonoBehaviour
                 //Создаем частицы взрыва
                 Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomBomb(myField.gameObject, CellTarget, radius);
                 particle3DCTRL.SetSpeed(radius);
-                particle3DCTRL.SetSize(radius * 3);
-                particle3DCTRL.SetColor(new Color(1,1,1) * 0.5f);
+                particle3DCTRL.SetSize(radius);
+                Vector3 colorNormalize = new Vector3(image.color.r, image.color.g , image.color.b);
+                colorNormalize.Normalize();
+                particle3DCTRL.SetColor(new Color(colorNormalize.x, colorNormalize.y, colorNormalize.z));
             }
         }
 
@@ -312,10 +316,6 @@ public class FlyCTRL : MonoBehaviour
 
                 animator.PlayAnimation("Destroy");
 
-                if (alpha < 0)
-                {
-                    Destroy(gameObject);
-                }
             }
         }
     }
@@ -403,6 +403,10 @@ public class FlyCTRL : MonoBehaviour
 
         //Считаем время с момента последнего запуска
         Invoke("PlaySoundStart", timeLastPlayStart - Time.unscaledTime);
+    }
+
+    public void Destroy() {
+        Destroy(gameObject);
     }
 
     //Деструктор

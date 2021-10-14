@@ -28,6 +28,18 @@ public class PlayerProfile : MonoBehaviour
     [HideInInspector]
     public int[] nextLevelPoint = new int[] { 1000 , 5000 , 10000 };
 
+    const string strProfileLevel = "ProfileLevel";
+    const string strProfileScore = "ProfileScore";
+    const string strProfileLevelOpen = "ProfileLevelOpen";
+
+    const string strGoldAmount = "GoldAmound";
+    const string strHealth = "HealtAmount";
+    const string strTicket = "TicketAmount";
+    const string strShopInternal = "ShopInternal";
+    const string strShopRocket = "ShopRocket";
+    const string strShopBomb = "ShopBomb";
+    const string strShopColor5 = "ShopColor5";
+
     /// <summary>
     /// количество игровой валюты
     /// </summary>
@@ -51,8 +63,9 @@ public class PlayerProfile : MonoBehaviour
     public Item Health = new Item(1);
     public Item Ticket = new Item(1);
 
-    public Item ShopBoom = new Item(1);
+    public Item ShopInternal = new Item(1);
     public Item ShopRocket = new Item(1);
+    public Item ShopBomb = new Item(1);
     public Item ShopColor5 = new Item(1);
 
 
@@ -68,25 +81,26 @@ public class PlayerProfile : MonoBehaviour
     //загрузка данных
     private void LoadProfie()
     {
-        ProfileLevel = PlayerPrefs.GetInt("ProfileLevel", 1);
-        ProfileScore = PlayerPrefs.GetInt("ProfileScore", 0);
-        ProfilelevelOpen = PlayerPrefs.GetInt("ProfielevelOpen", 1);
+        ProfileLevel = PlayerPrefs.GetInt(strProfileLevel, 1);
+        ProfileScore = PlayerPrefs.GetInt(strProfileScore, 0);
+        ProfilelevelOpen = PlayerPrefs.GetInt(strProfileLevelOpen, 1);
         //ProfilelevelOpen = 40;
 
-        GoldAmount = PlayerPrefs.GetInt("GoldAmount", 10);
+        GoldAmount = PlayerPrefs.GetInt(strGoldAmount, 10);
         GoldAmount = 40;
 
-        Health.Amount = PlayerPrefs.GetInt("HealthAmount", 5);
-        Ticket.Amount = PlayerPrefs.GetInt("TicketAmount", 5);
-        ShopBoom.Amount = PlayerPrefs.GetInt("ShopBoom", 3);
-        ShopRocket.Amount = PlayerPrefs.GetInt("ShopRocket", 3);
-        ShopColor5.Amount = PlayerPrefs.GetInt("ShopColor5", 3);
+        Health.Amount = PlayerPrefs.GetInt(strHealth, 5);
+        Ticket.Amount = PlayerPrefs.GetInt(strTicket, 5);
+        ShopInternal.Amount = PlayerPrefs.GetInt(strShopInternal, 3);
+        ShopRocket.Amount = PlayerPrefs.GetInt(strShopRocket, 3);
+        ShopBomb.Amount = PlayerPrefs.GetInt(strShopBomb, 3);
+        ShopColor5.Amount = PlayerPrefs.GetInt(strShopColor5, 3);
         
     }
     public void Save() {
-        PlayerPrefs.SetInt("ProfileLevel", ProfileLevel);
-        PlayerPrefs.SetInt("ProfileScore", ProfileScore);
-        PlayerPrefs.SetInt("ProfielevelOpen", ProfilelevelOpen);
+        PlayerPrefs.SetInt(strProfileLevel, ProfileLevel);
+        PlayerPrefs.SetInt(strProfileScore, ProfileScore);
+        PlayerPrefs.SetInt(strProfileLevelOpen, ProfilelevelOpen);
 
         SaveItemAmount();
     }
@@ -103,8 +117,8 @@ public class PlayerProfile : MonoBehaviour
             ProfileScore %= nextLevelPoint[ProfileLevel - 1];
             ProfileLevel++;
         }
-        PlayerPrefs.SetInt("ProfileLevel", ProfileLevel);
-        PlayerPrefs.SetInt("ProfileScore", ProfileScore);
+        PlayerPrefs.SetInt(strProfileLevel, ProfileLevel);
+        PlayerPrefs.SetInt(strProfileScore, ProfileScore);
     }
 
     /// <summary>
@@ -134,13 +148,14 @@ public class PlayerProfile : MonoBehaviour
     /// </summary>
     private void SaveItemAmount()
     {
-        PlayerPrefs.SetInt("GoldAmount", GoldAmount);
-        PlayerPrefs.SetInt("HealthAmount", Health.Amount);
-        PlayerPrefs.SetInt("TicketAmount", Ticket.Amount);
+        PlayerPrefs.SetInt(strGoldAmount, GoldAmount);
+        PlayerPrefs.SetInt(strHealth, Health.Amount);
+        PlayerPrefs.SetInt(strTicket, Ticket.Amount);
 
-        PlayerPrefs.SetInt("ShopBoom", ShopBoom.Amount);
-        PlayerPrefs.SetInt("ShopRocket", ShopRocket.Amount);
-        PlayerPrefs.SetInt("ShopColor5", ShopColor5.Amount);
+        PlayerPrefs.SetInt(strShopInternal, ShopInternal.Amount);
+        PlayerPrefs.SetInt(strShopRocket, ShopRocket.Amount);
+        PlayerPrefs.SetInt(strShopBomb, ShopBomb.Amount);
+        PlayerPrefs.SetInt(strShopColor5, ShopColor5.Amount);
     }
 
     public void LevelPassed(int Level)
