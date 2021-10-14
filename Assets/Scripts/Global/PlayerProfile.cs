@@ -71,7 +71,7 @@ public class PlayerProfile : MonoBehaviour
         ProfileLevel = PlayerPrefs.GetInt("ProfileLevel", 1);
         ProfileScore = PlayerPrefs.GetInt("ProfileScore", 0);
         ProfilelevelOpen = PlayerPrefs.GetInt("ProfielevelOpen", 1);
-        //ProfilelevelOpen = 40;
+        ProfilelevelOpen = 50;
 
         GoldAmount = PlayerPrefs.GetInt("GoldAmount", 10);
         GoldAmount = 40;
