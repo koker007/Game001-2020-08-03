@@ -304,7 +304,7 @@ public class MenuGameplay : MonoBehaviour
         }
         //Открываем меню покупки
         else {
-            GlobalMessage.ShopBuyBoom();
+            GlobalMessage.ShopBuyInternal();
         }
     }
     public void ButtonClickRosket() {

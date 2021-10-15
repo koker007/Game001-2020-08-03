@@ -14,7 +14,9 @@ public class WorldGenerateScene : MonoBehaviour
     public GameObject PrefLevelButton;
     public GameObject PrefGroundLoc10Grad;
     public WorldLocation[] PrefabsLocation = new WorldLocation[0];
-    
+
+    [SerializeField]
+    public float angleLocationGenerate = 180;
 
     private float SetRotationForWorldUp;
     private float SetRotationForWorldDown;
@@ -183,7 +185,7 @@ public class WorldGenerateScene : MonoBehaviour
             }
 
             //≈сли нету, а расто€ние маленькое создаем
-            if (!found && Mathf.Abs(posNow - rotationNow) < 180)
+            if (!found && Mathf.Abs(posNow - rotationNow) < angleLocationGenerate)
             {
                 GameObject locationObj = Instantiate(PrefabsLocation[num].gameObject, RotatableObj.transform);
                 WorldLocation location = locationObj.GetComponent<WorldLocation>();

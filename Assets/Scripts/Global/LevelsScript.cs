@@ -331,6 +331,16 @@ public class LevelsScript : MonoBehaviour
     /// </summary>
     public Level ReturnLevel(int NumLevel)
     {
+
+        Level result = Levels[NumLevel];
+
+        if (result == null) {
+            result = LevelGenerator.main.GenerateLevel(NumLevel);
+        }
+
+        return result;
+
+        /*
         try
         {
             return Levels[NumLevel];
@@ -339,6 +349,7 @@ public class LevelsScript : MonoBehaviour
         {
             return LevelGenerator.main.GenerateLevel(NumLevel);
         }
+        */
     }
     /// <summary>
     /// возвращает стартовое количество ходов текущего уровня

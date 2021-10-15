@@ -19,7 +19,7 @@ public class LevelPosition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (positionVisualizator.activeSelf) {
+        if (positionVisualizator && positionVisualizator.activeSelf) {
             positionVisualizator.SetActive(false);
         }   
     }

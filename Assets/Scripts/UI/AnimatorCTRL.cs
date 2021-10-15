@@ -36,6 +36,10 @@ public class AnimatorCTRL : MonoBehaviour
         }
     }
 
+    public void SetFloat(string name, float value) {
+        animator.SetFloat(name, value);
+    }
+
     public void StopAnimations()
     {
         animator.SetInteger(parameterNameInt, 0);

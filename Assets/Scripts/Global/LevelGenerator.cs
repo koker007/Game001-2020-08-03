@@ -26,10 +26,16 @@ public class LevelGenerator : MonoBehaviour
         float RandomFactor = 1.234567f * NumLevel;
         RandomFactor = Mathf.PerlinNoise(0, RandomFactor) + 1;
 
-        if (LevelsScript.main.ReturnLevel(NumLevel) != null)
+        //Если уровень есть, то отправляем его
+        if (LevelsScript.main.Levels[NumLevel] != null)
+            //была рекурсия, избавился
+            //LevelsScript.main.ReturnLevel(NumLevel) != null)
         {
-            return LevelsScript.main.ReturnLevel(NumLevel);
+            return LevelsScript.main.Levels[NumLevel];
         }
+
+        //Иначе генерируем
+
         float NoizeResult = Mathf.PerlinNoise(Mathf.Cos(NumLevel), 0f) * Mathf.PerlinNoise(Mathf.Sin(NumLevel), 0f) * Mathf.PerlinNoise(Mathf.Tan(NumLevel), 0f) * 1000000;
         //устанавливаем размер уровня
         int Width = (int)NoizeResult % 8 + 6;

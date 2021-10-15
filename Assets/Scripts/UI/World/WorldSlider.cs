@@ -36,7 +36,7 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private void Start()
     {
         main = this;
-        WorldGenerateScene.main.rotationNeed = StartRotation - (PlayerProfile.main.ProfilelevelOpen * 5);
+        WorldGenerateScene.main.rotationNeed = StartRotation - (PlayerProfile.main.ProfilelevelOpen * 5 - 5);
     }
 
     private void Update()

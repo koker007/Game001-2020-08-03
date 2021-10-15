@@ -33,12 +33,15 @@ public class MessageLevelInfo : MonoBehaviour
     void Inicialize() {
         LevelText.text = System.Convert.ToString(Gameplay.main.levelSelect);
 
-        try
-        {
-            LevelInfoText.text = "Required number of points:" + LevelsScript.main.ReturnLevel().NeedScore.ToString() + "\nRecord:\n" + LevelsScript.main.ReturnLevel().MaxScore.ToString();
-            Gameplay.main.CountStars(LevelsScript.main.ReturnLevel().MaxScore, ref LevelStars);
-        }
-        catch { }
+        string textInfo = "Required number of points:";
+        textInfo += System.Convert.ToString(LevelsScript.main.ReturnLevel().NeedScore);
+        textInfo += "\nRecord:\n";
+        textInfo += System.Convert.ToString(LevelsScript.main.ReturnLevel().MaxScore);
+
+        LevelInfoText.text = textInfo;
+
+        Gameplay.main.CountStars(LevelsScript.main.ReturnLevel().MaxScore, ref LevelStars);
+
     }
 
     public void ClickButtonStartLevel() {

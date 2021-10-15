@@ -77,6 +77,7 @@ public class PlayerProfile : MonoBehaviour
 
     private void Start()
     {
+        main = this;
     }
     //загрузка данных
     private void LoadProfie()

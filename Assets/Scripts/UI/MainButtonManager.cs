@@ -15,4 +15,29 @@ public class MainButtonManager : MonoBehaviour
         SoundCTRL.main.PlaySound(SoundCTRL.main.clipPressButton);
     }
 
+
+    public void ButtonClickBuyGold()
+    {
+
+    }
+
+    public void ButtonClickBuyInternal()
+    {
+        GlobalMessage.ShopBuyInternal();
+    }
+
+    public void ButtonClickBuyRocket()
+    {
+        GlobalMessage.ShopBuyRocket();
+    }
+
+    public void ButtonClickBuyBomb()
+    {
+        GlobalMessage.ShopBuyBomb();
+    }
+
+    public void ButtonClickBuyColor5()
+    {
+        GlobalMessage.ShopBuyColor5();
+    }
 }

@@ -50,7 +50,8 @@ public class GameplayParticles3D : MonoBehaviour
             texture = new RenderTexture(Screen.width, Screen.height, 1);
             camera.targetTexture = texture;
 
-            MenuGameplay.main.Particles3D.texture = camera.targetTexture;
+            if (MenuGameplay.main && MenuGameplay.main.Particles3D)
+                MenuGameplay.main.Particles3D.texture = camera.targetTexture;
         }
         
     }

@@ -25,6 +25,8 @@ public class CellInternalObject : MonoBehaviour
     RawImage Image;
     [SerializeField]
     RawImage LastImage;
+    [SerializeField]
+    RawImage CoreImage;
 
     [SerializeField]
     Color red = Color.red;
@@ -44,19 +46,35 @@ public class CellInternalObject : MonoBehaviour
     [SerializeField]
     Texture2D TextureRed;
     [SerializeField]
+    Texture2D TextureRedCore;
+    [SerializeField]
     Texture2D TextureGreen;
+    [SerializeField]
+    Texture2D TextureGreenCore;
     [SerializeField]
     Texture2D TextureBlue;
     [SerializeField]
+    Texture2D TextureBlueCore;
+    [SerializeField]
     Texture2D TextureYellow;
+    [SerializeField]
+    Texture2D TextureYellowCore;
     [SerializeField]
     Texture2D TextureViolet;
     [SerializeField]
+    Texture2D TextureVioletCore;
+    [SerializeField]
     Texture2D TextureColor5;
+    [SerializeField]
+    Texture2D TextureColor5Core;
     [SerializeField]
     Texture2D TextureUltimative;
     [SerializeField]
+    Texture2D TextureUltimativeCore;
+    [SerializeField]
     Texture2D TextureBomb;
+    [SerializeField]
+    Texture2D TextureBombCore;
     [SerializeField]
     Texture2D TextureFly;
     [SerializeField]
@@ -480,59 +498,9 @@ public class CellInternalObject : MonoBehaviour
 
     public void randColor() {
         color = GetRandomColor();
-        if (type == Type.color) {
-            if (color == InternalColor.Red)
-            {
-                Image.texture = TextureRed;
-                Image.color = red;
-            }
-            else if (color == InternalColor.Green)
-            {
-                Image.texture = TextureGreen;
-                Image.color = green;
-            }
-            else if (color == InternalColor.Blue)
-            {
-                Image.texture = TextureBlue;
-                Image.color = blue;
-            }
-            else if (color == InternalColor.Yellow)
-            {
-                Image.texture = TextureYellow;
-                Image.color = yellow;
-            }
-            else if (color == InternalColor.Violet)
-            {
-                Image.texture = TextureViolet;
-                Image.color = violet;
-            }
-            else if (color == InternalColor.Ultimate) {
-                Image.texture = TextureUltimative;
-                Image.color = Ultimative;
-            }
-        }
-        else {
-            if (color == InternalColor.Red)
-            {
-                Image.color = red;
-            }
-            else if (color == InternalColor.Green)
-            {
-                Image.color = green;
-            }
-            else if (color == InternalColor.Blue)
-            {
-                Image.color = blue;
-            }
-            else if (color == InternalColor.Yellow)
-            {
-                Image.color = yellow;
-            }
-            else if (color == InternalColor.Violet)
-            {
-                Image.color = violet;
-            }
-        }
+
+        setColor(color);
+
     }
     public void randType() {
         int rand = Random.Range(1, 6+1);
@@ -560,43 +528,120 @@ public class CellInternalObject : MonoBehaviour
         } 
     }
     public void setColor(InternalColor internalColor) {
+        if (animatorObject != null) {
+            animatorObject.SetFloat("InternalColor", (float)color);
+        }
+
         if (type == Type.color)
         {
+            animatorObject.SetFloat("StayType", 1);
             LastImage.texture = null;
             LastImage.color = new Color(0,0,0,0);
 
             if (internalColor == InternalColor.Red)
             {
                 Image.texture = TextureRed;
-                Image.color = red;
+                CoreImage.texture =TextureRedCore;
+                LastImage.texture = null;
+                //Image.color = red;
             }
             else if (internalColor == InternalColor.Green)
             {
                 Image.texture = TextureGreen;
-                Image.color = green;
+                CoreImage.texture = TextureGreenCore;
+                LastImage.texture = null;
+                //Image.color = green;
             }
             else if (internalColor == InternalColor.Blue)
             {
                 Image.texture = TextureBlue;
-                Image.color = blue;
+                CoreImage.texture = TextureBlueCore;
+                LastImage.texture = null;
+                //Image.color = blue;
             }
             else if (internalColor == InternalColor.Yellow)
             {
                 Image.texture = TextureYellow;
-                Image.color = yellow;
+                CoreImage.texture = TextureYellowCore;
+                LastImage.texture = null;
+                //Image.color = yellow;
             }
             else if (internalColor == InternalColor.Violet)
             {
                 Image.texture = TextureViolet;
-                Image.color = violet;
+                CoreImage.texture = TextureVioletCore;
+                LastImage.texture = null;
+                //Image.color = violet;
             }
             else if (internalColor == InternalColor.Ultimate) {
                 Image.texture = TextureUltimative;
-                Image.color = Ultimative;
+                CoreImage.texture = TextureUltimativeCore;
+                LastImage.texture = null;
+                //Image.color = Ultimative;
             }
 
         }
+
+        if (type == Type.airplane) {
+            Image.texture = TextureFly;
+            setInternalColor();
+            LastImage.texture = TextureFlyLast;
+
+            CoreImage.texture = null;
+        }
+        else if (type == Type.bomb)
+        {
+            Image.texture = TextureBomb;
+            setInternalColor();
+            LastImage.texture = null;
+
+            CoreImage.texture = null;
+        }
+        else if (type == Type.rocketHorizontal)
+        {
+            Image.texture = TextureRocketHorizontal;
+            setInternalColor();
+            LastImage.texture = null;
+
+            CoreImage.texture = null;
+        }
+        else if (type == Type.rocketVertical)
+        {
+            Image.texture = TextureRocketVertical;
+            setInternalColor();
+
+            LastImage.texture = null;
+
+            CoreImage.texture = null;
+        }
+        else if (type == Type.color5)
+        {
+            animatorObject.SetFloat("StayType", 2);
+            Image.texture = TextureColor5;
+            Image.color = new Color(1,1,1,1);
+            LastImage.texture = null;
+
+            CoreImage.texture = TextureColor5Core;
+        }
+
+        color = internalColor;
+
+        if (CoreImage.texture == null)
+        {
+            CoreImage.gameObject.SetActive(false);
+        }
         else {
+            CoreImage.gameObject.SetActive(true);
+        }
+
+        if (LastImage.texture == null) {
+            LastImage.gameObject.SetActive(false);
+        }
+        else {
+            LastImage.gameObject.SetActive(true);
+        }
+
+        void setInternalColor() {
             if (internalColor == InternalColor.Red)
             {
                 Image.color = red;
@@ -618,40 +663,6 @@ public class CellInternalObject : MonoBehaviour
                 Image.color = violet;
             }
         }
-
-        if (type == Type.airplane) {
-            Image.texture = TextureFly;
-            LastImage.texture = TextureFlyLast;
-            LastImage.color = new Color(1, 1, 1, 1);
-        }
-        else if (type == Type.bomb)
-        {
-            Image.texture = TextureBomb;
-            LastImage.texture = null;
-            LastImage.color = new Color(1, 1, 1, 0);
-        }
-        else if (type == Type.rocketHorizontal)
-        {
-            Image.texture = TextureRocketHorizontal;
-            LastImage.texture = null;
-            LastImage.color = new Color(1, 1, 1, 0);
-        }
-        else if (type == Type.rocketVertical)
-        {
-            Image.texture = TextureRocketVertical;
-            LastImage.texture = null;
-            LastImage.color = new Color(1, 1, 1, 0);
-        }
-        else if (type == Type.color5)
-        {
-            Image.texture = TextureColor5;
-            Image.color = new Color(1,1,1,1);
-            LastImage.texture = null;
-            LastImage.color = new Color(1, 1, 1, 0);
-
-        }
-
-        color = internalColor;
     }
     public void setColorAndType(InternalColor internalColor, Type typeNew) {
         type = typeNew;
@@ -1562,6 +1573,8 @@ public class CellInternalObject : MonoBehaviour
         Image.texture = TextureBomb;
 
         myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
+
+        setColor(internalColor);
     }
 
     public void IniFly(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor, int myCombIDFunc)
@@ -1572,7 +1585,6 @@ public class CellInternalObject : MonoBehaviour
         MyCombID = myCombIDFunc;
 
         type = Type.airplane;
-        setColor(internalColor);
 
         myCell.cellInternal = this;
         PosToCell();
@@ -1580,6 +1592,8 @@ public class CellInternalObject : MonoBehaviour
         type = Type.airplane;
         color = internalColor;
         Image.texture = TextureFly;
+
+        setColor(internalColor);
     }
 
     public void IniSuperColor(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor, int myCombIDFunc)
@@ -1588,7 +1602,6 @@ public class CellInternalObject : MonoBehaviour
         myCell = myCellNew;
         myField = gameField;
         MyCombID = myCombIDFunc;
-        setColor(internalColor);
 
         myCell.cellInternal = this;
         PosToCell();
@@ -1597,6 +1610,8 @@ public class CellInternalObject : MonoBehaviour
         color = internalColor;
         Image.texture = TextureColor5;
         myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
+
+        setColor(internalColor);
     }
 
     public void IniRocketVertical(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor, int myCombIDFunc)
@@ -1605,7 +1620,6 @@ public class CellInternalObject : MonoBehaviour
         myCell = myCellNew;
         myField = gameField;
         MyCombID = myCombIDFunc;
-        setColor(internalColor);
 
         myCell.cellInternal = this;
         PosToCell();
@@ -1614,6 +1628,8 @@ public class CellInternalObject : MonoBehaviour
         color = internalColor;
         Image.texture = TextureRocketVertical;
         myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
+
+        setColor(internalColor);
     }
     public void IniRocketHorizontal(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor, int myCombIDFunc)
     {
@@ -1621,7 +1637,6 @@ public class CellInternalObject : MonoBehaviour
         myCell = myCellNew;
         myField = gameField;
         MyCombID = myCombIDFunc;
-        setColor(internalColor);
 
         myCell.cellInternal = this;
         PosToCell();
@@ -1630,6 +1645,8 @@ public class CellInternalObject : MonoBehaviour
         color = internalColor;
         Image.texture = TextureRocketHorizontal;
         myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
+
+        setColor(internalColor);
     }
 
 }

@@ -177,7 +177,7 @@ public class GlobalMessage : MonoBehaviour
     {
         if (main.openMessage)
         {
-            return;
+            Close();
         }
         main.openMessage = true;
         GameObject messageObj = Instantiate(main.PrefabShop, main.transform);
@@ -190,12 +190,13 @@ public class GlobalMessage : MonoBehaviour
     /// <summary>
     /// ¬сплывающее окно купить первую абилку
     /// </summary>
-    static public void ShopBuyBoom()
+    static public void ShopBuyInternal()
     {
         if (main.openMessage)
         {
-            return;
+            Close();
         }
+
         main.openMessage = true;
         GameObject messageObj = Instantiate(main.PrefabShopBuyBoom, main.transform);
         main.SelectMessanger = messageObj.GetComponent<RectTransform>();
@@ -210,7 +211,7 @@ public class GlobalMessage : MonoBehaviour
     {
         if (main.openMessage)
         {
-            return;
+            Close();
         }
         main.openMessage = true;
         GameObject messageObj = Instantiate(main.PrefabShopBuyRocket, main.transform);
@@ -226,7 +227,7 @@ public class GlobalMessage : MonoBehaviour
     static public void ShopBuyBomb() {
         if (main.openMessage)
         {
-            return;
+            Close();
         }
         main.openMessage = true;
         GameObject messageObj = Instantiate(main.PrefabShopBuyBomb, main.transform);
@@ -243,7 +244,7 @@ public class GlobalMessage : MonoBehaviour
     {
         if (main.openMessage)
         {
-            return;
+            Close();
         }
         main.openMessage = true;
         GameObject messageObj = Instantiate(main.PrefabShopBuyColor5, main.transform);
