@@ -81,17 +81,11 @@ public class PlayerProfile : MonoBehaviour
     //загрузка данных
     private void LoadProfie()
     {
-<<<<<<< HEAD
-        ProfileLevel = PlayerPrefs.GetInt("ProfileLevel", 1);
-        ProfileScore = PlayerPrefs.GetInt("ProfileScore", 0);
-        ProfilelevelOpen = PlayerPrefs.GetInt("ProfielevelOpen", 1);
-        ProfilelevelOpen = 50;
-=======
+
         ProfileLevel = PlayerPrefs.GetInt(strProfileLevel, 1);
         ProfileScore = PlayerPrefs.GetInt(strProfileScore, 0);
         ProfilelevelOpen = PlayerPrefs.GetInt(strProfileLevelOpen, 1);
-        //ProfilelevelOpen = 40;
->>>>>>> РЎРµРјРµРЅ2
+        ProfilelevelOpen = 40;
 
         GoldAmount = PlayerPrefs.GetInt(strGoldAmount, 10);
         GoldAmount = 40;
