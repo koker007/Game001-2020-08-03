@@ -3557,7 +3557,7 @@ public class GameFieldCTRL : MonoBehaviour
 
 
     void TestEndMessage() {
-        if (MessageCTRL.main != null) {
+        if (MessageCTRL.selected != null) {
             return;
         }
 

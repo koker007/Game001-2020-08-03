@@ -10,14 +10,13 @@ using UnityEngine.UI;
 public class MessageCTRL : MonoBehaviour
 {
     [SerializeField]
-    static public MessageCTRL main;
+    Animator myAnimator;
+
+    static List<MessageCTRL> BufferMessages = new List<MessageCTRL>();
 
     [SerializeField]
-    public bool NeedClose = false;
-    [SerializeField]
-    public bool WorlUIClose;
-    [SerializeField]
-    float sinTime = 2; //Для дрожания по синусу
+    static public MessageCTRL selected;
+
 
     [SerializeField]
     Text title;
@@ -26,95 +25,24 @@ public class MessageCTRL : MonoBehaviour
     [SerializeField]
     Text button;
 
-    RectTransform rectTransform;
-
-    // Start is called before the first frame update
     void Start()
     {
-        rectTransform = gameObject.GetComponent<RectTransform>();
-        startPosition();
 
-        if(main != null) {
-            main.ClickButtonClose();
-        }
-        
-        main = this;
     }
 
     // Update is called once per frame
     void Update()
     {
-        moving();
+        //moving();
     }
-    
-    void startPosition()
-    {
-        rectTransform.pivot = new Vector2(0.5f, 5);
-    }
-    void moving() {
 
-        //Появление
-        if (!NeedClose)
-        {
-            sinTime -= Time.unscaledDeltaTime;
-            if (sinTime < 0)
-                sinTime = 0;
 
-            float sinPlus = Mathf.Sin(sinTime * 20);
-
-            float y = rectTransform.pivot.y;
-            y += (0.5f - y) * Time.unscaledDeltaTime * 5;
-
-            //y += sinPlus * sinTime * 0.05f;
-
-            if (Mathf.Abs(y) > 3 || sinTime > 2) { 
-                y = -3;
-                sinTime = 1;
-            }
-            rectTransform.pivot = new Vector2(rectTransform.pivot.x, y);
-
-            //деактивация worldUI при появлении сообщения
-            if (WorlUIClose && MenuWorld.main.isOpen == MenuWorld.UIIsOpen.Map)
-            {
-                MainComponents.Vertical.SetActive(false);
-                MainComponents.PanelMap.SetActive(false);
-            }
-        }
-        //Исчезание
-        else {
-            sinTime += Time.unscaledDeltaTime;
-
-            float sinPlus = Mathf.Sin(sinTime * 20);
-            float y = rectTransform.pivot.y;
-
-            float minusTime = sinTime - 0.25f;
-            if (minusTime < 0) minusTime = 0;
-            y += minusTime;
-
-            float sinTimeCut = 0.5f - sinTime;
-            if (sinTimeCut < 0) sinTimeCut = 0;
-            y += sinPlus * sinTimeCut * 0.2f;
-
-            rectTransform.pivot = new Vector2(rectTransform.pivot.x, y);
-
-            //активация worldUI
-            if (WorlUIClose)
-            {
-                if(MenuWorld.main.isOpen == MenuWorld.UIIsOpen.Map)
-                {
-                    MainComponents.PanelMap.SetActive(true);
-                }
-                MainComponents.Vertical.SetActive(true);
-                WorlUIClose = false;
-            }
-
-            //Удаление префаба
-            if (Mathf.Abs(y) > 10) {
-                Destroy(gameObject);
-            }
+    public void SetSelected() {
+        if (selected != null && selected != this) {
+            selected.ClickButtonClose();
         }
 
-
+        selected = this;
     }
 
     public void setMessage(string titleFunc, string messageFunc, string buttonFunc) {
@@ -127,7 +55,97 @@ public class MessageCTRL : MonoBehaviour
     /// Закрыть сообщение
     /// </summary>
     public void ClickButtonClose() {
-        NeedClose = true;
-        GlobalMessage.Close();
+
+        myAnimator.SetBool("Close", true);
+
+    }
+
+    public void TryDestroy()
+    {
+
+        //Ищем данное сообщение в списке
+        foreach (MessageCTRL message in BufferMessages) {
+            if (message == this) {
+                return;
+            }
+        }
+
+        //Ненашли значит удаляем
+        Destroy();
+    }
+
+    public void Destroy()
+    {
+        DeleteInBuffer();
+
+        Destroy(gameObject);
+    }
+
+    public void DeleteInBuffer() {
+        //Новый список сообщений в буфере
+        List<MessageCTRL> bufferMessagesNew = new List<MessageCTRL>();
+        foreach (MessageCTRL messageCTRL in BufferMessages)
+        {
+            if (messageCTRL == this)
+            {
+                continue;
+            }
+
+            bufferMessagesNew.Add(messageCTRL);
+        }
+
+        BufferMessages = bufferMessagesNew;
+    }
+    public void AddInBuffer() {
+
+        foreach (MessageCTRL messageCTRL in BufferMessages)
+        {
+            if (messageCTRL == this)
+            {
+                return;
+            }
+        }
+
+        BufferMessages.Add(this);
+    }
+
+    public void TestOpenFromHide() {
+        myAnimator.SetBool("Close", false);
+
+        //Проверяем что это сообщение есть в списке сообщений и оно там последнее
+        bool meLast = false;
+        bool mefound = false;
+        for (int num = 0; num < BufferMessages.Count; num++) {
+            if (BufferMessages[num] == this)
+            {
+                mefound = true;
+                if (num == BufferMessages.Count - 1) meLast = true;
+            }
+        }
+
+        //Если себя не нашли удаляем это сообщение
+        if (!mefound) {
+            //Ненашли значит удаляем
+            Destroy(gameObject);
+        }
+
+        if (!meLast) return;
+
+        //Если оказывается я последний то выводим это сообщение
+        myAnimator.SetBool("Open", true);
+    }
+
+    public void SetOpenFalse()
+    {
+        myAnimator.SetBool("Open", false);
+    }
+
+
+    static public  void NewMessage(MessageCTRL message) {
+        if (selected != null)
+        {
+            selected.AddInBuffer();
+        }
+        selected = message;
     }
 }

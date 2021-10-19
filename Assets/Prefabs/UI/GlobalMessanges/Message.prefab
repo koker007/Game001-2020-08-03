@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 7478902612445323562}
   - component: {fileID: 7478902612445323563}
   - component: {fileID: 7478902612445323556}
+  - component: {fileID: 823957141488711594}
   m_Layer: 5
   m_Name: Message
   m_TagString: Untagged
@@ -138,12 +139,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1156fd637a777094881f2f5828b188fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myAnimator: {fileID: 823957141488711594}
   NeedClose: 0
   WorlUIClose: 0
   sinTime: 6
   title: {fileID: 7478902613490472120}
   message: {fileID: 7478902612846193627}
   button: {fileID: 4504271521622011694}
+--- !u!95 &823957141488711594
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7478902612445323561}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5bb9cdf7e9cfd3043a96bb99ef10587b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7478902612468385570
 GameObject:
   m_ObjectHideFlags: 0

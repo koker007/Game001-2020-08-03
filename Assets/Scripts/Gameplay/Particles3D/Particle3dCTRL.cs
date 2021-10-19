@@ -15,6 +15,9 @@ public class Particle3dCTRL : MonoBehaviour
     ParticleSystem[] particles;
 
     [SerializeField]
+    float posZ = 0;
+
+    [SerializeField]
     float SpeedMove = 0;
     [SerializeField]
     Vector2 TargetMove = new Vector2();
@@ -59,7 +62,7 @@ public class Particle3dCTRL : MonoBehaviour
         //Перемещаем частицу на стартовую позицию
         transform.localPosition = new Vector3(
             (field.pivot.x - 0.5f) * scaleMove + posOnField.x + 0.5f,
-            (field.pivot.y - 0.5f) * scaleMove + posOnField.y + 0.5f, 0);
+            (field.pivot.y - 0.5f) * scaleMove + posOnField.y + 0.5f, posZ);
 
         particles = GetComponentsInChildren<ParticleSystem>();
 

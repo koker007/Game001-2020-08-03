@@ -10,6 +10,6 @@ public class MessageFonCloser : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData pointerEventData)
     {
 
-        MessageCTRL.main.ClickButtonClose();
+        MessageCTRL.selected.ClickButtonClose();
     }
 }
