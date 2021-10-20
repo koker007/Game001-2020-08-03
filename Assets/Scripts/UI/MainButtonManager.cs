@@ -18,7 +18,7 @@ public class MainButtonManager : MonoBehaviour
 
     public void ButtonClickBuyGold()
     {
-
+        GlobalMessage.ShopBuyGold();
     }
 
     public void ButtonClickBuyInternal()

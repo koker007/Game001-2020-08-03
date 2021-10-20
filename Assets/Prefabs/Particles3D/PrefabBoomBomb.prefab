@@ -865,7 +865,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 500
+      scalar: 150
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4851,6 +4851,7 @@ MonoBehaviour:
   timeLifeMax: 10
   particles:
   - {fileID: 1540684045146012368}
+  posZ: 0
   SpeedMove: 0
   TargetMove: {x: 0, y: 0}
   targetInternalObject: {fileID: 0}

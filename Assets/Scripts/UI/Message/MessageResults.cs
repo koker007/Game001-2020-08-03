@@ -27,7 +27,9 @@ public class MessageResults : MonoBehaviour
     {
         Gameplay.main.levelSelect++;
 
-        GlobalMessage.Close();
+        //Закрыть свое сообщение
+        MessageCTRL myMessageCTRL = gameObject.GetComponent<MessageCTRL>();
+        myMessageCTRL.ClickButtonClose();
 
         Gameplay.main.GameplayEnd = false;
         Destroy(MenuGameplay.GameField);

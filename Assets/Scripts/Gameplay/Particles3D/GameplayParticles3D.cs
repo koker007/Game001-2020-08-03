@@ -30,6 +30,8 @@ public class GameplayParticles3D : MonoBehaviour
     [SerializeField]
     public GameObject prefabBoomSuperColor;
     [SerializeField]
+    public GameObject prefabBoomAll;
+    [SerializeField]
     public GameObject prefabCellDamage;
 
     // Start is called before the first frame update

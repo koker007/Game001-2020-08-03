@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4113693801095978999
 RectTransform:
   m_ObjectHideFlags: 0
@@ -137,14 +137,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7857579, g: 0.7924528, b: 0.5719117, a: 1}
+  m_Color: {r: 0.8160377, g: 0.9611462, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: b6055864ba6585d4b9b449cd1c44c52f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -213,6 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c24d27d3d21c5642aea840b3755a29d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myField: {fileID: 0}
+  MyPriority: 0
   ramka:
   - {fileID: 4113693801690683199}
   - {fileID: 4113693802874934426}
@@ -220,10 +222,18 @@ MonoBehaviour:
   - {fileID: 4113693802861484617}
   pos: {x: 0, y: 0}
   cellInternal: {fileID: 0}
-  movingInternalNow: 0
-  dontMoving: 0
-  gel: 0
+  BoxBlockCTRL: {fileID: 0}
+  moldCTRL: {fileID: 0}
+  rockCTRL: {fileID: 0}
+  panelCTRL: {fileID: 0}
+  BlockingMove: 0
+  mold: 0
+  rock: 0
+  panel: 0
   myInternalNum: 0
+  timeBoomOld: 0
+  timeAddInternalOld: 0
+  BufferNearDamage: 1
 --- !u!114 &4113693801544523251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,7 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.9170409, b: 0.7028302, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -271,7 +281,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4113693801690683198
 RectTransform:
   m_ObjectHideFlags: 0
@@ -346,7 +356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4113693802861484616
 RectTransform:
   m_ObjectHideFlags: 0
@@ -421,7 +431,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4113693802874934405
 RectTransform:
   m_ObjectHideFlags: 0

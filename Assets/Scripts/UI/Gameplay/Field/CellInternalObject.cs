@@ -1168,12 +1168,12 @@ public class CellInternalObject : MonoBehaviour
                         myField.cellCTRLs[x, y].BufferCombination = combination;
                         myField.cellCTRLs[x, y].BufferNearDamage = false;
                         myField.cellCTRLs[x, y].DamageInvoke(0.1f * distance);
-
-                        Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomSuperColor(myField.transform, myCell);
-                        particle3DCTRL.SetTransformTarget(new Vector2(x + 0.5f, y + 0.5f));
-                        particle3DCTRL.SetTransformSpeed(1 / speed);
                     }
                 }
+
+                Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomAll(myField.gameObject, myCell, 1);
+                //particle3DCTRL.SetSpeed(1);
+                //particle3DCTRL.SetSize(1);
 
                 //Удаляем обьект партнера
                 if (partner)

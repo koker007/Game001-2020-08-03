@@ -27,7 +27,10 @@ public class AnimatorCTRL : MonoBehaviour
 
     public void PlayAnimation(string key)
     {
-        for(int i = 0; i < animations.Length; i++)
+        if (animator == null)
+            return;
+
+        for (int i = 0; i < animations.Length; i++)
         {
             if (key == animations[i].key)
             {

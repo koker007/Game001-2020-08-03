@@ -35,6 +35,8 @@ public class GlobalMessage : MonoBehaviour
     [SerializeField]
     GameObject PrefabShop;
     [SerializeField]
+    GameObject PrefabShopBuyGold;
+    [SerializeField]
     GameObject PrefabShopBuyBoom;
     [SerializeField]
     GameObject PrefabShopBuyRocket;
@@ -142,6 +144,17 @@ public class GlobalMessage : MonoBehaviour
         MessageCTRL.NewMessage(messageCTRL);
     }
 
+    /// <summary>
+    /// Купить Золото
+    /// </summary>
+    static public void ShopBuyGold()
+    {
+        GameObject messageObj = Instantiate(main.PrefabShopBuyGold, main.transform);
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+
+
+        MessageCTRL.NewMessage(messageCTRL);
+    }
     /// <summary>
     /// Всплывающее окно купить первую абилку
     /// </summary>

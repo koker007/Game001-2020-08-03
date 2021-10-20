@@ -112,6 +112,9 @@ public class MessageCTRL : MonoBehaviour
     public void TestOpenFromHide() {
         myAnimator.SetBool("Close", false);
 
+        //Если есть текущее сообщение то проверка на вывод не нужна
+        if (selected != null) return;
+
         //Проверяем что это сообщение есть в списке сообщений и оно там последнее
         bool meLast = false;
         bool mefound = false;
@@ -129,6 +132,7 @@ public class MessageCTRL : MonoBehaviour
             Destroy(gameObject);
         }
 
+        //Выходим если я не последний или
         if (!meLast) return;
 
         //Если оказывается я последний то выводим это сообщение

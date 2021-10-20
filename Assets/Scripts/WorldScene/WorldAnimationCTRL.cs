@@ -35,6 +35,8 @@ public class WorldAnimationCTRL : MonoBehaviour
         bool SelectModel() {
             bool selected = false;
 
+            if (veroatnost.Length == 0 || models.Length == 0) return true;
+
             //Выбираем рандомно модель
             int modelNum = Random.Range(0, models.Length);
             float veroatnostNow = veroatnost[modelNum];

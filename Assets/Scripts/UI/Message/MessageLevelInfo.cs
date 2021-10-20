@@ -46,6 +46,8 @@ public class MessageLevelInfo : MonoBehaviour
 
     public void ClickButtonStartLevel() {
         UICTRL.main.OpenGameplay();
-        GlobalMessage.Close();
+
+        MessageCTRL myMessageCTRL = gameObject.GetComponent<MessageCTRL>();
+        myMessageCTRL.ClickButtonClose();
     }
 }

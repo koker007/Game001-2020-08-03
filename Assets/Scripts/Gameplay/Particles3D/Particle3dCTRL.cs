@@ -198,6 +198,26 @@ public class Particle3dCTRL : MonoBehaviour
         return particle3DCTRL;
     }
 
+    public static Particle3dCTRL CreateBoomAll(GameObject field, CellCTRL cellStartExplose, float Radius)
+    {
+
+        GameObject ParticleObj = Instantiate(GameplayParticles3D.main.prefabBoomAll, GameplayParticles3D.main.transform);
+        Particle3dCTRL particle3DCTRL = ParticleObj.GetComponent<Particle3dCTRL>();
+
+        RectTransform rectField = field.GetComponent<RectTransform>();
+
+        if (particle3DCTRL == null)
+        {
+            Destroy(ParticleObj);
+            return particle3DCTRL;
+        }
+
+        //Инициализируем данными частицу
+        particle3DCTRL.Inizialize(rectField, cellStartExplose.pos);
+
+        return particle3DCTRL;
+    }
+
     /// <summary>
     /// Создать эффект взрыва ракеты и получить ссылку на нее
     /// </summary>

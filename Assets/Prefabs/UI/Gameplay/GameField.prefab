@@ -480,6 +480,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f635d36367ce7d44384a87b8b15f01cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NeedOpenComplite: 0
+  NeedOpenDefeat: 0
   CountBoxBlocker: 0
   CountRockBlocker: 0
   CountMold: 0
@@ -512,6 +514,7 @@ MonoBehaviour:
   timeLastMove: 0
   moldCTRLs: []
   ComboCount: 1
+  ComboInternal: 0
   testCell: {x: 0, y: 8}
   cellsPriority: []
 --- !u!114 &7182278835875313941
