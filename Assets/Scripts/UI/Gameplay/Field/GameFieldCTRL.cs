@@ -442,6 +442,8 @@ public class GameFieldCTRL : MonoBehaviour
 
         //Проверка на завершение игры
         TestEndMessage();
+
+        PanelSpreadCTRL.TestOffSet();
     }
 
     //Стартовая инициализация игрового поля

@@ -613,7 +613,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     /// </summary>
     public void CalcMyPriority() {
 
-        const int PriorityBox = 10; //Приоритет ящика
+        const int PriorityBox = 20; //Приоритет ящика
         const int PriorityRock = 10;
         const int PriorityMold = 5; //приоритет плесени
         const int PriorityPanel = 5; //Приоритет отсутствия панели
