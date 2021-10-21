@@ -684,7 +684,7 @@ public class LevelsArray : LevelsScript
         lvl = 10;
         Levels[lvl] = CreateLevel(lvl, 9, 7, 15000, 20, 4, 0);
 
-        Levels[lvl].PassedWithMold = true;
+        Levels[lvl].PassedWithIce = true;
 
         Levels[lvl].SetMass(
             new int[,] //exist
@@ -760,7 +760,7 @@ public class LevelsArray : LevelsScript
                 { 1,1,1,1,1,1,1 },
                 { 1,1,1,1,1,1,1 }
             },
-            "mold"
+            "ice"
             );
         Levels[lvl].SetCells();
 

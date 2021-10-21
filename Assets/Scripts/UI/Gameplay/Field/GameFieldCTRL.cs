@@ -32,6 +32,13 @@ public class GameFieldCTRL : MonoBehaviour
     /// </summary>
     [SerializeField]
     public int CountMold = 0;
+
+    /// <summary>
+    /// Количество льда на карте
+    /// </summary>
+    [SerializeField]
+    public int CountIce = 0;
+
     /// <summary>
     /// Текущее количество распространяемой панели на карте
     /// </summary>
@@ -58,6 +65,8 @@ public class GameFieldCTRL : MonoBehaviour
     public GameObject prefabPanel;
     [SerializeField]
     GameObject prefabMold;
+    [SerializeField]
+    GameObject prefabIce;
 
     [Header("Particles")]
     [SerializeField]
@@ -79,6 +88,8 @@ public class GameFieldCTRL : MonoBehaviour
     public Transform parentOfPanels;
     [SerializeField]
     public Transform parentOfMold;
+    [SerializeField]
+    public Transform parentOfIce;
     [SerializeField]
     public Transform parentOfRock;
     [SerializeField]
@@ -109,6 +120,37 @@ public class GameFieldCTRL : MonoBehaviour
     /// Список контроллеров плесени
     /// </summary>
     public List<MoldCTRL> moldCTRLs = new List<MoldCTRL>();
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        StartInicialize();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        TestSpawn(); //Спавним
+        isMoving();
+        TestFieldCombination(true); //Тестим комбинации с применением урона
+
+        TestFieldPotencial(); //ищем потенциальные ходы
+        TestRandomNotPotencial(); //Рандомизируем если ходов не обнаружено
+
+        TestStartSwap(); //Начинаем обмен
+        TestReturnSwap(); //Возвращяем обмен
+
+        TestMold(); //Выполняем действия после хода
+
+        TestCalcPriorityCells(); //Вычисление приоритета ячеек
+
+        //Проверка на завершение игры
+        TestEndMessage();
+
+        PanelSpreadCTRL.TestOffSet();
+    }
 
     /// <summary>
     /// Пересчитать текущее количество плесени, исключить удаленные из списка
@@ -196,6 +238,11 @@ public class GameFieldCTRL : MonoBehaviour
     public RockCTRL[,] rockCTRLs;
 
     /// <summary>
+    /// Контроллеры льда
+    /// </summary>
+    public IceCTRL[,] iceCTRLs;
+
+    /// <summary>
     /// Инициализировать игровое поле, на основе данных уровня, или рандомно, если уровня нет
     /// </summary>
     public void inicializeField(LevelsScript.Level level) {
@@ -259,6 +306,7 @@ public class GameFieldCTRL : MonoBehaviour
             cellCTRLs = new CellCTRL[level.Width, level.Height];
             BoxBlockCTRLs = new BoxBlockCTRL[level.Width, level.Height];
             rockCTRLs = new RockCTRL[level.Width, level.Height];
+            iceCTRLs = new IceCTRL[level.Width, level.Height];
             cellsPriority = new CellCTRL[cellCTRLs.GetLength(0) * cellCTRLs.GetLength(1)];
 
             Gameplay.main.colors = level.NumColors;
@@ -298,9 +346,10 @@ public class GameFieldCTRL : MonoBehaviour
                         //Перемещаем объект на свою позицию
                         RectTransform rect = cellObj.GetComponent<RectTransform>();
                         rect.pivot = new Vector2(-x, -y);
-                        cellCTRLs[x, y].BlockingMove = level.cells[x, y].boxHealth;
+                        cellCTRLs[x, y].BlockingMove = level.cells[x, y].HealthBox;
                         cellCTRLs[x, y].rock = level.cells[x, y].rock;
-                        cellCTRLs[x, y].mold = level.cells[x, y].moldHealth;
+                        cellCTRLs[x, y].mold = level.cells[x, y].HealthMold;
+                        cellCTRLs[x, y].ice = level.cells[x, y].HealthIce;
                         
                         if(level.cells[x, y].Panel > 0)
                             cellCTRLs[x, y].panel = true;
@@ -336,6 +385,17 @@ public class GameFieldCTRL : MonoBehaviour
                         //Инициализация плесени
                         moldCTRL.inicialize(cellCTRLs[x, y]);
                     }
+
+                    //Нужно ли создать лед
+                    if (cellCTRLs[x, y].ice > 0) {
+                        GameObject iceObj = Instantiate(prefabIce, parentOfIce);
+                        IceCTRL iceCTRL = iceObj.GetComponent<IceCTRL>();
+                        cellCTRLs[x, y].iceCTRL = iceCTRL;
+
+                        //Инициализация плесени
+                        iceCTRL.inicialize(cellCTRLs[x, y]);
+                    }
+
                     //Нужно ли создать панель
                     if (cellCTRLs[x,y].panel) {
                         GameObject panelObj = Instantiate(prefabPanel, parentOfPanels);
@@ -416,35 +476,7 @@ public class GameFieldCTRL : MonoBehaviour
 
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        StartInicialize();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-        TestSpawn(); //Спавним
-        isMoving();
-        TestFieldCombination(true); //Тестим комбинации с применением урона
-
-        TestFieldPotencial(); //ищем потенциальные ходы
-        TestRandomNotPotencial(); //Рандомизируем если ходов не обнаружено
-
-        TestStartSwap(); //Начинаем обмен
-        TestReturnSwap(); //Возвращяем обмен
-
-        TestMold(); //Выполняем действия после хода
-
-        TestCalcPriorityCells(); //Вычисление приоритета ячеек
-
-        //Проверка на завершение игры
-        TestEndMessage();
-
-        PanelSpreadCTRL.TestOffSet();
-    }
 
     //Стартовая инициализация игрового поля
     void StartInicialize() {
@@ -623,13 +655,9 @@ public class GameFieldCTRL : MonoBehaviour
 
 
                 if (ParentComb.foundPanel)
-                {
                     foundPanel = ParentComb.foundPanel;
-                }
                 if (ParentComb.foundBenefit)
-                {
                     foundBenefit = ParentComb.foundBenefit;
-                }
             }
             else {
 
@@ -3218,7 +3246,7 @@ public class GameFieldCTRL : MonoBehaviour
     float lastTime = 0;
     //Если количетсво ходов изменилось
     void TestMold() {
-
+        Debug.Log("MovingMold: " + Gameplay.main.movingMoldCount + " lastStepCount: " + lastStepCount);
         if (Gameplay.main.movingMoldCount <= lastStepCount || //если количество ходов игрока меньше чем сделала плесень
             Gameplay.main.combo > 0 || //Если идет набор комбинации и ход не закончен
             isMovingInternalObj

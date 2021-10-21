@@ -46,6 +46,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     public CellInternalObject cellInternal;
     public BoxBlockCTRL BoxBlockCTRL;
     public MoldCTRL moldCTRL;
+    public IceCTRL iceCTRL;
     public RockCTRL rockCTRL;
     public PanelSpreadCTRL panelCTRL;
 
@@ -58,11 +59,16 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     /// </summary>
     public int mold;
     /// <summary>
+    /// степень льда
+    /// </summary>
+    public int ice;
+    /// <summary>
     /// Степень камня
     /// </summary>
     public int rock;
 
     public bool panel;
+
     
     public int myInternalNum = 0;
 
@@ -438,6 +444,70 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 myField.timeLastBoom += 0.025f;
         }
 
+
+        bool CanInternal = false;
+        bool canNear = false;
+        bool CanBenefit = false;
+
+        //Если есть камень урон камню
+        if (rock > 0) {
+            rock--;
+            CanBenefit = true;
+        }
+        //иначе если есть ящик урон ящику
+        else if (BlockingMove > 0) {
+            BlockingMove--;
+            CanBenefit = true;
+        }
+        //иначе если есть лед урон льду и объектам внутри и рядом
+        else if (ice > 0) {
+            ice--;
+            CanBenefit = true;
+            canNear = true;
+            CanInternal = true;
+        }
+        //Иначе если плесень урон плесени и объектам внутри и рядом
+        else if (mold > 0) {
+            mold--;
+            CanBenefit = true;
+            canNear = true;
+            CanInternal = true;
+        }
+        //иначе если панель ставим панель и урон объектам рядом и снаружи
+        else if (!panel && combination != null && combination.foundPanel) {
+            CreatePanel();
+
+            CanBenefit = true;
+            canNear = true;
+            CanInternal = true;
+        }
+        else {
+            canNear = true;
+            CanInternal = true;
+        }
+
+
+
+        //////////////////////////
+        //Урон по внутренней
+        if (CanInternal && cellInternal) {
+            cellInternal.Activate(cellInternal.type, partner, combination);
+        }
+
+        //////////////////////////
+        //Урон по ближайшим
+        if (canNear && nearDamage) {
+            if (!CanBenefit) 
+                CanBenefit = DamageNearCells();
+        }
+
+        //////////////////////////
+        //Ставим бользу
+        if (CanBenefit && combination != null) {
+            combination.foundBenefit = true;
+        }
+
+        /*
         //Если камня нету
         if (rock <= 0)
         {
@@ -470,7 +540,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 if (nearDamage)
                 {
                     bool benefit = DamageNearCells();
-                    if (combination != null) {
+                    if (combination != null && benefit) {
                         combination.foundBenefit = benefit;
                     }
                 }
@@ -479,7 +549,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             {
                 //Самому себе
                 bool benefit = DamageNear();
-                if (combination != null)
+                if (combination != null && benefit)
                 {
                     combination.foundBenefit = benefit;
                 }
@@ -488,7 +558,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         else {
             rock--;
         }
-        
+        */
 
         //Создаем панель если плесени нет и нужно создать панель
         if (combination != null && BlockingMove <= 0 && mold <= 0 && combination.foundPanel && !panel) {

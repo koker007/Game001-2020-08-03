@@ -59,6 +59,8 @@ public class MenuGameplay : MonoBehaviour
     [SerializeField]
     Sprite PassedMoldImage;
     [SerializeField]
+    Sprite PassedIceImage;
+    [SerializeField]
     Sprite PassedRockImage;
 
     [HideInInspector]
@@ -218,6 +220,11 @@ public class MenuGameplay : MonoBehaviour
         {
             GoalImage[i].sprite = PassedMoldImage;
             GoalText[i].text = "M " + gameFieldCTRL.CountMold.ToString();
+            i++;
+        }
+        if (level.PassedWithIce) {
+            GoalImage[i].sprite = PassedIceImage;
+            GoalText[i].text = "I " + gameFieldCTRL.CountIce.ToString();
             i++;
         }
         if (level.PassedWithPanel)

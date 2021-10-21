@@ -24,19 +24,20 @@ public class LevelsScript : MonoBehaviour
         /// <summary>
         /// коробка с жизнями
         /// </summary>
-        public int boxHealth;
-        public int moldHealth;
+        public int HealthBox;
+        public int HealthMold;
+        public int HealthIce;
         public int Panel;
         public int rock;
         public bool upWall;
         public bool downWall;
         public bool leftWall;
         public bool rightWall;
-        public CellInfo(int box, int mold, int color, int type, int panel, int rockF, char[] walls)
+        public CellInfo(int box, int mold, int color, int type, int panel, int rockF, int ice, char[] walls)
         {
             if (box != 0)
             {
-                boxHealth = box;
+                HealthBox = box;
             }
             else
             {
@@ -46,13 +47,17 @@ public class LevelsScript : MonoBehaviour
 
             rock = rockF;
 
+            if (ice > 0) {
+                HealthIce = ice;
+            }
+
             if (panel != 0)
             {
                 Panel = panel;
             }
             else if (mold != 0)
             {
-                moldHealth = mold;
+                HealthMold = mold;
             }
 
             for(int i = 0; i < walls.Length; i++)
@@ -122,6 +127,7 @@ public class LevelsScript : MonoBehaviour
         public bool PassedWithCrystal = false;
         public bool PassedWithBox = false;
         public bool PassedWithMold = false;
+        public bool PassedWithIce = false;
         public bool PassedWithPanel = false;
         public bool PassedWithRock = false;
         //для прохождения с помощью сбора кристаллов
@@ -131,6 +137,7 @@ public class LevelsScript : MonoBehaviour
         int[,] exist;
         int[,] box;
         int[,] mold;
+        int[,] ice;
         int[,] panel;
         int[,] internalColors;
         int[,] type;
@@ -171,6 +178,9 @@ public class LevelsScript : MonoBehaviour
                     break;
                 case "mold":
                     mold = values;
+                    break;
+                case "ice":
+                    ice = values;
                     break;
                 case "type":
                     type = values;
@@ -228,6 +238,9 @@ public class LevelsScript : MonoBehaviour
             {
                 massNull(ref mold, 0);
             }
+            if (ice == null) {
+                massNull(ref ice, 0);
+            }
             if (panel == null)
             {
                 massNull(ref panel, 0);
@@ -250,7 +263,7 @@ public class LevelsScript : MonoBehaviour
                     }
                     else
                     {
-                        cells[x, cells.GetLength(1) - 1 - y] = new CellInfo(box[y, x], mold[y, x], internalColors[y, x], type[y, x], panel[y, x], rock[y,x], walls[y,x].ToCharArray());
+                        cells[x, cells.GetLength(1) - 1 - y] = new CellInfo(box[y, x], mold[y, x], internalColors[y, x], type[y, x], panel[y, x], rock[y,x], ice[y,x], walls[y,x].ToCharArray());
                     }
                 }
             }

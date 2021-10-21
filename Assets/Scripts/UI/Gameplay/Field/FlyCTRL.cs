@@ -114,6 +114,10 @@ public class FlyCTRL : MonoBehaviour
         //Если не инициализировано, выходим
         if (!isInicialized) return;
 
+        if (comb != null) {
+            comb.timeLastAction = Time.unscaledTime;
+        }
+
         float distToTarget = Vector2.Distance(PivotTarget, myRect.pivot);
 
         Rotate();
@@ -193,6 +197,7 @@ public class FlyCTRL : MonoBehaviour
 
         }
         void Move() {
+
 
             if (distToTarget < DistMinForHitTarget) { return; }
 
