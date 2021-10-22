@@ -633,6 +633,17 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             BlockingMove--;
             benefit = true;
         }
+        else if (cellInternal != null && cellInternal.type == CellInternalObject.Type.blocker) {
+            if (rock > 0)
+            {
+                rock--;
+            }
+            else {
+                //Урон по внутреннему объекту блокиратору
+                cellInternal.Activate(CellInternalObject.Type.blocker, null, null);
+            }
+        }
+        
 
         //Перенасчет приоритета
         CalcMyPriority();

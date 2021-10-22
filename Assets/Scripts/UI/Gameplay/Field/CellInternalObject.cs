@@ -79,6 +79,8 @@ public class CellInternalObject : MonoBehaviour
     Texture2D TextureFly;
     [SerializeField]
     Texture2D TextureFlyLast;
+    [SerializeField]
+    Texture2D TextureBlocker;
 
     [SerializeField]
     Texture2D TextureRocketHorizontal;
@@ -104,7 +106,8 @@ public class CellInternalObject : MonoBehaviour
         rocketHorizontal,
         rocketVertical,
         bomb,
-        airplane
+        airplane,
+        blocker //Объект который падает и препятствует распространению ракеты, но ломается как ящик
     }
 
 
@@ -618,10 +621,16 @@ public class CellInternalObject : MonoBehaviour
         {
             animatorObject.SetFloat("StayType", 2);
             Image.texture = TextureColor5;
-            Image.color = new Color(1,1,1,1);
+            Image.color = new Color(1, 1, 1, 1);
             LastImage.texture = null;
 
             CoreImage.texture = TextureColor5Core;
+        }
+        else if (type == Type.blocker) {
+            Image.texture = TextureBlocker;
+
+            LastImage.texture = null;
+            CoreImage.texture = null;
         }
 
         color = internalColor;
@@ -1644,6 +1653,25 @@ public class CellInternalObject : MonoBehaviour
         type = Type.rocketHorizontal;
         color = internalColor;
         Image.texture = TextureRocketHorizontal;
+        myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
+
+        setColor(internalColor);
+    }
+
+
+    public void IniBlockerColor(CellCTRL myCellNew, GameFieldCTRL gameField, InternalColor internalColor, int myCombIDFunc)
+    {
+
+        myCell = myCellNew;
+        myField = gameField;
+        MyCombID = myCombIDFunc;
+
+        myCell.cellInternal = this;
+        PosToCell();
+
+        type = Type.blocker;
+        color = internalColor;
+        Image.texture = TextureBlocker;
         myCellNew.myInternalNum = myCellNew.GetNextLastInternalNum;
 
         setColor(internalColor);
