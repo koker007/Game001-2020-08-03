@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Семен
 /// <summary>
@@ -10,10 +11,11 @@ public class IceCTRL : MonoBehaviour
 {
     [SerializeField]
     AnimatorCTRL animator;
+    [SerializeField]
+    CanvasGroup canvasGroup;
 
     CellCTRL myCell;
     RectTransform myRect;
-
 
     int HealthOld = -1;
 
@@ -59,6 +61,7 @@ public class IceCTRL : MonoBehaviour
         if (HealthOld == myCell.ice)
             return;
 
+        HealthOld = myCell.ice;
         ChangeImage();
 
 
@@ -68,23 +71,40 @@ public class IceCTRL : MonoBehaviour
         }
 
         DestroyIce();
-        HealthOld = myCell.ice;
 
         void ChangeImage()
         {
-
+            if (myCell.ice == 1) {
+                animator.PlayAnimation("lvl1");
+            }
+            else if (myCell.ice == 2) {
+                animator.PlayAnimation("lvl2");
+            }
+            else if (myCell.ice == 3)
+            {
+                animator.PlayAnimation("lvl3");
+            }
+            else if (myCell.ice == 4)
+            {
+                animator.PlayAnimation("lvl4");
+            }
+            else if (myCell.ice == 5)
+            {
+                animator.PlayAnimation("lvl5");
+            }
         }
 
         //Уничтожить если жизни кончились
         void DestroyIce()
         {
-            if (myCell.rock > 0) return;
+            if (myCell.ice > 0) return;
 
             animator.PlayAnimation("Destroy");
 
             //Звук разбивания камня
             SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipDamageRock, 0.5f, Random.Range(0.9f, 1.1f));
         }
+
     }
 
     void ReCalcIceCount()

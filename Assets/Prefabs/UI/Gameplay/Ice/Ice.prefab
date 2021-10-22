@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 3597963235252477848}
+  canvasGroup: {fileID: 582436687209630736}
 --- !u!114 &6710709974077923725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,7 +203,17 @@ MonoBehaviour:
   parameterNameInt: parameter
   animations:
   - num: 0
-    key: None
+    key: Destroy
+  - num: 1
+    key: lvl1
+  - num: 2
+    key: lvl2
+  - num: 3
+    key: lvl3
+  - num: 4
+    key: lvl4
+  - num: 5
+    key: lvl5
 --- !u!225 &582436687209630736
 CanvasGroup:
   m_ObjectHideFlags: 0
