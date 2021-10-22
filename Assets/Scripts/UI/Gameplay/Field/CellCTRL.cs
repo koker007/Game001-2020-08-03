@@ -686,6 +686,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         const int PriorityBox = 20; //Приоритет ящика
         const int PriorityRock = 10;
         const int PriorityMold = 5; //приоритет плесени
+        const int PriorityIce = 5;
         const int PriorityPanel = 5; //Приоритет отсутствия панели
 
 
@@ -740,6 +741,10 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             if (mold > 0)
             {
                 result += (5 - mold) * PriorityMold; //Чем меньше жизней, тем желательнее ее сломать
+            }
+            //Лед
+            if (ice > 0) {
+                result += ice * PriorityIce; //Чем больше жизней тем желательнее сломать
             }
             //отсутствия панели
             if (!panel)
