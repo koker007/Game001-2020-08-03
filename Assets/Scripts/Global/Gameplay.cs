@@ -141,15 +141,18 @@ public class Gameplay : MonoBehaviour
                     {
                         if (MenuGameplay.main.gameFieldCTRL.CountRockBlocker <= 0 || !level.PassedWithRock)
                         {
-                            if (MenuGameplay.main.gameFieldCTRL.CountInteractiveCells <= MenuGameplay.main.gameFieldCTRL.CountPanelSpread || !level.PassedWithPanel)
+                            if (MenuGameplay.main.gameFieldCTRL.CountIce <= 0 || !level.PassedWithIce) 
                             {
-                                if (level.NeedCrystal <= main.colorsCount[(int)level.NeedColor] || !level.PassedWithCrystal)
+                                if (MenuGameplay.main.gameFieldCTRL.CountInteractiveCells <= MenuGameplay.main.gameFieldCTRL.CountPanelSpread || !level.PassedWithPanel)
                                 {
-                                    PlayerProfile.main.LevelPassed(levelSelect);
-                                    GlobalMessage.Results();
-                                    LevelsScript.main.ReturnLevel().MaxScore = score;
-                                    GameplayEnd = true;
-                                    return;
+                                    if (level.NeedCrystal <= main.colorsCount[(int)level.NeedColor] || !level.PassedWithCrystal)
+                                    {
+                                        PlayerProfile.main.LevelPassed(levelSelect);
+                                        GlobalMessage.Results();
+                                        LevelsScript.main.ReturnLevel().MaxScore = score;
+                                        GameplayEnd = true;
+                                        return;
+                                    }
                                 }
                             }
                         }
@@ -201,11 +204,14 @@ public class Gameplay : MonoBehaviour
                         {
                             if (MenuGameplay.main.gameFieldCTRL.CountRockBlocker <= 0 || !level.PassedWithRock)
                             {
-                                if (MenuGameplay.main.gameFieldCTRL.CountInteractiveCells <= MenuGameplay.main.gameFieldCTRL.CountPanelSpread || !level.PassedWithPanel)
+                                if (MenuGameplay.main.gameFieldCTRL.CountIce <= 0 || !level.PassedWithIce)
                                 {
-                                    if (level.NeedCrystal <= main.colorsCount[(int)level.NeedColor] || !level.PassedWithCrystal)
+                                    if (MenuGameplay.main.gameFieldCTRL.CountInteractiveCells <= MenuGameplay.main.gameFieldCTRL.CountPanelSpread || !level.PassedWithPanel)
                                     {
-                                        buffer.missionComplite = true;
+                                        if (level.NeedCrystal <= main.colorsCount[(int)level.NeedColor] || !level.PassedWithCrystal)
+                                        {
+                                            buffer.missionComplite = true;
+                                        }
                                     }
                                 }
                             }
