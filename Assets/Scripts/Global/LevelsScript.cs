@@ -118,6 +118,13 @@ public class LevelsScript : MonoBehaviour
         /// Процент выпадения супер цвета от 0 до 100
         /// </summary>
         public int SuperColorPercent = 0;
+
+        /// <summary>
+        /// Процент выпадения блокираторов которые уничтожаются как ящики и не дают распространяться взрыву 
+        /// </summary>
+        public int TypeBlockerPercent = 0;
+        
+
         /// <summary>
         /// массив ячеек на поле
         /// </summary>
@@ -321,7 +328,8 @@ public class LevelsScript : MonoBehaviour
         int NeedScore,
         int move,
         int numColors,
-        int superColorPercent
+        int superColorPercent,
+        int typeBlockerPercent
         )
     {
         level = new Level {
@@ -331,7 +339,9 @@ public class LevelsScript : MonoBehaviour
             NeedScore = NeedScore,
             Move = move,
             NumColors = numColors,
-            SuperColorPercent = superColorPercent
+            SuperColorPercent = superColorPercent,
+            TypeBlockerPercent = typeBlockerPercent
+            
         };
 
         level.cells = new CellInfo[Height, Width];

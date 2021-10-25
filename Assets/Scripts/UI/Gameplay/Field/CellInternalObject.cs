@@ -499,10 +499,12 @@ public class CellInternalObject : MonoBehaviour
 
     }
 
-    public void randColor() {
-        color = GetRandomColor();
+    public void randSpawnType(bool isSpawn) {
+        CellInternalObject cellInternal = GetRandomColor(isSpawn);
+        color = cellInternal.color;
+        type = cellInternal.type;
 
-        setColor(color);
+        setColorAndType(color, type);
 
     }
     public void randType() {
@@ -628,6 +630,7 @@ public class CellInternalObject : MonoBehaviour
         }
         else if (type == Type.blocker) {
             Image.texture = TextureBlocker;
+            Image.color = new Color(1, 1, 1, 1);
 
             LastImage.texture = null;
             CoreImage.texture = null;
@@ -678,33 +681,52 @@ public class CellInternalObject : MonoBehaviour
         setColor(internalColor);
     }
 
-    InternalColor GetRandomColor()
+    CellInternalObject GetRandomColor(bool isSpawn)
     {
-        InternalColor colorResult = InternalColor.Red;
+        CellInternalObject Result = new CellInternalObject();
 
-        int random = Random.Range(0, Gameplay.main.colors + 1);
-        //Супер цвет
+        Result.color = InternalColor.Red;
+        Result.type = Type.color;
+
+
+        int random = Random.Range(0, Gameplay.main.colors + 2);
+
+        //Шанс супер цвета
         if (random == 0)
         {
             //Если выпал шанс заспавнить ультимативный цвет то спавним
             if (Random.Range(0, 100) < Gameplay.main.superColorPercent)
-                colorResult = InternalColor.Ultimate;
-
+            {
+                Result.color = InternalColor.Ultimate;
+            }
             //Иначе обычный
             else
-                colorResult = GetColorBasic();
-
+            {
+                Result.color = GetColorBasic();
+            }
+        }
+        //Шанс завпавнить блокиратор
+        else if (random == 1 && isSpawn) {
+            //Если выпал шанс заспавнить блокиратор
+            if (Random.Range(0, 100) < Gameplay.main.typeBlockerPercent) {
+                Result.color = InternalColor.Red;
+                Result.type = Type.blocker;
+            }
+            //Иначе обычный
+            else {
+                Result.color = GetColorBasic();
+            }
         }
 
         //Иначе обычный цвет
         else {
-            colorResult = GetColorBasic();
+            Result.color = GetColorBasic();
         }
 
 
         
 
-        return colorResult;
+        return Result;
 
 
         //Получить любой базовый цвет
@@ -1128,7 +1150,8 @@ public class CellInternalObject : MonoBehaviour
                         if (!myField.cellCTRLs[x, y] || !myField.cellCTRLs[x, y].cellInternal || 
                             myField.cellCTRLs[x,y].cellInternal == this || 
                             (partner != null && myField.cellCTRLs[x,y].cellInternal == partner) || 
-                            myField.cellCTRLs[x,y].cellInternal.type == Type.color5) {
+                            myField.cellCTRLs[x,y].cellInternal.type == Type.color5 ||
+                            myField.cellCTRLs[x, y].cellInternal.type == Type.blocker) {
                             continue;
                         }
 

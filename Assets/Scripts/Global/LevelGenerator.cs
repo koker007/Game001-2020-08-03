@@ -56,7 +56,7 @@ public class LevelGenerator : MonoBehaviour
 
         //создаем уровень без массивов
         LevelsScript.Level level = LevelsScript.main.Levels[NumLevel];
-        level = LevelsScript.main.CreateLevel(NumLevel, Height, Width, NeedScore, (int)move, numColors, (int)(NoizeResult * 100));
+        level = LevelsScript.main.CreateLevel(NumLevel, Height, Width, NeedScore, (int)move, numColors, (int)NoizeResult * 100, (int)NoizeResult * 100);
 
         PassRandom();
 

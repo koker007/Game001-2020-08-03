@@ -497,8 +497,9 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         //////////////////////////
         //Урон по ближайшим
         if (canNear && nearDamage) {
+            bool nearBenefit = DamageNearCells();
             if (!CanBenefit) 
-                CanBenefit = DamageNearCells();
+                CanBenefit = nearBenefit;
         }
 
         //////////////////////////
@@ -584,19 +585,23 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             }
 
             //Слева
-            if (pos.x - 1 >= 0 && myField.cellCTRLs[pos.x - 1, pos.y]) {
+            if (pos.x - 1 >= 0 && 
+                myField.cellCTRLs[pos.x - 1, pos.y]) {
                 setBenefit(myField.cellCTRLs[pos.x - 1, pos.y].DamageNear());
             }
             //Справа
-            if (pos.x + 1 < myField.cellCTRLs.GetLength(0) && myField.cellCTRLs[pos.x + 1, pos.y]) {
+            if (pos.x + 1 < myField.cellCTRLs.GetLength(0) && 
+                myField.cellCTRLs[pos.x + 1, pos.y]) {
                 setBenefit(myField.cellCTRLs[pos.x + 1, pos.y].DamageNear());
             }
             //снизу
-            if (pos.y - 1 >= 0 && myField.cellCTRLs[pos.x, pos.y - 1]) {
+            if (pos.y - 1 >= 0 &&
+                myField.cellCTRLs[pos.x, pos.y - 1]) {
                 setBenefit(myField.cellCTRLs[pos.x, pos.y - 1].DamageNear());
             }
             //Сверху
-            if (pos.y + 1 < myField.cellCTRLs.GetLength(1) && myField.cellCTRLs[pos.x, pos.y + 1]) {
+            if (pos.y + 1 < myField.cellCTRLs.GetLength(1) && 
+                myField.cellCTRLs[pos.x, pos.y + 1]) {
                 setBenefit(myField.cellCTRLs[pos.x, pos.y + 1].DamageNear());
             }
 

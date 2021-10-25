@@ -311,6 +311,7 @@ public class GameFieldCTRL : MonoBehaviour
 
             Gameplay.main.colors = level.NumColors;
             Gameplay.main.superColorPercent = level.SuperColorPercent;
+            Gameplay.main.typeBlockerPercent = level.TypeBlockerPercent;
 
             for (int x = 0; x < cellCTRLs.GetLength(0); x++)
             {
@@ -519,7 +520,7 @@ public class GameFieldCTRL : MonoBehaviour
                             Internal.PosToCell();
 
                             //Установить цвет
-                            Internal.randColor();
+                            Internal.randSpawnType(true);
                         }
 
                         
@@ -565,7 +566,7 @@ public class GameFieldCTRL : MonoBehaviour
                             CellInternalObject internalCtrl = internalObj.GetComponent<CellInternalObject>();
 
                             //Установить цвет
-                            internalCtrl.randColor();
+                            internalCtrl.randSpawnType(true);
 
                             //включаем падение
                             internalCtrl.StartMove(cellCTRLs[x, y]);
@@ -1252,7 +1253,7 @@ public class GameFieldCTRL : MonoBehaviour
                         //перемешать цвет
                         void mixColor()
                         {
-                            c.cellInternal.randColor();
+                            c.cellInternal.randSpawnType(false);
                         }
                         //Нанести урон
                         void SetDamage()
@@ -1341,7 +1342,7 @@ public class GameFieldCTRL : MonoBehaviour
                         //перемешать цвет
                         void mixColor()
                         {
-                            c.cellInternal.randColor();
+                            c.cellInternal.randSpawnType(false);
                         }
                         //Нанести урон
                         void SetDamage()
@@ -1871,7 +1872,8 @@ public class GameFieldCTRL : MonoBehaviour
                 bool result = false;
 
                 if (select != null && select.cellInternal &&
-                    select.rock == 0) {
+                    select.rock == 0 &&
+                    select.cellInternal.type != CellInternalObject.Type.blocker) {
                     result = true;
                 }
 
@@ -2184,7 +2186,8 @@ public class GameFieldCTRL : MonoBehaviour
             void CombinatePotencialSuper()
             {
                 //если текущая ячейка не цвет
-                if (cell.cellInternal.type == CellInternalObject.Type.color)
+                if (cell.cellInternal.type == CellInternalObject.Type.color ||
+                    cell.cellInternal.type == CellInternalObject.Type.blocker)
                 {
                     //выходим
                     return;
@@ -2202,6 +2205,7 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x - 1, cell.pos.y].rock == 0 &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal != null &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.type != CellInternalObject.Type.color &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.type != CellInternalObject.Type.blocker &&
                     !(cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.activateNeed)
                     )
                 {
@@ -2215,6 +2219,7 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x + 1, cell.pos.y].rock == 0 &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal != null &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.type != CellInternalObject.Type.color &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.type != CellInternalObject.Type.blocker &&
                     !(cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.activateNeed)
                     )
                 {
@@ -2228,6 +2233,7 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x, cell.pos.y + 1].rock == 0 &&
                     cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal != null &&
                     cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.type != CellInternalObject.Type.color &&
+                    cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.type != CellInternalObject.Type.blocker &&
                     !(cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.activateNeed)
                     )
                 {
@@ -2242,6 +2248,7 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x, cell.pos.y - 1].rock == 0 &&
                     cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal != null &&
                     cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.type != CellInternalObject.Type.color &&
+                    cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.type != CellInternalObject.Type.blocker &&
                     !(cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.activateNeed)
                                         )
                 {
@@ -2376,6 +2383,7 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x - 1, cell.pos.y + 1] != null &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].rock == 0 &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].cellInternal != null &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].cellInternal.type != CellInternalObject.Type.blocker &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].cellInternal.color == potencialLeft.cells[0].cellInternal.color
                     )
                 {
@@ -2417,6 +2425,7 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x + 1, cell.pos.y + 1] != null &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].rock == 0 &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].cellInternal != null &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].cellInternal.type != CellInternalObject.Type.blocker &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].cellInternal.color == potencialRight.cells[0].cellInternal.color)
                 {
 
@@ -2457,6 +2466,7 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x + 1, cell.pos.y - 1] != null &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].rock == 0 &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].cellInternal != null &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].cellInternal.type != CellInternalObject.Type.blocker &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].cellInternal.color == potencialRight.cells[0].cellInternal.color)
                 {
 
@@ -2497,6 +2507,7 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x - 1, cell.pos.y - 1] != null &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].rock == 0 &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].cellInternal != null &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].cellInternal.type != CellInternalObject.Type.blocker &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].cellInternal.color == potencialLeft.cells[0].cellInternal.color)
                 {
 
@@ -2759,9 +2770,9 @@ public class GameFieldCTRL : MonoBehaviour
             Vector2 pivotNeed = new Vector2((cellCTRLs.GetLength(0)/2)*-1, (cellCTRLs.GetLength(1)/2)*-1);
 
             foreach (CellInternalObject cellInternal in ListWaitingInternals) {
-
-                cellInternal.rectMy.pivot += (pivotNeed - cellInternal.rectMy.pivot) * Time.deltaTime * 4;
-
+                if (cellInternal) {
+                    cellInternal.rectMy.pivot += (pivotNeed - cellInternal.rectMy.pivot) * Time.deltaTime * 4;
+                }
             }
             
 
@@ -2873,7 +2884,7 @@ public class GameFieldCTRL : MonoBehaviour
                     if (countRandomNow < countRandomMax && ListWaitingInternals[x].type == CellInternalObject.Type.color) {
                         countRandomNow++;
 
-                        ListWaitingInternals[x].randColor();
+                        ListWaitingInternals[x].randSpawnType(false);
                     }
 
                     while (!selectedCell)
@@ -2920,7 +2931,7 @@ public class GameFieldCTRL : MonoBehaviour
                     {
                         countRandomNow++;
 
-                        ListWaitingInternals[x].randColor();
+                        ListWaitingInternals[x].randSpawnType(false);
                     }
 
                     while (!selectedCell)
@@ -2968,7 +2979,7 @@ public class GameFieldCTRL : MonoBehaviour
                         countRandomNow++;
 
                         ListWaitingInternals[x].randType();
-                        ListWaitingInternals[x].randColor();
+                        ListWaitingInternals[x].randSpawnType(false);
                         ListWaitingInternals[x].setColorAndType(ListWaitingInternals[x].color, ListWaitingInternals[x].type);
                     }
 
@@ -3431,7 +3442,8 @@ public class GameFieldCTRL : MonoBehaviour
         if (cell == null) return result;
 
 
-        if (cell.rock > 0) {
+        if (cell.rock > 0 ||
+            (cell.cellInternal != null && cell.cellInternal.type == CellInternalObject.Type.blocker)) {
             result = true;
         }
 
@@ -3457,6 +3469,7 @@ public class GameFieldCTRL : MonoBehaviour
             if (Gameplay.main.isMissionComplite()) {
                 Gameplay.main.colors = 6;
                 Gameplay.main.superColorPercent = 20;
+                Gameplay.main.typeBlockerPercent = 20;
 
                 CellSelect = null;
             }

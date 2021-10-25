@@ -103,14 +103,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 1}
+  m_Color: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: b6055864ba6585d4b9b449cd1c44c52f, type: 3}
+  m_Texture: {fileID: 2800000, guid: 70351f3e46f9545428d6298d735c1000, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 6114125917689287995}
   - component: {fileID: 2607666006931952264}
   - component: {fileID: 2278057277167859779}
+  - component: {fileID: 7431201139472312527}
   m_Layer: 5
   m_Name: Rock
   m_TagString: Untagged
@@ -216,3 +217,15 @@ MonoBehaviour:
     key: 
   - num: 1
     key: Destroy
+--- !u!225 &7431201139472312527
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8442138300124586247}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

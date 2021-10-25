@@ -49,6 +49,7 @@ public class Gameplay : MonoBehaviour
     public int movingMoldCount = 0;
     public int colors = 3;
     public int superColorPercent = 0;
+    public int typeBlockerPercent = 0;
     public int combo = 0;
 
     public float threeStartFactor = 2f;
