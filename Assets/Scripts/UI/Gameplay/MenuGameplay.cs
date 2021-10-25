@@ -142,6 +142,10 @@ public class MenuGameplay : MonoBehaviour
 
     //Создать игровое поле согласно параметрам игры
     void CreateGameField() {
+
+        SuperHitSelected = SuperHitType.none;
+
+
         //Создание игрового поля
         GameField = Instantiate(GameFieldPrefab, GameFieldParent);
         gameFieldCTRL = GameField.GetComponent<GameFieldCTRL>();
