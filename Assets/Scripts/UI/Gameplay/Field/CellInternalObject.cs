@@ -369,7 +369,7 @@ public class CellInternalObject : MonoBehaviour
                     ) {
                     //Блокируем если
                     if (
-                        (myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].cellInternal && myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].cellInternal.isMove) || // Внутри есть ячейка которая находится в движении
+                        (myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].cellInternal && myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].cellInternal.isMove && minus <= 1) || // Внутри есть ячейка которая находится в движении
                         Time.unscaledTime - myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].timeBoomOld < 0.25f //Время ожидания после взрыва не вышло
                         ) {
                         result = false;
@@ -1064,12 +1064,13 @@ public class CellInternalObject : MonoBehaviour
                 {
                     for (int y = 0; y < myField.cellCTRLs.GetLength(1); y++)
                     {
+
                         //Проверяем что ячейка есть
                         if (!myField.cellCTRLs[x, y] || //Если ячейки нет
                             !myField.cellCTRLs[x, y].cellInternal || //Если нет внутренности
                             myField.cellCTRLs[x, y].cellInternal.color != partner.color || //Если цвет не совпадает с цветом партнера
                             myField.cellCTRLs[x, y].cellInternal.type != Type.color //Если тип объекта особенный
-                            //myField.cellCTRLs[x,y].cellInternal.type == Type.color5
+                                                                                    //myField.cellCTRLs[x,y].cellInternal.type == Type.color5
                             )
                         {
                             continue;
@@ -1077,44 +1078,50 @@ public class CellInternalObject : MonoBehaviour
 
                         float dist = Vector2.Distance(myField.cellCTRLs[x, y].pos, myCell.pos);
 
+
+                        CellInternalObject cellInternalObject = myField.cellCTRLs[x, y].cellInternal;
+
                         //Удаляем старый объект
-                        if (myField.cellCTRLs[x, y].cellInternal)
+                        if (myField.cellCTRLs[x, y].cellInternal && myField.cellCTRLs[x, y].rock <= 0)
                         {
                             Destroy(myField.cellCTRLs[x, y].cellInternal.gameObject);
+
+                            //создаем новый обьект
+                            GameObject internalObj = Instantiate(myField.prefabInternal, myField.parentOfInternals);
+                            cellInternalObject = internalObj.GetComponent<CellInternalObject>();
+                            cellInternalObject.myField = myField;
                         }
 
+                        //Заменяем если нет камня
+                        if (myField.cellCTRLs[x, y].rock <= 0) {
 
-                        //создаем новый обьект
-                        GameObject internalObj = Instantiate(myField.prefabInternal, myField.parentOfInternals);
-                        CellInternalObject cellInternalObject = internalObj.GetComponent<CellInternalObject>();
-                        cellInternalObject.myField = myField;
-
-                        //Если партнер ракета
-                        if (partner.type == Type.rocketHorizontal || partner.type == Type.rocketVertical)
-                        {
-                            if (Random.Range(0, 100) < 50)
+                            //Если партнер ракета
+                            if (partner.type == Type.rocketHorizontal || partner.type == Type.rocketVertical)
                             {
-                                cellInternalObject.setColorAndType(partner.color, Type.rocketVertical);
+                                if (Random.Range(0, 100) < 50)
+                                {
+                                    cellInternalObject.setColorAndType(partner.color, Type.rocketVertical);
+                                }
+                                else
+                                {
+                                    cellInternalObject.setColorAndType(partner.color, Type.rocketHorizontal);
+                                }
+                            }
+                            //Если бомба
+                            else if (partner.type == Type.bomb)
+                            {
+                                cellInternalObject.setColorAndType(partner.color, Type.bomb);
+                            }
+                            //Если самолет
+                            else if (partner.type == Type.airplane)
+                            {
+                                cellInternalObject.setColorAndType(partner.color, Type.airplane);
+
                             }
                             else
                             {
-                                cellInternalObject.setColorAndType(partner.color, Type.rocketHorizontal);
+
                             }
-                        }
-                        //Если бомба
-                        else if (partner.type == Type.bomb)
-                        {
-                            cellInternalObject.setColorAndType(partner.color, Type.bomb);
-                        }
-                        //Если самолет
-                        else if (partner.type == Type.airplane)
-                        {
-                            cellInternalObject.setColorAndType(partner.color, Type.airplane);
-
-                        }
-                        else
-                        {
-
                         }
 
                         Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomSuperColor(myField.transform, myCell);
@@ -1163,6 +1170,8 @@ public class CellInternalObject : MonoBehaviour
                             myField.cellCTRLs[x, y].cellInternal.BufferPartner = partner;
                             myField.cellCTRLs[x, y].cellInternal.BufferCombination = combination;
                             //myField.cellCTRLs[x, y].DamageInvoke(dist * speedPerCell + 0.5f);
+
+                            
 
                             Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomSuperColor(myField.transform, myCell);
                             particle3DCTRL.SetTransformTarget(myField.cellCTRLs[x,y].cellInternal, combination);

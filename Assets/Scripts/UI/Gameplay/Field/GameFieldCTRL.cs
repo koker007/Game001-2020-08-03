@@ -1800,13 +1800,13 @@ public class GameFieldCTRL : MonoBehaviour
         }
         AnimationPlayPotencial();
 
-        float timeToTest = 2;
+        float timeToTest = 0.5f;
         //≈сли недавно было движение то обнул€ем лист
         if (Time.unscaledTime - timeLastMove < timeToTest) {
             listPotencial = new List<PotencialComb>();
             potencialBest = null;
 
-            Debug.Log("Waiting Time " + Time.unscaledTime);
+            //Debug.Log("Waiting Time " + Time.unscaledTime);
 
             return;
         }
@@ -1846,7 +1846,7 @@ public class GameFieldCTRL : MonoBehaviour
         //¬оспроизвести анимацию потенциала если есть
         void AnimationPlayPotencial()
         {
-            if (potencialBest == null)
+            if (potencialBest == null || Time.unscaledTime - timeLastMove < 4)
                 return;
 
             //≈сли потенциал есть
@@ -3301,7 +3301,7 @@ public class GameFieldCTRL : MonoBehaviour
     float lastTime = 0;
     //≈сли количетсво ходов изменилось
     void TestMold() {
-        Debug.Log("MovingMold: " + Gameplay.main.movingMoldCount + " lastStepCount: " + lastStepCount);
+        //Debug.Log("MovingMold: " + Gameplay.main.movingMoldCount + " lastStepCount: " + lastStepCount);
         if (Gameplay.main.movingMoldCount <= lastStepCount || //если количество ходов игрока меньше чем сделала плесень
             Gameplay.main.combo > 0 || //≈сли идет набор комбинации и ход не закончен
             isMovingInternalObj
