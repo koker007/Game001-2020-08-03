@@ -29,10 +29,12 @@ public class ButtonAbility : MonoBehaviour
             Count.text = System.Convert.ToString(PlayerProfile.main.ShopInternal.Amount);
         else if (type == MenuGameplay.SuperHitType.rosket2x)
             Count.text = System.Convert.ToString(PlayerProfile.main.ShopRocket.Amount);
-        else if (type == MenuGameplay.SuperHitType.bomb) 
+        else if (type == MenuGameplay.SuperHitType.bomb)
             Count.text = System.Convert.ToString(PlayerProfile.main.ShopBomb.Amount);
         else if (type == MenuGameplay.SuperHitType.Color5)
             Count.text = System.Convert.ToString(PlayerProfile.main.ShopColor5.Amount);
+        else if (type == MenuGameplay.SuperHitType.mixed)
+            Count.text = System.Convert.ToString(PlayerProfile.main.ShopMixed.Amount);
 
                 
     }

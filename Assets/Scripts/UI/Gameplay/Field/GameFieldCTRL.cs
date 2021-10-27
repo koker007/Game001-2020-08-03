@@ -1623,6 +1623,8 @@ public class GameFieldCTRL : MonoBehaviour
                     TestShopBomb();
                 else if (buffer.superHit == MenuGameplay.SuperHitType.Color5)
                     TestShopSuperColor();
+                else if (buffer.superHit == MenuGameplay.SuperHitType.mixed)
+                    TestShopMixed();
 
                 //Активировали, возвращаем ничего
                 MenuGameplay.main.SuperHitSelected = MenuGameplay.SuperHitType.none;
@@ -1713,6 +1715,21 @@ public class GameFieldCTRL : MonoBehaviour
 
                 MenuGameplay.main.SuperHitSelected = MenuGameplay.SuperHitType.none;
             }
+
+            void TestShopMixed()
+            {
+                if (PlayerProfile.main.ShopMixed.Amount <= 0 || CellSelect.cellInternal == null)
+                {
+                    return;
+                }
+
+                PlayerProfile.main.ShopMixed.Amount--;
+
+                //Нужно миксовать..
+                BuyMixedNeed = true;
+
+                MenuGameplay.main.SuperHitSelected = MenuGameplay.SuperHitType.none;
+            }
         }
 
     }
@@ -1785,6 +1802,8 @@ public class GameFieldCTRL : MonoBehaviour
         }
     }
 
+    public bool BuyMixedNeed = false;
+
     [SerializeField]
     public Vector2Int testCell = new Vector2Int();
     /// <summary>
@@ -1812,7 +1831,7 @@ public class GameFieldCTRL : MonoBehaviour
         }
 
         //ВЫходим если список уже есть или миссия провалена или выполнена
-        if (listPotencial.Count > 0 || Gameplay.main.isMissionComplite() || Gameplay.main.isMissionDefeat()) {
+        if ((listPotencial.Count > 0 && !BuyMixedNeed) || Gameplay.main.isMissionComplite() || Gameplay.main.isMissionDefeat()) {
             return;
         }
 
@@ -1820,7 +1839,7 @@ public class GameFieldCTRL : MonoBehaviour
         ReCalcListPotencial();
 
         //Если комбинации нашлись
-        if (listPotencial.Count > 0) {
+        if (listPotencial.Count > 0 && !BuyMixedNeed) {
             //ВЫбираем лучшую
             if (potencialBest == null) {
                 potencialBest = listPotencial[0];
@@ -1836,8 +1855,16 @@ public class GameFieldCTRL : MonoBehaviour
         }
         //если комбинаций не нашлось и лист нужных к перемещению объектов еще не создан
         else if(ListWaitingInternals.Count <= 0){
+            listPotencial = new List<PotencialComb>();
+
+            //выводим собщение что перемешиваем
+            MenuGameplay.main.CreateMidleMessage("Mixed");
+
             CreateRandomInternalList();
             Debug.Log("Not Found potencial comb " + Time.unscaledTime);
+
+            //Перемешивание закончено
+            BuyMixedNeed = false;
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3555,8 +3582,13 @@ public class GameFieldCTRL : MonoBehaviour
                     //Если остались ходы
                     else if (Gameplay.main.movingCan > 0)
                     {
+                        int TestCount = 0;
                         while (Gameplay.main.movingCan > 0)
                         {
+                            TestCount++;
+                            if (TestCount > 100)
+                                break;
+
                             //Выбираем рандомный объект
                             int x = Random.Range(0, cellCTRLs.GetLength(0));
                             int y = Random.Range(0, cellCTRLs.GetLength(1));

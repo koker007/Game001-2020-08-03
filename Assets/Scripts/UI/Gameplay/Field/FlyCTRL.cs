@@ -212,7 +212,7 @@ public class FlyCTRL : MonoBehaviour
 
             //Нормальное быстрое далекое движение
             if (distToTarget > 0.75f) {
-                SpeedMove += (0.1f - SpeedMove) * Time.deltaTime * 2f;
+                SpeedMove += (0.4f - SpeedMove) * Time.deltaTime * 2f;
             }
             //Движение с замедлением в близи
             else {

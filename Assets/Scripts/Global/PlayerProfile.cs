@@ -67,6 +67,7 @@ public class PlayerProfile : MonoBehaviour
     public Item ShopRocket = new Item(1);
     public Item ShopBomb = new Item(1);
     public Item ShopColor5 = new Item(1);
+    public Item ShopMixed = new Item(1);
 
 
     private void Awake()

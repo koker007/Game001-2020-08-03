@@ -56,7 +56,7 @@ public class MessageBuyItem : MonoBehaviour
 
         if (typeBuy == MenuGameplay.SuperHitType.internalObj)
         {
-            
+
             TargetCount.text = System.Convert.ToString(PlayerProfile.main.ShopInternal.Amount);
         }
         else if (typeBuy == MenuGameplay.SuperHitType.rosket2x)
@@ -69,6 +69,9 @@ public class MessageBuyItem : MonoBehaviour
         }
         else if (typeBuy == MenuGameplay.SuperHitType.Color5) {
             TargetCount.text = System.Convert.ToString(PlayerProfile.main.ShopColor5.Amount);
+        }
+        else if (typeBuy == MenuGameplay.SuperHitType.mixed) {
+            TargetCount.text = System.Convert.ToString(PlayerProfile.main.ShopMixed.Amount);
         }
     }
 
@@ -94,6 +97,13 @@ public class MessageBuyItem : MonoBehaviour
         }
         else if (typeBuy == MenuGameplay.SuperHitType.Color5) {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopColor5)) {
+                NeedBuyAntigen = true;
+            }
+        }
+        else if (typeBuy == MenuGameplay.SuperHitType.mixed)
+        {
+            if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopMixed))
+            {
                 NeedBuyAntigen = true;
             }
         }

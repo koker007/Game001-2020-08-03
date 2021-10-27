@@ -121,7 +121,7 @@ public class MenuGameplay : MonoBehaviour
 
             float upY = PanelUp.pivot.y;
             upY += (1 - upY) * Time.unscaledDeltaTime * 4;
-            if (upY > 1) upY = 1; 
+            if (upY > 1) upY = 1;
 
             PanelUp.pivot = new Vector2(PanelUp.pivot.x, upY);
         }
@@ -302,7 +302,8 @@ public class MenuGameplay : MonoBehaviour
         internalObj,
         rosket2x,
         bomb,
-        Color5
+        Color5,
+        mixed
     }
 
     public SuperHitType SuperHitSelected = SuperHitType.none;
@@ -353,6 +354,20 @@ public class MenuGameplay : MonoBehaviour
         //Открываем меню покупки
         else {
             GlobalMessage.ShopBuyColor5();
+        }
+    }
+
+    //Кнопка рандомизации объектов
+    public void ButtonClickMixed() {
+        //Инициируем атаку
+        if (PlayerProfile.main.ShopMixed.Amount > 0)
+        {
+            SuperHitSelected = SuperHitType.mixed;
+        }
+        //Открываем меню покупки
+        else
+        {
+            GlobalMessage.ShopBuyMixed();
         }
     }
     //Конец зоны кнопок платных ударов
