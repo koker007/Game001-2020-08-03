@@ -76,13 +76,13 @@ public class MenuWorld : MonoBehaviour
         startButtons();
         SetText();
 
-        if (!World3D.activeSelf) {
+        if (World3D != null && !World3D.activeSelf) {
             World3D.SetActive(true);
         }
     }
     void OnDisable()
     {
-        if (World3D.activeSelf) {
+        if (World3D != null && World3D.activeSelf) {
             World3D.SetActive(false);
         }
     }
