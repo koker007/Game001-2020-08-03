@@ -15,6 +15,8 @@ public class MessageShop : MonoBehaviour
     Text CountBomb;
     [SerializeField]
     Text CountColor5;
+    [SerializeField]
+    Text CountMixed;
 
     // Start is called before the first frame update
     void Start()
@@ -34,5 +36,6 @@ public class MessageShop : MonoBehaviour
         CountRocket.text = PlayerProfile.main.ShopRocket.Amount.ToString();
         CountBomb.text = PlayerProfile.main.ShopBomb.Amount.ToString();
         CountColor5.text = PlayerProfile.main.ShopColor5.Amount.ToString();
+        CountMixed.text = PlayerProfile.main.ShopMixed.Amount.ToString();
     }
 }

@@ -40,4 +40,7 @@ public class MainButtonManager : MonoBehaviour
     {
         GlobalMessage.ShopBuyColor5();
     }
+    public void ButtonClickBuyMixed() {
+        GlobalMessage.ShopBuyMixed();
+    }
 }

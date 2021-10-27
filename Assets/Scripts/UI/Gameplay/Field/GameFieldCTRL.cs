@@ -671,6 +671,16 @@ public class GameFieldCTRL : MonoBehaviour
             }
             
         }
+
+        public void TestCells() {
+            foreach (CellCTRL cell in cells) {
+                if (cell.panel)
+                    foundPanel = true;
+
+                if (cell.mold > 0)
+                    foundBenefit = true;
+            }
+        }
     }
     void TestFieldCombination(bool damageOnCombinations) {
         //Создаем новый список комбинаций
@@ -1657,12 +1667,7 @@ public class GameFieldCTRL : MonoBehaviour
                     //Создаем комбинацию
                     Combination comb = new Combination();
                     comb.cells.Add(CellSelect);
-
-                    //если ячейки есть
-                    if (CellSelect.panel)
-                        comb.foundPanel = true;
-                    if (CellSelect.mold > 0)
-                        comb.foundBenefit = true;
+                    comb.TestCells();
 
                     CellSelect.BufferCombination = comb;
 
@@ -1711,7 +1716,13 @@ public class GameFieldCTRL : MonoBehaviour
 
                 PlayerProfile.main.ShopColor5.Amount--;
 
-                CellSelect.cellInternal.Activate(CellInternalObject.Type.color5, CellSelect.cellInternal, null);
+                //Создаем комбинацию
+                Combination comb = new Combination();
+                comb.cells.Add(CellSelect);
+                comb.TestCells();
+
+
+                CellSelect.cellInternal.Activate(CellInternalObject.Type.color5, CellSelect.cellInternal, comb);
 
                 MenuGameplay.main.SuperHitSelected = MenuGameplay.SuperHitType.none;
             }

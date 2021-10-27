@@ -537,6 +537,8 @@ public class CellInternalObject : MonoBehaviour
             animatorObject.SetFloat("InternalColor", (float)color);
         }
 
+        Image.color = new Color(1, 1, 1, 1);
+
         if (type == Type.color)
         {
             animatorObject.SetFloat("StayType", 1);
@@ -677,6 +679,11 @@ public class CellInternalObject : MonoBehaviour
         }
     }
     public void setColorAndType(InternalColor internalColor, Type typeNew) {
+
+        if (myCell != null && myCell.myField.testCell == myCell.pos) {
+            bool test = false;
+        }
+
         type = typeNew;
         setColor(internalColor);
     }

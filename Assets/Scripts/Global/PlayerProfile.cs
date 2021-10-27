@@ -25,8 +25,14 @@ public class PlayerProfile : MonoBehaviour
     /// количество очков до следующего уровня
     /// </summary>
     /// 
+
+    public int ProfileTermsOfUse = 0;
+
     [HideInInspector]
     public int[] nextLevelPoint = new int[] { 1000 , 5000 , 10000 };
+
+    //Пользовательское соглашение
+    const string strProfileTermsOfUse = "ProfileTermsOfUse";
 
     const string strProfileLevel = "ProfileLevel";
     const string strProfileScore = "ProfileScore";
@@ -39,6 +45,7 @@ public class PlayerProfile : MonoBehaviour
     const string strShopRocket = "ShopRocket";
     const string strShopBomb = "ShopBomb";
     const string strShopColor5 = "ShopColor5";
+    const string strShopMixed = "ShopMixed";
 
     /// <summary>
     /// количество игровой валюты
@@ -84,6 +91,8 @@ public class PlayerProfile : MonoBehaviour
     private void LoadProfie()
     {
 
+        ProfileTermsOfUse = PlayerPrefs.GetInt(strProfileTermsOfUse, 0);
+
         ProfileLevel = PlayerPrefs.GetInt(strProfileLevel, 1);
         ProfileScore = PlayerPrefs.GetInt(strProfileScore, 0);
         ProfilelevelOpen = PlayerPrefs.GetInt(strProfileLevelOpen, 1);
@@ -98,12 +107,16 @@ public class PlayerProfile : MonoBehaviour
         ShopRocket.Amount = PlayerPrefs.GetInt(strShopRocket, 3);
         ShopBomb.Amount = PlayerPrefs.GetInt(strShopBomb, 3);
         ShopColor5.Amount = PlayerPrefs.GetInt(strShopColor5, 3);
+
+        ShopMixed.Amount = PlayerPrefs.GetInt(strShopMixed, 3);
         
     }
     public void Save() {
         PlayerPrefs.SetInt(strProfileLevel, ProfileLevel);
         PlayerPrefs.SetInt(strProfileScore, ProfileScore);
         PlayerPrefs.SetInt(strProfileLevelOpen, ProfilelevelOpen);
+
+        PlayerPrefs.SetInt(strProfileTermsOfUse, ProfileTermsOfUse);
 
         SaveItemAmount();
     }
@@ -159,6 +172,7 @@ public class PlayerProfile : MonoBehaviour
         PlayerPrefs.SetInt(strShopRocket, ShopRocket.Amount);
         PlayerPrefs.SetInt(strShopBomb, ShopBomb.Amount);
         PlayerPrefs.SetInt(strShopColor5, ShopColor5.Amount);
+        PlayerPrefs.SetInt(strShopMixed, ShopMixed.Amount);
     }
 
     public void LevelPassed(int Level)
