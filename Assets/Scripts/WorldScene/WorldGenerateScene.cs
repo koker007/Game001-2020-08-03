@@ -25,7 +25,7 @@ public class WorldGenerateScene : MonoBehaviour
     private int MaxLevel;
     private int MinLevel;
     private const float DistanceFromWorldCenter = 100.5f;
-    private const float DistanceSpawnLevelBut = 5f;
+    private const float DistanceSpawnLevelBut = 2.5f;  //check
     private const float WidthSpawnLevelBut = 8f;
 
     public float posStart = -90;
@@ -37,7 +37,7 @@ public class WorldGenerateScene : MonoBehaviour
     private const float SpeedLerpRotation = 2f;
     private Transform RotatableObj;
     private float levelAngleSum = 0;
-    private float rotNow;
+
 
     private bool startRotationSet = false;
 
@@ -71,7 +71,8 @@ public class WorldGenerateScene : MonoBehaviour
 
     private void Start()
     {
-        rotNow = levelAngleSum; //fix
+
+
         main = this;
 
         rotationNeed = -100;
@@ -88,7 +89,7 @@ public class WorldGenerateScene : MonoBehaviour
         //Locations[locationCounter] = Instantiate(PrefabsLocation[1].gameObject, MainComponents.RotatableObj.transform.position, Quaternion.identity, MainComponents.RotatableObj.transform);
         locationCounter++;
 
-        levelAngleSum = 0;
+        levelAngleSum = -115; // fix
         for (int num = 0; num < MainLocations.Length; num++)
         {
             levelAngleSum -= MainLocations[num].lenghtAngle;
@@ -102,6 +103,8 @@ public class WorldGenerateScene : MonoBehaviour
             rotationNow = rotationNeed + 30;
             startRotationSet = true;
         }
+
+
         RotateMainObject();
 
         //UpdateMainObject();
@@ -116,9 +119,9 @@ public class WorldGenerateScene : MonoBehaviour
         {
             rotationNeed = WorldSlider.main.StartRotation;
         }
-        else if (rotationNeed <= WorldSlider.main.StartRotation - (PlayerProfile.main.ProfilelevelOpen * 5))
+        else if (rotationNeed <= WorldSlider.main.StartRotation - (PlayerProfile.main.ProfilelevelOpen * 2.5f))
         {
-            rotationNeed = WorldSlider.main.StartRotation - (PlayerProfile.main.ProfilelevelOpen * 5);
+            rotationNeed = WorldSlider.main.StartRotation - (PlayerProfile.main.ProfilelevelOpen * 2.5f);
         }
 
         rotationNow = Mathf.Lerp(rotationNow, rotationNeed, Time.deltaTime * SpeedLerpRotation);
@@ -194,7 +197,6 @@ public class WorldGenerateScene : MonoBehaviour
         }
         LevelButtons = bufferButtonsNew;
 
-        rotNow = rotationNeed - rotationNeed % 90; //fix + add check
         float posNow = posStart;
         int lvlNow = 1;
         //Идем по списку заранее подготовленных локаций
@@ -223,7 +225,7 @@ public class WorldGenerateScene : MonoBehaviour
                     //Заполняем локацию уровнями
 
                     //высчитываем какое количество уровней надо создать на локации
-                    int needCreatelvl = (int)location.lenghtAngle / 5;
+                    int needCreatelvl = (int)(location.lenghtAngle / 2.5f);
                     foreach (LevelPosition levelPosition in location.LevelPositions)
                     {
                         //Проверяем что текущий уровень еще не создан
@@ -279,7 +281,7 @@ public class WorldGenerateScene : MonoBehaviour
                 //Иначе прибавляем число уровней которые сейчас не должны быть загруженны
                 else
                 {
-                    lvlLastCreate += (int)MainLocations[num].lenghtAngle / 5;
+                    lvlLastCreate += (int)(MainLocations[num].lenghtAngle / 2.5f);
                 }
 
                 //Вычитаем текущий угол префаба
@@ -287,10 +289,11 @@ public class WorldGenerateScene : MonoBehaviour
 
             }
 
+        float additionalLocationRotation = rotationNeed - rotationNeed % 90; //fix + add check
 
-        if (rotationNeed < levelAngleSum) //fix
+        if (rotationNeed < levelAngleSum + angleLocationGenerate) //fix
         {
-            
+
             int randomAdditionalLocationID = Random.Range(0, AdditionalLocations.Length);
 
 
@@ -298,7 +301,7 @@ public class WorldGenerateScene : MonoBehaviour
             bool found = false;
             foreach (WorldLocation bufferLocation in bufferLocations)
             {
-                if (bufferLocation.myAngle == rotNow)
+                if (bufferLocation.myAngle == additionalLocationRotation - angleLocationGenerate)
                 {
                     found = true;
                     break;
@@ -306,17 +309,16 @@ public class WorldGenerateScene : MonoBehaviour
             }
 
             //Если нету, а растояние маленькое создаем
-            if (!found && Mathf.Abs(rotNow - rotationNow) < angleLocationGenerate)
+            if (!found && Mathf.Abs(additionalLocationRotation - rotationNow) < angleLocationGenerate)
             {
-                Debug.Log("CHECK");
                 GameObject locationObj = Instantiate(AdditionalLocations[randomAdditionalLocationID].gameObject, RotatableObj.transform);
                 WorldLocation location = locationObj.GetComponent<WorldLocation>();
-                location.Inicialize(rotNow, lvlNow);
+                location.Inicialize(additionalLocationRotation - angleLocationGenerate, lvlNow);
 
                 //Заполняем локацию уровнями
 
                 //высчитываем какое количество уровней надо создать на локации
-                int needCreatelvl = (int)location.lenghtAngle / 5;
+                int needCreatelvl = (int)(location.lenghtAngle / 2.5f);
                 foreach (LevelPosition levelPosition in location.LevelPositions)
                 {
                     //Проверяем что текущий уровень еще не создан
@@ -372,14 +374,14 @@ public class WorldGenerateScene : MonoBehaviour
             //Иначе прибавляем число уровней которые сейчас не должны быть загруженны
             else
             {
-                lvlLastCreate += (int)AdditionalLocations[randomAdditionalLocationID].lenghtAngle / 5;
+                lvlLastCreate += (int)(AdditionalLocations[randomAdditionalLocationID].lenghtAngle / 2.5);
             }
 
 
 
 
             //Вычитаем текущий угл префаба
-            rotNow -= AdditionalLocations[randomAdditionalLocationID].lenghtAngle;
+            additionalLocationRotation -= AdditionalLocations[randomAdditionalLocationID].lenghtAngle;
         }
 
         //Создать кнопку на месте отправляемого объекта
