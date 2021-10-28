@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Семен
+
+/// <summary>
+/// Сообщение с пользовательским соглашением
+/// </summary>
 public class MessageTermsOfUse : MonoBehaviour
 {
     // Start is called before the first frame update
