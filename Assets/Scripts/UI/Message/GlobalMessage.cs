@@ -24,6 +24,9 @@ public class GlobalMessage : MonoBehaviour
 
     [Header("Prefabs")]
     [SerializeField]
+    GameObject PrefabTermsOfUse;
+
+    [SerializeField]
     GameObject PrefabMessanger;
     [SerializeField]
     GameObject PrefabSettings;
@@ -67,13 +70,23 @@ public class GlobalMessage : MonoBehaviour
     void Start()
     {
         Fon.gameObject.SetActive(true);
+        InvokeRepeating("InvokeMessages", 0.1f, 5f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateOpenClose();
+        UpdateFon();
     }
+
+    public void InvokeMessages() {
+        if (PlayerProfile.main.ProfileTermsOfUse == 0 && !MessageCTRL.selected) {
+            TermsOfUse();
+        }
+    }
+    
+    /////////////////////////////////////////////////////////////////////////////////
+    ///Ниже функции вызова сообщений
 
     /// <summary>
     /// Закрыть всплывающее окно
@@ -105,6 +118,13 @@ public class GlobalMessage : MonoBehaviour
     }
     static public void Message(string title, string message) {
         Message(title, message, "Ok");
+    }
+
+    static public void TermsOfUse() {
+        GameObject messageObj = Instantiate(main.PrefabTermsOfUse, main.transform);
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+
+        MessageCTRL.NewMessage(messageCTRL);
     }
 
     static public void Settings()
@@ -294,7 +314,7 @@ public class GlobalMessage : MonoBehaviour
     }
 
     //Открытие или закрытие информационного меню
-    void UpdateOpenClose()
+    void UpdateFon()
     {
 
         testFon();

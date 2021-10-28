@@ -309,6 +309,8 @@ public class MenuGameplay : MonoBehaviour
     public SuperHitType SuperHitSelected = SuperHitType.none;
 
     public void ButtonClickDestroyInternal() {
+        SuperHitSelected = SuperHitType.none;
+
         //Иницируем атаку
         if (PlayerProfile.main.ShopInternal.Amount > 0)
         {
@@ -320,6 +322,8 @@ public class MenuGameplay : MonoBehaviour
         }
     }
     public void ButtonClickRosket() {
+        SuperHitSelected = SuperHitType.none;
+
         //Инициируем атаку
         if (PlayerProfile.main.ShopRocket.Amount > 0)
         {
@@ -333,6 +337,8 @@ public class MenuGameplay : MonoBehaviour
     }
 
     public void ButtonClickBomb() {
+        SuperHitSelected = SuperHitType.none;
+
         //Инициируем атаку
         if (PlayerProfile.main.ShopBomb.Amount > 0)
         {
@@ -347,6 +353,8 @@ public class MenuGameplay : MonoBehaviour
     }
 
     public void ButtonClickSuperColor() {
+        SuperHitSelected = SuperHitType.none;
+
         //Инициируем атаку
         if (PlayerProfile.main.ShopColor5.Amount > 0) {
             SuperHitSelected = SuperHitType.Color5;
@@ -359,6 +367,8 @@ public class MenuGameplay : MonoBehaviour
 
     //Кнопка рандомизации объектов
     public void ButtonClickMixed() {
+        SuperHitSelected = SuperHitType.none;
+
         //Инициируем атаку
         if (PlayerProfile.main.ShopMixed.Amount > 0)
         {

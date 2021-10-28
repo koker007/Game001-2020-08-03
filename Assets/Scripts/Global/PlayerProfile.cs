@@ -92,6 +92,7 @@ public class PlayerProfile : MonoBehaviour
     {
 
         ProfileTermsOfUse = PlayerPrefs.GetInt(strProfileTermsOfUse, 0);
+        ProfileTermsOfUse = 0;
 
         ProfileLevel = PlayerPrefs.GetInt(strProfileLevel, 1);
         ProfileScore = PlayerPrefs.GetInt(strProfileScore, 0);
