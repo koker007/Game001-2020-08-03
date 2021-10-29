@@ -905,12 +905,13 @@ public class CellInternalObject : MonoBehaviour
 
             //Если партнер супер цвет
             //Эта активация в основном через кнопки магазина
-            else if(partner.type == Type.color5) {
-                if (ActivateType == Type.rocketHorizontal || ActivateType == Type.rocketVertical) {
+            else if (partner.type == Type.color5) {
+                if (ActivateType == Type.rocketHorizontal || ActivateType == Type.rocketVertical ||
+                    ActivateType == Type.bomb) {
+
                     ActivateSuperColor();
                 }
             }
-
         }
 
         activateNum--;
@@ -1007,6 +1008,7 @@ public class CellInternalObject : MonoBehaviour
             }
 
             //Если активируемый тип не колор 5 но партнер с колор5 и вообще я сам себе партнер
+            //(ситуация когда игрок нажимает кнопку бомбы или ракеты из магазина и применяет ее на супер цвет)
             if (ActivateType != Type.color5 && partner.type == Type.color5) {
                 typePartner = ActivateType;
                 ActivateType = Type.color5;

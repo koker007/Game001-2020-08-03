@@ -125,7 +125,7 @@ public class GameFieldCTRL : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartInicialize();
+        //StartInicialize();
     }
 
     // Update is called once per frame
@@ -242,11 +242,13 @@ public class GameFieldCTRL : MonoBehaviour
     /// </summary>
     public IceCTRL[,] iceCTRLs;
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>
     /// Инициализировать игровое поле, на основе данных уровня, или рандомно, если уровня нет
     /// </summary>
     public void inicializeField(LevelsScript.Level level) {
-        
+
+        timeLastMove = Time.unscaledTime;
 
         //Перемещаем поле в центр
         RectTransform rect = gameObject.GetComponent<RectTransform>();
@@ -350,6 +352,9 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[x, y].BlockingMove = level.cells[x, y].HealthBox;
                         cellCTRLs[x, y].rock = level.cells[x, y].rock;
                         cellCTRLs[x, y].mold = level.cells[x, y].HealthMold;
+                        if (cellCTRLs[x,y].mold <= 0 && cellCTRLs[x,y].BlockingMove > 0) {
+                            cellCTRLs[x, y].mold = 1;
+                        }
                         cellCTRLs[x, y].ice = level.cells[x, y].HealthIce;
                         
                         if(level.cells[x, y].Panel > 0)
@@ -377,8 +382,8 @@ public class GameFieldCTRL : MonoBehaviour
                         boxBlockCTRL.Inicialize(cellCTRLs[x, y]);
                     }
 
-                    //Нужно ли создать плесень
-                    if (cellCTRLs[x, y].mold > 0) {
+                    //Нужно ли создать плесень //Если есть ящик
+                    if (cellCTRLs[x, y].mold > 0 || cellCTRLs[x,y].BlockingMove > 0) {
                         GameObject MoldObj = Instantiate(prefabMold, parentOfMold);
                         MoldCTRL moldCTRL = MoldObj.GetComponent<MoldCTRL>();
                         cellCTRLs[x, y].moldCTRL = moldCTRL;
@@ -483,6 +488,7 @@ public class GameFieldCTRL : MonoBehaviour
 
 
     //Стартовая инициализация игрового поля
+    /*
     void StartInicialize() {
         //Добавляем в поле все ячейки
 
@@ -533,6 +539,7 @@ public class GameFieldCTRL : MonoBehaviour
 
 
     }
+    */
 
     //Проверка ячеек на падение и совместимость
     void TestSpawn() {
@@ -3537,7 +3544,7 @@ public class GameFieldCTRL : MonoBehaviour
             if (isMovingOld && !isMovingNow)
             {
 
-                //Вызываем сообжение о комбинации
+                //Вызываем сообщение о комбинации
                 if (!Gameplay.main.isMissionComplite() && !Gameplay.main.isMissionDefeat()) {
                     MidleMessageCombo();
                 }

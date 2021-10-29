@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 
 //alexandr
+//—емен
 /// <summary>
 /// отвечает за сообщение проигрыша
 /// </summary>
@@ -26,6 +27,10 @@ public class MessageYouLose : MonoBehaviour
         Destroy(MenuGameplay.GameField);
         UICTRL.main.OpenWorld();
         UICTRL.main.OpenGameplay();
+    }
+
+    public void ClickButtonSeeAdd() {
+        
     }
 
     public void ExitGameplay()
