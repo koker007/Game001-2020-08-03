@@ -873,29 +873,42 @@ public class CellInternalObject : MonoBehaviour
         else {
 
             //супер колор + что угодно
-            if (ActivateType == Type.color5) {
+            if (ActivateType == Type.color5)
+            {
                 ActivateSuperColor();
             }
             //Бомба + ракета
             else if ((ActivateType == Type.bomb && partner.type == Type.rocketHorizontal) ||
                 (ActivateType == Type.rocketHorizontal && partner.type == Type.bomb) ||
                 (ActivateType == Type.bomb && partner.type == Type.rocketVertical) ||
-                (ActivateType == Type.rocketVertical && partner.type == Type.bomb)) {
+                (ActivateType == Type.rocketVertical && partner.type == Type.bomb))
+            {
                 ActivateBombAndRocket();
             }
             //Бомба + бомба
-            else if (ActivateType == Type.bomb && partner.type == Type.bomb) {
+            else if (ActivateType == Type.bomb && partner.type == Type.bomb)
+            {
                 ActivateBomb(2);
             }
             //ракета + ракета
             else if ((ActivateType == Type.rocketHorizontal || ActivateType == Type.rocketVertical) &&
-                (partner.type == Type.rocketHorizontal || partner.type == Type.rocketVertical)) {
+                (partner.type == Type.rocketHorizontal || partner.type == Type.rocketVertical))
+            {
                 ActivateRocket(true, true);
             }
 
             //Самолет + самолет
-            else if (ActivateType == Type.airplane) {
+            else if (ActivateType == Type.airplane)
+            {
                 ActivateFly();
+            }
+
+            //Если партнер супер цвет
+            //Эта активация в основном через кнопки магазина
+            else if(partner.type == Type.color5) {
+                if (ActivateType == Type.rocketHorizontal || ActivateType == Type.rocketVertical) {
+                    ActivateSuperColor();
+                }
             }
 
         }
@@ -988,24 +1001,34 @@ public class CellInternalObject : MonoBehaviour
 
             int sizeMax = 1;
 
+            Type typePartner = Type.none;
+            if (partner != null) {
+                typePartner = partner.type;
+            }
+
+            //Если активируемый тип не колор 5 но партнер с колор5 и вообще я сам себе партнер
+            if (ActivateType != Type.color5 && partner.type == Type.color5) {
+                typePartner = ActivateType;
+                ActivateType = Type.color5;
+            }
+
             //Партнер такая же бомба
-            if (partner != null && partner.type == Type.color5) {
+            if (typePartner == Type.color5) {
                 DestroyAll();
             }
             //Если партнер бомба, ракета или самолет
-            else if (partner != null && 
-                (partner.type == Type.bomb ||
-                partner.type == Type.airplane)
+            else if (typePartner == Type.bomb ||
+                typePartner == Type.airplane
                 ) {
                 replacementColorAndActivate();
             }
             //партнер ракета
-            else if (partner != null && (partner.type == Type.rocketHorizontal || partner.type == Type.rocketVertical)) {
+            else if (typePartner == Type.rocketHorizontal || typePartner == Type.rocketVertical) {
                 replacementColorAndActivate();
                 //DestroyAllRocket(partner.color);
             }
             //Если партнер просто цвет
-            else if (partner != null && partner.type == Type.color)
+            else if (typePartner == Type.color)
             {
                 DestroyAllColor(partner.color);
             }
@@ -1103,7 +1126,7 @@ public class CellInternalObject : MonoBehaviour
                         if (myField.cellCTRLs[x, y].rock <= 0) {
 
                             //Если партнер ракета
-                            if (partner.type == Type.rocketHorizontal || partner.type == Type.rocketVertical)
+                            if (typePartner == Type.rocketHorizontal || typePartner == Type.rocketVertical)
                             {
                                 if (Random.Range(0, 100) < 50)
                                 {
@@ -1115,12 +1138,12 @@ public class CellInternalObject : MonoBehaviour
                                 }
                             }
                             //Если бомба
-                            else if (partner.type == Type.bomb)
+                            else if (typePartner == Type.bomb)
                             {
                                 cellInternalObject.setColorAndType(partner.color, Type.bomb);
                             }
                             //Если самолет
-                            else if (partner.type == Type.airplane)
+                            else if (typePartner == Type.airplane)
                             {
                                 cellInternalObject.setColorAndType(partner.color, Type.airplane);
 

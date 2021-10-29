@@ -1669,10 +1669,19 @@ public class GameFieldCTRL : MonoBehaviour
                     comb.cells.Add(CellSelect);
                     comb.TestCells();
 
-                    CellSelect.BufferCombination = comb;
+                    //Если есть внутренний обьект и это колор5
+                    if (CellSelect.cellInternal && CellSelect.cellInternal.type == CellInternalObject.Type.color5) {
+                        
 
-                    CellSelect.explosion = new CellCTRL.Explosion(true, true, true, true, 0.05f, comb);
-                    CellSelect.ExplosionBoomInvoke(CellSelect.explosion, CellSelect.explosion.timer);
+                        CellSelect.cellInternal.Activate(CellInternalObject.Type.rocketHorizontal , CellSelect.cellInternal, comb); 
+                    }
+                    else {
+
+                        CellSelect.BufferCombination = comb;
+
+                        CellSelect.explosion = new CellCTRL.Explosion(true, true, true, true, 0.05f, comb);
+                        CellSelect.ExplosionBoomInvoke(CellSelect.explosion, CellSelect.explosion.timer);
+                    }
 
                     MenuGameplay.main.SuperHitSelected = MenuGameplay.SuperHitType.none;
                 }
