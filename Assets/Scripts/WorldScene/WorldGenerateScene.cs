@@ -209,8 +209,8 @@ public class WorldGenerateScene : MonoBehaviour
 
         float posNow = posStart;
         int lvlNow = 1;
-        //Идем по списку заранее подготовленных локаций
 
+        //Проверяем, сколько допольнительных локаций пройдено
         if (rotationNeed <= levelAngleSum)
         {
             numOfCreatedAdditionalLocations = (int)Mathf.Abs(Mathf.Floor((rotationNeed - levelAngleSum) / 90));
@@ -220,8 +220,10 @@ public class WorldGenerateScene : MonoBehaviour
             numOfCreatedAdditionalLocations = 0;
         }
 
+        //Если доп локаций не пройдено, мы находимся в зоне основных локаций, создаем их
         if (numOfCreatedAdditionalLocations == 0)
         {
+            //Идем по списку заранее подготовленных локаций
             for (int num = 0; num < MainLocations.Length; num++)
             {
                 //проверяем есть ли локация с текущим углом в буффере
@@ -310,9 +312,10 @@ public class WorldGenerateScene : MonoBehaviour
             }
         }
 
-        else //fix
+        else 
         {
-
+            Debug.Log(numOfCreatedAdditionalLocations * 90 / 2.5f);
+            lvlLastCreate += (int)(mainLevels - 1 + (numOfCreatedAdditionalLocations - 1) * 90 / 2.5f);
             float additionalLocationRotation = levelAngleSum - (90 * (numOfCreatedAdditionalLocations - 1));
 
             int randomAdditionalLocationID = Random.Range(0, AdditionalLocations.Length);
@@ -346,7 +349,7 @@ public class WorldGenerateScene : MonoBehaviour
                     bool foundButton = false;
                     foreach (LButton lButton in LevelButtons)
                     {
-                        if (lButton.NumLevel == mainLevels + lvlLastCreate) //fix
+                        if (lButton.NumLevel == lvlLastCreate) //fix
                         {
                             foundButton = true;
                             break;
@@ -392,14 +395,6 @@ public class WorldGenerateScene : MonoBehaviour
                 bufferLocations.Add(location);
 
             }
-
-            /*
-            //Иначе прибавляем число уровней которые сейчас не должны быть загруженны
-            else
-            {
-                lvlLastCreate += (int)(AdditionalLocations[randomAdditionalLocationID].lenghtAngle / 2.5);
-            }
-            */
         }
 
         //Создать кнопку на месте отправляемого объекта
