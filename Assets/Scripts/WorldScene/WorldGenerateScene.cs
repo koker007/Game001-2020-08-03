@@ -26,8 +26,8 @@ public class WorldGenerateScene : MonoBehaviour
     private int MaxLevel;
     private int MinLevel;
     private const float DistanceFromWorldCenter = 100.5f;
-    private const float DistanceSpawnLevelBut = 2.5f;  //check
-    //int lvlLastCreate = 0; //check
+    private const float DistanceSpawnLevelBut = 2.5f; //рассто€ние между уровн€ми
+    //int lvlLastCreate = 0;
     private int mainLevels = 0;
     private int numOfCreatedAdditionalLocations = 0;
     private const float WidthSpawnLevelBut = 8f;
@@ -41,9 +41,6 @@ public class WorldGenerateScene : MonoBehaviour
     private const float SpeedLerpRotation = 2f;
     private Transform RotatableObj;
     private float levelAngleSum = 0;
-
-
-    private bool startRotationSet = false;
 
     /// <summary>
     /// класс кнопки
@@ -103,18 +100,12 @@ public class WorldGenerateScene : MonoBehaviour
         {
             mainLevels += (int)(MainLocations[i].lenghtAngle / 2.5f);
         }
+
+        rotationNow = -(PlayerProfile.main.ProfilelevelOpen * 2.5f - 30);
     }
 
     private void Update()
     {
-
-        if (!startRotationSet) //fix
-        {
-            //rotationNow = rotationNeed + 30;
-            startRotationSet = true;
-        }
-
-
         RotateMainObject();
 
         //UpdateMainObject();
@@ -211,17 +202,26 @@ public class WorldGenerateScene : MonoBehaviour
         int lvlNow = 1;
 
         //ѕровер€ем, сколько допольнительных локаций пройдено
-        if (rotationNeed <= levelAngleSum)
+        if (Mathf.Abs(rotationNeed - 90 - levelAngleSum) <= 90 && rotationNeed - 90 > levelAngleSum)
         {
-            numOfCreatedAdditionalLocations = (int)Mathf.Abs(Mathf.Floor((rotationNeed - levelAngleSum) / 90));
+            numOfCreatedAdditionalLocations = 1;
+        }
+        else if (Mathf.Abs(rotationNeed - 90 - levelAngleSum) <= 90 && rotationNeed - 90 <= levelAngleSum)
+        {
+            numOfCreatedAdditionalLocations = 2;
+        }
+        else if (rotationNeed - 90 - levelAngleSum <= -90)
+        {
+            numOfCreatedAdditionalLocations = (int)Mathf.Abs(Mathf.Floor((rotationNeed - 90 - levelAngleSum) / 90)) + 1;
+            
         }
         else
         {
             numOfCreatedAdditionalLocations = 0;
         }
 
-        //≈сли доп локаций не пройдено, мы находимс€ в зоне основных локаций, создаем их
-        if (numOfCreatedAdditionalLocations == 0)
+        //≈сли доп локаций меньше 3, создаем основные локации
+        if (numOfCreatedAdditionalLocations < 3)
         {
             //»дем по списку заранее подготовленных локаций
             for (int num = 0; num < MainLocations.Length; num++)
@@ -312,88 +312,111 @@ public class WorldGenerateScene : MonoBehaviour
             }
         }
 
-        else 
+        //≈сли начались доп локации, создаем их
+        if (numOfCreatedAdditionalLocations > 0)
         {
-            Debug.Log(numOfCreatedAdditionalLocations * 90 / 2.5f);
-            lvlLastCreate += (int)(mainLevels - 1 + (numOfCreatedAdditionalLocations - 1) * 90 / 2.5f);
-            float additionalLocationRotation = levelAngleSum - (90 * (numOfCreatedAdditionalLocations - 1));
-
-            int randomAdditionalLocationID = Random.Range(0, AdditionalLocations.Length);
-
-
-            //провер€ем есть ли локаци€ с текущим углом в буффере
-            bool found = false;
-            foreach (WorldLocation bufferLocation in bufferLocations)
+            for (int locationsToSpawn = 0; locationsToSpawn < 3; locationsToSpawn++)
             {
-                if (bufferLocation.myAngle == additionalLocationRotation)
+                if (numOfCreatedAdditionalLocations - locationsToSpawn >= -1)
                 {
-                    found = true;
-                    break;
-                }
-            }
+                    //”гол спавна доп локации
+                    float additionalLocationRotation = levelAngleSum - 90 * (numOfCreatedAdditionalLocations - locationsToSpawn - 2);
 
-            //≈сли нету, создаем
-            if (!found)
-            {
-                GameObject locationObj = Instantiate(AdditionalLocations[randomAdditionalLocationID].gameObject, RotatableObj.transform);
-                WorldLocation location = locationObj.GetComponent<WorldLocation>();
-                location.Inicialize(additionalLocationRotation, lvlNow);
-
-                //«аполн€ем локацию уровн€ми
-
-                //высчитываем какое количество уровней надо создать на локации
-                int needCreatelvl = (int)(location.lenghtAngle / 2.5f);
-                foreach (LevelPosition levelPosition in location.LevelPositions)
-                {
-                    //ѕровер€ем что текущий уровень еще не создан
-                    bool foundButton = false;
-                    foreach (LButton lButton in LevelButtons)
+                    //≈сли угол спавна доп локации больше или равен углу конца последней основной локации, создаем ее (доп локацию)
+                    if (additionalLocationRotation <= levelAngleSum)
                     {
-                        if (lButton.NumLevel == lvlLastCreate) //fix
+                        //провер€ем есть ли локаци€ с текущим углом в буффере
+                        bool found = false;
+
+                        foreach (WorldLocation bufferLocation in bufferLocations)
                         {
-                            foundButton = true;
-                            break;
+                            if (bufferLocation.myAngle == additionalLocationRotation)
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        //≈сли нету, создаем
+                        if (!found)
+                        {
+                            //–ассчитываем псевдослучайный ID локации на основе количества пройденных доп локаций
+                            int perVar = (int)Mathf.Floor(Mathf.PerlinNoise(numOfCreatedAdditionalLocations * 0.7f, 0) * 10000 % 10);
+
+                            int randomAdditionalLocationID = 0;
+                            if (perVar != 0)
+                            {
+                                randomAdditionalLocationID = (int)Mathf.Floor((AdditionalLocations.Length - 1) / perVar);
+                            }
+                            else
+                            {
+                                randomAdditionalLocationID = 0;
+                            }
+                            GameObject locationObj = Instantiate(AdditionalLocations[randomAdditionalLocationID].gameObject, RotatableObj.transform);
+                            WorldLocation location = locationObj.GetComponent<WorldLocation>();
+                            location.Inicialize(additionalLocationRotation, lvlNow);
+
+                            //«аполн€ем локацию уровн€ми
+
+                            //—мотрим, какой номер уровн€ станет первым на локации (зависимость от угла)
+                            lvlLastCreate = (int)(mainLevels - 1 + (numOfCreatedAdditionalLocations - locationsToSpawn - 2) * 90 / 2.5f);
+                            Debug.Log(lvlLastCreate);
+                            //высчитываем какое количество уровней надо создать на локации
+                            int needCreatelvl = (int)(location.lenghtAngle / 2.5f);
+                            foreach (LevelPosition levelPosition in location.LevelPositions)
+                            {
+                                //ѕровер€ем что текущий уровень еще не создан
+                                bool foundButton = false;
+                                foreach (LButton lButton in LevelButtons)
+                                {
+                                    if (lButton.NumLevel == lvlLastCreate)
+                                    {
+                                        foundButton = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!foundButton)
+                                {
+                                    if (levelPosition != null)
+                                    {
+                                        CreateNewButtonPos(levelPosition);
+                                    }
+                                    else
+                                    {
+                                        CreateNewButtonLocate(location);
+                                    }
+                                    needCreatelvl--;
+                                    lvlLastCreate++;
+                                }
+                            }
+
+                            for (; needCreatelvl > 0;)
+                            {
+                                //ѕровер€ем что текущий уровень еще не создан
+                                bool foundButton = false;
+                                foreach (LButton lButton in LevelButtons)
+                                {
+                                    if (lButton.NumLevel == lvlLastCreate)
+                                    {
+                                        foundButton = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!foundButton)
+                                    CreateNewButtonLocate(location);
+
+                                needCreatelvl--;
+                                lvlLastCreate++;
+                            }
+
+
+                            bufferLocations.Add(location);
+
                         }
                     }
-
-                    if (!foundButton)
-                    {
-                        if (levelPosition != null)
-                        {
-                            CreateNewButtonPos(levelPosition);
-                        }
-                        else
-                        {
-                            CreateNewButtonLocate(location);
-                        }
-                        needCreatelvl--;
-                        lvlLastCreate++;
-                    }
                 }
-
-                for (; needCreatelvl > 0;)
-                {
-                    //ѕровер€ем что текущий уровень еще не создан
-                    bool foundButton = false;
-                    foreach (LButton lButton in LevelButtons)
-                    {
-                        if (lButton.NumLevel == lvlLastCreate)
-                        {
-                            foundButton = true;
-                            break;
-                        }
-                    }
-
-                    if (!foundButton)
-                        CreateNewButtonLocate(location);
-
-                    needCreatelvl--;
-                    lvlLastCreate++;
-                }
-
-
-                bufferLocations.Add(location);
-
             }
         }
 
