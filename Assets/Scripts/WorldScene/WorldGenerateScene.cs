@@ -103,7 +103,7 @@ public class WorldGenerateScene : MonoBehaviour
             mainLevels += (int)(MainLocations[i].lenghtAngle / 2.5f);
         }
 
-        rotationNow = -(PlayerProfile.main.ProfilelevelOpen * 2.5f - 10);
+        rotationNow = -(PlayerProfile.main.ProfilelevelOpen * 2.5f) - 100;
     }
 
     private void Update()
@@ -340,21 +340,25 @@ public class WorldGenerateScene : MonoBehaviour
                 }
 
                 //≈сли нет, создаем
-                if (!found && additionalLocationRotation <= levelAngleSum && Mathf.Abs(WorldGenerateScene.main.rotationNow + 45 - additionalLocationRotation) <= 90)
+                if (!found && additionalLocationRotation <= levelAngleSum && Mathf.Abs(WorldGenerateScene.main.rotationNow - additionalLocationRotation) <= 135)
                 {
+                    
                     //–ассчитываем псевдослучайный ID локации на основе количества пройденных доп локаций
-                    int perVar = (int)Mathf.Floor(Mathf.PerlinNoise(numOfCreatedAdditionalLocations * 0.7f, 0) * 10000 % 10);
+                    int perVar = (int)(Mathf.PerlinNoise(numOfCreatedAdditionalLocations * 1337.228f, 0) * 10000 % 10);
 
                     int randomAdditionalLocationID = 0;
                     if (perVar != 0)
                     {
-                        randomAdditionalLocationID = (int)Mathf.Floor((AdditionalLocations.Length - 1) / perVar);
+                        randomAdditionalLocationID = (AdditionalLocations.Length - 1) % perVar;
                     }
                     else
                     {
                         randomAdditionalLocationID = 0;
                     }
+                    Debug.Log(perVar + " | " + randomAdditionalLocationID);
+                    
 
+                    //int randomAdditionalLocationID = Random.Range(0, AdditionalLocations.Length); //временный рандом дл€ оценки разнообрази€, рандом на основе шума закомментирован выше, требуетс€ доработка
                     GameObject locationObj = Instantiate(AdditionalLocations[randomAdditionalLocationID].gameObject, RotatableObj.transform);
                     WorldLocation location = locationObj.GetComponent<WorldLocation>();
                     location.Inicialize(additionalLocationRotation, lvlNow);

@@ -100,7 +100,7 @@ public class WorldLocation : MonoBehaviour
     }
     public void TestDelete() {
         rotateNow = WorldGenerateScene.main.rotationNow;
-        if (Mathf.Abs(WorldGenerateScene.main.rotationNow + 45 - myAngle) > 90) {
+        if (Mathf.Abs(WorldGenerateScene.main.rotationNow - myAngle) > 135) {
             Destroy(gameObject);           
         }
     }
