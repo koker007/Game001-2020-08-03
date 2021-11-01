@@ -1635,6 +1635,30 @@ public class CellInternalObject : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Запустить анимацию смещения от взрыва
+    /// </summary>
+    public void PlayBoomAnimation(Vector2 from, float distanceMax) {
+
+        //считаем растояние взрыва
+        float distance = Vector2.Distance(from, myCell.pos);
+
+        //находим вектор взрыва
+        Vector2 vectorBoom = new Vector2(myCell.pos.x, myCell.pos.y) - from;
+
+        if (distance == 0) {
+            return;
+        }
+
+        //Ищем силу смещения
+        float strange = distanceMax / distance;
+
+        //если сила взрыва меньше нуля выходим
+        if (strange < 0) {
+            return;
+        }
+    }
+
     public void IniBomb(CellCTRL myCellNew, GameFieldCTRL gameField ,InternalColor internalColor, int myCombIDFunc) {
 
         myCell = myCellNew;
