@@ -87,6 +87,7 @@ public class WorldLocation : MonoBehaviour
 
         }
 
+        /*
         void DeleteGraunds() {
             foreach (GameObject gameObject in Graunds) {
                 if (gameObject != null) {
@@ -95,14 +96,12 @@ public class WorldLocation : MonoBehaviour
             }
             Graunds = null;
         }
+        */
     }
     public void TestDelete() {
         rotateNow = WorldGenerateScene.main.rotationNow;
-
-        if (Mathf.Abs(WorldGenerateScene.main.rotationNow - myAngle) > 1.5f * WorldGenerateScene.main.angleLocationGenerate) {
-            Debug.Log(Mathf.Abs(WorldGenerateScene.main.rotationNow - myAngle));
+        if (Mathf.Abs(WorldGenerateScene.main.rotationNow + 45 - myAngle) > 90) {
             Destroy(gameObject);           
         }
     }
-
 }
