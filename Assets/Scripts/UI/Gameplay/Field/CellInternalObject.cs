@@ -499,13 +499,17 @@ public class CellInternalObject : MonoBehaviour
 
     }
 
-    public void randSpawnType(bool isSpawn) {
+    public void randSpawnType(bool isSpawn, bool isRandType = true) {
         CellInternalObject cellInternal = GetRandomColor(isSpawn);
         color = cellInternal.color;
-        type = cellInternal.type;
 
-        setColorAndType(color, type);
-
+        if (isRandType) {
+            type = cellInternal.type;
+            setColorAndType(color, type);
+        }
+        else {
+            setColor(color);
+        }
     }
     public void randType() {
         int rand = Random.Range(1, 6+1);

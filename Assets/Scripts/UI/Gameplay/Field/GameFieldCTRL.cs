@@ -1270,7 +1270,7 @@ public class GameFieldCTRL : MonoBehaviour
                         //перемешать цвет
                         void mixColor()
                         {
-                            c.cellInternal.randSpawnType(false);
+                            c.cellInternal.randSpawnType(false, false);
                         }
                         //Нанести урон
                         void SetDamage()
@@ -1880,8 +1880,9 @@ public class GameFieldCTRL : MonoBehaviour
 
             Debug.Log("Found potencial: " + potencialBest.priority + " Pos: " + potencialBest.Target.pos + " Target:" + potencialBest.Target.pos + " Moving:" + potencialBest.Moving.pos);
         }
-        //если комбинаций не нашлось и лист нужных к перемещению объектов еще не создан
-        else if(ListWaitingInternals.Count <= 0){
+        //если комбинаций не нашлось и лист нужных к перемещению объектов еще не создан и это не первый ход
+        else if(ListWaitingInternals.Count <= 0)
+        {
             listPotencial = new List<PotencialComb>();
 
             //выводим собщение что перемешиваем
