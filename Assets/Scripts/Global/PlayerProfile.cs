@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //alexandr
+//Андрей
 /// <summary>
 /// профиль игрока, урвоень, его предметы, количество игровой валюты
 /// </summary>

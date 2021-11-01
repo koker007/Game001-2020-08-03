@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 //семен
+//Андрей
 /// <summary>
 /// Представляет из себя данные о текущей локации
 /// </summary>
@@ -86,6 +87,7 @@ public class WorldLocation : MonoBehaviour
 
         }
 
+        /*
         void DeleteGraunds() {
             foreach (GameObject gameObject in Graunds) {
                 if (gameObject != null) {
@@ -94,13 +96,12 @@ public class WorldLocation : MonoBehaviour
             }
             Graunds = null;
         }
+        */
     }
     public void TestDelete() {
         rotateNow = WorldGenerateScene.main.rotationNow;
-
-        if (Mathf.Abs(WorldGenerateScene.main.rotationNow - myAngle) > WorldGenerateScene.main.angleLocationGenerate) {
-            Destroy(gameObject);
+        if (Mathf.Abs(WorldGenerateScene.main.rotationNow + 45 - myAngle) > 90) {
+            Destroy(gameObject);           
         }
     }
-
 }
