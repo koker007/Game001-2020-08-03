@@ -129,6 +129,7 @@ public class MoldCTRL : MonoBehaviour
 
             //Звук спавна плесени
             SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipAddMold, 0.5f, Random.Range(0.9f, 1.1f));
+            Particle3dCTRL.CreateSpawnMold(myCell.myField.transform, cellTarget);
         }
         
         //Если дошли до конца значит выполнили
