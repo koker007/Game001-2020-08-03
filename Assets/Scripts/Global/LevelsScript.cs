@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //Alexandr
+//Андрей
 /// <summary>
 /// хранит данные об уровнях
 /// </summary>
@@ -33,6 +34,8 @@ public class LevelsScript : MonoBehaviour
         public bool downWall;
         public bool leftWall;
         public bool rightWall;
+       
+
         public CellInfo(int box, int mold, int color, int type, int panel, int rockF, int ice, char[] walls)
         {
             if (box != 0)
@@ -86,6 +89,7 @@ public class LevelsScript : MonoBehaviour
     /// </summary>
     public class Level
     {
+
         /// <summary>
         /// ширина игрового поля
         /// </summary>
@@ -307,8 +311,8 @@ public class LevelsScript : MonoBehaviour
     }
 
     private Level level;
-
-    public Level[] Levels = new Level[1000];
+    private const int mainLevelsCount = 51;
+    public Level[] Levels = new Level[mainLevelsCount];
 
     private void Start()
     {
@@ -355,12 +359,16 @@ public class LevelsScript : MonoBehaviour
     public Level ReturnLevel(int NumLevel)
     {
 
-        Level result = Levels[NumLevel];
+        Level result;
 
-        if (result == null) {
-            result = LevelGenerator.main.GenerateLevel(NumLevel);
+        if (NumLevel < mainLevelsCount)
+        {
+            result = Levels[NumLevel];
         }
-
+        else
+        {
+            result = LevelGenerator.main.GenerateLevelV2(NumLevel);
+        }
         return result;
 
         /*

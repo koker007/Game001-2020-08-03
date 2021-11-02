@@ -344,19 +344,48 @@ public class WorldGenerateScene : MonoBehaviour
                 {
                     
                     //Рассчитываем псевдослучайный ID локации на основе количества пройденных доп локаций
-                    int perVar = (int)(Mathf.PerlinNoise(numOfCreatedAdditionalLocations * 1337.228f, 0) * 10000 % 10);
 
+
+                    int integer = AdditionalLocations.Length;                  
+                    int remCounter = 1;
+
+                    while (integer > 9)
+                    {                        
+                        remCounter++;
+                        integer = Mathf.FloorToInt(integer / 9);
+                    }
+                    float[] rem = new float[remCounter];
+
+                    integer = AdditionalLocations.Length;
+                    for (int i = remCounter; i > 0; i--)
+                    {
+                        rem[rem.Length - i] = integer % 9;
+                        if (i == 1)
+                        {
+                            rem[rem.Length - i]--;
+                        }
+                        integer = Mathf.FloorToInt(integer / 9);
+                    }
+                    //Debug.Log(remCounter);
                     int randomAdditionalLocationID = 0;
-                    if (perVar != 0)
+                    for (int i = remCounter; i > 0; i--)
                     {
-                        randomAdditionalLocationID = (AdditionalLocations.Length - 1) % perVar;
+                        int perVar = (int)(Mathf.PerlinNoise(numOfCreatedAdditionalLocations * 666.666f + i, 0) * 10000 % 10);
+                        int randRem = Mathf.RoundToInt(rem[i - 1] / 9 * perVar);
+                        //Debug.Log(remCounter);
+
+                        if (remCounter > 1)
+                        {
+                            randomAdditionalLocationID += integer * perVar + randRem;
+                        }
+                        else 
+                        {
+                            randomAdditionalLocationID = randRem;
+                        }
+                        
                     }
-                    else
-                    {
-                        randomAdditionalLocationID = 0;
-                    }
-                    Debug.Log(perVar + " | " + randomAdditionalLocationID);
-                    
+                    //randomAdditionalLocationID--;
+                    Debug.Log(randomAdditionalLocationID);
 
                     //int randomAdditionalLocationID = Random.Range(0, AdditionalLocations.Length); //временный рандом для оценки разнообразия, рандом на основе шума закомментирован выше, требуется доработка
                     GameObject locationObj = Instantiate(AdditionalLocations[randomAdditionalLocationID].gameObject, RotatableObj.transform);

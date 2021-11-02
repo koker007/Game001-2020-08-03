@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //александр
+//Андрей
 /// <summary>
 /// генерирует рандомные уровни
 /// </summary>
@@ -26,13 +27,7 @@ public class LevelGenerator : MonoBehaviour
         float RandomFactor = 1.234567f * NumLevel;
         RandomFactor = Mathf.PerlinNoise(0, RandomFactor) + 1;
 
-        //Если уровень есть, то отправляем его
-        if (LevelsScript.main.Levels[NumLevel] != null)
-            //была рекурсия, избавился
-            //LevelsScript.main.ReturnLevel(NumLevel) != null)
-        {
-            return LevelsScript.main.Levels[NumLevel];
-        }
+
 
         //Иначе генерируем
 
@@ -518,6 +513,132 @@ public class LevelGenerator : MonoBehaviour
             else
             {
                 return false;
+            }
+        }
+    }
+
+
+    public LevelsScript.Level GenerateLevelV2(int NumLevel)
+    {
+        int perVar = (int)(Mathf.PerlinNoise(NumLevel * 666.666f, 0) * 10000 % 10);
+        //устанавливаем размер уровня
+        int Width = perVar % 8 + 6;
+        int Height = perVar * 123 % (Width / 2) + 6;
+
+        //основные параметры уровня
+        int NeedScore = Width * Height * (perVar % ScoreСoefficient + ScoreСoefficient / 2);
+        float move = (float)30 / (Width * Height * ScoreСoefficient) * NeedScore;
+
+        //выюираем количество цветов
+        int numColors;
+        if (Width > 10)
+        {
+            numColors = 5;
+        }
+        else
+        {
+            numColors = 4;
+        }
+
+        //создаем уровень без массивов
+        LevelsScript.Level level = LevelsScript.main.CreateLevel(NumLevel, Height, Width, NeedScore, (int)move, numColors, (int)perVar * 100, (int)perVar * 100);
+
+        PassRandom();
+
+        ArraysRandom();
+
+        //LevelsScript.main.Levels[NumLevel] = level;
+
+        return level;
+
+        //выбираем цели уровня
+        void PassRandom()
+        {
+            int numPass = (int)perVar % 2 + 1;
+            int k = 11;
+
+            for (int i = 0; i < numPass; i++)
+            {
+                k++;
+                int rand = (int)perVar * k % 5;
+                if (rand == 0 && !level.PassedWithBox)
+                {
+                    level.PassedWithRock = true;
+                }
+                else if (rand == 1 && !level.PassedWithScore)
+                {
+                    level.PassedWithCrystal = true;
+                    level.NeedCrystal = (int)perVar % 15 + 15;
+                    level.NeedColor = (CellInternalObject.InternalColor)(int)(perVar % 5);
+                }
+                else if (rand == 2 && !level.PassedWithScore && !level.PassedWithRock)
+                {
+                    level.PassedWithBox = true;
+                }
+                else if (rand == 3 && !level.PassedWithScore && !level.PassedWithPanel)
+                {
+                    level.PassedWithMold = true;
+                }
+                else if (rand == 4 && !level.PassedWithScore && !level.PassedWithMold)
+                {
+                    level.PassedWithPanel = true;
+                }
+            }
+        }
+        //заносим значения клеток
+        void ArraysRandom()
+        {
+            int[,] exist = new int[Height, Width];
+            int[,] box = new int[Height, Width];
+            int[,] mold = new int[Height, Width];
+            int[,] panel = new int[Height, Width];
+            int[,] rock = new int[Height, Width];
+            int[,] IColors = new int[Height, Width];
+            int[,] Type = new int[Height, Width];
+
+            //PerlinAllRandom();
+
+
+            CellRandom(exist, 0, 1, 80, 1);
+            CellRandom(box, 0, 1, 10, 2);
+            CellRandom(mold, 0, 1, 10, 3);
+            CellRandom(panel, 0, 1, 10, 4);
+            CellRandom(rock, 0, 1, 10, 5);
+            CellRandom(Type, 1, 1, 50, 6);
+            CellRandom(IColors, 0, 1, 10, 6);
+
+
+            level.SetMass(exist, "exist");
+            level.SetMass(IColors, "color");
+            level.SetMass(Type, "type");
+            level.SetMass(box, "box");
+            level.SetMass(mold, "mold");
+            level.SetMass(panel, "panel");
+            level.SetMass(rock, "rock");
+            level.SetCells();
+
+
+            //алгоритм генерации
+            void CellRandom(int[,] array, int minArrayValue, int maxArrayValue, float percentOfField, int ID)
+            {
+                //SetArray(ref exist, 1);
+                for (int x = 0; x < Height; x++)
+                {
+                    for (int y = 0; y < Width; y++)
+                    {
+                        perVar = (int)(Mathf.PerlinNoise(x * NumLevel * 666.666f * ID, y * NumLevel * 666.666f * ID) * 10000 % 10) * 10;
+                        if (perVar <= percentOfField)
+                        {
+                            array[x, y] = maxArrayValue;
+                        }
+                        else
+                        {
+                            array[x, y] = minArrayValue;
+
+                        }
+                    }
+                }
+                //SymmetryArrayForGorizontal(ref exist);
             }
         }
     }
