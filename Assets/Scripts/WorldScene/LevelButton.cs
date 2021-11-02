@@ -97,7 +97,7 @@ public class LevelButton : MonoBehaviour
                 if (hit.collider.transform.tag == "LevelButton")
                 {
                     SoundCTRL.main.PlaySound(SoundCTRL.main.clipPressButton);
-                    LevelGenerator.main.GenerateLevel(NumLevel);
+                    //LevelGenerator.main.GenerateLevelV2(NumLevel);
                     GlobalMessage.LevelInfo(NumLevel);
                 }
             }
