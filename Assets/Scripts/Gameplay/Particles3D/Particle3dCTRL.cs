@@ -278,4 +278,23 @@ public class Particle3dCTRL : MonoBehaviour
 
         return particle3DCTRL;
     }
+
+    public static Particle3dCTRL CreateSpawnMold(Transform field, CellCTRL cellStartExplose)
+    {
+        GameObject ParticleObj = Instantiate(GameplayParticles3D.main.prefabSpawnMold, GameplayParticles3D.main.transform);
+        Particle3dCTRL particle3DCTRL = ParticleObj.GetComponent<Particle3dCTRL>();
+
+        RectTransform rectField = field.GetComponent<RectTransform>();
+
+        if (particle3DCTRL == null)
+        {
+            Destroy(ParticleObj);
+            return particle3DCTRL;
+        }
+
+        //Инициализируем данными частицу
+        particle3DCTRL.Inizialize(rectField, cellStartExplose.pos);
+
+        return particle3DCTRL;
+    }
 }

@@ -33,6 +33,9 @@ public class GameplayParticles3D : MonoBehaviour
     public GameObject prefabBoomAll;
     [SerializeField]
     public GameObject prefabCellDamage;
+    [SerializeField]
+    public GameObject prefabSpawnMold;
+
 
     // Start is called before the first frame update
     void Start()

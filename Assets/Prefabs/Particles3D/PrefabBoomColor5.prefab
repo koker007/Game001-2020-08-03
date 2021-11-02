@@ -16,6 +16,10 @@ PrefabInstance:
       value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 1540684045146012368, guid: 839bd9e11e857664d901f579776d2e49, type: 3}
+      propertyPath: simulationSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540684045146012368, guid: 839bd9e11e857664d901f579776d2e49, type: 3}
       propertyPath: TrailModule.mode
       value: 0
       objectReference: {fileID: 0}
@@ -69,7 +73,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1540684045146012368, guid: 839bd9e11e857664d901f579776d2e49, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1540684045146012368, guid: 839bd9e11e857664d901f579776d2e49, type: 3}
       propertyPath: InitialModule.startSpeed.minScalar
@@ -237,7 +241,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: cf39ecd9a16af86499f45f5239c588b8, type: 2}
     - target: {fileID: 4122549601957071373, guid: 839bd9e11e857664d901f579776d2e49, type: 3}
       propertyPath: looping
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4122549601957071373, guid: 839bd9e11e857664d901f579776d2e49, type: 3}
       propertyPath: lengthInSec
