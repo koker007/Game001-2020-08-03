@@ -1908,9 +1908,9 @@ public class GameFieldCTRL : MonoBehaviour
             //ѕеребираем €чейки и воспроизводим анимацию
             foreach (CellCTRL potencialCell in potencialBest.cells)
             {
-                potencialCell.cellInternal.animatorObject.PlayAnimation("ApperanceCombinationObject");
+                potencialCell.cellInternal.animatorCTRL.PlayAnimation("ApperanceCombinationObject");
             }
-            potencialBest.Moving.cellInternal.animatorObject.PlayAnimation("ApperanceCombinationObject");
+            potencialBest.Moving.cellInternal.animatorCTRL.PlayAnimation("ApperanceCombinationObject");
         }
 
         void CreateRandomInternalList() {

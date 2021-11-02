@@ -10,7 +10,8 @@ using UnityEngine.UI;
 public class CellInternalObject : MonoBehaviour
 {
     [SerializeField]
-    public AnimatorCTRL animatorObject;
+    public AnimatorCTRL animatorCTRL;
+
 
     //мое поле
     public GameFieldCTRL myField;
@@ -255,7 +256,7 @@ public class CellInternalObject : MonoBehaviour
                     isMove = false;
                     myCell.CalcMyPriority();
                     //Запустить анимацию остановки
-                    animatorObject.PlayAnimation("DroppedDown");
+                    animatorCTRL.PlayAnimation("DroppedDown");
                 }
             }
 
@@ -537,15 +538,15 @@ public class CellInternalObject : MonoBehaviour
         } 
     }
     public void setColor(InternalColor internalColor) {
-        if (animatorObject != null) {
-            animatorObject.SetFloat("InternalColor", (float)color);
+        if (animatorCTRL != null) {
+            animatorCTRL.SetFloat("InternalColor", (float)color);
         }
 
         Image.color = new Color(1, 1, 1, 1);
 
         if (type == Type.color)
         {
-            animatorObject.SetFloat("StayType", 1);
+            animatorCTRL.SetFloat("StayType", 1);
             LastImage.texture = null;
             LastImage.color = new Color(0,0,0,0);
 
@@ -627,7 +628,7 @@ public class CellInternalObject : MonoBehaviour
         }
         else if (type == Type.color5)
         {
-            animatorObject.SetFloat("StayType", 2);
+            animatorCTRL.SetFloat("StayType", 2);
             Image.texture = TextureColor5;
             Image.color = new Color(1, 1, 1, 1);
             LastImage.texture = null;
@@ -1477,7 +1478,7 @@ public class CellInternalObject : MonoBehaviour
 
         void ActivateBomb(int radius) {
 
-            animatorObject.PlayAnimation("BombActivated");
+            animatorCTRL.PlayAnimation("BombActivated");
 
             BoombRadius = radius;
 
@@ -1495,8 +1496,8 @@ public class CellInternalObject : MonoBehaviour
             }
 
             //Перебираем поле 5 на 5
-            for (int x = -radius; x <= radius; x++) {
-                for (int y = -radius; y <= radius; y++) {
+            for (int x = -radius * 3; x <= radius * 3; x++) {
+                for (int y = -radius * 3; y <= radius * 3; y++) {
                     int fieldPosX = myCell.pos.x + x;
                     int fieldPosY = myCell.pos.y + y;
                     //Если вышли за пределы карты или этой ячейки нету
@@ -1510,10 +1511,23 @@ public class CellInternalObject : MonoBehaviour
 
                     //Считаем время задержки взрыва этой ячейки
                     float time = Vector2.Distance(new Vector2(), new Vector2(x, y)) * 0.2f;
-                    //
+
+                    //Запускаем анимацию смещения если есть внутренность
+                    if (myField.cellCTRLs[fieldPosX, fieldPosY].cellInternal)
+                    {
+                        myField.cellCTRLs[fieldPosX, fieldPosY].cellInternal.PlayBoomAnimationInvoke(myCell.pos, radius * 3f, time/1.5f);
+                    }
+
+
+                    //Если урон этой ячейке не нужен выходим
+                    if (Mathf.Abs(x) > radius || Mathf.Abs(y) > radius) {
+                        continue;
+                    }
+
                     myField.cellCTRLs[fieldPosX, fieldPosY].BufferCombination = combination;
                     myField.cellCTRLs[fieldPosX, fieldPosY].BufferNearDamage = false;
                     myField.cellCTRLs[fieldPosX, fieldPosY].DamageInvoke(time);
+
                 }
             }
 
@@ -1638,25 +1652,50 @@ public class CellInternalObject : MonoBehaviour
     /// <summary>
     /// Запустить анимацию смещения от взрыва
     /// </summary>
-    public void PlayBoomAnimation(Vector2 from, float distanceMax) {
+    Vector2 BoomFrom = new Vector2();
+    float BoomDistanceMax = 0;
+
+    public void PlayBoomAnimation() {
 
         //считаем растояние взрыва
-        float distance = Vector2.Distance(from, myCell.pos);
-
-        //находим вектор взрыва
-        Vector2 vectorBoom = new Vector2(myCell.pos.x, myCell.pos.y) - from;
+        float distance = Vector2.Distance(BoomFrom, myCell.pos);
 
         if (distance == 0) {
             return;
         }
 
         //Ищем силу смещения
-        float strange = distanceMax / distance;
+        float strange =  1 - (distance / BoomDistanceMax);
 
         //если сила взрыва меньше нуля выходим
         if (strange < 0) {
             return;
         }
+
+        //находим вектор взрыва
+        Vector2 vectorBoom = new Vector2(myCell.pos.x, myCell.pos.y) - BoomFrom;
+
+        //Нормализовываем вектор
+        vectorBoom.Normalize();
+
+        //Иначе отправляем запускаем анимацию смещения и отправляем вектор смещения
+        animatorCTRL.SetFloat("DroppedSizeX", vectorBoom.x * strange * -1);
+        animatorCTRL.SetFloat("DroppedSizeY", vectorBoom.y * strange * -1);
+
+        //Узнаем преобладание горизонтального смещения над вертикальным
+        //получаем
+        float horizontal = Mathf.Acos(Mathf.Abs(vectorBoom.x));
+        horizontal = 1-(horizontal / (Mathf.PI / 2));
+
+        animatorCTRL.SetFloat("DroppedIsHorizontal", horizontal);
+
+        //Запускаем анимацию
+        animatorCTRL.PlayAnimation("DroppedDown");
+    }
+    public void PlayBoomAnimationInvoke(Vector2 from, float distanceMax, float invokeTime) {
+        BoomFrom = from;
+        BoomDistanceMax = distanceMax;
+        Invoke("PlayBoomAnimation", invokeTime);
     }
 
     public void IniBomb(CellCTRL myCellNew, GameFieldCTRL gameField ,InternalColor internalColor, int myCombIDFunc) {
