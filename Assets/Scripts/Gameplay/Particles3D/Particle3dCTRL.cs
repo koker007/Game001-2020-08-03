@@ -176,6 +176,27 @@ public class Particle3dCTRL : MonoBehaviour
     }
 
     /// <summary>
+    /// Дать префаб эффекта и создать этот эффект в указанном месте на поле
+    /// </summary>
+    public static Particle3dCTRL CreateParticle(Transform field, CellCTRL cellStartExplose, GameObject prefabParticle) {
+        GameObject ParticleObj = Instantiate(prefabParticle, GameplayParticles3D.main.transform);
+        Particle3dCTRL particle3DCTRL = ParticleObj.GetComponent<Particle3dCTRL>();
+
+        RectTransform rectField = field.GetComponent<RectTransform>();
+
+        if (particle3DCTRL == null)
+        {
+            Destroy(ParticleObj);
+            return particle3DCTRL;
+        }
+
+        //Инициализируем данными частицу
+        particle3DCTRL.Inizialize(rectField, cellStartExplose.pos);
+
+        return particle3DCTRL;
+    }
+
+    /// <summary>
     /// Создать эффект взрыва бомбы и получить ссылку на нее
     /// </summary>
     public static Particle3dCTRL CreateBoomBomb(GameObject field, CellCTRL cellStartExplose, float Radius)
@@ -222,6 +243,10 @@ public class Particle3dCTRL : MonoBehaviour
     /// Создать эффект взрыва ракеты и получить ссылку на нее
     /// </summary>
     public static Particle3dCTRL CreateBoomRocket(Transform field, CellCTRL cellStartExplose) {
+
+        return CreateParticle(field, cellStartExplose, GameplayParticles3D.main.prefabBoomRocket);
+
+        /*
         GameObject ParticleObj = Instantiate(GameplayParticles3D.main.prefabBoomRocket, GameplayParticles3D.main.transform);
         Particle3dCTRL particle3DCTRL = ParticleObj.GetComponent<Particle3dCTRL>();
 
@@ -237,6 +262,7 @@ public class Particle3dCTRL : MonoBehaviour
         particle3DCTRL.Inizialize(rectField, cellStartExplose.pos);
 
         return particle3DCTRL;
+        */
     }
 
     /// <summary>
@@ -244,6 +270,10 @@ public class Particle3dCTRL : MonoBehaviour
     /// </summary>
     public static Particle3dCTRL CreateBoomSuperColor(Transform field, CellCTRL cellStartExplose)
     {
+
+        return CreateParticle(field, cellStartExplose, GameplayParticles3D.main.prefabBoomSuperColor);
+
+        /*
         GameObject ParticleObj = Instantiate(GameplayParticles3D.main.prefabBoomSuperColor, GameplayParticles3D.main.transform);
         Particle3dCTRL particle3DCTRL = ParticleObj.GetComponent<Particle3dCTRL>();
 
@@ -259,6 +289,7 @@ public class Particle3dCTRL : MonoBehaviour
         particle3DCTRL.Inizialize(rectField, cellStartExplose.pos);
 
         return particle3DCTRL;
+        */
     }
 
     public static Particle3dCTRL CreateCellDamage(Transform field, CellCTRL cellStartExplose) {
@@ -282,6 +313,44 @@ public class Particle3dCTRL : MonoBehaviour
     public static Particle3dCTRL CreateSpawnMold(Transform field, CellCTRL cellStartExplose)
     {
         GameObject ParticleObj = Instantiate(GameplayParticles3D.main.prefabSpawnMold, GameplayParticles3D.main.transform);
+        Particle3dCTRL particle3DCTRL = ParticleObj.GetComponent<Particle3dCTRL>();
+
+        RectTransform rectField = field.GetComponent<RectTransform>();
+
+        if (particle3DCTRL == null)
+        {
+            Destroy(ParticleObj);
+            return particle3DCTRL;
+        }
+
+        //Инициализируем данными частицу
+        particle3DCTRL.Inizialize(rectField, cellStartExplose.pos);
+
+        return particle3DCTRL;
+    }
+
+    public static Particle3dCTRL CreateDestroyRock(Transform field, CellCTRL cellStartExplose)
+    {
+        GameObject ParticleObj = Instantiate(GameplayParticles3D.main.prefabDestroyRock, GameplayParticles3D.main.transform);
+        Particle3dCTRL particle3DCTRL = ParticleObj.GetComponent<Particle3dCTRL>();
+
+        RectTransform rectField = field.GetComponent<RectTransform>();
+
+        if (particle3DCTRL == null)
+        {
+            Destroy(ParticleObj);
+            return particle3DCTRL;
+        }
+
+        //Инициализируем данными частицу
+        particle3DCTRL.Inizialize(rectField, cellStartExplose.pos);
+
+        return particle3DCTRL;
+    }
+
+    public static Particle3dCTRL CreateDestroyBox(Transform field, CellCTRL cellStartExplose)
+    {
+        GameObject ParticleObj = Instantiate(GameplayParticles3D.main.prefabDestroyBox, GameplayParticles3D.main.transform);
         Particle3dCTRL particle3DCTRL = ParticleObj.GetComponent<Particle3dCTRL>();
 
         RectTransform rectField = field.GetComponent<RectTransform>();

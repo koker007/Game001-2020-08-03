@@ -35,7 +35,12 @@ public class GameplayParticles3D : MonoBehaviour
     public GameObject prefabCellDamage;
     [SerializeField]
     public GameObject prefabSpawnMold;
-
+    [SerializeField]
+    public GameObject prefabDestroyRock;
+    [SerializeField]
+    public GameObject prefabDestroyBox;
+    [SerializeField]
+    public GameObject prefabDestroyIce;
 
     // Start is called before the first frame update
     void Start()
@@ -65,7 +70,7 @@ public class GameplayParticles3D : MonoBehaviour
 
         float coof = (float)Screen.height / (float)Screen.width;
 
-        camera.orthographicSize = ((scaleX/2)+0.5f) * coof;
+        camera.orthographicSize = (((scaleX/2)+0.5f) * coof)-0.5f;
         camera.transform.localPosition = new Vector3(scaleX / 2, scaleY / 2, camera.transform.localPosition.z);
 
     }

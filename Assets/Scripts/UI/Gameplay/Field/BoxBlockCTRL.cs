@@ -107,6 +107,8 @@ public class BoxBlockCTRL : MonoBehaviour
                     myCell.myField.BoxBlockCTRLs[myCell.pos.x, myCell.pos.y] = null;
                     ReCalcBoxCount();
 
+                    Particle3dCTRL.CreateDestroyBox(myCell.myField.transform, myCell);
+
                     Destroy(gameObject);
                 }
             }
