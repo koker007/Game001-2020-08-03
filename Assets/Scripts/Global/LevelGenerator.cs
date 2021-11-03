@@ -4,6 +4,7 @@ using UnityEngine;
 
 //александр
 //Андрей
+//Семен
 /// <summary>
 /// генерирует рандомные уровни
 /// </summary>
@@ -526,10 +527,28 @@ public class LevelGenerator : MonoBehaviour
 
         //основные параметры уровня
         int NeedScore = Width * Height * (perVar % ScoreСoefficient + ScoreСoefficient / 2);
-        float move = (float)30 / (Width * Height * ScoreСoefficient) * NeedScore;
+        float move = (float)60 / (Width * Height * ScoreСoefficient) * NeedScore;
 
         //выюираем количество цветов
-        int numColors = 5;
+        int numColors = (Width * Height)/20;
+        if (numColors > 5)
+            numColors = 5;
+        else if (numColors < 3)
+            numColors = 3;
+
+        //Какой процент для создания супер цвета
+        float perlinSuperColor = Mathf.PerlinNoise(777.777f / 666.666f + NumLevel, 1234) * 100;
+        //Если меньше порога пусть лучше вообще не мешают
+        if (perlinSuperColor < 60) {
+            perlinSuperColor = 0;
+        }
+
+        //какой процент для создания блокираторов
+        float perlinBlocker = Mathf.PerlinNoise(777.777f / 666.666f + NumLevel, 9876) * 100;
+        if (perlinBlocker < 60) {
+            perlinBlocker = 0;
+        }
+
         /*
         if (Width > 10)
         {
@@ -541,7 +560,7 @@ public class LevelGenerator : MonoBehaviour
         }
         */
         //создаем уровень без массивов
-        LevelsScript.Level level = LevelsScript.main.CreateLevel(NumLevel, Height, Width, NeedScore, (int)move, numColors, (int)perVar * 100, (int)perVar * 100);
+        LevelsScript.Level level = LevelsScript.main.CreateLevel(NumLevel, Height, Width, NeedScore, (int)move, numColors, (int)perlinSuperColor, (int)perlinBlocker);
 
         PassRandom();
 
@@ -603,7 +622,7 @@ public class LevelGenerator : MonoBehaviour
             
 
             level.SetMass(CellRandom(exist, 80, 1), "exist");
-            level.SetMass(ColorRandom(IColors, 5), "color");
+            level.SetMass(ColorRandom(IColors, numColors), "color");
             level.SetMass(TypeTest(Type), "type");
             level.SetMass(CellRandom(box, 20, 2), "box");
             level.SetMass(CellRandom(mold, 20, 3), "mold");
