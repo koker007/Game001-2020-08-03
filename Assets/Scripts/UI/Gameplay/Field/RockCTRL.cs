@@ -47,6 +47,10 @@ public class RockCTRL : MonoBehaviour
             return;
 
         ChangeImage();
+        //Если здоровье уменьшилось, спавним эффект
+        if (HealthOld > myCell.rock) {
+            Particle3dCTRL.CreateDestroyRock(myCell.myField.transform, myCell);
+        }
 
         DestroyRock();
         HealthOld = myCell.rock;
