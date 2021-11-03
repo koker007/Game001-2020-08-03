@@ -16,7 +16,6 @@ public class LevelGenerator : MonoBehaviour
     private float moldChance = 0.5f;
     private float panelChance = 0.2f;
     private float noizeScale = 0.04f;
-
     private void Start()
     {
         main = this;
@@ -520,7 +519,7 @@ public class LevelGenerator : MonoBehaviour
 
     public LevelsScript.Level GenerateLevelV2(int NumLevel)
     {
-        int perVar = (int)(Mathf.PerlinNoise(NumLevel * 666.666f, 0) * 10000 % 10);
+        int perVar = (int)Mathf.Round(Mathf.PerlinNoise(777.777f / 666.666f + NumLevel, 0) * 10000 % 10);
         //устанавливаем размер уровня
         int Width = perVar % 8 + 6;
         int Height = perVar * 123 % (Width / 2) + 6;
@@ -530,7 +529,8 @@ public class LevelGenerator : MonoBehaviour
         float move = (float)30 / (Width * Height * ScoreСoefficient) * NeedScore;
 
         //выюираем количество цветов
-        int numColors;
+        int numColors = 5;
+        /*
         if (Width > 10)
         {
             numColors = 5;
@@ -539,15 +539,13 @@ public class LevelGenerator : MonoBehaviour
         {
             numColors = 4;
         }
-
+        */
         //создаем уровень без массивов
         LevelsScript.Level level = LevelsScript.main.CreateLevel(NumLevel, Height, Width, NeedScore, (int)move, numColors, (int)perVar * 100, (int)perVar * 100);
 
         PassRandom();
 
         ArraysRandom();
-
-        //LevelsScript.main.Levels[NumLevel] = level;
 
         return level;
 
@@ -599,46 +597,73 @@ public class LevelGenerator : MonoBehaviour
             //PerlinAllRandom();
 
 
-            CellRandom(exist, 0, 1, 80, 1);
-            CellRandom(box, 0, 1, 10, 2);
-            CellRandom(mold, 0, 1, 10, 3);
-            CellRandom(panel, 0, 1, 10, 4);
-            CellRandom(rock, 0, 1, 10, 5);
-            CellRandom(Type, 1, 1, 50, 6);
-            CellRandom(IColors, 0, 1, 10, 6);
 
+            //CellRandom(Type, 50, 6);
+            
+            
 
-            level.SetMass(exist, "exist");
-            level.SetMass(IColors, "color");
-            level.SetMass(Type, "type");
-            level.SetMass(box, "box");
-            level.SetMass(mold, "mold");
-            level.SetMass(panel, "panel");
-            level.SetMass(rock, "rock");
+            level.SetMass(CellRandom(exist, 80, 1), "exist");
+            level.SetMass(ColorRandom(IColors, 5), "color");
+            level.SetMass(TypeTest(Type), "type");
+            level.SetMass(CellRandom(box, 20, 2), "box");
+            level.SetMass(CellRandom(mold, 20, 3), "mold");
+            level.SetMass(CellRandom(panel, 20, 4), "panel");
+            level.SetMass(CellRandom(rock, 20, 5), "rock");
             level.SetCells();
 
 
             //алгоритм генерации
-            void CellRandom(int[,] array, int minArrayValue, int maxArrayValue, float percentOfField, int ID)
+            int[,] CellRandom(int[,] array, float percentOfField, int ID)
             {
-                //SetArray(ref exist, 1);
                 for (int x = 0; x < Height; x++)
                 {
                     for (int y = 0; y < Width; y++)
                     {
-                        perVar = (int)(Mathf.PerlinNoise(x * NumLevel * 666.666f * ID, y * NumLevel * 666.666f * ID) * 10000 % 10) * 10;
+                        
+                        perVar = (int)Mathf.Ceil(Mathf.PerlinNoise((x + 777.777f) / 666.666f + NumLevel + ID, (y + 777.777f) / 666.666f + NumLevel + ID) * 10000 % 10 * 10);
+
                         if (perVar <= percentOfField)
                         {
-                            array[x, y] = maxArrayValue;
+                            array[x, y] = 1;
+                            //Debug.Log("check");
                         }
                         else
                         {
-                            array[x, y] = minArrayValue;
-
+                            array[x, y] = 0;
                         }
                     }
                 }
-                //SymmetryArrayForGorizontal(ref exist);
+                return array;
+            }
+
+            int[,] ColorRandom(int[,] array, float maxArrayValue)
+            {
+                for (int x = 0; x < Height; x++)
+                {
+                    for (int y = 0; y < Width; y++)
+                    {
+
+                        perVar = (int)Mathf.Floor(Mathf.PerlinNoise((x + 777.777f) / 666.666f + NumLevel, (y + 777.777f) / 666.666f + NumLevel) * 10000 % 10);
+
+                        int randVal = (int)Mathf.Round(maxArrayValue / 9 * perVar);
+
+                        array[x, y] = randVal;
+                        //array[x, y] = 1;
+                    }
+                }
+                return array;
+            }
+
+            int[,] TypeTest(int[,] array)
+            {
+                for (int x = 0; x < Height; x++)
+                {
+                    for (int y = 0; y < Width; y++)
+                    {
+                        array[x, y] = 1;
+                    }
+                }
+                return array;
             }
         }
     }

@@ -8,6 +8,13 @@ using UnityEngine;
 /// </summary>
 public class LevelsScript : MonoBehaviour
 {
+    private void Start()
+    {
+        main = this;
+
+
+    }
+
     public static LevelsScript main;
     /// <summary>
     /// хранит данные о ячейке
@@ -213,6 +220,8 @@ public class LevelsScript : MonoBehaviour
         /// <summary>
         ///заносит значения в массив уровня
         /// </summary>
+         
+        /*
         public void SetMass(string[,] values, string massName)
         {
             switch (massName)
@@ -222,7 +231,7 @@ public class LevelsScript : MonoBehaviour
                     break;
             }
         }
-
+        */
         /// <summary>
         ///устанавливает в массивы дефолтные значения
         ///заносит информацию о клетках из массивов
@@ -278,6 +287,7 @@ public class LevelsScript : MonoBehaviour
                     }
                 }
             }
+           
         }
 
         /// <summary>
@@ -314,12 +324,7 @@ public class LevelsScript : MonoBehaviour
     private const int mainLevelsCount = 51;
     public Level[] Levels = new Level[mainLevelsCount];
 
-    private void Start()
-    {
-        main = this;
 
-        
-    }
 
     /// <summary>
     ///создание уровня(метод существует для зрительного упрощения схемы уровня в Start)
@@ -356,9 +361,9 @@ public class LevelsScript : MonoBehaviour
     /// <summary>
     /// возвращает стартовое количество ходов текущего уровня
     /// </summary>
-    public Level ReturnLevel(int NumLevel)
+    public Level ReturnLevel()
     {
-
+        int NumLevel = Gameplay.main.levelSelect;
         Level result;
 
         if (NumLevel < mainLevelsCount)
@@ -370,26 +375,7 @@ public class LevelsScript : MonoBehaviour
             result = LevelGenerator.main.GenerateLevelV2(NumLevel);
         }
         return result;
-
-        /*
-        try
-        {
-            return Levels[NumLevel];
-        }
-        catch
-        {
-            return LevelGenerator.main.GenerateLevel(NumLevel);
-        }
-        */
     }
-    /// <summary>
-    /// возвращает стартовое количество ходов текущего уровня
-    /// </summary>
-    public Level ReturnLevel()
-    {
-        return ReturnLevel(Gameplay.main.levelSelect);
-    }
-
 }
 
 /*

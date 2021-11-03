@@ -370,7 +370,7 @@ public class WorldGenerateScene : MonoBehaviour
                     int randomAdditionalLocationID = 0;
                     for (int i = remCounter; i > 0; i--)
                     {
-                        int perVar = (int)(Mathf.PerlinNoise(numOfCreatedAdditionalLocations * 666.666f + i, 0) * 10000 % 10);
+                        int perVar = (int)Mathf.Floor(Mathf.PerlinNoise(numOfCreatedAdditionalLocations / 666.666f + i, 0) * 10000 % 10);
                         int randRem = Mathf.RoundToInt(rem[i - 1] / 9 * perVar);
                         //Debug.Log(remCounter);
 
@@ -385,8 +385,6 @@ public class WorldGenerateScene : MonoBehaviour
                         
                     }
                     //randomAdditionalLocationID--;
-                    Debug.Log(randomAdditionalLocationID);
-
                     //int randomAdditionalLocationID = Random.Range(0, AdditionalLocations.Length); //временный рандом для оценки разнообразия, рандом на основе шума закомментирован выше, требуется доработка
                     GameObject locationObj = Instantiate(AdditionalLocations[randomAdditionalLocationID].gameObject, RotatableObj.transform);
                     WorldLocation location = locationObj.GetComponent<WorldLocation>();
