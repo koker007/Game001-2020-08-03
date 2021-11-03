@@ -8,7 +8,7 @@ public class WorldAnimationCTRL : MonoBehaviour
     [SerializeField]
     float timeAnimationPlay = 0;
     [SerializeField]
-    Animation animation;
+    Animation modelAnimation;
 
     [SerializeField]
     GameObject[] models;
@@ -59,19 +59,19 @@ public class WorldAnimationCTRL : MonoBehaviour
     }
 
     void AnimationStart() {
-        foreach (AnimationState state in animation) {
+        foreach (AnimationState state in modelAnimation) {
             state.time = timeAnimationPlay;
         }
 
-        animation.Play();
+        modelAnimation.Play();
     }
 
     public void AnimationRestart() {
-        foreach (AnimationState state in animation)
+        foreach (AnimationState state in modelAnimation)
         {
             state.time = 0;
         }
 
-        animation.Play();
+        modelAnimation.Play();
     }
 }
