@@ -1249,7 +1249,7 @@ public class CellInternalObject : MonoBehaviour
                     }
                 }
 
-                Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomAll(myField.gameObject, myCell, 1);
+                Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomAll(myField.gameObject.transform, myCell);
                 //particle3DCTRL.SetSpeed(1);
                 //particle3DCTRL.SetSize(1);
 
@@ -1446,7 +1446,7 @@ public class CellInternalObject : MonoBehaviour
 
             float radius = 1;
             //Создаем частицы взрыва
-            Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomBomb(myField.gameObject, myCell, radius);
+            Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomBomb(myField.gameObject.transform, myCell);
             particle3DCTRL.SetSpeed(radius);
             particle3DCTRL.SetSize(radius);
 
@@ -1532,7 +1532,7 @@ public class CellInternalObject : MonoBehaviour
             }
 
             //Создаем частицы взрыва
-            Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomBomb(myField.gameObject, myCell, radius);
+            Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomBomb(myField.gameObject.transform, myCell);
             particle3DCTRL.SetSpeed(radius);
             particle3DCTRL.SetSize(radius);
 

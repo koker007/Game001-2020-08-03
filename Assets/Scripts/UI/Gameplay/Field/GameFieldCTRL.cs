@@ -122,10 +122,12 @@ public class GameFieldCTRL : MonoBehaviour
     public List<MoldCTRL> moldCTRLs = new List<MoldCTRL>();
 
 
+
+
     // Start is called before the first frame update
     void Start()
     {
-        //StartInicialize();
+
     }
 
     // Update is called once per frame
@@ -150,6 +152,279 @@ public class GameFieldCTRL : MonoBehaviour
         TestEndMessage();
 
         PanelSpreadCTRL.TestOffSet();
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Инициализировать игровое поле, на основе данных уровня, или рандомно, если уровня нет
+    /// </summary>
+    public void inicializeField(LevelsScript.Level level)
+    {
+
+        timeLastMove = Time.unscaledTime;
+
+        //Перемещаем поле в центр
+        RectTransform rect = gameObject.GetComponent<RectTransform>();
+        rect.pivot = new Vector2(0.5f, 0.5f);
+
+        //Если уровень есть в базе
+        if (level != null)
+        {
+            AddAllCellLevel();
+        }
+        else
+        {
+            AddAllCellsRandom();
+        }
+
+        ScaleField();
+
+        //Заполняем все поля ячейками рандомно
+        void AddAllCellsRandom()
+        {
+            //Создаем пространство игрового поля
+            cellCTRLs = new CellCTRL[10, 10];
+            cellsPriority = new CellCTRL[cellCTRLs.GetLength(0) * cellCTRLs.GetLength(1)];
+
+            for (int x = 0; x < cellCTRLs.GetLength(0); x++)
+            {
+                for (int y = 0; y < cellCTRLs.GetLength(1); y++)
+                {
+                    if (!cellCTRLs[x, y])
+                    {
+                        GameObject cellObj = Instantiate(prefabCell, parentOfCells);
+
+
+                        //ищем компонент
+                        cellCTRLs[x, y] = cellObj.GetComponent<CellCTRL>();
+                        cellsPriority[x * cellCTRLs.GetLength(1) + y] = cellCTRLs[x, y];
+                        //Если компонент не нашелся удаляем этот мусор
+                        if (!cellCTRLs[x, y])
+                        {
+                            Destroy(cellObj);
+                            break;
+                        }
+
+                        cellCTRLs[x, y].pos = new Vector2Int(x, y);
+                        cellCTRLs[x, y].myField = this;
+                        //Перемещаем объект на свою позицию
+                        RectTransform rect = cellObj.GetComponent<RectTransform>();
+                        rect.pivot = new Vector2(-x, -y);
+
+                        //Перерасчет приоритера
+                        cellCTRLs[x, y].CalcMyPriority();
+                    }
+                }
+            }
+        }
+
+        //заполняем все поля ячейками по шаблону уровня
+        void AddAllCellLevel()
+        {
+
+            CountDestroyCrystals = new int[level.NumColors];
+
+            //Создаем пространство игрового поля
+            cellCTRLs = new CellCTRL[level.Width, level.Height];
+            BoxBlockCTRLs = new BoxBlockCTRL[level.Width, level.Height];
+            rockCTRLs = new RockCTRL[level.Width, level.Height];
+            iceCTRLs = new IceCTRL[level.Width, level.Height];
+            cellsPriority = new CellCTRL[cellCTRLs.GetLength(0) * cellCTRLs.GetLength(1)];
+
+            Gameplay.main.colors = level.NumColors;
+            Gameplay.main.superColorPercent = level.SuperColorPercent;
+            Gameplay.main.typeBlockerPercent = level.TypeBlockerPercent;
+
+            for (int x = 0; x < cellCTRLs.GetLength(0); x++)
+            {
+                for (int y = 0; y < cellCTRLs.GetLength(1); y++)
+                {
+                    //Нужно ли создавать ячейку
+                    LevelsScript.CellInfo cellInfo = level.ReturneCell(new Vector2Int(x, y));
+
+                    //Если этой ячейки не существует
+                    if (cellInfo == null)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        CountInteractiveCells++;
+                    }
+
+                    //Если ячейки нет, создаем
+                    if (!cellCTRLs[x, y])
+                    {
+
+                        GameObject cellObj = Instantiate(prefabCell, parentOfCells);
+                        //ищем компонент
+                        cellCTRLs[x, y] = cellObj.GetComponent<CellCTRL>();
+                        cellsPriority[x * cellCTRLs.GetLength(1) + y] = cellCTRLs[x, y];
+                        if (!cellCTRLs[x, y])
+                        {
+                            Destroy(cellObj);
+                            break;
+                        }
+
+                        cellCTRLs[x, y].pos = new Vector2Int(x, y);
+                        cellCTRLs[x, y].myField = this;
+                        //Перемещаем объект на свою позицию
+                        RectTransform rect = cellObj.GetComponent<RectTransform>();
+                        rect.pivot = new Vector2(-x, -y);
+                        cellCTRLs[x, y].BlockingMove = level.cells[x, y].HealthBox;
+                        cellCTRLs[x, y].rock = level.cells[x, y].rock;
+                        cellCTRLs[x, y].mold = level.cells[x, y].HealthMold;
+                        if (cellCTRLs[x, y].mold <= 0 && cellCTRLs[x, y].BlockingMove > 0)
+                        {
+                            cellCTRLs[x, y].mold = 1;
+                        }
+                        cellCTRLs[x, y].ice = level.cells[x, y].HealthIce;
+
+                        if (level.cells[x, y].Panel > 0)
+                            cellCTRLs[x, y].panel = true;
+
+                        //рандомизация для тестирования
+                        //if (Random.Range(0,100) > 90) {
+                        //    cellCTRLs[x, y].BlockingMove = 5;
+                        //}
+                        //if (Random.Range(0, 100) > 90) {
+                        //    cellCTRLs[x, y].mold = 5;
+                        //}
+                        //if (Random.Range(0, 100) > 90) {
+                        //    cellCTRLs[x, y].panel = true;
+                        //}
+                    }
+
+                    //Нужно ли создать ящик
+                    if (cellCTRLs[x, y].BlockingMove > 0)
+                    {
+                        GameObject BoxBlockObj = Instantiate(prefabBoxBlock, parentOfBoxBlock);
+                        BoxBlockCTRL boxBlockCTRL = BoxBlockObj.GetComponent<BoxBlockCTRL>();
+                        cellCTRLs[x, y].BoxBlockCTRL = boxBlockCTRL;
+
+                        //Инициализируем коробку
+                        boxBlockCTRL.Inicialize(cellCTRLs[x, y]);
+                    }
+
+                    //Нужно ли создать плесень //Если есть ящик
+                    if (cellCTRLs[x, y].mold > 0 || cellCTRLs[x, y].BlockingMove > 0)
+                    {
+                        GameObject MoldObj = Instantiate(prefabMold, parentOfMold);
+                        MoldCTRL moldCTRL = MoldObj.GetComponent<MoldCTRL>();
+                        cellCTRLs[x, y].moldCTRL = moldCTRL;
+
+                        //Инициализация плесени
+                        moldCTRL.inicialize(cellCTRLs[x, y]);
+                    }
+                    else {
+                        cellCTRLs[x, y].mold = 0;
+                    }
+
+                    //Нужно ли создать лед
+                    if (cellCTRLs[x, y].ice > 0)
+                    {
+                        GameObject iceObj = Instantiate(prefabIce, parentOfIce);
+                        IceCTRL iceCTRL = iceObj.GetComponent<IceCTRL>();
+                        cellCTRLs[x, y].iceCTRL = iceCTRL;
+
+                        //Инициализация плесени
+                        iceCTRL.inicialize(cellCTRLs[x, y]);
+                    }
+
+                    //Нужно ли создать панель
+                    if (cellCTRLs[x, y].panel)
+                    {
+                        GameObject panelObj = Instantiate(prefabPanel, parentOfPanels);
+                        cellCTRLs[x, y].panelCTRL = panelObj.GetComponent<PanelSpreadCTRL>();
+
+                        //Инициализация плесени
+                        cellCTRLs[x, y].panelCTRL.inicialize(cellCTRLs[x, y]);
+                    }
+                    //Нужно ли создать камень и нет ящика
+                    if (cellCTRLs[x, y].rock > 0 && cellCTRLs[x, y].BlockingMove <= 0)
+                    {
+                        GameObject rockObj = Instantiate(prefabRock, parentOfRock);
+                        cellCTRLs[x, y].rockCTRL = rockObj.GetComponent<RockCTRL>();
+
+                        //Инициализация камня
+                        cellCTRLs[x, y].rockCTRL.inicialize(cellCTRLs[x, y]);
+                    }
+                    else {
+                        cellCTRLs[x, y].rock = 0;
+                    }
+
+                    //Создаем подвижные объекты
+                    if (level.cells[x, y].typeCell != CellInternalObject.Type.none &&
+                        cellCTRLs[x, y].BlockingMove == 0 //Если нету ящика
+                        )
+                    {
+                        if (level.cells[x, y].typeCell == CellInternalObject.Type.color)
+                        {
+                            //Создаем объект и перемещаем
+                            GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
+                            CellInternalObject internalCtrl = internalObj.GetComponent<CellInternalObject>();
+                            internalCtrl.myField = this;
+                            internalCtrl.StartMove(cellCTRLs[x, y]);
+                            internalCtrl.EndMove();
+
+                            //Меняем тип объекта
+                            internalCtrl.setColorAndType(cellInfo.colorCell, level.cells[x, y].typeCell);
+
+                            internalCtrl.color = cellInfo.colorCell;
+
+                        }
+                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.airplane)
+                        {
+                            CreateFly(cellCTRLs[x, y], cellInfo.colorCell, 0);
+                        }
+                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.bomb)
+                        {
+                            CreateBomb(cellCTRLs[x, y], cellInfo.colorCell, 0);
+                        }
+                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.rocketHorizontal)
+                        {
+                            CreateRocketHorizontal(cellCTRLs[x, y], cellInfo.colorCell, 0);
+                        }
+                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.rocketVertical)
+                        {
+                            CreateRocketVertical(cellCTRLs[x, y], cellInfo.colorCell, 0);
+                        }
+                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.color5)
+                        {
+                            CreateSuperColor(cellCTRLs[x, y], cellInfo.colorCell, 0);
+                        }
+                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.blocker)
+                        {
+                            CreateBlocker(cellCTRLs[x, y], cellInfo.colorCell, 0);
+                        }
+
+                    }
+
+                    //Перерасчет приоритера
+                    cellCTRLs[x, y].CalcMyPriority();
+
+                }
+            }
+        }
+
+        //Подогнать размер поля в зависимости от количества ячеек
+        void ScaleField()
+        {
+            //100% размер это поле с 10-ю ячейками
+
+            if (!myRect) myRect = GetComponent<RectTransform>();
+
+            //вычисляем какого размера должно быть поле
+            float cellsWeight = (float)cellCTRLs.GetLength(0);
+
+            float sizeNeed = 10 / cellsWeight;
+
+            //Устанавливаем размер поля
+            myRect.localScale = new Vector3(sizeNeed, sizeNeed, 1);
+            myRect.sizeDelta = new Vector2(100 * cellCTRLs.GetLength(0), 100 * cellCTRLs.GetLength(1));
+        }
+
+
     }
 
     /// <summary>
@@ -242,304 +517,6 @@ public class GameFieldCTRL : MonoBehaviour
     /// </summary>
     public IceCTRL[,] iceCTRLs;
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// <summary>
-    /// Инициализировать игровое поле, на основе данных уровня, или рандомно, если уровня нет
-    /// </summary>
-    public void inicializeField(LevelsScript.Level level) {
-
-        timeLastMove = Time.unscaledTime;
-
-        //Перемещаем поле в центр
-        RectTransform rect = gameObject.GetComponent<RectTransform>();
-        rect.pivot = new Vector2(0.5f,0.5f);
-
-        //Если уровень есть в базе
-        if (level != null)
-        {
-            AddAllCellLevel();
-        }
-        else {
-            AddAllCellsRandom();
-        }
-
-        ScaleField();
-
-        //Заполняем все поля ячейками рандомно
-        void AddAllCellsRandom() {
-            //Создаем пространство игрового поля
-            cellCTRLs = new CellCTRL[10, 10];
-            cellsPriority = new CellCTRL[cellCTRLs.GetLength(0) * cellCTRLs.GetLength(1)];
-
-            for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
-                for (int y = 0; y < cellCTRLs.GetLength(1); y++) {
-                    if (!cellCTRLs[x,y]) {
-                        GameObject cellObj = Instantiate(prefabCell, parentOfCells);
-                        
-
-                        //ищем компонент
-                        cellCTRLs[x, y] = cellObj.GetComponent<CellCTRL>();
-                        cellsPriority[x * cellCTRLs.GetLength(1) + y] = cellCTRLs[x, y];
-                        //Если компонент не нашелся удаляем этот мусор
-                        if (!cellCTRLs[x,y]) {
-                            Destroy(cellObj);
-                            break;
-                        }
-
-                        cellCTRLs[x, y].pos = new Vector2Int(x, y);
-                        cellCTRLs[x, y].myField = this;
-                        //Перемещаем объект на свою позицию
-                        RectTransform rect = cellObj.GetComponent<RectTransform>();
-                        rect.pivot = new Vector2(-x,-y);
-
-                        //Перерасчет приоритера
-                        cellCTRLs[x, y].CalcMyPriority();
-                    }
-                }
-            }
-        }
-
-        //заполняем все поля ячейками по шаблону уровня
-        void AddAllCellLevel() {
-
-            CountDestroyCrystals = new int[level.NumColors];
-
-            //Создаем пространство игрового поля
-            cellCTRLs = new CellCTRL[level.Width, level.Height];
-            BoxBlockCTRLs = new BoxBlockCTRL[level.Width, level.Height];
-            rockCTRLs = new RockCTRL[level.Width, level.Height];
-            iceCTRLs = new IceCTRL[level.Width, level.Height];
-            cellsPriority = new CellCTRL[cellCTRLs.GetLength(0) * cellCTRLs.GetLength(1)];
-
-            Gameplay.main.colors = level.NumColors;
-            Gameplay.main.superColorPercent = level.SuperColorPercent;
-            Gameplay.main.typeBlockerPercent = level.TypeBlockerPercent;
-
-            for (int x = 0; x < cellCTRLs.GetLength(0); x++)
-            {
-                for (int y = 0; y < cellCTRLs.GetLength(1); y++)
-                {
-                    //Нужно ли создавать ячейку
-                    LevelsScript.CellInfo cellInfo = level.ReturneCell(new Vector2Int(x,y));
-                    
-                    //Если этой ячейки не существует
-                    if (cellInfo == null)
-                    {
-                        continue;
-                    }
-                    else {
-                        CountInteractiveCells++;
-                    }
-
-                    //Если ячейки нет, создаем
-                    if (!cellCTRLs[x, y]) {
-
-                        GameObject cellObj = Instantiate(prefabCell, parentOfCells);
-                        //ищем компонент
-                        cellCTRLs[x, y] = cellObj.GetComponent<CellCTRL>();
-                        cellsPriority[x * cellCTRLs.GetLength(1) + y] = cellCTRLs[x, y];
-                        if (!cellCTRLs[x, y])
-                        {
-                            Destroy(cellObj);
-                            break;
-                        }
-
-                        cellCTRLs[x, y].pos = new Vector2Int(x, y);
-                        cellCTRLs[x, y].myField = this;
-                        //Перемещаем объект на свою позицию
-                        RectTransform rect = cellObj.GetComponent<RectTransform>();
-                        rect.pivot = new Vector2(-x, -y);
-                        cellCTRLs[x, y].BlockingMove = level.cells[x, y].HealthBox;
-                        cellCTRLs[x, y].rock = level.cells[x, y].rock;
-                        cellCTRLs[x, y].mold = level.cells[x, y].HealthMold;
-                        if (cellCTRLs[x,y].mold <= 0 && cellCTRLs[x,y].BlockingMove > 0) {
-                            cellCTRLs[x, y].mold = 1;
-                        }
-                        cellCTRLs[x, y].ice = level.cells[x, y].HealthIce;
-                        
-                        if(level.cells[x, y].Panel > 0)
-                            cellCTRLs[x, y].panel = true;
-
-                        //рандомизация для тестирования
-                        //if (Random.Range(0,100) > 90) {
-                        //    cellCTRLs[x, y].BlockingMove = 5;
-                        //}
-                        //if (Random.Range(0, 100) > 90) {
-                        //    cellCTRLs[x, y].mold = 5;
-                        //}
-                        //if (Random.Range(0, 100) > 90) {
-                        //    cellCTRLs[x, y].panel = true;
-                        //}
-                    }
-
-                    //Нужно ли создать ящик
-                    if (cellCTRLs[x, y].BlockingMove > 0) {
-                        GameObject BoxBlockObj = Instantiate(prefabBoxBlock, parentOfBoxBlock);
-                        BoxBlockCTRL boxBlockCTRL = BoxBlockObj.GetComponent<BoxBlockCTRL>();
-                        cellCTRLs[x, y].BoxBlockCTRL = boxBlockCTRL;
-
-                        //Инициализируем коробку
-                        boxBlockCTRL.Inicialize(cellCTRLs[x, y]);
-                    }
-
-                    //Нужно ли создать плесень //Если есть ящик
-                    if (cellCTRLs[x, y].mold > 0 || cellCTRLs[x,y].BlockingMove > 0) {
-                        GameObject MoldObj = Instantiate(prefabMold, parentOfMold);
-                        MoldCTRL moldCTRL = MoldObj.GetComponent<MoldCTRL>();
-                        cellCTRLs[x, y].moldCTRL = moldCTRL;
-
-                        //Инициализация плесени
-                        moldCTRL.inicialize(cellCTRLs[x, y]);
-                    }
-
-                    //Нужно ли создать лед
-                    if (cellCTRLs[x, y].ice > 0) {
-                        GameObject iceObj = Instantiate(prefabIce, parentOfIce);
-                        IceCTRL iceCTRL = iceObj.GetComponent<IceCTRL>();
-                        cellCTRLs[x, y].iceCTRL = iceCTRL;
-
-                        //Инициализация плесени
-                        iceCTRL.inicialize(cellCTRLs[x, y]);
-                    }
-
-                    //Нужно ли создать панель
-                    if (cellCTRLs[x,y].panel) {
-                        GameObject panelObj = Instantiate(prefabPanel, parentOfPanels);
-                        cellCTRLs[x, y].panelCTRL = panelObj.GetComponent<PanelSpreadCTRL>();
-
-                        //Инициализация плесени
-                        cellCTRLs[x, y].panelCTRL.inicialize(cellCTRLs[x, y]);
-                    }
-                    //Нужно ли создать камень
-                    if (cellCTRLs[x, y].rock > 0) {
-                        GameObject rockObj = Instantiate(prefabRock, parentOfRock);
-                        cellCTRLs[x, y].rockCTRL = rockObj.GetComponent<RockCTRL>();
-
-                        //Инициализация камня
-                        cellCTRLs[x, y].rockCTRL.inicialize(cellCTRLs[x, y]);
-                    }
-
-                    //Создаем подвижные объекты
-                    if (level.cells[x, y].typeCell != CellInternalObject.Type.none &&
-                        cellCTRLs[x, y].BlockingMove == 0 //Если нету ящика
-                        )
-                    {
-                        if (level.cells[x, y].typeCell == CellInternalObject.Type.color) {
-                            //Создаем объект и перемещаем
-                            GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
-                            CellInternalObject internalCtrl = internalObj.GetComponent<CellInternalObject>();
-                            internalCtrl.myField = this;
-                            internalCtrl.StartMove(cellCTRLs[x, y]);
-                            internalCtrl.EndMove();
-
-                            //Меняем тип объекта
-                            internalCtrl.setColorAndType(cellInfo.colorCell, level.cells[x, y].typeCell);
-
-                            internalCtrl.color = cellInfo.colorCell;
-
-                        }
-                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.airplane) {
-                            CreateFly(cellCTRLs[x, y], cellInfo.colorCell, 0);
-                        }
-                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.bomb) {
-                            CreateBomb(cellCTRLs[x, y], cellInfo.colorCell, 0);
-                        }
-                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.rocketHorizontal) {
-                            CreateRocketHorizontal(cellCTRLs[x, y], cellInfo.colorCell, 0);
-                        }
-                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.rocketVertical) {
-                            CreateRocketVertical(cellCTRLs[x, y], cellInfo.colorCell, 0);
-                        }
-                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.color5) {
-                            CreateSuperColor(cellCTRLs[x, y], cellInfo.colorCell, 0);
-                        }
-                        else if (level.cells[x, y].typeCell == CellInternalObject.Type.blocker) {
-                            CreateBlocker(cellCTRLs[x,y], cellInfo.colorCell, 0);
-                        }
-                        
-                    }
-
-                    //Перерасчет приоритера
-                    cellCTRLs[x, y].CalcMyPriority();
-
-                }
-            }
-        }
-
-        //Подогнать размер поля в зависимости от количества ячеек
-        void ScaleField() {
-            //100% размер это поле с 10-ю ячейками
-
-            if (!myRect) myRect = GetComponent<RectTransform>();
-
-            //вычисляем какого размера должно быть поле
-            float cellsWeight = (float)cellCTRLs.GetLength(0);
-
-            float sizeNeed = 10 / cellsWeight;
-
-            //Устанавливаем размер поля
-            myRect.localScale = new Vector3(sizeNeed, sizeNeed, 1);
-            myRect.sizeDelta = new Vector2(100 * cellCTRLs.GetLength(0), 100 * cellCTRLs.GetLength(1));
-        }
-
-
-    }
-
-
-
-    //Стартовая инициализация игрового поля
-    /*
-    void StartInicialize() {
-        //Добавляем в поле все ячейки
-
-        timeLastMove = Time.unscaledTime;
-
-        //RandomInicialize();
-
-        void RandomInicialize() {
-
-            bool isComplite = false;
-            int colors = Gameplay.main.colors;
-
-            while (!isComplite) {
-                //Ставим внизу вверх
-                for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
-                    //слева в право
-                    for (int y = 0; y < cellCTRLs.GetLength(1); y++) {
-                        //Если ячейки нет - выходим
-                        if (!cellCTRLs[x,y]) {
-                            break;
-                        }
-
-                        //если ячейка пустая добавляем внутренность и без коробки
-                        if (!cellCTRLs[x,y].cellInternal && cellCTRLs[x,y].BlockingMove <= 0) {
-                            //создаем внутренность
-                            GameObject InternalObj = Instantiate(prefabInternal, parentOfInternals);
-                            CellInternalObject Internal = InternalObj.GetComponent<CellInternalObject>();
-
-                            Internal.myField = this;
-                            Internal.myCell = cellCTRLs[x, y];
-                            cellCTRLs[x, y].cellInternal = Internal;
-
-                            //Устанавливаем позицию
-                            Internal.IniRect();
-                            Internal.PosToCell();
-
-                            //Установить цвет
-                            Internal.randSpawnType(true);
-                        }
-
-                        
-                    }
-                }
-
-                isComplite = true;
-            }
-        }
-
-
-    }
-    */
 
     //Проверка ячеек на падение и совместимость
     void TestSpawn() {
@@ -1469,7 +1446,7 @@ public class GameFieldCTRL : MonoBehaviour
                         }
 
                         //Создаем частицы взрыва
-                        Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomBomb(gameObject, cellCross, radius);
+                        Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomBomb(gameObject.transform, cellCross);
                         particle3DCTRL.SetSpeed(radius);
                         particle3DCTRL.SetSize(radius);
                         Color color1 = cellCross.cellInternal.GetColor(color);

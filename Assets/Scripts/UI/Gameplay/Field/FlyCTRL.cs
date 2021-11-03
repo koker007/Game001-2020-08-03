@@ -304,7 +304,7 @@ public class FlyCTRL : MonoBehaviour
                 }
 
                 //Создаем частицы взрыва
-                Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomBomb(myField.gameObject, CellTarget, radius);
+                Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomBomb(myField.gameObject.transform, CellTarget);
                 particle3DCTRL.SetSpeed(radius);
                 particle3DCTRL.SetSize(radius);
                 Vector3 colorNormalize = new Vector3(image.color.r, image.color.g , image.color.b);
