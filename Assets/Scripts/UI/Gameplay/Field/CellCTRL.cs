@@ -452,17 +452,17 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         //Если есть камень урон камню
         if (rock > 0) {
             rock--;
-            CanBenefit = true;
+            //CanBenefit = true;
         }
         //иначе если есть ящик урон ящику
         else if (BlockingMove > 0) {
             BlockingMove--;
-            CanBenefit = true;
+            //CanBenefit = true;
         }
         //иначе если есть лед урон льду и объектам внутри и рядом
         else if (ice > 0) {
             ice--;
-            CanBenefit = true;
+            //CanBenefit = true;
             canNear = true;
             CanInternal = true;
         }
@@ -477,7 +477,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         else if (!panel && combination != null && combination.foundPanel) {
             CreatePanel();
 
-            CanBenefit = true;
+            //CanBenefit = true;
             canNear = true;
             CanInternal = true;
         }
