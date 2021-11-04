@@ -41,6 +41,10 @@ public class GameplayParticles3D : MonoBehaviour
     public GameObject prefabDestroyBox;
     [SerializeField]
     public GameObject prefabDestroyIce;
+    [SerializeField]
+    public GameObject prefabDestroyBlocker;
+    [SerializeField]
+    public GameObject prefabCreateMaz;
 
     // Start is called before the first frame update
     void Start()

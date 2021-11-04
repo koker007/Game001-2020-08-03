@@ -492,6 +492,10 @@ public class CellInternalObject : MonoBehaviour
                 rectDie.pivot = rectMy.pivot;
                 rectScore.pivot = rectMy.pivot;
             }
+            
+            if (type == Type.blocker) {
+                Particle3dCTRL.CreateDestroyBlocker(myField.transform, myCell);
+            }
         }
 
         void AddCountColor() {
@@ -853,6 +857,19 @@ public class CellInternalObject : MonoBehaviour
         BufferActivateType = ActivateType;
         BufferPartner = partner;
         BufferCombination = combination;
+
+        //Если комбинации нет, то создаем
+        if (BufferCombination == null)
+        {
+            BufferCombination = new GameFieldCTRL.Combination();
+            //добавляем в ячейку комбинацию
+            BufferCombination.cells.Add(myCell);
+            //добавляем партнера если он есть
+            if (partner != null)
+                BufferCombination.cells.Add(partner.myCell);
+
+            BufferCombination.TestCells();
+        }
 
         if (!needInstantDamage)
         {
@@ -1495,6 +1512,8 @@ public class CellInternalObject : MonoBehaviour
 
             }
 
+
+
             //Перебираем поле 5 на 5
             for (int x = -radius * 3; x <= radius * 3; x++) {
                 for (int y = -radius * 3; y <= radius * 3; y++) {
@@ -1524,7 +1543,7 @@ public class CellInternalObject : MonoBehaviour
                         continue;
                     }
 
-                    myField.cellCTRLs[fieldPosX, fieldPosY].BufferCombination = combination;
+                    myField.cellCTRLs[fieldPosX, fieldPosY].BufferCombination = BufferCombination;
                     myField.cellCTRLs[fieldPosX, fieldPosY].BufferNearDamage = false;
                     myField.cellCTRLs[fieldPosX, fieldPosY].DamageInvoke(time);
 

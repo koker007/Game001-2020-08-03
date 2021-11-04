@@ -366,7 +366,7 @@ public class LevelsScript : MonoBehaviour
         int NumLevel = Gameplay.main.levelSelect;
         Level result;
 
-        if (NumLevel < mainLevelsCount)
+        if (NumLevel < Levels.Length && Levels[NumLevel] != null)
         {
             result = Levels[NumLevel];
         }

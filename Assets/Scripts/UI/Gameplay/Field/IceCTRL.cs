@@ -61,6 +61,12 @@ public class IceCTRL : MonoBehaviour
         if (HealthOld == myCell.ice)
             return;
 
+
+        //Если получили урон воспроизводим частицы разломов
+        if (HealthOld > myCell.ice) {
+            Particle3dCTRL.CreateDestroyIce(myCell.myField.transform, myCell);
+        }
+
         HealthOld = myCell.ice;
         ChangeImage();
 

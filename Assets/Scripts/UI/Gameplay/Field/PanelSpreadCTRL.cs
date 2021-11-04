@@ -26,6 +26,7 @@ public class PanelSpreadCTRL : MonoBehaviour
 
         myRect = GetComponent<RectTransform>();
         myRect.pivot = new Vector2(-myCell.pos.x, -myCell.pos.y);
+
     }
 
     // Start is called before the first frame update
@@ -56,5 +57,9 @@ public class PanelSpreadCTRL : MonoBehaviour
 
     void UpdateOffSet() {
         image.uvRect = new Rect(0, offsetY, image.uvRect.width, image.uvRect.height);
+    }
+
+    public void EffectCreate() {
+        Particle3dCTRL.CreateCreateMaz(myCell.myField.transform, myCell);
     }
 }

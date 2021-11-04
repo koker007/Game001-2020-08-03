@@ -250,4 +250,22 @@ public class Particle3dCTRL : MonoBehaviour
 
         return CreateParticle(field, cellStartExplose, GameplayParticles3D.main.prefabDestroyBox);
     }
+
+    public static Particle3dCTRL CreateDestroyIce(Transform field, CellCTRL cellStartExplose)
+    {
+
+        return CreateParticle(field, cellStartExplose, GameplayParticles3D.main.prefabDestroyIce);
+    }
+
+    public static Particle3dCTRL CreateDestroyBlocker(Transform field, CellCTRL cellStartExplose)
+    {
+
+        return CreateParticle(field, cellStartExplose, GameplayParticles3D.main.prefabDestroyBlocker);
+    }
+
+    public static Particle3dCTRL CreateCreateMaz(Transform field, CellCTRL cellStartExplose)
+    {
+
+        return CreateParticle(field, cellStartExplose, GameplayParticles3D.main.prefabCreateMaz);
+    }
 }

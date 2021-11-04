@@ -2810,6 +2810,10 @@ public class GameFieldCTRL : MonoBehaviour
 
             //проверяем все внутренние на близость к центру
             foreach (CellInternalObject cellInternal in ListWaitingInternals) {
+                //если внутренности нет, то переходим к следующей
+                if (cellInternal == null) {
+                    continue;
+                }
                 if (Vector2.Distance(pivotNeed, cellInternal.rectMy.pivot) > 0.1f) {
                     return false;
                 }

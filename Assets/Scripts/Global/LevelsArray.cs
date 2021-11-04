@@ -2205,7 +2205,7 @@ public class LevelsArray : LevelsScript
         ////////////////////////////////////////////////////////////////////////////
         //уровень 36
         lvl = 36;
-        Levels[lvl] = CreateLevel(lvl, 10, 10, 10000, 20, 3, 100, 0);
+        Levels[lvl] = CreateLevel(lvl, 10, 10, 10000, 20, 3, 100, 100);
 
         Levels[lvl].PassedWithCrystal = true;
         Levels[lvl].NeedColor = (CellInternalObject.InternalColor)5;
@@ -2252,7 +2252,7 @@ public class LevelsArray : LevelsScript
                 { 0,0,1,1,0,0,0,1,1,0 },
                 { 0,1,1,0,0,1,0,0,1,0 },
                 { 0,1,0,0,0,1,0,0,0,0 },
-                { 0,7,7,7,7,1,7,7,7,0 },
+                { 0,0,0,0,0,1,0,0,0,0 },
                 { 3,3,3,3,0,3,3,3,3,4 },
                 { 0,0,0,0,0,1,0,0,0,0 },
                 { 0,0,0,0,0,0,0,0,0,0 }

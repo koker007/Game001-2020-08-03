@@ -522,7 +522,7 @@ public class LevelGenerator : MonoBehaviour
     {
         int perVar = (int)Mathf.Round(Mathf.PerlinNoise(777.777f / 666.666f + NumLevel, 0) * 10000 % 10);
         //устанавливаем размер уровня
-        int Width = perVar % 8 + 6;
+        int Width = perVar % 4 + 5;
         int Height = perVar * 123 % (Width / 2) + 6;
 
         //основные параметры уровня
