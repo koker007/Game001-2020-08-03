@@ -11,7 +11,6 @@ using UnityEngine;
 public class WorldGenerateScene : MonoBehaviour
 {
     static public WorldGenerateScene main;
-
     public GameObject PrefLevelButton;
     public GameObject PrefGroundLoc10Grad;
     [SerializeField] private WorldLocation[] MainLocations = new WorldLocation[0];
@@ -342,61 +341,89 @@ public class WorldGenerateScene : MonoBehaviour
                 //Если нет, создаем
                 if (!found && additionalLocationRotation <= levelAngleSum && Mathf.Abs(WorldGenerateScene.main.rotationNow - additionalLocationRotation) <= 135)
                 {
-                    
+
                     //Рассчитываем псевдослучайный ID локации на основе количества пройденных доп локаций
 
 
-                    int integer = AdditionalLocations.Length;                  
+                    int integer = AdditionalLocations.Length;
                     int remCounter = 1;
 
-                    while (integer > 9)
-                    {                        
+                    while (integer >= 9)
+                    {
                         remCounter++;
-                        integer = Mathf.FloorToInt(integer / 9);
+                        integer = Mathf.FloorToInt(integer / 10);
                     }
+
                     float[] rem = new float[remCounter];
 
                     integer = AdditionalLocations.Length;
+
                     for (int i = remCounter; i > 0; i--)
                     {
-                        rem[rem.Length - i] = integer % 9;
-                        if (i == 1)
+                        rem[rem.Length - i] = integer % 10;
+
+                        if (i > 1)
+                        {
+                            integer = Mathf.FloorToInt(integer / 10);
+                        }
+                        else
                         {
                             rem[rem.Length - i]--;
-                        }
-                        integer = Mathf.FloorToInt(integer / 9);
+                           
+                        }                       
                     }
-                    //Debug.Log(remCounter);
+
+                    
+
+
                     int randomAdditionalLocationID = 0;
+
                     for (int i = remCounter; i > 0; i--)
                     {
-                        int perVar = (int)Mathf.Floor(Mathf.PerlinNoise(numOfCreatedAdditionalLocations / 666.666f + i, 0) * 10000 % 10);
-                        int randRem = Mathf.RoundToInt(rem[i - 1] / 9 * perVar);
-                        //Debug.Log(remCounter);
 
-                        if (remCounter > 1)
+                        int perVar = (int)Mathf.Floor(Mathf.PerlinNoise(Mathf.Sin(numOfCreatedAdditionalLocations) * 777.777f * i, Mathf.Sin(numOfCreatedAdditionalLocations) * 777.777f * i) * 10000 % 9);
+
+                        //Debug.Log(Mathf.Sin(numOfCreatedAdditionalLocations * 10));
+                        //Debug.Log(rem[i - 1]);
+                        int randRem = Mathf.RoundToInt(rem[i - 1] / 8 * perVar);
+                        //Debug.Log(rem[i - 1] / 8 * perVar);
+
+                        if (i > 1)
                         {
+                            
+                            
                             randomAdditionalLocationID += integer * perVar + randRem;
                         }
-                        else 
+                        else
                         {
-                            randomAdditionalLocationID = randRem;
+
+                            randomAdditionalLocationID += randRem;
+                            Debug.Log(randomAdditionalLocationID);
                         }
-                        
+
+
                     }
-                    //randomAdditionalLocationID--;
-                    //int randomAdditionalLocationID = Random.Range(0, AdditionalLocations.Length); //временный рандом для оценки разнообразия, рандом на основе шума закомментирован выше, требуется доработка
+
+
+
+                    //Debug.Log(randomAdditionalLocationID);
                     GameObject locationObj = Instantiate(AdditionalLocations[randomAdditionalLocationID].gameObject, RotatableObj.transform);
                     WorldLocation location = locationObj.GetComponent<WorldLocation>();
                     location.Inicialize(additionalLocationRotation, lvlNow);
-
+                    /*
+                    int perVar2 = (int)Mathf.Floor(Mathf.PerlinNoise(numOfCreatedAdditionalLocations * 666.666f, 0) * 10000 % 10);
+                    if (perVar2 > 4)
+                    {
+                        locationObj.transform.rotation *= Quaternion.Euler(-30, 180, 0);
+                    }
+                    */
                     //Заполняем локацию уровнями
 
                     //Смотрим, какой номер уровня станет первым на локации (зависимость от угла)
                     lvlLastCreate = (int)(mainLevels + (numOfCreatedAdditionalLocations - locationsToSpawn - 1) * additionalLocationSize / 2.5f);
                     //высчитываем какое количество уровней надо создать на локации
                     int needCreatelvl = (int)(location.lenghtAngle / 2.5f);
-                    
+
                     foreach (LevelPosition levelPosition in location.LevelPositions)
                     {
                         //Проверяем что текущий уровень еще не создан
@@ -412,7 +439,7 @@ public class WorldGenerateScene : MonoBehaviour
 
                         if (!foundButton)
                         {
-                            
+
                             if (levelPosition != null)
                             {
                                 CreateNewButtonPos(levelPosition);
@@ -443,7 +470,7 @@ public class WorldGenerateScene : MonoBehaviour
 
                         needCreatelvl--;
                         lvlLastCreate++;
-                    }                    
+                    }
 
                     bufferLocations.Add(location);
 
