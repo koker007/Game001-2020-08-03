@@ -1,5 +1,44 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &3713208986001636849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8176193155358567986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Shop
+--- !u!114 &6131035843528346653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8176193157479240021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: BombBuy
+--- !u!114 &1987639233484422229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4260086993997152183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Buy
 --- !u!1001 &8310290953429118526
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -173,3 +212,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2dc043e306d217e45b231f1fb7ff9964, type: 3}
+--- !u!1 &8176193155358567986 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 154171100826714124, guid: 2dc043e306d217e45b231f1fb7ff9964, type: 3}
+  m_PrefabInstance: {fileID: 8310290953429118526}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8176193157479240021 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 154171101806559083, guid: 2dc043e306d217e45b231f1fb7ff9964, type: 3}
+  m_PrefabInstance: {fileID: 8310290953429118526}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4260086993997152183 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5209199237815783817, guid: 2dc043e306d217e45b231f1fb7ff9964, type: 3}
+  m_PrefabInstance: {fileID: 8310290953429118526}
+  m_PrefabAsset: {fileID: 0}

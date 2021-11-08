@@ -1360,6 +1360,24 @@ MonoBehaviour:
   prefabDestroyIce: {fileID: 1826681873095554630, guid: 72baa9dc45b23ea44b28716a7626db99, type: 3}
   prefabDestroyBlocker: {fileID: 2809473121838095277, guid: 745e9c554b45a234db15d6849b7786fa, type: 3}
   prefabCreateMaz: {fileID: 105150161536517929, guid: a8a44d70238a7d04cae335528dd6aae5, type: 3}
+--- !u!1 &164642875 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5361943101469650051, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+  m_PrefabInstance: {fileID: 2087879019}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &164642879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164642875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Settings
 --- !u!1 &170145354
 GameObject:
   m_ObjectHideFlags: 0
@@ -3601,7 +3619,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &386845655
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5392,6 +5410,24 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6106494515621661619, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
   m_PrefabInstance: {fileID: 516862977}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &535466973 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5361943101469650051, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+  m_PrefabInstance: {fileID: 760893277}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &535466977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535466973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Exit
 --- !u!1 &537618618
 GameObject:
   m_ObjectHideFlags: 0
@@ -10697,6 +10733,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ButtonOptions
       objectReference: {fileID: 0}
+    - target: {fileID: 1052787884345213481, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2373700408733989988, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -10704,6 +10744,10 @@ PrefabInstance:
     - target: {fileID: 4915813174233924978, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5361943101469650051, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5859629081775563385, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
       propertyPath: m_RootOrder
@@ -11994,7 +12038,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1071777518
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15234,7 +15278,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -15783,7 +15827,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1537194980
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17958,6 +18002,7 @@ GameObject:
   - component: {fileID: 1775551240}
   - component: {fileID: 1775551242}
   - component: {fileID: 1775551241}
+  - component: {fileID: 1775551243}
   m_Layer: 5
   m_Name: TextVersion
   m_TagString: Untagged
@@ -18026,6 +18071,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1775551239}
   m_CullTransparentMesh: 1
+--- !u!114 &1775551243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775551239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Ver
 --- !u!1 &1821187292
 GameObject:
   m_ObjectHideFlags: 0
