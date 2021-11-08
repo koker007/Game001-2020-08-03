@@ -5,6 +5,9 @@ using UnityEngine;
 public class RopeChain : MonoBehaviour
 {
     [SerializeField]
+    LVLChain myChain;
+
+    [SerializeField]
     Transform positionBack;
     [SerializeField]
     Transform positionMe;
@@ -76,20 +79,22 @@ public class RopeChain : MonoBehaviour
     {
         float scale = 0.01f;
 
+        Vector3 up = myChain.transform.position - WorldGenerateScene.main.transform.position;
+
         //Сперва поворачиваем первую кость
         if (myChain.back != null)
         {
             //Ставим объект на начало
-            positionBack.transform.position = myChain.back.gameObject.transform.position;
+            gameObject.transform.position = myChain.back.gameObject.transform.position;
 
             //Вектор разности растояния
             Vector3 vector = myChain.transform.position - myChain.back.transform.position;
-            Vector3 up = myChain.back.transform.position - WorldGenerateScene.main.transform.position;
+
 
             //разворачиваем обьект чтобы смотреть на следуюшую точку
-            Quaternion rot = Quaternion.LookRotation(vector,up);
-            rot.eulerAngles = new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, rot.eulerAngles.z);
-            positionBack.transform.rotation = rot;
+            Quaternion rot = Quaternion.LookRotation(vector, up);
+            rot.eulerAngles = new Vector3(rot.eulerAngles.x+90, rot.eulerAngles.y, rot.eulerAngles.z);
+            gameObject.transform.rotation = rot;
 
             positionMe.transform.localPosition = new Vector3(0, vector.magnitude * scale, 0);
         }
@@ -97,16 +102,16 @@ public class RopeChain : MonoBehaviour
         else
         {
             Vector3 backPos = myChain.transform.position - myChain.transform.forward;
-            positionBack.transform.position = backPos;
+            gameObject.transform.position = backPos;
 
             //Вектор разности растояния
             Vector3 vector = myChain.transform.position - backPos;
-            Vector3 up = backPos - WorldGenerateScene.main.transform.position;
+            //Vector3 up = backPos - WorldGenerateScene.main.transform.position;
 
             //разворачиваем обьект чтобы смотреть на следуюшую точку
             Quaternion rot = Quaternion.LookRotation(vector, up);
-            rot.eulerAngles = new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, rot.eulerAngles.z);
-            positionBack.transform.rotation = rot;
+            rot.eulerAngles = new Vector3(rot.eulerAngles.x+90, rot.eulerAngles.y, rot.eulerAngles.z);
+            gameObject.transform.rotation = rot;
 
             positionMe.transform.localPosition = new Vector3(0, vector.magnitude * scale, 0);
         }
@@ -119,11 +124,11 @@ public class RopeChain : MonoBehaviour
 
             //Вектор разности растояния
             Vector3 vector = myChain.next.transform.position - myChain.transform.position;
-            Vector3 up = myChain.transform.position - WorldGenerateScene.main.transform.position;
+            //Vector3 up = myChain.transform.position - WorldGenerateScene.main.transform.position;
 
             //разворачиваем обьект чтобы смотреть на следуюшую точку
-            Quaternion rot = Quaternion.LookRotation(vector, up);
-            rot.eulerAngles = new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, rot.eulerAngles.z);
+            Quaternion rot = Quaternion.LookRotation(vector);
+            rot.eulerAngles = new Vector3(rot.eulerAngles.x+90, rot.eulerAngles.y, rot.eulerAngles.z);
             positionMe.transform.rotation = rot;
 
             positionNext.transform.localPosition = new Vector3(0, vector.magnitude * scale, 0);
@@ -137,11 +142,11 @@ public class RopeChain : MonoBehaviour
 
             //Вектор разности растояния
             Vector3 vector = myChain.next.next.transform.position - myChain.next.transform.position;
-            Vector3 up = myChain.next.transform.position - WorldGenerateScene.main.transform.position;
+            //Vector3 up = myChain.next.transform.position - WorldGenerateScene.main.transform.position;
 
             //разворачиваем обьект чтобы смотреть на следуюшую точку
-            Quaternion rot = Quaternion.LookRotation(vector, up);
-            rot.eulerAngles = new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, rot.eulerAngles.z);
+            Quaternion rot = Quaternion.LookRotation(vector);
+            rot.eulerAngles = new Vector3(rot.eulerAngles.x+90, rot.eulerAngles.y, rot.eulerAngles.z);
             positionNext.transform.rotation = rot;
 
             positionNext2.transform.localPosition = new Vector3(0, vector.magnitude * scale, 0);
@@ -149,66 +154,36 @@ public class RopeChain : MonoBehaviour
 
     }
 
-    public void ReCalcPositions3(LVLChain myChain)
-    {
-        float scale = 0.01f;
 
-        //ставим задом наперед чтобы меш не исчезал
-        if (myChain.next != null && myChain.next.next != null) {
+    public void ReCalcTransform(LVLChain myChainFunc)
+    {
+        myChain = myChainFunc;
+
+        float scale = 10;
+
+        //Узнаем вектор вниз
+        Vector3 up = myChain.transform.position - WorldGenerateScene.main.transform.position.normalized;
+
+        if (myChainFunc.next != null)
+        {
             //Ставим объект на начало
-            positionBack.transform.position = myChain.next.next.gameObject.transform.position;
+            gameObject.transform.position = myChainFunc.gameObject.transform.position;
 
             //Вектор разности растояния
-            Vector3 vector = myChain.next.next.transform.position - myChain.next.transform.position;
-            Vector3 up = myChain.next.next.transform.position - WorldGenerateScene.main.transform.position;
+            Vector3 vector = myChainFunc.next.transform.position - myChainFunc.transform.position;
+
 
             //разворачиваем обьект чтобы смотреть на следуюшую точку
-            Quaternion rot = Quaternion.LookRotation(vector, up);
+            Quaternion rot = Quaternion.LookRotation(vector);
             rot.eulerAngles = new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, rot.eulerAngles.z);
-            positionBack.transform.rotation = rot;
+            gameObject.transform.rotation = rot;
 
-            positionMe.transform.localPosition = new Vector3(0, vector.magnitude * scale, 0);
-        }
-        else if (myChain.next != null) {
+            gameObject.transform.localScale = new Vector3(scale, scale, vector.magnitude / 2 * scale);
 
         }
         else {
-        
-        }
-
-        //главная кость
-        if (myChain.next != null) {
             //Ставим объект на начало
-            positionMe.transform.position = myChain.next.gameObject.transform.position;
-
-            //Вектор разности растояния
-            Vector3 vector = myChain.next.transform.position - myChain.transform.position;
-            Vector3 up = myChain.next.transform.position - WorldGenerateScene.main.transform.position;
-
-            //разворачиваем обьект чтобы смотреть на следуюшую точку
-            Quaternion rot = Quaternion.LookRotation(vector, up);
-            rot.eulerAngles = new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, rot.eulerAngles.z);
-            positionBack.transform.rotation = rot;
-
-            positionMe.transform.localPosition = new Vector3(0, vector.magnitude * scale, 0);
+            gameObject.transform.position = myChainFunc.gameObject.transform.position;
         }
-
-        //последняя кость
-        if (myChain.back) {
-            //Ставим объект на начало
-            positionMe.transform.position = myChain.gameObject.transform.position;
-
-            //Вектор разности растояния
-            Vector3 vector = myChain.transform.position - myChain.back.transform.position;
-            Vector3 up = myChain.transform.position - WorldGenerateScene.main.transform.position;
-
-            //разворачиваем обьект чтобы смотреть на следуюшую точку
-            Quaternion rot = Quaternion.LookRotation(vector, up);
-            rot.eulerAngles = new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, rot.eulerAngles.z);
-            positionBack.transform.rotation = rot;
-
-            positionMe.transform.localPosition = new Vector3(0, vector.magnitude * scale, 0);
-        }
-
     }
 }
