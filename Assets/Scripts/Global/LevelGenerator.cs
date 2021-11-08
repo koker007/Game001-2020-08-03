@@ -638,8 +638,10 @@ public class LevelGenerator : MonoBehaviour
                 {
                     for (int y = 0; y < Width; y++)
                     {
-                        
-                        perVar = (int)Mathf.Ceil(Mathf.PerlinNoise((x + 777.777f) / 666.666f + NumLevel + ID, (y + 777.777f) / 666.666f + NumLevel + ID) * 10000 % 10 * 10);
+                        //perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(Mathf.Sin(NumLevel * 10 * x * ID) * 77.77f, Mathf.Sin(NumLevel * 10 * y * ID) * 66.6f) * 10000 % 10 * 10);
+                        perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(NumLevel + x + ID + 0.777f, NumLevel + y + ID + 0.777f) * 10000 % 10 * 10);
+
+                        //perVar = (int)Mathf.Ceil(Mathf.PerlinNoise((x + 777.777f) / 666.666f + NumLevel + ID, (y + 777.777f) / 666.666f + NumLevel + ID) * 10000 % 10 * 10);
 
                         if (perVar <= percentOfField)
                         {
@@ -661,8 +663,10 @@ public class LevelGenerator : MonoBehaviour
                 {
                     for (int y = 0; y < Width; y++)
                     {
+                        //perVar = (int)Mathf.Floor(Mathf.PerlinNoise(Mathf.Sin(NumLevel * 10 * x) * 77.77f, Mathf.Sin(NumLevel * 10 * y) * 66.6f) * 10000 % 10);
+                        perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(NumLevel + x + 0.777f, NumLevel + y + 0.777f) * 10000 % 10);
 
-                        perVar = (int)Mathf.Floor(Mathf.PerlinNoise((x + 777.777f) / 666.666f + NumLevel, (y + 777.777f) / 666.666f + NumLevel) * 10000 % 10);
+                        //perVar = (int)Mathf.Floor(Mathf.PerlinNoise((x + 777.777f) / 666.666f + NumLevel, (y + 777.777f) / 666.666f + NumLevel) * 10000 % 10);
 
                         int randVal = (int)Mathf.Round(maxArrayValue / 9 * perVar);
 

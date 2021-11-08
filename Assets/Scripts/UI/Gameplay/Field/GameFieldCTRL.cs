@@ -1863,7 +1863,7 @@ public class GameFieldCTRL : MonoBehaviour
             listPotencial = new List<PotencialComb>();
 
             //выводим собщение что перемешиваем
-            MenuGameplay.main.CreateMidleMessage("Mixed");
+            MenuGameplay.main.CreateMidleMessage(TranslateManager.main.GetText("Mixed"));
 
             CreateRandomInternalList();
             Debug.Log("Not Found potencial comb " + Time.unscaledTime);
@@ -3664,16 +3664,16 @@ public class GameFieldCTRL : MonoBehaviour
         void MidleMessageCombo() {
 
             if (ComboCount > 10) {
-                MenuGameplay.main.CreateMidleMessage("Crazy Combo");
+                MenuGameplay.main.CreateMidleMessage(TranslateManager.main.GetText("Crazy"));
             }
             else if (ComboInternal > 45) {
-                MenuGameplay.main.CreateMidleMessage("Ultimative");
+                MenuGameplay.main.CreateMidleMessage(TranslateManager.main.GetText("Ult"));
             }
             else if (ComboInternal > 30) {
-                MenuGameplay.main.CreateMidleMessage("Incredible");
+                MenuGameplay.main.CreateMidleMessage(TranslateManager.main.GetText("Incredible"));
             }
             else if (ComboInternal > 15) {
-                MenuGameplay.main.CreateMidleMessage("Not bad");
+                MenuGameplay.main.CreateMidleMessage(TranslateManager.main.GetText("NotBad"));
             }
 
 
