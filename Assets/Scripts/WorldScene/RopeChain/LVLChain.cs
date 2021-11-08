@@ -105,12 +105,12 @@ public class LVLChain : MonoBehaviour
 
         //Пересчитываем позицию моего и соседних звеньев с учетом новых данных
         if (back != null && back.myRope != null)
-            back.myRope.ReCalcPositions2(back);
+            back.myRope.ReCalcTransform(back);
 
-        myRope.ReCalcPositions2(this);
+        myRope.ReCalcTransform(this);
 
         if (next != null && next.myRope != null)
-            next.myRope.ReCalcPositions2(next);
+            next.myRope.ReCalcTransform(next);
 
         void TestCreateRope()
         {
