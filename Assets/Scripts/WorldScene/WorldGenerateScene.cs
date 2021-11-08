@@ -116,6 +116,9 @@ public class WorldGenerateScene : MonoBehaviour
     //поворот обьекта
     private void RotateMainObject()
     {
+        //выходим если еще не проинициализированно
+        if (WorldSlider.main == null) return;
+
         //ѕроверка границ
         if (rotationNeed >= WorldSlider.main.StartRotation)
         {
