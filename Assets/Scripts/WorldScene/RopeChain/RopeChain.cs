@@ -17,6 +17,9 @@ public class RopeChain : MonoBehaviour
     Transform positionNext2;
 
     [SerializeField]
+    Transform[] posRigs;
+
+    [SerializeField]
     SkinnedMeshRenderer mesh;
 
     //Пересчитать положение костей для модели
@@ -184,6 +187,70 @@ public class RopeChain : MonoBehaviour
         else {
             //Ставим объект на начало
             gameObject.transform.position = myChainFunc.gameObject.transform.position;
+        }
+    }
+    
+
+    //Пересчет позиции с учетом направляющего вектора
+    public void ReCalcPositions3(LVLChain myChainFunc) {
+        myChain = myChainFunc;
+
+        if (posRigs.Length < 2) {
+            return;
+        }
+
+        float one = 1.0f/(posRigs.Length-1);
+
+        //Перебираем все кости от начала до конца
+        for (int num = 0; num < posRigs.Length; num++) {
+            float progress = one * num;
+
+            // теперь знаем позицию
+            Vector3 position = myChain.GetPosition(progress);
+
+            //перемещаем эту кость на эту позицию
+            //если это первая кость
+            if (num == 0) {
+                //просто перемещаем всю модель на эту позицию
+                gameObject.transform.position = position;
+                //И поворачиваем так чтобы она смотрела по направляющему вектору этой кнопки
+                Quaternion rot = Quaternion.LookRotation(myChain.forvard);
+                rot.eulerAngles = new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, rot.eulerAngles.z);
+
+                gameObject.transform.rotation = rot;
+            }
+            else if (num == 1) {
+                //поворачиваем родителя в сторону новой позиции
+                Vector3 forvard = (position - posRigs[num - 1].transform.position).normalized;
+
+                //И поворачиваем так чтобы она смотрела по направляющему вектору к следующей ступени
+                Quaternion rot = Quaternion.LookRotation(forvard);
+                
+                rot.eulerAngles = new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, rot.eulerAngles.z);
+                posRigs[num - 1].transform.rotation = rot;
+
+                //Узнаем растояние между точками
+                float distance = Vector3.Distance(position, posRigs[num - 1].transform.position);
+                //перемемещаем точку на указанное растояние
+                //posRigs[num].localPosition = new Vector3(0, 0, distance);
+            }
+            /*
+            //Если кость не первая
+            else {
+                //поворачиваем родителя в сторону новой позиции
+                Vector3 forvard = (position - posRigs[num - 1].transform.position).normalized;
+
+                //И поворачиваем так чтобы она смотрела по направляющему вектору к следующей ступени
+                Quaternion rot = Quaternion.LookRotation(forvard);
+                rot.eulerAngles = new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, rot.eulerAngles.z);
+                posRigs[num - 1].transform.rotation = rot;
+
+                //Узнаем растояние между точками
+                float distance = Vector3.Distance(position, posRigs[num - 1].transform.position);
+                //перемемещаем точку на указанное растояние
+                posRigs[num].position = new Vector3(0, 0, distance);
+            }
+            */
         }
     }
 }

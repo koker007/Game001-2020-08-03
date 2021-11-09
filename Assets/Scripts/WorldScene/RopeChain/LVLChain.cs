@@ -13,6 +13,9 @@ public class LVLChain : MonoBehaviour
     public LVLChain back;
     public LVLChain next;
 
+    //¬ектор показывающий направление взгл€да вперед
+    public Vector3 forvard;
+
     [SerializeField]
     RopeChain myRope;
 
@@ -45,8 +48,39 @@ public class LVLChain : MonoBehaviour
             }
         }
 
-        //«вень€ цепи настроенны
-        //“еперь создаем саму визуализацию звена
+        //ищем вектор наравлени€ маршрута
+        Vector3 old = new Vector3(0, 0, 0);
+        Vector3 future = new Vector3(0, 0, 0);
+        forvard = new Vector3(0, 0, 0);
+
+
+        //≈сли есть предыдуща€ позици€
+        if (back)
+        {
+            old = gameObject.transform.position - back.gameObject.transform.position;
+            forvard = old;
+        }
+        //≈сли есть следующа€ точка
+        if (next)
+        {
+            future = next.gameObject.transform.position - gameObject.transform.position;
+            forvard = future;
+        }
+
+        //≈сли есть точка сзади и спереди
+        if (back != null && next != null)
+        {
+            //находим вектор захода и выхода из точки, это средний вектор между прошлым движением и будущим
+            forvard = (old.normalized + future.normalized).normalized;
+        }
+
+
+        //«вень€ цепи настроенны есть направл€ющий вектор
+        //“еперь создаем саму визуализацию звена от певого к следующему
+
+        //—оздаем звено от текущего к следующему
+
+
         if(back != null)
             back.ReCalcVisual();
 
@@ -105,12 +139,12 @@ public class LVLChain : MonoBehaviour
 
         //ѕересчитываем позицию моего и соседних звеньев с учетом новых данных
         if (back != null && back.myRope != null)
-            back.myRope.ReCalcTransform(back);
+            back.myRope.ReCalcPositions3(back);
 
-        myRope.ReCalcTransform(this);
+        myRope.ReCalcPositions3(this);
 
         if (next != null && next.myRope != null)
-            next.myRope.ReCalcTransform(next);
+            next.myRope.ReCalcPositions3(next);
 
         void TestCreateRope()
         {
@@ -125,6 +159,47 @@ public class LVLChain : MonoBehaviour
                 bool test = false;
             }
         }
+    }
+
+    //ѕолучить позицию, передать прогресс движени€ от 0 до 1
+    public Vector3 GetPosition(float progress)
+    {
+        Vector3 result = gameObject.transform.position;
+
+        //≈сли нулевой прогресс или следующей позиции нет
+        if (progress <= 0 || next == null)
+        {
+            return result;
+        }
+        //≈сли прогресс больше 1 то равно окончанию
+        else if (progress >= 1)
+        {
+            return next.gameObject.transform.position;
+        }
+
+        //Ќаходим промежуточное значение по пр€мой между двум€ точками
+        Vector3 posInLine = Vector3.Lerp(transform.position, next.transform.position, progress);
+        Vector3 offset = new Vector3(0,0,0);
+        //начало
+        if (progress >= 0 && progress <= 0.25) {
+            float t = progress / 0.25f;
+            offset = Vector3.LerpUnclamped(new Vector3(0,0,0), forvard, t);
+        }
+        //—ередина
+        else if (progress >= 0.25f && progress <= 0.75f) {
+            float t = (progress - 0.25f)/0.5f;
+            offset = Vector3.LerpUnclamped(forvard, next.forvard * -1,t);
+        }
+        // онец
+        else {
+            float t = (progress - 0.75f) / 0.25f;
+            offset = Vector3.LerpUnclamped(next.forvard * -1, new Vector3(0,0,0), t);
+        }
+
+        //нашли промежуточную точку и смещение. вычисл€ем результат
+        result = posInLine;// + offset;
+
+        return result;
     }
 
     // Start is called before the first frame update

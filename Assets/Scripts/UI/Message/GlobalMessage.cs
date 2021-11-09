@@ -335,6 +335,8 @@ public class GlobalMessage : MonoBehaviour
 
         //Изменение альфы
         void testFon() {
+            
+
             float alphaMax = 0.5f;
             if (!MessageCTRL.selected && Fon.color.a > 0)
             {
@@ -344,6 +346,10 @@ public class GlobalMessage : MonoBehaviour
                 {
                     Fon.raycastTarget = false;
                     alpha = 0;
+                }
+                else if (alpha > 0.5f)
+                {
+                    alpha = 0.5f;
                 }
 
                 Fon.color = new Color(Fon.color.r, Fon.color.g, Fon.color.b, alpha);
@@ -356,6 +362,9 @@ public class GlobalMessage : MonoBehaviour
                 if (alpha < 0)
                 {
                     alpha = alphaMax;
+                }
+                else if (alpha > 0.5f) {
+                    alpha = 0.5f;
                 }
                 Fon.color = new Color(Fon.color.r, Fon.color.g, Fon.color.b, alpha);
             }
