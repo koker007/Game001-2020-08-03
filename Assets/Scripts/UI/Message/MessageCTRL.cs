@@ -12,7 +12,7 @@ public class MessageCTRL : MonoBehaviour
     [SerializeField]
     Animator myAnimator;
 
-    static List<MessageCTRL> BufferMessages = new List<MessageCTRL>();
+    public static List<MessageCTRL> BufferMessages = new List<MessageCTRL>();
 
     [SerializeField]
     static public MessageCTRL selected;
@@ -77,7 +77,7 @@ public class MessageCTRL : MonoBehaviour
     public void Destroy()
     {
         DeleteInBuffer();
-
+        TutorialController.main.CheckLevelTutorial(Gameplay.main.levelSelect); //Костыль, поправить
         Destroy(gameObject);
     }
 

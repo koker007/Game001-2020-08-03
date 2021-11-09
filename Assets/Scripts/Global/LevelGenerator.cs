@@ -517,24 +517,29 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-
     public LevelsScript.Level GenerateLevelV2(int NumLevel)
     {
         int perVar = (int)Mathf.Round(Mathf.PerlinNoise(777.777f / 666.666f + NumLevel, 0) * 10000 % 10);
+        //float perVar1 = Mathf.Round(Mathf.PerlinNoise(NumLevel + 0.777f, 0) * 10000 % 10) / 7;
+        //float perVar2 = Mathf.Round(Mathf.PerlinNoise(NumLevel + 0.666f, 0) * 10000 % 10) / 7;
         //óñòàíàâëèâàåì ðàçìåð óðîâíÿ
         int Width = perVar % 4 + 5;
         int Height = perVar * 123 % (Width / 2) + 6;
+        //int Width = (int)Mathf.Round(perVar1 * 7);
+        //int Height = (int)Mathf.Round(perVar2 * 7);
 
         //îñíîâíûå ïàðàìåòðû óðîâíÿ
         int NeedScore = Width * Height * (perVar % ScoreÑoefficient + ScoreÑoefficient / 2);
         float move = (float)60 / (Width * Height * ScoreÑoefficient) * NeedScore;
 
         //âûþèðàåì êîëè÷åñòâî öâåòîâ
-        int numColors = (Width * Height)/20;
+        int numColors = 5;
+        /*
         if (numColors > 5)
             numColors = 5;
         else if (numColors < 3)
             numColors = 3;
+        */
 
         //Êàêîé ïðîöåíò äëÿ ñîçäàíèÿ ñóïåð öâåòà
         float perlinSuperColor = Mathf.PerlinNoise(777.777f / 666.666f + NumLevel, 1234) * 100;
@@ -606,6 +611,7 @@ public class LevelGenerator : MonoBehaviour
         void ArraysRandom()
         {
             int[,] exist = new int[Height, Width];
+            int[,] ice = new int[Height, Width];
             int[,] box = new int[Height, Width];
             int[,] mold = new int[Height, Width];
             int[,] panel = new int[Height, Width];
@@ -618,16 +624,14 @@ public class LevelGenerator : MonoBehaviour
 
 
             //CellRandom(Type, 50, 6);
-            
-            
-
             level.SetMass(CellRandom(exist, 80, 1), "exist");
-            level.SetMass(ColorRandom(IColors, numColors), "color");
+            level.SetMass(ColorRandom(IColors, numColors - 1), "color");
             level.SetMass(TypeTest(Type), "type");
             level.SetMass(CellRandom(box, 20, 2), "box");
             level.SetMass(CellRandom(mold, 20, 3), "mold");
             level.SetMass(CellRandom(panel, 20, 4), "panel");
             level.SetMass(CellRandom(rock, 20, 5), "rock");
+            level.SetMass(CellRandom(ice, 20, 6), "ice");
             level.SetCells();
 
 
@@ -688,6 +692,7 @@ public class LevelGenerator : MonoBehaviour
                 }
                 return array;
             }
+           
         }
     }
 }

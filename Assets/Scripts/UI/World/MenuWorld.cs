@@ -180,6 +180,11 @@ public class MenuWorld : MonoBehaviour
         WorldGenerateScene.main.rotationNeed += 45;
     }
 
+    public void ClickBottonRotateToCurrentLevel()
+    {
+        WorldGenerateScene.main.rotationNeed = -(PlayerProfile.main.ProfilelevelOpen * 2.5f) - 115;
+    }
+
     public void SetText()
     {
         try{

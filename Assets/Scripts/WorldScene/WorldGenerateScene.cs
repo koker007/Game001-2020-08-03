@@ -203,17 +203,17 @@ public class WorldGenerateScene : MonoBehaviour
         int lvlNow = 1;
 
         //Проверяем, сколько допольнительных локаций пройдено
-        if (Mathf.Abs(rotationNeed - levelAngleSum) <= additionalLocationSize && rotationNeed > levelAngleSum)
+        if (Mathf.Abs(rotationNow - levelAngleSum) <= additionalLocationSize && rotationNow > levelAngleSum)
         {
             numOfCreatedAdditionalLocations = 1;
         }
-        else if (Mathf.Abs(rotationNeed - levelAngleSum) <= additionalLocationSize && rotationNeed <= levelAngleSum)
+        else if (Mathf.Abs(rotationNow - levelAngleSum) <= additionalLocationSize && rotationNow <= levelAngleSum)
         {
             numOfCreatedAdditionalLocations = 2;
         }
-        else if (rotationNeed - levelAngleSum <= -additionalLocationSize)
+        else if (rotationNow - levelAngleSum <= -additionalLocationSize)
         {
-            numOfCreatedAdditionalLocations = (int)Mathf.Abs(Mathf.Floor((rotationNeed - levelAngleSum) / additionalLocationSize)) + 1;
+            numOfCreatedAdditionalLocations = (int)Mathf.Abs(Mathf.Floor((rotationNow - levelAngleSum) / additionalLocationSize)) + 1;
 
         }
         else
@@ -383,8 +383,8 @@ public class WorldGenerateScene : MonoBehaviour
                     for (int i = remCounter; i > 0; i--)
                     {
                         //Переменная на основе шума
-                        int perVar = (int)Mathf.Floor(Mathf.PerlinNoise(Mathf.Sin(numOfCreatedAdditionalLocations * 10 * i) * 77.77f, 0) * 10000 % 9) ;
-
+                        //int perVar = (int)Mathf.Floor(Mathf.PerlinNoise(Mathf.Sin(numOfCreatedAdditionalLocations * 10 * i) * 77.77f, 0) * 10000 % 9) ;
+                        int perVar = (int)Mathf.Floor(Mathf.PerlinNoise(numOfCreatedAdditionalLocations + i + 0.777f, 0) * 10000 % 9);
                         //Случайный остаток
                         int randRem = Mathf.RoundToInt(rem[i - 1] / 8 * perVar);
 

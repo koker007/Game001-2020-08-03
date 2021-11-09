@@ -36,6 +36,9 @@ public class GlobalMessage : MonoBehaviour
     GameObject PrefabLVLInfo;
 
     [SerializeField]
+    GameObject PrefabLVLTutorial;
+
+    [SerializeField]
     GameObject PrefabShop;
     [SerializeField]
     GameObject PrefabShopBuyGold;
@@ -298,6 +301,17 @@ public class GlobalMessage : MonoBehaviour
         GameObject messageObj = Instantiate(main.PrefabLVLInfo, main.transform);
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
 
+        MessageCTRL.NewMessage(messageCTRL);
+    }
+
+    /// <summary>
+    /// ¬ыбрать уровень и показать туториал
+    /// </summary>
+    static public void LevelTutorial(int levelNum)
+    {        
+        GameObject messageObj = Instantiate(main.PrefabLVLTutorial, main.transform);
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+        messageObj.transform.Find("Image").transform.Find("Text").GetComponent<TextTranslator>().key = "Tutorial" + levelNum.ToString();
         MessageCTRL.NewMessage(messageCTRL);
     }
 
