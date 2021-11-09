@@ -11,8 +11,8 @@ using UnityEngine.UI;
 /// </summary>
 public class MessageYouLose : MonoBehaviour
 {
-    [SerializeField]
-    Text ScoreText;
+    [SerializeField] Text ScoreText;
+    //[SerializeField] AdMobController adMobController;
 
     public void OnEnable()
     {
@@ -29,8 +29,9 @@ public class MessageYouLose : MonoBehaviour
         UICTRL.main.OpenGameplay();
     }
 
-    public void ClickButtonSeeAdd() {
-        
+    public void ClickButtonSeeRewardedAd() {
+
+        AdMobController.ShowRewardedAd();
     }
 
     public void ExitGameplay()
