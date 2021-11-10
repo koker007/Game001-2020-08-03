@@ -133,6 +133,11 @@ public class GameFieldCTRL : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        if (NeedOpenDefeat && Gameplay.main.movingCan > 0)
+        {
+            NeedOpenDefeat = false;
+        }
 
         TestSpawn(); //Спавним
         isMoving();
@@ -3628,7 +3633,6 @@ public class GameFieldCTRL : MonoBehaviour
                             //вычитаем ход
                             Gameplay.main.movingCan--;
                         }
-
                         MenuGameplay.main.updateMoving();
                         isMovingOld = true;
 

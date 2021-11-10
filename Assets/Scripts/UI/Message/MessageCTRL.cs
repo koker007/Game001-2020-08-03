@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Андрей
 //Семен
 /// <summary>
 /// Контролирует сообщения, движение, и несколько функций для кнопок
@@ -25,16 +26,8 @@ public class MessageCTRL : MonoBehaviour
     [SerializeField]
     Text button;
 
-    void Start()
-    {
+    [SerializeField] private bool levelInfo;
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //moving();
-    }
 
 
     public void SetSelected() {
@@ -77,7 +70,11 @@ public class MessageCTRL : MonoBehaviour
     public void Destroy()
     {
         DeleteInBuffer();
-        TutorialController.main.CheckLevelTutorial(Gameplay.main.levelSelect); //Костыль, поправить
+        //Если окно содержит информацию об уровне, то после его закрытия открываем туториал
+        if (levelInfo)
+        {
+            TutorialController.main.CheckLevelTutorial(Gameplay.main.levelSelect);
+        }
         Destroy(gameObject);
     }
 

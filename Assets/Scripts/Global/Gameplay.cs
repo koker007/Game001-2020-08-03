@@ -24,7 +24,7 @@ public class Gameplay : MonoBehaviour
 
     public bool isGameplay = false;
     public bool GameplayEnd = false;
-
+    public bool adWatched = false;
     [Header("Level parameters")]
     public int score = 0;
     public int scoreMax = 0;
@@ -55,16 +55,9 @@ public class Gameplay : MonoBehaviour
     public float threeStartFactor = 2f;
     public float twoStartFactor = 1.5f;
 
-    // Start is called before the first frame update
     void Start()
     {
         main = this;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        combWaitingCalc();
     }
 
     public void StartGameplay(ref Image[] stars)
@@ -74,13 +67,12 @@ public class Gameplay : MonoBehaviour
         movingCount = 0;
         movingMoldCount = 0;
         movingCan = LevelsScript.main.ReturnLevel().Move;
+        adWatched = false;
         CountStars(ref stars);
-
 
         for (int x = 0; x < colorsCount.Length; x++) {
             colorsCount[x] = 0;
         }
-
     }
 
     //—писок комбинаций которые получились благодар€ действи€м игрока и ждут пост проверок
@@ -127,6 +119,7 @@ public class Gameplay : MonoBehaviour
         MenuGameplay.main.updateScore();
     }
 
+    /*
     public void CheckEndGame()
     {
         //≈сли есть ходы, идет игра, и игра не закончена
@@ -169,7 +162,7 @@ public class Gameplay : MonoBehaviour
         }
 
     }
-
+    */
     struct Buffer {
         //«авершена ли мисси€
         public bool missionComplite;

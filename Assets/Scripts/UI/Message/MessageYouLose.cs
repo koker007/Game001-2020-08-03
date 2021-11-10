@@ -6,18 +6,23 @@ using UnityEngine.UI;
 
 //alexandr
 //Семен
+//Андрей
 /// <summary>
 /// отвечает за сообщение проигрыша
 /// </summary>
 public class MessageYouLose : MonoBehaviour
 {
     [SerializeField] Text ScoreText;
+    [SerializeField] GameObject showAdButton;
     //[SerializeField] AdMobController adMobController;
 
     public void OnEnable()
     {
         ScoreText.text = "Score:\n" + Gameplay.main.score.ToString();
-
+        if (!Gameplay.main.adWatched)
+        {
+            showAdButton.SetActive(true);
+        }
         SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipLVLFailed, Settings.main.VolumeMusicFrom0To1, 1);
     }
 
@@ -31,7 +36,8 @@ public class MessageYouLose : MonoBehaviour
 
     public void ClickButtonSeeRewardedAd() {
 
-        AdMobController.ShowRewardedAd();
+        AdMobController.main.ShowRewardedAd();
+        Gameplay.main.adWatched = true;
     }
 
     public void ExitGameplay()

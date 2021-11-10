@@ -6,19 +6,34 @@ using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 
+//Андрей
 public class AdMobController : MonoBehaviour
 {
-    public static RewardedAd rewardedAd;
+    public static AdMobController main;
+    private RewardedAd rewardedAd;
     private BannerView bannerView;
+    private bool showAd = true;
 
-    public void Start()
+    private void Start()
     {
+        main = this;
         MobileAds.Initialize(initStatus => { });
         CreateAndLoadRewardedAd();
-        RequestBanner();
+        if (showAd)
+        {
+            RequestBanner();
+        }
     }
 
-    public void CreateAndLoadRewardedAd()
+    //Отключить рекламу (кроме наградной)
+    public void DisableAds()
+    {
+        showAd = false;
+        bannerView.Destroy();
+    }
+
+    //Создаем наградную рекламу
+    private void CreateAndLoadRewardedAd()
     {
         string reawardedAdUnitId;
 #if UNITY_ANDROID
@@ -39,6 +54,7 @@ public class AdMobController : MonoBehaviour
         rewardedAd.LoadAd(request);
     }
 
+    //Создаем баннер
     private void RequestBanner()
     {
 #if UNITY_ANDROID
@@ -61,7 +77,7 @@ public class AdMobController : MonoBehaviour
         this.bannerView.LoadAd(request);
     }
 
-    public static void ShowRewardedAd()
+    public void ShowRewardedAd()
     {
         if (rewardedAd.IsLoaded())
         {
@@ -69,56 +85,55 @@ public class AdMobController : MonoBehaviour
         }
     }
 
-    public void HandleUserEarnedReward(object sender, Reward args)
+    #region rewardedAdHandlers
+    private void HandleUserEarnedReward(object sender, Reward args)
     {
         Gameplay.main.movingCan += 2;
-        GlobalMessage.Close();
     }
 
-    #region rewardedAdHandlers
-    public void HandleRewardedAdLoaded(object sender, EventArgs args)
+    private void HandleRewardedAdLoaded(object sender, EventArgs args)
     {
         
     }
 
-    public void HandleRewardedAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
+    private void HandleRewardedAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
         
     }
-    
-    public void HandleRewardedAdOpening(object sender, EventArgs args)
+
+    private void HandleRewardedAdOpening(object sender, EventArgs args)
     {
 
     }
-    
-    public void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs args)
+
+    private void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs args)
     {
 
     }
-    
-    public void HandleRewardedAdClosed(object sender, EventArgs args)
+
+    private void HandleRewardedAdClosed(object sender, EventArgs args)
     {
         CreateAndLoadRewardedAd();
     }
     #endregion
 
     #region bannerAdHandlers
-    public void HandleOnBannerAdLoaded(object sender, EventArgs args)
+    private void HandleOnBannerAdLoaded(object sender, EventArgs args)
     {
         
     }
 
-    public void HandleOnBannerAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
+    private void HandleOnBannerAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
         
     }
 
-    public void HandleOnBannerAdOpened(object sender, EventArgs args)
+    private void HandleOnBannerAdOpened(object sender, EventArgs args)
     {
        
     }
 
-    public void HandleOnBannerAdClosed(object sender, EventArgs args)
+    private void HandleOnBannerAdClosed(object sender, EventArgs args)
     {
        
     }

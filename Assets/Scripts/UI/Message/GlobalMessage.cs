@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 
 //Семен
+//Андрей
 /// <summary>
 /// Отвечает за вывод глобальных сообщений на экран
 /// </summary>
@@ -68,15 +69,12 @@ public class GlobalMessage : MonoBehaviour
     [SerializeField]
     GameObject PrefabExitGame;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         Fon.gameObject.SetActive(true);
         InvokeRepeating("InvokeMessages", 0.1f, 5f);
     }
 
-    // Update is called once per frame
     void Update()
     {
         UpdateFon();
@@ -259,7 +257,7 @@ public class GlobalMessage : MonoBehaviour
         MessageCTRL.NewMessage(messageCTRL);
     }
     /// <summary>
-    /// прогигрышь
+    /// Поражение
     /// </summary>
     static public void Lose()
     {
@@ -330,7 +328,6 @@ public class GlobalMessage : MonoBehaviour
     //Открытие или закрытие информационного меню
     void UpdateFon()
     {
-
         testFon();
 
         //Изменение альфы
@@ -370,5 +367,4 @@ public class GlobalMessage : MonoBehaviour
             }
         }
     }
-
 }
