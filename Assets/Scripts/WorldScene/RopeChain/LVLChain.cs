@@ -179,25 +179,17 @@ public class LVLChain : MonoBehaviour
 
         //Ќаходим промежуточное значение по пр€мой между двум€ точками
         Vector3 posInLine = Vector3.Lerp(transform.position, next.transform.position, progress);
-        Vector3 offset = new Vector3(0,0,0);
-        //начало
-        if (progress >= 0 && progress <= 0.25) {
-            float t = progress / 0.25f;
-            offset = Vector3.LerpUnclamped(new Vector3(0,0,0), forvard, t);
-        }
-        //—ередина
-        else if (progress >= 0.25f && progress <= 0.75f) {
-            float t = (progress - 0.25f)/0.5f;
-            offset = Vector3.LerpUnclamped(forvard, next.forvard * -1,t);
-        }
-        // онец
-        else {
-            float t = (progress - 0.75f) / 0.25f;
-            offset = Vector3.LerpUnclamped(next.forvard * -1, new Vector3(0,0,0), t);
+
+        //Ќаходим промежуточное смещение по направл€ющим векторам
+        Vector3 offset = Vector3.LerpUnclamped(forvard, next.forvard * -1, progress);
+
+        float offsetSize = progress;
+        if (offsetSize > 0.5f) {
+            offsetSize =  0.5f-(progress - 0.5f);
         }
 
         //нашли промежуточную точку и смещение. вычисл€ем результат
-        result = posInLine;// + offset;
+        result = posInLine + offset* offsetSize;
 
         return result;
     }
@@ -211,6 +203,7 @@ public class LVLChain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
+
 }
