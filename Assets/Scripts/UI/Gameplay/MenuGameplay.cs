@@ -303,7 +303,7 @@ public class MenuGameplay : MonoBehaviour
         rosket2x,
         bomb,
         Color5,
-        mixed
+        mixed          
     }
 
     public SuperHitType SuperHitSelected = SuperHitType.none;

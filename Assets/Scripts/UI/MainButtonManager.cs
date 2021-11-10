@@ -43,4 +43,8 @@ public class MainButtonManager : MonoBehaviour
     public void ButtonClickBuyMixed() {
         GlobalMessage.ShopBuyMixed();
     }
+    public void ButtonClickBuyMoneybox()
+    {
+        GlobalMessage.ShopBuyMoneybox();
+    }
 }

@@ -49,6 +49,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     public IceCTRL iceCTRL;
     public RockCTRL rockCTRL;
     public PanelSpreadCTRL panelCTRL;
+    //public PanelSpreadCTRL panelCTRL;
 
     /// <summary>
     /// Степень запрета на перемещение объекта

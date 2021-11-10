@@ -53,6 +53,8 @@ public class GlobalMessage : MonoBehaviour
     GameObject PrefabShopBuyColor5;
     [SerializeField]
     GameObject PrefabShopBuyMixed;
+    [SerializeField]
+    GameObject PrefabShopBuyMoneybox;
 
     [SerializeField]
     GameObject PrefabEvents;
@@ -228,6 +230,17 @@ public class GlobalMessage : MonoBehaviour
     static public void ShopBuyMixed()
     {
         GameObject messageObj = Instantiate(main.PrefabShopBuyMixed, main.transform);
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+
+        MessageCTRL.NewMessage(messageCTRL);
+    }
+
+    /// <summary>
+    /// ¬сплывающее окно купить перемешивание
+    /// </summary>
+    static public void ShopBuyMoneybox()
+    {
+        GameObject messageObj = Instantiate(main.PrefabShopBuyMoneybox, main.transform);
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
 
         MessageCTRL.NewMessage(messageCTRL);
