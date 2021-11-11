@@ -148,6 +148,7 @@ public class LevelsScript : MonoBehaviour
         public bool PassedWithIce = false;
         public bool PassedWithPanel = false;
         public bool PassedWithRock = false;
+        public bool PassedWithEnemy = false;
         //для прохождения с помощью сбора кристаллов
         public int NeedCrystal;
         public CellInternalObject.InternalColor NeedColor;

@@ -40,6 +40,8 @@ public class PlayerProfile : MonoBehaviour
     const string strProfileLevelOpen = "ProfileLevelOpen";
 
     const string strGoldAmount = "GoldAmound";
+    const string strMoneyboxCapacity = "MoneyboxCapacity";
+    const string strMoneyboxContent = "MoneyboxContent";
     const string strHealth = "HealtAmount";
     const string strTicket = "TicketAmount";
     const string strShopInternal = "ShopInternal";
@@ -52,6 +54,8 @@ public class PlayerProfile : MonoBehaviour
     /// количество игровой валюты
     /// </summary>
     public int GoldAmount;
+    public int moneyboxCapacity;
+    public int moneyboxContent;
 
     /// <summary>
     /// покупаемые предметы 
@@ -98,14 +102,12 @@ public class PlayerProfile : MonoBehaviour
         ProfileLevel = PlayerPrefs.GetInt(strProfileLevel, 1);
         ProfileScore = PlayerPrefs.GetInt(strProfileScore, 0);
         ProfilelevelOpen = PlayerPrefs.GetInt(strProfileLevelOpen, 1);
-<<<<<<< HEAD
-        ProfilelevelOpen = 1000;
-=======
-        ProfilelevelOpen = 310;
->>>>>>> РЎРµРјРµРЅ2
+        ProfilelevelOpen = 31;
 
         GoldAmount = PlayerPrefs.GetInt(strGoldAmount, 10);
-        GoldAmount = 40;
+        moneyboxCapacity = PlayerPrefs.GetInt(strMoneyboxCapacity, 10);
+        moneyboxContent = PlayerPrefs.GetInt(strMoneyboxContent, 0);
+
 
         Health.Amount = PlayerPrefs.GetInt(strHealth, 5);
         Ticket.Amount = PlayerPrefs.GetInt(strTicket, 5);
@@ -173,6 +175,8 @@ public class PlayerProfile : MonoBehaviour
         PlayerPrefs.SetInt(strGoldAmount, GoldAmount);
         PlayerPrefs.SetInt(strHealth, Health.Amount);
         PlayerPrefs.SetInt(strTicket, Ticket.Amount);
+        PlayerPrefs.SetInt(strMoneyboxCapacity, moneyboxCapacity);
+        PlayerPrefs.SetInt(strMoneyboxContent, moneyboxContent);
 
         PlayerPrefs.SetInt(strShopInternal, ShopInternal.Amount);
         PlayerPrefs.SetInt(strShopRocket, ShopRocket.Amount);
@@ -190,9 +194,32 @@ public class PlayerProfile : MonoBehaviour
         PlayerPrefs.SetInt("ProfilelevelOpen", ProfilelevelOpen);
     }
 
-    public void OpenMoneybox(int moneyboxGoldAmount)
+    #region moneybox
+
+    //Опустошаем копилку
+    public void OpenMoneybox()
     {
-        GoldAmount += moneyboxGoldAmount;
+        GoldAmount += moneyboxContent;
+        moneyboxContent = 0;
         SaveItemAmount();
     }
+
+    //Улучшаем копилку
+    public void UpgradeMoneybox()
+    {
+        moneyboxCapacity += 5;
+        SaveItemAmount();
+    }
+
+    //Заполняем копилку
+    public void FillMoneyBox(int goldAmount)
+    {
+        moneyboxContent += goldAmount;
+        if (moneyboxContent > moneyboxCapacity)
+        {
+            moneyboxContent = moneyboxCapacity;
+        }
+        SaveItemAmount();
+    }
+    #endregion
 }

@@ -18,7 +18,6 @@ public class MarkerAnimationController : MonoBehaviour
     {
         PlayInAnim();
         PlayOutAnim();
-        Debug.Log(canPlayOutAnim);
     }
 
     private void PlayInAnim()

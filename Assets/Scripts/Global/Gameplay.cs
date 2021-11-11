@@ -33,7 +33,7 @@ public class Gameplay : MonoBehaviour
     /// Цель окончания игры
     /// </summary>
     public int[] colorsCount = new int[10];
-
+    private int starsCount = 0;
 
     /// <summary>
     /// Оставшиеся количество ходов
@@ -52,6 +52,11 @@ public class Gameplay : MonoBehaviour
     public int typeBlockerPercent = 0;
     public int combo = 0;
 
+    /// <summary>
+    /// Ход противника
+    /// </summary>
+    public bool enemyTurn;
+
     public float threeStartFactor = 2f;
     public float twoStartFactor = 1.5f;
 
@@ -63,6 +68,7 @@ public class Gameplay : MonoBehaviour
     public void StartGameplay(ref Image[] stars)
     {
         //Если уровень выбран
+        starsCount = 0;
         score = 0;
         movingCount = 0;
         movingMoldCount = 0;
@@ -240,8 +246,10 @@ public class Gameplay : MonoBehaviour
         PlayerProfile.main.LevelPassed(levelSelect);
         GlobalMessage.Results();
         LevelsScript.main.ReturnLevel().MaxScore = score;
+        Debug.Log(starsCount);
+        PlayerProfile.main.FillMoneyBox(starsCount);
+        PlayerProfile.main.Save();
         GameplayEnd = true;
-
     }
     public void OpenMessageDefeat() {
         GlobalMessage.Lose();
@@ -261,24 +269,28 @@ public class Gameplay : MonoBehaviour
             stars[0].color = Color.yellow;
             stars[1].color = Color.yellow;
             stars[2].color = Color.yellow;
+            starsCount = 3;
         }
         else if (score >= LevelsScript.main.ReturnLevel().NeedScore * twoStartFactor)
         {
             stars[0].color = Color.yellow;
             stars[1].color = Color.yellow;
             stars[2].color = new Color32(140, 140, 60, 255);
+            starsCount = 2;
         }
         else if (score >= LevelsScript.main.ReturnLevel().NeedScore)
         {
             stars[0].color = Color.yellow;
             stars[1].color = new Color32(140, 140, 60, 255);
             stars[2].color = new Color32(140, 140, 60, 255);
+            starsCount = 1;
         }
         else
         {
             stars[0].color = new Color32(140, 140, 60, 255);
             stars[1].color = new Color32(140, 140, 60, 255);
             stars[2].color = new Color32(140, 140, 60, 255);
+            starsCount = 0;
         }
     }
     /// <summary>

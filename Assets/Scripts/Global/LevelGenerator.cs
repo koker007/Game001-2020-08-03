@@ -582,7 +582,7 @@ public class LevelGenerator : MonoBehaviour
             for (int i = 0; i < numPass; i++)
             {
                 k++;
-                int rand = (int)perVar * k % 5;
+                int rand = (int)perVar * k % 6;
                 if (rand == 0 && !level.PassedWithBox)
                 {
                     level.PassedWithRock = true;
@@ -604,6 +604,10 @@ public class LevelGenerator : MonoBehaviour
                 else if (rand == 4 && !level.PassedWithScore && !level.PassedWithMold)
                 {
                     level.PassedWithPanel = true;
+                }
+                else if (rand == 5 && !level.PassedWithScore)
+                {
+                    level.PassedWithEnemy = true;
                 }
             }
         }

@@ -1,41 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MoneyboxPurchaseController : MonoBehaviour
 {
-    public static MoneyboxPurchaseController main;
-    private int moneyboxCapacity = 10;
-    private int newMoneyboxCapacity = 10;
-    private int moneyboxContent = 0;
+    [SerializeField] Text moneyboxCapacityText;
 
     private void Start()
     {
-        main = this;
+        SetMoneyboxCapacityText();
     }
 
+    //Функция опустошения копилки
     public void OpenMoneybox()
     {
-        PlayerProfile.main.OpenMoneybox(moneyboxContent);
-        moneyboxContent = 0;
+        PlayerProfile.main.OpenMoneybox();        
+        SetMoneyboxCapacityText();
     }
 
+    //Функция кнопки улучшения копилки
     public void UpgradeMoneybox()
     {
-        newMoneyboxCapacity = 15; //test
-        SetMoneyboxCapacity();
-    }
-    private void SetMoneyboxCapacity()
-    {
-        moneyboxCapacity = newMoneyboxCapacity;
+        PlayerProfile.main.UpgradeMoneybox();        
+        SetMoneyboxCapacityText();
     }
 
-    public void FillMoneyBox(int goldAmount)
+    //Устанавливаем текст содержимого копилки (содержимое копилки / лимит содержимого)
+    private void SetMoneyboxCapacityText()
     {
-        moneyboxContent += goldAmount;
-        if (moneyboxContent > moneyboxCapacity)
-        {
-            moneyboxContent = moneyboxCapacity;
-        }
+        moneyboxCapacityText.text = PlayerProfile.main.moneyboxContent + " / " + PlayerProfile.main.moneyboxCapacity;
     }
 }

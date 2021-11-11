@@ -688,11 +688,6 @@ public class CellInternalObject : MonoBehaviour
         }
     }
     public void setColorAndType(InternalColor internalColor, Type typeNew) {
-
-        if (myCell != null && myCell.myField.testCell == myCell.pos) {
-            bool test = false;
-        }
-
         type = typeNew;
         setColor(internalColor);
     }
@@ -885,7 +880,6 @@ public class CellInternalObject : MonoBehaviour
         //Если партнера нет
         if (partner == null)
         {
-            Debug.Log("Activate");
             if (ActivateType == Type.bomb) ActivateBomb(BoombRadius);
             else if (ActivateType == Type.rocketHorizontal) ActivateRocket(true, false);
             else if (ActivateType == Type.rocketVertical) ActivateRocket(false, true);
@@ -893,7 +887,6 @@ public class CellInternalObject : MonoBehaviour
             else if (ActivateType == Type.airplane) ActivateFly();
         }
         else {
-
             //супер колор + что угодно
             if (ActivateType == Type.color5)
             {
@@ -919,9 +912,16 @@ public class CellInternalObject : MonoBehaviour
                 ActivateRocket(true, true);
             }
 
-            //Самолет + самолет
+            //Самолет + ???
             else if (ActivateType == Type.airplane)
             {
+                ActivateFly();
+            }
+
+            //Бомба + самолет
+            else if (ActivateType == Type.bomb && partner.type == Type.airplane)
+            {
+                partner.type = Type.bomb;
                 ActivateFly();
             }
 
@@ -1015,25 +1015,30 @@ public class CellInternalObject : MonoBehaviour
         }
 
         void ActivateSuperColor() {
-            Debug.Log("ActivateSuperColor");
-
             //Активируем только если бомба еще не активна
             if (activate) return;
 
             activate = true;
-
-            int sizeMax = 1;
 
             Type typePartner = Type.none;
             if (partner != null) {
                 typePartner = partner.type;
             }
 
+            //Цвет, на который заменяем
+            InternalColor replaceColor;
             //Если активируемый тип не колор 5 но партнер с колор5 и вообще я сам себе партнер
             //(ситуация когда игрок нажимает кнопку бомбы или ракеты из магазина и применяет ее на супер цвет)
-            if (ActivateType != Type.color5 && partner.type == Type.color5) {
+            //Цвет считается по приоритету
+            if (ActivateType != Type.color5 && partner.type == Type.color5) 
+            {
                 typePartner = ActivateType;
-                ActivateType = Type.color5;
+                replaceColor = CalculateColorPriority();
+            }
+            //Иначе берем цвет партнера
+            else
+            {               
+                replaceColor = partner.color;
             }
 
             //Партнер такая же бомба
@@ -1042,14 +1047,11 @@ public class CellInternalObject : MonoBehaviour
             }
             //Если партнер бомба, ракета или самолет
             else if (typePartner == Type.bomb ||
-                typePartner == Type.airplane
+                typePartner == Type.airplane ||
+                typePartner == Type.rocketHorizontal || 
+                typePartner == Type.rocketVertical
                 ) {
                 replacementColorAndActivate();
-            }
-            //партнер ракета
-            else if (typePartner == Type.rocketHorizontal || typePartner == Type.rocketVertical) {
-                replacementColorAndActivate();
-                //DestroyAllRocket(partner.color);
             }
             //Если партнер просто цвет
             else if (typePartner == Type.color)
@@ -1122,14 +1124,13 @@ public class CellInternalObject : MonoBehaviour
                         //Проверяем что ячейка есть
                         if (!myField.cellCTRLs[x, y] || //Если ячейки нет
                             !myField.cellCTRLs[x, y].cellInternal || //Если нет внутренности
-                            myField.cellCTRLs[x, y].cellInternal.color != partner.color || //Если цвет не совпадает с цветом партнера
+                            myField.cellCTRLs[x, y].cellInternal.color != replaceColor || //Если цвет не совпадает с цветом партнера
                             myField.cellCTRLs[x, y].cellInternal.type != Type.color //Если тип объекта особенный
                                                                                     //myField.cellCTRLs[x,y].cellInternal.type == Type.color5
                             )
                         {
                             continue;
                         }
-
                         float dist = Vector2.Distance(myField.cellCTRLs[x, y].pos, myCell.pos);
 
 
@@ -1164,7 +1165,8 @@ public class CellInternalObject : MonoBehaviour
                             //Если бомба
                             else if (typePartner == Type.bomb)
                             {
-                                cellInternalObject.setColorAndType(partner.color, Type.bomb);
+                                Debug.Log(CalculateColorPriority());
+                                cellInternalObject.setColorAndType(replaceColor, Type.bomb);
                             }
                             //Если самолет
                             else if (typePartner == Type.airplane)
@@ -1827,4 +1829,37 @@ public class CellInternalObject : MonoBehaviour
         setColor(internalColor);
     }
 
+    //Расчет приоритетного цвета
+    private InternalColor CalculateColorPriority()
+    {
+        //Массив приоритетов (количество элементов каждого цвета)
+        int[] colorPriority = new int[10]; //fix
+
+        //Проходимся по всем клеткам, считаем цвета
+        for (int x = 0; x < myField.cellCTRLs.GetLength(0); x++)
+        {
+            for (int y = 0; y < myField.cellCTRLs.GetLength(1); y++)
+            {
+                if (myField.cellCTRLs[x, y] != null)
+                {
+                    colorPriority[(int)myField.cellCTRLs[x, y].cellInternal.color]++;
+                }
+            }
+        }
+
+        //Приоритетный цвет
+        InternalColor priorityColor = 0;
+        //Самый большой приоритет (для сравнения)
+        int largestPriority = 0;
+        for (int i = 0; i < colorPriority.Length; i++)
+        {
+            //Заменяем приоритет, если он больше
+            if (colorPriority[i] > largestPriority)
+            {
+                largestPriority = colorPriority[i];
+                priorityColor = (InternalColor)i;
+            }
+        }
+        return priorityColor;
+    }
 }

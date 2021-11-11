@@ -154,7 +154,6 @@ public class GameFieldCTRL : MonoBehaviour
         TestRandomNotPotencial(); //Рандомизируем если ходов не обнаружено
 
         ActicateMarkers(); //Включаем маркеры цели
-
         TestStartSwap(); //Начинаем обмен
         TestReturnSwap(); //Возвращяем обмен
 
@@ -1781,9 +1780,7 @@ public class GameFieldCTRL : MonoBehaviour
                         CellSelect.cellInternal.type == CellInternalObject.Type.rocketHorizontal ||
                         CellSelect.cellInternal.type == CellInternalObject.Type.rocketVertical)
                     {
-
                         CellSelect.cellInternal.Activate(CellInternalObject.Type.bomb, CellSelect.cellInternal, null);
-
                     }
                     else
                     {
@@ -1841,6 +1838,7 @@ public class GameFieldCTRL : MonoBehaviour
     PotencialComb potencialBest = null;
     public class PotencialComb
     {
+        public static PotencialComb main;
         public CellCTRL Moving = null; //Ячейка которую необходимо передвинуть
         public CellCTRL Target = null; //Ячейка относитенльно которой проверяем комбинации
 
