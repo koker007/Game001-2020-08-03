@@ -13,7 +13,11 @@ public class RopeChain : MonoBehaviour
     Transform[] posVector;
 
     [SerializeField]
+    float strange = 4f;
+
+    [SerializeField]
     SkinnedMeshRenderer mesh;
+
 
     //Пересчет позиции с учетом направляющего вектора
     public void ReCalcPositions3(LVLChain myChainFunc) {
@@ -30,7 +34,7 @@ public class RopeChain : MonoBehaviour
             float progress = one * num;
 
             // теперь знаем позицию
-            Vector3 position = myChain.GetPosition(progress);
+            Vector3 position = myChain.GetPosition(progress, 1);
 
             //перемещаем эту кость на эту позицию
             //если это первая кость
@@ -69,23 +73,51 @@ public class RopeChain : MonoBehaviour
                 posRigs[num].position = posVector[num].position;
             }
         }
+
+        /*
+        //поворачиваем родителя в сторону новой позиции
+        Vector3 forvard2 = (myChain.next.transform.position - posVector[posVector.Length - 1].transform.position).normalized;
+
+        //И поворачиваем так чтобы она смотрела по направляющему вектору к следующей ступени
+        Quaternion rot2 = Quaternion.LookRotation(forvard2);
+
+        rot2.eulerAngles = new Vector3(rot2.eulerAngles.x, rot2.eulerAngles.y, rot2.eulerAngles.z);
+        posVector[posVector.Length - 1].transform.rotation = rot2;
+
+        //Узнаем растояние между точками
+        float distance2 = Vector3.Distance(myChain.next.transform.position, posVector[posVector.Length - 1].transform.position) * 0.01f;
+        //перемемещаем точку на указанное растояние
+        posVector[num].localPosition = new Vector3(0, 0, distance2);
+
+        //Поворачиваем прошлый меш
+        Quaternion rotMesh2 = posRigs[num].rotation;
+        rotMesh2.eulerAngles = new Vector3(posVector[num - 1].rotation.eulerAngles.x + 90, posVector[num - 1].rotation.eulerAngles.y, posVector[num - 1].rotation.eulerAngles.z);
+        posRigs[num].rotation = rotMesh2;
+
+        //Перемещаем текущий меш
+        posRigs[num].position = posVector[num].position;
+        */
+    }
+
+    private void Start()
+    {
+        Invoke("ReCalc", 0.5f);
     }
 
     private void Update()
     {
-        TestReCalc();
+        ReCalc();
     }
 
-    [SerializeField]
+   [SerializeField]
     bool needRecalc = false;
-    void TestReCalc()
+
+    void ReCalc()
     {
         if (!needRecalc)
-        {
             return;
-        }
 
-        ReCalcPositions3(myChain);
+        myChain.iniChain();
         needRecalc = false;
     }
 }

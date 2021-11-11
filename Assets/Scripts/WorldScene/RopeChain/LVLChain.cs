@@ -71,7 +71,7 @@ public class LVLChain : MonoBehaviour
         if (back != null && next != null)
         {
             //находим вектор захода и выхода из точки, это средний вектор между прошлым движением и будущим
-            forvard = (old.normalized + future.normalized).normalized;
+            forvard = (old + future)/2;
         }
 
 
@@ -162,7 +162,7 @@ public class LVLChain : MonoBehaviour
     }
 
     //Получить позицию, передать прогресс движения от 0 до 1
-    public Vector3 GetPosition(float progress)
+    public Vector3 GetPosition(float progress, float strange)
     {
         Vector3 result = gameObject.transform.position;
 
@@ -181,7 +181,7 @@ public class LVLChain : MonoBehaviour
         Vector3 posInLine = Vector3.Lerp(transform.position, next.transform.position, progress);
 
         //Находим промежуточное смещение по направляющим векторам
-        Vector3 offset = Vector3.LerpUnclamped(forvard, next.forvard * -1, progress);
+        Vector3 offset = vectorLerp(forvard, -next.forvard, progress);
 
         float offsetSize = progress;
         if (offsetSize > 0.5f) {
@@ -189,9 +189,18 @@ public class LVLChain : MonoBehaviour
         }
 
         //нашли промежуточную точку и смещение. вычисляем результат
-        result = posInLine + offset* offsetSize;
+        result = posInLine + offset * offsetSize * strange;
 
         return result;
+
+        Vector3 vectorLerp(Vector3 a, Vector3 b, float interpolate) {
+            float intA = 1 - interpolate;
+            a = a * intA;
+
+            b = b * interpolate;
+
+            return a + b;
+        }
     }
 
     // Start is called before the first frame update
