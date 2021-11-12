@@ -4,24 +4,30 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public static EnemyController main;
+    public static bool enemyTurn;
 
-    private void Start()
+    private void Update()
     {
-        main = this;
+        EnmyTurn();
     }
 
     public void EnmyTurn()
     {
-        if (Gameplay.main.enemyTurn)
+        if (enemyTurn)
         {
-            //Собираем потенциальную комбинацию
-            if (GameFieldCTRL.PotencialComb.main.Moving != null && GameFieldCTRL.PotencialComb.main.Target != null)
+            if (GameFieldCTRL.enemyPotencialBest != null)
             {
-                //Двигаем GameFieldCTRL.PotencialComb.main.Moving; в GameFieldCTRL.PotencialComb.main.Target;
-
+                CellCTRL cellSelect = GameFieldCTRL.enemyPotencialBest.Moving;
+                CellCTRL cellSwap = GameFieldCTRL.enemyPotencialBest.Target;
+                //Собираем потенциальную комбинацию
+                if (cellSelect != null && cellSwap != null)
+                {
+                    GameFieldCTRL.main.CellSelect = cellSelect;
+                    GameFieldCTRL.main.CellSwap = cellSwap;
+                    Debug.Log("ET");
+                    enemyTurn = false;
+                }
             }
-            Gameplay.main.enemyTurn = false;
         }
     }
 }

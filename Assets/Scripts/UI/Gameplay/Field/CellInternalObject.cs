@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //—емен
+//јндрей
 /// <summary>
 /// ¬рутренн€€ перемещаема€ часть €чеек
 /// </summary>
@@ -946,7 +947,7 @@ public class CellInternalObject : MonoBehaviour
 
         void ActivateRocket(bool horizontal, bool vertical)
         {
-            Debug.Log("ActivateRocket");
+            //Debug.Log("ActivateRocket");
             //јктивируем только если бомба еще не активна
             if (activate) return;
             

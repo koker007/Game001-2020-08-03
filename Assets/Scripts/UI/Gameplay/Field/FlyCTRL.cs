@@ -395,7 +395,7 @@ public class FlyCTRL : MonoBehaviour
     void PlaySoundStart() {
         float timePlay = Time.unscaledTime - timeLastPlayStart;
         SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipFlyStart, 1, 0.9f + (timePlay/zaderzka) * 0.05f);
-        Debug.Log("Fly time play " + timePlay);
+        //Debug.Log("Fly time play " + timePlay);
     }
     public void PlaySoundStartInvoke() {
 

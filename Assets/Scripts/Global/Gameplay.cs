@@ -11,8 +11,7 @@ public class Gameplay : MonoBehaviour
 {
 
     static public Gameplay main;
-
-
+    public bool playerTurn = true;
     /// <summary>
     /// Текущий выбранный уровень
     /// </summary>
@@ -28,6 +27,8 @@ public class Gameplay : MonoBehaviour
     [Header("Level parameters")]
     public int score = 0;
     public int scoreMax = 0;
+
+    public int enemyScore = 0;
 
     /// <summary>
     /// Цель окончания игры
@@ -51,11 +52,6 @@ public class Gameplay : MonoBehaviour
     public int superColorPercent = 0;
     public int typeBlockerPercent = 0;
     public int combo = 0;
-
-    /// <summary>
-    /// Ход противника
-    /// </summary>
-    public bool enemyTurn;
 
     public float threeStartFactor = 2f;
     public float twoStartFactor = 1.5f;
@@ -82,8 +78,9 @@ public class Gameplay : MonoBehaviour
     }
 
     //Список комбинаций которые получились благодаря действиям игрока и ждут пост проверок
-    List<GameFieldCTRL.Combination> combWaiting = new List<GameFieldCTRL.Combination>();
+    //List<GameFieldCTRL.Combination> combWaiting = new List<GameFieldCTRL.Combination>();
     
+    /*
     //Проверить комбинации на то что их время вышло
     void combWaitingCalc() {
 
@@ -106,22 +103,32 @@ public class Gameplay : MonoBehaviour
         //Заменяем
         combWaiting = combWaitingNew;
     }
+    */
 
     //вычитает ход и делает проверку на 0 ходов
     public void MinusMoving(GameFieldCTRL.Combination combination)
     {
-        movingCount++;
-        movingCan--;
-        MenuGameplay.main.updateMoving();
-
-        //Добавляем комбинацию для пост проверки
-        combWaiting.Add(combination);
-
+        if (playerTurn)
+        {
+            movingCount++;
+            movingCan--;
+            MenuGameplay.main.updateMoving();
+            //Добавляем комбинацию для пост проверки
+            //combWaiting.Add(combination);
+        }
     }
 
     public void ScoreUpdate(int PlusScore)
     {
-        score += PlusScore;
+        if (playerTurn)
+        {
+            score += PlusScore;
+        }
+        else
+        {
+            enemyScore += PlusScore;
+        }
+        Debug.Log(enemyScore);
         MenuGameplay.main.updateScore();
     }
 
@@ -210,6 +217,7 @@ public class Gameplay : MonoBehaviour
                                     {
                                         if (level.NeedCrystal <= main.colorsCount[(int)level.NeedColor] || !level.PassedWithCrystal)
                                         {
+                                            if (score > enemyScore || !level.PassedWithEnemy)
                                             buffer.missionComplite = true;
                                         }
                                     }

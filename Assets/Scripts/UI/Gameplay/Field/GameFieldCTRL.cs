@@ -9,6 +9,7 @@ using UnityEngine.UI;
 /// </summary>
 public class GameFieldCTRL : MonoBehaviour
 {
+    public static GameFieldCTRL main;
 
     [SerializeField]
     bool NeedOpenComplite = false;
@@ -109,10 +110,8 @@ public class GameFieldCTRL : MonoBehaviour
 
 
     [Header("Other")]
-    [SerializeField]
     public CellCTRL CellSelect; //Первый выделенный пользователем объект
-    [SerializeField]
-    CellCTRL CellSwap; //Второй выделенный пользователем объект
+    public CellCTRL CellSwap; //Второй выделенный пользователем объект
 
     [SerializeField]
     RectTransform rectParticleSelect;
@@ -130,14 +129,11 @@ public class GameFieldCTRL : MonoBehaviour
     private GameObject[,] markers;
 
     private bool markersActive = false;
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-
+        main = this;
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -155,6 +151,7 @@ public class GameFieldCTRL : MonoBehaviour
 
         ActicateMarkers(); //Включаем маркеры цели
         TestStartSwap(); //Начинаем обмен
+        
         TestReturnSwap(); //Возвращяем обмен
 
         TestMold(); //Выполняем действия после хода
@@ -1834,8 +1831,10 @@ public class GameFieldCTRL : MonoBehaviour
     }
 
 
-    List<PotencialComb> listPotencial = new List<PotencialComb>();
-    PotencialComb potencialBest = null;
+    private List<PotencialComb> listPotencial = new List<PotencialComb>();
+    private PotencialComb potencialBest = null;
+    //Лучшая комбинация для робота (самая слабая)
+    public static PotencialComb enemyPotencialBest = null;
     public class PotencialComb
     {
         public static PotencialComb main;
@@ -1925,21 +1924,24 @@ public class GameFieldCTRL : MonoBehaviour
         if (Gameplay.main.isMissionComplite() || Gameplay.main.isMissionDefeat())
         {
             potencialBest = null;
+            enemyPotencialBest = null;
         }
         AnimationPlayPotencial();
 
+        /*
         float timeToTest = 0.5f;
         //Если недавно было движение то обнуляем лист
         if (Time.unscaledTime - timeLastMove < timeToTest)
         {
             listPotencial = new List<PotencialComb>();
             potencialBest = null;
+            enemyPotencialBest = null;
 
             //Debug.Log("Waiting Time " + Time.unscaledTime);
 
             return;
         }
-
+        */
         //ВЫходим если список уже есть или миссия провалена или выполнена
         if ((listPotencial.Count > 0 && !BuyMixedNeed) || Gameplay.main.isMissionComplite() || Gameplay.main.isMissionDefeat())
         {
@@ -1962,22 +1964,35 @@ public class GameFieldCTRL : MonoBehaviour
                     if (potencialBest.priority < potencial.priority)
                     {
                         potencialBest = potencial;
+
                     }
                 }
             }
 
-            Debug.Log("Found potencial: " + potencialBest.priority + " Pos: " + potencialBest.Target.pos + " Target:" + potencialBest.Target.pos + " Moving:" + potencialBest.Moving.pos);
+            //Считаем самую лучшую комбинацию для робота (самую слабую)
+            if (enemyPotencialBest == null)
+            {
+                enemyPotencialBest = listPotencial[0];
+
+                foreach (PotencialComb potencial in listPotencial)
+                {
+                    if (enemyPotencialBest.priority > potencial.priority)
+                    {
+                        enemyPotencialBest = potencial;
+
+                    }
+                }
+            }
+            //Debug.Log("Found potencial: " + potencialBest.priority + " Pos: " + potencialBest.Target.pos + " Target:" + potencialBest.Target.pos + " Moving:" + potencialBest.Moving.pos);
         }
         //если комбинаций не нашлось и лист нужных к перемещению объектов еще не создан и это не первый ход
         else if (ListWaitingInternals.Count <= 0)
         {
-            listPotencial = new List<PotencialComb>();
-
             //выводим собщение что перемешиваем
             MenuGameplay.main.CreateMidleMessage(TranslateManager.main.GetText("Mixed"));
 
             CreateRandomInternalList();
-            Debug.Log("Not Found potencial comb " + Time.unscaledTime);
+            //Debug.Log("Not Found potencial comb " + Time.unscaledTime);
 
             //Перемешивание закончено
             BuyMixedNeed = false;
@@ -3401,13 +3416,15 @@ public class GameFieldCTRL : MonoBehaviour
 
     float timeCellSelect = 0;
     //Проверка на то что нужно поменять местами объекты
-    void TestStartSwap()
+    public void TestStartSwap()
     {
         //Если выделенная ячейка есть и прошло больще 5 секунд снимаем выделение
-        if (CellSelect && Time.unscaledTime - timeCellSelect > 4)
+        
+        if (CellSelect && Time.unscaledTime - timeCellSelect > 4 && Gameplay.main.playerTurn)
         {
             CellSelect = null;
         }
+        
 
         //Если есть выбранная ячейка
         if (CellSelect)
@@ -3755,7 +3772,6 @@ public class GameFieldCTRL : MonoBehaviour
             //Если прекратили двигаться
             if (isMovingOld && !isMovingNow)
             {
-
                 //Вызываем сообщение о комбинации
                 if (!Gameplay.main.isMissionComplite() && !Gameplay.main.isMissionDefeat())
                 {
@@ -3874,6 +3890,23 @@ public class GameFieldCTRL : MonoBehaviour
 
                 }
                 else if (Gameplay.main.isMissionDefeat()) NeedOpenDefeat = true;
+
+                listPotencial = new List<PotencialComb>();
+                potencialBest = null;
+                enemyPotencialBest = null;
+                //Передаем ход противнику
+                if (Gameplay.main.playerTurn && !EnemyController.enemyTurn)
+                {
+                    Gameplay.main.playerTurn = false;
+                    EnemyController.enemyTurn = true;
+                    MenuGameplay.main.CreateMidleMessage("Enemy Turn", Color.blue);
+                }
+                //Передаем ход игроку
+                else if (!EnemyController.enemyTurn && !Gameplay.main.playerTurn)
+                {
+                    Gameplay.main.playerTurn = true;
+                    MenuGameplay.main.CreateMidleMessage("Your Turn", Color.blue);
+                }
             }
             else if (!isMovingOld && isMovingNow)
             {
