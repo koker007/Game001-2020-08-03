@@ -49,6 +49,8 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     public IceCTRL iceCTRL;
     public RockCTRL rockCTRL;
     public PanelSpreadCTRL panelCTRL;
+
+    public WallController wallController;
     //public PanelSpreadCTRL panelCTRL;
 
     /// <summary>
@@ -67,6 +69,8 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     /// Степень камня
     /// </summary>
     public int rock;
+
+    public int wall;
 
     public bool panel;
 
@@ -818,11 +822,17 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (LevelsScript.main.ReturnLevel().PassedWithEnemy && (Gameplay.main.moveCompleted || !Gameplay.main.playerTurn))
+        {
+            return;
+        }
+        else 
+        { 
         //Если клик по ячейке
         MouseCTRL.main.click();
 
-        //Если внутри есть объект и движения нет
-        //if (cellInternal && !cellInternal.isMove) {
+            //Если внутри есть объект и движения нет
+            //if (cellInternal && !cellInternal.isMove) {
 
             //если произошел двойной клик и клик по тойже ячейке
             if (MouseCTRL.main.ClickDouble && CellClickOld == this)
@@ -831,21 +841,33 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             }
 
             //Одинарный клик
-            else {
+            else
+            {
                 myField.SetSelectCell(this);
             }
 
             CellClickOld = this;
-        //}
+            //}
+        }
     }
     public void OnPointerEnter(PointerEventData eventData) {
 
-        if (Input.GetMouseButton(0)) {
-            if (CellClickOld != this && CellEnterOld != this) {
-                myField.SetSelectCell(this);
+            if (LevelsScript.main.ReturnLevel().PassedWithEnemy && (Gameplay.main.moveCompleted || !Gameplay.main.playerTurn))
+            {
+                return;
             }
-            CellEnterOld = this;
-        }
+            else
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    if (CellClickOld != this && CellEnterOld != this)
+                    {
+                        myField.SetSelectCell(this);
+                    }
+                    CellEnterOld = this;
+                }
+            }
+        
     }
     public void OnPointerUp( PointerEventData eventData)
     {

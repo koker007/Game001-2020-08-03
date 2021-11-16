@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //Семен
+//Андрей
 /// <summary>
 /// Глобальные игровые параметры
 /// </summary>
@@ -27,7 +28,7 @@ public class Gameplay : MonoBehaviour
     [Header("Level parameters")]
     public int score = 0;
     public int scoreMax = 0;
-
+    public float timeScale = 1;
     public int enemyScore = 0;
 
     /// <summary>
@@ -52,7 +53,7 @@ public class Gameplay : MonoBehaviour
     public int superColorPercent = 0;
     public int typeBlockerPercent = 0;
     public int combo = 0;
-
+    public bool moveCompleted = false;
     public float threeStartFactor = 2f;
     public float twoStartFactor = 1.5f;
 
@@ -64,12 +65,16 @@ public class Gameplay : MonoBehaviour
     public void StartGameplay(ref Image[] stars)
     {
         //Если уровень выбран
+        timeScale = 1;
         starsCount = 0;
         score = 0;
+        enemyScore = 0;
         movingCount = 0;
         movingMoldCount = 0;
         movingCan = LevelsScript.main.ReturnLevel().Move;
         adWatched = false;
+        moveCompleted = false;
+        playerTurn = true;
         CountStars(ref stars);
 
         for (int x = 0; x < colorsCount.Length; x++) {
@@ -112,10 +117,12 @@ public class Gameplay : MonoBehaviour
         {
             movingCount++;
             movingCan--;
+            
             MenuGameplay.main.updateMoving();
             //Добавляем комбинацию для пост проверки
             //combWaiting.Add(combination);
         }
+        moveCompleted = true;
     }
 
     public void ScoreUpdate(int PlusScore)
@@ -217,8 +224,11 @@ public class Gameplay : MonoBehaviour
                                     {
                                         if (level.NeedCrystal <= main.colorsCount[(int)level.NeedColor] || !level.PassedWithCrystal)
                                         {
-                                            if (score > enemyScore || !level.PassedWithEnemy)
-                                            buffer.missionComplite = true;
+                                            if ((score > enemyScore || !level.PassedWithEnemy))
+                                            {
+                                                buffer.missionComplite = true;
+   
+                                            }
                                         }
                                     }
                                 }
@@ -227,7 +237,7 @@ public class Gameplay : MonoBehaviour
                     }
                 }
                 //если ходов нет проигрышь
-                if (movingCan <= 0)
+                if (movingCan <= 0 && !level.PassedWithEnemy)
                 {
                     buffer.missionDefeat = true;
                 }

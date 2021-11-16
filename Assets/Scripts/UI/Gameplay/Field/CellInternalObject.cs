@@ -155,6 +155,7 @@ public class CellInternalObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         Moving();
         UpdateActivate();
     }
@@ -167,8 +168,6 @@ public class CellInternalObject : MonoBehaviour
 
     public float MovingSpeed = 0;
     void Moving() {
-        
-
         //Движение к соседу
         if (isMove) {
 
@@ -176,7 +175,8 @@ public class CellInternalObject : MonoBehaviour
             //Горизонтальное движение
             float posXnew = rectMy.pivot.x;
 
-            MovingSpeed += Time.unscaledDeltaTime;
+            MovingSpeed += Time.unscaledDeltaTime * Gameplay.main.timeScale;
+
             float speed = 0.05f + MovingSpeed;
 
             float correctY = 0;
@@ -284,7 +284,7 @@ public class CellInternalObject : MonoBehaviour
         CellCTRL returnCell = null;
 
         //выходим если предмет в этой ячейке находится в камне
-        if (myField.cellCTRLs[myCell.pos.x, myCell.pos.y].rock > 0)
+        if (myField.cellCTRLs[myCell.pos.x, myCell.pos.y].rock > 0 || myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall == 15)
             return null;
 
 
@@ -296,8 +296,8 @@ public class CellInternalObject : MonoBehaviour
                 myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].BlockingMove == 0 && //И нет яшика
                 myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].rock == 0 && //и нет камня
                 Time.unscaledTime - myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].timeBoomOld > 0.35f && //c уничтожения ячеек снизу
-                Time.unscaledTime - myField.timeLastBoom > 0
-                ) 
+                Time.unscaledTime - myField.timeLastBoom > 0 &&
+                GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].wall, myField.cellCTRLs[myCell.pos.x, myCell.pos.y - (minusY - 1)].wall))
             {
                 //Ставим такую ячейку как нижнюю
                 returnCell = myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY];
@@ -334,8 +334,18 @@ public class CellInternalObject : MonoBehaviour
                     myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].rock == 0 && //и нет камня
                     Time.unscaledTime - myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.35f &&
                     Time.unscaledTime - myField.timeLastBoom > 0 &&
-                    isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie]) //В этом столбце нет потенциального вертикального движения
-                    ) {
+                    isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie]) &&//В этом столбце нет потенциального вертикального движения
+                    (GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[myCell.pos.x, myCell.pos.y - smeshenie].wall, myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall) ||
+                    GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wall, myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y].wall)) &&
+                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wall != 8 &&
+                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wall != 12 &&
+                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wall != 13 &&
+                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wall != 15 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall != 6 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall != 11 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall != 14 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall != 15)
+                {
                     //Ставим такую ячейку как целевую
                     returnCell = myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie];
                 }
@@ -348,8 +358,18 @@ public class CellInternalObject : MonoBehaviour
                     myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].rock == 0 && //и нет камня
                     Time.unscaledTime - myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.35f &&
                     Time.unscaledTime - myField.timeLastBoom > 0 &&
-                    isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie]) //В этом столбце нет потенциального вертикального движения
-                    ) {
+                    isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie]) && //В этом столбце нет потенциального вертикального движения
+                    (GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[myCell.pos.x, myCell.pos.y - smeshenie].wall, myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall) ||
+                    GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wall, myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y].wall)) &&
+                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wall != 5 &&
+                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wall != 13 &&
+                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wall != 14 &&
+                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wall != 15 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall != 7 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall != 11 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall != 12 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall != 15)
+                {
                     //Ставим такую ячейку как целевую
                     returnCell = myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie];
                 }
@@ -357,23 +377,25 @@ public class CellInternalObject : MonoBehaviour
         }
 
         return returnCell;
-
+        //test
         //Проверка можно ли двигаться боком в эту 
         bool isCanMoveToThisColum(CellCTRL cellFunc) {
             bool result = true; //Изначально двигаться разрешено
 
             //Проверяем низ на то что никто не движется в ячейки снизу
-            for (int minus = 0; minus < myField.cellCTRLs.GetLength(1) && result; minus++) {
+            for (int minus = 1; minus < myField.cellCTRLs.GetLength(1) && result; minus++) {
                 if (cellFunc.pos.y - minus >= 0 &&//Если не вышли за пределы массива
                     myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus] && //есть ячейка
                     myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].BlockingMove <= 0 &&//ячейка находится без блокировки движения
-                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].rock <= 0
-                    ) {
+                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].rock <= 0 &&
+                    GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].wall, myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - (minus - 1)].wall))
+                {
                     //Блокируем если
                     if (
                         (myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].cellInternal && myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].cellInternal.isMove && minus <= 1) || // Внутри есть ячейка которая находится в движении
-                        Time.unscaledTime - myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].timeBoomOld < 0.25f //Время ожидания после взрыва не вышло
-                        ) {
+                        Time.unscaledTime - myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].timeBoomOld < 0.25f//Время ожидания после взрыва не вышло
+                        ) 
+                    {
                         result = false;
                     }
 
@@ -384,14 +406,13 @@ public class CellInternalObject : MonoBehaviour
             }
 
             //Проверка сверху
-            for (int plus = 0; plus < myField.cellCTRLs.GetLength(1) && result; plus++) {
+            for (int plus = 1; plus < myField.cellCTRLs.GetLength(1) && result; plus++) {
                 //Проверяем верх на то что нету предметов которые могли бы упасть
-                if (
-                    cellFunc.pos.y + plus < myField.cellCTRLs.GetLength(1) &&//Если не вышли за пределы массива
+                if (cellFunc.pos.y + plus < myField.cellCTRLs.GetLength(1) &&//Если не вышли за пределы массива
                     myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus] && //есть ячейка
                     myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus].BlockingMove <= 0 &&//ячейка находится без блокировки движения
-                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus].rock <= 0
-                    )
+                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus].rock <= 0 &&
+                    GameFieldCTRL.main.CheckWallsToMoveUp(myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus].wall, myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + (plus - 1)].wall))
                 {
                     //Блокируем если
                     if (
@@ -1841,7 +1862,7 @@ public class CellInternalObject : MonoBehaviour
         {
             for (int y = 0; y < myField.cellCTRLs.GetLength(1); y++)
             {
-                if (myField.cellCTRLs[x, y] != null)
+                if (myField.cellCTRLs[x, y] != null && myField.cellCTRLs[x, y].cellInternal != null)
                 {
                     colorPriority[(int)myField.cellCTRLs[x, y].cellInternal.color]++;
                 }

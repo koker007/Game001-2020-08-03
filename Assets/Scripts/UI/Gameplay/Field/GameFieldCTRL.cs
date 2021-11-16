@@ -70,6 +70,8 @@ public class GameFieldCTRL : MonoBehaviour
     GameObject prefabIce;
     [SerializeField]
     GameObject prefabMarker;
+    [SerializeField]
+    GameObject prefabWall;
 
     LevelsScript.Level currentLevel;
 
@@ -98,6 +100,8 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     public Transform parentOfRock;
     [SerializeField]
+    public Transform parentOfWall;
+    [SerializeField]
     public Transform parentOfFly;
     [SerializeField]
     public Transform parentOfParticles;
@@ -107,7 +111,6 @@ public class GameFieldCTRL : MonoBehaviour
     public Transform parentOfSelect;
     [SerializeField]
     public Transform parentOfMarkers;
-
 
     [Header("Other")]
     public CellCTRL CellSelect; //Первый выделенный пользователем объект
@@ -129,6 +132,8 @@ public class GameFieldCTRL : MonoBehaviour
     private GameObject[,] markers;
 
     private bool markersActive = false;
+
+
     private void Start()
     {
         main = this;
@@ -136,7 +141,13 @@ public class GameFieldCTRL : MonoBehaviour
 
     void Update()
     {
-
+        if (Gameplay.main.isMissionComplite())
+        {
+            Time.timeScale = 20;
+            Gameplay.main.timeScale = 20;
+            EnemyController.enemyTurn = true; //test
+        }
+        Debug.Log(Gameplay.main.isMissionComplite());
         if (NeedOpenDefeat && Gameplay.main.movingCan > 0)
         {
             NeedOpenDefeat = false;
@@ -151,7 +162,7 @@ public class GameFieldCTRL : MonoBehaviour
 
         ActicateMarkers(); //Включаем маркеры цели
         TestStartSwap(); //Начинаем обмен
-        
+
         TestReturnSwap(); //Возвращяем обмен
 
         TestMold(); //Выполняем действия после хода
@@ -285,6 +296,7 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[x, y].BlockingMove = level.cells[x, y].HealthBox;
                         cellCTRLs[x, y].rock = level.cells[x, y].rock;
                         cellCTRLs[x, y].mold = level.cells[x, y].HealthMold;
+                        cellCTRLs[x, y].wall = level.cells[x, y].wall;
                         if (cellCTRLs[x, y].mold <= 0 && cellCTRLs[x, y].BlockingMove > 0)
                         {
                             cellCTRLs[x, y].mold = 1;
@@ -369,6 +381,16 @@ public class GameFieldCTRL : MonoBehaviour
                     else
                     {
                         cellCTRLs[x, y].rock = 0;
+                    }
+
+                    //Нужно ли создать стену
+                    if (cellCTRLs[x, y].wall > 0)
+                    {
+                        GameObject wallObj = Instantiate(prefabWall, parentOfWall);
+                        WallController wallController = wallObj.GetComponent<WallController>();
+                        wallObj.GetComponent<RectTransform>().pivot = new Vector2(-cellCTRLs[x, y].pos.x, -cellCTRLs[x, y].pos.y);
+                        cellCTRLs[x, y].wallController = wallController;
+                        wallController.SetWalls(cellCTRLs[x, y].wall);
                     }
 
                     //Создаем подвижные объекты
@@ -597,7 +619,8 @@ public class GameFieldCTRL : MonoBehaviour
                         else if (y + plusY < cellCTRLs.GetLength(1) && (
                             !cellCTRLs[x, y + plusY] ||
                             cellCTRLs[x, y + plusY].BlockingMove > 0 ||
-                            cellCTRLs[x, y + plusY].rock > 0
+                            cellCTRLs[x, y + plusY].rock > 0 ||
+                            !CheckWallsToMoveUp(cellCTRLs[x, y + plusY].wall, cellCTRLs[x, y].wall)
                             ))
                         {
                             break;
@@ -606,7 +629,8 @@ public class GameFieldCTRL : MonoBehaviour
                         //За перемещение ниже отвечает сам перемещаемый объект
 
                         //Если сверху есть ячейка с внутренностью и она не блокирована
-                        else if (y + plusY < cellCTRLs.GetLength(1) && cellCTRLs[x, y + plusY].BlockingMove <= 0 && cellCTRLs[x, y + plusY].cellInternal && cellCTRLs[x, y + plusY].rock <= 0)
+                        else if (y + plusY < cellCTRLs.GetLength(1) && cellCTRLs[x, y + plusY].BlockingMove <= 0 && cellCTRLs[x, y + plusY].cellInternal && cellCTRLs[x, y + plusY].rock <= 0 &&
+                            CheckWallsToMoveUp(cellCTRLs[x, y + plusY].wall, cellCTRLs[x, y].wall))
                         {
 
                             break;
@@ -2081,7 +2105,7 @@ public class GameFieldCTRL : MonoBehaviour
                     void SetMarkersActive()
                     {
                         if (markers[x, y] != null)
-                        {                         
+                        {
                             markers[x, y].GetComponent<MarkerAnimationController>().canPlayInAnim = true;
                             markers[x, y].GetComponent<MarkerAnimationController>().isMarkerPlayingAnimation = true;
                         }
@@ -2181,6 +2205,7 @@ public class GameFieldCTRL : MonoBehaviour
             }
             //Права
             if (isCellOK(new Vector2Int(cell.pos.x + 1, cell.pos.y)))
+
             {
 
                 potencialRight.Target = cell;
@@ -2339,8 +2364,8 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal.color == potTest.cells[0].cellInternal.color &&
                         cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal.type != CellInternalObject.Type.color5 &&
                         cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal.type != CellInternalObject.Type.blocker &&
-                        !(cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal.activateNeed)
-                        )
+                        !(cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].cellInternal.activateNeed) &&
+                        CheckWallsToMoveLeft(cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y].wall, cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y].wall))
                     {
 
                         potTest.Moving = cellCTRLs[potTest.Target.pos.x - 1, potTest.Target.pos.y];
@@ -2355,8 +2380,8 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal.color == potTest.cells[0].cellInternal.color &&
                         cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal.type != CellInternalObject.Type.color5 &&
                         cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal.type != CellInternalObject.Type.blocker &&
-                        !(cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal.activateNeed)
-                        )
+                        !(cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].cellInternal.activateNeed) &&
+                        CheckWallsToMoveRight(cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y].wall, cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y].wall))
                     {
 
                         potTest.Moving = cellCTRLs[potTest.Target.pos.x + 1, potTest.Target.pos.y];
@@ -2371,8 +2396,8 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal.color == potTest.cells[0].cellInternal.color &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal.type != CellInternalObject.Type.color5 &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal.type != CellInternalObject.Type.blocker &&
-                        !(cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal.activateNeed)
-                        )
+                        !(cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].cellInternal.activateNeed) &&
+                        CheckWallsToMoveUp(cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1].wall, cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y].wall))
                     {
 
                         potTest.Moving = cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y + 1];
@@ -2387,8 +2412,8 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal.color == potTest.cells[0].cellInternal.color &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal.type != CellInternalObject.Type.color5 &&
                         cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal.type != CellInternalObject.Type.blocker &&
-                        !(cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal.activateNeed)
-                        )
+                        !(cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].cellInternal.activateNeed) &&
+                        CheckWallsToMoveDown(cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1].wall, cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y].wall))
                     {
 
                         potTest.Moving = cellCTRLs[potTest.Target.pos.x, potTest.Target.pos.y - 1];
@@ -2436,8 +2461,8 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal != null &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.type != CellInternalObject.Type.color &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.type != CellInternalObject.Type.blocker &&
-                    !(cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.activateNeed)
-                    )
+                    !(cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.activateNeed) &&
+                    CheckWallsToMoveLeft(cellCTRLs[cell.pos.x - 1, cell.pos.y].wall, cellCTRLs[cell.pos.x, cell.pos.y].wall))
                 {
 
                     left = cellCTRLs[cell.pos.x - 1, cell.pos.y];
@@ -2450,8 +2475,8 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal != null &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.type != CellInternalObject.Type.color &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.type != CellInternalObject.Type.blocker &&
-                    !(cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.activateNeed)
-                    )
+                    !(cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.activateNeed) &&
+                    CheckWallsToMoveRight(cellCTRLs[cell.pos.x + 1, cell.pos.y].wall, cellCTRLs[cell.pos.x, cell.pos.y].wall))
                 {
 
                     right = cellCTRLs[cell.pos.x + 1, cell.pos.y];
@@ -2464,8 +2489,8 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal != null &&
                     cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.type != CellInternalObject.Type.color &&
                     cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.type != CellInternalObject.Type.blocker &&
-                    !(cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.activateNeed)
-                    )
+                    !(cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.activateNeed) &&
+                    CheckWallsToMoveUp(cellCTRLs[cell.pos.x, cell.pos.y + 1].wall, cellCTRLs[cell.pos.x, cell.pos.y].wall))
                 {
 
                     up = cellCTRLs[cell.pos.x, cell.pos.y + 1];
@@ -2479,8 +2504,8 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal != null &&
                     cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.type != CellInternalObject.Type.color &&
                     cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.type != CellInternalObject.Type.blocker &&
-                    !(cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.activateNeed)
-                                        )
+                    !(cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.activateNeed) &&
+                    CheckWallsToMoveDown(cellCTRLs[cell.pos.x, cell.pos.y - 1].wall, cellCTRLs[cell.pos.x, cell.pos.y].wall))
                 {
 
                     down = cellCTRLs[cell.pos.x, cell.pos.y - 1];
@@ -2497,7 +2522,8 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[cell.pos.x - 1, cell.pos.y].rock == 0 &&
                         cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal != null &&
                         (cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.type == CellInternalObject.Type.color ||
-                        cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.type == CellInternalObject.Type.color5))
+                        cellCTRLs[cell.pos.x - 1, cell.pos.y].cellInternal.type == CellInternalObject.Type.color5) &&
+                        CheckWallsToMoveLeft(cellCTRLs[cell.pos.x - 1, cell.pos.y].wall, cellCTRLs[cell.pos.x, cell.pos.y].wall))
                     {
 
                         left = cellCTRLs[cell.pos.x - 1, cell.pos.y];
@@ -2509,7 +2535,8 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[cell.pos.x + 1, cell.pos.y].rock == 0 &&
                         cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal != null &&
                         (cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.type == CellInternalObject.Type.color ||
-                        cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.type == CellInternalObject.Type.color5))
+                        cellCTRLs[cell.pos.x + 1, cell.pos.y].cellInternal.type == CellInternalObject.Type.color5) &&
+                        CheckWallsToMoveRight(cellCTRLs[cell.pos.x + 1, cell.pos.y].wall, cellCTRLs[cell.pos.x, cell.pos.y].wall))
                     {
 
                         right = cellCTRLs[cell.pos.x + 1, cell.pos.y];
@@ -2521,7 +2548,8 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[cell.pos.x, cell.pos.y + 1].rock == 0 &&
                         cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal != null &&
                         (cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.type == CellInternalObject.Type.color ||
-                        cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.type == CellInternalObject.Type.color5))
+                        cellCTRLs[cell.pos.x, cell.pos.y + 1].cellInternal.type == CellInternalObject.Type.color5) &&
+                        CheckWallsToMoveUp(cellCTRLs[cell.pos.x, cell.pos.y + 1].wall, cellCTRLs[cell.pos.x, cell.pos.y].wall))
                     {
 
                         up = cellCTRLs[cell.pos.x, cell.pos.y + 1];
@@ -2534,7 +2562,8 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[cell.pos.x, cell.pos.y - 1].rock == 0 &&
                         cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal != null &&
                         (cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.type == CellInternalObject.Type.color ||
-                        cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.type == CellInternalObject.Type.color5))
+                        cellCTRLs[cell.pos.x, cell.pos.y - 1].cellInternal.type == CellInternalObject.Type.color5) &&
+                        CheckWallsToMoveDown(cellCTRLs[cell.pos.x, cell.pos.y - 1].wall, cellCTRLs[cell.pos.x, cell.pos.y].wall))
                     {
 
                         down = cellCTRLs[cell.pos.x, cell.pos.y - 1];
@@ -2614,8 +2643,15 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].rock == 0 &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].cellInternal != null &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].cellInternal.type != CellInternalObject.Type.blocker &&
-                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].cellInternal.color == potencialLeft.cells[0].cellInternal.color
-                    )
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].cellInternal.color == potencialLeft.cells[0].cellInternal.color &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].wall != 6 &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].wall != 11 &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].wall != 14 &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].wall != 15 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 8 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 12 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 13 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 15)
                 {
 
                     PotencialComb super = new PotencialComb();
@@ -2656,7 +2692,15 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].rock == 0 &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].cellInternal != null &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].cellInternal.type != CellInternalObject.Type.blocker &&
-                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].cellInternal.color == potencialRight.cells[0].cellInternal.color)
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].cellInternal.color == potencialRight.cells[0].cellInternal.color &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].wall != 7 &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].wall != 11 &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].wall != 12 &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].wall != 15 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 5 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 13 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 14 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 15)
                 {
 
                     PotencialComb super = new PotencialComb();
@@ -2697,7 +2741,15 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].rock == 0 &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].cellInternal != null &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].cellInternal.type != CellInternalObject.Type.blocker &&
-                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].cellInternal.color == potencialRight.cells[0].cellInternal.color)
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].cellInternal.color == potencialRight.cells[0].cellInternal.color &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].wall != 8 &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].wall != 12 &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].wall != 13 &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].wall != 15 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 6 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 11 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 14 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 15)
                 {
 
                     PotencialComb super = new PotencialComb();
@@ -2738,7 +2790,15 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].rock == 0 &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].cellInternal != null &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].cellInternal.type != CellInternalObject.Type.blocker &&
-                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].cellInternal.color == potencialLeft.cells[0].cellInternal.color)
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].cellInternal.color == potencialLeft.cells[0].cellInternal.color &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].wall != 5 &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].wall != 13 &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].wall != 14 &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].wall != 15 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 7 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 11 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 12 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 15)
                 {
 
                     PotencialComb super = new PotencialComb();
@@ -2799,7 +2859,8 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[first.Target.pos.x, first.Target.pos.y + 1].cellInternal != null &&
                         cellCTRLs[first.Target.pos.x, first.Target.pos.y + 1].cellInternal.color == first.cells[0].cellInternal.color &&
                         cellCTRLs[first.Target.pos.x, first.Target.pos.y + 1].cellInternal.type != CellInternalObject.Type.color5 &&
-                        cellCTRLs[first.Target.pos.x, first.Target.pos.y + 1].cellInternal.type != CellInternalObject.Type.blocker)
+                        cellCTRLs[first.Target.pos.x, first.Target.pos.y + 1].cellInternal.type != CellInternalObject.Type.blocker &&
+                        CheckWallsToMoveUp(cellCTRLs[first.Target.pos.x, first.Target.pos.y + 1].wall, cellCTRLs[first.Target.pos.x, first.Target.pos.y].wall))
                     {
 
                         up = cellCTRLs[first.Target.pos.x, first.Target.pos.y + 1];
@@ -2811,7 +2872,8 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[first.Target.pos.x, first.Target.pos.y - 1].cellInternal != null &&
                         cellCTRLs[first.Target.pos.x, first.Target.pos.y - 1].cellInternal.color == first.cells[0].cellInternal.color &&
                         cellCTRLs[first.Target.pos.x, first.Target.pos.y - 1].cellInternal.type != CellInternalObject.Type.color5 &&
-                        cellCTRLs[first.Target.pos.x, first.Target.pos.y - 1].cellInternal.type != CellInternalObject.Type.blocker)
+                        cellCTRLs[first.Target.pos.x, first.Target.pos.y - 1].cellInternal.type != CellInternalObject.Type.blocker &&
+                        CheckWallsToMoveDown(cellCTRLs[first.Target.pos.x, first.Target.pos.y - 1].wall, cellCTRLs[first.Target.pos.x, first.Target.pos.y].wall))
                     {
                         down = cellCTRLs[first.Target.pos.x, first.Target.pos.y - 1];
                     }
@@ -2874,7 +2936,7 @@ public class GameFieldCTRL : MonoBehaviour
 
                     CellCTRL right = null;
                     CellCTRL left = null;
-                    //проверка сверху
+                    //проверка справа
                     if (first.Target.pos.x + 1 < cellCTRLs.GetLength(0) &&
                         cellCTRLs[first.Target.pos.x + 1, first.Target.pos.y] != null &&
                         cellCTRLs[first.Target.pos.x + 1, first.Target.pos.y] != first.cells[0] &&
@@ -2882,7 +2944,8 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[first.Target.pos.x + 1, first.Target.pos.y].cellInternal != null &&
                         cellCTRLs[first.Target.pos.x + 1, first.Target.pos.y].cellInternal.color == first.cells[0].cellInternal.color &&
                         cellCTRLs[first.Target.pos.x + 1, first.Target.pos.y].cellInternal.type != CellInternalObject.Type.color5 &&
-                        cellCTRLs[first.Target.pos.x + 1, first.Target.pos.y].cellInternal.type != CellInternalObject.Type.blocker)
+                        cellCTRLs[first.Target.pos.x + 1, first.Target.pos.y].cellInternal.type != CellInternalObject.Type.blocker &&
+                        CheckWallsToMoveRight(cellCTRLs[first.Target.pos.x + 1, first.Target.pos.y].wall, cellCTRLs[first.Target.pos.x, first.Target.pos.y].wall))
                     {
 
                         right = cellCTRLs[first.Target.pos.x + 1, first.Target.pos.y];
@@ -2894,7 +2957,8 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[first.Target.pos.x - 1, first.Target.pos.y].cellInternal != null &&
                         cellCTRLs[first.Target.pos.x - 1, first.Target.pos.y].cellInternal.color == first.cells[0].cellInternal.color &&
                         cellCTRLs[first.Target.pos.x - 1, first.Target.pos.y].cellInternal.type != CellInternalObject.Type.color5 &&
-                        cellCTRLs[first.Target.pos.x - 1, first.Target.pos.y].cellInternal.type != CellInternalObject.Type.blocker)
+                        cellCTRLs[first.Target.pos.x - 1, first.Target.pos.y].cellInternal.type != CellInternalObject.Type.blocker &&
+                        CheckWallsToMoveLeft(cellCTRLs[first.Target.pos.x - 1, first.Target.pos.y].wall, cellCTRLs[first.Target.pos.x, first.Target.pos.y].wall))
                     {
                         left = cellCTRLs[first.Target.pos.x - 1, first.Target.pos.y];
                     }
@@ -3419,12 +3483,12 @@ public class GameFieldCTRL : MonoBehaviour
     public void TestStartSwap()
     {
         //Если выделенная ячейка есть и прошло больще 5 секунд снимаем выделение
-        
+
         if (CellSelect && Time.unscaledTime - timeCellSelect > 4 && Gameplay.main.playerTurn)
         {
             CellSelect = null;
         }
-        
+
 
         //Если есть выбранная ячейка
         if (CellSelect)
@@ -3448,23 +3512,79 @@ public class GameFieldCTRL : MonoBehaviour
             return;
 
         bool neibour = false;
-
+        bool wallBlocksMovement = false;
         //Проверяем соседство
         //слева
         if (CellSelect.pos.x > 0 && CellSwap == cellCTRLs[CellSelect.pos.x - 1, CellSelect.pos.y])
+        {
             neibour = true;
+            //Все варианты, где слева от выбранной клетки стена || Все варианты, где справа от целевой клетки стена
+            if (CellSelect.wall == 4 || CellSwap.wall == 2 ||
+            CellSelect.wall == 7 || CellSwap.wall == 5 ||
+            CellSelect.wall == 8 || CellSwap.wall == 6 ||
+            CellSelect.wall == 10 || CellSwap.wall == 10 ||
+            CellSelect.wall == 11 || CellSwap.wall == 11 ||
+            CellSelect.wall == 12 || CellSwap.wall == 13 ||
+            CellSelect.wall == 13 || CellSwap.wall == 14 ||
+            CellSelect.wall == 15 || CellSwap.wall == 15)
+            {
+                wallBlocksMovement = true;
+            }
+        }
         //справа
         else if (CellSelect.pos.x < cellCTRLs.GetLength(0) - 1 && CellSwap == cellCTRLs[CellSelect.pos.x + 1, CellSelect.pos.y])
+        {
             neibour = true;
+            //Все варианты, где справа от выбранной клетки стена || Все варианты, где слева от целевой клетки стена
+            if (CellSelect.wall == 2 || CellSwap.wall == 4 ||
+                CellSelect.wall == 5 || CellSwap.wall == 7 ||
+                CellSelect.wall == 6 || CellSwap.wall == 8 ||
+                CellSelect.wall == 10 || CellSwap.wall == 10 ||
+                CellSelect.wall == 11 || CellSwap.wall == 11 ||
+                CellSelect.wall == 13 || CellSwap.wall == 12 ||
+                CellSelect.wall == 14 || CellSwap.wall == 13 ||
+                CellSelect.wall == 15 || CellSwap.wall == 15)
+            {
+                wallBlocksMovement = true;
+            }
+        }
         //Снизу
         else if (CellSelect.pos.y > 0 && CellSwap == cellCTRLs[CellSelect.pos.x, CellSelect.pos.y - 1])
+        {
             neibour = true;
+            //Все варианты, где снизу от выбранной клетки стена || Все варианты, где сверху от целевой клетки стена
+            if (CellSelect.wall == 3 || CellSwap.wall == 1 ||
+            CellSelect.wall == 6 || CellSwap.wall == 5 ||
+            CellSelect.wall == 7 || CellSwap.wall == 8 ||
+            CellSelect.wall == 9 || CellSwap.wall == 9 ||
+            CellSelect.wall == 11 || CellSwap.wall == 12 ||
+            CellSelect.wall == 12 || CellSwap.wall == 13 ||
+            CellSelect.wall == 14 || CellSwap.wall == 14 ||
+            CellSelect.wall == 15 || CellSwap.wall == 15)
+            {
+                wallBlocksMovement = true;
+            }
+        }
         //сверху
         else if (CellSelect.pos.y < cellCTRLs.GetLength(1) - 1 && CellSwap == cellCTRLs[CellSelect.pos.x, CellSelect.pos.y + 1])
+        {
             neibour = true;
+            //Все варианты, где сверху от выбранной клетки стена || Все варианты, где снизу от целевой клетки стена
+            if (CellSelect.wall == 1 || CellSwap.wall == 3 ||
+            CellSelect.wall == 5 || CellSwap.wall == 6 ||
+            CellSelect.wall == 8 || CellSwap.wall == 7 ||
+            CellSelect.wall == 9 || CellSwap.wall == 9 ||
+            CellSelect.wall == 12 || CellSwap.wall == 11 ||
+            CellSelect.wall == 13 || CellSwap.wall == 12 ||
+            CellSelect.wall == 14 || CellSwap.wall == 14 ||
+            CellSelect.wall == 15 || CellSwap.wall == 15)
+            {
+                wallBlocksMovement = true;
+            }
+        }
 
-        //если не соседняя ячейка, выходим
-        if (!neibour)
+        //если не соседняя ячейка + если стена, выходим 
+        if (!neibour || wallBlocksMovement)
         {
             CellSelect = null;
             CellSwap = null;
@@ -3549,7 +3669,6 @@ public class GameFieldCTRL : MonoBehaviour
                 InternalSecond.StartMove(swap.first);
 
                 Gameplay.main.movingCount--;
-
                 continue;
             }
             BufferSwapNew.Add(swap);
@@ -3757,7 +3876,6 @@ public class GameFieldCTRL : MonoBehaviour
 
             TestMoveInternalObj(); //Проверяем наличие движения для отмены комбо
             TestMoveFly();
-
             //Если происходит движение
             if (isMovingInternalObj || isMovingFly || Time.unscaledTime - movingObjLastTime < 1)
             {
@@ -3772,6 +3890,10 @@ public class GameFieldCTRL : MonoBehaviour
             //Если прекратили двигаться
             if (isMovingOld && !isMovingNow)
             {
+
+                listPotencial = new List<PotencialComb>();
+                potencialBest = null;
+                enemyPotencialBest = null;
                 //Вызываем сообщение о комбинации
                 if (!Gameplay.main.isMissionComplite() && !Gameplay.main.isMissionDefeat())
                 {
@@ -3891,22 +4013,26 @@ public class GameFieldCTRL : MonoBehaviour
                 }
                 else if (Gameplay.main.isMissionDefeat()) NeedOpenDefeat = true;
 
-                listPotencial = new List<PotencialComb>();
-                potencialBest = null;
-                enemyPotencialBest = null;
-                //Передаем ход противнику
-                if (Gameplay.main.playerTurn && !EnemyController.enemyTurn)
+
+
+                //Если в игре есть противник
+                if (LevelsScript.main.ReturnLevel().PassedWithEnemy && Gameplay.main.moveCompleted)
                 {
-                    Gameplay.main.playerTurn = false;
-                    EnemyController.enemyTurn = true;
-                    MenuGameplay.main.CreateMidleMessage("Enemy Turn", Color.blue);
+                    //Передаем ход противнику
+                    if (Gameplay.main.playerTurn && !EnemyController.enemyTurn)
+                    {
+                        Gameplay.main.playerTurn = false;
+                        EnemyController.enemyTurn = true;
+                        MenuGameplay.main.CreateMidleMessage("Enemy Turn", Color.blue);
+                    }
+                    //Передаем ход игроку
+                    else if (!EnemyController.enemyTurn && !Gameplay.main.playerTurn)
+                    {
+                        Gameplay.main.playerTurn = true;
+                        MenuGameplay.main.CreateMidleMessage("Your Turn", Color.blue);
+                    }
                 }
-                //Передаем ход игроку
-                else if (!EnemyController.enemyTurn && !Gameplay.main.playerTurn)
-                {
-                    Gameplay.main.playerTurn = true;
-                    MenuGameplay.main.CreateMidleMessage("Your Turn", Color.blue);
-                }
+                Gameplay.main.moveCompleted = false;
             }
             else if (!isMovingOld && isMovingNow)
             {
@@ -3995,8 +4121,8 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[x, y - 1] &&
                     !cellCTRLs[x, y - 1].cellInternal &&
                     cellCTRLs[x, y - 1].rock == 0 &&
-                    cellCTRLs[x, y - 1].BlockingMove == 0
-                    )
+                    cellCTRLs[x, y - 1].BlockingMove == 0 &&
+                    CheckWallsToMoveDown(cellCTRLs[x, y - 1].wall, cellCTRLs[x, y].wall))
                 {
                     movingNow = true;
                 }
@@ -4040,4 +4166,87 @@ public class GameFieldCTRL : MonoBehaviour
             isMovingFly = false;
         }
     }
+
+    //Проверяем, мешают ли стены двигаться вверх \ вниз \ влево \ вправо
+    #region WallsCheck
+    public bool CheckWallsToMoveUp(int targetCellWalls, int movingCellWalls)
+    {
+        return (targetCellWalls != 3 &&
+                        targetCellWalls != 6 &&
+                        targetCellWalls != 7 &&
+                        targetCellWalls != 9 &&
+                        targetCellWalls != 11 &&
+                        targetCellWalls != 12 &&
+                        targetCellWalls != 14 &&
+                        targetCellWalls != 15 &&
+                        movingCellWalls != 1 &&
+                        movingCellWalls != 5 &&
+                        movingCellWalls != 8 &&
+                        movingCellWalls != 9 &&
+                        movingCellWalls != 12 &&
+                        movingCellWalls != 13 &&
+                        movingCellWalls != 14 &&
+                        movingCellWalls != 15);
+    }
+
+    public bool CheckWallsToMoveDown(int targetCellWalls, int movingCellWalls)
+    {
+        return (targetCellWalls != 1 &&
+                        targetCellWalls != 5 &&
+                        targetCellWalls != 8 &&
+                        targetCellWalls != 9 &&
+                        targetCellWalls != 12 &&
+                        targetCellWalls != 13 &&
+                        targetCellWalls != 14 &&
+                        targetCellWalls != 15 &&
+                        movingCellWalls != 3 &&
+                        movingCellWalls != 6 &&
+                        movingCellWalls != 7 &&
+                        movingCellWalls != 9 &&
+                        movingCellWalls != 11 &&
+                        movingCellWalls != 12 &&
+                        movingCellWalls != 14 &&
+                        movingCellWalls != 15);
+    }
+
+    public bool CheckWallsToMoveLeft(int targetCellWalls, int movingCellWalls)
+    {
+        return (targetCellWalls != 2 &&
+                        targetCellWalls != 5 &&
+                        targetCellWalls != 6 &&
+                        targetCellWalls != 10 &&
+                        targetCellWalls != 11 &&
+                        targetCellWalls != 13 &&
+                        targetCellWalls != 14 &&
+                        targetCellWalls != 15 &&
+                        movingCellWalls != 4 &&
+                        movingCellWalls != 7 &&
+                        movingCellWalls != 8 &&
+                        movingCellWalls != 10 &&
+                        movingCellWalls != 11 &&
+                        movingCellWalls != 12 &&
+                        movingCellWalls != 13 &&
+                        movingCellWalls != 15);
+    }
+
+    public bool CheckWallsToMoveRight(int targetCellWalls, int movingCellWalls)
+    {
+        return (targetCellWalls != 4 &&
+                        targetCellWalls != 7 &&
+                        targetCellWalls != 8 &&
+                        targetCellWalls != 10 &&
+                        targetCellWalls != 11 &&
+                        targetCellWalls != 12 &&
+                        targetCellWalls != 13 &&
+                        targetCellWalls != 15 &&
+                        movingCellWalls != 2 &&
+                        movingCellWalls != 5 &&
+                        movingCellWalls != 6 &&
+                        movingCellWalls != 10 &&
+                        movingCellWalls != 11 &&
+                        movingCellWalls != 13 &&
+                        movingCellWalls != 14 &&
+                        movingCellWalls != 15);
+    }
+    #endregion
 }
