@@ -40,9 +40,18 @@ public class MessageLevelInfo : MonoBehaviour
     }
 
     public void ClickButtonStartLevel() {
-        UICTRL.main.OpenGameplay();
+        if (PlayerProfile.main.Health.Amount > 0)
+        {
+            UICTRL.main.OpenGameplay();
 
-        MessageCTRL myMessageCTRL = gameObject.GetComponent<MessageCTRL>();
-        myMessageCTRL.ClickButtonClose();
+            MessageCTRL myMessageCTRL = gameObject.GetComponent<MessageCTRL>();
+            myMessageCTRL.ClickButtonClose();
+        }
+        else
+        {
+            GlobalMessage.ShopBuyHealth();
+            MessageCTRL myMessageCTRL = gameObject.GetComponent<MessageCTRL>();
+            myMessageCTRL.ClickButtonClose();
+        }
     }
 }

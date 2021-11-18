@@ -46,12 +46,6 @@ public class GameplayParticles3D : MonoBehaviour
     [SerializeField]
     public GameObject prefabCreateMaz;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     //инициализация рендер текстуры
     Vector2 sizeOld = new Vector2();
     void iniRenderTexture() {

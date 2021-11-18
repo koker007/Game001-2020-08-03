@@ -110,6 +110,7 @@ public class PlayerProfile : MonoBehaviour
 
 
         Health.Amount = PlayerPrefs.GetInt(strHealth, 5);
+        Health.Amount = 100;
         Ticket.Amount = PlayerPrefs.GetInt(strTicket, 5);
         ShopInternal.Amount = PlayerPrefs.GetInt(strShopInternal, 3);
         ShopRocket.Amount = PlayerPrefs.GetInt(strShopRocket, 3);
@@ -161,7 +162,7 @@ public class PlayerProfile : MonoBehaviour
             item.Amount++;
 
             MenuWorld.main.SetText();
-            //SaveItemAmount();
+            SaveItemAmount();
 
             return true;
         }

@@ -19,7 +19,8 @@ public class MessageBuyItem : MonoBehaviour
 
     [SerializeField]
     Image To;
-
+    [SerializeField]
+    bool health;
 
     [SerializeField]
     Image Target;
@@ -36,13 +37,6 @@ public class MessageBuyItem : MonoBehaviour
     [SerializeField]
     MenuGameplay.SuperHitType typeBuy;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         UpdateText();
@@ -50,8 +44,12 @@ public class MessageBuyItem : MonoBehaviour
 
     void UpdateText() {
 
-        FromCount.text = System.Convert.ToString(PlayerProfile.main.GoldAmount);
-        FromPrice.text = System.Convert.ToString(DealPrice);
+        if (!health)
+        {
+            FromCount.text = System.Convert.ToString(PlayerProfile.main.GoldAmount);
+            FromPrice.text = System.Convert.ToString(DealPrice);
+        }
+
         TargetPrice.text = System.Convert.ToString(DealResult);
 
         if (typeBuy == MenuGameplay.SuperHitType.internalObj)
@@ -72,6 +70,10 @@ public class MessageBuyItem : MonoBehaviour
         }
         else if (typeBuy == MenuGameplay.SuperHitType.mixed) {
             TargetCount.text = System.Convert.ToString(PlayerProfile.main.ShopMixed.Amount);
+        }
+        else if (health)
+        {
+            TargetCount.text = System.Convert.ToString(PlayerProfile.main.Health.Amount);
         }
     }
 
@@ -103,6 +105,13 @@ public class MessageBuyItem : MonoBehaviour
         else if (typeBuy == MenuGameplay.SuperHitType.mixed)
         {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopMixed))
+            {
+                NeedBuyAntigen = true;
+            }
+        }
+        else if(health)
+        {
+            if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.Health))
             {
                 NeedBuyAntigen = true;
             }

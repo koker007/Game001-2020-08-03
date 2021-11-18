@@ -141,13 +141,6 @@ public class GameFieldCTRL : MonoBehaviour
 
     void Update()
     {
-        if (Gameplay.main.isMissionComplite())
-        {
-            Time.timeScale = 20;
-            Gameplay.main.timeScale = 20;
-            EnemyController.enemyTurn = true; //test
-        }
-        Debug.Log(Gameplay.main.isMissionComplite());
         if (NeedOpenDefeat && Gameplay.main.movingCan > 0)
         {
             NeedOpenDefeat = false;
@@ -1856,7 +1849,7 @@ public class GameFieldCTRL : MonoBehaviour
 
 
     private List<PotencialComb> listPotencial = new List<PotencialComb>();
-    private PotencialComb potencialBest = null;
+    public static PotencialComb potencialBest = null;
     //Лучшая комбинация для робота (самая слабая)
     public static PotencialComb enemyPotencialBest = null;
     public class PotencialComb
@@ -3631,6 +3624,12 @@ public class GameFieldCTRL : MonoBehaviour
         BufferSwap.Add(swap);
 
         Gameplay.main.movingCount++;
+        if (!Gameplay.main.gameStarted)
+        {
+            PlayerProfile.main.Health.Amount--;
+            PlayerProfile.main.Save();
+            Gameplay.main.gameStarted = true;
+        }
         //Gameplay.main.movingCan--;
     }
 
@@ -3909,34 +3908,44 @@ public class GameFieldCTRL : MonoBehaviour
                     List<CellInternalObject> flys = new List<CellInternalObject>();
                     List<CellInternalObject> color5 = new List<CellInternalObject>();
 
-                    for (int y = 0; y < cellCTRLs.GetLength(1); y++)
+                    if (Gameplay.main.movingCan > 0)
                     {
-                        for (int x = 0; x < cellCTRLs.GetLength(0); x++)
+                        for (int y = 0; y < cellCTRLs.GetLength(1); y++)
                         {
-                            if (cellCTRLs[x, y] != null && cellCTRLs[x, y].cellInternal)
-                            {
+                            //int x = Mathf.CeilToInt(cellCTRLs.GetLength(1) / 2);
 
-                                if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.rocketHorizontal ||
-                                    cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.rocketVertical)
+                            for (int x = 0; x < cellCTRLs.GetLength(0); x++)
+                            {
+                                if (cellCTRLs[x, y] != null && cellCTRLs[x, y].cellInternal)
                                 {
-                                    roskets.Add(cellCTRLs[x, y].cellInternal);
-                                }
-                                else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.bomb)
-                                {
-                                    bombs.Add(cellCTRLs[x, y].cellInternal);
-                                }
-                                else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.airplane)
-                                {
-                                    flys.Add(cellCTRLs[x, y].cellInternal);
-                                }
-                                else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.color5)
-                                {
-                                    color5.Add(cellCTRLs[x, y].cellInternal);
+                                    cellCTRLs[x, y].cellInternal.setColorAndType(cellCTRLs[x, y].cellInternal.color, (CellInternalObject.Type)Random.Range(3, 5));
+                                    cellCTRLs[x, y].cellInternal.Activate(cellCTRLs[x, y].cellInternal.type, null, null);
+                                    Gameplay.main.movingCan = 0;
+
+                                    /*
+                                    if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.rocketHorizontal ||
+                                        cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.rocketVertical)
+                                    {
+                                        roskets.Add(cellCTRLs[x, y].cellInternal);
+                                    }
+                                    else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.bomb)
+                                    {
+                                        bombs.Add(cellCTRLs[x, y].cellInternal);
+                                    }
+                                    else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.airplane)
+                                    {
+                                        flys.Add(cellCTRLs[x, y].cellInternal);
+                                    }
+                                    else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.color5)
+                                    {
+                                        color5.Add(cellCTRLs[x, y].cellInternal);
+                                    }
+                                    */
                                 }
                             }
                         }
                     }
-
+                    /*
                     if (roskets.Count > 0)
                     {
                         foreach (CellInternalObject inside in roskets)
@@ -4005,13 +4014,20 @@ public class GameFieldCTRL : MonoBehaviour
                             MenuGameplay.main.CreateMidleMessage("Last Move", Color.green);
                         }
                     }
-                    else
+                     */
+                    else if (Gameplay.main.isMissionComplite() && !NeedOpenComplite)
                     {
+                        PlayerProfile.main.Health.Amount++;
+                        PlayerProfile.main.Save();
                         NeedOpenComplite = true;
                     }
 
                 }
-                else if (Gameplay.main.isMissionDefeat()) NeedOpenDefeat = true;
+
+                else if (Gameplay.main.isMissionDefeat())
+                {                                     
+                    NeedOpenDefeat = true;
+                }
 
 
 
@@ -4033,6 +4049,11 @@ public class GameFieldCTRL : MonoBehaviour
                     }
                 }
                 Gameplay.main.moveCompleted = false;
+
+                if (Gameplay.main.isMissionComplite())
+                {
+                    Gameplay.main.timeScale = 20;
+                }
             }
             else if (!isMovingOld && isMovingNow)
             {

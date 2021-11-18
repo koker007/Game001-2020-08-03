@@ -154,9 +154,9 @@ public class LevelGenerator : MonoBehaviour
                     Sidecenter = RandomBool(0.5f);
                 }
 
-                if(Width >= 8)
+                if (Width >= 8)
                 {
-                    if(!Sidecenter)
+                    if (!Sidecenter)
                     {
                         center = RandomBool(0.9f);
                     }
@@ -214,7 +214,7 @@ public class LevelGenerator : MonoBehaviour
 
                     for (int x = 0; x >= (Width + 1) / 2; x++)
                     {
-                        if(heightExist > startExist)
+                        if (heightExist > startExist)
                         {
                             break;
                         }
@@ -284,7 +284,7 @@ public class LevelGenerator : MonoBehaviour
                 bool rightAndLeftBox = false;
 
                 downBox = RandomBool(0.4f);
-                if(Width >= 10)
+                if (Width >= 10)
                 {
                     downCenterBox = RandomBool(0.5f);
                 }
@@ -301,9 +301,9 @@ public class LevelGenerator : MonoBehaviour
                 if (downBox)
                 {
                     int heightBox = Height - RandomInt(Height / 2 - 2) - 1;
-                    for(int x = 0; x < Width; x++)
+                    for (int x = 0; x < Width; x++)
                     {
-                        for(int y = heightBox; y < Height; y++)
+                        for (int y = heightBox; y < Height; y++)
                         {
                             box[y, x] = 5;
                         }
@@ -373,7 +373,7 @@ public class LevelGenerator : MonoBehaviour
                 {
                     return;
                 }
-                for(int numPanel = 0; numPanel < 4; numPanel++)
+                for (int numPanel = 0; numPanel < 4; numPanel++)
                 {
                     RandomFactor = Mathf.PerlinNoise(0, RandomFactor * 100) + 1;
                     for (int y = 0; y < Height; y++)
@@ -387,7 +387,7 @@ public class LevelGenerator : MonoBehaviour
                                 if (box[y, x] == 0 && exist[y, x] == 1 && rock[y, x] == 0)
                                 {
                                     numPanel++;
-                                    if(numPanel >= 10)
+                                    if (numPanel >= 10)
                                     {
                                         SymmetryArrayForGorizontal(ref panel);
                                         return;
@@ -495,7 +495,7 @@ public class LevelGenerator : MonoBehaviour
         //выдает случайное значение от 0 до указонного
         int RandomInt(int maxValue)
         {
-            if(maxValue <= 0)
+            if (maxValue <= 0)
             {
                 return 0;
             }
@@ -544,13 +544,15 @@ public class LevelGenerator : MonoBehaviour
         //Какой процент для создания супер цвета
         float perlinSuperColor = Mathf.PerlinNoise(777.777f / 666.666f + NumLevel, 1234) * 100;
         //Если меньше порога пусть лучше вообще не мешают
-        if (perlinSuperColor < 60) {
+        if (perlinSuperColor < 60)
+        {
             perlinSuperColor = 0;
         }
 
         //какой процент для создания блокираторов
         float perlinBlocker = Mathf.PerlinNoise(777.777f / 666.666f + NumLevel, 9876) * 100;
-        if (perlinBlocker < 60) {
+        if (perlinBlocker < 60)
+        {
             perlinBlocker = 0;
         }
 
@@ -628,33 +630,49 @@ public class LevelGenerator : MonoBehaviour
 
 
             //CellRandom(Type, 50, 6);
-            level.SetMass(CellRandom(exist, 80, 1), "exist");
+            level.SetMass(CellRandom(exist, 80, 1, false), "exist");
             level.SetMass(ColorRandom(IColors, numColors - 1), "color");
             level.SetMass(TypeTest(Type), "type");
-            level.SetMass(CellRandom(box, 20, 2), "box");
-            level.SetMass(CellRandom(mold, 20, 3), "mold");
-            level.SetMass(CellRandom(panel, 20, 4), "panel");
-            level.SetMass(CellRandom(rock, 20, 5), "rock");
-            level.SetMass(CellRandom(ice, 20, 6), "ice");
+
+            level.SetMass(CellRandom(box, 20, 2, !level.PassedWithBox), "box");
+
+
+            level.SetMass(CellRandom(mold, 20, 3, !level.PassedWithMold), "mold");
+
+
+            level.SetMass(CellRandom(panel, 20, 4, !level.PassedWithPanel), "panel");
+
+
+            level.SetMass(CellRandom(rock, 20, 5, !level.PassedWithRock), "rock");
+
+            level.SetMass(CellRandom(ice, 20, 6, !level.PassedWithIce), "ice");
+
             level.SetCells();
 
 
             //алгоритм генерации
-            int[,] CellRandom(int[,] array, float percentOfField, int ID)
+            int[,] CellRandom(int[,] array, float percentOfField, int ID, bool zeroArray)
             {
                 for (int x = 0; x < Height; x++)
                 {
                     for (int y = 0; y < Width; y++)
                     {
-                        //perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(Mathf.Sin(NumLevel * 10 * x * ID) * 77.77f, Mathf.Sin(NumLevel * 10 * y * ID) * 66.6f) * 10000 % 10 * 10);
-                        perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(NumLevel + x + ID + 0.777f, NumLevel + y + ID + 0.777f) * 10000 % 10 * 10);
-
-                        //perVar = (int)Mathf.Ceil(Mathf.PerlinNoise((x + 777.777f) / 666.666f + NumLevel + ID, (y + 777.777f) / 666.666f + NumLevel + ID) * 10000 % 10 * 10);
-
-                        if (perVar <= percentOfField)
+                        if (!zeroArray)
                         {
-                            array[x, y] = 1;
-                            //Debug.Log("check");
+                            //perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(Mathf.Sin(NumLevel * 10 * x * ID) * 77.77f, Mathf.Sin(NumLevel * 10 * y * ID) * 66.6f) * 10000 % 10 * 10);
+                            perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(NumLevel + x + ID + 0.777f, NumLevel + y + ID + 0.777f) * 10000 % 10 * 10);
+
+                            //perVar = (int)Mathf.Ceil(Mathf.PerlinNoise((x + 777.777f) / 666.666f + NumLevel + ID, (y + 777.777f) / 666.666f + NumLevel + ID) * 10000 % 10 * 10);
+
+                            if (perVar <= percentOfField)
+                            {
+                                array[x, y] = 1;
+                                //Debug.Log("check");
+                            }
+                            else
+                            {
+                                array[x, y] = 0;
+                            }
                         }
                         else
                         {
@@ -696,7 +714,7 @@ public class LevelGenerator : MonoBehaviour
                 }
                 return array;
             }
-           
+
         }
     }
 }

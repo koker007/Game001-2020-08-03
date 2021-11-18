@@ -74,6 +74,8 @@ public class UICTRL : MonoBehaviour
     public void OpenWorld()
     {
         Gameplay.main.isGameplay = false;
+        Time.timeScale = 1;
+        Gameplay.main.timeScale = 1;
         CloseAll();
         UIWorld.SetActive(true);
     }

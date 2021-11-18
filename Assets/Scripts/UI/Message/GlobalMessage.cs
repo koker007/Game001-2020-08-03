@@ -55,6 +55,8 @@ public class GlobalMessage : MonoBehaviour
     GameObject PrefabShopBuyMixed;
     [SerializeField]
     GameObject PrefabShopBuyMoneybox;
+    [SerializeField]
+    GameObject PrefabShopBuyHealth;
 
     [SerializeField]
     GameObject PrefabEvents;
@@ -70,6 +72,7 @@ public class GlobalMessage : MonoBehaviour
     GameObject PrefabComingSoon;
     [SerializeField]
     GameObject PrefabExitGame;
+
 
     void Start()
     {
@@ -236,11 +239,22 @@ public class GlobalMessage : MonoBehaviour
     }
 
     /// <summary>
-    /// Всплывающее окно купить перемешивание
+    /// Всплывающее окно купить копилку
     /// </summary>
     static public void ShopBuyMoneybox()
     {
         GameObject messageObj = Instantiate(main.PrefabShopBuyMoneybox, main.transform);
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+
+        MessageCTRL.NewMessage(messageCTRL);
+    }
+
+    /// <summary>
+    /// Всплывающее окно купить жизни
+    /// </summary>
+    static public void ShopBuyHealth()
+    {
+        GameObject messageObj = Instantiate(main.PrefabShopBuyHealth, main.transform);
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
 
         MessageCTRL.NewMessage(messageCTRL);

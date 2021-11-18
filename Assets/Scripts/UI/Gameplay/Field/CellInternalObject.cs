@@ -13,6 +13,8 @@ public class CellInternalObject : MonoBehaviour
     [SerializeField]
     public AnimatorCTRL animatorCTRL;
 
+    [SerializeField] GameObject trail;
+    bool trailSpawned = false;
 
     //мое поле
     public GameFieldCTRL myField;
@@ -170,7 +172,11 @@ public class CellInternalObject : MonoBehaviour
     void Moving() {
         //Движение к соседу
         if (isMove) {
-
+            if (!trailSpawned)
+            { 
+                Instantiate(trail, GameObject.Find("Particles3D").transform);
+                trailSpawned = true;
+            }
             //////////////////////////////////////////////////////////
             //Горизонтальное движение
             float posXnew = rectMy.pivot.x;
@@ -314,20 +320,20 @@ public class CellInternalObject : MonoBehaviour
         if (returnCell == null) {
             //Проверяем относительно высоты
 
-
+            /*
             bool canTestingRight = true;
             bool canTestingLeft = true;
+            */
 
             //Общая проверка по высоте
             int smeshenie = 1;
-            if (myCell.pos.y - smeshenie >= 0 //если не вышли за массив
-                ) {
+            if (myCell.pos.y - smeshenie >= 0) //если не вышли за массив
+            {
 
                 //Если перемещение четное, то провека справа
                 //int internalNum = CellCTRL.GetNowLastInternalNum;
                 //Справа
-                if (
-                    myCell.pos.x + smeshenie < myField.cellCTRLs.GetLength(0) && //если не вышли за массив
+                if (myCell.pos.x + smeshenie < myField.cellCTRLs.GetLength(0) && //если не вышли за массив
                     myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie] && //Если есть ячейка
                     !myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].cellInternal && //И она свободна
                     myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].BlockingMove == 0 && //и нет ящика
@@ -335,8 +341,8 @@ public class CellInternalObject : MonoBehaviour
                     Time.unscaledTime - myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.35f &&
                     Time.unscaledTime - myField.timeLastBoom > 0 &&
                     isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie]) &&//В этом столбце нет потенциального вертикального движения
-                    (GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[myCell.pos.x, myCell.pos.y - smeshenie].wall, myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall) ||
-                    GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wall, myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y].wall)) &&
+                    /*(GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[myCell.pos.x, myCell.pos.y - smeshenie].wall, myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall) ||
+                    GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wall, myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y].wall)) &&*/
                     myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wall != 8 &&
                     myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wall != 12 &&
                     myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wall != 13 &&
@@ -350,8 +356,7 @@ public class CellInternalObject : MonoBehaviour
                     returnCell = myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie];
                 }
                 //Слева
-                else if (
-                    myCell.pos.x - smeshenie >= 0 && //если не вышли за массив
+                else if (myCell.pos.x - smeshenie >= 0 && //если не вышли за массив
                     myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie] && //Если есть ячейка
                     !myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].cellInternal && //И она свободна
                     myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].BlockingMove == 0 && //И можно двигаться
@@ -359,8 +364,8 @@ public class CellInternalObject : MonoBehaviour
                     Time.unscaledTime - myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.35f &&
                     Time.unscaledTime - myField.timeLastBoom > 0 &&
                     isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie]) && //В этом столбце нет потенциального вертикального движения
-                    (GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[myCell.pos.x, myCell.pos.y - smeshenie].wall, myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall) ||
-                    GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wall, myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y].wall)) &&
+                    /*(GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[myCell.pos.x, myCell.pos.y - smeshenie].wall, myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall) ||
+                    GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wall, myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y].wall)) &&*/
                     myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wall != 5 &&
                     myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wall != 13 &&
                     myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wall != 14 &&
@@ -1052,7 +1057,7 @@ public class CellInternalObject : MonoBehaviour
             //Если активируемый тип не колор 5 но партнер с колор5 и вообще я сам себе партнер
             //(ситуация когда игрок нажимает кнопку бомбы или ракеты из магазина и применяет ее на супер цвет)
             //Цвет считается по приоритету
-            if (ActivateType != Type.color5 && partner.type == Type.color5) 
+            if (ActivateType != Type.color5 && partner.type == Type.color5 || partner == null) 
             {
                 typePartner = ActivateType;
                 replaceColor = CalculateColorPriority();
@@ -1187,7 +1192,6 @@ public class CellInternalObject : MonoBehaviour
                             //Если бомба
                             else if (typePartner == Type.bomb)
                             {
-                                Debug.Log(CalculateColorPriority());
                                 cellInternalObject.setColorAndType(replaceColor, Type.bomb);
                             }
                             //Если самолет

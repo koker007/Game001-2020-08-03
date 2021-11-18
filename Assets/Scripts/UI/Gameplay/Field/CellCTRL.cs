@@ -402,7 +402,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     }
     public void ExplosionBoomInvoke(Explosion explosionNew, float invokeTime) {
         explosion = explosionNew;
-        Invoke("ExplosionBoom", invokeTime);
+        Invoke("ExplosionBoom", invokeTime / Gameplay.main.timeScale);
     }
     // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -625,7 +625,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     }
 
     public void DamageInvoke(float time) {
-        Invoke("Damage", time);
+        Invoke("Damage", time / Gameplay.main.timeScale);
     }
 
     public bool DamageNear() {

@@ -34,13 +34,6 @@ public class Particle3dCTRL : MonoBehaviour
     [SerializeField]
     Vector2 PitchDiapazone = new Vector2(1,1);
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         TestMove();

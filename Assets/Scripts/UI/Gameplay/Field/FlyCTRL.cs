@@ -166,7 +166,7 @@ public class FlyCTRL : MonoBehaviour
             }
 
             //Прибавялем угловую скорость
-            SpeedRotate += Time.deltaTime * 60 * (6/distToTarget); //В скобках угловая скорость в зависимости от растояния
+            SpeedRotate += Time.deltaTime * 60 * (6/distToTarget) * Gameplay.main.timeScale; //В скобках угловая скорость в зависимости от растояния
             //вычисляем коофицент угловой скорости
             float coofRotSpeed = SpeedRotate * SpeedMove * Time.deltaTime;
             //Если коофицент стал больше 1 приравниваем к 1. 1 это моментальное вращение в сторону цели;
@@ -218,11 +218,10 @@ public class FlyCTRL : MonoBehaviour
             else {
                 SpeedMove += (0.01f - SpeedMove) * Time.deltaTime * 15f;
             }
-            Vector2 moving = vectorMove * SpeedMove;
+            Vector2 moving = vectorMove * SpeedMove * Gameplay.main.timeScale;
             //Расчет новой позиции
-            myRect.pivot = new Vector2(myRect.pivot.x + moving.x, myRect.pivot.y + moving.y);
-            
-
+            //myRect.pivot = new Vector2(myRect.pivot.x + moving.x, myRect.pivot.y + moving.y);
+            myRect.pivot = Vector3.Lerp(myRect.pivot, myRect.pivot + moving, 0.5f);
         }
 
         void Damage() {

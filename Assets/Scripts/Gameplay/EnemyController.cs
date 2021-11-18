@@ -8,10 +8,10 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        EnmyTurn();
+        EnemyTurn();
     }
 
-    public void EnmyTurn()
+    public void EnemyTurn()
     {
         if (enemyTurn)
         {
@@ -25,10 +25,7 @@ public class EnemyController : MonoBehaviour
                     GameFieldCTRL.main.CellSelect = cellSelect;
                     GameFieldCTRL.main.CellSwap = cellSwap;
                     Debug.Log("ET");
-                    if (!Gameplay.main.isMissionComplite())
-                    {
-                        enemyTurn = false;
-                    }
+                    enemyTurn = false;
                 }
             }
         }

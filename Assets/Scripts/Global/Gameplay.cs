@@ -25,6 +25,7 @@ public class Gameplay : MonoBehaviour
     public bool isGameplay = false;
     public bool GameplayEnd = false;
     public bool adWatched = false;
+    public bool gameStarted = false; //Проверяем, сделал ли игрок первый ход
     [Header("Level parameters")]
     public int score = 0;
     public int scoreMax = 0;
@@ -65,6 +66,7 @@ public class Gameplay : MonoBehaviour
     public void StartGameplay(ref Image[] stars)
     {
         //Если уровень выбран
+        gameStarted = false;
         timeScale = 1;
         starsCount = 0;
         score = 0;
@@ -119,6 +121,8 @@ public class Gameplay : MonoBehaviour
             movingCan--;
             
             MenuGameplay.main.updateMoving();
+
+
             //Добавляем комбинацию для пост проверки
             //combWaiting.Add(combination);
         }
@@ -135,7 +139,6 @@ public class Gameplay : MonoBehaviour
         {
             enemyScore += PlusScore;
         }
-        Debug.Log(enemyScore);
         MenuGameplay.main.updateScore();
     }
 
@@ -211,7 +214,7 @@ public class Gameplay : MonoBehaviour
                 //Если
                 LevelsScript.Level level = LevelsScript.main.ReturnLevel();
                 if (score >= level.NeedScore || !level.PassedWithScore)
-                {
+                {                   
                     if (MenuGameplay.main.gameFieldCTRL.CountMold <= 0 || !level.PassedWithMold)
                     {
                         if (MenuGameplay.main.gameFieldCTRL.CountBoxBlocker <= 0 || !level.PassedWithBox)
@@ -221,13 +224,12 @@ public class Gameplay : MonoBehaviour
                                 if (MenuGameplay.main.gameFieldCTRL.CountIce <= 0 || !level.PassedWithIce)
                                 {
                                     if (MenuGameplay.main.gameFieldCTRL.CountInteractiveCells <= MenuGameplay.main.gameFieldCTRL.CountPanelSpread || !level.PassedWithPanel)
-                                    {
+                                    {                                       
                                         if (level.NeedCrystal <= main.colorsCount[(int)level.NeedColor] || !level.PassedWithCrystal)
                                         {
-                                            if ((score > enemyScore || !level.PassedWithEnemy))
+                                            if (score > enemyScore || !level.PassedWithEnemy)
                                             {
                                                 buffer.missionComplite = true;
-   
                                             }
                                         }
                                     }
@@ -261,6 +263,7 @@ public class Gameplay : MonoBehaviour
     }
 
     public void OpenMessageComplite() {
+        timeScale = 1;
         PlayerProfile.main.LevelPassed(levelSelect);
         GlobalMessage.Results();
         LevelsScript.main.ReturnLevel().MaxScore = score;
@@ -270,6 +273,7 @@ public class Gameplay : MonoBehaviour
         GameplayEnd = true;
     }
     public void OpenMessageDefeat() {
+        timeScale = 1;
         GlobalMessage.Lose();
         LevelsScript.main.ReturnLevel().MaxScore = score;
     }
