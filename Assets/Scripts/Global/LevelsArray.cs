@@ -2136,7 +2136,7 @@ public class LevelsArray : LevelsScript
         lvl = 31;
         Levels[lvl] = CreateLevel(lvl, 5, 5, 20000, 30, 3, 0, 0);
 
-        Levels[lvl].PassedWithRock = true;
+        Levels[lvl].PassedWithPanel = true;
 
         Levels[lvl].SetMass(
             new int[,] //exist
@@ -2163,11 +2163,11 @@ public class LevelsArray : LevelsScript
         Levels[lvl].SetMass(
             new int[,] //type
             {
-                { 0,0,0,0,0 },
-                { 0,0,0,0,0 },
-                { 6,0,1,0,0 },
-                { 0,0,1,0,0 },
-                { 0,5,2,0,0 },
+                { 0,1,1,1,0 },
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 },
+                { 1,1,1,1,1 },
+                { 0,1,1,1,0 },
             },
             "type"
             );
@@ -2176,7 +2176,7 @@ public class LevelsArray : LevelsScript
             {
                 { 0,0,0,0,0 },
                 { 0,0,0,0,0 },
-                { 0,0,1,0,0 },
+                { 0,0,0,0,0 },
                 { 0,0,0,0,0 },
                 { 0,0,0,0,0 },
             },
@@ -2187,7 +2187,7 @@ public class LevelsArray : LevelsScript
             {
                 { 0,0,0,0,0 },
                 { 0,0,0,0,0 },
-                { 0,0,0,0,0 },
+                { 0,0,1,0,0 },
                 { 0,0,0,0,0 },
                 { 0,0,0,0,0 },
             },
@@ -2198,14 +2198,25 @@ public class LevelsArray : LevelsScript
             {
                 { 0,0,0,0,0 },
                 { 0,0,0,0,0 },
-                { 5,0,3,0,8 },
+                { 5,0,0,0,8 },
                 { 0,0,0,0,0 },
                 { 0,0,0,0,0 },
             },
             "walls"
             );
+        Levels[lvl].SetMass(
+            new int[,] //dispencers
+            {
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 },
+                { 0,0,1,0,0 },
+                { 0,0,0,0,0 },
+                { 0,0,0,0,0 },
+            },
+            "dispencers"
+            );
 
-Levels[lvl].SetCells();
+        Levels[lvl].SetCells();
 
 
         ////////////////////////////////////////////////////////////////////////////

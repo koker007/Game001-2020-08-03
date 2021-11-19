@@ -156,7 +156,6 @@ public class CellInternalObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         Moving();
         UpdateActivate();
     }
@@ -305,13 +304,11 @@ public class CellInternalObject : MonoBehaviour
         //Получить свободную ячейку снизу
         for (int minusY = 1; minusY < myField.cellCTRLs.GetLength(1); minusY++) {
             if (myCell.pos.y - minusY >= 0 && //если не вышли за массив
-                myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY] && //Если есть ячейка
+                GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - (minusY - 1)]) &&
                 !myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].cellInternal && //И она свободна
-                myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].BlockingMove == 0 && //И нет яшика
-                myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].rock == 0 && //и нет камня
                 Time.unscaledTime - myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].timeBoomOld > 0.35f && //c уничтожения ячеек снизу
-                Time.unscaledTime - myField.timeLastBoom > 0 &&
-                GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].wall, myField.cellCTRLs[myCell.pos.x, myCell.pos.y - (minusY - 1)].wall))
+                Time.unscaledTime - myField.timeLastBoom > 0)
+                
             {
                 //Ставим такую ячейку как нижнюю
                 returnCell = myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY];
@@ -398,10 +395,10 @@ public class CellInternalObject : MonoBehaviour
             //Проверяем низ на то что никто не движется в ячейки снизу
             for (int minus = 1; minus < myField.cellCTRLs.GetLength(1) && result; minus++) {
                 if (cellFunc.pos.y - minus >= 0 &&//Если не вышли за пределы массива
+                    GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus], myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - (minus - 1)]) &&
                     myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus] && //есть ячейка
                     myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].BlockingMove <= 0 &&//ячейка находится без блокировки движения
-                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].rock <= 0 &&
-                    GameFieldCTRL.main.CheckWallsToMoveDown(myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].wall, myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - (minus - 1)].wall))
+                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].rock <= 0)
                 {
                     //Блокируем если
                     if (
@@ -422,10 +419,10 @@ public class CellInternalObject : MonoBehaviour
             for (int plus = 1; plus < myField.cellCTRLs.GetLength(1) && result; plus++) {
                 //Проверяем верх на то что нету предметов которые могли бы упасть
                 if (cellFunc.pos.y + plus < myField.cellCTRLs.GetLength(1) &&//Если не вышли за пределы массива
+                    GameFieldCTRL.main.CheckWallsToMoveUp(myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus], myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + (plus - 1)]) &&
                     myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus] && //есть ячейка
-                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus].BlockingMove <= 0 &&//ячейка находится без блокировки движения
-                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus].rock <= 0 &&
-                    GameFieldCTRL.main.CheckWallsToMoveUp(myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus].wall, myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + (plus - 1)].wall))
+                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus].BlockingMove <= 0)//ячейка находится без блокировки движения
+                    
                 {
                     //Блокируем если
                     if (
