@@ -45,6 +45,8 @@ public class GameplayParticles3D : MonoBehaviour
     public GameObject prefabDestroyBlocker;
     [SerializeField]
     public GameObject prefabCreateMaz;
+    [SerializeField]
+    public GameObject prefabTrail;
 
     //инициализация рендер текстуры
     Vector2 sizeOld = new Vector2();
