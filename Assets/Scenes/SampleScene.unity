@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657892, g: 0.4964128, b: 0.5748173, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1360,7 +1360,6 @@ MonoBehaviour:
   prefabDestroyIce: {fileID: 1826681873095554630, guid: 72baa9dc45b23ea44b28716a7626db99, type: 3}
   prefabDestroyBlocker: {fileID: 2809473121838095277, guid: 745e9c554b45a234db15d6849b7786fa, type: 3}
   prefabCreateMaz: {fileID: 105150161536517929, guid: a8a44d70238a7d04cae335528dd6aae5, type: 3}
-  prefabTrail: {fileID: 3025663214686244676, guid: 42db7e19483864041a1318e171084a71, type: 3}
 --- !u!1 &164642875 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5361943101469650051, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
@@ -10704,7 +10703,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
-  antialiasingMode: 0
+  antialiasingMode: 1
   temporalAntialiasing:
     jitterSpread: 0.75
     sharpness: 0.25
@@ -10713,7 +10712,7 @@ MonoBehaviour:
   subpixelMorphologicalAntialiasing:
     quality: 2
   fastApproximateAntialiasing:
-    fastMode: 0
+    fastMode: 1
     keepAlpha: 0
   fog:
     enabled: 1

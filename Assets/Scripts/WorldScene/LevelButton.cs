@@ -11,7 +11,7 @@ public class LevelButton : MonoBehaviour
 {
 
     public Animator LevelAnim;
-    public Text text;
+    public Text[] text;
 
     public GraphicRaycaster raycaster;
     private PointerEventData eventData;
@@ -117,6 +117,9 @@ public class LevelButton : MonoBehaviour
     public void LevelUpdate(int lev)
     {
         NumLevel = lev;
-        text.text = lev.ToString();
+
+        for(int num = 0; num < text.Length; num++) {
+            text[num].text = lev.ToString();
+        }
     }
 }
