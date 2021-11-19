@@ -261,4 +261,10 @@ public class Particle3dCTRL : MonoBehaviour
 
         return CreateParticle(field, cellStartExplose, GameplayParticles3D.main.prefabCreateMaz);
     }
+
+    public static Particle3dCTRL CreateTrail(Transform field, CellCTRL cellStartExplose)
+    {
+
+        return CreateParticle(field, cellStartExplose, GameplayParticles3D.main.prefabTrail);
+    }
 }

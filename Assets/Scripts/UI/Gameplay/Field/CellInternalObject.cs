@@ -12,9 +12,8 @@ public class CellInternalObject : MonoBehaviour
 {
     [SerializeField]
     public AnimatorCTRL animatorCTRL;
-
-    [SerializeField] GameObject trail;
-    bool trailSpawned = false;
+    private Particle3dCTRL trail;
+    private bool trailSpawned = false;
 
     //мое поле
     public GameFieldCTRL myField;
@@ -172,11 +171,19 @@ public class CellInternalObject : MonoBehaviour
     void Moving() {
         //Движение к соседу
         if (isMove) {
-            if (!trailSpawned)
-            { 
-                Instantiate(trail, GameObject.Find("Particles3D").transform);
+            if ((trail == null || !trailSpawned) && (GameFieldCTRL.main.CellSelect == myCell || GameFieldCTRL.main.CellSwap == myCell))
+            {
+                trail = Particle3dCTRL.CreateTrail(myCell.myField.transform, myCell);
                 trailSpawned = true;
             }
+
+            if (trail != null)
+            {
+                trail.gameObject.transform.localPosition = new Vector3(
+                (myCell.myField.transform.GetComponent<RectTransform>().pivot.x - 0.5f) - rectMy.pivot.x + 0.5f,
+                (myCell.myField.transform.GetComponent<RectTransform>().pivot.y - 0.5f) - rectMy.pivot.y + 0.5f, 0);
+            }
+
             //////////////////////////////////////////////////////////
             //Горизонтальное движение
             float posXnew = rectMy.pivot.x;
@@ -276,6 +283,7 @@ public class CellInternalObject : MonoBehaviour
 
         //Проверяем снизу наличие свободной ячейки
         else {
+            trailSpawned = false;
             CellCTRL cellMove = GetFreeCellDown();
             if (cellMove)
                 StartMove(cellMove);
