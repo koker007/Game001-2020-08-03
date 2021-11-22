@@ -27,6 +27,10 @@ public class MidleTextGameplay: MonoBehaviour
     }
 
     void Destroy() {
+        EnemyController.canEnemyMove = true;
+
+        GameFieldCTRL.main.canPassTurn = true;
+        
         Destroy(gameObject);
     }
 }

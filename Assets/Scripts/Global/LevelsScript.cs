@@ -38,9 +38,10 @@ public class LevelsScript : MonoBehaviour
         public int Panel;
         public int rock;
         public int wall;
+        public int teleport;
         public bool dispencer;
 
-        public CellInfo(int box, int mold, int color, int type, int panel, int rockF, int ice, int walls, int disp)
+        public CellInfo(int box, int mold, int color, int type, int panel, int rockF, int ice, int walls, int disp, int tp)
         {
             if (box != 0)
             {
@@ -70,6 +71,11 @@ public class LevelsScript : MonoBehaviour
             if (walls > 0)
             {
                 wall = walls;
+            }
+
+            if (tp > 0)
+            {
+                teleport = tp;
             }
 
             dispencer = (disp != 0);
@@ -148,6 +154,7 @@ public class LevelsScript : MonoBehaviour
         int[,] type;
         int[,] rock;
         int[,] walls;
+        int[,] teleport;
         int[,] dispencers;
 
         /// <summary>
@@ -209,6 +216,9 @@ public class LevelsScript : MonoBehaviour
                 case "dispencers":
                     dispencers = values;
                     break;
+                case "teleport":
+                    teleport = values;
+                    break;
             }
         }
         /// <summary>
@@ -266,6 +276,10 @@ public class LevelsScript : MonoBehaviour
             {
                 massNull(ref walls, 0);
             }
+            if (teleport == null)
+            {
+                massNull(ref teleport, 0);
+            }
             if (dispencers == null)
             {
                 massNull(ref dispencers, 0);
@@ -281,7 +295,7 @@ public class LevelsScript : MonoBehaviour
                     }
                     else
                     {
-                        cells[x, cells.GetLength(1) - 1 - y] = new CellInfo(box[y, x], mold[y, x], internalColors[y, x], type[y, x], panel[y, x], rock[y,x], ice[y,x], walls[y,x], dispencers[y,x]);
+                        cells[x, cells.GetLength(1) - 1 - y] = new CellInfo(box[y, x], mold[y, x], internalColors[y, x], type[y, x], panel[y, x], rock[y,x], ice[y,x], walls[y,x], dispencers[y,x], teleport[y,x]);
                     }
                 }
             }

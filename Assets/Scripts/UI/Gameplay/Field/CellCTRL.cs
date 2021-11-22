@@ -72,6 +72,8 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
     public int wall;
 
+    public int teleport;
+
     public bool panel;
 
     public bool dispencer;
