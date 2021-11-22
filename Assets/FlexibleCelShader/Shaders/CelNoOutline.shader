@@ -8,7 +8,6 @@
 		_EmmisTex("Emission", 2D) = "black" {}
 		
 		_RampLevels("Ramp Levels", Range(2, 50)) = 2
-		_LightScalar("Light Scalar", Range(0, 10)) = 1
 
 		_HighColor("High Light Color", Color) = (1, 1, 1, 1)
 		_HighIntensity("High Light Intensity", Range(0, 10)) = 1.5
@@ -89,7 +88,6 @@
 			sampler2D _EmmisTex;
 			uniform float4 _EmmisTex_ST;
 			int       _RampLevels;
-			float     _LightScalar;
 			float     _HighIntensity;
 			float4    _HighColor;
 			float     _LowIntensity;
@@ -128,7 +126,6 @@
 
 				// Calculate light intensity
 				float intensity = dot(worldNormal, lightDirection);
-				intensity = clamp(intensity * _LightScalar, 0, 1);
 				
 				// Factor in the shadow
 				intensity *= shadow;

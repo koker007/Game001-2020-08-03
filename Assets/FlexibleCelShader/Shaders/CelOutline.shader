@@ -5,7 +5,6 @@
 		_Color("Global Color Modifier", Color) = (1, 1, 1, 1)
 		_MainTex("Texture", 2D) = "white" {}
 		_NormalTex("Normal", 2D) = "bump" {}
-		_EmmisTex("Emission", 2D) = "black" {}
 
 		_RampLevels("Ramp Levels", Range(2, 50)) = 2
 		_LightScalar("Light Scalar", Range(0, 10)) = 1
@@ -18,11 +17,6 @@
 
 		_OutlineColor("Outline Color", Color) = (0, 0, 0, 1)
 		_OutlineSize("Outline Size", float) = 10
-
-		_RimColor("Hard Edge Light Color", Color) = (1, 1, 1, 1)
-		_RimAlpha("Hard Edge Light Brightness", Range(0, 1)) = 0
-		_RimPower("Hard Edge Light Size", Range(0,1)) = 0
-		_RimDropOff("Hard Edge Light Dropoff", range(0, 1)) = 0
 
 		_FresnelColor("Soft Edge Light Color", Color) = (1,1,1,1)
 		_FresnelBrightness("Soft Edge Light Brightness", Range(0, 1)) = 0
@@ -86,7 +80,6 @@
 			uniform float4 _MainTex_ST;
 			sampler2D _NormalTex;
 			uniform float4 _NormalTex_ST;
-			sampler2D _EmmisTex;
 			uniform float4 _EmmisTex_ST;
 			int       _RampLevels;
 			float     _LightScalar;
@@ -94,10 +87,7 @@
 			float4    _HighColor;
 			float     _LowIntensity;
 			float4    _LowColor;
-			float     _RimPower;
-			float	  _RimAlpha;
-			float4    _RimColor;
-			float     _RimDropOff;
+
 			float     _FresnelBrightness;
 			float     _FresnelPower;
 			float4    _FresnelColor;
@@ -114,7 +104,6 @@
 				// Sample textures
 				fixed4 col = tex2D(_MainTex, i.uv * _MainTex_ST.xy + _MainTex_ST.zw);
 				fixed3 tangentNormal = tex2D(_NormalTex, i.uv * _NormalTex_ST.xy + _NormalTex_ST.zw) * 2 - 1;
-				fixed4 emmision = tex2D(_EmmisTex, i.uv * _EmmisTex_ST.xy + _EmmisTex_ST.zw);
 
 				// Get normal
 				float3 worldNormal = float3(i.worldTangent * tangentNormal.r + i.worldBitangent * tangentNormal.g + i.worldNormal * tangentNormal.b);
@@ -152,16 +141,6 @@
 				float rampPercentSoftFresnel = 1 - ((1 - rampLevel / _RampLevels) * (1 - _FresnelShadowDropoff));
 				col.rgb = col.rgb + _FresnelColor * (_FresnelBrightness * 10 - fresnelFactor * _FresnelBrightness * 10) * rampPercentSoftFresnel;
 
-				// Apply hard rim lighting
-				_RimAlpha *= 1 - ((1 - rampLevel / _RampLevels) * (1 - _RimDropOff));
-				if (factor <= _RimPower) {
-					col.rgb = _RimColor.rgb * _RimAlpha + col.rgb * (1 - _RimAlpha);
-				}
-
-				// Apply emmision lighting
-				half eIntensity = max(emmision.r, emmision.g);
-				eIntensity = max(eIntensity, emmision.b);
-				col = emmision * eIntensity + col * (1 - eIntensity);
 
 				return col;
 			}
