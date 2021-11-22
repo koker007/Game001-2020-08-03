@@ -11,6 +11,8 @@ public class GameFieldCTRL : MonoBehaviour
 {
     public static GameFieldCTRL main;
 
+    private TeleportController[] firstTeleports = new TeleportController[100]; //fix
+
     [SerializeField]
     bool NeedOpenComplite = false;
     [SerializeField]
@@ -74,6 +76,8 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     GameObject prefabWall;                                  //Стенка
     [SerializeField]
+    GameObject prefabTeleport;                              //Телепорт
+    [SerializeField]
     GameObject prefabDispencer;                             //Раздатчик
 
     LevelsScript.Level currentLevel;
@@ -116,6 +120,8 @@ public class GameFieldCTRL : MonoBehaviour
     public Transform parentOfMarkers;                       //Маркеры цели (подсказки)
     [SerializeField]
     public Transform parentOfDispencers;                    //Раздатчики
+    [SerializeField]
+    public Transform parentOfTeleport;                    //Раздатчики
 
     [Header("Other")]
     public CellCTRL CellSelect; //Первый выделенный пользователем объект
@@ -147,7 +153,6 @@ public class GameFieldCTRL : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(canPassTurn);
         if (NeedOpenDefeat && Gameplay.main.movingCan > 0)
         {
             NeedOpenDefeat = false;
@@ -297,6 +302,7 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[x, y].rock = level.cells[x, y].rock;
                         cellCTRLs[x, y].mold = level.cells[x, y].HealthMold;
                         cellCTRLs[x, y].wall = level.cells[x, y].wall;
+                        cellCTRLs[x, y].teleport = level.cells[x, y].teleport;
                         if (cellCTRLs[x, y].mold <= 0 && cellCTRLs[x, y].BlockingMove > 0)
                         {
                             cellCTRLs[x, y].mold = 1;
@@ -332,12 +338,34 @@ public class GameFieldCTRL : MonoBehaviour
                         {
                             dispencerObj.GetComponent<DispencerController>().targetCell = cellCTRLs[x, y - 1];
                         }
-                        cellCTRLs[x, y].dispencer = true;
+                        //cellCTRLs[x, y].dispencer = true;
                         dispencerObj.GetComponent<DispencerController>().primaryObjectColor = level.cells[x, y].colorCell;
                         dispencerObj.GetComponent<DispencerController>().primaryObjectType = level.cells[x, y].typeCell;
                     }
 
-                    //if (cellCTRLs[x, y].tele)
+                    if (level.cells[x, y].teleport > 0)
+                    {
+                        int teleportID = level.cells[x, y].teleport;
+                        GameObject teleportObj = Instantiate(prefabTeleport, parentOfTeleport);                        
+                        teleportObj.GetComponent<RectTransform>().pivot = new Vector2(-cellCTRLs[x, y].pos.x, -cellCTRLs[x, y].pos.y);
+
+                        teleportObj.GetComponent<TeleportController>().teleportIn = cellCTRLs[x, y];
+                        
+                        if (y > 0)
+                        {
+                            teleportObj.GetComponent<TeleportController>().teleportOut = cellCTRLs[x, y - 1];
+                        }
+
+                        if (firstTeleports[teleportID] == null)
+                        {
+                            firstTeleports[teleportID] = teleportObj.GetComponent<TeleportController>();
+                        }
+                        else
+                        {
+                            firstTeleports[teleportID].secondTeleport = teleportObj.GetComponent<TeleportController>();
+                            teleportObj.GetComponent<TeleportController>().secondTeleport = firstTeleports[teleportID];
+                        }
+                    }
 
                     //Нужно ли создать ящик
                     if (cellCTRLs[x, y].BlockingMove > 0)
@@ -3900,7 +3928,6 @@ public class GameFieldCTRL : MonoBehaviour
                 //Вызываем сообщение о комбинации
                 if (!Gameplay.main.isMissionComplite() && !Gameplay.main.isMissionDefeat())
                 {
-                    Debug.Log("Check");
                     MidleMessageCombo();
                 }
 
@@ -4181,6 +4208,7 @@ public class GameFieldCTRL : MonoBehaviour
                         targetCell.rock == 0 &&
                         targetCell.BlockingMove == 0 &&
                         !targetCell.dispencer &&
+                        targetCell.teleport == 0 &&
                         targetCell.wall != 3 &&
                         targetCell.wall != 6 &&
                         targetCell.wall != 7 &&
@@ -4216,6 +4244,7 @@ public class GameFieldCTRL : MonoBehaviour
                         targetCell.wall != 14 &&
                         targetCell.wall != 15 &&
                         ((movingCell != null &&
+                        movingCell.teleport == 0 &&
                         movingCell.wall != 3 &&
                         movingCell.wall != 6 &&
                         movingCell.wall != 7 &&
