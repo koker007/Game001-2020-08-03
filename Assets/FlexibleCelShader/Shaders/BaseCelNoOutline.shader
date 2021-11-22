@@ -1,4 +1,4 @@
-﻿Shader "FlexibleCelShader/Cel OutlineNew"
+﻿Shader "FlexibleCelShader/Cel No Outline"
 {
 	Properties
 	{
@@ -6,7 +6,7 @@
 		_MainTex("Texture", 2D) = "white" {}
 		_NormalTex("Normal", 2D) = "bump" {}
 		_EmmisTex("Emission", 2D) = "black" {}
-
+		
 		_RampLevels("Ramp Levels", Range(2, 50)) = 2
 		_LightScalar("Light Scalar", Range(0, 10)) = 1
 
@@ -74,7 +74,7 @@
 				o.worldNormal = UnityObjectToWorldNormal(v.normal);
 				o.worldTangent = UnityObjectToWorldNormal(v.tangent);
 				o.worldBitangent = cross(o.worldTangent, o.worldNormal);
-
+				
 				// Compute shadows data
 				TRANSFER_SHADOW(o);
 
@@ -129,13 +129,13 @@
 				// Calculate light intensity
 				float intensity = dot(worldNormal, lightDirection);
 				intensity = clamp(intensity * _LightScalar, 0, 1);
-
+				
 				// Factor in the shadow
 				intensity *= shadow;
-
+				
 				// Determine level
 				float rampLevel = round(intensity * _RampLevels);
-
+				
 				// Get light multiplier based on level
 				float lightMultiplier = _LowIntensity + ((_HighIntensity - _LowIntensity) / (_RampLevels)) * rampLevel;
 
@@ -143,14 +143,14 @@
 				float4 highColor = (rampLevel / _RampLevels) * _HighColor;
 				float4 lowColor = ((_RampLevels - rampLevel) / _RampLevels) * _LowColor;
 				float4 mixColor = (highColor + lowColor) / 2;
-
+				
 				// Apply light multiplier and color
 				col *= lightMultiplier;
 				col *= _Color * mixColor;
 
 				// Apply soft Fresnel
 				float rampPercentSoftFresnel = 1 - ((1 - rampLevel / _RampLevels) * (1 - _FresnelShadowDropoff));
-				col.rgb = col.rgb + _FresnelColor * (_FresnelBrightness * 10 - fresnelFactor * _FresnelBrightness * 10) * rampPercentSoftFresnel;
+				col.rgb = col.rgb + _FresnelColor*(_FresnelBrightness*10 - fresnelFactor*_FresnelBrightness*10) * rampPercentSoftFresnel;
 
 				// Apply hard rim lighting
 				_RimAlpha *= 1 - ((1 - rampLevel / _RampLevels) * (1 - _RimDropOff));
@@ -161,54 +161,14 @@
 				// Apply emmision lighting
 				half eIntensity = max(emmision.r, emmision.g);
 				eIntensity = max(eIntensity, emmision.b);
-				col = emmision * eIntensity + col * (1 - eIntensity);
+				col = emmision*eIntensity + col*(1 - eIntensity);
 
 				return col;
 			}
-
+				
 			ENDCG
 		} // End Main Pass
 
-		// This Pass Renders the outlines
-		Cull Front
-		Pass
-		{
-			Blend SrcAlpha OneMinusSrcAlpha
-			CGPROGRAM
-			#pragma vertex vert
-			#pragma fragment frag
-
-			#include "UnityCG.cginc"
-
-			struct appdata
-			{
-				float4 vertex : POSITION;
-				float3 normal : NORMAL;
-			};
-
-			struct v2f
-			{
-				float4 vertex : SV_POSITION;
-			};
-
-			float _OutlineSize;
-			v2f vert(appdata v)
-			{
-				v2f o;
-				float4 worldPos = mul(unity_ObjectToWorld, v.vertex);
-				half3 worldNormal = UnityObjectToWorldNormal(v.normal);
-				worldPos.xyz = worldPos.xyz + worldNormal * _OutlineSize * 0.001;
-				o.vertex = mul(UNITY_MATRIX_VP, worldPos);
-				return o;
-			}
-
-			float4 _OutlineColor;
-			fixed4 frag(v2f i) : SV_Target
-			{
-				return _OutlineColor;
-			}
-				ENDCG
-		}// End Outline Pass
 
 		// Shadow casting
 		UsePass "Legacy Shaders/VertexLit/SHADOWCASTER"

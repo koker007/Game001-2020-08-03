@@ -1,4 +1,4 @@
-﻿Shader "FlexibleCelShader/Cel OutlineNew"
+﻿Shader "FlexibleCelShader/Cel Outline"
 {
 	Properties
 	{
