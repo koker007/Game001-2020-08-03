@@ -7,12 +7,9 @@
 		_NormalTex("Normal", 2D) = "bump" {}
 
 		_RampLevels("Ramp Levels", Range(2, 50)) = 2
-		_LightScalar("Light Scalar", Range(0, 10)) = 1
 
-		_HighColor("High Light Color", Color) = (1, 1, 1, 1)
 		_HighIntensity("High Light Intensity", Range(0, 10)) = 1.5
 
-		_LowColor("Low Light Color", Color) = (1, 1, 1, 1)
 		_LowIntensity("Low Light Intensity", Range(0, 10)) = 1
 
 		_OutlineColor("Outline Color", Color) = (0, 0, 0, 1)
@@ -21,7 +18,6 @@
 		_FresnelColor("Soft Edge Light Color", Color) = (1,1,1,1)
 		_FresnelBrightness("Soft Edge Light Brightness", Range(0, 1)) = 0
 		_FresnelPower("Soft Edge Light Size", Range(0, 1)) = 0
-		_FresnelShadowDropoff("Soft Edge Light Dropoff", range(0, 1)) = 0
 	}
 	
 	SubShader
@@ -82,16 +78,12 @@
 			uniform float4 _NormalTex_ST;
 			uniform float4 _EmmisTex_ST;
 			int       _RampLevels;
-			float     _LightScalar;
 			float     _HighIntensity;
-			float4    _HighColor;
 			float     _LowIntensity;
-			float4    _LowColor;
 
 			float     _FresnelBrightness;
 			float     _FresnelPower;
 			float4    _FresnelColor;
-			float     _FresnelShadowDropoff;
 
 			fixed4 frag(v2f i) : SV_Target
 			{
@@ -117,7 +109,7 @@
 
 				// Calculate light intensity
 				float intensity = dot(worldNormal, lightDirection);
-				intensity = clamp(intensity * _LightScalar, 0, 1);
+				intensity = clamp(intensity, 0, 1);
 
 				// Factor in the shadow
 				intensity *= shadow;
@@ -129,8 +121,8 @@
 				float lightMultiplier = _LowIntensity + ((_HighIntensity - _LowIntensity) / (_RampLevels)) * rampLevel;
 
 				// Get color multiplier based on level
-				float4 highColor = (rampLevel / _RampLevels) * _HighColor;
-				float4 lowColor = ((_RampLevels - rampLevel) / _RampLevels) * _LowColor;
+				float4 highColor = rampLevel / _RampLevels;
+				float4 lowColor = (_RampLevels - rampLevel) / _RampLevels;
 				float4 mixColor = (highColor + lowColor) / 2;
 
 				// Apply light multiplier and color
@@ -138,7 +130,7 @@
 				col *= _Color * mixColor;
 
 				// Apply soft Fresnel
-				float rampPercentSoftFresnel = 1 - ((1 - rampLevel / _RampLevels) * (1 - _FresnelShadowDropoff));
+				float rampPercentSoftFresnel = 1 - (1 - rampLevel / _RampLevels);
 				col.rgb = col.rgb + _FresnelColor * (_FresnelBrightness * 10 - fresnelFactor * _FresnelBrightness * 10) * rampPercentSoftFresnel;
 
 
