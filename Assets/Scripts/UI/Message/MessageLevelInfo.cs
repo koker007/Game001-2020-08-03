@@ -24,15 +24,13 @@ public class MessageLevelInfo : MonoBehaviour
     }
 
     void Inicialize() {
+        
         LevelText.text = System.Convert.ToString(Gameplay.main.levelSelect);
-
+        LevelGenerator.main.GenerateNewLevel(Gameplay.main.levelSelect);
         string textInfo = TranslateManager.main.GetText("LevelRequrements") + 
             " " + System.Convert.ToString(LevelsScript.main.ReturnLevel().NeedScore) + 
             "\n" + TranslateManager.main.GetText("Record") + 
             "\n" + System.Convert.ToString(LevelsScript.main.ReturnLevel().MaxScore);
-        //textInfo += System.Convert.ToString(LevelsScript.main.ReturnLevel().NeedScore);
-        //textInfo += "\n" + TranslateManager.main.GetText("Record") + "\n";
-        //textInfo += System.Convert.ToString(LevelsScript.main.ReturnLevel().MaxScore);
 
         LevelInfoText.text = textInfo;
 

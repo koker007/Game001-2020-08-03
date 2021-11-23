@@ -384,7 +384,7 @@ public class LevelsScript : MonoBehaviour
         }
         else
         {
-            result = LevelGenerator.main.GenerateLevelV2(NumLevel);
+            result = LevelGenerator.main.thisLevel;
         }
         return result;
     }

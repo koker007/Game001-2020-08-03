@@ -267,7 +267,6 @@ public class Gameplay : MonoBehaviour
         PlayerProfile.main.LevelPassed(levelSelect);
         GlobalMessage.Results();
         LevelsScript.main.ReturnLevel().MaxScore = score;
-        Debug.Log(starsCount);
         PlayerProfile.main.FillMoneyBox(starsCount);
         PlayerProfile.main.Save();
         GameplayEnd = true;

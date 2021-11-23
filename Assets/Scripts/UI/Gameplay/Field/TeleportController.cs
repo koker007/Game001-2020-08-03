@@ -18,12 +18,13 @@ public class TeleportController : MonoBehaviour
         if (teleportIn.cellInternal)
         {
             //Если выход второго телепорта свободен и доступен, телепортируем предмет на входе туда
-            if (secondTeleport.teleportOut.BlockingMove == 0 && !secondTeleport.teleportOut.cellInternal && secondTeleport.teleportOut.rock == 0)
+            if (secondTeleport.teleportOut != null &&
+                secondTeleport.teleportOut.BlockingMove == 0 &&
+                !secondTeleport.teleportOut.cellInternal &&
+                secondTeleport.teleportOut.rock == 0)
             {                
                 teleportIn.cellInternal.GetComponent<RectTransform>().pivot = secondTeleport.teleportOut.GetComponent<RectTransform>().pivot;
-
                 teleportIn.cellInternal.StartMove(secondTeleport.teleportOut);
-                teleportIn.cellInternal.myField = GameFieldCTRL.main;
                 secondTeleport.teleportOut.setInternal(teleportIn.cellInternal);
             }
         }

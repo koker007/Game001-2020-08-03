@@ -328,38 +328,47 @@ public class GameFieldCTRL : MonoBehaviour
                     markerObj.GetComponent<RectTransform>().pivot = new Vector2(-cellCTRLs[x, y].pos.x, -cellCTRLs[x, y].pos.y);
                     markers[x, y] = markerObj;
 
-                    
+                    //Если нужно создать раздатчик
                     if (level.cells[x, y].dispencer)
                     {
                         GameObject dispencerObj = Instantiate(prefabDispencer, parentOfDispencers);
                         dispencerObj.GetComponent<RectTransform>().pivot = new Vector2(-cellCTRLs[x, y].pos.x, -cellCTRLs[x, y].pos.y);
+                        //Клетка с раздатчикои
                         dispencerObj.GetComponent<DispencerController>().myCell = cellCTRLs[x, y];
+                        //Клетка, в которую раздатчик выдает предмет
                         if (y - 1 >= 0)
                         {
                             dispencerObj.GetComponent<DispencerController>().targetCell = cellCTRLs[x, y - 1];
                         }
                         //cellCTRLs[x, y].dispencer = true;
+                        //Цвет основного (выдаваемого) объекта, берем из массива цветов
                         dispencerObj.GetComponent<DispencerController>().primaryObjectColor = level.cells[x, y].colorCell;
+                        //Тип основного (выдаваемого) объекта, берем из массива типов
                         dispencerObj.GetComponent<DispencerController>().primaryObjectType = level.cells[x, y].typeCell;
                     }
 
+                    //Если нужно создать телепорт
                     if (level.cells[x, y].teleport > 0)
                     {
                         int teleportID = level.cells[x, y].teleport;
                         GameObject teleportObj = Instantiate(prefabTeleport, parentOfTeleport);                        
                         teleportObj.GetComponent<RectTransform>().pivot = new Vector2(-cellCTRLs[x, y].pos.x, -cellCTRLs[x, y].pos.y);
 
+                        //Точка входа в телепорт
                         teleportObj.GetComponent<TeleportController>().teleportIn = cellCTRLs[x, y];
                         
+                        //Точка выхода из телепорта
                         if (y > 0)
                         {
                             teleportObj.GetComponent<TeleportController>().teleportOut = cellCTRLs[x, y - 1];
                         }
 
+                        //Если первый телепорт с заданным ID отсутствует в массиве, добавляем текущий
                         if (firstTeleports[teleportID] == null)
                         {
                             firstTeleports[teleportID] = teleportObj.GetComponent<TeleportController>();
                         }
+                        //Иначе создаем пару телепортов
                         else
                         {
                             firstTeleports[teleportID].secondTeleport = teleportObj.GetComponent<TeleportController>();
@@ -3893,6 +3902,7 @@ public class GameFieldCTRL : MonoBehaviour
 
             timelastMoveTest = Time.unscaledTime;
 
+            /*
             //Если мисия уже завершилась включаем все возможные цвета
             if (Gameplay.main.isMissionComplite())
             {
@@ -3902,6 +3912,7 @@ public class GameFieldCTRL : MonoBehaviour
 
                 CellSelect = null;
             }
+            */
 
             TestMoveInternalObj(); //Проверяем наличие движения для отмены комбо
             TestMoveFly();

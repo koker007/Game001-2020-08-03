@@ -146,14 +146,12 @@ public class CellInternalObject : MonoBehaviour
         rectCell = myCell.GetComponent<RectTransform>();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         timeCreate = Time.unscaledTime;
         IniRect();
     }
 
-    // Update is called once per frame
     void Update()
     {
         Moving();

@@ -20,7 +20,9 @@ public class DispencerController : MonoBehaviour
     private void SpawnInternal()
     {
         //Проверяем, есть ли снизу место для спавна
-        if (GameFieldCTRL.main.CheckObstaclesToMoveDown(targetCell, myCell) && targetCell.cellInternal == null)
+        if (targetCell != null && 
+            GameFieldCTRL.main.CheckObstaclesToMoveDown(targetCell, myCell) && 
+            targetCell.cellInternal == null)
         {
             //Создаем и размещаем предмет
             GameObject internalObj = Instantiate(GameFieldCTRL.main.prefabInternal, GameFieldCTRL.main.parentOfInternals);
@@ -34,15 +36,11 @@ public class DispencerController : MonoBehaviour
             if (primaryObjectSpawnChance >= currentChance) //Проверяем шанс
             {            
                 internalController.setColorAndType(primaryObjectColor, primaryObjectType);
-
-                Debug.Log("SPAWN PRIMARY!");
             }
             //Спавн случайного цвета
             else
             {
                 internalController.setColorAndType(internalController.GetRandomColor(false).color, CellInternalObject.Type.color);
-
-                Debug.Log("SPAWN!");
             }
             
             internalController.StartMove(targetCell);
