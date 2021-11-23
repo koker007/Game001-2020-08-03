@@ -20,8 +20,7 @@ public class WorldGenerateScene : MonoBehaviour
     [SerializeField]
     public float angleLocationGenerate = 180;
 
-    private float SetRotationForWorldUp;
-    private float SetRotationForWorldDown;
+
     private int MaxLevel;
     private int MinLevel;
     private const float DistanceFromWorldCenter = 100.5f;
@@ -73,14 +72,10 @@ public class WorldGenerateScene : MonoBehaviour
 
     private void Start()
     {
-
-
         main = this;
 
         rotationNeed = -0;
 
-        SetRotationForWorldUp = 0;
-        SetRotationForWorldDown = -180;
 
         MaxLevel = 0;
         MinLevel = 1;
@@ -133,33 +128,6 @@ public class WorldGenerateScene : MonoBehaviour
         RotatableObj.eulerAngles = new Vector3(rotationNow, 0, 0);
     }
 
-    //проверка обновлений цилиндра
-    private void UpdateMainObject()
-    {
-        if (rotationNow <= SetRotationForWorldUp - DistanceSpawnLevelBut)
-        {
-            GenerateLevelButtonUp();
-            SetRotationForWorldUp -= DistanceSpawnLevelBut;
-            //UpdateLokations(true);
-        }
-        else if (rotationNow >= SetRotationForWorldUp + DistanceSpawnLevelBut && rotationNow <= 9)
-        {
-            DeleteLevelButtonUp();
-            SetRotationForWorldUp += DistanceSpawnLevelBut;
-            //UpdateLokations(false);
-        }
-        if (rotationNow <= SetRotationForWorldDown - DistanceSpawnLevelBut)
-        {
-            DeleteLevelButtonDown();
-            SetRotationForWorldDown -= DistanceSpawnLevelBut;
-        }
-        else if (rotationNow >= SetRotationForWorldDown - DistanceSpawnLevelBut && rotationNow <= -181)
-        {
-            GenerateLevelButtonDown();
-            SetRotationForWorldDown += DistanceSpawnLevelBut;
-        }
-    }
-
     List<WorldLocation> bufferLocations = new List<WorldLocation>();
     /// <summary>
     /// ѕроверка генерировани€ локаций
@@ -177,7 +145,6 @@ public class WorldGenerateScene : MonoBehaviour
             if (bufferLocation != null)
             {
                 bufferLocation.TestDelete();
-
                 //≈сли все еще есть добавл€ем в новый лист
                 if (bufferLocation != null)
                 {
@@ -245,6 +212,8 @@ public class WorldGenerateScene : MonoBehaviour
                 if (Mathf.Abs(WorldGenerateScene.main.rotationNow + 45 - posNow) <= 90 && !found)
                 {
                     GameObject locationObj = Instantiate(MainLocations[num].gameObject, RotatableObj.transform);
+                    //GameObject locationObj = ObjectPooler.main.SpawnMainLocation(num);
+                    locationObj.SetActive(true);
                     WorldLocation location = locationObj.GetComponent<WorldLocation>();
                     location.Inicialize(posNow, lvlNow);
 
@@ -319,6 +288,7 @@ public class WorldGenerateScene : MonoBehaviour
         //≈сли начались доп локации, создаем их
         if (numOfCreatedAdditionalLocations > 0)
         {
+            
             //—оздаем до 3 локаций: одна активна€, перед камерой, втора€ - сзади, треть€ - спереди
             for (int locationsToSpawn = 0; locationsToSpawn < 3; locationsToSpawn++)
             {
@@ -402,6 +372,8 @@ public class WorldGenerateScene : MonoBehaviour
                     }
 
                     GameObject locationObj = Instantiate(AdditionalLocations[randomAdditionalLocationID].gameObject, RotatableObj.transform);
+                    //GameObject locationObj = ObjectPooler.main.SpawnAdditionalLocation(0); //fix
+                    locationObj.SetActive(true);
                     WorldLocation location = locationObj.GetComponent<WorldLocation>();
                     location.Inicialize(additionalLocationRotation, lvlNow);
                     //«аполн€ем локацию уровн€ми
@@ -492,33 +464,6 @@ public class WorldGenerateScene : MonoBehaviour
                 obj = Instantiate(PrefLevelButton, position, Quaternion.identity, location.transform)
             });
             LevelButtons[LevelButtons.Count - 1].Level();
-        }
-    }
-
-    private void UpdateLokations(bool Up)
-    {
-        if (SetRotationForWorldUp % 180 == 0)
-        {
-            if (Up)
-            {
-                Destroy(Locations[locationCounter]);
-                Locations[locationCounter] = Instantiate(MainLocations[Random.Range(0, 3)].gameObject, MainComponents.RotatableObj.transform.position, Quaternion.identity, MainComponents.RotatableObj.transform);
-                locationCounter++;
-                if (locationCounter > 1)
-                {
-                    locationCounter = 0;
-                }
-            }
-            else
-            {
-                locationCounter--;
-                if (locationCounter < 0)
-                {
-                    locationCounter = 1;
-                }
-                Destroy(Locations[locationCounter]);
-                Locations[locationCounter] = Instantiate(MainLocations[Random.Range(0, 3)].gameObject, MainComponents.RotatableObj.transform.position, Quaternion.identity, MainComponents.RotatableObj.transform);
-            }
         }
     }
 

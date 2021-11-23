@@ -141,7 +141,6 @@ public class GameFieldCTRL : MonoBehaviour
     public List<MoldCTRL> moldCTRLs = new List<MoldCTRL>();
 
     private GameObject[,] markers;
-    private GameObject[,] dispencers;
 
     private bool markersActive = false;
 
@@ -248,7 +247,6 @@ public class GameFieldCTRL : MonoBehaviour
         //заполняем все поля ячейками по шаблону уровня
         void AddAllCellLevel()
         {
-
             CountDestroyCrystals = new int[level.NumColors];
 
             //Создаем пространство игрового поля
@@ -311,17 +309,6 @@ public class GameFieldCTRL : MonoBehaviour
 
                         if (level.cells[x, y].Panel > 0)
                             cellCTRLs[x, y].panel = true;
-
-                        //рандомизация для тестирования
-                        //if (Random.Range(0,100) > 90) {
-                        //    cellCTRLs[x, y].BlockingMove = 5;
-                        //}
-                        //if (Random.Range(0, 100) > 90) {
-                        //    cellCTRLs[x, y].mold = 5;
-                        //}
-                        //if (Random.Range(0, 100) > 90) {
-                        //    cellCTRLs[x, y].panel = true;
-                        //}
                     }
 
                     GameObject markerObj = Instantiate(prefabMarker, parentOfMarkers);
@@ -340,7 +327,7 @@ public class GameFieldCTRL : MonoBehaviour
                         {
                             dispencerObj.GetComponent<DispencerController>().targetCell = cellCTRLs[x, y - 1];
                         }
-                        //cellCTRLs[x, y].dispencer = true;
+                        cellCTRLs[x, y].dispencer = true;
                         //Цвет основного (выдаваемого) объекта, берем из массива цветов
                         dispencerObj.GetComponent<DispencerController>().primaryObjectColor = level.cells[x, y].colorCell;
                         //Тип основного (выдаваемого) объекта, берем из массива типов
@@ -491,7 +478,6 @@ public class GameFieldCTRL : MonoBehaviour
                         {
                             CreateBlocker(cellCTRLs[x, y], cellInfo.colorCell, 0);
                         }
-
                     }
 
                     //Перерасчет приоритера
@@ -634,7 +620,6 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[x, y].rock == 0 &&
                     !cellCTRLs[x, y].dispencer)
                 {
-
                     //Проверяем сверху на то есть ли там что-то что может упасть
                     for (int plusY = 0; plusY <= cellCTRLs.GetLength(1); plusY++)
                     {
@@ -764,7 +749,6 @@ public class GameFieldCTRL : MonoBehaviour
             }
 
         }
-
         public void TestCells()
         {
             foreach (CellCTRL cell in cells)
@@ -811,7 +795,6 @@ public class GameFieldCTRL : MonoBehaviour
         {
             TestDamageAndSpawn();
         }
-        //TestSuperCombination();
 
         ///////////////////////////////////////////////////////////////
         //Проверить ячейку на комбинации. вариант 2 2021.08.18
@@ -870,6 +853,7 @@ public class GameFieldCTRL : MonoBehaviour
                     }
                 }
             }
+
             void SetCombination()
             {
                 if (Combination.cells.Count <= 0)

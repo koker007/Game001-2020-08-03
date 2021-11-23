@@ -13,16 +13,9 @@ public class WorldRopeChainCTRL : MonoBehaviour
     [SerializeField]
     public RopeChain PrefabRopeChain;
 
-    // Start is called before the first frame update
     void Start()
     {
         //ссылаемся на самого себя
         main = this;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

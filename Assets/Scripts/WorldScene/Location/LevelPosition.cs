@@ -15,19 +15,11 @@ public class LevelPosition : MonoBehaviour
 
     public WorldGenerateScene.LButton button = new WorldGenerateScene.LButton();
     
-
-    // Start is called before the first frame update
     void Start()
     {
         if (positionVisualizator && positionVisualizator.activeSelf) {
             positionVisualizator.SetActive(false);
         }   
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     //Инициализировать позицию

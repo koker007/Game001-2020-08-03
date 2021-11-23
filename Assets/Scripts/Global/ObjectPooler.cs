@@ -7,10 +7,11 @@ public class ObjectPooler : MonoBehaviour
     public static ObjectPooler main;
 
     [SerializeField] private GameObject[] mainLocations;
-    [SerializeField] private GameObject[] additionalLocations;
+    [SerializeField] private GameObject[] additionalLocations;    
 
     private List<GameObject> listOfMainLocations;
     private List<GameObject> listOfAdditionalLocations;
+    private List<int> addLocIDs;
 
     [SerializeField] private int additionalLocationsCount;
 
@@ -51,7 +52,7 @@ public class ObjectPooler : MonoBehaviour
 
     public GameObject SpawnAdditionalLocation(int locationID)
     {
-        for (int i = 0; i < additionalLocationsCount; i++)
+        for (int i = 0; i < listOfAdditionalLocations.Count; i++)
         {
             if (!listOfAdditionalLocations[i].activeInHierarchy)
             {

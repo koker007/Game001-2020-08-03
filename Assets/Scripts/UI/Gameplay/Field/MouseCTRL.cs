@@ -13,16 +13,9 @@ public class MouseCTRL : MonoBehaviour
     [SerializeField]
     bool Click = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         main = this;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     float timeLastClick = 0;
