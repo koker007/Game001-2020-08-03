@@ -48,8 +48,8 @@ public class MessageCTRL : MonoBehaviour
     /// Закрыть сообщение
     /// </summary>
     public void ClickButtonClose() {
-
-        myAnimator.SetBool("Close", true);
+        if(myAnimator)
+            myAnimator.SetBool("Close", true);
 
     }
 
