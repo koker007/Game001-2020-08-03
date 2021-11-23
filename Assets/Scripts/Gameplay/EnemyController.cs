@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public static bool enemyTurn;
+    public static bool canEnemyMove = true;
 
     private void Update()
     {
@@ -13,7 +14,7 @@ public class EnemyController : MonoBehaviour
 
     public void EnemyTurn()
     {
-        if (enemyTurn)
+        if (enemyTurn && canEnemyMove)
         {
             if (GameFieldCTRL.enemyPotencialBest != null)
             {

@@ -38,8 +38,10 @@ public class LevelsScript : MonoBehaviour
         public int Panel;
         public int rock;
         public int wall;
+        public int teleport;
+        public bool dispencer;
 
-        public CellInfo(int box, int mold, int color, int type, int panel, int rockF, int ice, int walls)
+        public CellInfo(int box, int mold, int color, int type, int panel, int rockF, int ice, int walls, int disp, int tp)
         {
             if (box != 0)
             {
@@ -70,6 +72,14 @@ public class LevelsScript : MonoBehaviour
             {
                 wall = walls;
             }
+
+            if (tp > 0)
+            {
+                teleport = tp;
+            }
+
+            dispencer = (disp != 0);
+            
         }
 
     }
@@ -144,6 +154,8 @@ public class LevelsScript : MonoBehaviour
         int[,] type;
         int[,] rock;
         int[,] walls;
+        int[,] teleport;
+        int[,] dispencers;
 
         /// <summary>
         /// возвращает информацию о клетке на текущем уровне
@@ -200,6 +212,12 @@ public class LevelsScript : MonoBehaviour
                     break;
                 case "walls":
                     walls = values;
+                    break;
+                case "dispencers":
+                    dispencers = values;
+                    break;
+                case "teleport":
+                    teleport = values;
                     break;
             }
         }
@@ -258,6 +276,14 @@ public class LevelsScript : MonoBehaviour
             {
                 massNull(ref walls, 0);
             }
+            if (teleport == null)
+            {
+                massNull(ref teleport, 0);
+            }
+            if (dispencers == null)
+            {
+                massNull(ref dispencers, 0);
+            }
 
             for (int y = 0; y < Height; y++)
             {
@@ -269,7 +295,7 @@ public class LevelsScript : MonoBehaviour
                     }
                     else
                     {
-                        cells[x, cells.GetLength(1) - 1 - y] = new CellInfo(box[y, x], mold[y, x], internalColors[y, x], type[y, x], panel[y, x], rock[y,x], ice[y,x], walls[y,x]);
+                        cells[x, cells.GetLength(1) - 1 - y] = new CellInfo(box[y, x], mold[y, x], internalColors[y, x], type[y, x], panel[y, x], rock[y,x], ice[y,x], walls[y,x], dispencers[y,x], teleport[y,x]);
                     }
                 }
             }
@@ -358,7 +384,7 @@ public class LevelsScript : MonoBehaviour
         }
         else
         {
-            result = LevelGenerator.main.GenerateLevelV2(NumLevel);
+            result = LevelGenerator.main.thisLevel;
         }
         return result;
     }

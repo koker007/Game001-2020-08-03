@@ -227,7 +227,7 @@ public class Gameplay : MonoBehaviour
                                     {                                       
                                         if (level.NeedCrystal <= main.colorsCount[(int)level.NeedColor] || !level.PassedWithCrystal)
                                         {
-                                            if (score > enemyScore || !level.PassedWithEnemy)
+                                            if (score > enemyScore && movingCan <= 0 && playerTurn || !level.PassedWithEnemy)
                                             {
                                                 buffer.missionComplite = true;
                                             }
@@ -238,7 +238,7 @@ public class Gameplay : MonoBehaviour
                         }
                     }
                 }
-                //если ходов нет проигрышь
+                //если ходов нет проигрыш
                 if (movingCan <= 0 && !level.PassedWithEnemy)
                 {
                     buffer.missionDefeat = true;
@@ -267,7 +267,6 @@ public class Gameplay : MonoBehaviour
         PlayerProfile.main.LevelPassed(levelSelect);
         GlobalMessage.Results();
         LevelsScript.main.ReturnLevel().MaxScore = score;
-        Debug.Log(starsCount);
         PlayerProfile.main.FillMoneyBox(starsCount);
         PlayerProfile.main.Save();
         GameplayEnd = true;

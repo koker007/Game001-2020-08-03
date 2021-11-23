@@ -17,10 +17,14 @@ public class LevelGenerator : MonoBehaviour
     private float moldChance = 0.5f;
     private float panelChance = 0.2f;
     private float noizeScale = 0.04f;
+    public LevelsScript.Level thisLevel;
+
+
     private void Start()
     {
         main = this;
     }
+
     //генерация уровня
     public LevelsScript.Level GenerateLevel(int NumLevel)
     {
@@ -517,16 +521,18 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    public LevelsScript.Level GenerateLevelV2(int NumLevel)
+    public void GenerateNewLevel(int NumLevel)
+    {
+        thisLevel = GenerateLevelV2(NumLevel);
+    }
+
+    private LevelsScript.Level GenerateLevelV2(int NumLevel)
     {
         int perVar = (int)Mathf.Round(Mathf.PerlinNoise(777.777f / 666.666f + NumLevel, 0) * 10000 % 10);
-        //float perVar1 = Mathf.Round(Mathf.PerlinNoise(NumLevel + 0.777f, 0) * 10000 % 10) / 7;
-        //float perVar2 = Mathf.Round(Mathf.PerlinNoise(NumLevel + 0.666f, 0) * 10000 % 10) / 7;
+
         //устанавливаем размер уровня
         int Width = perVar % 4 + 5;
         int Height = perVar * 123 % (Width / 2) + 6;
-        //int Width = (int)Mathf.Round(perVar1 * 7);
-        //int Height = (int)Mathf.Round(perVar2 * 7);
 
         //основные параметры уровня
         int NeedScore = Width * Height * (perVar % ScoreСoefficient + ScoreСoefficient / 2);
@@ -534,12 +540,6 @@ public class LevelGenerator : MonoBehaviour
 
         //выюираем количество цветов
         int numColors = 5;
-        /*
-        if (numColors > 5)
-            numColors = 5;
-        else if (numColors < 3)
-            numColors = 3;
-        */
 
         //Какой процент для создания супер цвета
         float perlinSuperColor = Mathf.PerlinNoise(777.777f / 666.666f + NumLevel, 1234) * 100;
@@ -556,16 +556,6 @@ public class LevelGenerator : MonoBehaviour
             perlinBlocker = 0;
         }
 
-        /*
-        if (Width > 10)
-        {
-            numColors = 5;
-        }
-        else
-        {
-            numColors = 4;
-        }
-        */
         //создаем уровень без массивов
         LevelsScript.Level level = LevelsScript.main.CreateLevel(NumLevel, Height, Width, NeedScore, (int)move, numColors, (int)perlinSuperColor, (int)perlinBlocker);
 
@@ -625,26 +615,13 @@ public class LevelGenerator : MonoBehaviour
             int[,] IColors = new int[Height, Width];
             int[,] Type = new int[Height, Width];
 
-            //PerlinAllRandom();
-
-
-
-            //CellRandom(Type, 50, 6);
             level.SetMass(CellRandom(exist, 80, 1, false), "exist");
             level.SetMass(ColorRandom(IColors, numColors - 1), "color");
             level.SetMass(TypeTest(Type), "type");
-
             level.SetMass(CellRandom(box, 20, 2, !level.PassedWithBox), "box");
-
-
             level.SetMass(CellRandom(mold, 20, 3, !level.PassedWithMold), "mold");
-
-
             level.SetMass(CellRandom(panel, 20, 4, !level.PassedWithPanel), "panel");
-
-
             level.SetMass(CellRandom(rock, 20, 5, !level.PassedWithRock), "rock");
-
             level.SetMass(CellRandom(ice, 20, 6, !level.PassedWithIce), "ice");
 
             level.SetCells();
@@ -659,15 +636,11 @@ public class LevelGenerator : MonoBehaviour
                     {
                         if (!zeroArray)
                         {
-                            //perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(Mathf.Sin(NumLevel * 10 * x * ID) * 77.77f, Mathf.Sin(NumLevel * 10 * y * ID) * 66.6f) * 10000 % 10 * 10);
                             perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(NumLevel + x + ID + 0.777f, NumLevel + y + ID + 0.777f) * 10000 % 10 * 10);
-
-                            //perVar = (int)Mathf.Ceil(Mathf.PerlinNoise((x + 777.777f) / 666.666f + NumLevel + ID, (y + 777.777f) / 666.666f + NumLevel + ID) * 10000 % 10 * 10);
 
                             if (perVar <= percentOfField)
                             {
                                 array[x, y] = 1;
-                                //Debug.Log("check");
                             }
                             else
                             {
@@ -689,15 +662,11 @@ public class LevelGenerator : MonoBehaviour
                 {
                     for (int y = 0; y < Width; y++)
                     {
-                        //perVar = (int)Mathf.Floor(Mathf.PerlinNoise(Mathf.Sin(NumLevel * 10 * x) * 77.77f, Mathf.Sin(NumLevel * 10 * y) * 66.6f) * 10000 % 10);
                         perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(NumLevel + x + 0.777f, NumLevel + y + 0.777f) * 10000 % 10);
-
-                        //perVar = (int)Mathf.Floor(Mathf.PerlinNoise((x + 777.777f) / 666.666f + NumLevel, (y + 777.777f) / 666.666f + NumLevel) * 10000 % 10);
 
                         int randVal = (int)Mathf.Round(maxArrayValue / 9 * perVar);
 
                         array[x, y] = randVal;
-                        //array[x, y] = 1;
                     }
                 }
                 return array;
@@ -714,7 +683,6 @@ public class LevelGenerator : MonoBehaviour
                 }
                 return array;
             }
-
         }
     }
 }

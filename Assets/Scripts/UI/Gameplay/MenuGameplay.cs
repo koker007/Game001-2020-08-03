@@ -284,6 +284,8 @@ public class MenuGameplay : MonoBehaviour
     }
 
     public void CreateMidleMessage(string text, Color color) {
+        EnemyController.canEnemyMove = false;
+        GameFieldCTRL.main.canPassTurn = false;
         GameObject MidleTextObj = Instantiate(MidleTextPrefab, MidleTextParent);
         MidleTextGameplay MidleText = MidleTextObj.GetComponent<MidleTextGameplay>();
         MidleText.SetText(text);

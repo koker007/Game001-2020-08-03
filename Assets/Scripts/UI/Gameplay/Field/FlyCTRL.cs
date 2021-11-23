@@ -212,16 +212,17 @@ public class FlyCTRL : MonoBehaviour
 
             //Нормальное быстрое далекое движение
             if (distToTarget > 0.75f) {
-                SpeedMove += (0.4f - SpeedMove) * Time.deltaTime * 2f;
+                SpeedMove += (0.4f - SpeedMove) * Time.deltaTime * 5f;
             }
             //Движение с замедлением в близи
             else {
                 SpeedMove += (0.01f - SpeedMove) * Time.deltaTime * 15f;
             }
-            Vector2 moving = vectorMove * SpeedMove * Gameplay.main.timeScale;
+            Vector2 moving = vectorMove.normalized * Gameplay.main.timeScale;
             //Расчет новой позиции
             //myRect.pivot = new Vector2(myRect.pivot.x + moving.x, myRect.pivot.y + moving.y);
-            myRect.pivot = Vector3.Lerp(myRect.pivot, myRect.pivot + moving, 0.5f);
+            myRect.pivot = Vector3.MoveTowards(myRect.pivot, myRect.pivot + moving, SpeedMove);
+            //myRect.pivot = Vector3.Lerp(myRect.pivot, myRect.pivot + moving, 0.5f);
         }
 
         void Damage() {

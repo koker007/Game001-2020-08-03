@@ -72,9 +72,12 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
     public int wall;
 
+    public int teleport;
+
     public bool panel;
 
-    
+    public bool dispencer;
+
     public int myInternalNum = 0;
 
     public float timeBoomOld = 0;     //Время последнего взрыва
