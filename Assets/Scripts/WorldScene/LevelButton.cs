@@ -73,6 +73,20 @@ public class LevelButton : MonoBehaviour
         }
     }
 
+    public void AnimStartPress() {
+        LevelAnim.SetBool("Touch", true);
+    }
+    public void AnimEndPress() {
+        LevelAnim.SetBool("Touch", false);
+    }
+    public void ClickLevel() {
+        SoundCTRL.main.PlaySound(SoundCTRL.main.clipPressButton);
+        //LevelGenerator.main.GenerateLevelV2(NumLevel);
+        GlobalMessage.LevelInfo(NumLevel);
+
+        AnimEndPress();
+    }
+
     private void OnMouseExit()
     {
         LevelAnim.SetBool("Touch", false);

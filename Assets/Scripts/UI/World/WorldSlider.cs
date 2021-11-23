@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 //алкександр
+//Семен
 /// <summary>
-/// Вращение мира прикосновением
+/// Вращение мира прикосновением. И проверка на клик по кнопке
 /// </summary>
 public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -19,18 +20,58 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private bool isDown;
 
+    LevelButton ButtonStart;
+
     //нажатие мыши на обьект
     public void OnPointerDown(PointerEventData eventData)
     {
+        //Запомнить позицию нажатия
         StartTouchPosition = Input.mousePosition;
         Srotation = WorldGenerateScene.main.rotationNeed;
         this.isDown = true;
+
+        
+        //Пускаем луч из камеры
+        Ray ray = MainCamera.main.myCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitInfo;
+
+        //Если произошло столкновение и столкновение с кнопкой
+        if (Physics.Raycast(ray, out hitInfo, 30))
+        {
+            //Запоминаем компонент кнопки
+            ButtonStart = hitInfo.collider.GetComponent<LevelButton>();
+            if(ButtonStart != null)
+                ButtonStart.AnimStartPress();
+        }
+        else {
+            ButtonStart = null;
+        }
     }
 
     //отпускание мыши
     public void OnPointerUp(PointerEventData eventData)
     {
         this.isDown = false;
+
+        if (!ButtonStart) return;
+
+        //Получить позицию отпускания
+        //Если разница позиций не большая
+        if (Vector3.Distance(StartTouchPosition, Input.mousePosition) < Screen.width * 0.1f)
+        {
+            //Пускаем луч из камеры
+            Ray ray = MainCamera.main.myCamera.ScreenPointToRay(Input.mousePosition / MainCamera.main.percent);
+            RaycastHit hitInfo;
+
+            //Если произошло столкновение и столкновение с кнопкой
+            if (Physics.Raycast(ray, out hitInfo, 30) && hitInfo.collider.gameObject == ButtonStart.gameObject)
+            {
+                ButtonStart.ClickLevel();
+            }
+        }
+
+        ButtonStart.AnimEndPress();
+        ButtonStart = null;
     }
 
     private void Start()
@@ -47,4 +88,6 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             WorldGenerateScene.main.rotationNeed = Srotation - (StartTouchPosition.y - Input.mousePosition.y) * SpeedRotation;
         }
     }
+
+
 }

@@ -35,6 +35,8 @@ public class MenuWorld : MonoBehaviour
     [Header("World")]
     [SerializeField]
     GameObject World3D;
+    [SerializeField]
+    RawImage renderImage;
 
     [HideInInspector]
     public enum UIIsOpen
@@ -51,6 +53,8 @@ public class MenuWorld : MonoBehaviour
     {
         main = this;
         OpenMapPanel();
+
+        renderImage.texture = MainCamera.main.renderTexture;
     }
 
     // Update is called once per frame
@@ -58,6 +62,12 @@ public class MenuWorld : MonoBehaviour
     {
         updateButtons();
         ExitGame();
+        testRenderTexture();
+    }
+
+    void testRenderTexture() {
+        if(renderImage.texture != MainCamera.main.renderTexture)
+            renderImage.texture = MainCamera.main.renderTexture;
     }
 
     void ExitGame()
