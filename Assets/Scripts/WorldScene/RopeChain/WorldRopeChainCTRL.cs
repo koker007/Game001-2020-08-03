@@ -12,6 +12,8 @@ public class WorldRopeChainCTRL : MonoBehaviour
 
     [SerializeField]
     public RopeChain PrefabRopeChain;
+    [SerializeField]
+    public GameObject PrefabSphere;
 
     // Start is called before the first frame update
     void Start()

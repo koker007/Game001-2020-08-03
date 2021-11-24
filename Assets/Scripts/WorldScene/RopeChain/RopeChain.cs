@@ -2,13 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//—емен
+/// <summary>
+/// —крипт который контролирует линию от точки к точке
+/// </summary>
 public class RopeChain : MonoBehaviour
 {
     [SerializeField]
     LVLChain myChain;
 
+    //ѕозици€ меша по факту
     [SerializeField]
     Transform[] posRigs;
+
+    //позици€ кости котора€ должна быть
     [SerializeField]
     Transform[] posVector;
 
@@ -62,7 +70,10 @@ public class RopeChain : MonoBehaviour
                 //”знаем расто€ние между точками
                 float distance = Vector3.Distance(position, posVector[num - 1].transform.position)*0.01f;
                 //перемемещаем точку на указанное расто€ние
-                posVector[num].localPosition = new Vector3(0, 0, distance);
+                posVector[num].position = myChain.GetPosition(progress, 1); //new Vector3(0, 0, distance);
+
+                GameObject sphere = Instantiate(WorldRopeChainCTRL.main.PrefabSphere, gameObject.transform);
+                sphere.transform.position = posVector[num].position;
 
                 //ѕоворачиваем прошлый меш
                 Quaternion rotMesh = posRigs[num].rotation;
@@ -74,29 +85,23 @@ public class RopeChain : MonoBehaviour
             }
         }
 
-        /*
-        //поворачиваем родител€ в сторону новой позиции
-        Vector3 forvard2 = (myChain.next.transform.position - posVector[posVector.Length - 1].transform.position).normalized;
+        mesh.gameObject.SetActive(false);
+    }
 
-        //» поворачиваем так чтобы она смотрела по направл€ющему вектору к следующей ступени
-        Quaternion rot2 = Quaternion.LookRotation(forvard2);
+    
 
-        rot2.eulerAngles = new Vector3(rot2.eulerAngles.x, rot2.eulerAngles.y, rot2.eulerAngles.z);
-        posVector[posVector.Length - 1].transform.rotation = rot2;
+    //ѕерерасчет позиции с учетом направл€ющего вектора
+    public void ReCalcPositions4(LVLChain myChainFunc) {
+        //присваиваем веревке ее звено
+        myChain = myChainFunc;
 
-        //”знаем расто€ние между точками
-        float distance2 = Vector3.Distance(myChain.next.transform.position, posVector[posVector.Length - 1].transform.position) * 0.01f;
-        //перемемещаем точку на указанное расто€ние
-        posVector[num].localPosition = new Vector3(0, 0, distance2);
+        if (posVector.Length < 2)
+        {
+            return;
+        }
 
-        //ѕоворачиваем прошлый меш
-        Quaternion rotMesh2 = posRigs[num].rotation;
-        rotMesh2.eulerAngles = new Vector3(posVector[num - 1].rotation.eulerAngles.x + 90, posVector[num - 1].rotation.eulerAngles.y, posVector[num - 1].rotation.eulerAngles.z);
-        posRigs[num].rotation = rotMesh2;
 
-        //ѕеремещаем текущий меш
-        posRigs[num].position = posVector[num].position;
-        */
+
     }
 
     private void Start()

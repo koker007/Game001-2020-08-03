@@ -32,11 +32,11 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         
         //Пускаем луч из камеры
-        Ray ray = MainCamera.main.myCamera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = MainCamera.main.myCamera.ScreenPointToRay(Input.mousePosition*MainCamera.main.percent);
         RaycastHit hitInfo;
 
         //Если произошло столкновение и столкновение с кнопкой
-        if (Physics.Raycast(ray, out hitInfo, 30))
+        if (Physics.Raycast(ray, out hitInfo, 40))
         {
             //Запоминаем компонент кнопки
             ButtonStart = hitInfo.collider.GetComponent<LevelButton>();
@@ -60,13 +60,19 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (Vector3.Distance(StartTouchPosition, Input.mousePosition) < Screen.width * 0.1f)
         {
             //Пускаем луч из камеры
-            Ray ray = MainCamera.main.myCamera.ScreenPointToRay(Input.mousePosition / MainCamera.main.percent);
+            Ray ray = MainCamera.main.myCamera.ScreenPointToRay(Input.mousePosition * MainCamera.main.percent);
             RaycastHit hitInfo;
 
             //Если произошло столкновение и столкновение с кнопкой
-            if (Physics.Raycast(ray, out hitInfo, 30) && hitInfo.collider.gameObject == ButtonStart.gameObject)
+            if (Physics.Raycast(ray, out hitInfo, 40) && hitInfo.collider.gameObject == ButtonStart.gameObject)
             {
-                ButtonStart.ClickLevel();
+                if (PlayerProfile.main.ProfilelevelOpen >= ButtonStart.NumLevel)
+                {
+                    ButtonStart.ClickLevel();
+                }
+                else { 
+                
+                }
             }
         }
 

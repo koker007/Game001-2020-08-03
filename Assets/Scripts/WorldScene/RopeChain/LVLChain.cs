@@ -181,15 +181,45 @@ public class LVLChain : MonoBehaviour
         Vector3 posInLine = Vector3.Lerp(transform.position, next.transform.position, progress);
 
         //Находим промежуточное смещение по направляющим векторам
-        Vector3 offset = vectorLerp(forvard, -next.forvard, progress);
+        Vector3 offsetVector = vectorLerp(forvard.normalized, -next.forvard.normalized, 0.5f);
+        float magnitude = Vector3.Distance(forvard.normalized, next.forvard.normalized);
+        offsetVector = new Vector3((1 - offsetVector.normalized.x) * -1, 0, 0);
 
-        float offsetSize = progress;
-        if (offsetSize > 0.5f) {
-            offsetSize =  0.5f-(progress - 0.5f);
+        //Вектор в направлении к цели 
+        Vector3 nextVector = next.transform.position - transform.position;
+
+        //Меняем местами x.y и отражаем -y в месте для x
+        nextVector = new Vector3(-nextVector.y, nextVector.x, nextVector.z);
+        //Меняем местами y.z и отражаем -z в месте для y
+        nextVector = new Vector3(nextVector.x, -nextVector.z, nextVector.y);
+        //Меняем местами z.x 
+        //nextVector = new Vector3(nextVector.z, nextVector.y, -nextVector.x);
+        nextVector = new Vector3(nextVector.x, 0, 0);
+
+        //Меняем местами x.z и отражаем z в месте x
+        //nextVector = new Vector3(-nextVector.z, nextVector.y, nextVector.x);
+        //Меняем местами z.y и отражаем y в месте z
+        //nextVector = new Vector3(nextVector.x, nextVector.z, -nextVector.y);
+
+        //Меняем местами x.y
+        //nextVector = new Vector3(-nextVector.y, nextVector.x, nextVector.z);
+        //Меняем местами y.z
+        //nextVector = new Vector3(nextVector.x, -nextVector.z, nextVector.y);
+
+        //Vector3 offsetVector = nextVector;
+
+        float offsetProgress = progress;
+        //Если прогресс больше 0.5 то реверс
+        if (offsetProgress > 0.5f) {
+            offsetProgress = 0.5f - (progress - 0.5f);
         }
+        //else if (offsetProgress >= 0.75f && offsetProgress <= 1) {
+        //    offsetProgress = 0.25f - (progress - 0.75f);
+        //    offsetProgress *= -1;
+        //}
 
         //нашли промежуточную точку и смещение. вычисляем результат
-        result = posInLine + offset * offsetSize * strange;
+        result = posInLine + offsetVector * offsetProgress * strange;
 
         return result;
 

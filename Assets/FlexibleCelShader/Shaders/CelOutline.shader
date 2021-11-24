@@ -124,6 +124,7 @@
 				float4 highColor = rampLevel / _RampLevels;
 				float4 lowColor = (_RampLevels - rampLevel) / _RampLevels;
 				float4 mixColor = (highColor + lowColor) / 2;
+				mixColor.a = 1;
 
 				// Apply light multiplier and color
 				col *= lightMultiplier;

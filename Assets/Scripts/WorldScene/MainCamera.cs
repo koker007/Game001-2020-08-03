@@ -28,6 +28,8 @@ public class MainCamera : MonoBehaviour
 
         iniTexture();
         iniCamera();
+
+        InvokeRepeating("TestTextureSize", 1, 1);
     }
 
     void iniTexture() {
@@ -41,6 +43,10 @@ public class MainCamera : MonoBehaviour
 
             //Если текстуры нет, создаем ее
             renderTexture = new RenderTexture((int)(Screen.width * percent), (int)(Screen.height * percent), 0);
+            renderTexture.filterMode = FilterMode.Bilinear;
+            renderTexture.antiAliasing = 2;
+            renderTexture.anisoLevel = 2;
+            renderTexture.Create();
         }
     }
     void iniCamera() {
@@ -54,7 +60,62 @@ public class MainCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TestTextureSize();
+        TestNewQuality();
+        //TestTextureSize();
+    }
+
+    struct FPS {
+        public float frame;
+        public float timeTest;
+    }
+    List<FPS> fpsList = new List<FPS>();
+
+    //выявление нужного разрешения
+    void TestNewQuality() {
+
+        float testSecond = 3;
+
+        float FpsMax = 45;
+
+        //проверяем текущий фпс
+        FPS fpsNow = new FPS();
+        fpsNow.frame = 1 / Time.deltaTime; //фпс
+        fpsNow.timeTest = Time.unscaledTime; //время работы программы
+
+        //Добавляем в список текущий фпс
+        fpsList.Add(fpsNow);
+
+        //новый список фпс
+        List<FPS> fpsListNew = new List<FPS>();
+        float fpsAverage = 1;
+        int fpsAverageCount = 0;
+        //Перебор всех фпс
+        foreach (FPS fps in fpsList) {
+            //Выходим если этот кадр устарел
+            if (Time.unscaledTime - fps.timeTest > testSecond) {
+                continue;
+            }
+
+            fpsAverage += fps.frame;
+            fpsAverageCount++;
+
+            //Добавляем этот кдр на следующий лист
+            fpsListNew.Add(fps);
+        }
+        //Сохраняем фпс
+        fpsList = fpsListNew;
+
+        //Перебор всех фпс
+        fpsAverage /= fpsAverageCount;
+
+        Debug.Log("fps average " + fpsAverage + " count " + fpsAverageCount);
+        if (fpsAverage >= FpsMax)
+        {
+            percent = 1;
+        }
+        else {
+            percent = fpsAverage / FpsMax;
+        }
     }
 
     //создать новую тестуру с новым разрешением
@@ -69,13 +130,13 @@ public class MainCamera : MonoBehaviour
         int y = (int)(Screen.height * percent);
 
         //выходим если размеры совпадают и не изменились
-        if (x == renderTexture.width || y == renderTexture.height) return;
+        if (x == renderTexture.width || y == renderTexture.height || x < 1 || y < 1) return;
 
         //создаем новую текстуру
-        renderTexture = new RenderTexture(x, y, 8);
+        renderTexture = new RenderTexture(x, y, 0);
         renderTexture.filterMode = FilterMode.Bilinear;
-        renderTexture.antiAliasing = 1;
-        renderTexture.anisoLevel = 1;
+        renderTexture.antiAliasing = 2;
+        renderTexture.anisoLevel = 2;
 
         renderTexture.Create();
         myCamera.targetTexture = renderTexture;
