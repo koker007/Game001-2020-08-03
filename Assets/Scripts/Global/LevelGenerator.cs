@@ -619,7 +619,7 @@ public class LevelGenerator : MonoBehaviour
             int[,] teleports = new int[Height, Width];
 
 
-            level.SetMass(CellRandom(exist, 80, 1, false), "exist");
+            level.SetMass(CellRandom(exist, 100, 1, false), "exist");
             level.SetMass(ColorRandom(IColors, numColors - 1), "color");
             
             level.SetMass(TypeTest(Type), "type");
@@ -628,7 +628,7 @@ public class LevelGenerator : MonoBehaviour
             level.SetMass(CellRandom(panel, 20, 4, !level.PassedWithPanel), "panel");
             level.SetMass(CellRandom(rock, 20, 5, !level.PassedWithRock), "rock");
             level.SetMass(CellRandom(ice, 20, 6, !level.PassedWithIce), "ice");
-            level.SetMass(CellRandom(dispencers, 10, 7, false), "dispencers");
+            level.SetMass(DispencerRandom(dispencers, 10, 7, false), "dispencers");
 
             level.SetMass(WallsRandom(walls, 15, 20), "walls");
 
@@ -641,6 +641,34 @@ public class LevelGenerator : MonoBehaviour
             int[,] CellRandom(int[,] array, float percentOfField, int ID, bool zeroArray)
             {
                 for (int x = 0; x < Height; x++)
+                {
+                    for (int y = 0; y < Width; y++)
+                    {
+                        if (!zeroArray)
+                        {
+                            perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(NumLevel + x + ID + 0.777f, NumLevel + y + ID + 0.777f) * 10000 % 10 * 10);
+
+                            if (perVar <= percentOfField)
+                            {
+                                array[x, y] = 1;
+                            }
+                            else
+                            {
+                                array[x, y] = 0;
+                            }
+                        }
+                        else
+                        {
+                            array[x, y] = 0;
+                        }
+                    }
+                }
+                return array;
+            }
+
+            int[,] DispencerRandom(int[,] array, float percentOfField, int ID, bool zeroArray)
+            {
+                for (int x = 0; x < Height - 1; x++)
                 {
                     for (int y = 0; y < Width; y++)
                     {
@@ -709,15 +737,15 @@ public class LevelGenerator : MonoBehaviour
             {
                 int teleportID1 = 0;
                 int teleportID2 = 0;
-                int lastCreatedTeleportXPos = -1;
-                int lastCreatedTeleportYPos = -1;
-                for (int x = 0; x < Height; x++)
+                int lastCreatedTeleportXPos = 0;
+                int lastCreatedTeleportYPos = 0;
+                for (int x = 1; x < Height - 1; x++)
                 {
                     for (int y = 0; y < Width; y++)
                     {
                         perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(NumLevel + x + 0.777f, NumLevel + y + 0.777f) * 10000 % 10 * 10);
 
-                        if (perVar <= teleportPercent)
+                        if (perVar <= teleportPercent && exist[x + 1, y] != 0 && exist[x - 1, y] != 0)
                         {                           
                             if (teleportID1 == 0 && exist[x, y] > 0)
                             {

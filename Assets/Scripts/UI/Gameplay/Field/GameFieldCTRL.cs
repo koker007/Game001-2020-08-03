@@ -771,11 +771,6 @@ public class GameFieldCTRL : MonoBehaviour
         {
             for (int x = 0; x < cellCTRLs.GetLength(0); x++)
             {
-                bool test = false;
-                if (x == 2 && y == 1)
-                {
-                    test = true;
-                }
                 TestCellCombination(cellCTRLs[x, y]);
             }
         }
@@ -984,13 +979,6 @@ public class GameFieldCTRL : MonoBehaviour
 
             void CalcResult()
             {
-                bool test = false;
-                if (cellLineRight.Count + cellLineLeft.Count > 1 ||
-                    cellLineDown.Count + cellLineUp.Count > 1)
-                {
-                    test = true;
-                }
-
                 Line5();
                 Line4();
                 Line3();
@@ -1116,12 +1104,6 @@ public class GameFieldCTRL : MonoBehaviour
             //Проверить ячейку на совпадение цвета и возможность добавления в комбинацию
             bool TestCellColor(CellCTRL SecondCell)
             {
-                bool test = false;
-                if (SecondCell && SecondCell.cellInternal != null && SecondCell.cellInternal.type == CellInternalObject.Type.color5)
-                {
-                    test = true;
-                }
-
                 //Отмена если
                 if (
                     !SecondCell || //если самой ячейки нет
@@ -2044,7 +2026,6 @@ public class GameFieldCTRL : MonoBehaviour
                     }
                 }
             }
-            //Debug.Log("Found potencial: " + potencialBest.priority + " Pos: " + potencialBest.Target.pos + " Target:" + potencialBest.Target.pos + " Moving:" + potencialBest.Moving.pos);
         }
         //если комбинаций не нашлось и лист нужных к перемещению объектов еще не создан и это не первый ход
         else if (ListWaitingInternals.Count <= 0)
@@ -2053,7 +2034,6 @@ public class GameFieldCTRL : MonoBehaviour
             MenuGameplay.main.CreateMidleMessage(TranslateManager.main.GetText("Mixed"));
 
             CreateRandomInternalList();
-            //Debug.Log("Not Found potencial comb " + Time.unscaledTime);
 
             //Перемешивание закончено
             BuyMixedNeed = false;
@@ -2188,14 +2168,6 @@ public class GameFieldCTRL : MonoBehaviour
 
         void testPotencialCell(CellCTRL cell)
         {
-
-            bool test = false;
-            if (cell != null &&
-                cell.pos == testCell)
-            {
-                test = true;
-            }
-
             //Выходим если этой ячейки нет или она заморожена
             if (cell == null ||
                 cell.cellInternal == null ||
@@ -3344,6 +3316,7 @@ public class GameFieldCTRL : MonoBehaviour
                 }
             }
 
+            /*
             //Проверяем текушую растановку ячеек на комбинации
             bool isCombinationFound()
             {
@@ -3362,6 +3335,7 @@ public class GameFieldCTRL : MonoBehaviour
 
                 return result;
             }
+            */
             bool isPotencialFound()
             {
                 bool result = false;
@@ -3535,14 +3509,7 @@ public class GameFieldCTRL : MonoBehaviour
         {
             neibour = true;
             //Все варианты, где слева от выбранной клетки стена || Все варианты, где справа от целевой клетки стена
-            if (CellSelect.wall == 4 || CellSwap.wall == 2 ||
-            CellSelect.wall == 7 || CellSwap.wall == 5 ||
-            CellSelect.wall == 8 || CellSwap.wall == 6 ||
-            CellSelect.wall == 10 || CellSwap.wall == 10 ||
-            CellSelect.wall == 11 || CellSwap.wall == 11 ||
-            CellSelect.wall == 12 || CellSwap.wall == 13 ||
-            CellSelect.wall == 13 || CellSwap.wall == 14 ||
-            CellSelect.wall == 15 || CellSwap.wall == 15)
+            if (!CheckObstaclesToMoveLeft(CellSwap, CellSelect))
             {
                 wallBlocksMovement = true;
             }
@@ -3552,14 +3519,7 @@ public class GameFieldCTRL : MonoBehaviour
         {
             neibour = true;
             //Все варианты, где справа от выбранной клетки стена || Все варианты, где слева от целевой клетки стена
-            if (CellSelect.wall == 2 || CellSwap.wall == 4 ||
-                CellSelect.wall == 5 || CellSwap.wall == 7 ||
-                CellSelect.wall == 6 || CellSwap.wall == 8 ||
-                CellSelect.wall == 10 || CellSwap.wall == 10 ||
-                CellSelect.wall == 11 || CellSwap.wall == 11 ||
-                CellSelect.wall == 13 || CellSwap.wall == 12 ||
-                CellSelect.wall == 14 || CellSwap.wall == 13 ||
-                CellSelect.wall == 15 || CellSwap.wall == 15)
+            if (!CheckObstaclesToMoveRight(CellSwap, CellSelect))
             {
                 wallBlocksMovement = true;
             }
@@ -3569,14 +3529,7 @@ public class GameFieldCTRL : MonoBehaviour
         {
             neibour = true;
             //Все варианты, где снизу от выбранной клетки стена || Все варианты, где сверху от целевой клетки стена
-            if (CellSelect.wall == 3 || CellSwap.wall == 1 ||
-            CellSelect.wall == 6 || CellSwap.wall == 5 ||
-            CellSelect.wall == 7 || CellSwap.wall == 8 ||
-            CellSelect.wall == 9 || CellSwap.wall == 9 ||
-            CellSelect.wall == 11 || CellSwap.wall == 12 ||
-            CellSelect.wall == 12 || CellSwap.wall == 13 ||
-            CellSelect.wall == 14 || CellSwap.wall == 14 ||
-            CellSelect.wall == 15 || CellSwap.wall == 15)
+            if (!CheckObstaclesToMoveDown(CellSwap, CellSelect))
             {
                 wallBlocksMovement = true;
             }
@@ -3586,14 +3539,7 @@ public class GameFieldCTRL : MonoBehaviour
         {
             neibour = true;
             //Все варианты, где сверху от выбранной клетки стена || Все варианты, где снизу от целевой клетки стена
-            if (CellSelect.wall == 1 || CellSwap.wall == 3 ||
-            CellSelect.wall == 5 || CellSwap.wall == 6 ||
-            CellSelect.wall == 8 || CellSwap.wall == 7 ||
-            CellSelect.wall == 9 || CellSwap.wall == 9 ||
-            CellSelect.wall == 12 || CellSwap.wall == 11 ||
-            CellSelect.wall == 13 || CellSwap.wall == 12 ||
-            CellSelect.wall == 14 || CellSwap.wall == 14 ||
-            CellSelect.wall == 15 || CellSwap.wall == 15)
+            if (!CheckObstaclesToMoveUp(CellSwap, CellSelect))
             {
                 wallBlocksMovement = true;
             }
