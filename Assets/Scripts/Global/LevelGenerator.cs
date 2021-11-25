@@ -568,40 +568,35 @@ public class LevelGenerator : MonoBehaviour
         //выбираем цели уровня
         void PassRandom()
         {
-            int numPass = (int)perVar % 2 + 1;
-            int k = 11;
 
-            for (int i = 0; i < numPass; i++)
+            float rand = 6f / 10f * perVar;
+            if ((int)rand == 0 && !level.PassedWithBox)
             {
-                k++;
-                int rand = (int)perVar * k % 6;
-                if (rand == 0 && !level.PassedWithBox)
-                {
-                    level.PassedWithRock = true;
-                }
-                else if (rand == 1 && !level.PassedWithScore)
-                {
-                    level.PassedWithCrystal = true;
-                    level.NeedCrystal = (int)perVar % 15 + 15;
-                    level.NeedColor = (CellInternalObject.InternalColor)(int)(perVar % 5);
-                }
-                else if (rand == 2 && !level.PassedWithScore && !level.PassedWithRock)
-                {
-                    level.PassedWithBox = true;
-                }
-                else if (rand == 3 && !level.PassedWithScore && !level.PassedWithPanel)
-                {
-                    level.PassedWithMold = true;
-                }
-                else if (rand == 4 && !level.PassedWithScore && !level.PassedWithMold)
-                {
-                    level.PassedWithPanel = true;
-                }
-                else if (rand == 5 && !level.PassedWithScore)
-                {
-                    level.PassedWithEnemy = true;
-                }
+                level.PassedWithRock = true;
             }
+            else if ((int)rand == 1 && !level.PassedWithScore)
+            {
+                level.PassedWithCrystal = true;
+                level.NeedCrystal = (int)perVar % 15 + 15;
+                level.NeedColor = (CellInternalObject.InternalColor)(int)(perVar % 5);
+            }
+            else if ((int)rand == 2 && !level.PassedWithScore && !level.PassedWithRock)
+            {
+                level.PassedWithBox = true;
+            }
+            else if ((int)rand == 3 && !level.PassedWithScore && !level.PassedWithPanel)
+            {
+                level.PassedWithMold = true;
+            }
+            else if ((int)rand == 4 && !level.PassedWithScore && !level.PassedWithMold)
+            {
+                level.PassedWithPanel = true;
+            }
+            else if ((int)rand == 5 && !level.PassedWithScore)
+            {
+                level.PassedWithEnemy = true;
+            }
+
         }
         //заносим значения клеток
         void ArraysRandom()
@@ -621,16 +616,15 @@ public class LevelGenerator : MonoBehaviour
 
             level.SetMass(CellRandom(exist, 100, 1, false), "exist");
             level.SetMass(ColorRandom(IColors, numColors - 1), "color");
-            
+
             level.SetMass(TypeTest(Type), "type");
             level.SetMass(CellRandom(box, 20, 2, !level.PassedWithBox), "box");
             level.SetMass(CellRandom(mold, 20, 3, !level.PassedWithMold), "mold");
             level.SetMass(CellRandom(panel, 20, 4, !level.PassedWithPanel), "panel");
             level.SetMass(CellRandom(rock, 20, 5, !level.PassedWithRock), "rock");
             level.SetMass(CellRandom(ice, 20, 6, !level.PassedWithIce), "ice");
-            level.SetMass(DispencerRandom(dispencers, 10, 7, false), "dispencers");
-
             level.SetMass(WallsRandom(walls, 15, 20), "walls");
+            level.SetMass(DispencerRandom(dispencers, 10, 7, false), "dispencers");
 
             level.SetMass(TeleportsRandom(teleports, 10), "teleport");
 
@@ -676,9 +670,19 @@ public class LevelGenerator : MonoBehaviour
                         {
                             perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(NumLevel + x + ID + 0.777f, NumLevel + y + ID + 0.777f) * 10000 % 10 * 10);
 
-                            if (perVar <= percentOfField)
+                            if (perVar <= percentOfField && array[x + 1, y] == 0 && exist[x + 1, y] == 1)
                             {
                                 array[x, y] = 1;
+                                rock[x, y] = 0;
+                                walls[x, y] = 0;
+                                walls[x + 1, y] = 0;
+                                box[x, y] = 0;
+                                ice[x, y] = 0;
+                                mold[x, y] = 0;
+                                if (level.PassedWithPanel)
+                                {
+                                    panel[x, y] = 1;
+                                }
                             }
                             else
                             {
@@ -718,7 +722,7 @@ public class LevelGenerator : MonoBehaviour
                     {
                         perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(NumLevel + x + 0.777f, NumLevel + y + 0.777f) * 10000 % 10);
                         int percentPerVar = (int)Mathf.Ceil(Mathf.PerlinNoise(NumLevel + x + 0.666f, NumLevel + y + 0.666f) * 10000 % 10);
-                       
+
                         if (percentPerVar * 10 <= wallPercent)
                         {
                             int randVal = (int)Mathf.Round(maxArrayValue / 10 * perVar);
@@ -732,30 +736,30 @@ public class LevelGenerator : MonoBehaviour
                 }
                 return array;
             }
-            
+
             int[,] TeleportsRandom(int[,] array, int teleportPercent)
             {
                 int teleportID1 = 0;
                 int teleportID2 = 0;
                 int lastCreatedTeleportXPos = 0;
                 int lastCreatedTeleportYPos = 0;
-                for (int x = 1; x < Height - 1; x++)
+                for (int x = 0; x < Height - 1; x++)
                 {
                     for (int y = 0; y < Width; y++)
                     {
                         perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(NumLevel + x + 0.777f, NumLevel + y + 0.777f) * 10000 % 10 * 10);
 
-                        if (perVar <= teleportPercent && exist[x + 1, y] != 0 && exist[x - 1, y] != 0)
-                        {                           
+                        if (perVar <= teleportPercent && exist[x + 1, y] != 0)
+                        {
                             if (teleportID1 == 0 && exist[x, y] > 0)
                             {
-                                teleportID1 = teleportID2 + 1;                             
+                                teleportID1 = teleportID2 + 1;
                                 array[x, y] = teleportID1;
                                 lastCreatedTeleportXPos = x;
                                 lastCreatedTeleportYPos = y;
                             }
-                           
-                            else if (teleportID1 != 0 && exist[x,y] > 0)
+
+                            else if (teleportID1 != 0 && exist[x, y] > 0)
                             {
                                 teleportID2 = teleportID1;
                                 teleportID1 = 0;
@@ -764,14 +768,14 @@ public class LevelGenerator : MonoBehaviour
                         }
                     }
                 }
-                
+
                 if (teleportID1 != 0)
                 {
                     array[lastCreatedTeleportXPos, lastCreatedTeleportYPos] = 0;
                 }
                 return array;
             }
-            
+
             int[,] TypeTest(int[,] array)
             {
                 for (int x = 0; x < Height; x++)

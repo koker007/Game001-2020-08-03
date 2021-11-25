@@ -75,6 +75,7 @@ public class Gameplay : MonoBehaviour
         {
             enemyScoreText.gameObject.SetActive(false);
         }
+        LevelStatsController.main.playerTurns = 0;
         gameStarted = false;
         timeScale = 1;
         starsCount = 0;
@@ -129,7 +130,7 @@ public class Gameplay : MonoBehaviour
         {
             movingCount++;
             movingCan--;
-            
+            LevelStatsController.main.playerTurns++;
             MenuGameplay.main.updateMoving();
 
 
@@ -241,6 +242,8 @@ public class Gameplay : MonoBehaviour
                                             if (score > enemyScore && movingCan <= 0 && playerTurn || !level.PassedWithEnemy)
                                             {
                                                 buffer.missionComplite = true;
+                                                LevelStatsController.main.playerScore = score;
+                                                LevelStatsController.main.SendPlayerStats();
                                             }
                                         }
                                     }
@@ -253,6 +256,8 @@ public class Gameplay : MonoBehaviour
                 if (movingCan <= 0 && (!level.PassedWithEnemy || (level.PassedWithEnemy && score <= enemyScore)))
                 {
                     buffer.missionDefeat = true;
+                    LevelStatsController.main.playerScore = score;                    
+                    LevelStatsController.main.SendPlayerStats();
                 }
             }
         }
