@@ -35,7 +35,7 @@ public class RopeChain : MonoBehaviour
             return;
         }
 
-        float one = 1.0f/(posVector.Length-1);
+        float one = 1.0f / (posVector.Length - 1);
 
         //Перебираем все кости от начала до конца
         for (int num = 0; num < posVector.Length; num++) {
@@ -57,27 +57,27 @@ public class RopeChain : MonoBehaviour
 
 
             }
-            else{
+            else {
                 //поворачиваем родителя в сторону новой позиции
                 Vector3 forvard = (position - posVector[num - 1].transform.position).normalized;
 
                 //И поворачиваем так чтобы она смотрела по направляющему вектору к следующей ступени
                 Quaternion rot = Quaternion.LookRotation(forvard);
-                
+
                 rot.eulerAngles = new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, rot.eulerAngles.z);
                 posVector[num - 1].transform.rotation = rot;
 
                 //Узнаем растояние между точками
-                float distance = Vector3.Distance(position, posVector[num - 1].transform.position)*0.01f;
+                float distance = Vector3.Distance(position, posVector[num - 1].transform.position) * 0.01f;
                 //перемемещаем точку на указанное растояние
                 posVector[num].position = myChain.GetPosition(progress, 1); //new Vector3(0, 0, distance);
 
-                GameObject sphere = Instantiate(WorldRopeChainCTRL.main.PrefabSphere, gameObject.transform);
-                sphere.transform.position = posVector[num].position;
+                //GameObject sphere = Instantiate(WorldRopeChainCTRL.main.PrefabSphere, gameObject.transform);
+                //sphere.transform.position = posVector[num].position;
 
                 //Поворачиваем прошлый меш
                 Quaternion rotMesh = posRigs[num].rotation;
-                rotMesh.eulerAngles = new Vector3(posVector[num-1].rotation.eulerAngles.x+90, posVector[num-1].rotation.eulerAngles.y, posVector[num-1].rotation.eulerAngles.z);
+                rotMesh.eulerAngles = new Vector3(posVector[num - 1].rotation.eulerAngles.x + 90, posVector[num - 1].rotation.eulerAngles.y, posVector[num - 1].rotation.eulerAngles.z);
                 posRigs[num].rotation = rotMesh;
 
                 //Перемещаем текущий меш
@@ -85,7 +85,9 @@ public class RopeChain : MonoBehaviour
             }
         }
 
-        mesh.gameObject.SetActive(false);
+        if (mesh != null) {
+            mesh.gameObject.SetActive(false);
+        }
     }
 
     
