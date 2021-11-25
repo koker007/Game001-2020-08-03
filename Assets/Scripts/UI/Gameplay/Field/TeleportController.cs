@@ -15,7 +15,7 @@ public class TeleportController : MonoBehaviour
 
     private void Teleport()
     {
-        if (teleportIn.cellInternal)
+        if (teleportIn.cellInternal != null)
         {
             //Если выход второго телепорта свободен и доступен, телепортируем предмет на входе туда
             if (secondTeleport.teleportOut != null &&
@@ -23,9 +23,8 @@ public class TeleportController : MonoBehaviour
                 !secondTeleport.teleportOut.cellInternal &&
                 secondTeleport.teleportOut.rock == 0)
             {                
-                teleportIn.cellInternal.GetComponent<RectTransform>().pivot = secondTeleport.teleportOut.GetComponent<RectTransform>().pivot;
+                //teleportIn.cellInternal.GetComponent<RectTransform>().pivot = secondTeleport.teleportOut.GetComponent<RectTransform>().pivot;
                 teleportIn.cellInternal.StartMove(secondTeleport.teleportOut);
-                secondTeleport.teleportOut.setInternal(teleportIn.cellInternal);
             }
         }
     }

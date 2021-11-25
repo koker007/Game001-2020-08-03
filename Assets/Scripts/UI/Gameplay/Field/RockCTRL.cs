@@ -46,7 +46,6 @@ public class RockCTRL : MonoBehaviour
         if (HealthOld == myCell.rock)
             return;
 
-        ChangeImage();
         //Если здоровье уменьшилось, спавним эффект
         if (HealthOld > myCell.rock) {
             Particle3dCTRL.CreateDestroyRock(myCell.myField.transform, myCell);
@@ -54,11 +53,6 @@ public class RockCTRL : MonoBehaviour
 
         DestroyRock();
         HealthOld = myCell.rock;
-
-        void ChangeImage()
-        {
-
-        }
 
         //Уничтожить если жизни кончились
         void DestroyRock()
@@ -83,14 +77,6 @@ public class RockCTRL : MonoBehaviour
         //Пересоздать список плесени исключая отсутствующиие
     }
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         UpdateLife();

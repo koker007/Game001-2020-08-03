@@ -535,11 +535,11 @@ public class LevelGenerator : MonoBehaviour
         int Height = perVar * 123 % (Width / 2) + 6;
 
         //îñíîâíûå ïàğàìåòğû óğîâíÿ
-        int NeedScore = Width * Height * (perVar % ScoreÑoefficient + ScoreÑoefficient / 2);
-        float move = (float)60 / (Width * Height * ScoreÑoefficient) * NeedScore;
+        int NeedScore = Width * Height * 50;// (perVar % ScoreÑoefficient + ScoreÑoefficient / 2);
+        float move = Width * Height / 2;//(float)60 / (Width * Height * ScoreÑoefficient) * NeedScore;
 
         //âûşèğàåì êîëè÷åñòâî öâåòîâ
-        int numColors = 5;
+        int numColors = 4;
 
         //Êàêîé ïğîöåíò äëÿ ñîçäàíèÿ ñóïåğ öâåòà
         float perlinSuperColor = Mathf.PerlinNoise(777.777f / 666.666f + NumLevel, 1234) * 100;
@@ -614,15 +614,25 @@ public class LevelGenerator : MonoBehaviour
             int[,] rock = new int[Height, Width];
             int[,] IColors = new int[Height, Width];
             int[,] Type = new int[Height, Width];
+            int[,] dispencers = new int[Height, Width];
+            int[,] walls = new int[Height, Width];
+            int[,] teleports = new int[Height, Width];
+
 
             level.SetMass(CellRandom(exist, 80, 1, false), "exist");
             level.SetMass(ColorRandom(IColors, numColors - 1), "color");
+            
             level.SetMass(TypeTest(Type), "type");
             level.SetMass(CellRandom(box, 20, 2, !level.PassedWithBox), "box");
             level.SetMass(CellRandom(mold, 20, 3, !level.PassedWithMold), "mold");
             level.SetMass(CellRandom(panel, 20, 4, !level.PassedWithPanel), "panel");
             level.SetMass(CellRandom(rock, 20, 5, !level.PassedWithRock), "rock");
             level.SetMass(CellRandom(ice, 20, 6, !level.PassedWithIce), "ice");
+            level.SetMass(CellRandom(dispencers, 10, 7, false), "dispencers");
+
+            level.SetMass(WallsRandom(walls, 15, 20), "walls");
+
+            level.SetMass(TeleportsRandom(teleports, 10), "teleport");
 
             level.SetCells();
 
@@ -664,7 +674,7 @@ public class LevelGenerator : MonoBehaviour
                     {
                         perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(NumLevel + x + 0.777f, NumLevel + y + 0.777f) * 10000 % 10);
 
-                        int randVal = (int)Mathf.Round(maxArrayValue / 9 * perVar);
+                        int randVal = (int)Mathf.Round(maxArrayValue / 10 * perVar);
 
                         array[x, y] = randVal;
                     }
@@ -672,6 +682,68 @@ public class LevelGenerator : MonoBehaviour
                 return array;
             }
 
+            int[,] WallsRandom(int[,] array, float maxArrayValue, int wallPercent)
+            {
+                for (int x = 0; x < Height; x++)
+                {
+                    for (int y = 0; y < Width; y++)
+                    {
+                        perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(NumLevel + x + 0.777f, NumLevel + y + 0.777f) * 10000 % 10);
+                        int percentPerVar = (int)Mathf.Ceil(Mathf.PerlinNoise(NumLevel + x + 0.666f, NumLevel + y + 0.666f) * 10000 % 10);
+                       
+                        if (percentPerVar * 10 <= wallPercent)
+                        {
+                            int randVal = (int)Mathf.Round(maxArrayValue / 10 * perVar);
+                            array[x, y] = randVal;
+                        }
+                        else
+                        {
+                            array[x, y] = 0;
+                        }
+                    }
+                }
+                return array;
+            }
+            
+            int[,] TeleportsRandom(int[,] array, int teleportPercent)
+            {
+                int teleportID1 = 0;
+                int teleportID2 = 0;
+                int lastCreatedTeleportXPos = -1;
+                int lastCreatedTeleportYPos = -1;
+                for (int x = 0; x < Height; x++)
+                {
+                    for (int y = 0; y < Width; y++)
+                    {
+                        perVar = (int)Mathf.Ceil(Mathf.PerlinNoise(NumLevel + x + 0.777f, NumLevel + y + 0.777f) * 10000 % 10 * 10);
+
+                        if (perVar <= teleportPercent)
+                        {                           
+                            if (teleportID1 == 0 && exist[x, y] > 0)
+                            {
+                                teleportID1 = teleportID2 + 1;                             
+                                array[x, y] = teleportID1;
+                                lastCreatedTeleportXPos = x;
+                                lastCreatedTeleportYPos = y;
+                            }
+                           
+                            else if (teleportID1 != 0 && exist[x,y] > 0)
+                            {
+                                teleportID2 = teleportID1;
+                                teleportID1 = 0;
+                                array[x, y] = teleportID2;
+                            }
+                        }
+                    }
+                }
+                
+                if (teleportID1 != 0)
+                {
+                    array[lastCreatedTeleportXPos, lastCreatedTeleportYPos] = 0;
+                }
+                return array;
+            }
+            
             int[,] TypeTest(int[,] array)
             {
                 for (int x = 0; x < Height; x++)

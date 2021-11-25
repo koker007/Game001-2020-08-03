@@ -63,12 +63,6 @@ public class FlyCTRL : MonoBehaviour
     CellInternalObject.Type partnerType; //Данные партнера
     GameFieldCTRL.Combination comb; //Данные комбинации
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     bool isInicialized = false;
     public void inicialize(CellCTRL CellStart, CellCTRL CellTargetFunc, CellInternalObject partner, GameFieldCTRL.Combination combFunc, Color color) {
 
