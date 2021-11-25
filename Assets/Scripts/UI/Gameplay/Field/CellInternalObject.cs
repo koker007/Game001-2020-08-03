@@ -805,22 +805,16 @@ public class CellInternalObject : MonoBehaviour
         {
             case InternalColor.Blue:
                 return Color.blue;
-                break;
             case InternalColor.Green:
                 return Color.green;
-                break;
             case InternalColor.Red:
                 return Color.red;
-                break;
             case InternalColor.Violet:
                 return Color.white;
-                break;
             case InternalColor.Yellow:
                 return Color.yellow;
-                break;
             default:
                 return Color.black;
-                break;
         }
     }
 
@@ -850,11 +844,6 @@ public class CellInternalObject : MonoBehaviour
             combination.ID == MyCombID &&
             !isMove //если объект не в движении
             ) return;
-
-        bool bomb = false;
-        if (type == Type.bomb && activateNeed) {
-            bomb = true;
-        }
 
         //Бомба должна активироваться только когда упала, с низу не должно быть свободных ячеек
         if (activateNeed && type == Type.bomb && myCell.rock == 0 &&
@@ -1090,6 +1079,7 @@ public class CellInternalObject : MonoBehaviour
 
             SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipExploseColor5);
 
+            /*
             void DestroyAllRocket(InternalColor internalColor)
             {
 
@@ -1135,6 +1125,7 @@ public class CellInternalObject : MonoBehaviour
 
                 myCell.Damage(null, combination);
             }
+            */
 
             void replacementColorAndActivate() {
 
@@ -1269,8 +1260,6 @@ public class CellInternalObject : MonoBehaviour
 
             void DestroyAll()
             {
-                float speed = 0.1f;
-
                 //Проверяем все ячейки на совпадение цветов
                 for (int x = 0; x < myField.cellCTRLs.GetLength(0); x++)
                 {

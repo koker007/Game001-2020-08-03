@@ -14,7 +14,7 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private Vector2 StartTouchPosition;
 
-    private const float SpeedRotation = 0.015f;
+    private const float SpeedRotation = 0.05f;
     private float Srotation;
     public float StartRotation = -115;
 

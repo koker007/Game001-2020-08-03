@@ -19,6 +19,7 @@ public class TeleportController : MonoBehaviour
         {
             //Если выход второго телепорта свободен и доступен, телепортируем предмет на входе туда
             if (secondTeleport.teleportOut != null &&
+                teleportIn.rock == 0 &&
                 secondTeleport.teleportOut.BlockingMove == 0 &&
                 !secondTeleport.teleportOut.cellInternal &&
                 secondTeleport.teleportOut.rock == 0)

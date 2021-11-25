@@ -28,6 +28,7 @@ public class Gameplay : MonoBehaviour
     public bool gameStarted = false; //ѕровер€ем, сделал ли игрок первый ход
     [Header("Level parameters")]
     public int score = 0;
+    [SerializeField] Text enemyScoreText;
     public int scoreMax = 0;
     public float timeScale = 1;
     public int enemyScore = 0;
@@ -66,11 +67,20 @@ public class Gameplay : MonoBehaviour
     public void StartGameplay(ref Image[] stars)
     {
         //≈сли уровень выбран
+        if (LevelsScript.main.ReturnLevel().PassedWithEnemy)
+        {
+            enemyScoreText.gameObject.SetActive(true);
+        }
+        else
+        {
+            enemyScoreText.gameObject.SetActive(false);
+        }
         gameStarted = false;
         timeScale = 1;
         starsCount = 0;
         score = 0;
         enemyScore = 0;
+        enemyScoreText.text = enemyScore.ToString();
         movingCount = 0;
         movingMoldCount = 0;
         movingCan = LevelsScript.main.ReturnLevel().Move;
@@ -138,6 +148,7 @@ public class Gameplay : MonoBehaviour
         else
         {
             enemyScore += PlusScore;
+            enemyScoreText.text = enemyScore.ToString();
         }
         MenuGameplay.main.updateScore();
     }
@@ -239,7 +250,7 @@ public class Gameplay : MonoBehaviour
                     }
                 }
                 //если ходов нет проигрыш
-                if (movingCan <= 0 && !level.PassedWithEnemy)
+                if (movingCan <= 0 && (!level.PassedWithEnemy || (level.PassedWithEnemy && score <= enemyScore)))
                 {
                     buffer.missionDefeat = true;
                 }
