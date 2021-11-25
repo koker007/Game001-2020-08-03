@@ -108,7 +108,6 @@ public class MainCamera : MonoBehaviour
         //Перебор всех фпс
         fpsAverage /= fpsAverageCount;
 
-        Debug.Log("fps average " + fpsAverage + " count " + fpsAverageCount);
         if (fpsAverage >= FpsMax)
         {
             percent = 1;
