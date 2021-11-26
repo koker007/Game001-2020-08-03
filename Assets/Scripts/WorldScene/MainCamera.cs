@@ -29,7 +29,7 @@ public class MainCamera : MonoBehaviour
         iniTexture();
         iniCamera();
 
-        InvokeRepeating("TestTextureSize", 1, 1);
+        //InvokeRepeating("TestTextureSize", 1, 1);
     }
 
     void iniTexture() {
@@ -64,6 +64,7 @@ public class MainCamera : MonoBehaviour
         //TestTextureSize();
     }
 
+    float fpsAverageOld = 60;
     struct FPS {
         public float frame;
         public float timeTest;
@@ -75,7 +76,7 @@ public class MainCamera : MonoBehaviour
 
         float testSecond = 3;
 
-        float FpsMax = 45;
+        float FpsTarget = 60;
 
         //проверяем текущий фпс
         FPS fpsNow = new FPS();
@@ -108,12 +109,21 @@ public class MainCamera : MonoBehaviour
         //Перебор всех фпс
         fpsAverage /= fpsAverageCount;
 
-        if (fpsAverage >= FpsMax)
-        {
-            percent = 1;
-        }
-        else {
-            percent = fpsAverage / FpsMax;
+        //узнаем какой был фпс в последний раз
+        float correct = fpsAverage / fpsAverageOld;
+        //Debug.Log("correct = " + correct);
+
+        //если фпс с прошлого изменения сильно отличаются то меняем
+        if (correct > 1.1 || correct < 0.9) {
+            if (fpsAverage >= FpsTarget)
+            {
+                percent = 1;
+            }
+            else {
+                percent = fpsAverage / FpsTarget;
+            }
+            fpsAverageOld = fpsAverage;
+            TestTextureSize();
         }
     }
 
@@ -121,8 +131,8 @@ public class MainCamera : MonoBehaviour
     void TestTextureSize() {
         if (percent > 1)
             percent = 1;
-        else if (percent < 0.1f)
-            percent = 0.1f;
+        else if (percent < 0.7f)
+            percent = 0.7f;
 
         //Считаем количество пикселей на экране
         int x = (int)(Screen.width * percent);

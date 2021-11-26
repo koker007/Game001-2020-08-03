@@ -18,7 +18,7 @@ public class WorldGenerateScene : MonoBehaviour
     [SerializeField] private WorldLocation[] AdditionalLocations = new WorldLocation[0];
 
     [SerializeField]
-    public float angleLocationGenerate = 180;
+    public float angleForvardSpawn = 35;
 
 
     private int MaxLevel;
@@ -197,7 +197,7 @@ public class WorldGenerateScene : MonoBehaviour
             //Идем по списку заранее подготовленных локаций
             for (int num = 0; num < MainLocations.Length; num++)
             {
-                //проверяем есть ли локация с текущим углом в буффере
+                //проверяем есть ли локация с текущим углом в буффере уже созданных локаций
                 bool found = false;
                 foreach (WorldLocation bufferLocation in bufferLocations)
                 {
@@ -208,8 +208,12 @@ public class WorldGenerateScene : MonoBehaviour
                     }
                 }
 
-                //Если нет, а растояние маленькое создаем
-                if (Mathf.Abs(WorldGenerateScene.main.rotationNow + 45 - posNow) <= 90 && !found)
+                //Если нету, а растояние маленькое создаем
+                // раньше Mathf.Abs(rotationNow + 45 - posNow) <= MainLocations[num].lenghtAngle
+                if (!found
+                    && rotationNow - posNow < angleForvardSpawn
+                    && rotationNow - posNow > (MainLocations[num].lenghtAngle + 45) * -1
+                    )
                 {
                     GameObject locationObj = Instantiate(MainLocations[num].gameObject, RotatableObj.transform);
                     //GameObject locationObj = ObjectPooler.main.SpawnMainLocation(num);

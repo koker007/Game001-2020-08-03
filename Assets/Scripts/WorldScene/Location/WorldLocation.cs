@@ -100,7 +100,10 @@ public class WorldLocation : MonoBehaviour
     }
     public void TestDelete() {
         rotateNow = WorldGenerateScene.main.rotationNow;
-        if (Mathf.Abs(WorldGenerateScene.main.rotationNow - myAngle) > 135) {
+        //Первое растояние спереди от которого надо удалять локацию. второе растояние сзади после которого надо удалять
+        //Сзади удаляется сразу как за камерой
+        if (WorldGenerateScene.main.rotationNow - myAngle > WorldGenerateScene.main.angleForvardSpawn 
+            || WorldGenerateScene.main.rotationNow - myAngle < (lenghtAngle+45) * -1) {
             //gameObject.SetActive(false);
             Destroy(gameObject);           
         }
