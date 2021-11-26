@@ -43,6 +43,7 @@ public class CameraScaler : MonoBehaviour
         }
     }
 
+
     private float CalcVerticalFov(float hFovInDeg, float aspectRatio)
     {
         float hFovInRads = hFovInDeg * Mathf.Deg2Rad;

@@ -21,6 +21,19 @@ public class MainCamera : MonoBehaviour
     [SerializeField]
     public float percent = 1;
 
+    /*
+    public Vector2 DefaultResolution = new Vector2(720, 1280);
+    [Range(0f, 1f)] public float WidthOrHeight = 0;
+
+    private Camera componentCamera;
+
+    private float initialSize;
+    private float targetAspect;
+
+    private float initialFov;
+    private float horizontalFov = 120f;
+    */
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,9 +41,23 @@ public class MainCamera : MonoBehaviour
 
         iniTexture();
         iniCamera();
-
+        //iniScaler();
         //InvokeRepeating("TestTextureSize", 1, 1);
+
+        //InvokeRepeating("CameraScaler", 0, Random.Range(1f, 1.5f));
     }
+
+    /*
+    void iniScaler() {
+        componentCamera = GetComponent<Camera>();
+        initialSize = componentCamera.orthographicSize;
+
+        targetAspect = DefaultResolution.x / DefaultResolution.y;
+
+        initialFov = componentCamera.fieldOfView;
+        horizontalFov = CalcVerticalFov(initialFov, 1 / targetAspect);
+    }
+    */
 
     void iniTexture() {
         if (!renderTexture)
@@ -61,8 +88,38 @@ public class MainCamera : MonoBehaviour
     void Update()
     {
         TestNewQuality();
-        //TestTextureSize();
     }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Проверка разрешения камеры
+    /*
+    void CameraScaler() {
+        if (componentCamera.orthographic)
+        {
+            float constantWidthSize = initialSize * (targetAspect / componentCamera.aspect);
+            componentCamera.orthographicSize = Mathf.Lerp(constantWidthSize, initialSize, WidthOrHeight);
+        }
+        else
+        {
+            float constantWidthFov = CalcVerticalFov(horizontalFov, componentCamera.aspect);
+            componentCamera.fieldOfView = Mathf.Lerp(constantWidthFov, initialFov, WidthOrHeight);
+        }
+
+    }
+    float CalcVerticalFov(float hFovInDeg, float aspectRatio)
+    {
+        float hFovInRads = hFovInDeg * Mathf.Deg2Rad;
+
+        float vFovInRads = 2 * Mathf.Atan(Mathf.Tan(hFovInRads / 2) / aspectRatio);
+
+        return vFovInRads * Mathf.Rad2Deg;
+    }
+    /
+    */
+
+    ///Конец разрешения камеры
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     float fpsAverageOld = 60;
     struct FPS {
@@ -71,7 +128,7 @@ public class MainCamera : MonoBehaviour
     }
     List<FPS> fpsList = new List<FPS>();
 
-    //выявление нужного разрешения
+    //выявление нужного разрешения для текстуры
     void TestNewQuality() {
 
         float testSecond = 3;

@@ -106,15 +106,18 @@ public class RopeChain : MonoBehaviour
 
     }
 
+    /*
     private void Start()
     {
         Invoke("ReCalc", 0.5f);
     }
 
+    
     private void Update()
     {
         ReCalc();
     }
+    */
 
    [SerializeField]
     bool needRecalc = false;
