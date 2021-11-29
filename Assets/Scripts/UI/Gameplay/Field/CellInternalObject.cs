@@ -11,6 +11,8 @@ using UnityEngine.UI;
 public class CellInternalObject : MonoBehaviour
 {
     [SerializeField]
+    public RectMask2D myMask2D;
+    [SerializeField]
     public AnimatorCTRL animatorCTRL;
     private Particle3dCTRL trail;
     private bool trailSpawned = false;
@@ -113,10 +115,17 @@ public class CellInternalObject : MonoBehaviour
         blocker //Объект который падает и препятствует распространению ракеты, но ломается как ящик
     }
 
+    public enum MaskType{
+        top,
+        bot,
+        left,
+        right
+    }
 
     [Header("Other")]
     public InternalColor color;
     public Type type;
+
 
 
     public Color GetColor(InternalColor internalColor) {
@@ -139,6 +148,30 @@ public class CellInternalObject : MonoBehaviour
         }
 
         return result;
+    }
+
+
+    //Замаскировать внутренний объект от туда, от куда он будет двигаться
+    public void SetFullMask2D(MaskType maskType) {
+        Vector4 mask2D = myMask2D.padding;
+
+        //Пропадает сверху
+        if (maskType == MaskType.top) {
+            mask2D.w = 200;
+        }
+        //Пропадает слева
+        else if (maskType == MaskType.left) {
+            mask2D.x = 200;
+        }
+        //Пропадает справа
+        else if (maskType == MaskType.right) {
+            mask2D.z = 200;
+        }
+        //пропадает снизу
+        else if (maskType == MaskType.bot) {
+            mask2D.y = 200;
+        }
+        myMask2D.padding = mask2D;
     }
 
     public void IniRect() {
@@ -207,9 +240,15 @@ public class CellInternalObject : MonoBehaviour
                     new Vector2(rectMy.pivot.x, rectMy.pivot.y));
             }
 
+
+            Vector4 mask2D = myMask2D.padding;
+
+            /////////////////////////////////////////////////////////////
+            ///Горизонтальное движение
             //Движение влево
             if (rectMy.pivot.x > rectCell.pivot.x) {
                 posXnew -= speed;
+
 
                 //Если слишком
                 if (posXnew <= rectCell.pivot.x)
@@ -232,6 +271,8 @@ public class CellInternalObject : MonoBehaviour
             if (rectMy.pivot.y > rectCell.pivot.y)
             {
                 posYnew -= speed;
+
+
                 //Если слишком
                 if (posYnew <= rectCell.pivot.y)
                 {
@@ -244,10 +285,34 @@ public class CellInternalObject : MonoBehaviour
             if (rectMy.pivot.y < rectCell.pivot.y)
             {
                 posYnew += speed + correctY;
+
                 //Если слишком
                 if (posYnew >= rectCell.pivot.y)
                     posYnew = rectCell.pivot.y;
             }
+
+
+            if (mask2D.x > 0)
+            {
+                mask2D.x -= speed * 200;
+                if (mask2D.x < 0) mask2D.x = 0;
+            }
+            if (mask2D.y > 0)
+            {
+                mask2D.y -= speed * 200;
+                if (mask2D.y < 0) mask2D.y = 0;
+            }
+            if (mask2D.z > 0)
+            {
+                mask2D.z -= speed * 200;
+                if (mask2D.z < 0) mask2D.z = 0;
+            }
+            if (mask2D.w > 0)
+            {
+                mask2D.w -= speed * 200;
+                if (mask2D.w < 0) mask2D.w = 0;
+            }
+            myMask2D.padding = mask2D;
 
 
             //Если позиция равна точке назначения
