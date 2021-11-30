@@ -136,9 +136,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myMask2D: {fileID: 6211101581484954579}
+  myMaskNeed: {x: 0, y: 0, z: 0, w: 0}
   animatorCTRL: {fileID: 7853739379585473240}
   myField: {fileID: 0}
   myCell: {fileID: 0}
+  myDeath: {x: 999, y: 999}
   MyCombID: 0
   rectMy: {fileID: 1515285975908226108}
   Image: {fileID: 2075986257870220958}
@@ -177,6 +179,7 @@ MonoBehaviour:
   timeCreate: 0
   timeLastMoving: 0
   MovingSpeed: 0
+  EndMoveAndRemove: 0
   isMove: 0
   activateNum: 1
   activateCount: 0
@@ -257,7 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
-  m_Softness: {x: 0, y: 0}
+  m_Softness: {x: 0, y: 10}
 --- !u!1 &5031001028452966960
 GameObject:
   m_ObjectHideFlags: 0

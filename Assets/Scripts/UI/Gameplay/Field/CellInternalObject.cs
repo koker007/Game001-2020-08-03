@@ -13,6 +13,8 @@ public class CellInternalObject : MonoBehaviour
     [SerializeField]
     public RectMask2D myMask2D;
     [SerializeField]
+    public Vector4 myMaskNeed;
+    [SerializeField]
     public AnimatorCTRL animatorCTRL;
     private Particle3dCTRL trail;
     private bool trailSpawned = false;
@@ -21,6 +23,7 @@ public class CellInternalObject : MonoBehaviour
     public GameFieldCTRL myField;
     //Моя ячейка
     public CellCTRL myCell;
+    public Vector2Int myDeath = new Vector2Int(999,999); //позиция для самоуничтожения, активно если отличается от значений по умолчанию
     public int MyCombID = 0;
 
     public RectTransform rectMy;
@@ -157,26 +160,28 @@ public class CellInternalObject : MonoBehaviour
 
         //Пропадает сверху
         if (maskType == MaskType.top) {
-            mask2D.w = 200;
+            mask2D.w = 100;
         }
         //Пропадает слева
         else if (maskType == MaskType.left) {
-            mask2D.x = 200;
+            mask2D.x = 100;
         }
         //Пропадает справа
         else if (maskType == MaskType.right) {
-            mask2D.z = 200;
+            mask2D.z = 100;
         }
         //пропадает снизу
         else if (maskType == MaskType.bot) {
-            mask2D.y = 200;
+            mask2D.y = 100;
         }
         myMask2D.padding = mask2D;
     }
 
     public void IniRect() {
         rectMy = GetComponent<RectTransform>();
-        rectCell = myCell.GetComponent<RectTransform>();
+
+        if (myCell)
+            rectCell = myCell.GetComponent<RectTransform>();
     }
 
     void Start()
@@ -198,10 +203,16 @@ public class CellInternalObject : MonoBehaviour
     static public float timeLastPlayDestroy = 0; //Как давно был воиспроизведен звук уничтожения
 
     public float MovingSpeed = 0;
+
+    public bool EndMoveAndRemove = false; //Как только движение объекта закончится объект тихо самоуничтожится. без нанесения чему либо урона
     void Moving() {
         //Движение к соседу
+
+        //если у внутреннего объекта нет ячейки к которой она привязанна это еще не ошибка
+        //возможно она движется в точку самоуничтожения
+
         if (isMove) {
-            if ((trail == null || !trailSpawned) && (GameFieldCTRL.main.CellSelect == myCell || GameFieldCTRL.main.CellSwap == myCell))
+            if ((trail == null || !trailSpawned) && myCell != null && (GameFieldCTRL.main.CellSelect == myCell || GameFieldCTRL.main.CellSwap == myCell))
             {
                 trail = Particle3dCTRL.CreateTrail(myCell.myField.transform, myCell);
                 trailSpawned = true;
@@ -214,17 +225,16 @@ public class CellInternalObject : MonoBehaviour
                 (myCell.myField.transform.GetComponent<RectTransform>().pivot.y - 0.5f) - rectMy.pivot.y + 0.5f, 0);
             }
 
-            //////////////////////////////////////////////////////////
-            //Горизонтальное движение
-            float posXnew = rectMy.pivot.x;
 
-            MovingSpeed += Time.unscaledDeltaTime * Gameplay.main.timeScale;
+            MovingSpeed += Time.unscaledDeltaTime * 0.5f;
 
             float speed = 0.05f + MovingSpeed;
+            speed *= Gameplay.main.timeScale;
 
             float correctY = 0;
             //если обьект сверху находится близко и у него скорость падения быстрее
-            if (myCell.pos.y < myField.cellCTRLs.GetLength(1) - 1 && 
+            if (myCell != null &&
+                myCell.pos.y < myField.cellCTRLs.GetLength(1) - 1 && 
                 myField.cellCTRLs[myCell.pos.x, myCell.pos.y+1] &&
                 myField.cellCTRLs[myCell.pos.x, myCell.pos.y+1].cellInternal &&
                 Vector2.Distance(
@@ -243,80 +253,48 @@ public class CellInternalObject : MonoBehaviour
 
             Vector4 mask2D = myMask2D.padding;
 
-            /////////////////////////////////////////////////////////////
-            ///Горизонтальное движение
-            //Движение влево
-            if (rectMy.pivot.x > rectCell.pivot.x) {
-                posXnew -= speed;
-
-
-                //Если слишком
-                if (posXnew <= rectCell.pivot.x)
-                    posXnew = rectCell.pivot.x;
-            }
-
-            //Движение вправо
-            if (rectMy.pivot.x < rectCell.pivot.x) {
-                posXnew += speed;
-
-                //Если слишком
-                if (posXnew >= rectCell.pivot.x)
-                    posXnew = rectCell.pivot.x;
-            }
-
-            /////////////////////////////////////////////////////////////
-            //вертикальное движение
+            float posXnew = rectMy.pivot.x;
             float posYnew = rectMy.pivot.y;
-            //Движение вниз
-            if (rectMy.pivot.y > rectCell.pivot.y)
+            //Если есть позиция смерти
+            if (myDeath.x < 100 || myDeath.y < 100)
             {
-                posYnew -= speed;
-
-
-                //Если слишком
-                if (posYnew <= rectCell.pivot.y)
-                {
-                    //Иначе останавливаемся
-                    posYnew = rectCell.pivot.y;
-                }
+                posXnew = Calculate.GetValueLinear(rectMy.pivot.x, myDeath.x, speed);
+                posYnew = Calculate.GetValueLinear(rectMy.pivot.y, myDeath.y, speed);
+            }
+            //Самое обычное движение к привязанной ячейке
+            else
+            {
+                posXnew = Calculate.GetValueLinear(rectMy.pivot.x, rectCell.pivot.x, speed);
+                posYnew = Calculate.GetValueLinear(rectMy.pivot.y, rectCell.pivot.y, speed);
             }
 
-            //Движение вверх
-            if (rectMy.pivot.y < rectCell.pivot.y)
-            {
-                posYnew += speed + correctY;
-
-                //Если слишком
-                if (posYnew >= rectCell.pivot.y)
-                    posYnew = rectCell.pivot.y;
+            if (myDeath.y < 100 || myDeath.x < 100) {
+                float test = 0;
             }
 
+            //Смещение маски
+            float maskCoof = 100;
 
-            if (mask2D.x > 0)
-            {
-                mask2D.x -= speed * 200;
-                if (mask2D.x < 0) mask2D.x = 0;
-            }
-            if (mask2D.y > 0)
-            {
-                mask2D.y -= speed * 200;
-                if (mask2D.y < 0) mask2D.y = 0;
-            }
-            if (mask2D.z > 0)
-            {
-                mask2D.z -= speed * 200;
-                if (mask2D.z < 0) mask2D.z = 0;
-            }
-            if (mask2D.w > 0)
-            {
-                mask2D.w -= speed * 200;
-                if (mask2D.w < 0) mask2D.w = 0;
-            }
+            mask2D.x = Calculate.GetValueLinear(mask2D.x, myMaskNeed.x, speed * maskCoof);
+            mask2D.y = Calculate.GetValueLinear(mask2D.y, myMaskNeed.y, speed * maskCoof);
+            mask2D.z = Calculate.GetValueLinear(mask2D.z, myMaskNeed.z, speed * maskCoof);
+            mask2D.w = Calculate.GetValueLinear(mask2D.w, myMaskNeed.w, speed * maskCoof);
+            //Применение новой маски
             myMask2D.padding = mask2D;
 
 
+            if (EndMoveAndRemove) {
+                if (myDeath.x == posXnew &&
+                    myDeath.y == posYnew) {
+
+                        DestroyObj(true);
+                        return;
+
+                }
+            }
+
             //Если позиция равна точке назначения
-            if (rectCell.pivot.x == posXnew &&
+            else if (rectCell.pivot.x == posXnew &&
                 rectCell.pivot.y == posYnew) {
 
                 //Если снизу ничего нет
@@ -591,6 +569,21 @@ public class CellInternalObject : MonoBehaviour
             Gameplay.main.colorsCount[(int)color]++;
         }
 
+    }
+    public void DestroyObj(bool silent)
+    {
+        if (silent) {
+            SilendRemove();
+        }
+        //Обычное уничтожение
+        else {
+            DestroyObj();
+        }
+
+        //Уничтожение по тихому без нанесения урона и последствий
+        void SilendRemove() {
+            Destroy(gameObject);
+        }
     }
 
     public void randSpawnType(bool isSpawn, bool isRandType = true) {

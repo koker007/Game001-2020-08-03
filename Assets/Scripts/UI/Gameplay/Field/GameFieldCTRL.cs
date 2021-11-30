@@ -342,12 +342,12 @@ public class GameFieldCTRL : MonoBehaviour
                         teleportObj.GetComponent<RectTransform>().pivot = new Vector2(-cellCTRLs[x, y].pos.x, -cellCTRLs[x, y].pos.y);
 
                         //Точка входа в телепорт
-                        teleportObj.GetComponent<TeleportController>().teleportIn = cellCTRLs[x, y];
+                        teleportObj.GetComponent<TeleportController>().cellIn = cellCTRLs[x, y];
                         
                         //Точка выхода из телепорта
                         if (y > 0)
                         {
-                            teleportObj.GetComponent<TeleportController>().teleportOut = cellCTRLs[x, y - 1];
+                            teleportObj.GetComponent<TeleportController>().cellOut = cellCTRLs[x, y - 1];
                         }
 
                         //Если первый телепорт с заданным ID отсутствует в массиве, добавляем текущий
