@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
+
 //Семен
 /// <summary>
 /// Ячейка и ее состояния
@@ -30,26 +31,60 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         }
     }
 
-    public GameFieldCTRL myField;
+    /// <summary>
+    /// Игровое поле ячейки
+    /// </summary>
+    public GameFieldCTRL myField; 
+    /// <summary>
+    /// Приоритет в уничтожении текущей ячейки, чем больше чем желательнее уничтожить ячейку
+    /// </summary>
     public int MyPriority = 0;
 
+    /// <summary>
+    /// Выделенная ячейка для перемещения, вероятно это можно упростить
+    /// </summary>
     static CellCTRL CellClickOld;
     static CellCTRL CellEnterOld;
 
+    /// <summary>
+    /// Изображение рамки ячейки
+    /// </summary>
     [SerializeField]
     Image[] ramka;
 
+
+    /// <summary>
+    /// Позиция ячейки на игровом поле
+    /// </summary>
     public Vector2Int pos = new Vector2Int();
     /// <summary>
-    /// Внутренность ячейки
+    /// Текущий перемещаемый объект внутри ячейки
     /// </summary>
     public CellInternalObject cellInternal;
+    /// <summary>
+    /// Коробка-аптечка
+    /// </summary>
     public BoxBlockCTRL BoxBlockCTRL;
+    /// <summary>
+    /// Распространяемая красная плесень
+    /// </summary>
     public MoldCTRL moldCTRL;
+    /// <summary>
+    /// Разбиваемый лед
+    /// </summary>
     public IceCTRL iceCTRL;
+    /// <summary>
+    /// Разбиваемый камень (бинты), который заперает внутри себя перемещаемый объект
+    /// </summary>
     public RockCTRL rockCTRL;
+    /// <summary>
+    /// Распространяемая панель (мазь)
+    /// </summary>
     public PanelSpreadCTRL panelCTRL;
 
+    /// <summary>
+    /// Контроллер стены
+    /// </summary>
     public WallController wallController;
     //public PanelSpreadCTRL panelCTRL;
 
@@ -69,22 +104,37 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     /// Степень камня
     /// </summary>
     public int rock;
-
+    /// <summary>
+    /// тип стены в ячейке 
+    /// </summary>
     public int wall;
-
+    /// <summary>
+    /// индекс телепорта в этой ячейке, другой телепорт с этим же индексом является ячейкой
+    /// </summary>
     public int teleport;
-
+    /// <summary>
+    /// Есть ли мазь на этой панеле
+    /// </summary>
     public bool panel;
-
+    /// <summary>
+    /// Есть ли раздатчик в этой ячейке?
+    /// </summary>
     public bool dispencer;
 
+    /// <summary>
+    /// Внутренний номер последнего действия на этой ячейке
+    /// </summary>
     public int myInternalNum = 0;
+
 
     public float timeBoomOld = 0;     //Время последнего взрыва
     public float timeAddInternalOld = 0;     //Время последнего добавления внутренности
 
     // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Класс распространяющегося взрыва
+    /// <summary>
+    /// Контроллер взрыва
+    /// Контролирует распространение взрыва от пилюль и комбинаций с пипюлями
+    /// </summary>
     public class Explosion
     {
         public bool left = false;
@@ -127,7 +177,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     public Explosion explosion = null;
 
     void ExplosionBoom() {
-        //ВЫйти если взрыва нет
+        //Выйти если взрыва нет
         if (explosion == null) return;
 
         //активируем сам взрыв
@@ -403,12 +453,19 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         explosion = null;
 
     }
+
+    /// <summary>
+    /// Устроить взрыв в этой ячейке через определенный промежуток времени
+    /// </summary>
     public void ExplosionBoomInvoke(Explosion explosionNew, float invokeTime) {
         explosion = explosionNew;
         Invoke("ExplosionBoom", invokeTime / Gameplay.main.timeScale);
     }
     // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /// <summary>
+    /// Присвоить этой ячейке перемещаемый внутренний объект
+    /// </summary>
     public void setInternal(CellInternalObject internalObjectNew) {
         cellInternal = internalObjectNew;
         cellInternal.isMove = true;
@@ -416,12 +473,18 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         lastInternalNum++;
     }
 
+    /// <summary>
+    /// Буфер комбинации, обычно заполняется перед активацией ячейки чтобы ячейка знала какая комбинация ее активировала, и могла правильно среагировать
+    /// </summary>
     public GameFieldCTRL.Combination BufferCombination;
+    /// <summary>
+    /// Буфер ближнего урона, говорит ячейке стоит ли ей нанести урон соседним ячейкам когда эта ячейка активируется
+    /// </summary>
     public bool BufferNearDamage = true;
 
 
     /// <summary>
-    /// получить очки и избавиться от внутренности
+    /// нанести ячейке урон, может использоваться когда надо нанести урон через какой-то промежуток времени, использует данные заранее записанные в буффер
     /// </summary>
     public void Damage()
     {
@@ -431,9 +494,16 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         BufferNearDamage = true;
     }
 
+    /// <summary>
+    /// нанести ячейке урон ячейке, явно указав какой партнер, при слиянии например таблетки и пилюли.
+    /// </summary>
     public void Damage(CellInternalObject partner, GameFieldCTRL.Combination combination) {
         Damage(partner, combination, true);
     }
+
+    /// <summary>
+    /// нанести урон ячейке, явно указав какой партнер, комбинация, нужен ли ближний урон
+    /// </summary>
     public void Damage(CellInternalObject partner, GameFieldCTRL.Combination combination, bool nearDamage)
     {
         bool test = false;
@@ -627,10 +697,16 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         }
     }
 
+    /// <summary>
+    /// нанести урон ячейке через определенный промежуток времени
+    /// </summary>
     public void DamageInvoke(float time) {
         Invoke("Damage", time / Gameplay.main.timeScale);
     }
 
+    /// <summary>
+    /// Нанести урон ближайшим ячейкам
+    /// </summary>
     public bool DamageNear() {
 
         bool benefit = false;
@@ -823,8 +899,12 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         }
     }
 
+    /// <summary>
+    /// Проверка клика игроком по ячейке
+    /// </summary>
     public void OnPointerDown(PointerEventData eventData)
     {
+        //Если этот уровень с врагом и сейчас ход игрока
         if (LevelsScript.main.ReturnLevel().PassedWithEnemy && (Gameplay.main.moveCompleted || !Gameplay.main.playerTurn))
         {
             return;

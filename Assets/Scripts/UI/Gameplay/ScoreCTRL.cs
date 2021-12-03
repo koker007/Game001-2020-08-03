@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 //alexandr
+//Семен
 /// <summary>
 /// очки вылетающие при разрушении игровых обьектов
 /// </summary>

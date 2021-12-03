@@ -6,7 +6,7 @@ using UnityEngine.UI;
 //—емен
 
 /// <summary>
-/// ”правл€ем поведением распростран€ющейс€ панели
+/// ”правл€ем поведением распростран€ющейс€ панели (мазь)
 /// </summary>
 public class PanelSpreadCTRL : MonoBehaviour
 {
