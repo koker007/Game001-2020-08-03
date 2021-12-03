@@ -118,6 +118,7 @@ public class CellInternalObject : MonoBehaviour
         blocker //Объект который падает и препятствует распространению ракеты, но ломается как ящик
     }
 
+    
     public enum MaskType{
         top,
         bot,

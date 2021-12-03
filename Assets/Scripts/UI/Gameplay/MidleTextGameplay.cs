@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//Контролирует движение всплывающего текста
+//Семен
+///////////////////////////////////////////////////////////////////////////////////
+//Контролирует всплываюший текст в геймплее (Всплывание через аниматор)
 public class MidleTextGameplay: MonoBehaviour
 {
 
@@ -26,6 +28,7 @@ public class MidleTextGameplay: MonoBehaviour
         fon.color = colorNew;
     }
 
+    //Удаляется через событие в аниматоре. Оставить
     void Destroy() {
         EnemyController.canEnemyMove = true;
 

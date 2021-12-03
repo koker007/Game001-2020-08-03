@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 //alexandr
 /// <summary>
 /// Устанавливает зависимость камеры по ширине или высоте
 /// </summary>
 public class CameraScaler : MonoBehaviour
 {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///Функционал Этого скрипта был перенесен в скрипт Main Camera (Семен)
+    ///
+
     public Vector2 DefaultResolution = new Vector2(720, 1280);
     [Range(0f, 1f)] public float WidthOrHeight = 0;
 

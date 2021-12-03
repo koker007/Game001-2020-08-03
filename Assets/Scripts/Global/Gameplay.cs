@@ -137,6 +137,7 @@ public class Gameplay : MonoBehaviour
             //ƒобавл€ем комбинацию дл€ пост проверки
             //combWaiting.Add(combination);
         }
+        //«авершено ли действие
         moveCompleted = true;
     }
 
@@ -278,6 +279,7 @@ public class Gameplay : MonoBehaviour
         return buffer.missionDefeat;
     }
 
+    
     public void OpenMessageComplite() {
         timeScale = 1;
         PlayerProfile.main.LevelPassed(levelSelect);
@@ -330,11 +332,11 @@ public class Gameplay : MonoBehaviour
             starsCount = 0;
         }
     }
+
+    
     /// <summary>
     /// считает сколько звезд игрок получил на уровне
     /// </summary>
-    /// <param name="score"></param>
-    /// <param name="stars"></param>
     public void CountStars(ref Image[] stars)
     {
         CountStars(score,ref stars);

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+//Андрей
+
+//Контролирует перемещение
 public class WallController : MonoBehaviour
 { 
     public void SetWalls(int wallID)
