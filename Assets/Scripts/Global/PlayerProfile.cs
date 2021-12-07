@@ -10,6 +10,8 @@ public class PlayerProfile : MonoBehaviour
 {
     public static PlayerProfile main;
 
+
+
     /// <summary>
     /// уровень игрока
     /// </summary>
@@ -102,7 +104,7 @@ public class PlayerProfile : MonoBehaviour
         ProfileLevel = PlayerPrefs.GetInt(strProfileLevel, 1);
         ProfileScore = PlayerPrefs.GetInt(strProfileScore, 0);
         ProfilelevelOpen = PlayerPrefs.GetInt(strProfileLevelOpen, 1);
-        ProfilelevelOpen = 62;
+        ProfilelevelOpen = 100;
 
         GoldAmount = PlayerPrefs.GetInt(strGoldAmount, 10);
         moneyboxCapacity = PlayerPrefs.GetInt(strMoneyboxCapacity, 10);
