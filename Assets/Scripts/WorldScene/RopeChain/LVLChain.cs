@@ -8,7 +8,7 @@ public class LVLChain : MonoBehaviour
     static List<LVLChain> allChains = new List<LVLChain>();
 
     [SerializeField]
-    LevelButton myButton;
+    LevelButton3D myButton;
 
     public LVLChain back;
     public LVLChain next;
