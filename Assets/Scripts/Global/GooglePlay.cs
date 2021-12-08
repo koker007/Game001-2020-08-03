@@ -4,9 +4,13 @@ using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using UnityEngine.SocialPlatforms;
+using UnityEngine.UI;
 
 public class GooglePlay : MonoBehaviour
 {
+    [SerializeField]
+    Text TestText;
+
     bool isAutorized = false;
 
     private void Awake()
@@ -42,7 +46,7 @@ public class GooglePlay : MonoBehaviour
 
         
     }
-    void AutorizationPlayGamesPatform() {
+    void AutorizationPlayGamesPlatform() {
         PlayGamesPlatform.Instance.Authenticate(SignInInteractivity.CanPromptAlways, (result) => {
             Debug.Log("===============================================");
             if (result == SignInStatus.Success)
@@ -62,6 +66,7 @@ public class GooglePlay : MonoBehaviour
     void Update()
     {
         //Debug.Log("google play autorized: " + isAutorized);
+        TestText.text = "google play autorized: " + isAutorized;
     }
 
     //Exit Google Play Store
