@@ -20,7 +20,7 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private bool isDown;
 
-    LevelButton ButtonStart;
+    LevelButton3D ButtonStart;
 
     //нажатие мыши на обьект
     public void OnPointerDown(PointerEventData eventData)
@@ -39,7 +39,7 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (Physics.Raycast(ray, out hitInfo, 40))
         {
             //Запоминаем компонент кнопки
-            ButtonStart = hitInfo.collider.GetComponent<LevelButton>();
+            ButtonStart = hitInfo.collider.GetComponent<LevelButton3D>();
             if(ButtonStart != null)
                 ButtonStart.AnimStartPress();
         }

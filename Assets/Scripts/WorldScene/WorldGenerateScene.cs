@@ -57,7 +57,7 @@ public class WorldGenerateScene : MonoBehaviour
 
         public void Level()
         {
-            obj.GetComponent<LevelButton>().LevelUpdate(NumLevel);
+            obj.GetComponent<LevelButton3D>().LevelUpdate(NumLevel);
         }
     }
 

@@ -37,6 +37,7 @@ public class SoundCTRL : MonoBehaviour
     [Header("Sounds")]
     [SerializeField]
     public AudioClip clipPressButton;
+    public AudioClip clipPressButtonLVL;
 
     public AudioClip clipCellSelect;
     public AudioClip clipMoveCrystal;
