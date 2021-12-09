@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Андрей
 //Семен
 public class TeleportController : MonoBehaviour
 {
+    public Image image;
+
     public CellCTRL cellIn; 
     public CellCTRL cellOut;
     public TeleportController secondTeleport;
