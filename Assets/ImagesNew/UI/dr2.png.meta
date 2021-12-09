@@ -1,12 +1,114 @@
 fileFormatVersion: 2
 guid: ac01b0aacaae34f49a5c93ab64140095
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 738348761014435620
+    second: dr_body
+  - first:
+      213: 6111466750668638815
+    second: dr_BicepsLeft
+  - first:
+      213: -8622263635532428756
+    second: dr_BicepsRight
+  - first:
+      213: 5833746671051914179
+    second: dr_midLeft
+  - first:
+      213: -3111601140435035294
+    second: dr_midRight
+  - first:
+      213: -1760193505083308363
+    second: dr_handLeftClose
+  - first:
+      213: 9203628553816511050
+    second: dr_HandRightPensl
+  - first:
+      213: 1412575378723640864
+    second: dr_HandRightOne
+  - first:
+      213: -1465474089669109115
+    second: dr_HandRightClose
+  - first:
+      213: 4193912722029489188
+    second: dr_glassNormalClose
+  - first:
+      213: -9167570773993872038
+    second: dr_glassNormalLeft
+  - first:
+      213: 695488031562150745
+    second: dr_glassNormalUp
+  - first:
+      213: 7843859081004161822
+    second: dr_glassNormalCamera
+  - first:
+      213: -8542568158379758039
+    second: dr_glassAgressClose
+  - first:
+      213: -743613386100028917
+    second: dr_glassAgressLeft
+  - first:
+      213: 3500025857432479746
+    second: dr_glassAgressUp
+  - first:
+      213: -8541194487634418356
+    second: dr_glassAgressCamera
+  - first:
+      213: -710306888518182959
+    second: dr_glassHappyClose
+  - first:
+      213: -3807977888434163211
+    second: dr_glassHappyLeft
+  - first:
+      213: -6841769184013640359
+    second: dr_glassHappyUp
+  - first:
+      213: -7214090759015381540
+    second: dr_glassHappyCamera
+  - first:
+      213: -6631134990657061385
+    second: dr_glassSadClose
+  - first:
+      213: 6459639590884569810
+    second: dr_glassSadLeft
+  - first:
+      213: -4609846697324160374
+    second: dr_glassSadUp
+  - first:
+      213: -1266281531125306671
+    second: dr_glassSadCamera
+  - first:
+      213: -7915598413666661373
+    second: dr_glassDisgustClose
+  - first:
+      213: 8289561719895114596
+    second: dr_glassDisgustLeft
+  - first:
+      213: 1618272845354442266
+    second: dr_glassDisgustUp
+  - first:
+      213: -7664889092831345072
+    second: dr_glassDisgustCamera
+  - first:
+      213: 8830039970728883253
+    second: dr_HeadNormal
+  - first:
+      213: 8754165107657587307
+    second: dr_HeadAgress
+  - first:
+      213: -4782297874711352518
+    second: dr_HeadHappy
+  - first:
+      213: 3557838869337928896
+    second: dr_HeadSad
+  - first:
+      213: 8115567307720992098
+    second: dr_HeadDisgust
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -35,13 +137,13 @@ TextureImporter:
     filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
+    wrapU: 1
+    wrapV: 1
     wrapW: 0
-  nPOTScale: 1
+  nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 0
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -50,9 +152,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 0
+  textureType: 8
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -75,13 +177,763 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: dr_body
+      rect:
+        serializedVersion: 2
+        x: 1491
+        y: 0
+        width: 557
+        height: 1631
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42f7d9449442f3a00800000000000000
+      internalID: 738348761014435620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_BicepsLeft
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 292
+        width: 154
+        height: 540
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5a073a31aa40d450800000000000000
+      internalID: 6111466750668638815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_BicepsRight
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 324
+        width: 160
+        height: 505
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2a425cf7e0975880800000000000000
+      internalID: -8622263635532428756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_midLeft
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 290
+        width: 128
+        height: 539
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cbbaa550b1a5f050800000000000000
+      internalID: 5833746671051914179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_midRight
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 314
+        width: 126
+        height: 515
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26b5badaf3f51d4d0800000000000000
+      internalID: -3111601140435035294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_handLeftClose
+      rect:
+        serializedVersion: 2
+        x: 509
+        y: 14
+        width: 162
+        height: 269
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b64f8145598297e0800000000000000
+      internalID: -1760193505083308363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_HandRightPensl
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 14
+        width: 162
+        height: 269
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4210e2286bd9bf70800000000000000
+      internalID: 9203628553816511050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_HandRightOne
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 14
+        width: 162
+        height: 269
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0261943a2d97a9310800000000000000
+      internalID: 1412575378723640864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_HandRightClose
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 14
+        width: 162
+        height: 269
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58adbb1741799abe0800000000000000
+      internalID: -1465474089669109115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassNormalClose
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 1493
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42c2f8f7665c33a30800000000000000
+      internalID: 4193912722029489188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassNormalLeft
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 1355
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a55a7d2f3fe36c080800000000000000
+      internalID: -9167570773993872038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassNormalUp
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 1222
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9533cca0eaed6a900800000000000000
+      internalID: 695488031562150745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassNormalCamera
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 1084
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1b997f864cfadc60800000000000000
+      internalID: 7843859081004161822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassAgressClose
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 1493
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92e263a3583b27980800000000000000
+      internalID: -8542568158379758039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassAgressLeft
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 1355
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0a484fa0972ea5f0800000000000000
+      internalID: -743613386100028917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassAgressUp
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 1222
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 208e1f039f6929030800000000000000
+      internalID: 3500025857432479746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassAgressCamera
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 1084
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c45a60fddd4977980800000000000000
+      internalID: -8541194487634418356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassHappyClose
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 1493
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d75c54f5ab7426f0800000000000000
+      internalID: -710306888518182959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassHappyLeft
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 1355
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f1f6573948572bc0800000000000000
+      internalID: -3807977888434163211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassHappyUp
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 1222
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95d17a72d272d01a0800000000000000
+      internalID: -6841769184013640359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassHappyCamera
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 1084
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd5c5733da662eb90800000000000000
+      internalID: -7214090759015381540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassSadClose
+      rect:
+        serializedVersion: 2
+        x: 761
+        y: 1493
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fdf838fbd979f3a0800000000000000
+      internalID: -6631134990657061385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassSadLeft
+      rect:
+        serializedVersion: 2
+        x: 761
+        y: 1355
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d279b7bbff35a950800000000000000
+      internalID: 6459639590884569810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassSadUp
+      rect:
+        serializedVersion: 2
+        x: 761
+        y: 1221
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8a5cf05ad88600c0800000000000000
+      internalID: -4609846697324160374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassSadCamera
+      rect:
+        serializedVersion: 2
+        x: 762
+        y: 1084
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1da63af08a34d6ee0800000000000000
+      internalID: -1266281531125306671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassDisgustClose
+      rect:
+        serializedVersion: 2
+        x: 1002
+        y: 1493
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30cc0c07e25262290800000000000000
+      internalID: -7915598413666661373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassDisgustLeft
+      rect:
+        serializedVersion: 2
+        x: 1002
+        y: 1355
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 463460ad6707a0370800000000000000
+      internalID: 8289561719895114596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassDisgustUp
+      rect:
+        serializedVersion: 2
+        x: 1002
+        y: 1222
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1e13013492457610800000000000000
+      internalID: 1618272845354442266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_glassDisgustCamera
+      rect:
+        serializedVersion: 2
+        x: 1002
+        y: 1084
+        width: 168
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 056850bfaf7d0a590800000000000000
+      internalID: -7664889092831345072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_HeadNormal
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 1635
+        width: 305
+        height: 406
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 534bbcfd19a9a8a70800000000000000
+      internalID: 8830039970728883253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_HeadAgress
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 1635
+        width: 305
+        height: 406
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6abc0ba8ca0d7970800000000000000
+      internalID: 8754165107657587307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_HeadHappy
+      rect:
+        serializedVersion: 2
+        x: 673
+        y: 1635
+        width: 305
+        height: 406
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3b69bfab6dd1adb0800000000000000
+      internalID: -4782297874711352518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_HeadSad
+      rect:
+        serializedVersion: 2
+        x: 1002
+        y: 1635
+        width: 305
+        height: 406
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c4f6f6f99bff5130800000000000000
+      internalID: 3557838869337928896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dr_HeadDisgust
+      rect:
+        serializedVersion: 2
+        x: 1331
+        y: 1635
+        width: 305
+        height: 406
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 265ab7fd77940a070800000000000000
+      internalID: 8115567307720992098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
