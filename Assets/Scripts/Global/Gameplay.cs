@@ -81,6 +81,7 @@ public class Gameplay : MonoBehaviour
         starsCount = 0;
         score = 0;
         enemyScore = 0;
+        EnemyController.MoveCount = 0;
         enemyScoreText.text = enemyScore.ToString();
         movingCount = 0;
         movingMoldCount = 0;
@@ -151,6 +152,7 @@ public class Gameplay : MonoBehaviour
         {
             enemyScore += PlusScore;
             enemyScoreText.text = enemyScore.ToString();
+            EnemyController.MoveCount++;
         }
         MenuGameplay.main.updateScore();
     }
@@ -240,7 +242,8 @@ public class Gameplay : MonoBehaviour
                                     {                                       
                                         if (level.NeedCrystal <= main.colorsCount[(int)level.NeedColor] || !level.PassedWithCrystal)
                                         {
-                                            if (score > enemyScore && movingCan <= 0 && playerTurn || !level.PassedWithEnemy)
+                                            //Если битва с врагом и у нас больше нет ходов и очков у нас больше чем у врага
+                                            if (!level.PassedWithEnemy || score > enemyScore && EnemyController.MoveCount > 5 && playerTurn)
                                             {
                                                 buffer.missionComplite = true;
                                                 LevelStatsController.main.playerScore = score;

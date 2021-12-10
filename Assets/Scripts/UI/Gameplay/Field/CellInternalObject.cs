@@ -339,14 +339,14 @@ public class CellInternalObject : MonoBehaviour
         CellCTRL returnCell = null;
 
         //выходим если предмет в этой ячейке находится в камне
-        if (myField.cellCTRLs[myCell.pos.x, myCell.pos.y].rock > 0 || myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall == 15)
+        if (myField.cellCTRLs[myCell.pos.x, myCell.pos.y].rock > 0 || myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID == 15)
             return null;
 
 
         //Получить свободную ячейку снизу
         for (int minusY = 1; minusY < myField.cellCTRLs.GetLength(1); minusY++) {
             if (myCell.pos.y - minusY >= 0 && //если не вышли за массив
-                GameFieldCTRL.main.CheckObstaclesToMoveDown(myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - (minusY - 1)]) &&
+                myField.CheckObstaclesToMoveDown(myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - (minusY - 1)]) &&
                 !myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].cellInternal && //И она свободна
                 Time.unscaledTime - myField.cellCTRLs[myCell.pos.x, myCell.pos.y - minusY].timeBoomOld > 0.35f && //c уничтожения ячеек снизу
                 Time.unscaledTime - myField.timeLastBoom > 0)
@@ -387,14 +387,14 @@ public class CellInternalObject : MonoBehaviour
                     Time.unscaledTime - myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.35f &&
                     Time.unscaledTime - myField.timeLastBoom > 0 &&
                     isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie]) &&//В этом столбце нет потенциального вертикального движения
-                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wall != 8 &&
-                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wall != 12 &&
-                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wall != 13 &&
-                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wall != 15 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall != 6 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall != 11 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall != 14 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall != 15)
+                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wallID != 8 &&
+                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wallID != 12 &&
+                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wallID != 13 &&
+                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wallID != 15 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 6 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 11 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 14 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 15)
                 {
                     //Ставим такую ячейку как целевую
                     returnCell = myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie];
@@ -407,14 +407,14 @@ public class CellInternalObject : MonoBehaviour
                     Time.unscaledTime - myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.35f &&
                     Time.unscaledTime - myField.timeLastBoom > 0 &&
                     isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie]) && //В этом столбце нет потенциального вертикального движения
-                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wall != 5 &&
-                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wall != 13 &&
-                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wall != 14 &&
-                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wall != 15 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall != 7 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall != 11 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall != 12 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wall != 15)
+                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wallID != 5 &&
+                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wallID != 13 &&
+                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wallID != 14 &&
+                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wallID != 15 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 7 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 11 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 12 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 15)
                 {
                     //Ставим такую ячейку как целевую
                     returnCell = myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie];
@@ -910,7 +910,9 @@ public class CellInternalObject : MonoBehaviour
             myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1] != null &&
             myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1].cellInternal == null &&
             myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1].BlockingMove == 0 &&
-            myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1].rock == 0) {
+            myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1].rock == 0 &&
+            myField.CheckObstaclesToMoveDown(myField.cellCTRLs[myCell.pos.x, myCell.pos.y], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1])
+            ) {
             return;
         }
 
@@ -1721,6 +1723,7 @@ public class CellInternalObject : MonoBehaviour
                 }
             }
         }
+
     }
     void Activate() {
         Activate(BufferActivateType, BufferPartner, BufferCombination);
@@ -1933,4 +1936,5 @@ public class CellInternalObject : MonoBehaviour
         }
         return priorityColor;
     }
+
 }
