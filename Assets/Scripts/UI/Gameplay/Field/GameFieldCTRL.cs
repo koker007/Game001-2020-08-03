@@ -299,7 +299,7 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[x, y].BlockingMove = level.cells[x, y].HealthBox;
                         cellCTRLs[x, y].rock = level.cells[x, y].rock;
                         cellCTRLs[x, y].mold = level.cells[x, y].HealthMold;
-                        cellCTRLs[x, y].wall = level.cells[x, y].wall;
+                        cellCTRLs[x, y].wallID = level.cells[x, y].wall;
                         cellCTRLs[x, y].teleport = level.cells[x, y].teleport;
                         if (cellCTRLs[x, y].mold <= 0 && cellCTRLs[x, y].BlockingMove > 0)
                         {
@@ -424,13 +424,12 @@ public class GameFieldCTRL : MonoBehaviour
                     }
 
                     //Нужно ли создать стену
-                    if (cellCTRLs[x, y].wall > 0)
+                    if (cellCTRLs[x, y].wallID > 0)
                     {
                         GameObject wallObj = Instantiate(prefabWall, parentOfWall);
                         WallController wallController = wallObj.GetComponent<WallController>();
-                        wallObj.GetComponent<RectTransform>().pivot = new Vector2(-cellCTRLs[x, y].pos.x, -cellCTRLs[x, y].pos.y);
-                        cellCTRLs[x, y].wallController = wallController;
-                        wallController.SetWalls(cellCTRLs[x, y].wall);
+                        //wallObj.GetComponent<RectTransform>().pivot = new Vector2(-cellCTRLs[x, y].pos.x, -cellCTRLs[x, y].pos.y);
+                        wallController.IniWall(cellCTRLs[x, y]);
                     }
 
                     //Создаем подвижные объекты
@@ -2019,8 +2018,10 @@ public class GameFieldCTRL : MonoBehaviour
 
                 foreach (PotencialComb potencial in listPotencial)
                 {
-                    if (enemyPotencialBest.priority > potencial.priority)
-                    {
+                    //Старая считала худшую комбинацию
+                    //if (enemyPotencialBest.priority > potencial.priority)
+                    if (enemyPotencialBest.priority < potencial.priority)
+                        {
                         enemyPotencialBest = potencial;
 
                     }
@@ -2637,14 +2638,14 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].cellInternal != null &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].cellInternal.type != CellInternalObject.Type.blocker &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].cellInternal.color == potencialLeft.cells[0].cellInternal.color &&
-                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].wall != 6 &&
-                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].wall != 11 &&
-                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].wall != 14 &&
-                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].wall != 15 &&
-                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 8 &&
-                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 12 &&
-                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 13 &&
-                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 15)
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].wallID != 6 &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].wallID != 11 &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].wallID != 14 &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y + 1].wallID != 15 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wallID != 8 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wallID != 12 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wallID != 13 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wallID != 15)
                 {
 
                     PotencialComb super = new PotencialComb();
@@ -2686,14 +2687,14 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].cellInternal != null &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].cellInternal.type != CellInternalObject.Type.blocker &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].cellInternal.color == potencialRight.cells[0].cellInternal.color &&
-                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].wall != 7 &&
-                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].wall != 11 &&
-                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].wall != 12 &&
-                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].wall != 15 &&
-                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 5 &&
-                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 13 &&
-                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 14 &&
-                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 15)
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].wallID != 7 &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].wallID != 11 &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].wallID != 12 &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y + 1].wallID != 15 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wallID != 5 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wallID != 13 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wallID != 14 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wallID != 15)
                 {
 
                     PotencialComb super = new PotencialComb();
@@ -2735,14 +2736,14 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].cellInternal != null &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].cellInternal.type != CellInternalObject.Type.blocker &&
                     cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].cellInternal.color == potencialRight.cells[0].cellInternal.color &&
-                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].wall != 8 &&
-                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].wall != 12 &&
-                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].wall != 13 &&
-                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].wall != 15 &&
-                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 6 &&
-                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 11 &&
-                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 14 &&
-                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 15)
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].wallID != 8 &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].wallID != 12 &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].wallID != 13 &&
+                    cellCTRLs[cell.pos.x + 1, cell.pos.y - 1].wallID != 15 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wallID != 6 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wallID != 11 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wallID != 14 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wallID != 15)
                 {
 
                     PotencialComb super = new PotencialComb();
@@ -2784,14 +2785,14 @@ public class GameFieldCTRL : MonoBehaviour
                     cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].cellInternal != null &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].cellInternal.type != CellInternalObject.Type.blocker &&
                     cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].cellInternal.color == potencialLeft.cells[0].cellInternal.color &&
-                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].wall != 5 &&
-                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].wall != 13 &&
-                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].wall != 14 &&
-                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].wall != 15 &&
-                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 7 &&
-                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 11 &&
-                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 12 &&
-                    cellCTRLs[cell.pos.x, cell.pos.y].wall != 15)
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].wallID != 5 &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].wallID != 13 &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].wallID != 14 &&
+                    cellCTRLs[cell.pos.x - 1, cell.pos.y - 1].wallID != 15 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wallID != 7 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wallID != 11 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wallID != 12 &&
+                    cellCTRLs[cell.pos.x, cell.pos.y].wallID != 15)
                 {
 
                     PotencialComb super = new PotencialComb();
@@ -4150,23 +4151,23 @@ public class GameFieldCTRL : MonoBehaviour
                         targetCell.BlockingMove == 0 &&
                         !targetCell.dispencer &&
                         targetCell.teleport == 0 &&
-                        targetCell.wall != 3 &&
-                        targetCell.wall != 6 &&
-                        targetCell.wall != 7 &&
-                        targetCell.wall != 9 &&
-                        targetCell.wall != 11 &&
-                        targetCell.wall != 12 &&
-                        targetCell.wall != 14 &&
-                        targetCell.wall != 15 &&
+                        targetCell.wallID != 3 &&
+                        targetCell.wallID != 6 &&
+                        targetCell.wallID != 7 &&
+                        targetCell.wallID != 9 &&
+                        targetCell.wallID != 11 &&
+                        targetCell.wallID != 12 &&
+                        targetCell.wallID != 14 &&
+                        targetCell.wallID != 15 &&
                         ((movingCell != null &&
-                        movingCell.wall != 1 &&
-                        movingCell.wall != 5 &&
-                        movingCell.wall != 8 &&
-                        movingCell.wall != 9 &&
-                        movingCell.wall != 12 &&
-                        movingCell.wall != 13 &&
-                        movingCell.wall != 14 &&
-                        movingCell.wall != 15) ||
+                        movingCell.wallID != 1 &&
+                        movingCell.wallID != 5 &&
+                        movingCell.wallID != 8 &&
+                        movingCell.wallID != 9 &&
+                        movingCell.wallID != 12 &&
+                        movingCell.wallID != 13 &&
+                        movingCell.wallID != 14 &&
+                        movingCell.wallID != 15) ||
                         (movingCell == null)));
     }
 
@@ -4176,24 +4177,24 @@ public class GameFieldCTRL : MonoBehaviour
                         targetCell.rock == 0 &&
                         targetCell.BlockingMove == 0 &&
                         !targetCell.dispencer &&
-                        targetCell.wall != 1 &&
-                        targetCell.wall != 5 &&
-                        targetCell.wall != 8 &&
-                        targetCell.wall != 9 &&
-                        targetCell.wall != 12 &&
-                        targetCell.wall != 13 &&
-                        targetCell.wall != 14 &&
-                        targetCell.wall != 15 &&
+                        targetCell.wallID != 1 &&
+                        targetCell.wallID != 5 &&
+                        targetCell.wallID != 8 &&
+                        targetCell.wallID != 9 &&
+                        targetCell.wallID != 12 &&
+                        targetCell.wallID != 13 &&
+                        targetCell.wallID != 14 &&
+                        targetCell.wallID != 15 &&
                         ((movingCell != null &&
                         movingCell.teleport == 0 &&
-                        movingCell.wall != 3 &&
-                        movingCell.wall != 6 &&
-                        movingCell.wall != 7 &&
-                        movingCell.wall != 9 &&
-                        movingCell.wall != 11 &&
-                        movingCell.wall != 12 &&
-                        movingCell.wall != 14 &&
-                        movingCell.wall != 15) ||
+                        movingCell.wallID != 3 &&
+                        movingCell.wallID != 6 &&
+                        movingCell.wallID != 7 &&
+                        movingCell.wallID != 9 &&
+                        movingCell.wallID != 11 &&
+                        movingCell.wallID != 12 &&
+                        movingCell.wallID != 14 &&
+                        movingCell.wallID != 15) ||
                         (movingCell == null)));
     }
 
@@ -4203,23 +4204,23 @@ public class GameFieldCTRL : MonoBehaviour
                         targetCell.rock == 0 &&
                         targetCell.BlockingMove == 0 &&
                         !targetCell.dispencer &&
-                        targetCell.wall != 2 &&
-                        targetCell.wall != 5 &&
-                        targetCell.wall != 6 &&
-                        targetCell.wall != 10 &&
-                        targetCell.wall != 11 &&
-                        targetCell.wall != 13 &&
-                        targetCell.wall != 14 &&
-                        targetCell.wall != 15 &&
+                        targetCell.wallID != 2 &&
+                        targetCell.wallID != 5 &&
+                        targetCell.wallID != 6 &&
+                        targetCell.wallID != 10 &&
+                        targetCell.wallID != 11 &&
+                        targetCell.wallID != 13 &&
+                        targetCell.wallID != 14 &&
+                        targetCell.wallID != 15 &&
                         ((movingCell != null &&
-                        movingCell.wall != 4 &&
-                        movingCell.wall != 7 &&
-                        movingCell.wall != 8 &&
-                        movingCell.wall != 10 &&
-                        movingCell.wall != 11 &&
-                        movingCell.wall != 12 &&
-                        movingCell.wall != 13 &&
-                        movingCell.wall != 15) ||
+                        movingCell.wallID != 4 &&
+                        movingCell.wallID != 7 &&
+                        movingCell.wallID != 8 &&
+                        movingCell.wallID != 10 &&
+                        movingCell.wallID != 11 &&
+                        movingCell.wallID != 12 &&
+                        movingCell.wallID != 13 &&
+                        movingCell.wallID != 15) ||
                         (movingCell == null)));
     }
 
@@ -4230,23 +4231,23 @@ public class GameFieldCTRL : MonoBehaviour
                         targetCell.rock == 0 &&
                         targetCell.BlockingMove == 0 &&
                         !targetCell.dispencer &&
-                        targetCell.wall != 4 &&
-                        targetCell.wall != 7 &&
-                        targetCell.wall != 8 &&
-                        targetCell.wall != 10 &&
-                        targetCell.wall != 11 &&
-                        targetCell.wall != 12 &&
-                        targetCell.wall != 13 &&
-                        targetCell.wall != 15 &&
+                        targetCell.wallID != 4 &&
+                        targetCell.wallID != 7 &&
+                        targetCell.wallID != 8 &&
+                        targetCell.wallID != 10 &&
+                        targetCell.wallID != 11 &&
+                        targetCell.wallID != 12 &&
+                        targetCell.wallID != 13 &&
+                        targetCell.wallID != 15 &&
                         ((movingCell != null &&                        
-                        movingCell.wall != 2 &&
-                        movingCell.wall != 5 &&
-                        movingCell.wall != 6 &&
-                        movingCell.wall != 10 &&
-                        movingCell.wall != 11 &&
-                        movingCell.wall != 13 &&
-                        movingCell.wall != 14 &&
-                        movingCell.wall != 15) || 
+                        movingCell.wallID != 2 &&
+                        movingCell.wallID != 5 &&
+                        movingCell.wallID != 6 &&
+                        movingCell.wallID != 10 &&
+                        movingCell.wallID != 11 &&
+                        movingCell.wallID != 13 &&
+                        movingCell.wallID != 14 &&
+                        movingCell.wallID != 15) || 
                         (movingCell == null)));
     }
     #endregion

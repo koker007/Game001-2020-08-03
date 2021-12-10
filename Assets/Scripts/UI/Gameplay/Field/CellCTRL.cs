@@ -107,7 +107,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     /// <summary>
     /// тип стены в €чейке 
     /// </summary>
-    public int wall;
+    public int wallID;
     /// <summary>
     /// индекс телепорта в этой €чейке, другой телепорт с этим же индексом €вл€етс€ €чейкой
     /// </summary>
