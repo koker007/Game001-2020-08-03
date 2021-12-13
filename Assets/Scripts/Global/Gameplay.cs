@@ -66,15 +66,6 @@ public class Gameplay : MonoBehaviour
 
     public void StartGameplay(ref Image[] stars)
     {
-        //Если уровень выбран
-        if (LevelsScript.main.ReturnLevel().PassedWithEnemy)
-        {
-            enemyScoreText.gameObject.SetActive(true);
-        }
-        else
-        {
-            enemyScoreText.gameObject.SetActive(false);
-        }
         LevelStatsController.main.playerTurns = 0;
         gameStarted = false;
         timeScale = 1;
@@ -82,7 +73,6 @@ public class Gameplay : MonoBehaviour
         score = 0;
         enemyScore = 0;
         EnemyController.MoveCount = 0;
-        enemyScoreText.text = enemyScore.ToString();
         movingCount = 0;
         movingMoldCount = 0;
         movingCan = LevelsScript.main.ReturnLevel().Move;
@@ -130,7 +120,9 @@ public class Gameplay : MonoBehaviour
         if (playerTurn)
         {
             movingCount++;
-            movingCan--;
+            if (EnemyController.MoveCount >= EnemyController.MoveCountForPlayer) {
+                movingCan--;
+            }
             LevelStatsController.main.playerTurns++;
             MenuGameplay.main.updateMoving();
 
@@ -138,6 +130,10 @@ public class Gameplay : MonoBehaviour
             //Добавляем комбинацию для пост проверки
             //combWaiting.Add(combination);
         }
+        else {
+            EnemyController.MoveCount++;
+        }
+
         //Завершено ли действие
         moveCompleted = true;
     }
@@ -150,9 +146,15 @@ public class Gameplay : MonoBehaviour
         }
         else
         {
-            enemyScore += PlusScore;
-            enemyScoreText.text = enemyScore.ToString();
-            EnemyController.MoveCount++;
+            //Враг получает вдвое больше очков в начале игры 
+            if (EnemyController.MoveCount <= EnemyController.MoveCountForPlayer)
+            {
+                enemyScore += PlusScore;
+            }
+            //Нормальное получение очков
+            else {
+                enemyScore += PlusScore;
+            }
         }
         MenuGameplay.main.updateScore();
     }
@@ -243,7 +245,7 @@ public class Gameplay : MonoBehaviour
                                         if (level.NeedCrystal <= main.colorsCount[(int)level.NeedColor] || !level.PassedWithCrystal)
                                         {
                                             //Если битва с врагом и у нас больше нет ходов и очков у нас больше чем у врага
-                                            if (!level.PassedWithEnemy || score > enemyScore && EnemyController.MoveCount > 5 && playerTurn)
+                                            if (!level.PassedWithEnemy || score > enemyScore && EnemyController.MoveCount > EnemyController.MoveCountForPlayer && playerTurn)
                                             {
                                                 buffer.missionComplite = true;
                                                 LevelStatsController.main.playerScore = score;

@@ -40,7 +40,11 @@ public class MenuGameplay : MonoBehaviour
     [SerializeField]
     Text Move;
     [SerializeField]
+    GameObject MoveClosedEnemy;
+
+    [SerializeField]
     Slider ScoreSlider;
+    float ScoreNeed = 0;
     [SerializeField]
     Image[] Stars = new Image[3];
     [SerializeField]
@@ -88,7 +92,7 @@ public class MenuGameplay : MonoBehaviour
     void Start()
     {
         startButtons();
-        updateUI();
+        EnableUI();
     }
 
     // Update is called once per frame
@@ -104,6 +108,8 @@ public class MenuGameplay : MonoBehaviour
                 clickButtonExitLevel();
             }
         }
+
+        UpdateUI();
     }
 
     void startButtons()
@@ -136,7 +142,7 @@ public class MenuGameplay : MonoBehaviour
     {
         DestroyAllField();
         CreateGameField();
-        updateUI();
+        EnableUI();
 
 
     }
@@ -185,7 +191,7 @@ public class MenuGameplay : MonoBehaviour
     }
 
     //обновление данных интерфейса
-    void updateUI() {
+    void EnableUI() {
         if (Gameplay.main) {
             Level.text = System.Convert.ToString(Gameplay.main.levelSelect);
             updateMoving();
@@ -200,21 +206,49 @@ public class MenuGameplay : MonoBehaviour
             }
         }
     }
+
+    void UpdateUI() {
+
+        Score();
+        EnemyCoof();
+
+
+        void Score() {
+            ScoreSlider.value += (ScoreNeed - ScoreSlider.value) * Time.deltaTime;
+        }
+        void EnemyCoof() {
+
+        }
+    }
+
     /// <summary>
     /// обновл€ет информацию о цели уровн€
     /// </summary>
     public void updateGoal()
     {
+        ClearGoal();
+
         //¬ключаем индикаторы врага
         if (level.PassedWithEnemy)
         {
+
             PassedEnemySlider.gameObject.SetActive(true);
             PassedEnemy.SetActive(true);
+            MoveClosedEnemy.SetActive(true);
+
+            if (EnemyController.MoveCount > 5)
+            {
+                MoveClosedEnemy.SetActive(false);
+            }
+            else {
+                MoveClosedEnemy.SetActive(true);
+            }
 
         }
         else {
             PassedEnemySlider.gameObject.SetActive(false);
             PassedEnemy.SetActive(false);
+            MoveClosedEnemy.SetActive(false);
 
             int i = 0;
             if (level.PassedWithScore)
@@ -262,15 +296,18 @@ public class MenuGameplay : MonoBehaviour
                 i++;
             }
 
-            for (int j = 0; j < Goal.Length; j++)
-            {
-                Goal[j].SetActive(false);
-            }
             for (int j = 0; j < i; j++)
             {
                 Goal[j].SetActive(true);
             }
 
+        }
+
+        void ClearGoal() {
+            for (int j = 0; j < Goal.Length; j++)
+            {
+                Goal[j].SetActive(false);
+            }
         }
     }
     /// <summary>
@@ -279,7 +316,10 @@ public class MenuGameplay : MonoBehaviour
     public void updateScore()
     {
         Score.text = System.Convert.ToString(Gameplay.main.score);
-        ScoreSlider.value = (float)Gameplay.main.score / (level.NeedScore * Gameplay.main.threeStartFactor);
+
+        ScoreNeed = (float)Gameplay.main.score / (level.NeedScore * Gameplay.main.threeStartFactor);
+
+
         Gameplay.main.CountStars(ref Stars);
     }
     public void updateMoving()

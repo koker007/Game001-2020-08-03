@@ -13,9 +13,19 @@ public class TeleportController : MonoBehaviour
     public CellCTRL cellOut;
     public TeleportController secondTeleport;
 
+    public Image ImageUP;
+    public Image imageDown;
+
+    //ID текущего телепорта
+    int ID = 0;
+
+    [SerializeField]
+    Color[] colors;
+
     private void Update()
     {
         Teleport();
+        UpdateImage();
     }
 
     private void Teleport()
@@ -30,8 +40,6 @@ public class TeleportController : MonoBehaviour
                 !secondTeleport.cellOut.cellInternal &&
                 secondTeleport.cellOut.rock == 0)
             {
-                //teleportIn.cellInternal.GetComponent<RectTransform>().pivot = secondTeleport.teleportOut.GetComponent<RectTransform>().pivot;
-                //cellIn.cellInternal.StartMove(secondTeleport.cellOut);
                 tele();
             }
         }
@@ -67,6 +75,44 @@ public class TeleportController : MonoBehaviour
             //√оворим внутренности двигатьс€ в позицию снизу
             cellIn.cellInternal.StartMove(secondTeleport.cellOut);
 
+
+            //ѕоджигаем изображени€ верхние и нижние свечение
+            ImageUPFull();
+            secondTeleport.ImageDownFull();
         }
     }
+
+    //”становить id телепорта и поставить его цвет
+    public void setIDAndColor(int IDnew) {
+        ID = IDnew;
+
+        image.color = colors[ID];
+    }
+
+    
+    //ѕоставить показ верхнего изображени€ на полную
+    void ImageUPFull() {
+        Color colorUP = ImageUP.color;
+        colorUP.a = 1;
+        ImageUP.color = colorUP;
+    }
+
+    //поставить показ нижнего изображени€ на полную
+    void ImageDownFull() {
+        Color colorDown = imageDown.color;
+        colorDown.a = 1;
+        imageDown.color = colorDown;
+    }
+
+    void UpdateImage() {
+        Color colorUP = ImageUP.color;
+        Color colorDown = imageDown.color;
+
+        colorUP.a += (0 - colorUP.a) * Time.unscaledDeltaTime;
+        colorDown.a += (0 - colorDown.a) * Time.unscaledDeltaTime;
+
+        ImageUP.color = colorUP;
+        imageDown.color = colorDown;
+    }
+
 }

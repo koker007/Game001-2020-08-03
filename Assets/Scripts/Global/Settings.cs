@@ -16,6 +16,9 @@ public class Settings : MonoBehaviour
     public AudioMixer audioMixer;
 
     [SerializeField]
+    public bool DeveloperTesting = false;
+
+    [SerializeField]
     float volumeAll = 0;
     [SerializeField]
     float volumeSound = 0;

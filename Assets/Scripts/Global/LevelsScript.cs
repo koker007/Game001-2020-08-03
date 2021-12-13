@@ -155,6 +155,10 @@ public class LevelsScript : MonoBehaviour
         int[,] rock;
         int[,] walls;
         int[,] teleport;
+
+        /// <summary>
+        /// ¬нимание! если надо создать раздатчик, то €чейка должна быть exist, иначе ничего не создастс€
+        /// </summary>
         int[,] dispencers;
 
         /// <summary>
@@ -181,6 +185,8 @@ public class LevelsScript : MonoBehaviour
         }
         /// <summary>
         ///заносит значени€ в массив уровн€
+        ///box, mold, ice, type, color, panel, exist, rock, walls, dispencers, teleport
+        ///≈сли нужно что-то создать, €чейка должна быть exist
         /// </summary>
         public void SetMass(int[,] values, string massName)
         {
@@ -333,7 +339,7 @@ public class LevelsScript : MonoBehaviour
     }
 
     private Level level;
-    private const int mainLevelsCount = 51;
+    private const int mainLevelsCount = 1000;
     public Level[] Levels = new Level[mainLevelsCount];
 
 
