@@ -34,7 +34,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     /// <summary>
     /// Игровое поле ячейки
     /// </summary>
-    public GameFieldCTRL myField; 
+    public GameFieldCTRL myField;
     /// <summary>
     /// Приоритет в уничтожении текущей ячейки, чем больше чем желательнее уничтожить ячейку
     /// </summary>
@@ -211,7 +211,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     }
                     //Иначе просто взрываем с таймером
                     else
-                    {  
+                    {
 
                         //Создаем взрыв и взрываем с таймером
                         myField.cellCTRLs[pos.x - minus, pos.y].ExplosionBoomInvoke(new Explosion(true, false, false, false, explosion.timer, comb), explosion.timer * minus);
@@ -518,7 +518,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         }
         else {
             //Добавляем время взрыва если его мало
-            if(Time.unscaledTime - myField.timeLastBoom < 2.5f)
+            if (Time.unscaledTime - myField.timeLastBoom < 2.5f)
                 myField.timeLastBoom += 0.025f;
         }
 
@@ -576,7 +576,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         //Урон по ближайшим
         if (canNear && nearDamage) {
             bool nearBenefit = DamageNearCells();
-            if (!CanBenefit) 
+            if (!CanBenefit)
                 CanBenefit = nearBenefit;
         }
 
@@ -663,12 +663,12 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             }
 
             //Слева
-            if (pos.x - 1 >= 0 && 
+            if (pos.x - 1 >= 0 &&
                 myField.cellCTRLs[pos.x - 1, pos.y]) {
                 setBenefit(myField.cellCTRLs[pos.x - 1, pos.y].DamageNear());
             }
             //Справа
-            if (pos.x + 1 < myField.cellCTRLs.GetLength(0) && 
+            if (pos.x + 1 < myField.cellCTRLs.GetLength(0) &&
                 myField.cellCTRLs[pos.x + 1, pos.y]) {
                 setBenefit(myField.cellCTRLs[pos.x + 1, pos.y].DamageNear());
             }
@@ -678,7 +678,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 setBenefit(myField.cellCTRLs[pos.x, pos.y - 1].DamageNear());
             }
             //Сверху
-            if (pos.y + 1 < myField.cellCTRLs.GetLength(1) && 
+            if (pos.y + 1 < myField.cellCTRLs.GetLength(1) &&
                 myField.cellCTRLs[pos.x, pos.y + 1]) {
                 setBenefit(myField.cellCTRLs[pos.x, pos.y + 1].DamageNear());
             }
@@ -732,7 +732,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 cellInternal.Activate(CellInternalObject.Type.blocker, null, null);
             }
         }
-        
+
 
         //Перенасчет приоритета
         CalcMyPriority();
@@ -752,7 +752,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -774,7 +774,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             return;
         }
 
-        
+
     }
 
 
@@ -870,8 +870,8 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 result *= 3;
             }
             //панель
-            if (!panel && LevelsScript.main.ReturnLevel().PassedWithPanel) { 
-                result *= 3;            
+            if (!panel && LevelsScript.main.ReturnLevel().PassedWithPanel) {
+                result *= 3;
             }
 
 
@@ -892,7 +892,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 for (int minus = 0; minus < myNum; minus++) {
                     //если приоритет текущей ячейки больше то продвигаем ее вперед
                     if (MyPriority > myField.cellsPriority[myNum].MyPriority) {
-                        
+
                     }
                 }
             }
@@ -909,10 +909,10 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         {
             return;
         }
-        else 
-        { 
-        //Если клик по ячейке
-        MouseCTRL.main.click();
+        else
+        {
+            //Если клик по ячейке
+            MouseCTRL.main.click();
 
             //Если внутри есть объект и движения нет
             //if (cellInternal && !cellInternal.isMove) {
@@ -935,26 +935,51 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     }
     public void OnPointerEnter(PointerEventData eventData) {
 
-            if (LevelsScript.main.ReturnLevel().PassedWithEnemy && (Gameplay.main.moveCompleted || !Gameplay.main.playerTurn))
+        if (LevelsScript.main.ReturnLevel().PassedWithEnemy && (Gameplay.main.moveCompleted || !Gameplay.main.playerTurn))
+        {
+            return;
+        }
+        else
+        {
+            if (Input.GetMouseButton(0))
             {
-                return;
-            }
-            else
-            {
-                if (Input.GetMouseButton(0))
+                if (CellClickOld != this && CellEnterOld != this)
                 {
-                    if (CellClickOld != this && CellEnterOld != this)
-                    {
-                        myField.SetSelectCell(this);
-                    }
-                    CellEnterOld = this;
+                    myField.SetSelectCell(this);
                 }
+                CellEnterOld = this;
             }
-        
+        }
+
     }
-    public void OnPointerUp( PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
 
     }
 
+
+    //Подчистить за собой
+    public void Destroy()
+    {
+
+        if (cellInternal)
+            Destroy(cellInternal.gameObject);
+        if (BoxBlockCTRL)
+            Destroy(BoxBlockCTRL.gameObject);
+
+        if (iceCTRL)
+            Destroy(iceCTRL.gameObject);
+
+        if (moldCTRL)
+            Destroy(moldCTRL.gameObject);
+        if (panelCTRL)
+            Destroy(panelCTRL.gameObject);
+        if (rockCTRL)
+            Destroy(rockCTRL.gameObject);
+
+        if (wallController)
+            Destroy(wallController.gameObject);
+
+        Destroy(gameObject);
+    }
 }

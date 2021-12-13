@@ -11,9 +11,11 @@ public class EnemyController : MonoBehaviour
     public static bool enemyTurn;
     public static bool canEnemyMove = true;
     public static int MoveCount = 0;
+    public const int MoveCountForPlayer = 5; //Количество ходов противника после которых отнимаются ходы игрока, идет счет между противником и игроком и игрок модет помедить 
 
     [SerializeField]
     Slider SliderCoof;
+
     [SerializeField]
     Text scoreText;
 
@@ -44,7 +46,9 @@ public class EnemyController : MonoBehaviour
 
     void UpdateIndicators() {
         if (Gameplay.main.enemyScore != 0)
-            SliderCoof.value = (float)(Gameplay.main.score) / (float)(Gameplay.main.enemyScore);
+        {
+            SliderCoof.value += ((float)(Gameplay.main.score) / (float)(Gameplay.main.enemyScore) - SliderCoof.value) * Time.unscaledDeltaTime;
+        }
         else SliderCoof.value = 0;
 
         scoreText.text = Gameplay.main.enemyScore.ToString();

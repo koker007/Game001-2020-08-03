@@ -10,8 +10,6 @@ public class PlayerProfile : MonoBehaviour
 {
     public static PlayerProfile main;
 
-
-
     /// <summary>
     /// уровень игрока
     /// </summary>
@@ -56,8 +54,8 @@ public class PlayerProfile : MonoBehaviour
     /// количество игровой валюты
     /// </summary>
     public int GoldAmount;
-    public int moneyboxCapacity;
-    public int moneyboxContent;
+    public int moneyboxCapacity; //Свинья копилка общий объем
+    public int moneyboxContent; //свинья копилка содержимое на данный момент
 
     /// <summary>
     /// покупаемые предметы 
@@ -84,15 +82,10 @@ public class PlayerProfile : MonoBehaviour
     public Item ShopMixed = new Item(1);
 
 
-    private void Awake()
-    {
-        main = this;
-        LoadProfie();
-    }
-
     private void Start()
     {
         main = this;
+        LoadProfie();
     }
     //загрузка данных
     private void LoadProfie()
@@ -104,7 +97,6 @@ public class PlayerProfile : MonoBehaviour
         ProfileLevel = PlayerPrefs.GetInt(strProfileLevel, 1);
         ProfileScore = PlayerPrefs.GetInt(strProfileScore, 0);
         ProfilelevelOpen = PlayerPrefs.GetInt(strProfileLevelOpen, 1);
-        ProfilelevelOpen = 100;
 
         GoldAmount = PlayerPrefs.GetInt(strGoldAmount, 10);
         moneyboxCapacity = PlayerPrefs.GetInt(strMoneyboxCapacity, 10);
@@ -112,7 +104,6 @@ public class PlayerProfile : MonoBehaviour
 
 
         Health.Amount = PlayerPrefs.GetInt(strHealth, 5);
-        Health.Amount = 100;
         Ticket.Amount = PlayerPrefs.GetInt(strTicket, 5);
         ShopInternal.Amount = PlayerPrefs.GetInt(strShopInternal, 3);
         ShopRocket.Amount = PlayerPrefs.GetInt(strShopRocket, 3);
@@ -120,6 +111,18 @@ public class PlayerProfile : MonoBehaviour
         ShopColor5.Amount = PlayerPrefs.GetInt(strShopColor5, 3);
 
         ShopMixed.Amount = PlayerPrefs.GetInt(strShopMixed, 3);
+
+        if (Settings.main.DeveloperTesting) {
+            GoldAmount = 100;
+            ProfilelevelOpen = 100;
+            Health.Amount = 100;
+
+            ShopInternal.Amount = 10;
+            ShopRocket.Amount = 10;
+            ShopBomb.Amount = 10;
+            ShopColor5.Amount = 10;
+            ShopMixed.Amount = 10;
+        }
         
     }
     public void Save() {

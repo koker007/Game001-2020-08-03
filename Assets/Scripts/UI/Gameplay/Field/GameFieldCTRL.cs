@@ -271,15 +271,16 @@ public class GameFieldCTRL : MonoBehaviour
                     //Если этой ячейки не существует
                     if (cellInfo == null)
                     {
-                        continue;
+                            continue;
                     }
                     else
                     {
+
                         CountInteractiveCells++;
                     }
 
-                    //Если ячейки нет, создаем
-                    if (!cellCTRLs[x, y])
+                    //Если ячейки нет, создаем, если
+                    if (!cellCTRLs[x, y] || level.cells[x, y].dispencer)
                     {
                         GameObject cellObj = Instantiate(prefabCell, parentOfCells);
                         //ищем компонент
@@ -296,6 +297,7 @@ public class GameFieldCTRL : MonoBehaviour
                         //Перемещаем объект на свою позицию
                         RectTransform rect = cellObj.GetComponent<RectTransform>();
                         rect.pivot = new Vector2(-x, -y);
+
                         cellCTRLs[x, y].BlockingMove = level.cells[x, y].HealthBox;
                         cellCTRLs[x, y].rock = level.cells[x, y].rock;
                         cellCTRLs[x, y].mold = level.cells[x, y].HealthMold;
@@ -321,7 +323,7 @@ public class GameFieldCTRL : MonoBehaviour
                         GameObject dispencerObj = Instantiate(prefabDispencer, parentOfDispencers);
                         dispencerObj.GetComponent<RectTransform>().pivot = new Vector2(-cellCTRLs[x, y].pos.x, -cellCTRLs[x, y].pos.y);
                         //Клетка с раздатчикои
-                        dispencerObj.GetComponent<DispencerController>().myCell = cellCTRLs[x, y];
+                        dispencerObj.GetComponent<DispencerController>().MyPosition = new Vector2Int(x,y);
                         //Клетка, в которую раздатчик выдает предмет
                         if (y - 1 >= 0)
                         {
@@ -358,8 +360,17 @@ public class GameFieldCTRL : MonoBehaviour
                         //Иначе создаем пару телепортов
                         else
                         {
+                            //firstTeleports[teleportID].secondTeleport = teleportObj.GetComponent<TeleportController>();
+                            //teleportObj.GetComponent<TeleportController>().secondTeleport = firstTeleports[teleportID];
+                            //firstTeleports[teleportID].setIDAndColor(teleportID);
+
+
                             firstTeleports[teleportID].secondTeleport = teleportObj.GetComponent<TeleportController>();
-                            teleportObj.GetComponent<TeleportController>().secondTeleport = firstTeleports[teleportID];
+                            firstTeleports[teleportID].secondTeleport.secondTeleport = firstTeleports[teleportID];
+
+                            //Пара телепортов связанна, ставим цвет
+                            firstTeleports[teleportID].setIDAndColor(teleportID);
+                            firstTeleports[teleportID].secondTeleport.setIDAndColor(teleportID);
                         }
                     }
 
@@ -3317,26 +3328,6 @@ public class GameFieldCTRL : MonoBehaviour
                 }
             }
 
-            /*
-            //Проверяем текушую растановку ячеек на комбинации
-            bool isCombinationFound()
-            {
-                bool result = false;
-
-                //Перебираем каждую ячейку
-                for (int x = 0; x < cellCTRLs.GetLength(0); x++)
-                {
-                    for (int y = 0; y < cellCTRLs.GetLength(1); y++)
-                    {
-
-                    }
-                }
-
-
-
-                return result;
-            }
-            */
             bool isPotencialFound()
             {
                 bool result = false;
@@ -3832,8 +3823,6 @@ public class GameFieldCTRL : MonoBehaviour
             bool isMovingNow = false;
 
             timelastMoveTest = Time.unscaledTime;
-
-            /*
             //Если мисия уже завершилась включаем все возможные цвета
             if (Gameplay.main.isMissionComplite())
             {
@@ -3843,7 +3832,6 @@ public class GameFieldCTRL : MonoBehaviour
 
                 CellSelect = null;
             }
-            */
 
             TestMoveInternalObj(); //Проверяем наличие движения для отмены комбо
             TestMoveFly();
@@ -3886,8 +3874,6 @@ public class GameFieldCTRL : MonoBehaviour
                     {
                         for (int y = 0; y < cellCTRLs.GetLength(1); y++)
                         {
-                            //int x = Mathf.CeilToInt(cellCTRLs.GetLength(1) / 2);
-
                             for (int x = 0; x < cellCTRLs.GetLength(0); x++)
                             {
                                 if (cellCTRLs[x, y] != null && cellCTRLs[x, y].cellInternal)
@@ -3895,100 +3881,10 @@ public class GameFieldCTRL : MonoBehaviour
                                     cellCTRLs[x, y].cellInternal.setColorAndType(cellCTRLs[x, y].cellInternal.color, (CellInternalObject.Type)Random.Range(3, 5));
                                     cellCTRLs[x, y].cellInternal.Activate(cellCTRLs[x, y].cellInternal.type, null, null);
                                     Gameplay.main.movingCan = 0;
-
-                                    /*
-                                    if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.rocketHorizontal ||
-                                        cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.rocketVertical)
-                                    {
-                                        roskets.Add(cellCTRLs[x, y].cellInternal);
-                                    }
-                                    else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.bomb)
-                                    {
-                                        bombs.Add(cellCTRLs[x, y].cellInternal);
-                                    }
-                                    else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.airplane)
-                                    {
-                                        flys.Add(cellCTRLs[x, y].cellInternal);
-                                    }
-                                    else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.color5)
-                                    {
-                                        color5.Add(cellCTRLs[x, y].cellInternal);
-                                    }
-                                    */
                                 }
                             }
                         }
                     }
-                    /*
-                    if (roskets.Count > 0)
-                    {
-                        foreach (CellInternalObject inside in roskets)
-                            inside.myCell.Damage();
-                    }
-                    else if (bombs.Count > 0)
-                    {
-                        foreach (CellInternalObject inside in bombs)
-                            inside.myCell.Damage();
-                    }
-                    else if (flys.Count > 0)
-                    {
-                        foreach (CellInternalObject inside in flys)
-                            inside.myCell.Damage();
-                    }
-                    else if (color5.Count > 0)
-                    {
-                        foreach (CellInternalObject inside in color5)
-                            inside.myCell.Damage();
-                    }
-                    //Если остались ходы
-                    else if (Gameplay.main.movingCan > 0)
-                    {
-                        int TestCount = 0;
-                        while (Gameplay.main.movingCan > 0)
-                        {
-                            TestCount++;
-                            if (TestCount > 100)
-                                break;
-
-                            //Выбираем рандомный объект
-                            int x = Random.Range(0, cellCTRLs.GetLength(0));
-                            int y = Random.Range(0, cellCTRLs.GetLength(1));
-
-                            //Если эта ячейка не подходит выходим
-                            if (cellCTRLs[x, y] == null || cellCTRLs[x, y].cellInternal == null || cellCTRLs[x, y].cellInternal.type != CellInternalObject.Type.color)
-                            {
-                                continue;
-                            }
-
-                            //Выбираем тип
-                            CellInternalObject.Type typeNew = CellInternalObject.Type.rocketHorizontal;
-                            if (Random.Range(0, 100) < 50) typeNew = CellInternalObject.Type.rocketVertical;
-
-
-                            //применяем изменения
-                            cellCTRLs[x, y].cellInternal.setColorAndType(cellCTRLs[x, y].cellInternal.color, typeNew);
-                            Combination comb = new Combination();
-                            comb.cells.Add(cellCTRLs[x, y]);
-                            if (cellCTRLs[x, y].panel)
-                            {
-                                comb.foundPanel = true;
-                            }
-                            //Активируем
-                            cellCTRLs[x, y].cellInternal.Activate(cellCTRLs[x, y].cellInternal.type, null, comb);
-
-
-                            //вычитаем ход
-                            Gameplay.main.movingCan--;
-                        }
-                        MenuGameplay.main.updateMoving();
-                        isMovingOld = true;
-
-                        if (Gameplay.main.isMissionComplite())
-                        {
-                            MenuGameplay.main.CreateMidleMessage("Last Move", Color.green);
-                        }
-                    }
-                     */
                     
                     else if (Gameplay.main.isMissionComplite() && !NeedOpenComplite)
                     {
@@ -4144,7 +4040,7 @@ public class GameFieldCTRL : MonoBehaviour
 
     //Проверяем, мешают ли стены двигаться вверх \ вниз \ влево \ вправо
     #region WallsCheck
-    public bool CheckObstaclesToMoveUp(CellCTRL targetCell, CellCTRL movingCell)
+    public bool CheckObstaclesToMoveUp(CellCTRL targetCell, CellCTRL fromCell)
     {
         return (targetCell != null &&
                         targetCell.rock == 0 &&
@@ -4159,19 +4055,19 @@ public class GameFieldCTRL : MonoBehaviour
                         targetCell.wallID != 12 &&
                         targetCell.wallID != 14 &&
                         targetCell.wallID != 15 &&
-                        ((movingCell != null &&
-                        movingCell.wallID != 1 &&
-                        movingCell.wallID != 5 &&
-                        movingCell.wallID != 8 &&
-                        movingCell.wallID != 9 &&
-                        movingCell.wallID != 12 &&
-                        movingCell.wallID != 13 &&
-                        movingCell.wallID != 14 &&
-                        movingCell.wallID != 15) ||
-                        (movingCell == null)));
+                        ((fromCell != null &&
+                        fromCell.wallID != 1 &&
+                        fromCell.wallID != 5 &&
+                        fromCell.wallID != 8 &&
+                        fromCell.wallID != 9 &&
+                        fromCell.wallID != 12 &&
+                        fromCell.wallID != 13 &&
+                        fromCell.wallID != 14 &&
+                        fromCell.wallID != 15) ||
+                        (fromCell == null)));
     }
 
-    public bool CheckObstaclesToMoveDown(CellCTRL targetCell, CellCTRL movingCell)
+    public bool CheckObstaclesToMoveDown(CellCTRL targetCell, CellCTRL fromCell)
     {
         return (targetCell != null &&
                         targetCell.rock == 0 &&
@@ -4185,20 +4081,20 @@ public class GameFieldCTRL : MonoBehaviour
                         targetCell.wallID != 13 &&
                         targetCell.wallID != 14 &&
                         targetCell.wallID != 15 &&
-                        ((movingCell != null &&
-                        movingCell.teleport == 0 &&
-                        movingCell.wallID != 3 &&
-                        movingCell.wallID != 6 &&
-                        movingCell.wallID != 7 &&
-                        movingCell.wallID != 9 &&
-                        movingCell.wallID != 11 &&
-                        movingCell.wallID != 12 &&
-                        movingCell.wallID != 14 &&
-                        movingCell.wallID != 15) ||
-                        (movingCell == null)));
+                        ((fromCell != null &&
+                        fromCell.teleport == 0 &&
+                        fromCell.wallID != 3 &&
+                        fromCell.wallID != 6 &&
+                        fromCell.wallID != 7 &&
+                        fromCell.wallID != 9 &&
+                        fromCell.wallID != 11 &&
+                        fromCell.wallID != 12 &&
+                        fromCell.wallID != 14 &&
+                        fromCell.wallID != 15) ||
+                        (fromCell == null)));
     }
 
-    public bool CheckObstaclesToMoveLeft(CellCTRL targetCell, CellCTRL movingCell)
+    public bool CheckObstaclesToMoveLeft(CellCTRL targetCell, CellCTRL fromCell)
     {
         return (targetCell != null && 
                         targetCell.rock == 0 &&
@@ -4212,19 +4108,19 @@ public class GameFieldCTRL : MonoBehaviour
                         targetCell.wallID != 13 &&
                         targetCell.wallID != 14 &&
                         targetCell.wallID != 15 &&
-                        ((movingCell != null &&
-                        movingCell.wallID != 4 &&
-                        movingCell.wallID != 7 &&
-                        movingCell.wallID != 8 &&
-                        movingCell.wallID != 10 &&
-                        movingCell.wallID != 11 &&
-                        movingCell.wallID != 12 &&
-                        movingCell.wallID != 13 &&
-                        movingCell.wallID != 15) ||
-                        (movingCell == null)));
+                        ((fromCell != null &&
+                        fromCell.wallID != 4 &&
+                        fromCell.wallID != 7 &&
+                        fromCell.wallID != 8 &&
+                        fromCell.wallID != 10 &&
+                        fromCell.wallID != 11 &&
+                        fromCell.wallID != 12 &&
+                        fromCell.wallID != 13 &&
+                        fromCell.wallID != 15) ||
+                        (fromCell == null)));
     }
 
-    public bool CheckObstaclesToMoveRight(CellCTRL targetCell, CellCTRL movingCell)
+    public bool CheckObstaclesToMoveRight(CellCTRL targetCell, CellCTRL fromCell)
     {
         return (targetCell != null &&
                         
@@ -4239,16 +4135,16 @@ public class GameFieldCTRL : MonoBehaviour
                         targetCell.wallID != 12 &&
                         targetCell.wallID != 13 &&
                         targetCell.wallID != 15 &&
-                        ((movingCell != null &&                        
-                        movingCell.wallID != 2 &&
-                        movingCell.wallID != 5 &&
-                        movingCell.wallID != 6 &&
-                        movingCell.wallID != 10 &&
-                        movingCell.wallID != 11 &&
-                        movingCell.wallID != 13 &&
-                        movingCell.wallID != 14 &&
-                        movingCell.wallID != 15) || 
-                        (movingCell == null)));
+                        ((fromCell != null &&                        
+                        fromCell.wallID != 2 &&
+                        fromCell.wallID != 5 &&
+                        fromCell.wallID != 6 &&
+                        fromCell.wallID != 10 &&
+                        fromCell.wallID != 11 &&
+                        fromCell.wallID != 13 &&
+                        fromCell.wallID != 14 &&
+                        fromCell.wallID != 15) || 
+                        (fromCell == null)));
     }
     #endregion
 

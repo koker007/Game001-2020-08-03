@@ -8,11 +8,36 @@ using UnityEngine;
 public class DispencerController : MonoBehaviour
 {
     private float primaryObjectSpawnChance = 10;                    //Шанс выпадения основного предмета
-    public CellCTRL myCell;                                         //Клетка с раздатчиком
+    public Vector2Int MyPosition;                   //Клетка с раздатчиком
     public CellCTRL targetCell;                                     //Клетка под раздатчиком
 
     public CellInternalObject.InternalColor primaryObjectColor;     //Цвет основного предмета, берется из массива уровня
     public CellInternalObject.Type primaryObjectType;               //Тип основного предмета, берется из массива уровня
+
+    private void Start()
+    {
+        Invoke("testDestroy", 0);
+    }
+
+    float testDestroyTime = 1;
+    void testDestroy() {
+        testDestroyTime *= 1.5f;
+        //Debug.Log("DispenserController Test Destroy: " + testDestroyTime);
+
+        //Удаляем себя если целевой ячейки не существует
+        if (targetCell == null) {
+            Destroy(gameObject);
+            return;
+        }
+
+        //Удаляем ячейку на которой находимся
+        if (targetCell.myField.cellCTRLs[MyPosition.x, MyPosition.y] != null) {
+            targetCell.myField.cellCTRLs[MyPosition.x, MyPosition.y].Destroy();
+        }
+
+        if(this != null)
+            Invoke("testDestroy", testDestroyTime * Random.Range(0.1f, 0.5f));
+    }
 
     private void Update()
     {
@@ -24,7 +49,7 @@ public class DispencerController : MonoBehaviour
     {
         //Проверяем, есть ли снизу место для спавна
         if (targetCell != null && 
-            GameFieldCTRL.main.CheckObstaclesToMoveDown(targetCell, myCell) && 
+            GameFieldCTRL.main.CheckObstaclesToMoveDown(targetCell, targetCell.myField.cellCTRLs[MyPosition.x, MyPosition.y]) && 
             targetCell.cellInternal == null)
         {
             //Создаем и размещаем предмет
@@ -34,7 +59,7 @@ public class DispencerController : MonoBehaviour
             internalController.SetFullMask2D(CellInternalObject.MaskType.top);
 
             RectTransform internalRect = internalObj.GetComponent<RectTransform>();
-            internalRect.pivot = myCell.GetComponent<RectTransform>().pivot;
+            internalRect.pivot = -MyPosition;
 
             int currentChance = Random.Range(1, 101);
 

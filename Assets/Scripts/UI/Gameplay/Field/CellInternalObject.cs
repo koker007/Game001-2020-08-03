@@ -539,13 +539,25 @@ public class CellInternalObject : MonoBehaviour
         void SpawnEffects() {
             myCell.timeBoomOld = Time.unscaledTime; //Ставим время взрыва
 
+            int scoreNow = score;
+            if (!Gameplay.main.playerTurn) {
+                //Враг получает вдвое больше очков в начале игры 
+                if (EnemyController.MoveCount <= EnemyController.MoveCountForPlayer)
+                {
+                    scoreNow = scoreNow * 2;
+                }
+                else {
+                    scoreNow = (int)(scoreNow * 0.62f);
+                }
+            }
+
             if (type == Type.color) {
                 GameObject PrefabDie = Instantiate(myField.PrefabParticleDie, myField.parentOfScore);
                 RectTransform rectDie = PrefabDie.GetComponent<RectTransform>();
 
                 GameObject PrefabScore = Instantiate(myField.PrefabParticleScore, myField.parentOfScore);
-                PrefabScore.GetComponent<ScoreCTRL>().Inicialize(score, ConvertEnumColor());
-                Gameplay.main.ScoreUpdate(score);
+                PrefabScore.GetComponent<ScoreCTRL>().Inicialize(scoreNow, ConvertEnumColor());
+                Gameplay.main.ScoreUpdate(scoreNow);
                 RectTransform rectScore = PrefabScore.GetComponent<RectTransform>();
 
                 //Нарисовать частицы
@@ -911,7 +923,7 @@ public class CellInternalObject : MonoBehaviour
             myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1].cellInternal == null &&
             myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1].BlockingMove == 0 &&
             myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1].rock == 0 &&
-            myField.CheckObstaclesToMoveDown(myField.cellCTRLs[myCell.pos.x, myCell.pos.y], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1])
+            myField.CheckObstaclesToMoveDown(myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1], myField.cellCTRLs[myCell.pos.x, myCell.pos.y])
             ) {
             return;
         }
