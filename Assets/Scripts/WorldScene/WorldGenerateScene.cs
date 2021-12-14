@@ -74,6 +74,9 @@ public class WorldGenerateScene : MonoBehaviour
     {
         main = this;
 
+        //Запускаем цикл обновлений изображений
+        Invoke("InvokeFonImage", 0);
+
         rotationNeed = -0;
 
 
@@ -98,6 +101,8 @@ public class WorldGenerateScene : MonoBehaviour
         }
 
         rotationNow = -(PlayerProfile.main.ProfilelevelOpen * 2.5f) - 100;
+
+        
     }
 
     private void Update()
@@ -106,6 +111,48 @@ public class WorldGenerateScene : MonoBehaviour
 
         //UpdateMainObject();
         UpdateMainObject2();
+
+
+    }
+    void InvokeFonImage() {
+        //ищем растояние у предыдущего измерения
+        float distFromAngleOld = 99999999999;
+        Texture nearestFon = MenuGameplay.main.ImageFon.texture;
+
+        //Перебираем все локации в буфере ищем ближайшую
+        foreach (WorldLocation location in bufferLocations) {
+            //Проводим расчет только если у локации есть ее особый фон
+            if (location.fonGameplay == null)
+                continue;
+
+            //Узнаем текущие 2 угла локации начальный и конечный
+            float start = location.myAngle - 25;
+            float end = location.myAngle - location.lenghtAngle + 1 - 25;
+
+            //Растояние до старта
+            float distStart = Mathf.Abs(rotationNow - start);
+            //Растояние до конца
+            float distEnd = Mathf.Abs(rotationNow - end);
+            
+            //Если старт ближе чем предыдущий расчет
+            if (distStart < distFromAngleOld) {
+                distFromAngleOld = distStart;
+                nearestFon = location.fonGameplay;
+            }
+            //Если конец ближе чем предыдущий расчет
+            else if(distEnd < distFromAngleOld) {
+                distFromAngleOld = distEnd;
+                nearestFon = location.fonGameplay;
+            }
+        }
+
+        //Если по итогам расчетов картинка отличается от текущей меняем ее
+        if (MenuGameplay.main.ImageFon.texture != nearestFon) {
+            MenuGameplay.main.ImageFon.texture = nearestFon;
+        }
+
+        //выполнять проверку не каждый кадр, чтобы снизить нагрузку
+        Invoke("InvokeFonImage", Random.Range(0.5f, 1f));
     }
 
     //поворот обьекта

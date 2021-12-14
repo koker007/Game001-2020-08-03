@@ -68,6 +68,9 @@ public class MenuGameplay : MonoBehaviour
     Sprite PassedRockImage;
 
     [SerializeField]
+    public RawImage ImageFon;
+
+    [SerializeField]
     Slider PassedEnemySlider;
     [SerializeField]
     GameObject PassedEnemy;
