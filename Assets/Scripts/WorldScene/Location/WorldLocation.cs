@@ -10,6 +10,9 @@ using UnityEngine;
 /// </summary>
 public class WorldLocation : MonoBehaviour
 {
+    [SerializeField]
+    public Texture fonGameplay;
+
     /// <summary>
     /// –азмер локации в градусах
     /// </summary>
@@ -17,6 +20,10 @@ public class WorldLocation : MonoBehaviour
     public float lenghtAngle = 90;
     [SerializeField]
     float rotateNow = 0;
+
+    /// <summary>
+    /// “екущий угл этой локации определ€етс€ при инициализации
+    /// </summary>
     [SerializeField]
     public float myAngle = 0;
 
@@ -87,16 +94,6 @@ public class WorldLocation : MonoBehaviour
 
         }
 
-        /*
-        void DeleteGraunds() {
-            foreach (GameObject gameObject in Graunds) {
-                if (gameObject != null) {
-                    Destroy(gameObject);
-                }
-            }
-            Graunds = null;
-        }
-        */
     }
     public void TestDelete() {
         rotateNow = WorldGenerateScene.main.rotationNow;
