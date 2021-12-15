@@ -8,6 +8,9 @@ using UnityEngine.UI;
 public class TeleportController : MonoBehaviour
 {
     public Image image;
+    public RectTransform rectMigleImage;
+
+    public GameFieldCTRL myField;
 
     public CellCTRL cellIn; 
     public CellCTRL cellOut;
@@ -24,12 +27,18 @@ public class TeleportController : MonoBehaviour
 
     private void Update()
     {
+        
         Teleport();
         UpdateImage();
     }
 
     private void Teleport()
     {
+        //Расчет только на расчетном кадре
+        if (myField.buffer.CalculateFrameNow != 0) {
+            return;
+        }
+
         //Если во входе есть что перемещать и объект готов к перемещению
         if (cellIn.cellInternal != null &&
             cellIn.rock == 0)
@@ -105,14 +114,27 @@ public class TeleportController : MonoBehaviour
     }
 
     void UpdateImage() {
-        Color colorUP = ImageUP.color;
-        Color colorDown = imageDown.color;
+        //Крутим портал
+        Quaternion rectMidleImage = rectMigleImage.localRotation;
+        Vector3 euler = rectMigleImage.eulerAngles;
 
-        colorUP.a += (0 - colorUP.a) * Time.unscaledDeltaTime;
-        colorDown.a += (0 - colorDown.a) * Time.unscaledDeltaTime;
+        euler.z += 90 * Time.unscaledDeltaTime;
 
-        ImageUP.color = colorUP;
-        imageDown.color = colorDown;
+        rectMidleImage.eulerAngles = euler;
+        rectMigleImage.localRotation = rectMidleImage;
+
+        if (ImageUP.color.a > 0) {
+            Color colorUP = ImageUP.color;
+            colorUP.a -= Time.unscaledDeltaTime;
+            ImageUP.color = colorUP;
+        }
+
+        if (imageDown.color.a > 0) {
+            Color colorDown = imageDown.color;
+            colorDown.a -= Time.unscaledDeltaTime;
+            imageDown.color = colorDown;
+        }
+        
     }
 
 }

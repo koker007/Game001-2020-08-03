@@ -161,7 +161,6 @@ GameObject:
   - component: {fileID: 1734677590448967597}
   - component: {fileID: 6641634456075859650}
   - component: {fileID: 6600308862231773384}
-  - component: {fileID: 8505341979762707221}
   m_Layer: 0
   m_Name: Teleport
   m_TagString: Untagged
@@ -212,6 +211,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 7616874181926489016}
+  rectMigleImage: {fileID: 1965445688455798485}
+  myField: {fileID: 0}
   cellIn: {fileID: 0}
   cellOut: {fileID: 0}
   secondTeleport: {fileID: 0}
@@ -224,25 +225,6 @@ MonoBehaviour:
   - {r: 0.5801887, g: 1, b: 0.58375883, a: 1}
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
---- !u!95 &8505341979762707221
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1751797163436208919}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ccdfd6868f7d418429023a8bd668a6c1, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2111960522184572396
 GameObject:
   m_ObjectHideFlags: 0
