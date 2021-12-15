@@ -114,6 +114,10 @@ public class WorldGenerateScene : MonoBehaviour
 
 
     }
+    private void FixedUpdate()
+    {
+        
+    }
     void InvokeFonImage() {
         //ищем растояние у предыдущего измерения
         float distFromAngleOld = 99999999999;

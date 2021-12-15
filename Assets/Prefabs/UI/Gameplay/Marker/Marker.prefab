@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1963403083099378184}
   - component: {fileID: 215193306643209202}
   - component: {fileID: 2111739415645884970}
-  - component: {fileID: 8757126872678565089}
   - component: {fileID: 7622721793594377976}
   m_Layer: 0
   m_Name: Marker
@@ -68,7 +67,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 3caa0c3c2a12a5f46a4188127ab28cce, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -76,26 +75,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!95 &8757126872678565089
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1876127274046963939}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 944d5cb491673e64780d77ed83bca75c, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_PixelsPerUnitMultiplier: 2.5
 --- !u!114 &7622721793594377976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,5 +88,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cdd2abe8b5eee44a9830085d962e41e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canPlayInAnim: 0
-  canPlayOutAnim: 0
+  image: {fileID: 2111739415645884970}

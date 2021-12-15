@@ -17,6 +17,9 @@ public class PanelSpreadCTRL : MonoBehaviour
     [SerializeField]
     RawImage image;
 
+    [SerializeField]
+    Animator myAnimator;
+
     RectTransform myRect;
 
     public void inicialize(CellCTRL cell) {
@@ -54,5 +57,10 @@ public class PanelSpreadCTRL : MonoBehaviour
 
     public void EffectCreate() {
         Particle3dCTRL.CreateCreateMaz(myCell.myField.transform, myCell);
+    }
+
+
+    public void DestoroyAnimator() {
+        Destroy(myAnimator);
     }
 }

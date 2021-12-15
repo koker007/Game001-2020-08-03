@@ -10,6 +10,8 @@ public class GooglePlay : MonoBehaviour
 {
     [SerializeField]
     Text TestText;
+    [SerializeField]
+    Text TestFps;
 
     bool isAutorized = false;
 
@@ -23,6 +25,12 @@ public class GooglePlay : MonoBehaviour
         PlayGamesPlatform.Activate();
         //AutorizationPlayGamesPatform();
         AutorizationSocial();
+
+        //Если авторизация не прошла успешно, принимаем новую попытку позже
+        if (!isAutorized)
+        {
+            Invoke("iniServices", 60f);
+        }
     }
     void AutorizationSocial() {
         Social.localUser.Authenticate(success => {
@@ -44,7 +52,6 @@ public class GooglePlay : MonoBehaviour
             isAutorized = success;
         });
 
-        
     }
     void AutorizationPlayGamesPlatform() {
         PlayGamesPlatform.Instance.Authenticate(SignInInteractivity.CanPromptAlways, (result) => {
@@ -62,18 +69,35 @@ public class GooglePlay : MonoBehaviour
         });
     }
 
-    // Update is called once per frame
+    int[] fpsBuffer = new int[10];
     void Update()
     {
         //Debug.Log("google play autorized: " + isAutorized);
-        TestText.text = "google play autorized: " + isAutorized;
+        if (Settings.main.DeveloperTesting)
+        {
+            TestText.text = "GPS:" + isAutorized;
+            int fpsNew = (int)(1 / (float)Time.unscaledDeltaTime);
+
+            int fpsSum = 0;
+            for (int num = 0; num < fpsBuffer.Length; num++) {
+                if (num != fpsBuffer.Length - 1)
+                    fpsBuffer[num] = fpsBuffer[num + 1];
+                else fpsBuffer[num] = fpsNew;
+
+                fpsSum += fpsBuffer[num];
+            }
+
+            fpsNew = fpsSum / fpsBuffer.Length;
+
+            TestFps.text = fpsNew.ToString();
+        }
+        
     }
 
     //Exit Google Play Store
     private void OnDestroy()
     {
         PlayGamesPlatform.Instance.SignOut();
-        //PlayGamesPlatform.Instance.
     }
 
 }

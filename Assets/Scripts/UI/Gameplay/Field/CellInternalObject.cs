@@ -227,9 +227,9 @@ public class CellInternalObject : MonoBehaviour
             }
 
 
-            MovingSpeed += Time.unscaledDeltaTime * 0.5f;
+            MovingSpeed += Time.unscaledDeltaTime * 1.5f;
 
-            float speed = 0.05f + MovingSpeed;
+            float speed = 0.1f + MovingSpeed;
             speed *= Gameplay.main.timeScale;
 
             float correctY = 0;
@@ -322,8 +322,9 @@ public class CellInternalObject : MonoBehaviour
             timeLastMoving = Time.unscaledTime;
         }
 
-        //Проверяем снизу наличие свободной ячейки
-        else {
+        //Проверяем снизу наличие свободной ячейки //Расчет происходит только в кадре для расчета
+        else if(myField.buffer.CalculateFrameNow == 0) {
+            
             trailSpawned = false;
             CellCTRL cellMove = GetFreeCellDown();
             if (cellMove)
@@ -1750,6 +1751,9 @@ public class CellInternalObject : MonoBehaviour
     }
 
     void UpdateActivate() {
+        //Выходим если не кадр расчета
+        if (myField == null || myField.buffer.CalculateFrameNow != 0)
+            return;
 
         if (activateNeed && !activate) {
             Activate(BufferActivateType, BufferPartner, BufferCombination);
