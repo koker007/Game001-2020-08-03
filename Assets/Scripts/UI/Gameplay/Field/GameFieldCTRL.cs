@@ -142,12 +142,11 @@ public class GameFieldCTRL : MonoBehaviour
 
     private GameObject[,] markers;
 
-    private bool markersActive = false;
-
 
     private void Start()
     {
         main = this;
+        buffer.Ini(); //Проинициализировать буффер
     }
 
     void Update()
@@ -158,14 +157,15 @@ public class GameFieldCTRL : MonoBehaviour
         }
         TestSpawn(); //Спавним
         isMoving();
+
         TestFieldCombination(true); //Тестим комбинации с применением урона
 
         TestFieldPotencial(); //ищем потенциальные ходы
         TestRandomNotPotencial(); //Рандомизируем если ходов не обнаружено
 
-        ActicateMarkers(); //Включаем маркеры цели
-        TestStartSwap(); //Начинаем обмен
+        ActivateMarkers(); //Включаем маркеры цели
 
+        TestStartSwap(); //Начинаем обмен
         TestReturnSwap(); //Возвращяем обмен
 
         TestMold(); //Выполняем действия после хода
@@ -173,9 +173,12 @@ public class GameFieldCTRL : MonoBehaviour
         TestCalcPriorityCells(); //Вычисление приоритета ячеек
 
         TurnPass();
-        
+
         //Проверка на завершение игры
         TestEndMessage();
+
+        //Расчет буферных вычислений.. в основном нужно для эллеменнов на после, не для самого поля..
+        buffer.Calculate();
 
         PanelSpreadCTRL.TestOffSet();
     }
@@ -313,10 +316,6 @@ public class GameFieldCTRL : MonoBehaviour
                             cellCTRLs[x, y].panel = true;
                     }
 
-                    GameObject markerObj = Instantiate(prefabMarker, parentOfMarkers);
-                    markerObj.GetComponent<RectTransform>().pivot = new Vector2(-cellCTRLs[x, y].pos.x, -cellCTRLs[x, y].pos.y);
-                    markers[x, y] = markerObj;
-
                     //Если нужно создать раздатчик
                     if (level.cells[x, y].dispencer)
                     {
@@ -371,6 +370,9 @@ public class GameFieldCTRL : MonoBehaviour
                             //Пара телепортов связанна, ставим цвет
                             firstTeleports[teleportID].setIDAndColor(teleportID);
                             firstTeleports[teleportID].secondTeleport.setIDAndColor(teleportID);
+
+                            firstTeleports[teleportID].myField = this;
+                            firstTeleports[teleportID].secondTeleport.myField = this;
                         }
                     }
 
@@ -2099,67 +2101,56 @@ public class GameFieldCTRL : MonoBehaviour
         }
     }
 
-    private void ActicateMarkers()
+    //Проверка на необходимость указать игроку цели мисии
+    private void ActivateMarkers()
     {
-        if (!markersActive && Time.unscaledTime - timeLastMove >= 10)
+        if (Time.unscaledTime - timeLastMove >= 10)
         {
             for (int x = 0; x < cellCTRLs.GetLength(0); x++)
             {
                 for (int y = 0; y < cellCTRLs.GetLength(1); y++)
                 {
-                    if (currentLevel.PassedWithBox && cellCTRLs[x, y] != null && cellCTRLs[x, y].BoxBlockCTRL != null)
+                    if (currentLevel.PassedWithBox && CountBoxBlocker < 5 && cellCTRLs[x, y] != null && cellCTRLs[x, y].BoxBlockCTRL != null)
                     {
-                        SetMarkersActive();
+                        TestCreateMarker();
                     }
-                    if (currentLevel.PassedWithIce && cellCTRLs[x, y] != null && cellCTRLs[x, y].iceCTRL != null)
+                    if (currentLevel.PassedWithIce && CountIce < 5 && cellCTRLs[x, y] != null && cellCTRLs[x, y].iceCTRL != null)
                     {
-                        SetMarkersActive();
+                        TestCreateMarker();
                     }
-                    if (currentLevel.PassedWithMold && cellCTRLs[x, y] != null && cellCTRLs[x, y].moldCTRL != null)
+                    if (currentLevel.PassedWithMold && CountMold < 5 && cellCTRLs[x, y] != null && cellCTRLs[x, y].moldCTRL != null)
                     {
-                        SetMarkersActive();
+                        TestCreateMarker();
                     }
-                    if (currentLevel.PassedWithPanel && cellCTRLs[x, y] != null && cellCTRLs[x, y].panelCTRL == null)
+                    if (currentLevel.PassedWithPanel && CountPanelSpread < 5 && cellCTRLs[x, y] != null && cellCTRLs[x, y].panelCTRL == null)
                     {
-                        SetMarkersActive();
+                        TestCreateMarker();
                     }
-                    if (currentLevel.PassedWithRock && cellCTRLs[x, y] != null && cellCTRLs[x, y].rockCTRL != null)
+                    if (currentLevel.PassedWithRock && CountRockBlocker < 5 && cellCTRLs[x, y] != null && cellCTRLs[x, y].rockCTRL != null)
                     {
-                        SetMarkersActive();
+                        TestCreateMarker();
                     }
+
                     if (currentLevel.PassedWithCrystal && cellCTRLs[x, y] != null && cellCTRLs[x, y].cellInternal != null && cellCTRLs[x, y].cellInternal.color == currentLevel.NeedColor)
                     {
-                        SetMarkersActive();
+                        TestCreateMarker();
                     }
-                    void SetMarkersActive()
+                    
+
+                    void TestCreateMarker()
                     {
-                        if (markers[x, y] != null)
-                        {
-                            markers[x, y].GetComponent<MarkerAnimationController>().canPlayInAnim = true;
-                            markers[x, y].GetComponent<MarkerAnimationController>().isMarkerPlayingAnimation = true;
+                        //Если маркер уже есть то выходим
+                        if (markers[x, y] != null) {
+                            return;
                         }
+                        //Создаем маркер
+                        markers[x, y] = Instantiate(prefabMarker, parentOfMarkers);
+                        //Перемещаем маркер
+                        RectTransform markerRect = markers[x, y].GetComponent<RectTransform>();
+                        markerRect.pivot = new Vector2(-x, -y);
                     }
                 }
             }
-            markersActive = true;
-        }
-        else if (markersActive && Time.unscaledTime - timeLastMove < 10)
-        {
-            for (int x = 0; x < cellCTRLs.GetLength(0); x++)
-            {
-                for (int y = 0; y < cellCTRLs.GetLength(1); y++)
-                {
-                    if (markers[x, y] != null)
-                    {
-                        if (markers[x, y].GetComponent<MarkerAnimationController>().isMarkerPlayingAnimation)
-                        {
-                            markers[x, y].GetComponent<MarkerAnimationController>().canPlayOutAnim = true;
-                            markers[x, y].GetComponent<MarkerAnimationController>().isMarkerPlayingAnimation = false;
-                        }
-                    }
-                }
-            }
-            markersActive = false;
         }
     }
 
@@ -3346,8 +3337,23 @@ public class GameFieldCTRL : MonoBehaviour
     public struct Buffer
     {
         public MenuGameplay.SuperHitType superHit;
+        public int CalculateFrameNow; //Текущий вычислительный кадр
+        public const int CalculateFrameMax = 5; //На каком кадре происходит вычисление, действие и сброс отсчета кадров
+
+        //Инициализация переменных
+        public void Ini() {
+            CalculateFrameNow = 0;
+        }
+
+        //Расчет
+        public void Calculate() {
+            CalculateFrameNow++;
+            if (CalculateFrameNow > CalculateFrameMax) {
+                CalculateFrameNow = 0;
+            }
+        }
     }
-    Buffer buffer;
+    public Buffer buffer;
 
     //Конец комбинаций
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

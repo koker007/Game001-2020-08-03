@@ -9,10 +9,9 @@ using UnityEngine.UI;
 /// </summary>
 public class IceCTRL : MonoBehaviour
 {
+
     [SerializeField]
-    AnimatorCTRL animator;
-    [SerializeField]
-    CanvasGroup canvasGroup;
+    Image image;
 
     CellCTRL myCell;
     RectTransform myRect;
@@ -51,7 +50,11 @@ public class IceCTRL : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateLife();
+        UpdateAlpha();
+    }
+    private void FixedUpdate()
+    {
+        UpdateLife2();
     }
 
 
@@ -68,7 +71,6 @@ public class IceCTRL : MonoBehaviour
         }
 
         HealthOld = myCell.ice;
-        ChangeImage();
 
 
         if (myCell.ice > 0)
@@ -76,41 +78,109 @@ public class IceCTRL : MonoBehaviour
             return;
         }
 
-        DestroyIce();
+    }
 
-        void ChangeImage()
+    float alphaNeed = 1;
+    float alphaSpeed = 0.2f;
+    bool alphaCalc = false;
+    void UpdateLife2() {
+        //Если здоровье не менялось
+        if (HealthOld == myCell.ice)
+            return;
+
+        HealthOld = myCell.ice;
+
+        //Перерасчет новой цели прозрачности
+        calcColor();
+
+        //Удаляем если здоровье ниже 0
+        if (myCell.ice > 0)
         {
-            if (myCell.ice == 1) {
-                animator.PlayAnimation("lvl1");
+            return;
+        }
+
+        destroy();
+
+        void destroy()
+        {
+            //Звук разбивания
+            SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipDamageRock, 0.5f, Random.Range(0.9f, 1.1f));
+
+            myCell.myField.iceCTRLs[myCell.pos.x, myCell.pos.y] = null;
+            ReCalcIceCount();
+            Destroy(gameObject);
+        }
+
+        void calcColor() {
+
+            alphaCalc = true;
+
+            if (myCell.ice == 1)
+            {
+                alphaNeed = 0.7f;
             }
-            else if (myCell.ice == 2) {
-                animator.PlayAnimation("lvl2");
+            else if (myCell.ice == 2)
+            {
+                alphaNeed = 0.8f;
             }
             else if (myCell.ice == 3)
             {
-                animator.PlayAnimation("lvl3");
+                alphaNeed = 0.9f;
             }
             else if (myCell.ice == 4)
             {
-                animator.PlayAnimation("lvl4");
+                alphaNeed = 0.95f;
             }
-            else if (myCell.ice == 5)
+            else if (myCell.ice == 5) {
+                alphaNeed = 1;
+            }
+        }
+    }
+
+    void UpdateAlpha() {
+        if (alphaCalc) {
+            //вытаскиваем цвет
+            Color color = image.color;
+
+            //проверка надобности вычислений
+            if (color.a == alphaNeed) {
+                //Достигли цели выходим
+                alphaCalc = false;
+                return;
+            }
+
+
+            //нужно прибавлять чтобы достигнуть цели
+            bool plusNeed = false;
+            if (alphaNeed - color.a > 0) {
+                plusNeed = true;
+            }
+
+            //прибавляем
+            if (plusNeed)
             {
-                animator.PlayAnimation("lvl5");
+                color.a += alphaSpeed * Time.deltaTime;
             }
+            //Вычитаем
+            else {
+                color.a -= alphaSpeed * Time.deltaTime;
+            }
+
+            //Проверяем на достижение цели
+            bool plusNow = false;
+            if (alphaNeed - color.a > 0)
+            {
+                plusNow = true;
+            }
+
+            //Если перескочили
+            if (plusNeed != plusNow) {
+                color.a = alphaNeed;
+                alphaCalc = false;
+            }
+
+            image.color = color;
         }
-
-        //Уничтожить если жизни кончились
-        void DestroyIce()
-        {
-            if (myCell.ice > 0) return;
-
-            animator.PlayAnimation("Destroy");
-
-            //Звук разбивания камня
-            SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipDamageRock, 0.5f, Random.Range(0.9f, 1.1f));
-        }
-
     }
 
     void ReCalcIceCount()
@@ -131,12 +201,5 @@ public class IceCTRL : MonoBehaviour
         }
 
         myCell.myField.CountIce = count;
-    }
-
-    public void Destroy() {
-
-        myCell.myField.iceCTRLs[myCell.pos.x, myCell.pos.y] = null;
-        ReCalcIceCount();
-        Destroy(gameObject);
     }
 }

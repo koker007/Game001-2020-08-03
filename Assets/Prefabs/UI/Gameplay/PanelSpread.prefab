@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 5581960502270536716}
+  myAnimator: {fileID: 5856590292143345495}
 --- !u!95 &5856590292143345495
 Animator:
   serializedVersion: 3
@@ -240,7 +241,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3356159166103908988}
   - component: {fileID: 2161122746874859348}
-  - component: {fileID: 2170724478869684036}
   m_Layer: 5
   m_Name: fon
   m_TagString: Untagged
@@ -279,25 +279,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6603396526539847739}
   m_CullTransparentMesh: 1
---- !u!95 &2170724478869684036
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6603396526539847739}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c046f574b22cb3f4d838417987866284, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6910091495182742257
 GameObject:
   m_ObjectHideFlags: 0
