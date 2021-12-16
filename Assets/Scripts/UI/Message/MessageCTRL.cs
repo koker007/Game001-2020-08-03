@@ -20,7 +20,7 @@ public class MessageCTRL : MonoBehaviour
 
 
     [SerializeField]
-    Text title;
+    public Text title;
     [SerializeField]
     Text message;
     [SerializeField]

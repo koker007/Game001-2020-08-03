@@ -10,6 +10,8 @@ using UnityEngine;
 public class AnimatorCTRL : MonoBehaviour
 {
     private Animator animator;
+    [SerializeField]
+    bool disableOnBaceAnimation = false;
     public string parameterNameInt = "parameter";
 
     [System.Serializable]
@@ -31,6 +33,8 @@ public class AnimatorCTRL : MonoBehaviour
         if (animator == null)
             return;
 
+        animator.enabled = true;
+
         for (int i = 0; i < animations.Length; i++)
         {
             if (key == animations[i].key)
@@ -46,6 +50,11 @@ public class AnimatorCTRL : MonoBehaviour
 
     public void StopAnimations()
     {
+        animator.enabled = true;
         animator.SetInteger(parameterNameInt, 0);
+    }
+    public void disableAnimator() {
+        if(disableOnBaceAnimation)
+            animator.enabled = false;
     }
 }
