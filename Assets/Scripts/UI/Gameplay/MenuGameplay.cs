@@ -147,11 +147,18 @@ public class MenuGameplay : MonoBehaviour
         CreateGameField();
         EnableUI();
 
-
+        if (!GameplayParticles3D.main.gameObject.activeSelf) {
+            GameplayParticles3D.main.gameObject.SetActive(true);
+        }
     }
     private void OnDisable()
     {
         DestroyAllField();
+
+        if (GameplayParticles3D.main.gameObject.activeSelf)
+        {
+            GameplayParticles3D.main.gameObject.SetActive(false);
+        }
     }
 
     //—оздать игровое поле согласно параметрам игры

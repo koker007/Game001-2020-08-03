@@ -36,7 +36,7 @@ public class WorldGenerateScene : MonoBehaviour
     /// </summary>
     public float rotationNow;
     public float rotationNeed;
-    private const float SpeedLerpRotation = 2f;
+    private const float SpeedLerpRotation = 5f;
     private Transform RotatableObj;
     private float levelAngleSum = 0;
 
@@ -68,6 +68,7 @@ public class WorldGenerateScene : MonoBehaviour
     private void Awake()
     {
         RotatableObj = MainComponents.RotatableObj.transform;
+        main = this;
     }
 
     private void Start()
@@ -121,6 +122,13 @@ public class WorldGenerateScene : MonoBehaviour
     void InvokeFonImage() {
         //ищем растояние у предыдущего измерения
         float distFromAngleOld = 99999999999;
+
+        if (MenuGameplay.main == null)
+        {
+            Invoke("InvokeFonImage", Random.Range(0.5f, 1f));
+            return;
+        }
+
         Texture nearestFon = MenuGameplay.main.ImageFon.texture;
 
         //Перебираем все локации в буфере ищем ближайшую
@@ -162,6 +170,9 @@ public class WorldGenerateScene : MonoBehaviour
     //поворот обьекта
     private void RotateMainObject()
     {
+        if (rotationNeed == rotationNow)
+            return;
+
         //выходим если еще не проинициализированно
         if (WorldSlider.main == null) return;
 
@@ -175,7 +186,14 @@ public class WorldGenerateScene : MonoBehaviour
             rotationNeed = WorldSlider.main.StartRotation - (PlayerProfile.main.ProfilelevelOpen * 2.5f);
         }
 
-        rotationNow = Mathf.Lerp(rotationNow, rotationNeed, Time.deltaTime * SpeedLerpRotation);
+        float timeOffSet = Time.deltaTime * SpeedLerpRotation;
+        if (timeOffSet > 1) timeOffSet = 1;
+        rotationNow = Mathf.Lerp(rotationNow, rotationNeed, timeOffSet);
+
+        if (Mathf.Abs(rotationNeed - rotationNow) < 0.01f) {
+            rotationNow = rotationNeed;
+        }
+        
         RotatableObj.eulerAngles = new Vector3(rotationNow, 0, 0);
     }
 
