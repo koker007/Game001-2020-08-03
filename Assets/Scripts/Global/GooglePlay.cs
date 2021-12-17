@@ -12,6 +12,8 @@ public class GooglePlay : MonoBehaviour
     Text TestText;
     [SerializeField]
     Text TestFps;
+    [SerializeField]
+    int fps;
 
     bool isAutorized = false;
 
@@ -90,6 +92,8 @@ public class GooglePlay : MonoBehaviour
             fpsNew = fpsSum / fpsBuffer.Length;
 
             TestFps.text = fpsNew.ToString();
+
+            fps = fpsNew;
         }
         
     }
@@ -98,6 +102,7 @@ public class GooglePlay : MonoBehaviour
     private void OnDestroy()
     {
         PlayGamesPlatform.Instance.SignOut();
+
     }
 
 }
