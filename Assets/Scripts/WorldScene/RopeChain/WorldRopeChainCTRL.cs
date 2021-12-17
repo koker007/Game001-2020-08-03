@@ -15,7 +15,7 @@ public class WorldRopeChainCTRL : MonoBehaviour
     [SerializeField]
     public GameObject PrefabSphere;
 
-    private void Awake()
+    void Start()
     {
         //ссылаемся на самого себя
         main = this;

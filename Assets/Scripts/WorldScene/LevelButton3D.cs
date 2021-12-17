@@ -49,33 +49,6 @@ public class LevelButton3D : MonoBehaviour
 
     }
 
-    private void FixedUpdate()
-    {
-        //Invoke("TestAnimation", Random.Range(0, 0.25f));
-    }
-
-    //Проверить на необходимость воспроизведения анимации для этой кнопки
-    void TestAnimation() {
-
-        if (Vector3.Distance(MainCamera.main.animatePos, gameObject.transform.position) < MainCamera.animateDist)
-        {
-            if (LevelAnim.enabled)
-                return;
-
-            LevelAnim.enabled = true;
-            LevelAnim.Rebind();
-            LevelAnim.Update(0f);
-        }
-        else
-        {
-            if (!LevelAnim.enabled) 
-                return;
-                
-            LevelAnim.enabled = false;
-            
-        }
-    }
-
     //Проверка активности кнопки
     void TestProfileOpen() {
         //Поставить цвет кнопки и установить ее активность

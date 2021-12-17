@@ -14,9 +14,6 @@ public class MainCamera : MonoBehaviour
 
     public Camera myCamera;
 
-    public const float animateDist = 25;
-    public Vector3 animatePos;
-
 
     /// <summary>
     ///  ачество изображени€ от 0 - плохое до 1 - полное
@@ -48,9 +45,19 @@ public class MainCamera : MonoBehaviour
         //InvokeRepeating("TestTextureSize", 1, 1);
 
         //InvokeRepeating("CameraScaler", 0, Random.Range(1f, 1.5f));
-
-        animatePos = transform.position + transform.forward.normalized * 30;
     }
+
+    /*
+    void iniScaler() {
+        componentCamera = GetComponent<Camera>();
+        initialSize = componentCamera.orthographicSize;
+
+        targetAspect = DefaultResolution.x / DefaultResolution.y;
+
+        initialFov = componentCamera.fieldOfView;
+        horizontalFov = CalcVerticalFov(initialFov, 1 / targetAspect);
+    }
+    */
 
     void iniTexture() {
         if (!renderTexture)

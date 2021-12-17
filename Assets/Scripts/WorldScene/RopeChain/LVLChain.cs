@@ -240,4 +240,10 @@ public class LVLChain : MonoBehaviour
         iniChain();
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
 }

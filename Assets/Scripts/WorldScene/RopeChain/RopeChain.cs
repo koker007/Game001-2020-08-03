@@ -106,5 +106,28 @@ public class RopeChain : MonoBehaviour
 
     }
 
+    /*
+    private void Start()
+    {
+        Invoke("ReCalc", 0.5f);
+    }
 
+    
+    private void Update()
+    {
+        ReCalc();
+    }
+    */
+
+   [SerializeField]
+    bool needRecalc = false;
+
+    void ReCalc()
+    {
+        if (!needRecalc)
+            return;
+
+        myChain.iniChain();
+        needRecalc = false;
+    }
 }
