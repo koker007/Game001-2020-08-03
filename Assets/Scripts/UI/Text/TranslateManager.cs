@@ -10,6 +10,18 @@ using System.IO;
 /// </summary>
 public class TranslateManager : MonoBehaviour
 {
+    public const string keyMessageLVLTitle = "MessageLVLTitle";
+    public const string keyMessageLVLTarget = "MessageLVLTarget";
+
+    public const string keyMessageLVLTargetScore = "MessageLVLScore";
+    public const string keyMessageLVLTargetCrystal = "MessageLVLTargetCrystal";
+    public const string keyMessageLVLTargetICE = "MessageLVLTargetICE";
+    public const string keyMessageLVLTargetBox = "MessageLVLTargetBox";
+    public const string keyMessageLVLTargetMold = "MessageLVLTargetMold";
+    public const string keyMessageLVLTargetPanel = "MessageLVLTargetPanel";
+    public const string keyMessageLVLTargetRock = "MessageLVLTargetRock";
+    public const string keyMessageLVLTargetEnemy = "MessageLVLTargetEnemy";
+
     private struct Translate
     {
         public string key;

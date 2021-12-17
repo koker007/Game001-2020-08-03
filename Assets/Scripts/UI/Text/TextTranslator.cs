@@ -17,4 +17,5 @@ public class TextTranslator : MonoBehaviour
     {
         text.text = TranslateManager.main.GetText(key);
     }
+    
 }

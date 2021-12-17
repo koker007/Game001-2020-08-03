@@ -34,8 +34,6 @@ public class MenuWorld : MonoBehaviour
 
     [Header("World")]
     [SerializeField]
-    GameObject World3D;
-    [SerializeField]
     RawImage renderImage;
 
     [HideInInspector]
@@ -86,14 +84,30 @@ public class MenuWorld : MonoBehaviour
         startButtons();
         SetText();
 
-        if (World3D != null && !World3D.activeSelf) {
-            World3D.SetActive(true);
+        if (WorldGenerateScene.main != null && !WorldGenerateScene.main.gameObject.activeSelf) {
+            WorldGenerateScene.main.gameObject.SetActive(true);
+        }
+        if (MainCamera.main != null && !MainCamera.main.myCamera.enabled)
+        {
+            MainCamera.main.myCamera.enabled = true;
+        }
+        if (MainCamera.main != null && !MainCamera.main.enabled)
+        {
+            MainCamera.main.enabled = true;
         }
     }
     void OnDisable()
     {
-        if (World3D != null && World3D.activeSelf) {
-            World3D.SetActive(false);
+        if (WorldGenerateScene.main != null && WorldGenerateScene.main.gameObject.activeSelf) {
+            WorldGenerateScene.main.gameObject.SetActive(false);
+        }
+        if (MainCamera.main != null && MainCamera.main.myCamera.enabled)
+        {
+            MainCamera.main.myCamera.enabled = false;
+        }
+        if (MainCamera.main != null && MainCamera.main.enabled)
+        {
+            MainCamera.main.enabled = false;
         }
     }
 
