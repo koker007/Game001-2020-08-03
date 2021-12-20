@@ -15,7 +15,6 @@ public class LevelButton3D : MonoBehaviour
     public Color colorOpen;
     public Color colorComplite;
 
-    public Animator LevelAnim;
     public GameObject parentText;
     public Text[] text;
 
@@ -82,22 +81,11 @@ public class LevelButton3D : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.transform.tag == "LevelButton")
-                {
-                    LevelAnim.SetBool("Touch", true);
-                }
+
             }
         }
     }
 
-    public void AnimStartPress()
-    {
-        LevelAnim.SetBool("Press", true);
-    }
-    public void AnimEndPress()
-    {
-        LevelAnim.SetBool("Press", false);
-    }
 
     public void Start()
     {
@@ -109,39 +97,6 @@ public class LevelButton3D : MonoBehaviour
         SoundCTRL.main.PlaySound(SoundCTRL.main.clipPressButtonLVL);
         //LevelGenerator.main.GenerateLevelV2(NumLevel);
         GlobalMessage.LevelInfo(NumLevel);
-
-        AnimEndPress();
-    }
-
-    private void OnMouseExit()
-    {
-        LevelAnim.SetBool("Touch", false);
-    }
-
-    //отпускание конпки
-    private void OnMouseUpAsButton()
-    {
-        if (isActive == false)
-        {
-            return;
-        }
-        LevelAnim.SetBool("Touch", false);
-
-        RayCast();
-        if (result.Count <= 1)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.collider.transform.tag == "LevelButton")
-                {
-                    SoundCTRL.main.PlaySound(SoundCTRL.main.clipPressButtonLVL);
-                    //LevelGenerator.main.GenerateLevelV2(NumLevel);
-                    GlobalMessage.LevelInfo(NumLevel);
-                }
-            }
-        }
     }
 
     //луч на кнопку

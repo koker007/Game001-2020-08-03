@@ -40,8 +40,6 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             //Запоминаем компонент кнопки
             ButtonStart = hitInfo.collider.GetComponent<LevelButton3D>();
-            if(ButtonStart != null)
-                ButtonStart.AnimStartPress();
         }
         else {
             ButtonStart = null;
@@ -76,7 +74,6 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             }
         }
 
-        ButtonStart.AnimEndPress();
         ButtonStart = null;
     }
 

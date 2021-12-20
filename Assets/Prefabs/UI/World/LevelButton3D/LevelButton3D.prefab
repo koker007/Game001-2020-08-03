@@ -384,7 +384,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6440033326093600098}
-  - component: {fileID: 4811206505807674102}
   - component: {fileID: 4548290735252066153}
   - component: {fileID: 4804510556258173965}
   - component: {fileID: 7156953669707228033}
@@ -404,7 +403,7 @@ Transform:
   m_GameObject: {fileID: 6440033326093599901}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children:
   - {fileID: 3004837316415955662}
   - {fileID: 2451313075437086725}
@@ -412,25 +411,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &4811206505807674102
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6440033326093599901}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 151bd0bf8bf01764a9edf265d575f044, type: 2}
-  m_CullingMode: 2
-  m_UpdateMode: 2
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!65 &4548290735252066153
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -459,7 +439,6 @@ MonoBehaviour:
   colorNotOpen: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
   colorOpen: {r: 0.85882354, g: 0.16470589, b: 0.16470589, a: 1}
   colorComplite: {r: 0.9926069, g: 1, b: 0, a: 1}
-  LevelAnim: {fileID: 4811206505807674102}
   parentText: {fileID: 3849966443128474474}
   text:
   - {fileID: 6268983627043593965}
@@ -550,6 +529,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 29f2daeba9f43bd4cb0e1012a55c28fd, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 29f2daeba9f43bd4cb0e1012a55c28fd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c6207b2737fdd6f40b751ba5711801d9, type: 2}
@@ -630,6 +613,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5d9c11191eb99134c849ea403b195e31, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 5d9c11191eb99134c849ea403b195e31, type: 3}
+      propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 5d9c11191eb99134c849ea403b195e31, type: 3}
