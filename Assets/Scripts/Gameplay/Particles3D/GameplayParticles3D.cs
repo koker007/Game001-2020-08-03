@@ -68,9 +68,15 @@ public class GameplayParticles3D : MonoBehaviour
 
     public void SetCameraPos(float scaleX, float scaleY) {
 
+        
+
         float coof = (float)Screen.height / (float)Screen.width;
 
-        camera.orthographicSize = (((scaleX/2)+0.5f) * coof)-0.5f;
+        //camera.orthographicSize = (((scaleX/2)+0.5f) * coof)-0.5f;
+
+        //Фиксированный маштаб
+        camera.orthographicSize = (((10 / 2) + 0.5f) * coof) - 0.5f;
+
         camera.transform.localPosition = new Vector3(scaleX / 2, scaleY / 2, camera.transform.localPosition.z);
 
     }
