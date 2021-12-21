@@ -117,12 +117,17 @@ public class Gameplay : MonoBehaviour
     //вычитает ход и делает проверку на 0 ходов
     public void MinusMoving(GameFieldCTRL.Combination combination)
     {
+
+        LevelsScript.Level level = LevelsScript.main.ReturnLevel();
+
         if (playerTurn)
         {
             movingCount++;
-            if (EnemyController.MoveCount >= EnemyController.MoveCountForPlayer) {
+
+            if (level.PassedWithEnemy && EnemyController.MoveCount >= EnemyController.MoveCountForPlayer)
                 movingCan--;
-            }
+            else movingCan--;
+
             LevelStatsController.main.playerTurns++;
             MenuGameplay.main.updateMoving();
 

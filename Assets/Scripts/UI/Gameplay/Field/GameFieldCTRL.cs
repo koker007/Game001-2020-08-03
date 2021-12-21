@@ -507,7 +507,8 @@ public class GameFieldCTRL : MonoBehaviour
             if (!myRect) myRect = GetComponent<RectTransform>();
 
             //вычисляем какого размера должно быть поле
-            float cellsWeight = (float)cellCTRLs.GetLength(0);
+            //Игровое поле фиксированно на 9 клеток
+            float cellsWeight = 9;//(float)cellCTRLs.GetLength(0);
 
             float sizeNeed = 10 / cellsWeight;
 
