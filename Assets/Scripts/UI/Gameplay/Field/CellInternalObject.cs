@@ -13,7 +13,8 @@ public class CellInternalObject : MonoBehaviour
     [SerializeField]
     public RectMask2D myMask2D;
     [SerializeField]
-    public Vector4 myMaskNeed;
+    public Vector4 myMaskNeed = new Vector4();
+    public Vector4 myMaskNow = new Vector4();
     [SerializeField]
     public AnimatorCTRL animatorCTRL;
     private Particle3dCTRL trail;
@@ -157,6 +158,8 @@ public class CellInternalObject : MonoBehaviour
 
     //Замаскировать внутренний объект от туда, от куда он будет двигаться
     public void SetFullMask2D(MaskType maskType) {
+        if (myMask2D == null) myMask2D = gameObject.AddComponent<RectMask2D>();
+
         Vector4 mask2D = myMask2D.padding;
 
         //Пропадает сверху
@@ -252,8 +255,6 @@ public class CellInternalObject : MonoBehaviour
             }
 
 
-            Vector4 mask2D = myMask2D.padding;
-
             float posXnew = rectMy.pivot.x;
             float posYnew = rectMy.pivot.y;
             //Если есть позиция смерти
@@ -273,16 +274,28 @@ public class CellInternalObject : MonoBehaviour
                 float test = 0;
             }
 
-            //Смещение маски
-            float maskCoof = 100;
 
-            mask2D.x = Calculate.GetValueLinear(mask2D.x, myMaskNeed.x, speed * maskCoof);
-            mask2D.y = Calculate.GetValueLinear(mask2D.y, myMaskNeed.y, speed * maskCoof);
-            mask2D.z = Calculate.GetValueLinear(mask2D.z, myMaskNeed.z, speed * maskCoof);
-            mask2D.w = Calculate.GetValueLinear(mask2D.w, myMaskNeed.w, speed * maskCoof);
-            //Применение новой маски
-            myMask2D.padding = mask2D;
+            if (myMaskNow != myMaskNeed || myMaskNow.x != 0 || myMaskNow.y != 0 || myMaskNow.z != 0 || myMaskNow.w != 0) {
+                if (myMask2D == null) myMask2D = gameObject.AddComponent<RectMask2D>();
 
+                //Смещение маски
+                float maskCoof = 100;
+
+                Vector4 mask2D = myMask2D.padding;
+
+                mask2D.x = Calculate.GetValueLinear(mask2D.x, myMaskNeed.x, speed * maskCoof);
+                mask2D.y = Calculate.GetValueLinear(mask2D.y, myMaskNeed.y, speed * maskCoof);
+                mask2D.z = Calculate.GetValueLinear(mask2D.z, myMaskNeed.z, speed * maskCoof);
+                mask2D.w = Calculate.GetValueLinear(mask2D.w, myMaskNeed.w, speed * maskCoof);
+
+                //Применение новой маски
+                myMask2D.padding = mask2D;
+                myMaskNow = mask2D;
+
+                if (myMask2D.padding.x == 0 && myMask2D.padding.y == 0 && myMask2D.padding.z == 0 && myMask2D.padding.w == 0) {
+                    Destroy(myMask2D);
+                }
+            }
 
             if (EndMoveAndRemove) {
                 if (myDeath.x == posXnew &&

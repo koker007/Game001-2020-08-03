@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1515285975908226110}
   - component: {fileID: 785928088036544592}
   - component: {fileID: 7853739379585473240}
-  - component: {fileID: 6211101581484954579}
   m_Layer: 5
   m_Name: InternalObject
   m_TagString: Untagged
@@ -61,7 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd709b982b9ab44297969c8357e0e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myMask2D: {fileID: 6211101581484954579}
+  myMask2D: {fileID: 0}
   myMaskNeed: {x: 0, y: 0, z: 0, w: 0}
   animatorCTRL: {fileID: 7853739379585473240}
   myField: {fileID: 0}
@@ -174,20 +173,6 @@ MonoBehaviour:
     key: DrppedRight
   - num: 13
     key: ApperanceCombinationObject
---- !u!114 &6211101581484954579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515285975908226051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding: {x: 0, y: 0, z: 0, w: 0}
-  m_Softness: {x: 0, y: 10}
 --- !u!1 &4902984234172704133
 GameObject:
   m_ObjectHideFlags: 0
