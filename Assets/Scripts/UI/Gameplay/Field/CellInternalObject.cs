@@ -182,7 +182,7 @@ public class CellInternalObject : MonoBehaviour
     }
 
     public void IniRect() {
-        rectMy = GetComponent<RectTransform>();
+        rectMy = gameObject.GetComponent<RectTransform>();
 
         if (myCell)
             rectCell = myCell.GetComponent<RectTransform>();
@@ -283,10 +283,10 @@ public class CellInternalObject : MonoBehaviour
 
                 Vector4 mask2D = myMask2D.padding;
 
-                mask2D.x = Calculate.GetValueLinear(mask2D.x, myMaskNeed.x, speed * maskCoof);
-                mask2D.y = Calculate.GetValueLinear(mask2D.y, myMaskNeed.y, speed * maskCoof);
-                mask2D.z = Calculate.GetValueLinear(mask2D.z, myMaskNeed.z, speed * maskCoof);
-                mask2D.w = Calculate.GetValueLinear(mask2D.w, myMaskNeed.w, speed * maskCoof);
+                mask2D.x = Calculate.GetValueLinear(mask2D.x, myMaskNeed.x, mask2D.x/100 + speed * maskCoof);
+                mask2D.y = Calculate.GetValueLinear(mask2D.y, myMaskNeed.y, mask2D.y/100 + speed * maskCoof);
+                mask2D.z = Calculate.GetValueLinear(mask2D.z, myMaskNeed.z, mask2D.z/100 + speed * maskCoof);
+                mask2D.w = Calculate.GetValueLinear(mask2D.w, myMaskNeed.w, mask2D.w/100 + speed * maskCoof);
 
                 //Применение новой маски
                 myMask2D.padding = mask2D;
@@ -390,33 +390,37 @@ public class CellInternalObject : MonoBehaviour
             int smeshenie = 1;
             if (myCell.pos.y - smeshenie >= 0) //если не вышли за массив
             {
-
-                //Если перемещение четное, то провека справа
+                if (myCell.pos.x == 3 && myCell.pos.y == 5 ) {
+                    bool test = false;
+                }
+                //Если перемещение четное, то провека на движение вправа
                 //int internalNum = CellCTRL.GetNowLastInternalNum;
                 //Справа
                 if (myCell.pos.x + smeshenie < myField.cellCTRLs.GetLength(0) && //если не вышли за массив
-                    GameFieldCTRL.main.CheckObstaclesToMoveUp(myField.cellCTRLs[myCell.pos.x, myCell.pos.y], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - smeshenie]) &&
-                    GameFieldCTRL.main.CheckObstaclesToMoveDown(myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie], myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y]) &&
+                    //GameFieldCTRL.main.CheckObstaclesToMoveUp(myField.cellCTRLs[myCell.pos.x, myCell.pos.y], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - smeshenie]) &&
+                    //GameFieldCTRL.main.CheckObstaclesToMoveDown(myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie], myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y]) &&
                     !myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].cellInternal && //И она свободна
                     Time.unscaledTime - myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.35f &&
                     Time.unscaledTime - myField.timeLastBoom > 0 &&
                     isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie]) &&//В этом столбце нет потенциального вертикального движения
-                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wallID != 8 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 6 && //проверка условий ячейки из которой уходим
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 11 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 14 &&
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 15 &&
+                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wallID != 8 && //Проверка условия ячейки в которую напраляемся
                     myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wallID != 12 &&
                     myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wallID != 13 &&
                     myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wallID != 15 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 6 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 11 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 14 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 15)
+                    //Проверка что правая и нижняя ячейки вместе не образуют стену
+                    canMoveRightDown(myField.cellCTRLs[myCell.pos.x + 1, myCell.pos.y], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1]))
                 {
                     //Ставим такую ячейку как целевую
                     returnCell = myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie];
                 }
                 //Слева
                 else if (myCell.pos.x - smeshenie >= 0 && //если не вышли за массив
-                    GameFieldCTRL.main.CheckObstaclesToMoveUp(myField.cellCTRLs[myCell.pos.x, myCell.pos.y], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - smeshenie]) &&
-                    GameFieldCTRL.main.CheckObstaclesToMoveDown(myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie], myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y]) &&
+                    //GameFieldCTRL.main.CheckObstaclesToMoveUp(myField.cellCTRLs[myCell.pos.x, myCell.pos.y], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - smeshenie]) &&
+                    //GameFieldCTRL.main.CheckObstaclesToMoveDown(myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie], myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y]) &&
                     !myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].cellInternal && //И она свободна
                     Time.unscaledTime - myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.35f &&
                     Time.unscaledTime - myField.timeLastBoom > 0 &&
@@ -428,7 +432,9 @@ public class CellInternalObject : MonoBehaviour
                     myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 7 &&
                     myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 11 &&
                     myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 12 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 15)
+                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 15 &&
+                    //проверка что левая и нижняя ячейки вместе не ображуют стену
+                    canMoveLeftDown(myField.cellCTRLs[myCell.pos.x-1, myCell.pos.y], myField.cellCTRLs[myCell.pos.x, myCell.pos.y-1]))
                 {
                     //Ставим такую ячейку как целевую
                     returnCell = myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie];
@@ -488,6 +494,114 @@ public class CellInternalObject : MonoBehaviour
                 }
             }
 
+
+            return result;
+        }
+
+        bool canMoveRightDown(CellCTRL right, CellCTRL down) {
+            
+            //изначально можно пройти
+            bool result = true;
+
+            //Если ничего не длокирует движение в ячейку ниже справа
+
+            bool freeRight = true;
+            //проверка справа
+            if (right.wallID != 0 && (
+                right.wallID == 4 ||
+                right.wallID == 6 ||
+                right.wallID == 7 ||
+                right.wallID == 8 ||
+                right.wallID == 9 ||
+                right.wallID == 10 ||
+                right.wallID == 11 ||
+                right.wallID == 12 ||
+                right.wallID == 13 ||
+                right.wallID == 14 ||
+                right.wallID == 15
+                )) {
+                freeRight = false;
+            }
+
+
+            //Проверка снизу
+            bool freeDown = true;
+            if (down.wallID != 0 && (
+                down.wallID == 1 ||
+                down.wallID == 2 ||
+                down.wallID == 5 ||
+                down.wallID == 6 ||
+                down.wallID == 8 ||
+                down.wallID == 9 ||
+                down.wallID == 10 ||
+                down.wallID == 11 ||
+                down.wallID == 12 ||
+                down.wallID == 13 ||
+                down.wallID == 14 ||
+                down.wallID == 15
+                )) {
+                freeDown = false;
+            }
+
+            if (!freeDown && !freeRight) {
+                result = false;
+            }
+
+            return result;
+        }
+        bool canMoveLeftDown(CellCTRL left, CellCTRL down)
+        {
+
+            //изначально можно пройти
+            bool result = true;
+
+            //Если ничего не длокирует движение в ячейку ниже справа
+
+            bool freeLeft = true;
+            //проверка слева
+            if (left.wallID != 0 && (
+                left.wallID == 2 ||
+                left.wallID == 3 ||
+                left.wallID == 5 ||
+                left.wallID == 6 ||
+                left.wallID == 7 ||
+                left.wallID == 9 ||
+                left.wallID == 10 ||
+                left.wallID == 11 ||
+                left.wallID == 12 ||
+                left.wallID == 13 ||
+                left.wallID == 14 ||
+                left.wallID == 15
+                ))
+            {
+                freeLeft = false;
+            }
+
+
+            //Проверка снизу
+            bool freeDown = true;
+            if (down.wallID != 0 && (
+                down.wallID == 1 ||
+                down.wallID == 4 ||
+                down.wallID == 5 ||
+                down.wallID == 7 ||
+                down.wallID == 8 ||
+                down.wallID == 9 ||
+                down.wallID == 10 ||
+                down.wallID == 11 ||
+                down.wallID == 12 ||
+                down.wallID == 13 ||
+                down.wallID == 14 ||
+                down.wallID == 15
+                ))
+            {
+                freeDown = false;
+            }
+
+            if (!freeDown && !freeLeft)
+            {
+                result = false;
+            }
 
             return result;
         }

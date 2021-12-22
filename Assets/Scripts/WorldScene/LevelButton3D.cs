@@ -22,6 +22,11 @@ public class LevelButton3D : MonoBehaviour
     MeshRenderer SphereMesh;
     Material SphereMat;
 
+    [SerializeField]
+    GameObject osnovanie;
+    [SerializeField]
+    GameObject bulka;
+
     public GraphicRaycaster raycaster;
     private PointerEventData eventData;
     private EventSystem eventSystem;
@@ -43,9 +48,32 @@ public class LevelButton3D : MonoBehaviour
 
     public void Update()
     {
+        UpdateVisualization();
+
         //Текст должен смотреть на камеру
         parentText.transform.LookAt(MainComponents.MainCamera.transform);
 
+    }
+
+    void UpdateVisualization() {
+        if (Vector3.Distance(MainCamera.main.gameObject.transform.position, gameObject.transform.position) < 50)
+        {
+            if (bulka.activeSelf) {
+                return;
+            }
+
+            bulka.SetActive(true);
+            osnovanie.SetActive(true);
+            parentText.SetActive(true);
+        }
+        else {
+            if (!bulka.activeSelf) 
+                return;
+
+            bulka.SetActive(false);
+            osnovanie.SetActive(false);
+            parentText.SetActive(false);
+        }
     }
 
     //Проверка активности кнопки

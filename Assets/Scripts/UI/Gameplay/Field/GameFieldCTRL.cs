@@ -132,6 +132,7 @@ public class GameFieldCTRL : MonoBehaviour
 
     public float timeLastBoom = 0;
     public float timeLastMove = 0;
+    public float timeLastMarker = 0;
 
     RectTransform myRect;
 
@@ -191,6 +192,7 @@ public class GameFieldCTRL : MonoBehaviour
     {
         currentLevel = level;
         timeLastMove = Time.unscaledTime;
+        timeLastMarker = Time.unscaledTime;
 
         //Перемещаем поле в центр
         RectTransform rect = gameObject.GetComponent<RectTransform>();
@@ -2105,29 +2107,30 @@ public class GameFieldCTRL : MonoBehaviour
     //Проверка на необходимость указать игроку цели мисии
     private void ActivateMarkers()
     {
-        if (Time.unscaledTime - timeLastMove >= 10)
+        if (Time.unscaledTime - timeLastMove >= 10 && Time.unscaledTime - timeLastMarker >= 10)
         {
+
             for (int x = 0; x < cellCTRLs.GetLength(0); x++)
             {
                 for (int y = 0; y < cellCTRLs.GetLength(1); y++)
                 {
-                    if (currentLevel.PassedWithBox && CountBoxBlocker < 5 && cellCTRLs[x, y] != null && cellCTRLs[x, y].BoxBlockCTRL != null)
+                    if (currentLevel.PassedWithBox && CountBoxBlocker < 10 && cellCTRLs[x, y] != null && cellCTRLs[x, y].BoxBlockCTRL != null)
                     {
                         TestCreateMarker();
                     }
-                    if (currentLevel.PassedWithIce && CountIce < 5 && cellCTRLs[x, y] != null && cellCTRLs[x, y].iceCTRL != null)
+                    if (currentLevel.PassedWithIce && CountIce < 10 && cellCTRLs[x, y] != null && cellCTRLs[x, y].iceCTRL != null)
                     {
                         TestCreateMarker();
                     }
-                    if (currentLevel.PassedWithMold && CountMold < 5 && cellCTRLs[x, y] != null && cellCTRLs[x, y].moldCTRL != null)
+                    if (currentLevel.PassedWithMold && CountMold < 10 && cellCTRLs[x, y] != null && cellCTRLs[x, y].moldCTRL != null)
                     {
                         TestCreateMarker();
                     }
-                    if (currentLevel.PassedWithPanel && CountPanelSpread < 5 && cellCTRLs[x, y] != null && cellCTRLs[x, y].panelCTRL == null)
+                    if (currentLevel.PassedWithPanel && CountPanelSpread < 10 && cellCTRLs[x, y] != null && cellCTRLs[x, y].panelCTRL == null)
                     {
                         TestCreateMarker();
                     }
-                    if (currentLevel.PassedWithRock && CountRockBlocker < 5 && cellCTRLs[x, y] != null && cellCTRLs[x, y].rockCTRL != null)
+                    if (currentLevel.PassedWithRock && CountRockBlocker < 10 && cellCTRLs[x, y] != null && cellCTRLs[x, y].rockCTRL != null)
                     {
                         TestCreateMarker();
                     }
@@ -2152,6 +2155,8 @@ public class GameFieldCTRL : MonoBehaviour
                     }
                 }
             }
+
+            timeLastMarker = Time.unscaledTime;
         }
     }
 
