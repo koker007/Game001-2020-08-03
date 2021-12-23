@@ -810,29 +810,29 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 //проверка соседей
                 //Слева
                 if (pos.x - 1 >= 0 &&
-                    myField.cellCTRLs[pos.x - 1, pos.y] != null &&
-                    myField.cellCTRLs[pos.x - 1, pos.y].rock == 0)
+                    (myField.cellCTRLs[pos.x - 1, pos.y] == null ||
+                    myField.cellCTRLs[pos.x - 1, pos.y].rock == 0))
                 {
                     result += 5;
                 }
                 //справа
                 if (pos.x + 1 < myField.cellCTRLs.GetLength(0) &&
-                    myField.cellCTRLs[pos.x + 1, pos.y] != null &&
-                    myField.cellCTRLs[pos.x + 1, pos.y].rock == 0)
+                    (myField.cellCTRLs[pos.x + 1, pos.y] == null ||
+                    myField.cellCTRLs[pos.x + 1, pos.y].rock == 0))
                 {
                     result += 5;
                 }
                 //сверху
                 if (pos.y + 1 < myField.cellCTRLs.GetLength(1) &&
-                    myField.cellCTRLs[pos.x, pos.y + 1] != null &&
-                    myField.cellCTRLs[pos.x, pos.y + 1].rock == 0)
+                    (myField.cellCTRLs[pos.x, pos.y + 1] == null ||
+                    myField.cellCTRLs[pos.x, pos.y + 1].rock == 0))
                 {
                     result += 5;
                 }
                 //снизу
-                if (pos.y - 1 >= 0 &&
-                    myField.cellCTRLs[pos.x, pos.y - 1] != null &&
-                    myField.cellCTRLs[pos.x, pos.y - 1].rock == 0)
+                if (pos.y - 1 >= 0 &&(
+                    myField.cellCTRLs[pos.x, pos.y - 1] == null ||
+                    myField.cellCTRLs[pos.x, pos.y - 1].rock == 0))
                 {
                     result += 5;
                 }
@@ -857,23 +857,31 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             //ящики
             if (BlockingMove > 0 && LevelsScript.main.ReturnLevel().PassedWithBox)
             {
+                result *= pos.y + 1;
                 result *= 3;
             }
             //панель
             if (rock > 0 && LevelsScript.main.ReturnLevel().PassedWithRock)
             {
+                result *= pos.y + 1;
                 result *= 3;
             }
             //mold
             if (mold > 0 && LevelsScript.main.ReturnLevel().PassedWithMold)
             {
+                result *= pos.y + 1;
                 result *= 3;
             }
             //панель
             if (!panel && LevelsScript.main.ReturnLevel().PassedWithPanel) {
+                result *= pos.y + 1;
                 result *= 3;
             }
 
+            //Освободить верх
+            if (pos.y + 1 == myField.cellCTRLs.GetLength(1)) {
+                result *= 5;
+            }
 
             return result;
         }

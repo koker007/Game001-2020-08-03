@@ -75,7 +75,11 @@ public class GameplayParticles3D : MonoBehaviour
         //camera.orthographicSize = (((scaleX/2)+0.5f) * coof)-0.5f;
 
         //Фиксированный маштаб
-        camera.orthographicSize = (((10 / 2) + 0.5f) * coof) - 0.5f;
+        //camera.orthographicSize = (((10 / 2) + 0.5f) * coof) - 0.5f;
+        //camera.orthographicSize = 10;
+
+        //Фиксированный маштаб 10
+        camera.orthographicSize = ((10 / 2) * coof);
 
         camera.transform.localPosition = new Vector3(scaleX / 2, scaleY / 2, camera.transform.localPosition.z);
 

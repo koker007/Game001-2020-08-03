@@ -40,14 +40,17 @@ public class TeleportController : MonoBehaviour
         }
 
         //Если во входе есть что перемещать и объект готов к перемещению
-        if (cellIn.cellInternal != null &&
-            cellIn.rock == 0)
+        if (cellIn.cellInternal != null && //Есть что перемещать
+            cellIn.rock == 0 && //объект не заперт
+            !cellIn.cellInternal.isMove //Объект бездействует
+            )
         {
             //Если выход второго телепорта свободен и доступен, инициируем телепортацию
-            if (secondTeleport.cellOut != null &&
-                secondTeleport.cellOut.BlockingMove == 0 &&
-                !secondTeleport.cellOut.cellInternal &&
-                secondTeleport.cellOut.rock == 0)
+            if (secondTeleport.cellOut != null && //точка выхода существует
+                secondTeleport.cellOut.BlockingMove == 0 && //Движение на выходе не заблокировано
+                !secondTeleport.cellOut.cellInternal && //Место выхода не занято
+                secondTeleport.cellOut.rock == 0 //на месте выхода нет камня
+                                                 ) 
             {
                 tele();
             }
@@ -67,7 +70,8 @@ public class TeleportController : MonoBehaviour
             dublicate.myMaskNeed.y = 100;
 
             //Говорим дубликату двигаться на позицию самоуничтожения
-            dublicate.myDeath = cellOut.pos * -1;
+            dublicate.myDeath = new Vector2Int(cellIn.pos.x, cellIn.pos.y - 1) * -1;
+            //dublicate.myDeath = cellOut.pos * -1;
             //По завершении движения уничтожиться
             dublicate.EndMoveAndRemove = true;
             dublicate.isMove = true;
@@ -80,7 +84,8 @@ public class TeleportController : MonoBehaviour
             //Оригинал перемещаем на позицию над точкой выхода
             cellIn.cellInternal.rectMy.pivot = secondTeleport.cellIn.pos * -1;
             //Скрываем объект сверху
-            cellIn.cellInternal.SetFullMask2D(CellInternalObject.MaskType.top);    
+            cellIn.cellInternal.SetFullMask2D(CellInternalObject.MaskType.top);
+            cellIn.cellInternal.myMaskNeed = new Vector4();
             //Говорим внутренности двигаться в позицию снизу
             cellIn.cellInternal.StartMove(secondTeleport.cellOut);
 
