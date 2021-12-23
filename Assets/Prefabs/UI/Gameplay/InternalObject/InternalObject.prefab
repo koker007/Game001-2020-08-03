@@ -62,6 +62,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myMask2D: {fileID: 0}
   myMaskNeed: {x: 0, y: 0, z: 0, w: 0}
+  myMaskNow: {x: 0, y: 0, z: 0, w: 0}
   animatorCTRL: {fileID: 7853739379585473240}
   myField: {fileID: 0}
   myCell: {fileID: 0}
@@ -70,7 +71,7 @@ MonoBehaviour:
   rectMy: {fileID: 1515285975908226108}
   Image: {fileID: 7144264043801098090}
   LastImage: {fileID: 2278179784382566018}
-  CoreImage: {fileID: 5162081429657617276}
+  CoreImage: {fileID: 0}
   red: {r: 0.98823535, g: 0.09411766, b: 0.09411766, a: 1}
   green: {r: 0, g: 1, b: 0, a: 1}
   blue: {r: 0, g: 0.79215693, b: 1, a: 1}
@@ -78,21 +79,13 @@ MonoBehaviour:
   violet: {r: 1, g: 1, b: 1, a: 1}
   Ultimative: {r: 0.7419535, g: 0.2688679, b: 1, a: 1}
   TextureRed: {fileID: 2800000, guid: e14150ed91276e34aac3e92795c622d3, type: 3}
-  TextureRedCore: {fileID: 0}
   TextureGreen: {fileID: 2800000, guid: fc52fb0f4a3e7a74cb9a4eb1d033eb47, type: 3}
-  TextureGreenCore: {fileID: 2800000, guid: 659cd7fd3fc40424d9f1d3fa7690e577, type: 3}
   TextureBlue: {fileID: 2800000, guid: c32a8c3a43a27a84d89e1be942f8f02c, type: 3}
-  TextureBlueCore: {fileID: 2800000, guid: 5b3e19f6e614d7a499147a2b10c033de, type: 3}
   TextureYellow: {fileID: 2800000, guid: 70ba32471378bd048ab35bcff019db00, type: 3}
-  TextureYellowCore: {fileID: 2800000, guid: e0fdbcc4eba25d94db2daa037764071d, type: 3}
   TextureViolet: {fileID: 2800000, guid: 7b5c096974a03a54f863ed0fdbebd107, type: 3}
-  TextureVioletCore: {fileID: 2800000, guid: 8fdcdc34c9350fd498865cd45278d9e2, type: 3}
   TextureColor5: {fileID: 2800000, guid: ab5113cc7b45e8c44ace1b0450d35e71, type: 3}
-  TextureColor5Core: {fileID: 2800000, guid: 00a68b754fd782740b817fd32783422c, type: 3}
   TextureUltimative: {fileID: 2800000, guid: 20e05c4d59a753a40b98a10dc14645f7, type: 3}
-  TextureUltimativeCore: {fileID: 2800000, guid: 1ff9fcf1b93a12c4a80e62ad1084acca, type: 3}
   TextureBomb: {fileID: 2800000, guid: 9cd8848c22692d74b9a573f897d12570, type: 3}
-  TextureBombCore: {fileID: 0}
   TextureFly: {fileID: 2800000, guid: 81fb2789040e94045bf4a7e5e9ac723e, type: 3}
   TextureFlyLast: {fileID: 2800000, guid: a8b0f48596a13e54cb97e982f90f712b, type: 3}
   TextureBlocker: {fileID: 2800000, guid: 0c1ef0d812d0d234594d25a2c0cc0136, type: 3}
@@ -203,7 +196,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2895933467673369647}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -225,78 +218,6 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4902984234172704133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 70ba32471378bd048ab35bcff019db00, type: 3}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
---- !u!1 &5155818058424371014
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4816303985210059929}
-  - component: {fileID: 5094794068254748753}
-  - component: {fileID: 5162081429657617276}
-  m_Layer: 5
-  m_Name: ImageCore
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &4816303985210059929
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5155818058424371014}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2895933467673369647}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 90, y: 90}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &5094794068254748753
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5155818058424371014}
-  m_CullTransparentMesh: 1
---- !u!114 &5162081429657617276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5155818058424371014}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
@@ -346,7 +267,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4816303985210059929}
   - {fileID: 5210260082059800816}
   m_Father: {fileID: 1515285975908226108}
   m_RootOrder: 0

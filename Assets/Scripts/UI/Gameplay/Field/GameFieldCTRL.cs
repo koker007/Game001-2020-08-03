@@ -84,8 +84,6 @@ public class GameFieldCTRL : MonoBehaviour
 
     [Header("Particles")]
     [SerializeField]
-    public GameObject PrefabParticleDie;
-    [SerializeField]
     public GameObject PrefabParticleScore;
     [SerializeField]
     public GameObject PrefabParticleSelect;
@@ -3861,8 +3859,9 @@ public class GameFieldCTRL : MonoBehaviour
                 isMovingNow = false;
             }
 
-            //Если прекратили двигаться
-            if (isMovingOld && !isMovingNow)
+            //Если прекратили двигаться и уровень закончен
+            if (isMovingOld && !isMovingNow ||
+                (isMovingOld && !isMovingNow && Gameplay.main.isMissionComplite()))
             {               
                 listPotencial = new List<PotencialComb>();
                 potencialBest = null;

@@ -34,8 +34,6 @@ public class CellInternalObject : MonoBehaviour
     RawImage Image;
     [SerializeField]
     RawImage LastImage;
-    [SerializeField]
-    RawImage CoreImage;
 
     [SerializeField]
     Color red = Color.red;
@@ -55,35 +53,19 @@ public class CellInternalObject : MonoBehaviour
     [SerializeField]
     Texture2D TextureRed;
     [SerializeField]
-    Texture2D TextureRedCore;
-    [SerializeField]
     Texture2D TextureGreen;
-    [SerializeField]
-    Texture2D TextureGreenCore;
     [SerializeField]
     Texture2D TextureBlue;
     [SerializeField]
-    Texture2D TextureBlueCore;
-    [SerializeField]
     Texture2D TextureYellow;
-    [SerializeField]
-    Texture2D TextureYellowCore;
     [SerializeField]
     Texture2D TextureViolet;
     [SerializeField]
-    Texture2D TextureVioletCore;
-    [SerializeField]
     Texture2D TextureColor5;
-    [SerializeField]
-    Texture2D TextureColor5Core;
     [SerializeField]
     Texture2D TextureUltimative;
     [SerializeField]
-    Texture2D TextureUltimativeCore;
-    [SerializeField]
     Texture2D TextureBomb;
-    [SerializeField]
-    Texture2D TextureBombCore;
     [SerializeField]
     Texture2D TextureFly;
     [SerializeField]
@@ -275,7 +257,8 @@ public class CellInternalObject : MonoBehaviour
             }
 
 
-            if (myMaskNow != myMaskNeed || myMaskNow.x != 0 || myMaskNow.y != 0 || myMaskNow.z != 0 || myMaskNow.w != 0) {
+            if (myMask2D != null && myMask2D.padding != myMaskNeed ||
+                myMaskNow != myMaskNeed || myMaskNow.x != 0 || myMaskNow.y != 0 || myMaskNow.z != 0 || myMaskNow.w != 0) {
                 if (myMask2D == null) myMask2D = gameObject.AddComponent<RectMask2D>();
 
                 //Смещение маски
@@ -290,7 +273,7 @@ public class CellInternalObject : MonoBehaviour
 
                 //Применение новой маски
                 myMask2D.padding = mask2D;
-                myMaskNow = mask2D;
+                myMaskNow = myMask2D.padding;
 
                 if (myMask2D.padding.x == 0 && myMask2D.padding.y == 0 && myMask2D.padding.z == 0 && myMask2D.padding.w == 0) {
                     Destroy(myMask2D);
@@ -397,11 +380,14 @@ public class CellInternalObject : MonoBehaviour
                 //int internalNum = CellCTRL.GetNowLastInternalNum;
                 //Справа
                 if (myCell.pos.x + smeshenie < myField.cellCTRLs.GetLength(0) && //если не вышли за массив
+                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie] != null &&
                     //GameFieldCTRL.main.CheckObstaclesToMoveUp(myField.cellCTRLs[myCell.pos.x, myCell.pos.y], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - smeshenie]) &&
                     //GameFieldCTRL.main.CheckObstaclesToMoveDown(myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie], myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y]) &&
                     !myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].cellInternal && //И она свободна
                     Time.unscaledTime - myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.35f &&
                     Time.unscaledTime - myField.timeLastBoom > 0 &&
+                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].rock == 0 &&
+                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].BlockingMove == 0 &&
                     isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie]) &&//В этом столбце нет потенциального вертикального движения
                     myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 6 && //проверка условий ячейки из которой уходим
                     myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 11 &&
@@ -419,11 +405,14 @@ public class CellInternalObject : MonoBehaviour
                 }
                 //Слева
                 else if (myCell.pos.x - smeshenie >= 0 && //если не вышли за массив
-                    //GameFieldCTRL.main.CheckObstaclesToMoveUp(myField.cellCTRLs[myCell.pos.x, myCell.pos.y], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - smeshenie]) &&
-                    //GameFieldCTRL.main.CheckObstaclesToMoveDown(myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie], myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y]) &&
+                                                          //GameFieldCTRL.main.CheckObstaclesToMoveUp(myField.cellCTRLs[myCell.pos.x, myCell.pos.y], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - smeshenie]) &&
+                                                          //GameFieldCTRL.main.CheckObstaclesToMoveDown(myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie], myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y]) &&
+                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie] != null &&
                     !myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].cellInternal && //И она свободна
                     Time.unscaledTime - myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.35f &&
                     Time.unscaledTime - myField.timeLastBoom > 0 &&
+                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].rock == 0 &&
+                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].BlockingMove == 0 &&
                     isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie]) && //В этом столбце нет потенциального вертикального движения
                     myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wallID != 5 &&
                     myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wallID != 13 &&
@@ -507,7 +496,9 @@ public class CellInternalObject : MonoBehaviour
 
             bool freeRight = true;
             //проверка справа
-            if (right.wallID != 0 && (
+            if (right == null ||
+                right != null &&
+                right.wallID != 0 && (
                 right.wallID == 4 ||
                 right.wallID == 6 ||
                 right.wallID == 7 ||
@@ -526,7 +517,9 @@ public class CellInternalObject : MonoBehaviour
 
             //Проверка снизу
             bool freeDown = true;
-            if (down.wallID != 0 && (
+            if (down == null ||
+                down != null &&
+                down.wallID != 0 && (
                 down.wallID == 1 ||
                 down.wallID == 2 ||
                 down.wallID == 5 ||
@@ -559,7 +552,9 @@ public class CellInternalObject : MonoBehaviour
 
             bool freeLeft = true;
             //проверка слева
-            if (left.wallID != 0 && (
+            if (left == null ||
+                left != null &&
+                left.wallID != 0 && (
                 left.wallID == 2 ||
                 left.wallID == 3 ||
                 left.wallID == 5 ||
@@ -580,7 +575,9 @@ public class CellInternalObject : MonoBehaviour
 
             //Проверка снизу
             bool freeDown = true;
-            if (down.wallID != 0 && (
+            if (down == null ||
+                down != null &&
+                down.wallID != 0 && (
                 down.wallID == 1 ||
                 down.wallID == 4 ||
                 down.wallID == 5 ||
@@ -680,8 +677,9 @@ public class CellInternalObject : MonoBehaviour
             }
 
             if (type == Type.color) {
-                GameObject PrefabDie = Instantiate(myField.PrefabParticleDie, myField.parentOfScore);
-                RectTransform rectDie = PrefabDie.GetComponent<RectTransform>();
+                //GameObject PrefabDie = Instantiate(myField.PrefabParticleDie, myField.parentOfScore);
+                //RectTransform rectDie = PrefabDie.GetComponent<RectTransform>();
+                //rectDie.pivot = rectMy.pivot;
 
                 GameObject PrefabScore = Instantiate(myField.PrefabParticleScore, myField.parentOfScore);
                 PrefabScore.GetComponent<ScoreCTRL>().Inicialize(scoreNow, ConvertEnumColor());
@@ -697,7 +695,6 @@ public class CellInternalObject : MonoBehaviour
                 particle3DCTRL.SetColor(color1);
 
                 //Изменить количество очков
-                rectDie.pivot = rectMy.pivot;
                 rectScore.pivot = rectMy.pivot;
             }
             
@@ -780,41 +777,35 @@ public class CellInternalObject : MonoBehaviour
             if (internalColor == InternalColor.Red)
             {
                 Image.texture = TextureRed;
-                CoreImage.texture =TextureRedCore;
                 LastImage.texture = null;
                 //Image.color = red;
             }
             else if (internalColor == InternalColor.Green)
             {
                 Image.texture = TextureGreen;
-                CoreImage.texture = TextureGreenCore;
                 LastImage.texture = null;
                 //Image.color = green;
             }
             else if (internalColor == InternalColor.Blue)
             {
                 Image.texture = TextureBlue;
-                CoreImage.texture = TextureBlueCore;
                 LastImage.texture = null;
                 //Image.color = blue;
             }
             else if (internalColor == InternalColor.Yellow)
             {
                 Image.texture = TextureYellow;
-                CoreImage.texture = TextureYellowCore;
                 LastImage.texture = null;
                 //Image.color = yellow;
             }
             else if (internalColor == InternalColor.Violet)
             {
                 Image.texture = TextureViolet;
-                CoreImage.texture = TextureVioletCore;
                 LastImage.texture = null;
                 //Image.color = violet;
             }
             else if (internalColor == InternalColor.Ultimate) {
                 Image.texture = TextureUltimative;
-                CoreImage.texture = TextureUltimativeCore;
                 LastImage.texture = null;
                 //Image.color = Ultimative;
             }
@@ -825,24 +816,18 @@ public class CellInternalObject : MonoBehaviour
             Image.texture = TextureFly;
             setInternalColor();
             LastImage.texture = TextureFlyLast;
-
-            CoreImage.texture = null;
         }
         else if (type == Type.bomb)
         {
             Image.texture = TextureBomb;
             setInternalColor();
             LastImage.texture = null;
-
-            CoreImage.texture = null;
         }
         else if (type == Type.rocketHorizontal)
         {
             Image.texture = TextureRocketHorizontal;
             setInternalColor();
             LastImage.texture = null;
-
-            CoreImage.texture = null;
         }
         else if (type == Type.rocketVertical)
         {
@@ -850,8 +835,6 @@ public class CellInternalObject : MonoBehaviour
             setInternalColor();
 
             LastImage.texture = null;
-
-            CoreImage.texture = null;
         }
         else if (type == Type.color5)
         {
@@ -859,26 +842,15 @@ public class CellInternalObject : MonoBehaviour
             Image.texture = TextureColor5;
             Image.color = new Color(1, 1, 1, 1);
             LastImage.texture = null;
-
-            CoreImage.texture = TextureColor5Core;
         }
         else if (type == Type.blocker) {
             Image.texture = TextureBlocker;
             Image.color = new Color(1, 1, 1, 1);
 
             LastImage.texture = null;
-            CoreImage.texture = null;
         }
 
         color = internalColor;
-
-        if (CoreImage.texture == null)
-        {
-            CoreImage.gameObject.SetActive(false);
-        }
-        else {
-            CoreImage.gameObject.SetActive(true);
-        }
 
         if (LastImage.texture == null) {
             LastImage.gameObject.SetActive(false);

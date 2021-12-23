@@ -12,6 +12,8 @@ public class AdMobController : MonoBehaviour
     public static AdMobController main;
     private RewardedAd rewardedAd;
     private BannerView bannerView;
+
+    [SerializeField]
     private bool showAd = true;
 
     private void Start()

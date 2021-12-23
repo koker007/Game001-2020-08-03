@@ -94,14 +94,14 @@ public class MenuGameplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        startButtons();
+        //startButtons();
         EnableUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        updateButtons();
+        //updateButtons();
         updateGoal();
 
         if (Application.platform == RuntimePlatform.Android)
@@ -117,8 +117,8 @@ public class MenuGameplay : MonoBehaviour
 
     void startButtons()
     {
-        PanelDown.pivot = new Vector2(PanelDown.pivot.x, 3);
-        PanelUp.pivot = new Vector2(PanelUp.pivot.x, -3);
+        //PanelDown.pivot = new Vector2(PanelDown.pivot.x, 3);
+        //PanelUp.pivot = new Vector2(PanelUp.pivot.x, -3);
     }
 
     void updateButtons()
@@ -219,15 +219,10 @@ public class MenuGameplay : MonoBehaviour
 
     void UpdateUI() {
 
-        Score();
-        EnemyCoof();
-
+        //Score();
 
         void Score() {
-            ScoreSlider.value += (ScoreNeed - ScoreSlider.value) * Time.deltaTime;
-        }
-        void EnemyCoof() {
-
+            //ScoreSlider.value += (ScoreNeed - ScoreSlider.value) * Time.deltaTime;
         }
     }
 
@@ -327,7 +322,7 @@ public class MenuGameplay : MonoBehaviour
     {
         Score.text = System.Convert.ToString(Gameplay.main.score);
 
-        ScoreNeed = (float)Gameplay.main.score / (level.NeedScore * Gameplay.main.threeStartFactor);
+        ScoreSlider.value = (float)Gameplay.main.score / (level.NeedScore * Gameplay.main.threeStartFactor);
 
 
         Gameplay.main.CountStars(ref Stars);
