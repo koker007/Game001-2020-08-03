@@ -353,7 +353,37 @@ public class MenuGameplay : MonoBehaviour
         GameFieldCTRL.main.canPassTurn = false;
         GameObject MidleTextObj = Instantiate(MidleTextPrefab, MidleTextParent);
         MidleTextGameplay MidleText = MidleTextObj.GetComponent<MidleTextGameplay>();
-        MidleText.SetText(text);
+
+        //Проверка на заранее подготовленный текст
+        if (text == MidleTextGameplay.strMixed)
+        {
+            MidleText.SetMixed();
+        }
+        else if (text == MidleTextGameplay.strEnemyTurn)
+        {
+            MidleText.SetTextEnemyMove();
+        }
+        else if (text == MidleTextGameplay.strYourTurn)
+        {
+            MidleText.SetTextYourMove();
+        }
+        else if (text == MidleTextGameplay.strCombo)
+        {
+            MidleText.SetTextCombo();
+        }
+        else if (text == MidleTextGameplay.strNotBad)
+        {
+            MidleText.SetTextNotBad();
+        }
+        else if (text == MidleTextGameplay.strCongratulations)
+        {
+            MidleText.SetTextCongratulations();
+        }
+        
+        //Иначе обычный текст
+        else {
+            MidleText.SetText(text);
+        }
 
         if (color != Color.black)
             MidleText.SetColorFon(color);

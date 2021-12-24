@@ -2046,7 +2046,7 @@ public class GameFieldCTRL : MonoBehaviour
         else if (ListWaitingInternals.Count <= 0)
         {
             //выводим собщение что перемешиваем
-            MenuGameplay.main.CreateMidleMessage(TranslateManager.main.GetText("Mixed"));
+            MenuGameplay.main.CreateMidleMessage(TranslateManager.main.GetText(MidleTextGameplay.strMixed));
 
             CreateRandomInternalList();
 
@@ -3942,11 +3942,11 @@ public class GameFieldCTRL : MonoBehaviour
         {
             if (ComboCount > 10)
             {
-                MenuGameplay.main.CreateMidleMessage(TranslateManager.main.GetText("Crazy"));
+                MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strCombo);
             }
             else if (ComboInternal > 45)
             {
-                MenuGameplay.main.CreateMidleMessage(TranslateManager.main.GetText("Ult"));
+                MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strCongratulations);
             }
             else if (ComboInternal > 30)
             {
@@ -3954,7 +3954,7 @@ public class GameFieldCTRL : MonoBehaviour
             }
             else if (ComboInternal > 15)
             {
-                MenuGameplay.main.CreateMidleMessage(TranslateManager.main.GetText("NotBad"));
+                MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strNotBad);
             }
 
             ComboCount = 1;
@@ -4174,13 +4174,13 @@ public class GameFieldCTRL : MonoBehaviour
             {
                 Gameplay.main.playerTurn = false;
                 EnemyController.enemyTurn = true;
-                MenuGameplay.main.CreateMidleMessage("Enemy Turn", Color.blue);
+                MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strEnemyTurn, Color.blue);
             }
             //Передаем ход игроку
             else if (!EnemyController.enemyTurn && !Gameplay.main.playerTurn)
             {
                 Gameplay.main.playerTurn = true;
-                MenuGameplay.main.CreateMidleMessage("Your Turn", Color.blue);
+                MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strYourTurn, Color.blue);
             }
             Gameplay.main.moveCompleted = false;
             canPassTurn = false;
