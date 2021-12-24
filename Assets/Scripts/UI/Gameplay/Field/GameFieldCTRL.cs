@@ -192,6 +192,9 @@ public class GameFieldCTRL : MonoBehaviour
         timeLastMove = Time.unscaledTime;
         timeLastMarker = Time.unscaledTime;
 
+        potencialBest = null; //Сброс потенциальной ячейки
+        enemyPotencialBest = null;
+
         //Перемещаем поле в центр
         RectTransform rect = gameObject.GetComponent<RectTransform>();
         rect.pivot = new Vector2(0.5f, 0.5f);
@@ -637,6 +640,13 @@ public class GameFieldCTRL : MonoBehaviour
                     for (int plusY = 0; plusY <= cellCTRLs.GetLength(1); plusY++)
                     {
 
+                        //Узнаем какая ячейка выше
+                        CellCTRL upCell = null;
+                        //Если выше потенциально есть ячейки 
+                        if (y + plusY + 1 < cellCTRLs.GetLength(1)) {
+                            upCell = cellCTRLs[x, y + plusY + 1];
+                        }
+
                         //Если достигли самого верха поля
                         if (y + plusY >= cellCTRLs.GetLength(1) &&
                             Time.unscaledTime - timeLastBoom > 0.1f)
@@ -670,8 +680,8 @@ public class GameFieldCTRL : MonoBehaviour
                         }
                         //или дошли до несуществующей йчейки, выходим
                         else if (y + plusY < cellCTRLs.GetLength(1) &&
-                            (!CheckObstaclesToMoveUp(cellCTRLs[x, y + plusY], cellCTRLs[x, y]) ||
-                            !CheckObstaclesToMoveDown(cellCTRLs[x, y + plusY], cellCTRLs[x, y])))
+                            (//!CheckObstaclesToMoveUp(cellCTRLs[x, y + plusY], null) || //Не очень понятно но вроде работает
+                            !CheckObstaclesToMoveDown(cellCTRLs[x, y + plusY], upCell)))
                         {
                             break;
                         }
@@ -680,12 +690,47 @@ public class GameFieldCTRL : MonoBehaviour
 
                         //Если сверху есть ячейка с внутренностью и она не блокирована
                         else if (y + plusY < cellCTRLs.GetLength(1) &&
-                            CheckObstaclesToMoveUp(cellCTRLs[x, y + plusY], cellCTRLs[x, y]) &&
-                            CheckObstaclesToMoveDown(cellCTRLs[x, y + plusY], cellCTRLs[x, y]) &&
+                            //CheckObstaclesToMoveUp(cellCTRLs[x, y + plusY], cellCTRLs[x, y]) &&
+                            //CheckObstaclesToMoveDown(cellCTRLs[x, y + plusY], cellCTRLs[x, y]) &&
                             cellCTRLs[x, y + plusY].cellInternal)
                         {
 
                             break;
+                        }
+
+                        //не заблокировано ли движение вниз для этой ячейки
+                        bool canMoveToTargetFromUP(CellCTRL target, CellCTRL from) {
+                            bool result = false;
+
+                            //Можно переместиться сверху если
+                            if (target != null && //Если есть куда
+                                target.rock == 0 &&
+                                target.BlockingMove == 0 &&
+                                !target.dispencer &&
+                                target.wallID != 1 &&
+                                target.wallID != 5 &&
+                                target.wallID != 8 &&
+                                target.wallID != 9 &&
+                                target.wallID != 12 &&
+                                target.wallID != 13 &&
+                                target.wallID != 14 &&
+                                target.wallID != 15 &&
+                                ((from != null &&
+                                from.teleport == 0 &&
+                                from.wallID != 3 &&
+                                from.wallID != 6 &&
+                                from.wallID != 7 &&
+                                from.wallID != 9 &&
+                                from.wallID != 11 &&
+                                from.wallID != 12 &&
+                                from.wallID != 14 &&
+                                from.wallID != 15) ||
+                                (from == null)))
+                            {
+                                result = true;
+                            }
+
+                            return result;
                         }
                     }
 
@@ -1975,6 +2020,12 @@ public class GameFieldCTRL : MonoBehaviour
     /// 
     void TestFieldPotencial()
     {
+        //Если игра только началась
+        if (Gameplay.main.movingCount < 0 && Time.unscaledTime - timeLastMove < 3)
+        {
+            potencialBest = null;
+            return;
+        }
 
         //Воспроизводим анимацию на ячейках с потенциалом
         if (Gameplay.main.isMissionComplite() || Gameplay.main.isMissionDefeat())
@@ -3135,6 +3186,8 @@ public class GameFieldCTRL : MonoBehaviour
             {
                 foreach (CellCTRL cell in cellsList)
                 {
+                    if (cell != null)
+
                     cell.cellInternal = null;
                 }
             }
@@ -3861,7 +3914,7 @@ public class GameFieldCTRL : MonoBehaviour
 
             //Если прекратили двигаться и уровень закончен
             if (isMovingOld && !isMovingNow ||
-                (isMovingOld && !isMovingNow && Gameplay.main.isMissionComplite()))
+                (!isMovingOld && !isMovingNow && Gameplay.main.isMissionComplite()))
             {               
                 listPotencial = new List<PotencialComb>();
                 potencialBest = null;
@@ -4057,7 +4110,7 @@ public class GameFieldCTRL : MonoBehaviour
                         targetCell.rock == 0 &&
                         targetCell.BlockingMove == 0 &&
                         !targetCell.dispencer &&
-                        targetCell.teleport == 0 &&
+                        targetCell.teleport == 0 && //Телепорт всегда у основания ячейки, движение сверху возможно
                         targetCell.wallID != 3 &&
                         targetCell.wallID != 6 &&
                         targetCell.wallID != 7 &&

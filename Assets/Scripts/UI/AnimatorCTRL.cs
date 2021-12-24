@@ -45,7 +45,8 @@ public class AnimatorCTRL : MonoBehaviour
     }
 
     public void SetFloat(string name, float value) {
-        animator.SetFloat(name, value);
+        if(animator != null)
+            animator.SetFloat(name, value);
     }
 
     public void StopAnimations()

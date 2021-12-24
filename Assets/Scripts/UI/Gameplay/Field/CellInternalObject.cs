@@ -164,10 +164,16 @@ public class CellInternalObject : MonoBehaviour
     }
 
     public void IniRect() {
+        if (this == null) return; //проверка на безопасность
+
         rectMy = gameObject.GetComponent<RectTransform>();
 
         if (myCell)
             rectCell = myCell.GetComponent<RectTransform>();
+        else {
+            Destroy(gameObject);
+        }
+        
     }
 
     void Start()
