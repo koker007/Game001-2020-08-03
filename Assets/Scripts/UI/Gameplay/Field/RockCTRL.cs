@@ -59,7 +59,7 @@ public class RockCTRL : MonoBehaviour
             needDestroy = true;
 
             //Звук разбивания камня
-            SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipDamageRock, 0.5f, Random.Range(0.9f, 1.1f));
+            SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipDestroyRock, 0.5f, Random.Range(0.9f, 1.1f));
         }
     }
 

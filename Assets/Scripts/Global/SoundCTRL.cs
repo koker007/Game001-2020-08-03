@@ -51,9 +51,11 @@ public class SoundCTRL : MonoBehaviour
     public AudioClip clipFlyProcess;
     public AudioClip clipFlyEnd;
 
-    public AudioClip clipDamageRock;
-    public AudioClip clipDamageMold;
-    public AudioClip clipDamageAcne;
+    public AudioClip clipDestroyRock;
+    public AudioClip clipDestroyMold;
+    public AudioClip clipDestroyBox;
+    public AudioClip clipDestroyIce;
+
     public AudioClip clipAddPanel;
     public AudioClip clipAddMold;
 

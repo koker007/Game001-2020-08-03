@@ -44,7 +44,7 @@ public class CellInternalObject : MonoBehaviour
     [SerializeField]
     Color yellow = Color.yellow;
     [SerializeField]
-    Color violet = Color.white;
+    Color orange = Color.white;
 
     [SerializeField]
     Color Ultimative = Color.white;
@@ -59,7 +59,7 @@ public class CellInternalObject : MonoBehaviour
     [SerializeField]
     Texture2D TextureYellow;
     [SerializeField]
-    Texture2D TextureViolet;
+    Texture2D TextureOrange;
     [SerializeField]
     Texture2D TextureColor5;
     [SerializeField]
@@ -131,7 +131,7 @@ public class CellInternalObject : MonoBehaviour
             result = yellow;
         }
         else if (internalColor == InternalColor.Violet) {
-            result = violet;
+            result = orange;
         }
 
         return result;
@@ -910,7 +910,7 @@ public class CellInternalObject : MonoBehaviour
             }
             else if (internalColor == InternalColor.Violet)
             {
-                Image.texture = TextureViolet;
+                Image.texture = TextureOrange;
                 LastImage.texture = null;
                 //Image.color = violet;
             }
@@ -988,7 +988,7 @@ public class CellInternalObject : MonoBehaviour
             }
             else if (internalColor == InternalColor.Violet)
             {
-                Image.color = violet;
+                Image.color = orange;
             }
         }
     }

@@ -104,7 +104,7 @@ public class IceCTRL : MonoBehaviour
         void destroy()
         {
             //Звук разбивания
-            SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipDamageRock, 0.5f, Random.Range(0.9f, 1.1f));
+            SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipDestroyRock, 0.5f, Random.Range(0.9f, 1.1f));
 
             myCell.myField.iceCTRLs[myCell.pos.x, myCell.pos.y] = null;
             ReCalcIceCount();

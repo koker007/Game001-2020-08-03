@@ -164,50 +164,6 @@ public class Gameplay : MonoBehaviour
         MenuGameplay.main.updateScore();
     }
 
-    /*
-    public void CheckEndGame()
-    {
-        //Если есть ходы, идет игра, и игра не закончена
-        if (isGameplay && GameplayEnd == false)
-        {
-            //Если
-            LevelsScript.Level level = LevelsScript.main.ReturnLevel();
-            if (score >= level.NeedScore || !level.PassedWithScore)
-            {
-                if (MenuGameplay.main.gameFieldCTRL.CountMold <= 0 || !level.PassedWithMold)
-                {
-                    if (MenuGameplay.main.gameFieldCTRL.CountBoxBlocker <= 0 || !level.PassedWithBox)
-                    {
-                        if (MenuGameplay.main.gameFieldCTRL.CountRockBlocker <= 0 || !level.PassedWithRock)
-                        {
-                            if (MenuGameplay.main.gameFieldCTRL.CountIce <= 0 || !level.PassedWithIce) 
-                            {
-                                if (MenuGameplay.main.gameFieldCTRL.CountInteractiveCells <= MenuGameplay.main.gameFieldCTRL.CountPanelSpread || !level.PassedWithPanel)
-                                {
-                                    if (level.NeedCrystal <= main.colorsCount[(int)level.NeedColor] || !level.PassedWithCrystal)
-                                    {
-                                        PlayerProfile.main.LevelPassed(levelSelect);
-                                        GlobalMessage.Results();
-                                        LevelsScript.main.ReturnLevel().MaxScore = score;
-                                        GameplayEnd = true;
-                                        return;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            //если ходов нет проигрышь
-            if (movingCan <= 0)
-            {
-                GlobalMessage.Lose();
-                LevelsScript.main.ReturnLevel().MaxScore = score;
-            }
-        }
-
-    }
-    */
     struct Buffer {
         //Завершена ли миссия
         public bool missionComplite;

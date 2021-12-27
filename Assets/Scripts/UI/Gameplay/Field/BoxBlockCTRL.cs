@@ -65,7 +65,7 @@ public class BoxBlockCTRL : MonoBehaviour
             //Если жизней стало меньше
             if (healthOld > myCell.BlockingMove) {
                 //Воспроизводим звук поломки
-                SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipDamageAcne);
+                SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipDestroyBox);
             }
 
 

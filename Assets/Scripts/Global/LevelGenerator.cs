@@ -623,7 +623,7 @@ public class LevelGenerator : MonoBehaviour
             level.SetMass(CellRandom(panel, 20, 4, !level.PassedWithPanel), "panel");
             level.SetMass(CellRandom(rock, 20, 5, !level.PassedWithRock), "rock");
             level.SetMass(CellRandom(ice, 20, 6, !level.PassedWithIce), "ice");
-            level.SetMass(WallsRandom(walls, 15, 20), "walls");
+            level.SetMass(WallsRandom(walls, 15, 10), "walls");
             level.SetMass(DispencerRandom(dispencers, 10, 7, false), "dispencers");
 
             level.SetMass(TeleportsRandom(teleports, 10), "teleport");

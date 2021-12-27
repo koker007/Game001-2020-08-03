@@ -193,6 +193,7 @@ public class GameFieldCTRL : MonoBehaviour
         timeLastMarker = Time.unscaledTime;
 
         potencialBest = null; //—брос потенциальной €чейки
+
         enemyPotencialBest = null;
 
         //ѕеремещаем поле в центр
@@ -2021,7 +2022,7 @@ public class GameFieldCTRL : MonoBehaviour
     void TestFieldPotencial()
     {
         //≈сли игра только началась
-        if (Gameplay.main.movingCount < 0 && Time.unscaledTime - timeLastMove < 3)
+        if (Gameplay.main.movingCount <= 0 && Time.unscaledTime - timeLastMove < 3)
         {
             potencialBest = null;
             return;
@@ -3089,8 +3090,8 @@ public class GameFieldCTRL : MonoBehaviour
     //ѕеремешиваем €чейки которые ожидают перемешивани€
     void TestRandomNotPotencial()
     {
-        //выходим если нет €чеек дл€ перемешивани€
-        if (ListWaitingInternals.Count == 0)
+        //выходим если нет €чеек дл€ перемешивани€ или движение еще не окончено
+        if (ListWaitingInternals.Count == 0 || Time.unscaledTime - timeLastMove < 1)
             return;
 
         //ƒвигаем к центру и если кто-то не достиг центра, выходим
@@ -3605,6 +3606,9 @@ public class GameFieldCTRL : MonoBehaviour
         {
             CellSelect = null;
             CellSwap = null;
+
+            SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipMoveReturn, 0.75f, Random.Range(0.9f, 1.1f));
+
             return;
         }
 
@@ -3622,6 +3626,7 @@ public class GameFieldCTRL : MonoBehaviour
         {
             CellSelect = null;
             CellSwap = null;
+
             return;
         }
 
@@ -3692,6 +3697,9 @@ public class GameFieldCTRL : MonoBehaviour
                 InternalSecond.StartMove(swap.first);
 
                 Gameplay.main.movingCount--;
+
+                SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipMoveReturn, 0.75f, Random.Range(0.9f, 1.1f));
+
                 continue;
             }
             BufferSwapNew.Add(swap);
