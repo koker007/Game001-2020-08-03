@@ -395,16 +395,13 @@ public class CellInternalObject : MonoBehaviour
                     myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].rock == 0 &&
                     myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].BlockingMove == 0 &&
                     isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie]) &&//В этом столбце нет потенциального вертикального движения
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 6 && //проверка условий ячейки из которой уходим
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 11 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 14 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 15 &&
-                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wallID != 8 && //Проверка условия ячейки в которую напраляемся
-                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wallID != 12 &&
-                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wallID != 13 &&
-                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].wallID != 15 &&
+
+                    //Нет блокирования стенами
+                    notBlockMoveFromToRight(myCell, myField.cellCTRLs[myCell.pos.x+1, myCell.pos.y -1], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1], myField.cellCTRLs[myCell.pos.x + 1, myCell.pos.y])
+
                     //Проверка что правая и нижняя ячейки вместе не образуют стену
-                    canMoveRightDown(myField.cellCTRLs[myCell.pos.x + 1, myCell.pos.y], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1]))
+                    //canMoveRightDown(myField.cellCTRLs[myCell.pos.x + 1, myCell.pos.y], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1])
+                    )
                 {
                     //Ставим такую ячейку как целевую
                     returnCell = myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie];
@@ -420,16 +417,11 @@ public class CellInternalObject : MonoBehaviour
                     myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].rock == 0 &&
                     myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].BlockingMove == 0 &&
                     isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie]) && //В этом столбце нет потенциального вертикального движения
-                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wallID != 5 &&
-                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wallID != 13 &&
-                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wallID != 14 &&
-                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].wallID != 15 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 7 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 11 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 12 &&
-                    myField.cellCTRLs[myCell.pos.x, myCell.pos.y].wallID != 15 &&
+                    //Нет блокирования стенами
+                    notBlockMoveFromToLeft(myCell, myField.cellCTRLs[myCell.pos.x- 1, myCell.pos.y - 1], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1], myField.cellCTRLs[myCell.pos.x - 1, myCell.pos.y])
                     //проверка что левая и нижняя ячейки вместе не ображуют стену
-                    canMoveLeftDown(myField.cellCTRLs[myCell.pos.x-1, myCell.pos.y], myField.cellCTRLs[myCell.pos.x, myCell.pos.y-1]))
+                    //canMoveLeftDown(myField.cellCTRLs[myCell.pos.x-1, myCell.pos.y], myField.cellCTRLs[myCell.pos.x, myCell.pos.y-1])
+                    )
                 {
                     //Ставим такую ячейку как целевую
                     returnCell = myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie];
@@ -537,7 +529,8 @@ public class CellInternalObject : MonoBehaviour
                 down.wallID == 12 ||
                 down.wallID == 13 ||
                 down.wallID == 14 ||
-                down.wallID == 15
+                down.wallID == 15 ||
+                myCell.teleport != 0 //Если снизу телепорт
                 )) {
                 freeDown = false;
             }
@@ -554,7 +547,7 @@ public class CellInternalObject : MonoBehaviour
             //изначально можно пройти
             bool result = true;
 
-            //Если ничего не длокирует движение в ячейку ниже справа
+            //Если ничего не блокирует движение в ячейку ниже справа
 
             bool freeLeft = true;
             //проверка слева
@@ -595,7 +588,8 @@ public class CellInternalObject : MonoBehaviour
                 down.wallID == 12 ||
                 down.wallID == 13 ||
                 down.wallID == 14 ||
-                down.wallID == 15
+                down.wallID == 15 ||
+                myCell.teleport != 0 //Если снизу телепорт
                 ))
             {
                 freeDown = false;
@@ -608,6 +602,116 @@ public class CellInternalObject : MonoBehaviour
 
             return result;
         }
+
+        //Проверка стен на движение в пок
+        bool notBlockMoveFromToRight(CellCTRL from, CellCTRL target, CellCTRL DownC, CellCTRL RightC)
+        {
+            //Изначально двигаться можно
+            bool result = true;
+
+            if (myCell.pos.x == 2 && myCell.pos.y == 2)
+            {
+                bool test = true;
+            }
+
+            //Блокирующие 4 стены образующие перекрестиме между 4 клетками которые были отправленны в эту функцию
+            bool Up = false;
+            bool Down = false;
+            bool Left = false;
+            bool Right = false;
+
+            //Проверяем верх
+            if (from.wallID == 2 || from.wallID == 5 || from.wallID == 6 || from.wallID == 10 || from.wallID == 11 || from.wallID == 13 || from.wallID == 14 || from.wallID == 15 ||
+                RightC != null && (RightC.wallID == 4 || RightC.wallID == 7 || RightC.wallID == 8 || RightC.wallID == 10 || RightC.wallID == 11 || RightC.wallID == 12 || RightC.wallID == 13 || RightC.wallID == 15)) {
+                Up = true;
+            }
+            //проверка лево
+            if (from.wallID == 3 || from.wallID == 6 || from.wallID == 7 || from.wallID == 9 || from.wallID == 11 || from.wallID == 12 || from.wallID == 14 || from.wallID == 15 || from.teleport != 0 ||
+                DownC != null && (DownC.wallID == 1 || DownC.wallID == 5 || DownC.wallID == 8 || DownC.wallID == 9 || DownC.wallID == 12 || DownC.wallID == 13 || DownC.wallID == 14 || DownC.wallID == 15)) {
+                Left = true;
+            }
+            //Проверка право
+            if (target.wallID == 1 || target.wallID == 5 || target.wallID == 8 || target.wallID == 9 || target.wallID == 12 || target.wallID == 13 || target.wallID == 14 || target.wallID == 15 ||
+                RightC != null && (RightC.wallID == 3 || RightC.wallID == 6 || RightC.wallID == 7 || RightC.wallID == 9 || RightC.wallID == 11 || RightC.wallID == 12 || RightC.wallID == 14 || RightC.wallID == 15 || RightC.teleport != 0)) {
+                Right = true;
+            }
+            //Проверка низ
+            if (target.wallID == 4 || target.wallID == 7 || target.wallID == 8 || target.wallID == 10 || target.wallID == 11 || target.wallID == 12 || target.wallID == 13 || target.wallID == 15 ||
+                DownC != null && (DownC.wallID == 2 || DownC.wallID == 5 || DownC.wallID == 6 || DownC.wallID == 10 || DownC.wallID == 11 || DownC.wallID == 13 || DownC.wallID == 14 || DownC.wallID == 15)) {
+                Down = true;
+            }
+
+            //Проверка блокирующих комбинаций стен
+            if (Up && Left || 
+                Down && Right || 
+                Up && Down ||
+                Left && Right) {
+
+                //Движение не возможно
+                result = false;
+                return result;
+            }
+
+
+            return result;
+        }
+        bool notBlockMoveFromToLeft(CellCTRL from, CellCTRL target, CellCTRL DownC, CellCTRL LeftC)
+        {
+            //Изначально двигаться можно
+            bool result = true;
+
+            if (myCell.pos.x == 2 && myCell.pos.y == 2)
+            {
+                bool test = true;
+            }
+
+            //Блокирующие 4 стены образующие перекрестиме между 4 клетками которые были отправленны в эту функцию
+            bool Up = false;
+            bool Down = false;
+            bool Left = false;
+            bool Right = false;
+
+            //Проверяем верх
+            if (from.wallID == 4 || from.wallID == 7 || from.wallID == 8 || from.wallID == 10 || from.wallID == 11 || from.wallID == 12 || from.wallID == 13 || from.wallID == 15 ||
+                LeftC != null && (LeftC.wallID == 2 || LeftC.wallID == 5 || LeftC.wallID == 6 || LeftC.wallID == 10 || LeftC.wallID == 11 || LeftC.wallID == 13 || LeftC.wallID == 14 || LeftC.wallID == 15))
+            {
+                Up = true;
+            }
+            //проверка право
+            if (from.wallID == 3 || from.wallID == 6 || from.wallID == 7 || from.wallID == 9 || from.wallID == 11 || from.wallID == 12 || from.wallID == 14 || from.wallID == 15 || from.teleport != 0 ||
+                DownC != null && (DownC.wallID == 1 || DownC.wallID == 5 || DownC.wallID == 8 || DownC.wallID == 9 || DownC.wallID == 12 || DownC.wallID == 13 || DownC.wallID == 14 || DownC.wallID == 15))
+            {
+                Left = true;
+            }
+            //Проверка лево
+            if (target.wallID == 1 || target.wallID == 5 || target.wallID == 8 || target.wallID == 9 || target.wallID == 12 || target.wallID == 13 || target.wallID == 14 || target.wallID == 15 ||
+                LeftC != null && (LeftC.wallID == 3 || LeftC.wallID == 6 || LeftC.wallID == 7 || LeftC.wallID == 9 || LeftC.wallID == 11 || LeftC.wallID == 12 || LeftC.wallID == 14 || LeftC.wallID == 15 || LeftC.teleport != 0))
+            {
+                Right = true;
+            }
+            //Проверка низ
+            if (target.wallID == 2 || target.wallID == 5 || target.wallID == 6 || target.wallID == 10 || target.wallID == 11 || target.wallID == 13 || target.wallID == 14 || target.wallID == 15 ||
+                DownC != null && (DownC.wallID == 4 || DownC.wallID == 7 || DownC.wallID == 8 || DownC.wallID == 10 || DownC.wallID == 11 || DownC.wallID == 12 || DownC.wallID == 13 || DownC.wallID == 15))
+            {
+                Down = true;
+            }
+
+            //Проверка блокирующих комбинаций стен
+            if (Up && Left ||
+                Down && Right ||
+                Up && Down ||
+                Left && Right)
+            {
+
+                //Движение не возможно
+                result = false;
+                return result;
+            }
+
+
+            return result;
+        }
+
     }
 
     /// <summary>
