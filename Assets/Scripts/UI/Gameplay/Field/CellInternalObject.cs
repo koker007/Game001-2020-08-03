@@ -1602,7 +1602,9 @@ public class CellInternalObject : MonoBehaviour
                         continue;
 
                     //Если этой ячейки нет, смотрим дальше
-                    if (myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y] == null) {
+                    if (myField.cellCTRLs.GetLength(0) >= myCell.pos.x + x ||
+                        myField.cellCTRLs.GetLength(1) >= myCell.pos.y + y ||
+                        myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y] == null) {
                         continue;
                     }
 
@@ -1685,7 +1687,7 @@ public class CellInternalObject : MonoBehaviour
             for (int x = -1; x <= 1; x++)
             {
                 //Если вышли за пределы массива //По x
-                if (myCell.pos.x + x < 0 || myCell.pos.x > myField.cellCTRLs.GetLength(0) - 1)
+                if (myCell.pos.x + x < 0 || myCell.pos.x + x > myField.cellCTRLs.GetLength(0) - 1)
                     continue;
 
                 //вниз

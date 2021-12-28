@@ -77,10 +77,10 @@ public class MenuWorld : MonoBehaviour
         if (WorldGenerateScene.main != null && !WorldGenerateScene.main.gameObject.activeSelf) {
             WorldGenerateScene.main.gameObject.SetActive(true);
         }
-        if (MainCamera.main != null && !MainCamera.main.myCamera.enabled)
-        {
-            MainCamera.main.myCamera.enabled = true;
-        }
+        //if (MainCamera.main != null && !MainCamera.main.myCamera.enabled)
+        //{
+        //    MainCamera.main.myCamera.enabled = true;
+        //}
         if (MainCamera.main != null && !MainCamera.main.enabled)
         {
             MainCamera.main.enabled = true;
@@ -91,10 +91,10 @@ public class MenuWorld : MonoBehaviour
         if (WorldGenerateScene.main != null && WorldGenerateScene.main.gameObject.activeSelf) {
             WorldGenerateScene.main.gameObject.SetActive(false);
         }
-        if (MainCamera.main != null && MainCamera.main.myCamera.enabled)
-        {
-            MainCamera.main.myCamera.enabled = false;
-        }
+        //if (MainCamera.main != null && MainCamera.main.myCamera.enabled)
+        //{
+        //    MainCamera.main.myCamera.enabled = false;
+        //}
         if (MainCamera.main != null && MainCamera.main.enabled)
         {
             MainCamera.main.enabled = false;

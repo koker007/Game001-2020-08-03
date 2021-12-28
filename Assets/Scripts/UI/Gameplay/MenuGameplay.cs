@@ -379,7 +379,10 @@ public class MenuGameplay : MonoBehaviour
         {
             MidleText.SetTextCongratulations();
         }
-        
+        else if (text == MidleTextGameplay.strLastMove) {
+            MidleText.SetTextLastMove();
+        }
+
         //Иначе обычный текст
         else {
             MidleText.SetText(text);

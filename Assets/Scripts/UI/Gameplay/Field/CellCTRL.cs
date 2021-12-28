@@ -31,6 +31,13 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         }
     }
 
+    [SerializeField]
+    Image ImageFon;
+    [SerializeField]
+    Color fon0;
+    [SerializeField]
+    Color fon1;
+
     /// <summary>
     /// »гровое поле €чейки
     /// </summary>
@@ -454,6 +461,17 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
     }
 
+    //—делать €ркость фона в шахматном пор€дке
+    public void IniFon() {
+        if ((pos.x + pos.y) % 2 == 1)
+        {
+            ImageFon.color = fon0;
+        }
+        else {
+            ImageFon.color = fon1;
+        }
+    }
+
     /// <summary>
     /// ”строить взрыв в этой €чейке через определенный промежуток времени
     /// </summary>
@@ -518,7 +536,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         }
         else {
             //ƒобавл€ем врем€ взрыва если его мало
-            if (Time.unscaledTime - myField.timeLastBoom < 2.5f)
+            if (Time.unscaledTime - myField.timeLastBoom > -0.5f)
                 myField.timeLastBoom += 0.025f;
         }
 

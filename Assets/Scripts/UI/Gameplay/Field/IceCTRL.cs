@@ -57,7 +57,7 @@ public class IceCTRL : MonoBehaviour
         UpdateLife2();
     }
 
-
+    /*
     void UpdateLife()
     {
         //Если здоровье не менялось
@@ -79,6 +79,7 @@ public class IceCTRL : MonoBehaviour
         }
 
     }
+    */
 
     float alphaNeed = 1;
     float alphaSpeed = 0.2f;
@@ -87,6 +88,12 @@ public class IceCTRL : MonoBehaviour
         //Если здоровье не менялось
         if (HealthOld == myCell.ice)
             return;
+
+        //Воспроизводим частицы разломов
+        if (HealthOld > myCell.ice)
+        {
+            Particle3dCTRL.CreateDestroyIce(myCell.myField.transform, myCell);
+        }
 
         HealthOld = myCell.ice;
 

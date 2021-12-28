@@ -79,6 +79,8 @@ public class GameFieldCTRL : MonoBehaviour
     GameObject prefabTeleport;                              //Телепорт
     [SerializeField]
     GameObject prefabDispencer;                             //Раздатчик
+    [SerializeField]
+    GameObject prefabContur;
 
     LevelsScript.Level currentLevel;
 
@@ -104,6 +106,8 @@ public class GameFieldCTRL : MonoBehaviour
     public Transform parentOfIce;
     [SerializeField]
     public Transform parentOfRock;
+    [SerializeField]
+    public Transform parentOfContur;
     [SerializeField]
     public Transform parentOfWall;                          //Стенки
     [SerializeField]
@@ -246,6 +250,12 @@ public class GameFieldCTRL : MonoBehaviour
 
                         //Перерасчет приоритера
                         cellCTRLs[x, y].CalcMyPriority();
+
+                        //Добавляем контур
+                        GameObject cellContur = Instantiate(prefabContur, parentOfContur);
+                        RectTransform rectContur = cellContur.GetComponent<RectTransform>();
+                        rectContur.pivot = new Vector2(-x, -y);
+
                     }
                 }
             }
@@ -304,6 +314,13 @@ public class GameFieldCTRL : MonoBehaviour
                         //Перемещаем объект на свою позицию
                         RectTransform rect = cellObj.GetComponent<RectTransform>();
                         rect.pivot = new Vector2(-x, -y);
+                        cellCTRLs[x, y].IniFon();
+
+                        //Добавляем контур
+                        GameObject cellContur = Instantiate(prefabContur, parentOfContur);
+                        RectTransform rectContur = cellContur.GetComponent<RectTransform>();
+                        rectContur.pivot = new Vector2(-x, -y);
+
 
                         cellCTRLs[x, y].BlockingMove = level.cells[x, y].HealthBox;
                         cellCTRLs[x, y].rock = level.cells[x, y].rock;
@@ -2022,7 +2039,10 @@ public class GameFieldCTRL : MonoBehaviour
     void TestFieldPotencial()
     {
         //Если игра только началась
-        if (Gameplay.main.movingCount <= 0 && Time.unscaledTime - timeLastMove < 3)
+        if ((Gameplay.main.movingCount <= 0 && Time.unscaledTime - timeLastMove < 3) ||
+            isMovingInternalObj ||
+            Time.unscaledTime - timeLastBoom < 0.2f
+            )
         {
             potencialBest = null;
             return;
@@ -3091,7 +3111,7 @@ public class GameFieldCTRL : MonoBehaviour
     void TestRandomNotPotencial()
     {
         //выходим если нет ячеек для перемешивания или движение еще не окончено
-        if (ListWaitingInternals.Count == 0 || Time.unscaledTime - timeLastMove < 1)
+        if (ListWaitingInternals.Count == 0 || Time.unscaledTime - timeLastMove < 1 || isMovingInternalObj || Time.unscaledTime - timeLastBoom < 0.2f)
             return;
 
         //Двигаем к центру и если кто-то не достиг центра, выходим
@@ -3942,23 +3962,115 @@ public class GameFieldCTRL : MonoBehaviour
                     List<CellInternalObject> flys = new List<CellInternalObject>();
                     List<CellInternalObject> color5 = new List<CellInternalObject>();
 
-                    if (Gameplay.main.movingCan > 0)
-                    {
-                        for (int y = 0; y < cellCTRLs.GetLength(1); y++)
-                        {
-                            for (int x = 0; x < cellCTRLs.GetLength(0); x++)
-                            {
-                                if (cellCTRLs[x, y] != null && cellCTRLs[x, y].cellInternal)
-                                {
-                                    cellCTRLs[x, y].cellInternal.setColorAndType(cellCTRLs[x, y].cellInternal.color, (CellInternalObject.Type)Random.Range(3, 5));
-                                    cellCTRLs[x, y].cellInternal.Activate(cellCTRLs[x, y].cellInternal.type, null, null);
-                                    Gameplay.main.movingCan = 0;
-                                }
+                    //Просто цвет
+                    List<CellInternalObject> colors = new List<CellInternalObject>();
+
+                    //Проверяем все ячейки на начилие активационных штук
+                    for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
+                        for (int y = 0; y < cellCTRLs.GetLength(1); y++) {
+                            //Если ячейки нет или нет внутренности идем дальше
+                            if (cellCTRLs[x,y] == null || 
+                                cellCTRLs[x,y].cellInternal == null) {
+                                continue;
+                            }
+
+                            //Если в ячейке
+                            //Цвет
+                            if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.color) {
+                                colors.Add(cellCTRLs[x, y].cellInternal);
+                            }
+                            //Бомба
+                            else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.bomb) {
+                                bombs.Add(cellCTRLs[x, y].cellInternal);
+                            }
+                            //Самолет
+                            else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.airplane) {
+                                flys.Add(cellCTRLs[x, y].cellInternal);
+                            }
+                            //ракета
+                            else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.rocketHorizontal ||
+                                cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.rocketVertical) {
+                                roskets.Add(cellCTRLs[x, y].cellInternal);
+                            }
+                            //Супер цвет
+                            else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.color5) {
+                                color5.Add(cellCTRLs[x, y].cellInternal);
                             }
                         }
                     }
-                    
-                    else if (Gameplay.main.isMissionComplite() && !NeedOpenComplite)
+
+                    //Активируем все супер цвет
+                    if (color5.Count > 0) {
+                        foreach (CellInternalObject cellInternal in color5) {
+                            cellInternal.Activate(CellInternalObject.Type.color5, null, null);
+                        }
+                    }
+                    //иначе активируем все бомбы
+                    else if (bombs.Count > 0)
+                    {
+                        foreach (CellInternalObject cellInternal in bombs)
+                        {
+                            cellInternal.Activate(CellInternalObject.Type.color5, null, null);
+                        }
+                    }
+                    //иначе активируем все ракеты
+                    else if (roskets.Count > 0)
+                    {
+                        foreach (CellInternalObject cellInternal in roskets)
+                        {
+                            cellInternal.Activate(cellInternal.type, null, null);
+                        }
+                    }
+                    //активируем все леталки
+                    else if (flys.Count > 0)
+                    {
+                        foreach (CellInternalObject cellInternal in flys)
+                        {
+                            cellInternal.Activate(CellInternalObject.Type.airplane, null, null);
+                        }
+                    }
+
+                    //Иначе если еще есть ходы в запасе.. 
+                    else if (Gameplay.main.movingCan > 0) {
+
+                        //выбираем случайную ячейку
+                        int count = Gameplay.main.movingCan;
+                        for (int num = 0; num < count; num++) {
+
+                            //выбираем рандомуную ячейку
+                            int numRand = Random.Range(0, colors.Count);
+                            //Если этой внутренности нет или это не цвет
+                            //Пропускаем
+                            if (numRand >= colors.Count ||
+                                colors[numRand] == null ||
+                                colors[numRand].type != CellInternalObject.Type.color) {
+                                continue;
+                            }
+
+
+                            //Меняем тип внутренности на ракету горизонтальную
+                            if (Random.Range(0, 100) < 50) {
+                                colors[numRand].setColorAndType(colors[numRand].color, CellInternalObject.Type.rocketHorizontal);
+                            }
+                            //Меняем тип внутренности на ракету вертикальную
+                            else {
+                                colors[numRand].setColorAndType(colors[numRand].color, CellInternalObject.Type.rocketVertical);
+                            }
+
+                            //Активируем ракету
+                            colors[numRand].Activate(colors[numRand].type, null, null);
+
+                            Gameplay.main.movingCan--;
+
+                        }
+
+                        //Если ходов не осталось высвечиваем сообщение о последнем ходе
+                        if (Gameplay.main.movingCan <= 0) {
+                            MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strLastMove);
+                        }
+                    }
+
+                    else if (Gameplay.main.isMissionComplite() && !NeedOpenComplite && Time.unscaledTime - timeLastMove > 0.5f)
                     {
                         PlayerProfile.main.Health.Amount++;
                         PlayerProfile.main.Save();

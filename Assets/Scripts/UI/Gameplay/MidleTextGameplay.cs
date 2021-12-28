@@ -33,6 +33,9 @@ public class MidleTextGameplay: MonoBehaviour
     [SerializeField]
     Image imageYourMove;
     public const string strYourTurn = "Your Move";
+    [SerializeField]
+    Image imageLastMove;
+    public const string strLastMove = "Last Move";
 
     [SerializeField]
     AudioClip audioClip;
@@ -80,6 +83,11 @@ public class MidleTextGameplay: MonoBehaviour
     {
         CloseAll();
         imageYourMove.gameObject.SetActive(true);
+    }
+    public void SetTextLastMove()
+    {
+        CloseAll();
+        imageLastMove.gameObject.SetActive(true);
     }
 
     public void CloseAll() {
