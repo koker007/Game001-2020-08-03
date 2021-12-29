@@ -224,6 +224,8 @@ public class MenuGameplay : MonoBehaviour
         void Score() {
             //ScoreSlider.value += (ScoreNeed - ScoreSlider.value) * Time.deltaTime;
         }
+
+        updateMoving();
     }
 
     /// <summary>

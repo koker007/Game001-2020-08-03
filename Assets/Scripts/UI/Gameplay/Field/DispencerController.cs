@@ -33,6 +33,7 @@ public class DispencerController : MonoBehaviour
         //”дал€ем €чейку на которой находимс€
         if (targetCell.myField.cellCTRLs[MyPosition.x, MyPosition.y] != null) {
             targetCell.myField.cellCTRLs[MyPosition.x, MyPosition.y].Destroy();
+            Destroy(targetCell.myField.cellConturs[MyPosition.x, MyPosition.y]);
         }
 
         if(this != null)

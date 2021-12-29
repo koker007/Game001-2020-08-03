@@ -67,6 +67,8 @@ public class CellInternalObject : MonoBehaviour
     [SerializeField]
     Texture2D TextureBomb;
     [SerializeField]
+    Texture2D TextureBombLast;
+    [SerializeField]
     Texture2D TextureFly;
     [SerializeField]
     Texture2D TextureFlyLast;
@@ -220,7 +222,7 @@ public class CellInternalObject : MonoBehaviour
 
             MovingSpeed += Time.unscaledDeltaTime * 1.5f;
 
-            float speed = 0.1f + MovingSpeed;
+            float speed = 0.09f + MovingSpeed;
             speed *= Gameplay.main.timeScale;
 
             float correctY = 0;
@@ -931,7 +933,7 @@ public class CellInternalObject : MonoBehaviour
         {
             Image.texture = TextureBomb;
             setInternalColor();
-            LastImage.texture = null;
+            LastImage.texture = TextureBombLast;
         }
         else if (type == Type.rocketHorizontal)
         {
@@ -967,6 +969,7 @@ public class CellInternalObject : MonoBehaviour
         }
         else {
             LastImage.gameObject.SetActive(true);
+            LastImage.color = new Color(1,1,1,1);
         }
 
         void setInternalColor() {

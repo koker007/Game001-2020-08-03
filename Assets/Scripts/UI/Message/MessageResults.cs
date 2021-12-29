@@ -15,12 +15,41 @@ public class MessageResults : MonoBehaviour
     [SerializeField]
     Image[] StarsImage = new Image[3];
 
+    int CountStar = 0;
+
     public void OnEnable()
     {
         ScoreText.text = "Score:\n" + Gameplay.main.score.ToString();
-        Gameplay.main.CountStars(ref StarsImage);
+        //Gameplay.main.CountStars(ref StarsImage);
 
         SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipLVLComplite, Settings.main.VolumeMusicFrom0To1, 1);
+
+        iniStar();
+    }
+
+    void iniStar() {
+        CountStar = Gameplay.main.CountStars(Gameplay.main.score);
+
+        if (CountStar == 0) {
+            StarsImage[0].gameObject.SetActive(false);
+            StarsImage[1].gameObject.SetActive(false);
+            StarsImage[2].gameObject.SetActive(false);
+        }
+        else if (CountStar == 1) {
+            StarsImage[0].gameObject.SetActive(true);
+            StarsImage[1].gameObject.SetActive(false);
+            StarsImage[2].gameObject.SetActive(false);
+        }
+        else if (CountStar == 2) {
+            StarsImage[0].gameObject.SetActive(true);
+            StarsImage[1].gameObject.SetActive(true);
+            StarsImage[2].gameObject.SetActive(false);
+        }
+        else if (CountStar == 3) {
+            StarsImage[0].gameObject.SetActive(true);
+            StarsImage[1].gameObject.SetActive(true);
+            StarsImage[2].gameObject.SetActive(true);
+        }
     }
 
     public void NextLVL()

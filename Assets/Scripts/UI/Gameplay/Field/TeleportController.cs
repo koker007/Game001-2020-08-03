@@ -34,13 +34,16 @@ public class TeleportController : MonoBehaviour
 
     private void Teleport()
     {
+        if (myField == null) Destroy(gameObject);
+
         //Расчет только на расчетном кадре
         if (myField.buffer.CalculateFrameNow != 0) {
             return;
         }
 
         //Если во входе есть что перемещать и объект готов к перемещению
-        if (cellIn.cellInternal != null && //Есть что перемещать
+        if (cellIn != null &&
+            cellIn.cellInternal != null && //Есть что перемещать
             cellIn.rock == 0 && //объект не заперт
             !cellIn.cellInternal.isMove //Объект бездействует
             )
@@ -81,8 +84,22 @@ public class TeleportController : MonoBehaviour
             //Делаем скорость дупликату как у оригинала
             dublicate.MovingSpeed = cellIn.cellInternal.MovingSpeed;
 
+            Vector2 pos = new Vector2();
+            if (secondTeleport.cellIn)
+            {
+                pos = secondTeleport.cellIn.pos;
+            }
+            else if (secondTeleport.cellOut)
+            {
+                pos = new Vector2(secondTeleport.cellOut.pos.x, secondTeleport.cellOut.pos.y + 1);
+            }
+            else
+            {
+                Debug.Log("Teleport not have in and out");
+            }
+
             //Оригинал перемещаем на позицию над точкой выхода
-            cellIn.cellInternal.rectMy.pivot = secondTeleport.cellIn.pos * -1;
+            cellIn.cellInternal.rectMy.pivot = pos * -1;
             //Скрываем объект сверху
             cellIn.cellInternal.SetFullMask2D(CellInternalObject.MaskType.top);
             cellIn.cellInternal.myMaskNeed = new Vector4();

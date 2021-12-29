@@ -29,6 +29,8 @@ public class LevelsScript : MonoBehaviour
         /// тип обькта €чейке 
         /// </summary>
         public CellInternalObject.Type typeCell;
+
+        public int Exist;
         /// <summary>
         /// коробка с жизн€ми
         /// </summary>
@@ -41,8 +43,11 @@ public class LevelsScript : MonoBehaviour
         public int teleport;
         public bool dispencer;
 
-        public CellInfo(int box, int mold, int color, int type, int panel, int rockF, int ice, int walls, int disp, int tp)
+        public CellInfo(int exist, int box, int mold, int color, int type, int panel, int rockF, int ice, int walls, int disp, int tp)
         {
+            if (exist != 0)
+                Exist = exist;
+
             if (box != 0)
             {
                 HealthBox = box;
@@ -160,21 +165,6 @@ public class LevelsScript : MonoBehaviour
         /// ¬нимание! если надо создать раздатчик, то €чейка должна быть exist, иначе ничего не создастс€
         /// </summary>
         int[,] dispencers;
-
-        /// <summary>
-        /// возвращает информацию о клетке на текущем уровне
-        /// </summary>
-        public CellInfo ReturneCell(Vector2Int PositionOnField)
-        {
-            try
-            {
-                return cells[PositionOnField.x, PositionOnField.y];
-            }
-            catch
-            {
-                return null;
-            }
-        }
         
         public void NewMaxScore(int score)
         {
@@ -295,14 +285,14 @@ public class LevelsScript : MonoBehaviour
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    if (exist[y, x] == 0)
-                    {
-                        cells[x, cells.GetLength(1) - 1 - y] = null;
-                    }
-                    else
-                    {
-                        cells[x, cells.GetLength(1) - 1 - y] = new CellInfo(box[y, x], mold[y, x], internalColors[y, x], type[y, x], panel[y, x], rock[y,x], ice[y,x], walls[y,x], dispencers[y,x], teleport[y,x]);
-                    }
+                    //if (exist[y, x] == 0 && teleport[y,x] == 0)
+                    //{
+                    //    cells[x, cells.GetLength(1) - 1 - y] = null;
+                    //}
+                    //else
+                    //{
+                        cells[x, cells.GetLength(1) - 1 - y] = new CellInfo(exist[y,x], box[y, x], mold[y, x], internalColors[y, x], type[y, x], panel[y, x], rock[y,x], ice[y,x], walls[y,x], dispencers[y,x], teleport[y,x]);
+                    //}
                 }
             }
            

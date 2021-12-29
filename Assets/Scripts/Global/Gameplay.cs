@@ -298,6 +298,24 @@ public class Gameplay : MonoBehaviour
             starsCount = 0;
         }
     }
+    public int CountStars(int score) {
+        int num = 0;
+
+        if (score >= LevelsScript.main.ReturnLevel().NeedScore * threeStartFactor)
+        {
+            num = 3;
+        }
+        else if (score >= LevelsScript.main.ReturnLevel().NeedScore * twoStartFactor)
+        {
+            num = 2;
+        }
+        else if (score >= LevelsScript.main.ReturnLevel().NeedScore)
+        {
+            num = 1;
+        }
+
+        return num;
+    }
 
     
     /// <summary>

@@ -268,6 +268,8 @@ public class GameFieldCTRL : MonoBehaviour
 
             //Создаем пространство игрового поля
             cellCTRLs = new CellCTRL[level.Width, level.Height];
+            cellConturs = new GameObject[level.Width, level.Height];
+
             BoxBlockCTRLs = new BoxBlockCTRL[level.Width, level.Height];
             rockCTRLs = new RockCTRL[level.Width, level.Height];
             iceCTRLs = new IceCTRL[cellCTRLs.GetLength(0), cellCTRLs.GetLength(1)];
@@ -282,13 +284,14 @@ public class GameFieldCTRL : MonoBehaviour
             {
                 for (int y = 0; y < cellCTRLs.GetLength(1); y++)
                 {
-                    //Нужно ли создавать ячейку
-                    LevelsScript.CellInfo cellInfo = level.ReturneCell(new Vector2Int(x, y));
 
-                    //Если этой ячейки не существует
-                    if (cellInfo == null)
+                    //Если этой ячейки не существует и нет телепорта и нет раздатчика
+                    if (level.cells[x,y].Exist == 0 && //Если ячейки нет
+                        level.cells[x, y].teleport == 0 && //Нет телепорта
+                        !level.cells[x, y].dispencer) //Нет раздатчика
                     {
-                            continue;
+                        //То пропускаем создание этой ячейки
+                        continue;
                     }
                     else
                     {
@@ -296,8 +299,8 @@ public class GameFieldCTRL : MonoBehaviour
                         CountInteractiveCells++;
                     }
 
-                    //Если ячейки нет, создаем, если
-                    if (!cellCTRLs[x, y] || level.cells[x, y].dispencer)
+                    //Если ячейки нет, или вместо нее тут раздатчик, создаем
+                    if (!cellCTRLs[x, y] && level.cells[x,y].Exist == 1 || level.cells[x,y].dispencer)
                     {
                         GameObject cellObj = Instantiate(prefabCell, parentOfCells);
                         //ищем компонент
@@ -317,8 +320,8 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[x, y].IniFon();
 
                         //Добавляем контур
-                        GameObject cellContur = Instantiate(prefabContur, parentOfContur);
-                        RectTransform rectContur = cellContur.GetComponent<RectTransform>();
+                        cellConturs[x,y] = Instantiate(prefabContur, parentOfContur);
+                        RectTransform rectContur = cellConturs[x, y].GetComponent<RectTransform>();
                         rectContur.pivot = new Vector2(-x, -y);
 
 
@@ -341,7 +344,7 @@ public class GameFieldCTRL : MonoBehaviour
                     if (level.cells[x, y].dispencer)
                     {
                         GameObject dispencerObj = Instantiate(prefabDispencer, parentOfDispencers);
-                        dispencerObj.GetComponent<RectTransform>().pivot = new Vector2(-cellCTRLs[x, y].pos.x, -cellCTRLs[x, y].pos.y);
+                        dispencerObj.GetComponent<RectTransform>().pivot = new Vector2(-x, -y);
                         //Клетка с раздатчикои
                         dispencerObj.GetComponent<DispencerController>().MyPosition = new Vector2Int(x,y);
                         //Клетка, в которую раздатчик выдает предмет
@@ -349,19 +352,19 @@ public class GameFieldCTRL : MonoBehaviour
                         {
                             dispencerObj.GetComponent<DispencerController>().targetCell = cellCTRLs[x, y - 1];
                         }
-                        cellCTRLs[x, y].dispencer = true;
                         //Цвет основного (выдаваемого) объекта, берем из массива цветов
                         dispencerObj.GetComponent<DispencerController>().primaryObjectColor = level.cells[x, y].colorCell;
                         //Тип основного (выдаваемого) объекта, берем из массива типов
                         dispencerObj.GetComponent<DispencerController>().primaryObjectType = level.cells[x, y].typeCell;
                     }
 
+
                     //Если нужно создать телепорт
                     if (level.cells[x, y].teleport > 0)
                     {
                         int teleportID = level.cells[x, y].teleport;
                         GameObject teleportObj = Instantiate(prefabTeleport, parentOfTeleport);                        
-                        teleportObj.GetComponent<RectTransform>().pivot = new Vector2(-cellCTRLs[x, y].pos.x, -cellCTRLs[x, y].pos.y);
+                        teleportObj.GetComponent<RectTransform>().pivot = new Vector2(-x, -y);
 
                         //Точка входа в телепорт
                         teleportObj.GetComponent<TeleportController>().cellIn = cellCTRLs[x, y];
@@ -395,7 +398,17 @@ public class GameFieldCTRL : MonoBehaviour
                             firstTeleports[teleportID].myField = this;
                             firstTeleports[teleportID].secondTeleport.myField = this;
                         }
+
+
+                        //Проверяем нужна ли 
                     }
+
+                    ////////////////////////////////////////////////////////////////////////////
+                    //Далее создаются внутреенние части для которых наличие ячейки - необходимо
+                    //По этому если ячейки нет то переключаемся на следуюшую клетку
+                    if (!cellCTRLs[x, y])
+                        continue;
+                    ////////////////////////////////////////////////////////////////////////////
 
                     //Нужно ли создать ящик
                     if (cellCTRLs[x, y].BlockingMove > 0)
@@ -482,34 +495,34 @@ public class GameFieldCTRL : MonoBehaviour
                             internalCtrl.EndMove();
 
                             //Меняем тип объекта
-                            internalCtrl.setColorAndType(cellInfo.colorCell, level.cells[x, y].typeCell);
+                            internalCtrl.setColorAndType(level.cells[x, y].colorCell, level.cells[x, y].typeCell);
 
-                            internalCtrl.color = cellInfo.colorCell;
+                            internalCtrl.color = level.cells[x, y].colorCell;
 
                         }
                         else if (level.cells[x, y].typeCell == CellInternalObject.Type.airplane)
                         {
-                            CreateFly(cellCTRLs[x, y], cellInfo.colorCell, 0);
+                            CreateFly(cellCTRLs[x, y], level.cells[x, y].colorCell, 0);
                         }
                         else if (level.cells[x, y].typeCell == CellInternalObject.Type.bomb)
                         {
-                            CreateBomb(cellCTRLs[x, y], cellInfo.colorCell, 0);
+                            CreateBomb(cellCTRLs[x, y], level.cells[x, y].colorCell, 0);
                         }
                         else if (level.cells[x, y].typeCell == CellInternalObject.Type.rocketHorizontal)
                         {
-                            CreateRocketHorizontal(cellCTRLs[x, y], cellInfo.colorCell, 0);
+                            CreateRocketHorizontal(cellCTRLs[x, y], level.cells[x, y].colorCell, 0);
                         }
                         else if (level.cells[x, y].typeCell == CellInternalObject.Type.rocketVertical)
                         {
-                            CreateRocketVertical(cellCTRLs[x, y], cellInfo.colorCell, 0);
+                            CreateRocketVertical(cellCTRLs[x, y], level.cells[x, y].colorCell, 0);
                         }
                         else if (level.cells[x, y].typeCell == CellInternalObject.Type.color5)
                         {
-                            CreateSuperColor(cellCTRLs[x, y], cellInfo.colorCell, 0);
+                            CreateSuperColor(cellCTRLs[x, y], level.cells[x, y].colorCell, 0);
                         }
                         else if (level.cells[x, y].typeCell == CellInternalObject.Type.blocker)
                         {
-                            CreateBlocker(cellCTRLs[x, y], cellInfo.colorCell, 0);
+                            CreateBlocker(cellCTRLs[x, y], level.cells[x, y].colorCell, 0);
                         }
                     }
 
@@ -620,6 +633,7 @@ public class GameFieldCTRL : MonoBehaviour
     /// Ячейки
     /// </summary>
     public CellCTRL[,] cellCTRLs;
+    public GameObject[,] cellConturs;
     /// <summary>
     /// препятствия движения
     /// </summary>

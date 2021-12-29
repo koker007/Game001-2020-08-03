@@ -100,6 +100,7 @@ public class MidleTextGameplay: MonoBehaviour
         imageEnemyMove.gameObject.SetActive(false);
         imageNotBad.gameObject.SetActive(false);
         imageYourMove.gameObject.SetActive(false);
+        imageLastMove.gameObject.SetActive(false);
 
     }
 
