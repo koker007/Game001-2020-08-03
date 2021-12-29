@@ -53,13 +53,23 @@ public class CellInternalObject : MonoBehaviour
     [SerializeField]
     Texture2D TextureRed;
     [SerializeField]
+    Texture2D TextureRedCore;
+    [SerializeField]
     Texture2D TextureGreen;
+    [SerializeField]
+    Texture2D TextureGreenCore;
     [SerializeField]
     Texture2D TextureBlue;
     [SerializeField]
+    Texture2D TextureBlueCore;
+    [SerializeField]
     Texture2D TextureYellow;
     [SerializeField]
+    Texture2D TextureYellowCore;
+    [SerializeField]
     Texture2D TextureOrange;
+    [SerializeField]
+    Texture2D TextureOrengeCore;
     [SerializeField]
     Texture2D TextureColor5;
     [SerializeField]
@@ -895,25 +905,25 @@ public class CellInternalObject : MonoBehaviour
             else if (internalColor == InternalColor.Green)
             {
                 Image.texture = TextureGreen;
-                LastImage.texture = null;
+                LastImage.texture = TextureGreenCore;
                 //Image.color = green;
             }
             else if (internalColor == InternalColor.Blue)
             {
                 Image.texture = TextureBlue;
-                LastImage.texture = null;
+                LastImage.texture = TextureBlueCore;
                 //Image.color = blue;
             }
             else if (internalColor == InternalColor.Yellow)
             {
                 Image.texture = TextureYellow;
-                LastImage.texture = null;
+                LastImage.texture = TextureYellowCore;
                 //Image.color = yellow;
             }
             else if (internalColor == InternalColor.Violet)
             {
                 Image.texture = TextureOrange;
-                LastImage.texture = null;
+                LastImage.texture = TextureOrengeCore;
                 //Image.color = violet;
             }
             else if (internalColor == InternalColor.Ultimate) {
