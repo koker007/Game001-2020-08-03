@@ -98,7 +98,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     /// <summary>
     /// Степень запрета на перемещение объекта
     /// </summary>
-    public int BlockingMove;
+    public int Box;
     /// <summary>
     /// Степень плесени
     /// </summary>
@@ -551,8 +551,8 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             //CanBenefit = true;
         }
         //иначе если есть ящик урон ящику
-        else if (BlockingMove > 0) {
-            BlockingMove--;
+        else if (Box > 0) {
+            Box--;
             //CanBenefit = true;
         }
         //иначе если есть лед урон льду и объектам внутри и рядом
@@ -658,7 +658,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         */
 
         //Создаем панель если плесени нет и нужно создать панель
-        if (combination != null && BlockingMove <= 0 && mold <= 0 && combination.foundPanel && !panel) {
+        if (combination != null && Box <= 0 && mold <= 0 && combination.foundPanel && !panel) {
             CreatePanel();
         }
 
@@ -735,9 +735,9 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         }
 
         //Нанести урон ящику
-        if (BlockingMove > 0)
+        if (Box > 0)
         {
-            BlockingMove--;
+            Box--;
             benefit = true;
         }
         else if (cellInternal != null && cellInternal.type == CellInternalObject.Type.blocker) {
@@ -817,9 +817,9 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
             //расчитываем приоритеты
             //ящика
-            if (BlockingMove > 0)
+            if (Box > 0)
             {
-                result += (5 - BlockingMove) * PriorityBox; //Чем меньше жизней, тем желательнее ее сломать
+                result += (5 - Box) * PriorityBox; //Чем меньше жизней, тем желательнее ее сломать
             }
             //Камня
             if (rock > 0) {
@@ -873,7 +873,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             /////////////////////////////////////////////
             //Умножаем за цель миссии на 2.5
             //ящики
-            if (BlockingMove > 0 && LevelsScript.main.ReturnLevel().PassedWithBox)
+            if (Box > 0 && LevelsScript.main.ReturnLevel().PassedWithBox)
             {
                 result *= pos.y + 1;
                 result *= 3;

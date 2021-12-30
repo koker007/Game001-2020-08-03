@@ -4108,7 +4108,7 @@ public class LevelsArray : LevelsScript
         ////////////////////////////////////////////////////////////////////////////
         //уровень 54
         lvl = 54;
-        Levels[lvl] = CreateLevel(lvl, 13, 7, 15000, 50, 5, 100, 40);
+        Levels[lvl] = CreateLevel(lvl, 12, 7, 15000, 50, 5, 100, 40);
 
         Levels[lvl].PassedWithCrystal = true;
         Levels[lvl].NeedColor = (CellInternalObject.InternalColor)4;
@@ -4116,7 +4116,6 @@ public class LevelsArray : LevelsScript
         Levels[lvl].SetMass(
         new int[,] //exist
             {
-                { 0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0 },
                 { 1,1,1,0,1,1,1 },
                 { 1,1,1,0,1,1,1 },
@@ -4135,7 +4134,6 @@ public class LevelsArray : LevelsScript
         Levels[lvl].SetMass(
             new int[,] //color
             {
-                { 1,1,1,1,1,1,1 },
                 { 2,3,4,1,1,1,1 },
                 { 1,1,1,1,1,1,1 },
                 { 1,1,1,1,1,1,1 },
@@ -4154,7 +4152,6 @@ public class LevelsArray : LevelsScript
         Levels[lvl].SetMass(
             new int[,] //type
             {
-                { 1,1,1,1,1,1,1 },
                 { 6,6,6,1,1,1,1 },
                 { 1,1,1,1,1,1,1 },
                 { 1,1,1,1,1,1,1 },
@@ -4173,7 +4170,6 @@ public class LevelsArray : LevelsScript
         Levels[lvl].SetMass(
             new int[,]
             {
-                { 0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0 },
                 { 1,0,0,0,0,0,1 },
@@ -4195,7 +4191,6 @@ public class LevelsArray : LevelsScript
                 { 0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0 },
-                { 0,0,0,0,0,0,0 },
                 { 0,5,0,5,0,5,0 },
                 { 0,5,0,5,0,5,0 },
                 { 0,5,0,5,0,5,0 },
@@ -4211,7 +4206,6 @@ public class LevelsArray : LevelsScript
         Levels[lvl].SetMass(
         new int[,] 
         {
-                { 0,0,0,0,0,0,0},
                 { 1,1,1,0,0,0,0 },
                 { 0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0 },
@@ -4230,7 +4224,6 @@ public class LevelsArray : LevelsScript
         Levels[lvl].SetMass(
             new int[,]
 {
-                { 0,0,0,0,0,0,0},
                 { 0,0,0,0,1,2,3 },
                 { 0,0,0,0,0,0,0 },
                 { 0,0,0,0,0,0,0 },

@@ -61,9 +61,9 @@ public class BoxBlockCTRL : MonoBehaviour
 
     //Проверка состояния обьекта
     void testLive() {
-        if (healthOld != myCell.BlockingMove) {
+        if (healthOld != myCell.Box) {
             //Если жизней стало меньше
-            if (healthOld > myCell.BlockingMove) {
+            if (healthOld > myCell.Box) {
                 //Воспроизводим звук поломки
                 SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipDestroyBox);
             }
@@ -76,13 +76,13 @@ public class BoxBlockCTRL : MonoBehaviour
             //Если жизни кончелись, самоуничтожаемся
             testDestroy();
 
-            healthOld = myCell.BlockingMove;
+            healthOld = myCell.Box;
             myCell.timeBoomOld = Time.unscaledTime;
 
             void testImage() {
                 Texture textureNow;
-                int array = myCell.BlockingMove - 1;
-                if (myCell.BlockingMove < textures.Length && array >= 0)
+                int array = myCell.Box - 1;
+                if (myCell.Box < textures.Length && array >= 0)
                 {
                     textureNow = textures[array];
                 }
@@ -99,7 +99,7 @@ public class BoxBlockCTRL : MonoBehaviour
 
 
             void testDestroy() {
-                if (myCell.BlockingMove <= 0) {
+                if (myCell.Box <= 0) {
                     //myCell.BoxBlock = null;
 
 

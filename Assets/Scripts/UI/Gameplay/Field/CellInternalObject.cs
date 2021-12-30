@@ -405,7 +405,7 @@ public class CellInternalObject : MonoBehaviour
                     Time.unscaledTime - myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.35f &&
                     Time.unscaledTime - myField.timeLastBoom > 0 &&
                     myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].rock == 0 &&
-                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].BlockingMove == 0 &&
+                    myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie].Box == 0 &&
                     isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x + smeshenie, myCell.pos.y - smeshenie]) &&//В этом столбце нет потенциального вертикального движения
 
                     //Нет блокирования стенами
@@ -427,7 +427,7 @@ public class CellInternalObject : MonoBehaviour
                     Time.unscaledTime - myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].timeBoomOld > 0.35f &&
                     Time.unscaledTime - myField.timeLastBoom > 0 &&
                     myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].rock == 0 &&
-                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].BlockingMove == 0 &&
+                    myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie].Box == 0 &&
                     isCanMoveToThisColum(myField.cellCTRLs[myCell.pos.x - smeshenie, myCell.pos.y - smeshenie]) && //В этом столбце нет потенциального вертикального движения
                     //Нет блокирования стенами
                     notBlockMoveFromToLeft(myCell, myField.cellCTRLs[myCell.pos.x- 1, myCell.pos.y - 1], myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1], myField.cellCTRLs[myCell.pos.x - 1, myCell.pos.y])
@@ -452,7 +452,7 @@ public class CellInternalObject : MonoBehaviour
                 if (cellFunc.pos.y - minus >= 0 &&//Если не вышли за пределы массива
                     GameFieldCTRL.main.CheckObstaclesToMoveDown(myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus], myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - (minus - 1)]) &&
                     myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus] && //есть ячейка
-                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].BlockingMove <= 0 &&//ячейка находится без блокировки движения
+                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].Box <= 0 &&//ячейка находится без блокировки движения
                     myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y - minus].rock <= 0)
                 {
                     //Блокируем если
@@ -476,7 +476,7 @@ public class CellInternalObject : MonoBehaviour
                 if (cellFunc.pos.y + plus < myField.cellCTRLs.GetLength(1) &&//Если не вышли за пределы массива
                     GameFieldCTRL.main.CheckObstaclesToMoveUp(myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus], myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + (plus - 1)]) &&
                     myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus] && //есть ячейка
-                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus].BlockingMove <= 0)//ячейка находится без блокировки движения
+                    myField.cellCTRLs[cellFunc.pos.x, cellFunc.pos.y + plus].Box <= 0)//ячейка находится без блокировки движения
                     
                 {
                     //Блокируем если
@@ -886,6 +886,7 @@ public class CellInternalObject : MonoBehaviour
     public void setColor(InternalColor internalColor) {
         if (animatorCTRL != null) {
             animatorCTRL.SetFloat("InternalColor", (float)color);
+            animatorCTRL.SetFloat("StayType", 0);
         }
 
         Image.color = new Color(1, 1, 1, 1);
@@ -1008,6 +1009,7 @@ public class CellInternalObject : MonoBehaviour
     public void setColorAndType(InternalColor internalColor, Type typeNew) {
         type = typeNew;
         setColor(internalColor);
+
     }
 
     public CellInternalObject GetRandomColor(bool isSpawn)
@@ -1144,7 +1146,7 @@ public class CellInternalObject : MonoBehaviour
             myCell.pos.y > 0 && 
             myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1] != null &&
             myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1].cellInternal == null &&
-            myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1].BlockingMove == 0 &&
+            myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1].Box == 0 &&
             myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1].rock == 0 &&
             myField.CheckObstaclesToMoveDown(myField.cellCTRLs[myCell.pos.x, myCell.pos.y - 1], myField.cellCTRLs[myCell.pos.x, myCell.pos.y])
             ) {

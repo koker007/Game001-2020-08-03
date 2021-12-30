@@ -335,7 +335,7 @@ public class FlyCTRL : MonoBehaviour
                 return true;
             }
 
-            if (!Activated && CellTarget.cellInternal == null && CellTarget.BlockingMove == 0 && CellTarget.mold == 0 && CellTarget.rock == 0) {
+            if (!Activated && CellTarget.cellInternal == null && CellTarget.Box == 0 && CellTarget.mold == 0 && CellTarget.rock == 0) {
                 result = true;
             }
 

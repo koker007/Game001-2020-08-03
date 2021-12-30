@@ -50,7 +50,7 @@ public class TeleportController : MonoBehaviour
         {
             //Если выход второго телепорта свободен и доступен, инициируем телепортацию
             if (secondTeleport.cellOut != null && //точка выхода существует
-                secondTeleport.cellOut.BlockingMove == 0 && //Движение на выходе не заблокировано
+                secondTeleport.cellOut.Box == 0 && //Движение на выходе не заблокировано
                 !secondTeleport.cellOut.cellInternal && //Место выхода не занято
                 secondTeleport.cellOut.rock == 0 //на месте выхода нет камня
                                                  ) 
