@@ -1082,6 +1082,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1000536005584634709
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 7741381453651228327}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7846484514276692300}
+  m_Layer: 0
+  m_Name: Missing Prefab (Dummy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7846484514276692300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 06200f2f4adc6384d8cf019faf7751a9, type: 3}
+  m_PrefabInstance: {fileID: 7741381453651228327}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000536005584634709}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3426222699229788765}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1018049667840236044
 GameObject:
   m_ObjectHideFlags: 0
@@ -3083,6 +3113,37 @@ Transform:
   m_Father: {fileID: 3531151174308904622}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3418166783478991385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 7741381453651228327}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3426222699229788765}
+  m_Layer: 0
+  m_Name: Cave (Missing Prefab)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3426222699229788765
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 7741381453651228327}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3418166783478991385}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7846484514276692300}
+  m_Father: {fileID: 4296432418937165912}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3427432472517410494
 GameObject:
   m_ObjectHideFlags: 0
@@ -3271,7 +3332,7 @@ Transform:
   - {fileID: 2009553731287775782}
   - {fileID: 5321862661822335651}
   - {fileID: 8251007833288209494}
-  - {fileID: 7846484514276692300}
+  - {fileID: 3426222699229788765}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3287,6 +3348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b76d011ecbb99640839c813e572a416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fonGameplay: {fileID: 0}
   lenghtAngle: 50
   rotateNow: 0
   myAngle: 0
@@ -8069,9 +8131,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -16.322
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -8275,16 +8353,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: GraundLoc10Grad (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8322109530522086267, guid: 15401177f3e581540bddbb654081a739, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 909ef49780459c64dbbe44f0b08c013e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15401177f3e581540bddbb654081a739, type: 3}
---- !u!1 &7642513432066050023 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7529718370460420782, guid: 15401177f3e581540bddbb654081a739, type: 3}
-  m_PrefabInstance: {fileID: 176000541014625609}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7008860876363177309 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7148688540337344532, guid: 15401177f3e581540bddbb654081a739, type: 3}
+  m_PrefabInstance: {fileID: 176000541014625609}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7642513432066050023 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7529718370460420782, guid: 15401177f3e581540bddbb654081a739, type: 3}
   m_PrefabInstance: {fileID: 176000541014625609}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &221115547871718544
@@ -8408,9 +8490,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 12.253
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1461304994638716399, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -678588488315902003, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
       propertyPath: m_Name
       value: Chinese house 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
@@ -8898,9 +9004,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 159.731
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -8972,9 +9094,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 11.696
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -9632,9 +9770,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 20.661
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1461304994638716399, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -678588488315902003, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
       propertyPath: m_Name
       value: Chinese house 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
@@ -9694,9 +9856,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -20.897
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1461304994638716399, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -678588488315902003, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
       propertyPath: m_Name
       value: Chinese house 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
@@ -9948,6 +10134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GraundLoc10Grad (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8322109530522086267, guid: 15401177f3e581540bddbb654081a739, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 909ef49780459c64dbbe44f0b08c013e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15401177f3e581540bddbb654081a739, type: 3}
 --- !u!1 &8776010734462807788 stripped
@@ -10425,9 +10615,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -14.056
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -10943,6 +11149,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 84.569
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: b5abd8eb7708a584c853b475c271ca21, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 909ef49780459c64dbbe44f0b08c013e, type: 2}
     - target: {fileID: 919132149155446097, guid: b5abd8eb7708a584c853b475c271ca21, type: 3}
       propertyPath: m_Name
       value: holm001
@@ -11321,9 +11531,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.716
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 39
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -11395,9 +11621,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 12.786
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1461304994638716399, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -678588488315902003, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
       propertyPath: m_Name
       value: Chinese house 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
@@ -11853,9 +12103,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 12.354
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1461304994638716399, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -678588488315902003, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
       propertyPath: m_Name
       value: Chinese house 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
@@ -12047,9 +12321,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -3.941
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 37
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -12289,9 +12579,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 26.373
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -12483,9 +12789,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -31.225
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -12549,16 +12871,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: GraundLoc10Grad (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8322109530522086267, guid: 15401177f3e581540bddbb654081a739, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 909ef49780459c64dbbe44f0b08c013e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15401177f3e581540bddbb654081a739, type: 3}
---- !u!1 &4796576906200059929 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7529718370460420782, guid: 15401177f3e581540bddbb654081a739, type: 3}
-  m_PrefabInstance: {fileID: 3093466888909576887}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5321862661822335651 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7148688540337344532, guid: 15401177f3e581540bddbb654081a739, type: 3}
+  m_PrefabInstance: {fileID: 3093466888909576887}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4796576906200059929 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7529718370460420782, guid: 15401177f3e581540bddbb654081a739, type: 3}
   m_PrefabInstance: {fileID: 3093466888909576887}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3095398362965095753
@@ -12810,9 +13136,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 8.544
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -13196,9 +13538,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 11.942
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -13682,9 +14040,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -16.323
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -13884,9 +14258,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -1.911
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -14828,9 +15218,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -29.028
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -15138,9 +15544,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -14.948
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -15472,9 +15894,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 13.989
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -15726,9 +16164,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -19.817
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -16106,9 +16560,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 6.417
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -16180,9 +16650,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 2.101
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -16530,6 +17016,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 14.555
       objectReference: {fileID: 0}
+    - target: {fileID: -5929206268164582044, guid: 04e185f4edf965e4ba6585342b490080, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 04e185f4edf965e4ba6585342b490080, type: 3}
       propertyPath: m_Name
       value: Mill 4
@@ -16597,9 +17087,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 6.417
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -17487,9 +17993,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -15.687
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1461304994638716399, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -678588488315902003, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
       propertyPath: m_Name
       value: Chinese house 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
@@ -18163,9 +18693,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -33.085
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -18333,9 +18879,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 19.619
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -18469,9 +19031,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -20
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1461304994638716399, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -678588488315902003, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
       propertyPath: m_Name
       value: Chinese house 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
@@ -18823,9 +19409,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -15.687
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1461304994638716399, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -678588488315902003, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
       propertyPath: m_Name
       value: Chinese house 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
@@ -18947,9 +19557,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -14.25
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -19433,20 +20059,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -27.826
       objectReference: {fileID: 0}
+    - target: {fileID: -5929206268164582044, guid: 04e185f4edf965e4ba6585342b490080, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 04e185f4edf965e4ba6585342b490080, type: 3}
       propertyPath: m_Name
       value: Mill 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04e185f4edf965e4ba6585342b490080, type: 3}
---- !u!1 &7332963712220023000 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 04e185f4edf965e4ba6585342b490080, type: 3}
-  m_PrefabInstance: {fileID: 7566753762517808521}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7964680853446201954 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 04e185f4edf965e4ba6585342b490080, type: 3}
+  m_PrefabInstance: {fileID: 7566753762517808521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7332963712220023000 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 04e185f4edf965e4ba6585342b490080, type: 3}
   m_PrefabInstance: {fileID: 7566753762517808521}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7736305324391274103
@@ -19580,11 +20210,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06200f2f4adc6384d8cf019faf7751a9, type: 3}
---- !u!4 &7846484514276692300 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 06200f2f4adc6384d8cf019faf7751a9, type: 3}
-  m_PrefabInstance: {fileID: 7741381453651228327}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7745166650186324085
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19690,9 +20315,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -22.24
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -19822,9 +20463,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -10.15
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -20008,9 +20665,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -16.006
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1461304994638716399, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -678588488315902003, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
       propertyPath: m_Name
       value: Chinese house 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
@@ -20144,9 +20825,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -31.225
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -20206,9 +20903,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 19.821
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -20267,6 +20980,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 04e185f4edf965e4ba6585342b490080, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 12.778
+      objectReference: {fileID: 0}
+    - target: {fileID: -5929206268164582044, guid: 04e185f4edf965e4ba6585342b490080, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 04e185f4edf965e4ba6585342b490080, type: 3}
       propertyPath: m_Name
@@ -20470,20 +21187,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -9.965
       objectReference: {fileID: 0}
+    - target: {fileID: -5929206268164582044, guid: 04e185f4edf965e4ba6585342b490080, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 04e185f4edf965e4ba6585342b490080, type: 3}
       propertyPath: m_Name
       value: Mill 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04e185f4edf965e4ba6585342b490080, type: 3}
---- !u!4 &8479913881151876479 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 04e185f4edf965e4ba6585342b490080, type: 3}
-  m_PrefabInstance: {fileID: 8224713948193835668}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &9143824653515913157 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 04e185f4edf965e4ba6585342b490080, type: 3}
+  m_PrefabInstance: {fileID: 8224713948193835668}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8479913881151876479 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 04e185f4edf965e4ba6585342b490080, type: 3}
   m_PrefabInstance: {fileID: 8224713948193835668}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8255570280316052463
@@ -20665,6 +21386,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GraundLoc10Grad
       objectReference: {fileID: 0}
+    - target: {fileID: 8322109530522086267, guid: 15401177f3e581540bddbb654081a739, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 909ef49780459c64dbbe44f0b08c013e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15401177f3e581540bddbb654081a739, type: 3}
 --- !u!4 &1190156163820279225 stripped
@@ -20860,9 +21585,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -18.837
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1461304994638716399, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -678588488315902003, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
       propertyPath: m_Name
       value: Chinese house 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8389760772b14d4e90516ea05afdb25, type: 3}
@@ -20922,9 +21671,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -12.149
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
@@ -21112,6 +21877,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GraundLoc10Grad (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8322109530522086267, guid: 15401177f3e581540bddbb654081a739, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 909ef49780459c64dbbe44f0b08c013e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15401177f3e581540bddbb654081a739, type: 3}
 --- !u!1 &1200366342629728412 stripped
@@ -22019,9 +22788,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -19.795
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
       propertyPath: m_Name
       value: Chinese house 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc66907361378a94c91a8a1d8cd2bf49, type: 3}
