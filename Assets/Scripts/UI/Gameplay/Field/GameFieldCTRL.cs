@@ -129,6 +129,8 @@ public class GameFieldCTRL : MonoBehaviour
     public CellCTRL CellSelect; //Первый выделенный пользователем объект
     public CellCTRL CellSwap; //Второй выделенный пользователем объект
 
+    public RectTransform PosSpawnInternals;
+
     [SerializeField]
     RectTransform rectParticleSelect;
 
@@ -280,6 +282,10 @@ public class GameFieldCTRL : MonoBehaviour
             Gameplay.main.superColorPercent = level.SuperColorPercent;
             Gameplay.main.typeBlockerPercent = level.TypeBlockerPercent;
 
+            //Выставляем позицию спавна объектов
+            PosSpawnInternals.pivot = new Vector2(0.5f, -level.Height);
+
+            //Раставляем ячейки
             for (int x = 0; x < cellCTRLs.GetLength(0); x++)
             {
                 for (int y = 0; y < cellCTRLs.GetLength(1); y++)
@@ -325,12 +331,12 @@ public class GameFieldCTRL : MonoBehaviour
                         rectContur.pivot = new Vector2(-x, -y);
 
 
-                        cellCTRLs[x, y].BlockingMove = level.cells[x, y].HealthBox;
+                        cellCTRLs[x, y].Box = level.cells[x, y].HealthBox;
                         cellCTRLs[x, y].rock = level.cells[x, y].rock;
                         cellCTRLs[x, y].mold = level.cells[x, y].HealthMold;
                         cellCTRLs[x, y].wallID = level.cells[x, y].wall;
                         cellCTRLs[x, y].teleport = level.cells[x, y].teleport;
-                        if (cellCTRLs[x, y].mold <= 0 && cellCTRLs[x, y].BlockingMove > 0)
+                        if (cellCTRLs[x, y].mold <= 0 && cellCTRLs[x, y].Box > 0)
                         {
                             cellCTRLs[x, y].mold = 1;
                         }
@@ -411,7 +417,7 @@ public class GameFieldCTRL : MonoBehaviour
                     ////////////////////////////////////////////////////////////////////////////
 
                     //Нужно ли создать ящик
-                    if (cellCTRLs[x, y].BlockingMove > 0)
+                    if (cellCTRLs[x, y].Box > 0)
                     {
                         GameObject BoxBlockObj = Instantiate(prefabBoxBlock, parentOfBoxBlock);
                         BoxBlockCTRL boxBlockCTRL = BoxBlockObj.GetComponent<BoxBlockCTRL>();
@@ -422,7 +428,7 @@ public class GameFieldCTRL : MonoBehaviour
                     }
 
                     //Нужно ли создать плесень //Если есть ящик
-                    if (cellCTRLs[x, y].mold > 0 || cellCTRLs[x, y].BlockingMove > 0)
+                    if (!level.PassedWithPanel && (cellCTRLs[x, y].mold > 0 || cellCTRLs[x, y].Box > 0))
                     {
                         GameObject MoldObj = Instantiate(prefabMold, parentOfMold);
                         MoldCTRL moldCTRL = MoldObj.GetComponent<MoldCTRL>();
@@ -457,7 +463,7 @@ public class GameFieldCTRL : MonoBehaviour
                         cellCTRLs[x, y].panelCTRL.inicialize(cellCTRLs[x, y]);
                     }
                     //Нужно ли создать камень и нет ящика
-                    if (cellCTRLs[x, y].rock > 0 && cellCTRLs[x, y].BlockingMove <= 0)
+                    if (cellCTRLs[x, y].rock > 0 && cellCTRLs[x, y].Box <= 0)
                     {
                         GameObject rockObj = Instantiate(prefabRock, parentOfRock);
                         cellCTRLs[x, y].rockCTRL = rockObj.GetComponent<RockCTRL>();
@@ -481,7 +487,7 @@ public class GameFieldCTRL : MonoBehaviour
 
                     //Создаем подвижные объекты
                     if (level.cells[x, y].typeCell != CellInternalObject.Type.none &&
-                        cellCTRLs[x, y].BlockingMove == 0 && //Если нету ящика
+                        cellCTRLs[x, y].Box == 0 && //Если нету ящика
                         !level.cells[x, y].dispencer
                         )
                     {
@@ -664,7 +670,7 @@ public class GameFieldCTRL : MonoBehaviour
 
                 //Если эта ячейка есть, пустая и без блокировки движения и на ней сейчас нет движения
                 if (cellCTRLs[x, y] && !cellCTRLs[x, y].cellInternal &&
-                    cellCTRLs[x, y].BlockingMove == 0 &&
+                    cellCTRLs[x, y].Box == 0 &&
                     cellCTRLs[x, y].rock == 0 &&
                     !cellCTRLs[x, y].dispencer)
                 {
@@ -737,7 +743,7 @@ public class GameFieldCTRL : MonoBehaviour
                             //Можно переместиться сверху если
                             if (target != null && //Если есть куда
                                 target.rock == 0 &&
-                                target.BlockingMove == 0 &&
+                                target.Box == 0 &&
                                 !target.dispencer &&
                                 target.wallID != 1 &&
                                 target.wallID != 5 &&
@@ -1895,7 +1901,7 @@ public class GameFieldCTRL : MonoBehaviour
             }
             void TestShopBomb()
             {
-                if (PlayerProfile.main.ShopBomb.Amount <= 0 || CellSelect.BlockingMove > 0)
+                if (PlayerProfile.main.ShopBomb.Amount <= 0 || CellSelect.Box > 0)
                 {
                     return;
                 }
@@ -3651,8 +3657,8 @@ public class GameFieldCTRL : MonoBehaviour
             !CellSwap.cellInternal ||
             CellSelect.cellInternal.isMove || //Если в ячейки происходит движение
             CellSwap.cellInternal.isMove ||
-            CellSelect.BlockingMove > 0 || //Если в ячейке коробка
-            CellSwap.BlockingMove > 0 ||
+            CellSelect.Box > 0 || //Если в ячейке коробка
+            CellSwap.Box > 0 ||
             CellSelect.rock > 0 || //Если в ячейке камень
             CellSwap.rock > 0 ||
             Gameplay.main.movingCan <= 0 //Если есть ходы
@@ -4183,7 +4189,7 @@ public class GameFieldCTRL : MonoBehaviour
                 //смотрим дальше
                 if (!cellCTRLs[x, y] || //Нет ячейки
                     !cellCTRLs[x, y].cellInternal || //Нет внутреннего объекта
-                    cellCTRLs[x, y].BlockingMove > 0 || //присутствует коробка
+                    cellCTRLs[x, y].Box > 0 || //присутствует коробка
                     cellCTRLs[x, y].rock > 0 //|| //Или есть камень
                                              //(cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.bomb && cellCTRLs[x,y].cellInternal.activateNeed) //или есть активированная бомба
                     ) continue;
@@ -4242,7 +4248,7 @@ public class GameFieldCTRL : MonoBehaviour
     {
         return (targetCell != null &&
                         targetCell.rock == 0 &&
-                        targetCell.BlockingMove == 0 &&
+                        targetCell.Box == 0 &&
                         !targetCell.dispencer &&
                         targetCell.teleport == 0 && //Телепорт всегда у основания ячейки, движение сверху возможно
                         targetCell.wallID != 3 &&
@@ -4269,7 +4275,7 @@ public class GameFieldCTRL : MonoBehaviour
     {
         return (targetCell != null &&
                         targetCell.rock == 0 &&
-                        targetCell.BlockingMove == 0 &&
+                        targetCell.Box == 0 &&
                         !targetCell.dispencer &&
                         targetCell.wallID != 1 &&
                         targetCell.wallID != 5 &&
@@ -4296,7 +4302,7 @@ public class GameFieldCTRL : MonoBehaviour
     {
         return (targetCell != null && 
                         targetCell.rock == 0 &&
-                        targetCell.BlockingMove == 0 &&
+                        targetCell.Box == 0 &&
                         !targetCell.dispencer &&
                         targetCell.wallID != 2 &&
                         targetCell.wallID != 5 &&
@@ -4323,7 +4329,7 @@ public class GameFieldCTRL : MonoBehaviour
         return (targetCell != null &&
                         
                         targetCell.rock == 0 &&
-                        targetCell.BlockingMove == 0 &&
+                        targetCell.Box == 0 &&
                         !targetCell.dispencer &&
                         targetCell.wallID != 4 &&
                         targetCell.wallID != 7 &&
