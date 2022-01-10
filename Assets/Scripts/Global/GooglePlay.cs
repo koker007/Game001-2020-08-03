@@ -3,20 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+using GooglePlayGames.BasicApi.SavedGame;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
+using System;
 
 public class GooglePlay : MonoBehaviour
 {
+    static public GooglePlay main;
+
     [SerializeField]
     Text TestText;
     [SerializeField]
     Text TestFps;
 
-    bool isAutorized = false;
+    public bool isAutorized = false;
+
+    bool isSaving = false;
+    public string BufferSaveSTR = "";
+    private DateTime startDateTime;
 
     private void Awake()
     {
+        main = this;
         iniServices();
     }
 
@@ -42,6 +51,9 @@ public class GooglePlay : MonoBehaviour
                     "\nUser ID: " + Social.localUser.id +
                     "\nIsUnderage: " + Social.localUser.underage;
                 Debug.Log(userInfo);
+
+                //Время входа
+                startDateTime = DateTime.Now;
             }
             else {
                 Debug.Log("Google Play Services: Authentication failed");
@@ -100,4 +112,96 @@ public class GooglePlay : MonoBehaviour
         PlayGamesPlatform.Instance.SignOut();
     }
 
+
+    public void SaveOrLoad(bool isSavingFunc) {
+        isSaving = isSavingFunc;
+        OpenSavedGame("Profile");
+    }
+
+    //////////////////////////////////////
+    //чтение игры из гугл плей
+    void OpenSavedGame(string filename)
+    {
+        ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
+        savedGameClient.OpenWithAutomaticConflictResolution(filename, DataSource.ReadCacheOrNetwork,
+            ConflictResolutionStrategy.UseLongestPlaytime, OnSavedGameOpened);
+    }
+
+    public void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game)
+    {
+        if (status == SavedGameRequestStatus.Success)
+        {
+            if (isSaving) {
+                byte[] dataSave = System.Text.Encoding.UTF8.GetBytes(BufferSaveSTR);
+                SaveGame(game, dataSave);
+            }
+            else {
+                LoadGameData(game);
+            }
+        }
+        else
+        {
+            // handle error
+        }
+    }
+
+
+    //Сохранение игры в гугл плей
+    void SaveGame(ISavedGameMetadata game, byte[] savedData)
+    {
+        TimeSpan CurrentSpan = DateTime.Now - startDateTime;
+        TimeSpan TotalPlaySpan = game.TotalTimePlayed + CurrentSpan;
+
+        ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
+
+        SavedGameMetadataUpdate.Builder builder = new SavedGameMetadataUpdate.Builder();
+        builder = builder
+            .WithUpdatedPlayedTime(TotalPlaySpan)
+            .WithUpdatedDescription("Saved game at " + DateTime.Now);
+
+        SavedGameMetadataUpdate updatedMetadata = builder.Build();
+        savedGameClient.CommitUpdate(game, updatedMetadata, savedData, OnSavedGameWritten);
+    }
+
+    public void OnSavedGameWritten(SavedGameRequestStatus status, ISavedGameMetadata game)
+    {
+        if (status == SavedGameRequestStatus.Success)
+        {
+            // handle reading or writing of saved game.
+            Debug.Log("Успешно сохранено в google play");
+
+        }
+        else
+        {
+            // handle error
+        }
+    }
+
+    //Загрузка игры
+    void LoadGameData(ISavedGameMetadata game)
+    {
+        ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
+        savedGameClient.ReadBinaryData(game, OnSavedGameDataRead);
+    }
+
+    public void OnSavedGameDataRead(SavedGameRequestStatus status, byte[] data)
+    {
+        if (status == SavedGameRequestStatus.Success)
+        {
+            // handle processing the byte array data
+            if (data.Length > 0)
+            {
+                string dataStr = System.Text.Encoding.ASCII.GetString(data);
+                //Успешно загруженно
+
+                //Отправляем на расшифровку загруженный текст
+                PlayerProfile.main.LoadFromGoogle(dataStr);
+            }
+            else Debug.LogError("loading data is null");
+        }
+        else
+        {
+            // handle error
+        }
+    }
 }
