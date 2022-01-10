@@ -22,6 +22,7 @@ public class GooglePlay : MonoBehaviour
     bool isSaving = false;
     public string BufferSaveSTR = "";
     private DateTime startDateTime;
+    string LastMessage = "None";
 
     private void Awake()
     {
@@ -54,6 +55,8 @@ public class GooglePlay : MonoBehaviour
 
                 //Время входа
                 startDateTime = DateTime.Now;
+                //Начать процесс загрузки данных с гугла
+                SaveOrLoad(false);
             }
             else {
                 Debug.Log("Google Play Services: Authentication failed");
@@ -103,7 +106,8 @@ public class GooglePlay : MonoBehaviour
 
             TestFps.text = fpsNew.ToString();
         }
-        
+
+        TestText.text = LastMessage;
     }
 
     //Exit Google Play Store
@@ -134,14 +138,32 @@ public class GooglePlay : MonoBehaviour
             if (isSaving) {
                 byte[] dataSave = System.Text.Encoding.UTF8.GetBytes(BufferSaveSTR);
                 SaveGame(game, dataSave);
+                LastMessage = "OnSavedGameOpened IsSave";
             }
             else {
                 LoadGameData(game);
+                LastMessage = "OnSavedGameOpened !IsSave";
             }
         }
         else
         {
             // handle error
+            LastMessage = "error OnSavedGameOpened ";
+            if (status == SavedGameRequestStatus.AuthenticationError)
+            {
+                LastMessage += "AuthenticationError";
+            }
+            else if(status == SavedGameRequestStatus.BadInputError) {
+                LastMessage += "BadInputError";
+            }
+            else if (status == SavedGameRequestStatus.InternalError)
+            {
+                LastMessage += "InternalError";
+            }
+            else if (status == SavedGameRequestStatus.TimeoutError)
+            {
+                LastMessage += "TimeoutError";
+            }
         }
     }
 
@@ -168,12 +190,30 @@ public class GooglePlay : MonoBehaviour
         if (status == SavedGameRequestStatus.Success)
         {
             // handle reading or writing of saved game.
-            Debug.Log("Успешно сохранено в google play");
+            LastMessage ="Успешно сохранено в google play";
 
         }
         else
         {
             // handle error
+            LastMessage = "OnSavedGameWritten bad ";
+            if (status == SavedGameRequestStatus.AuthenticationError)
+            {
+                LastMessage += "AuthenticationError";
+            }
+            else if (status == SavedGameRequestStatus.BadInputError)
+            {
+                LastMessage += "BadInputError";
+            }
+            else if (status == SavedGameRequestStatus.InternalError)
+            {
+                LastMessage += "InternalError";
+            }
+            else if (status == SavedGameRequestStatus.TimeoutError)
+            {
+                LastMessage += "TimeoutError";
+            }
+
         }
     }
 
@@ -197,11 +237,28 @@ public class GooglePlay : MonoBehaviour
                 //Отправляем на расшифровку загруженный текст
                 PlayerProfile.main.LoadFromGoogle(dataStr);
             }
-            else Debug.LogError("loading data is null");
+            else LastMessage = "loading data is null";
         }
         else
         {
             // handle error
+            LastMessage = "OnSavedGameDataRead ";
+            if (status == SavedGameRequestStatus.AuthenticationError)
+            {
+                LastMessage += "AuthenticationError";
+            }
+            else if (status == SavedGameRequestStatus.BadInputError)
+            {
+                LastMessage += "BadInputError";
+            }
+            else if (status == SavedGameRequestStatus.InternalError)
+            {
+                LastMessage += "InternalError";
+            }
+            else if (status == SavedGameRequestStatus.TimeoutError)
+            {
+                LastMessage += "TimeoutError";
+            }
         }
     }
 }
