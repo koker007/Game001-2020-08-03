@@ -18,11 +18,106 @@ public class GooglePlay : MonoBehaviour
     Text TestFps;
 
     public bool isAutorized = false;
+    
 
-    bool isSaving = false;
-    public string BufferSaveSTR = "";
+    bool dataIsLoadedSuccess = false; //Была ли уже попытка считать данные и ответ был получен
+    float lastTimeSaveLoad = 0;
     private DateTime startDateTime;
     string LastMessage = "None";
+
+    //Имена файлов которые участвуют в загрузке и сохранении на гуглплей
+    public const string KeyFileProfile = "Profile";
+    public const string KeyFileLVLStars = "LVLStars";
+
+    class SaveOrLoadData {
+        public string keyFile; //имя файла который будет загружаться
+        public bool isSave; //Этот файл нужно сохранить? если нет то загрузка из гугла
+        public string dataSTR; //Данные файла
+
+        public bool inProcess; //Находится ли этот шаг в процессе выполнения
+
+        public SaveOrLoadData(string keyFileF, bool isSavingF, string dataSTRF) {
+            keyFile = keyFileF;
+            isSave = isSavingF;
+            dataSTR = dataSTRF;
+
+            inProcess = false;
+        }
+
+        public void SetProcessTrue() {
+            inProcess = true;
+        }
+    }
+
+    //Список запросов на запись или чтение
+    List<SaveOrLoadData> BufferWaitingFile = new List<SaveOrLoadData>();
+
+    /// <summary>
+    /// Добавить файл в очередь на загрузку или сохранение
+    /// </summary>
+    /// <param name="keyFileF"></param>
+    /// <param name="needSaveF"></param>
+    /// <param name="dataSTRF"></param>
+    void AddBufferWaitingFile(string keyFileF, bool needSaveF, string dataSTRF) {
+        //выходим, если нет информации или нет имени файла 
+        if (keyFileF.Length == 0 || keyFileF == "" || 
+            (needSaveF && (dataSTRF == "" || dataSTRF.Length == 0))) {
+            return;
+        }
+
+        //Создаем запрос
+        BufferWaitingFile.Add(new SaveOrLoadData(keyFileF, needSaveF, dataSTRF));
+    }
+
+    /// <summary>
+    /// Добавить в очерерь на загрузку из гугл плей
+    /// </summary>
+    /// <param name="KeyFile"></param>
+    public void AddBufferWaitingFile(string keyFileF) {
+        AddBufferWaitingFile(keyFileF, false, "");
+    }
+
+    /// <summary>
+    /// Сохранить информацию в файл
+    /// </summary>
+    /// <param name="keyFileF"></param>
+    /// <param name="dataSTRF"></param>
+    public void AddBufferWaitingFile(string keyFileF, string dataSTRF) {
+        AddBufferWaitingFile(keyFileF, true, dataSTRF);
+    }
+
+    //Выполнить шаг загрузки или сохранения файла из очереди
+    void StepBufferSaveOrLoad() {
+        //Выходим если
+        if (!isAutorized || //Не выполнена авторизация в гугл плее
+            BufferWaitingFile.Count <= 0 || // буффер выполнения пуст
+            BufferWaitingFile[0].inProcess || //Первый в очереди уже в процессе выполнения
+            Time.unscaledTime - lastTimeSaveLoad < 5 //время для проверки еще не пришло
+            ) {
+            return; 
+        }
+
+        //Выполняем шаг первый в очереди
+        OpenSavedGame();
+
+        lastTimeSaveLoad = Time.unscaledTime;
+    }
+
+    //Удалить первого в списке на сохранение или загрузку
+    void DelFirstInBufferSaveOrLoad() {
+
+        List<SaveOrLoadData> BufferWaitingFileNew = new List<SaveOrLoadData>();
+        //Перебираем список начиная со второго чтобы не добавить первого
+        for (int num = 0; num < BufferWaitingFile.Count; num++) {
+            if (num > 0) {
+                BufferWaitingFileNew.Add(BufferWaitingFile[num]);
+            }
+        }
+
+        //Заменяем
+        BufferWaitingFile = BufferWaitingFileNew;
+    }
+
 
     private void Awake()
     {
@@ -31,7 +126,29 @@ public class GooglePlay : MonoBehaviour
     }
 
     void iniServices() {
+        LastMessage = "1";
+        //Создаем конфигурацию с указанием какие ништяки Google play нужно использовать
+        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+                // enables saving game progress.
+            .EnableSavedGames()
+                // requests the email address of the player be available.
+                // Will bring up a prompt for consent.
+            //.RequestEmail()
+                // requests a server auth code be generated so it can be passed to an
+                //  associated back end server application and exchanged for an OAuth token.
+            //.RequestServerAuthCode(false)
+                // requests an ID token be generated.  This OAuth token can be used to
+                //  identify the player to other services such as Firebase.
+            //.RequestIdToken()
+            .Build();
+
+        LastMessage = "2";
+        //Применяем конфигурацию
+        PlayGamesPlatform.InitializeInstance(config);
+        LastMessage = "3";
+
         PlayGamesPlatform.DebugLogEnabled = true;
+        LastMessage = "4";
         PlayGamesPlatform.Activate();
         //AutorizationPlayGamesPatform();
         AutorizationSocial();
@@ -43,6 +160,8 @@ public class GooglePlay : MonoBehaviour
         }
     }
     void AutorizationSocial() {
+
+        LastMessage = "AutorizationSocial";
         Social.localUser.Authenticate(success => {
             Debug.Log("===============================================");
             if (success)
@@ -53,13 +172,17 @@ public class GooglePlay : MonoBehaviour
                     "\nIsUnderage: " + Social.localUser.underage;
                 Debug.Log(userInfo);
 
+                LastMessage = "Google Play Services: Authentication ok";
+
                 //Время входа
                 startDateTime = DateTime.Now;
-                //Начать процесс загрузки данных с гугла
-                SaveOrLoad(false);
+
+                //Добавляем на загрузку данные
+                AddBufferWaitingFile(KeyFileProfile);
             }
             else {
                 Debug.Log("Google Play Services: Authentication failed");
+                LastMessage = "Google Play Services: Authentication failed";
             }
 
             Debug.Log("===============================================");
@@ -87,6 +210,9 @@ public class GooglePlay : MonoBehaviour
     int[] fpsBuffer = new int[10];
     void Update()
     {
+
+        StepBufferSaveOrLoad();
+
         //Debug.Log("google play autorized: " + isAutorized);
         if (Settings.main.DeveloperTesting)
         {
@@ -117,17 +243,22 @@ public class GooglePlay : MonoBehaviour
     }
 
 
-    public void SaveOrLoad(bool isSavingFunc) {
-        isSaving = isSavingFunc;
-        OpenSavedGame("Profile");
-    }
-
     //////////////////////////////////////
-    //чтение игры из гугл плей
-    void OpenSavedGame(string filename)
+    //чтение игры из гугл плей //По файлу первому в очереди
+    void OpenSavedGame()
     {
+        //Если первый файл уже в процессе выполнения
+        if (BufferWaitingFile[0].inProcess) {
+            return;
+        }
+
+        //Говорим что в процессе выполнения
+        BufferWaitingFile[0].SetProcessTrue();
+
+        LastMessage = "OpenSavedGame";
         ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
-        savedGameClient.OpenWithAutomaticConflictResolution(filename, DataSource.ReadCacheOrNetwork,
+        LastMessage = "savedGameClient";
+        savedGameClient.OpenWithAutomaticConflictResolution(BufferWaitingFile[0].keyFile, DataSource.ReadCacheOrNetwork,
             ConflictResolutionStrategy.UseLongestPlaytime, OnSavedGameOpened);
     }
 
@@ -135,14 +266,26 @@ public class GooglePlay : MonoBehaviour
     {
         if (status == SavedGameRequestStatus.Success)
         {
-            if (isSaving) {
-                byte[] dataSave = System.Text.Encoding.UTF8.GetBytes(BufferSaveSTR);
-                SaveGame(game, dataSave);
-                LastMessage = "OnSavedGameOpened IsSave";
+            if (BufferWaitingFile[0].isSave)
+            {
+
+                //Перезаписать данные можно только если был ранее получен ответ
+                if (dataIsLoadedSuccess)
+                {
+                    byte[] dataSave = System.Text.Encoding.UTF8.GetBytes(BufferWaitingFile[0].dataSTR);
+                    SaveGame(game, dataSave);
+                    LastMessage = "OnSavedGameOpened IsSaving";
+                }
+                else
+                {
+                    LastMessage = "OnSavedGameOpened IsSaving not Success";
+                    DelFirstInBufferSaveOrLoad();
+                }
             }
-            else {
+            else
+            {
                 LoadGameData(game);
-                LastMessage = "OnSavedGameOpened !IsSave";
+                LastMessage = "OnSavedGameOpened IsLoading";
             }
         }
         else
@@ -164,6 +307,9 @@ public class GooglePlay : MonoBehaviour
             {
                 LastMessage += "TimeoutError";
             }
+
+            //Какая-то ошибка удаляем из очереди
+            DelFirstInBufferSaveOrLoad();
         }
     }
 
@@ -215,6 +361,9 @@ public class GooglePlay : MonoBehaviour
             }
 
         }
+
+        //Процесс сохранения выполнен удаляем из очереди
+        DelFirstInBufferSaveOrLoad();
     }
 
     //Загрузка игры
@@ -237,7 +386,13 @@ public class GooglePlay : MonoBehaviour
                 //Отправляем на расшифровку загруженный текст
                 PlayerProfile.main.LoadFromGoogle(dataStr);
             }
-            else LastMessage = "loading data is null";
+            else
+            {
+                
+                LastMessage = "loading data is null";
+            }
+            //Говорим что ответ был получен
+            dataIsLoadedSuccess = true;
         }
         else
         {
@@ -260,5 +415,8 @@ public class GooglePlay : MonoBehaviour
                 LastMessage += "TimeoutError";
             }
         }
+
+        //Процесс загрузки был выполнен удаляем из очереди
+        DelFirstInBufferSaveOrLoad();
     }
 }

@@ -27,6 +27,9 @@ public class LevelButton3D : MonoBehaviour
     [SerializeField]
     GameObject bulka;
 
+    [SerializeField]
+    Image[] StarsComplite;
+
     public GraphicRaycaster raycaster;
     private PointerEventData eventData;
     private EventSystem eventSystem;
