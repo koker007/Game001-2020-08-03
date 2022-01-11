@@ -34,8 +34,19 @@ public class MessageBuyItem : MonoBehaviour
         Gold
     }
 
+    public enum TypeBuy {
+        none,
+        internalObj,
+        rosket2x,
+        bomb,
+        Color5,
+        mixed,
+        healt,
+        gold100
+    }
+
     [SerializeField]
-    MenuGameplay.SuperHitType typeBuy;
+    TypeBuy typeBuy;
 
     void Update()
     {
@@ -47,28 +58,28 @@ public class MessageBuyItem : MonoBehaviour
         if (!health)
         {
             FromCount.text = System.Convert.ToString(PlayerProfile.main.GoldAmount);
-            FromPrice.text = System.Convert.ToString(DealPrice);
+            FromPrice.text = "-"+ System.Convert.ToString(DealPrice);
         }
 
-        TargetPrice.text = System.Convert.ToString(DealResult);
+        TargetPrice.text = "+" + System.Convert.ToString(DealResult);
 
-        if (typeBuy == MenuGameplay.SuperHitType.internalObj)
+        if (typeBuy == TypeBuy.internalObj)
         {
 
             TargetCount.text = System.Convert.ToString(PlayerProfile.main.ShopInternal.Amount);
         }
-        else if (typeBuy == MenuGameplay.SuperHitType.rosket2x)
+        else if (typeBuy == TypeBuy.rosket2x)
         {
             TargetCount.text = System.Convert.ToString(PlayerProfile.main.ShopRocket.Amount);
         }
-        else if (typeBuy == MenuGameplay.SuperHitType.bomb)
+        else if (typeBuy == TypeBuy.bomb)
         {
             TargetCount.text = System.Convert.ToString(PlayerProfile.main.ShopBomb.Amount);
         }
-        else if (typeBuy == MenuGameplay.SuperHitType.Color5) {
+        else if (typeBuy == TypeBuy.Color5) {
             TargetCount.text = System.Convert.ToString(PlayerProfile.main.ShopColor5.Amount);
         }
-        else if (typeBuy == MenuGameplay.SuperHitType.mixed) {
+        else if (typeBuy == TypeBuy.mixed) {
             TargetCount.text = System.Convert.ToString(PlayerProfile.main.ShopMixed.Amount);
         }
         else if (health)
@@ -82,34 +93,40 @@ public class MessageBuyItem : MonoBehaviour
         bool NeedBuyAntigen = false;
 
         //Если хватает антител
-        if (typeBuy == MenuGameplay.SuperHitType.internalObj) {
+        if (typeBuy == TypeBuy.internalObj) {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopInternal)) {
                 NeedBuyAntigen = true;
             }
         }
-        else if (typeBuy == MenuGameplay.SuperHitType.rosket2x) {
+        else if (typeBuy == TypeBuy.rosket2x) {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopRocket)) {
                 NeedBuyAntigen = true;
             }
         }
-        else if (typeBuy == MenuGameplay.SuperHitType.bomb) {
+        else if (typeBuy == TypeBuy.bomb) {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopBomb)) {
                 NeedBuyAntigen = true;
             }
         }
-        else if (typeBuy == MenuGameplay.SuperHitType.Color5) {
+        else if (typeBuy == TypeBuy.Color5) {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopColor5)) {
                 NeedBuyAntigen = true;
             }
         }
-        else if (typeBuy == MenuGameplay.SuperHitType.mixed)
+        else if (typeBuy == TypeBuy.mixed)
         {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopMixed))
             {
                 NeedBuyAntigen = true;
             }
         }
-        else if(health)
+        //Кнопка покупки за реал
+        else if (
+            typeBuy == TypeBuy.gold100
+            ) {
+            PlayerProfile.main.PayReal(typeBuy);
+        }
+        else if (health)
         {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.Health))
             {

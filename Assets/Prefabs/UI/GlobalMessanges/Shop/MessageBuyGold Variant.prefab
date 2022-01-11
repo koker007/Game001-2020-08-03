@@ -310,7 +310,7 @@ PrefabInstance:
     - target: {fileID: 2242432098107239116, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 21300000, guid: 8656ee665ac7016419c3e9d8ce4ef376, type: 3}
     - target: {fileID: 2242432098107239116, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -427,6 +427,22 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7198743265358374722, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8418187813694582105, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8787602311654469385, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: typeBuy
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8787602311654469385, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: FromCount
+      value: 
+      objectReference: {fileID: 7246092809547164792}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
 --- !u!224 &6217191110069904315 stripped
@@ -443,5 +459,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8aed194d7fd3cbc4baecda9b5ec91909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7246092809547164792 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1442448661982061677, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+  m_PrefabInstance: {fileID: 8109804728008804373}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

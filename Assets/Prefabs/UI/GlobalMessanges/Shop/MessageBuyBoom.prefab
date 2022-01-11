@@ -1,54 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &3957050648274225290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 154171100826714124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: Shop
---- !u!114 &1000506302249860256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 154171101806559083}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: BoomBuy
---- !u!114 &6709336792349651263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 154171101930599835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8aed194d7fd3cbc4baecda9b5ec91909, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DealPrice: 1
-  DealResult: 1
-  From: {fileID: 4319294959270819066}
-  FromCount: {fileID: 6127668536851254854}
-  FromPrice: {fileID: 7602622757223898113}
-  To: {fileID: 8608044244424949861}
-  health: 0
-  Target: {fileID: 2137778522877521301}
-  TargetCount: {fileID: 3524933775740435035}
-  TargetPrice: {fileID: 1231103327821398233}
-  typeBuy: 1
 --- !u!1 &711992715040737640
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,7 +143,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 59a8a9e22982dd0438937f32424fab2d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0aaf987c625189947bbdcf00dd0309d3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -358,19 +309,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: count
---- !u!114 &8638066980737877254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5209199237815783817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: Buy
 --- !u!1 &5781749779850392431
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,6 +544,68 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: count
+--- !u!114 &6709336792349651263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154171101930599835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aed194d7fd3cbc4baecda9b5ec91909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DealPrice: 1
+  DealResult: 1
+  From: {fileID: 4319294959270819066}
+  FromCount: {fileID: 6127668536851254854}
+  FromPrice: {fileID: 7602622757223898113}
+  To: {fileID: 8608044244424949861}
+  health: 0
+  Target: {fileID: 2137778522877521301}
+  TargetCount: {fileID: 3524933775740435035}
+  TargetPrice: {fileID: 1231103327821398233}
+  typeBuy: 1
+--- !u!114 &3957050648274225290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154171100826714124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Shop
+--- !u!114 &1000506302249860256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154171101806559083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: BoomBuy
+--- !u!114 &8638066980737877254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5209199237815783817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Buy
 --- !u!1 &8152454555871260002
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,11 +818,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b09534c2d1526a4fadec986dd22fea9, type: 3}
---- !u!1 &154171100826714124 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7478902613490472126, guid: 6b09534c2d1526a4fadec986dd22fea9, type: 3}
-  m_PrefabInstance: {fileID: 7343646416603927730}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &154171101930599832 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7478902612445323562, guid: 6b09534c2d1526a4fadec986dd22fea9, type: 3}
@@ -836,6 +831,11 @@ GameObject:
 --- !u!1 &5209199237815783817 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3288494806841525563, guid: 6b09534c2d1526a4fadec986dd22fea9, type: 3}
+  m_PrefabInstance: {fileID: 7343646416603927730}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &154171100826714124 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7478902613490472126, guid: 6b09534c2d1526a4fadec986dd22fea9, type: 3}
   m_PrefabInstance: {fileID: 7343646416603927730}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &154171101930599835 stripped
