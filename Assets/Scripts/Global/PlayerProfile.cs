@@ -142,8 +142,8 @@ public class PlayerProfile : MonoBehaviour
 
     //Сохранить данные в гугл плей в виде строки
     public void SaveToGoogle() {
-        if (!GooglePlay.main.isAutorized)
-            return;
+        //if (!GooglePlay.main.isAutorized)
+            //return;
 
         //Создаем список параметров
         string dataStr = "";
@@ -168,8 +168,8 @@ public class PlayerProfile : MonoBehaviour
         dataStr += strShopColor5 + spliterKAD + ShopColor5.Amount + spliterDAD;
         dataStr += strShopMixed + spliterKAD + ShopMixed.Amount + spliterDAD;
 
-        GooglePlay.main.BufferSaveSTR = dataStr;
-        GooglePlay.main.SaveOrLoad(true);
+        //Отправить данные за сохрание в гугл
+        GooglePlay.main.AddBufferWaitingFile(GooglePlay.KeyFileProfile, dataStr);
     }
 
     //начать процесс загрузки данных из гугла
@@ -239,7 +239,7 @@ public class PlayerProfile : MonoBehaviour
     }
 
     /// <summary>
-    /// покупка редмета
+    /// покупка редмета за игровую валюту
     /// </summary>
     public bool isPurchaseItem(ref Item item)
     {
@@ -260,6 +260,19 @@ public class PlayerProfile : MonoBehaviour
     }
 
     /// <summary>
+    /// Покупка предмета за реал
+    /// </summary>
+    /// <returns></returns>
+    public void PayReal(MessageBuyItem.TypeBuy typeBuy) {
+
+        //покупка голды
+        if (typeBuy == MessageBuyItem.TypeBuy.gold100) {
+            GoldAmount += 1;
+            SaveItemAmount();
+        }
+    }
+
+    /// <summary>
     /// сохранение количества предметов
     /// </summary>
     private void SaveItemAmount()
@@ -275,6 +288,8 @@ public class PlayerProfile : MonoBehaviour
         PlayerPrefs.SetInt(strShopBomb, ShopBomb.Amount);
         PlayerPrefs.SetInt(strShopColor5, ShopColor5.Amount);
         PlayerPrefs.SetInt(strShopMixed, ShopMixed.Amount);
+
+        SaveToGoogle();
     }
 
     public void LevelPassed(int Level)
