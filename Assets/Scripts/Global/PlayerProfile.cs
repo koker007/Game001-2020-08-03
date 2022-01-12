@@ -25,7 +25,6 @@ public class PlayerProfile : MonoBehaviour
     /// <summary>
     /// количество очков до следующего уровня
     /// </summary>
-    /// 
 
     public int ProfileTermsOfUse = 0;
 
@@ -59,6 +58,12 @@ public class PlayerProfile : MonoBehaviour
     public int GoldAmount;
     public int moneyboxCapacity; //Свинья копилка общий объем
     public int moneyboxContent; //свинья копилка содержимое на данный момент
+
+    /// <summary>
+    /// Сколько очков получил игрок на этом уровне
+    /// </summary>
+    public int[] LVLStar = new int[1];
+    
 
     /// <summary>
     /// покупаемые предметы 
@@ -170,6 +175,9 @@ public class PlayerProfile : MonoBehaviour
 
         //Отправить данные за сохрание в гугл
         GooglePlay.main.AddBufferWaitingFile(GooglePlay.KeyFileProfile, dataStr);
+
+        //Сохранить звезды уровней
+        SaveForGoogleLVLStar();
     }
 
     //начать процесс загрузки данных из гугла
@@ -223,6 +231,84 @@ public class PlayerProfile : MonoBehaviour
         
     }
 
+    public void LoadFromGoogleLVLStar(string dataStr) {
+        //разделяем строку на множество данных
+        string[] dataDADs = dataStr.Split(spliterDAD);
+
+        foreach (string dataDAD in dataDADs)
+        {
+            string[] dataKAD = dataDAD.Split(spliterKAD);
+            //Если данных не 2 то это ошибка
+            if (dataKAD.Length != 2)
+            {
+                continue;
+            }
+
+            //Переписать данные профиля игрока данными из гугла
+            WriteDataLVL(dataKAD[0], dataKAD[1]);
+        }
+
+        //Прочитать данные профиля игрока данными из гугла
+        void WriteDataLVL(string lvlStr, string starsStr) {
+            //проверяем какой уровень
+            int lvl = System.Convert.ToInt32(lvlStr);
+            int stars = System.Convert.ToInt32(starsStr);
+
+            //если загружаемый уровень выше чем текущий массив, то рассширяем массив
+            if (lvl >= LVLStar.Length) {
+                //расширяем до последнего значения
+                int[] LVLStarNew = new int[lvl+1];
+
+                //Заполняем данными
+                for (int x = 0; x < LVLStar.Length; x++) {
+                    LVLStarNew[x] = LVLStar[x];
+                }
+
+                LVLStar = LVLStarNew;
+            }
+
+            //Внедряем данные по значению
+            LVLStar[lvl] = stars;
+        }
+    }
+    void SaveForGoogleLVLStar() {
+        //Создаем список параметров
+        string dataStr = "";
+
+        //Начинаем с конца чтобы последний лвл записался первым и потом первым считался
+        for (int x = LVLStar.Length - 1; x > 0; x--) {
+            //Пропускаем если звезд нет
+            if (LVLStar[x] == 0)
+                continue;
+
+            //Записываем в строку |LVL=NUM|
+            dataStr += "" + x + spliterKAD + LVLStar[x] + spliterDAD;
+        }
+
+        //Отправить данные на сохрание в гугл
+        GooglePlay.main.AddBufferWaitingFile(GooglePlay.KeyFileLVLStars, dataStr);
+    }
+    
+    //Сохранить звезды
+    public void SetLVLStar(int LVLnum, int starsCount) {
+        
+
+        if (LVLnum >= LVLStar.Length) {
+            int[] LVLStarNew = new int[LVLnum + 1];
+
+            //Переносим данные
+            for (int x = 0; x < LVLStar.Length; x++) {
+                LVLStarNew[x] = LVLStar[x];
+            }
+
+            LVLStar = LVLStarNew;
+        }
+
+        LVLStar[LVLnum] = starsCount;
+
+        SaveForGoogleLVLStar();
+    }
+
     /// <summary>
     /// увеличение очков уровня игрока
     /// </summary>
@@ -253,7 +339,7 @@ public class PlayerProfile : MonoBehaviour
             item.Amount++;
 
             MenuWorld.main.SetText();
-            SaveItemAmount();
+            Save();
 
             return true;
         }
@@ -268,7 +354,7 @@ public class PlayerProfile : MonoBehaviour
         //покупка голды
         if (typeBuy == MessageBuyItem.TypeBuy.gold100) {
             GoldAmount += 1;
-            SaveItemAmount();
+            Save();
         }
     }
 
@@ -289,7 +375,6 @@ public class PlayerProfile : MonoBehaviour
         PlayerPrefs.SetInt(strShopColor5, ShopColor5.Amount);
         PlayerPrefs.SetInt(strShopMixed, ShopMixed.Amount);
 
-        SaveToGoogle();
     }
 
     public void LevelPassed(int Level)
@@ -308,14 +393,14 @@ public class PlayerProfile : MonoBehaviour
     {
         GoldAmount += moneyboxContent;
         moneyboxContent = 0;
-        SaveItemAmount();
+        Save();
     }
 
     //Улучшаем копилку
     public void UpgradeMoneybox()
     {
         moneyboxCapacity += 5;
-        SaveItemAmount();
+        Save();
     }
 
     //Заполняем копилку
@@ -326,7 +411,7 @@ public class PlayerProfile : MonoBehaviour
         {
             moneyboxContent = moneyboxCapacity;
         }
-        SaveItemAmount();
+        Save();
     }
     #endregion
 }

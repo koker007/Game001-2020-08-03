@@ -96,6 +96,34 @@ public class LevelButton3D : MonoBehaviour
             SphereMat.color = colorOpen;
 
         }
+
+        //Проверка звезд
+        if (PlayerProfile.main.LVLStar.Length > NumLevel && PlayerProfile.main.LVLStar[NumLevel] > 0)
+        {
+            //1
+            if (PlayerProfile.main.LVLStar[NumLevel] == 1) {
+                StarsComplite[0].gameObject.SetActive(true);
+                StarsComplite[1].gameObject.SetActive(false);
+                StarsComplite[2].gameObject.SetActive(false);
+            }
+            //2
+            else if (PlayerProfile.main.LVLStar[NumLevel] == 2) {
+                StarsComplite[0].gameObject.SetActive(true);
+                StarsComplite[1].gameObject.SetActive(true);
+                StarsComplite[2].gameObject.SetActive(false);
+            }
+            //3
+            else if (PlayerProfile.main.LVLStar[NumLevel] == 3) {
+                StarsComplite[0].gameObject.SetActive(true);
+                StarsComplite[1].gameObject.SetActive(true);
+                StarsComplite[2].gameObject.SetActive(true);
+            }
+        }
+        else {
+            StarsComplite[0].gameObject.SetActive(false);
+            StarsComplite[1].gameObject.SetActive(false);
+            StarsComplite[2].gameObject.SetActive(false);
+        }
     }
 
     //нажатие на кнопку

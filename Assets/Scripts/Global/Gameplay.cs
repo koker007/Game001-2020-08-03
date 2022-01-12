@@ -297,6 +297,10 @@ public class Gameplay : MonoBehaviour
             stars[2].color = new Color32(140, 140, 60, 255);
             starsCount = 0;
         }
+
+
+        PlayerProfile.main.SetLVLStar(levelSelect, starsCount);
+
     }
     public int CountStars(int score) {
         int num = 0;

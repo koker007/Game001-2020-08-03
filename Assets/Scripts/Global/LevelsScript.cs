@@ -93,7 +93,6 @@ public class LevelsScript : MonoBehaviour
     /// </summary>
     public class Level
     {
-
         /// <summary>
         /// ширина игрового поля
         /// </summary>
