@@ -64,7 +64,7 @@ public class MessageLevelInfo : MonoBehaviour
 
         LevelInfoText.text = textInfo;
 
-        Gameplay.main.CountStars(LevelsScript.main.ReturnLevel().MaxScore, ref LevelStars);
+        Gameplay.main.CountStars(LevelsScript.main.ReturnLevel().MaxScore, ref LevelStars, false);
 
         //Получаем данные уровня
         LevelsScript.Level level = LevelsScript.main.ReturnLevel();

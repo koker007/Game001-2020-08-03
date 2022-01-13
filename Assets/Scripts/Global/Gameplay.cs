@@ -267,7 +267,7 @@ public class Gameplay : MonoBehaviour
     /// </summary>
     /// <param name="score"></param>
     /// <param name="stars"></param>
-    public void CountStars(int score, ref Image[] stars)
+    public void CountStars(int score, ref Image[] stars, bool saveStars)
     {
         if (score >= LevelsScript.main.ReturnLevel().NeedScore * threeStartFactor)
         {
@@ -298,8 +298,8 @@ public class Gameplay : MonoBehaviour
             starsCount = 0;
         }
 
-
-        PlayerProfile.main.SetLVLStar(levelSelect, starsCount);
+        if (saveStars)
+            PlayerProfile.main.SetLVLStar(levelSelect, starsCount);
 
     }
     public int CountStars(int score) {
@@ -327,6 +327,7 @@ public class Gameplay : MonoBehaviour
     /// </summary>
     public void CountStars(ref Image[] stars)
     {
-        CountStars(score,ref stars);
+
+        CountStars(score,ref stars, false);
     }
 }

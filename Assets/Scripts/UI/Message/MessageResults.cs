@@ -50,6 +50,9 @@ public class MessageResults : MonoBehaviour
             StarsImage[1].gameObject.SetActive(true);
             StarsImage[2].gameObject.SetActive(true);
         }
+
+        //Сохранить прогресс звезд
+        PlayerProfile.main.SetLVLStar(Gameplay.main.levelSelect, CountStar);
     }
 
     public void NextLVL()

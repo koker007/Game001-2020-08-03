@@ -100,7 +100,6 @@ public class PlayerProfile : MonoBehaviour
     {
 
         ProfileTermsOfUse = PlayerPrefs.GetInt(strProfileTermsOfUse, 0);
-        ProfileTermsOfUse = 0;
 
         ProfileLevel = PlayerPrefs.GetInt(strProfileLevel, 1);
         ProfileScore = PlayerPrefs.GetInt(strProfileScore, 0);
@@ -121,6 +120,8 @@ public class PlayerProfile : MonoBehaviour
         ShopMixed.Amount = PlayerPrefs.GetInt(strShopMixed, 3);
 
         if (Settings.main.DeveloperTesting) {
+            ProfileTermsOfUse = 0;
+
             GoldAmount = 100;
             ProfilelevelOpen = 100;
             Health.Amount = 100;

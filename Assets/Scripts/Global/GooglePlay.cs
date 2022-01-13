@@ -53,7 +53,7 @@ public class GooglePlay : MonoBehaviour
     }
 
     //Список запросов на запись или чтение
-    List<SaveOrLoadData> BufferWaitingFile = new List<SaveOrLoadData>();
+    List<SaveOrLoadData> BufferWaitingFiles = new List<SaveOrLoadData>();
 
     /// <summary>
     /// Добавить файл в очередь на загрузку или сохранение
@@ -63,13 +63,38 @@ public class GooglePlay : MonoBehaviour
     /// <param name="dataSTRF"></param>
     void AddBufferWaitingFile(string keyFileF, bool needSaveF, string dataSTRF) {
         //выходим, если нет информации или нет имени файла 
-        if (keyFileF.Length == 0 || keyFileF == "" || 
+        if (keyFileF.Length == 0 || keyFileF == "" ||
             (needSaveF && (dataSTRF == "" || dataSTRF.Length == 0))) {
             return;
         }
 
+        //Убеждаемся что подобного запроса нет в списке
+        foreach (SaveOrLoadData bufferWaitingFile in BufferWaitingFiles) {
+            if (bufferWaitingFile.keyFile == keyFileF //Если ключ исполняемого файла тот же
+                ) {
+
+                //Если дребутся сохраниться
+                if (bufferWaitingFile.isSave)
+                {
+                    //и этот запрос не обрабатывается
+                    if (!bufferWaitingFile.inProcess) {
+                        //Заменяем данные в этом запросе новыми значениями
+                        bufferWaitingFile.dataSTR = dataSTRF;
+                        //Не добавляем запрос потому что нашли аналогичный и заменили в нем старые значения новыми
+                        return;
+                    }
+                }
+
+                else {
+                    //Не добавляем запрос потому что это загрузка а подобный запрос уже есть в списке
+                    return;
+                }
+
+            }
+        }
+
         //Создаем запрос
-        BufferWaitingFile.Add(new SaveOrLoadData(keyFileF, needSaveF, dataSTRF));
+        BufferWaitingFiles.Add(new SaveOrLoadData(keyFileF, needSaveF, dataSTRF));
     }
 
     /// <summary>
@@ -93,8 +118,8 @@ public class GooglePlay : MonoBehaviour
     void StepBufferSaveOrLoad() {
         //Выходим если
         if (!isAutorized || //Не выполнена авторизация в гугл плее
-            BufferWaitingFile.Count <= 0 || // буффер выполнения пуст
-            BufferWaitingFile[0].inProcess || //Первый в очереди уже в процессе выполнения
+            BufferWaitingFiles.Count <= 0 || // буффер выполнения пуст
+            BufferWaitingFiles[0].inProcess || //Первый в очереди уже в процессе выполнения
             Time.unscaledTime - lastTimeSaveLoad < 1 //время для проверки еще не пришло
             ) {
             return; 
@@ -111,14 +136,14 @@ public class GooglePlay : MonoBehaviour
 
         List<SaveOrLoadData> BufferWaitingFileNew = new List<SaveOrLoadData>();
         //Перебираем список начиная со второго чтобы не добавить первого
-        for (int num = 0; num < BufferWaitingFile.Count; num++) {
+        for (int num = 0; num < BufferWaitingFiles.Count; num++) {
             if (num != 0) {
-                BufferWaitingFileNew.Add(BufferWaitingFile[num]);
+                BufferWaitingFileNew.Add(BufferWaitingFiles[num]);
             }
         }
 
         //Заменяем
-        BufferWaitingFile = BufferWaitingFileNew;
+        BufferWaitingFiles = BufferWaitingFileNew;
         //Время последнего сохранения
         lastTimeSaveLoad = Time.unscaledTime;
     }
@@ -254,34 +279,34 @@ public class GooglePlay : MonoBehaviour
     void OpenSavedGame()
     {
         //Если первый файл уже в процессе выполнения
-        if (BufferWaitingFile == null || 
-            BufferWaitingFile.Count == 0 || 
-            BufferWaitingFile[0].inProcess) {
+        if (BufferWaitingFiles == null || 
+            BufferWaitingFiles.Count == 0 || 
+            BufferWaitingFiles[0].inProcess) {
             return;
         }
 
         //Говорим что в процессе выполнения
-        BufferWaitingFile[0].SetProcessTrue();
+        BufferWaitingFiles[0].SetProcessTrue();
 
         LastMessage = "OpenSavedGame";
         ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
         LastMessage = "savedGameClient";
-        savedGameClient.OpenWithAutomaticConflictResolution(BufferWaitingFile[0].keyFile, DataSource.ReadCacheOrNetwork,
+        savedGameClient.OpenWithAutomaticConflictResolution(BufferWaitingFiles[0].keyFile, DataSource.ReadCacheOrNetwork,
             ConflictResolutionStrategy.UseLongestPlaytime, OnSavedGameOpened);
     }
 
     public void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game)
     {
-        LastMessage = BufferWaitingFile[0].keyFile + " ";
+        LastMessage = BufferWaitingFiles[0].keyFile + " ";
         if (status == SavedGameRequestStatus.Success)
         {
-            if (BufferWaitingFile[0].isSave)
+            if (BufferWaitingFiles[0].isSave)
             {
 
                 //Перезаписать данные можно только если был ранее получен ответ
                 bool canWrite = false;
-                if (BufferWaitingFile[0].keyFile == KeyFileProfile && firstGetProfile ||
-                    BufferWaitingFile[0].keyFile == KeyFileLVLStars && firstGetLVLStars)
+                if (BufferWaitingFiles[0].keyFile == KeyFileProfile && firstGetProfile ||
+                    BufferWaitingFiles[0].keyFile == KeyFileLVLStars && firstGetLVLStars)
                 {
                     canWrite = true;
                 }
@@ -289,7 +314,7 @@ public class GooglePlay : MonoBehaviour
 
                 if (canWrite)
                 {
-                    byte[] dataSave = System.Text.Encoding.UTF8.GetBytes(BufferWaitingFile[0].dataSTR);
+                    byte[] dataSave = System.Text.Encoding.UTF8.GetBytes(BufferWaitingFiles[0].dataSTR);
                     SaveGame(game, dataSave);
                     LastMessage += "IsSaving";
                 }
@@ -308,7 +333,7 @@ public class GooglePlay : MonoBehaviour
         else
         {
             // handle error
-            LastMessage = BufferWaitingFile[0].keyFile + " error OnSavedGameOpened ";
+            LastMessage = BufferWaitingFiles[0].keyFile + " error OnSavedGameOpened ";
             if (status == SavedGameRequestStatus.AuthenticationError)
             {
                 LastMessage += "AuthenticationError";
@@ -401,7 +426,7 @@ public class GooglePlay : MonoBehaviour
 
                 //Успешно загруженно
                 //Обрабатываем файл в зависимости от имени
-                CalcLoadedData(BufferWaitingFile[0].keyFile, dataStr);
+                CalcLoadedData(BufferWaitingFiles[0].keyFile, dataStr);
             }
             else
             {
@@ -410,11 +435,11 @@ public class GooglePlay : MonoBehaviour
             }
             //Говорим что ответ был получен
             //Если данные профиля
-            if (BufferWaitingFile[0].keyFile == KeyFileProfile) {
+            if (BufferWaitingFiles[0].keyFile == KeyFileProfile) {
                 firstGetProfile = true;
             }
             //Если данные звезд уровней
-            else if (BufferWaitingFile[0].keyFile == KeyFileLVLStars) {
+            else if (BufferWaitingFiles[0].keyFile == KeyFileLVLStars) {
                 firstGetLVLStars = true;
             }
         }

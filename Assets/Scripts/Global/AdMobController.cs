@@ -38,13 +38,13 @@ public class AdMobController : MonoBehaviour
     private void CreateAndLoadRewardedAd()
     {
         string reawardedAdUnitId;
-#if UNITY_ANDROID
-        reawardedAdUnitId = "ca-app-pub-3940256099942544/5224354917";
-#elif UNITY_IPHONE
-            reawardedAdUnitId = "ca-app-pub-3940256099942544/1712485313";
-#else
-            reawardedAdUnitId = "unexpected_platform";
-#endif
+        #if UNITY_ANDROID
+                reawardedAdUnitId = "ca-app-pub-3940256099942544/5224354917";
+        #elif UNITY_IPHONE
+                    reawardedAdUnitId = "ca-app-pub-3940256099942544/1712485313";
+        #else
+                    reawardedAdUnitId = "unexpected_platform";
+        #endif
 
         rewardedAd = new RewardedAd(reawardedAdUnitId);
 
@@ -59,13 +59,13 @@ public class AdMobController : MonoBehaviour
     //Создаем баннер
     private void RequestBanner()
     {
-#if UNITY_ANDROID
-        string adUnitId = "ca-app-pub-3940256099942544/6300978111";
-#elif UNITY_IPHONE
-            string adUnitId = "ca-app-pub-3940256099942544/2934735716";
-#else
-            string adUnitId = "unexpected_platform";
-#endif
+        #if UNITY_ANDROID
+                string adUnitId = "ca-app-pub-3940256099942544/6300978111";
+        #elif UNITY_IPHONE
+                    string adUnitId = "ca-app-pub-3940256099942544/2934735716";
+        #else
+                    string adUnitId = "unexpected_platform";
+        #endif
 
         this.bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
 
