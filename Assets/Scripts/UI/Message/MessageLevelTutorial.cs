@@ -22,7 +22,6 @@ public class MessageLevelTutorial : MonoBehaviour
         _tutorialNum = tutorialNum;
         SetTextKey("Tutorial" + tutorialNum.ToString());
         SetAnimation((int)(Mathf.Round(tutorialNum * 10)));
-        Debug.Log((int)(Mathf.Round(tutorialNum * 10)));
     }
 
     public void SetTextKey(string value)

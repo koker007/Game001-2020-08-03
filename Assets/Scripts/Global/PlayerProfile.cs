@@ -263,13 +263,16 @@ public class PlayerProfile : MonoBehaviour
     /// Покупка предмета за реал
     /// </summary>
     /// <returns></returns>
-    public void PayReal(MessageBuyItem.TypeBuy typeBuy) {
+    public void PayReal(ShopPack Pack) 
+    {
+        GoldAmount += Pack._BuyInternalNum;
+        ShopInternal.Amount += Pack._BuyInternalNum;
+        ShopRocket.Amount += Pack._BuyRocketNum;
+        ShopBomb.Amount += Pack._BuyBombNum;
+        ShopColor5.Amount += Pack._BuyColor5Num;
+        ShopMixed.Amount += Pack._BuyMixedNum;
 
-        //покупка голды
-        if (typeBuy == MessageBuyItem.TypeBuy.gold100) {
-            GoldAmount += 1;
-            SaveItemAmount();
-        }
+        SaveItemAmount();
     }
 
     /// <summary>
