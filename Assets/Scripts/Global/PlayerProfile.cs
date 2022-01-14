@@ -123,7 +123,7 @@ public class PlayerProfile : MonoBehaviour
             ProfileTermsOfUse = 0;
 
             GoldAmount = 100;
-            ProfilelevelOpen = 100;
+            ProfilelevelOpen = 200;
             Health.Amount = 100;
 
             ShopInternal.Amount = 10;
