@@ -26,8 +26,8 @@ public class GooglePlay : MonoBehaviour
     string LastMessage = "None";
 
     //Имена файлов которые участвуют в загрузке и сохранении на гуглплей
-    public const string KeyFileProfile = "Profile";
-    public const string KeyFileLVLStars = "LVLStars";
+    public const string KeyFileProfile = "Profile.v01";
+    public const string KeyFileLVLs = "LVLs.v01";
 
     bool firstGetProfile = false;
     bool firstGetLVLStars = false;
@@ -73,7 +73,7 @@ public class GooglePlay : MonoBehaviour
             if (bufferWaitingFile.keyFile == keyFileF //Если ключ исполняемого файла тот же
                 ) {
 
-                //Если дребутся сохраниться
+                //Если требутся сохраниться
                 if (bufferWaitingFile.isSave)
                 {
                     //и этот запрос не обрабатывается
@@ -209,7 +209,7 @@ public class GooglePlay : MonoBehaviour
 
                 //Добавляем на загрузку данные
                 AddBufferWaitingFile(KeyFileProfile);
-                AddBufferWaitingFile(KeyFileLVLStars);
+                AddBufferWaitingFile(KeyFileLVLs);
             }
             else {
                 Debug.Log("Google Play Services: Authentication failed");
@@ -306,7 +306,7 @@ public class GooglePlay : MonoBehaviour
                 //Перезаписать данные можно только если был ранее получен ответ
                 bool canWrite = false;
                 if (BufferWaitingFiles[0].keyFile == KeyFileProfile && firstGetProfile ||
-                    BufferWaitingFiles[0].keyFile == KeyFileLVLStars && firstGetLVLStars)
+                    BufferWaitingFiles[0].keyFile == KeyFileLVLs && firstGetLVLStars)
                 {
                     canWrite = true;
                 }
@@ -439,7 +439,7 @@ public class GooglePlay : MonoBehaviour
                 firstGetProfile = true;
             }
             //Если данные звезд уровней
-            else if (BufferWaitingFiles[0].keyFile == KeyFileLVLStars) {
+            else if (BufferWaitingFiles[0].keyFile == KeyFileLVLs) {
                 firstGetLVLStars = true;
             }
         }
@@ -475,8 +475,8 @@ public class GooglePlay : MonoBehaviour
             //Отправляем на расшифровку загруженный текст
             PlayerProfile.main.LoadFromGoogle(data);
         }
-        else if (fileName == KeyFileLVLStars) {
-            PlayerProfile.main.LoadFromGoogleLVLStar(data);
+        else if (fileName == KeyFileLVLs) {
+            PlayerProfile.main.LoadFromGoogleLVL(data);
         }
     }
 }
