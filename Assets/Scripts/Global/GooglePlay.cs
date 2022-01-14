@@ -29,6 +29,9 @@ public class GooglePlay : MonoBehaviour
     public const string KeyFileProfile = "Profile";
     public const string KeyFileLVLStars = "LVLStars";
 
+    bool firstGetProfile = false;
+    bool firstGetLVLStars = false;
+
     class SaveOrLoadData {
         public string keyFile; //имя файла который будет загружаться
         public bool isSave; //Этот файл нужно сохранить? если нет то загрузка из гугла
@@ -50,7 +53,7 @@ public class GooglePlay : MonoBehaviour
     }
 
     //Список запросов на запись или чтение
-    List<SaveOrLoadData> BufferWaitingFile = new List<SaveOrLoadData>();
+    List<SaveOrLoadData> BufferWaitingFiles = new List<SaveOrLoadData>();
 
     /// <summary>
     /// Добавить файл в очередь на загрузку или сохранение
@@ -60,13 +63,38 @@ public class GooglePlay : MonoBehaviour
     /// <param name="dataSTRF"></param>
     void AddBufferWaitingFile(string keyFileF, bool needSaveF, string dataSTRF) {
         //выходим, если нет информации или нет имени файла 
-        if (keyFileF.Length == 0 || keyFileF == "" || 
+        if (keyFileF.Length == 0 || keyFileF == "" ||
             (needSaveF && (dataSTRF == "" || dataSTRF.Length == 0))) {
             return;
         }
 
+        //Убеждаемся что подобного запроса нет в списке
+        foreach (SaveOrLoadData bufferWaitingFile in BufferWaitingFiles) {
+            if (bufferWaitingFile.keyFile == keyFileF //Если ключ исполняемого файла тот же
+                ) {
+
+                //Если дребутся сохраниться
+                if (bufferWaitingFile.isSave)
+                {
+                    //и этот запрос не обрабатывается
+                    if (!bufferWaitingFile.inProcess) {
+                        //Заменяем данные в этом запросе новыми значениями
+                        bufferWaitingFile.dataSTR = dataSTRF;
+                        //Не добавляем запрос потому что нашли аналогичный и заменили в нем старые значения новыми
+                        return;
+                    }
+                }
+
+                else {
+                    //Не добавляем запрос потому что это загрузка а подобный запрос уже есть в списке
+                    return;
+                }
+
+            }
+        }
+
         //Создаем запрос
-        BufferWaitingFile.Add(new SaveOrLoadData(keyFileF, needSaveF, dataSTRF));
+        BufferWaitingFiles.Add(new SaveOrLoadData(keyFileF, needSaveF, dataSTRF));
     }
 
     /// <summary>
@@ -90,9 +118,9 @@ public class GooglePlay : MonoBehaviour
     void StepBufferSaveOrLoad() {
         //Выходим если
         if (!isAutorized || //Не выполнена авторизация в гугл плее
-            BufferWaitingFile.Count <= 0 || // буффер выполнения пуст
-            BufferWaitingFile[0].inProcess || //Первый в очереди уже в процессе выполнения
-            Time.unscaledTime - lastTimeSaveLoad < 5 //время для проверки еще не пришло
+            BufferWaitingFiles.Count <= 0 || // буффер выполнения пуст
+            BufferWaitingFiles[0].inProcess || //Первый в очереди уже в процессе выполнения
+            Time.unscaledTime - lastTimeSaveLoad < 1 //время для проверки еще не пришло
             ) {
             return; 
         }
@@ -108,14 +136,16 @@ public class GooglePlay : MonoBehaviour
 
         List<SaveOrLoadData> BufferWaitingFileNew = new List<SaveOrLoadData>();
         //Перебираем список начиная со второго чтобы не добавить первого
-        for (int num = 0; num < BufferWaitingFile.Count; num++) {
-            if (num > 0) {
-                BufferWaitingFileNew.Add(BufferWaitingFile[num]);
+        for (int num = 0; num < BufferWaitingFiles.Count; num++) {
+            if (num != 0) {
+                BufferWaitingFileNew.Add(BufferWaitingFiles[num]);
             }
         }
 
         //Заменяем
-        BufferWaitingFile = BufferWaitingFileNew;
+        BufferWaitingFiles = BufferWaitingFileNew;
+        //Время последнего сохранения
+        lastTimeSaveLoad = Time.unscaledTime;
     }
 
 
@@ -179,6 +209,7 @@ public class GooglePlay : MonoBehaviour
 
                 //Добавляем на загрузку данные
                 AddBufferWaitingFile(KeyFileProfile);
+                AddBufferWaitingFile(KeyFileLVLStars);
             }
             else {
                 Debug.Log("Google Play Services: Authentication failed");
@@ -248,50 +279,61 @@ public class GooglePlay : MonoBehaviour
     void OpenSavedGame()
     {
         //Если первый файл уже в процессе выполнения
-        if (BufferWaitingFile[0].inProcess) {
+        if (BufferWaitingFiles == null || 
+            BufferWaitingFiles.Count == 0 || 
+            BufferWaitingFiles[0].inProcess) {
             return;
         }
 
         //Говорим что в процессе выполнения
-        BufferWaitingFile[0].SetProcessTrue();
+        BufferWaitingFiles[0].SetProcessTrue();
 
         LastMessage = "OpenSavedGame";
         ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
         LastMessage = "savedGameClient";
-        savedGameClient.OpenWithAutomaticConflictResolution(BufferWaitingFile[0].keyFile, DataSource.ReadCacheOrNetwork,
+        savedGameClient.OpenWithAutomaticConflictResolution(BufferWaitingFiles[0].keyFile, DataSource.ReadCacheOrNetwork,
             ConflictResolutionStrategy.UseLongestPlaytime, OnSavedGameOpened);
     }
 
     public void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game)
     {
+        LastMessage = BufferWaitingFiles[0].keyFile + " ";
         if (status == SavedGameRequestStatus.Success)
         {
-            if (BufferWaitingFile[0].isSave)
+            if (BufferWaitingFiles[0].isSave)
             {
 
                 //Перезаписать данные можно только если был ранее получен ответ
-                if (dataIsLoadedSuccess)
+                bool canWrite = false;
+                if (BufferWaitingFiles[0].keyFile == KeyFileProfile && firstGetProfile ||
+                    BufferWaitingFiles[0].keyFile == KeyFileLVLStars && firstGetLVLStars)
                 {
-                    byte[] dataSave = System.Text.Encoding.UTF8.GetBytes(BufferWaitingFile[0].dataSTR);
+                    canWrite = true;
+                }
+
+
+                if (canWrite)
+                {
+                    byte[] dataSave = System.Text.Encoding.UTF8.GetBytes(BufferWaitingFiles[0].dataSTR);
                     SaveGame(game, dataSave);
-                    LastMessage = "OnSavedGameOpened IsSaving";
+                    LastMessage += "IsSaving";
                 }
                 else
                 {
-                    LastMessage = "OnSavedGameOpened IsSaving not Success";
+                    LastMessage += "not can save";
                     DelFirstInBufferSaveOrLoad();
                 }
             }
             else
             {
                 LoadGameData(game);
-                LastMessage = "OnSavedGameOpened IsLoading";
+                LastMessage += " IsLoading";
             }
         }
         else
         {
             // handle error
-            LastMessage = "error OnSavedGameOpened ";
+            LastMessage = BufferWaitingFiles[0].keyFile + " error OnSavedGameOpened ";
             if (status == SavedGameRequestStatus.AuthenticationError)
             {
                 LastMessage += "AuthenticationError";
@@ -381,18 +423,25 @@ public class GooglePlay : MonoBehaviour
             if (data.Length > 0)
             {
                 string dataStr = System.Text.Encoding.ASCII.GetString(data);
-                //Успешно загруженно
 
-                //Отправляем на расшифровку загруженный текст
-                PlayerProfile.main.LoadFromGoogle(dataStr);
+                //Успешно загруженно
+                //Обрабатываем файл в зависимости от имени
+                CalcLoadedData(BufferWaitingFiles[0].keyFile, dataStr);
             }
             else
             {
-                
+
                 LastMessage = "loading data is null";
             }
             //Говорим что ответ был получен
-            dataIsLoadedSuccess = true;
+            //Если данные профиля
+            if (BufferWaitingFiles[0].keyFile == KeyFileProfile) {
+                firstGetProfile = true;
+            }
+            //Если данные звезд уровней
+            else if (BufferWaitingFiles[0].keyFile == KeyFileLVLStars) {
+                firstGetLVLStars = true;
+            }
         }
         else
         {
@@ -418,5 +467,16 @@ public class GooglePlay : MonoBehaviour
 
         //Процесс загрузки был выполнен удаляем из очереди
         DelFirstInBufferSaveOrLoad();
+    }
+
+    //Обработать загруженные данные
+    void CalcLoadedData(string fileName, string data) {
+        if (fileName == KeyFileProfile) {
+            //Отправляем на расшифровку загруженный текст
+            PlayerProfile.main.LoadFromGoogle(data);
+        }
+        else if (fileName == KeyFileLVLStars) {
+            PlayerProfile.main.LoadFromGoogleLVLStar(data);
+        }
     }
 }
