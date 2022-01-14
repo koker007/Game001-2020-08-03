@@ -15,6 +15,11 @@ public class TextTranslator : MonoBehaviour
 
     private void Start()
     {
+        UpdtaeText();
+    }
+
+    public void UpdtaeText()
+    {
         text.text = TranslateManager.main.GetText(key);
     }
     

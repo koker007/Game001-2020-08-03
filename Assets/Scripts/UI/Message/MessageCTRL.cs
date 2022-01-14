@@ -55,7 +55,6 @@ public class MessageCTRL : MonoBehaviour
 
     public void TryDestroy()
     {
-
         //»щем данное сообщение в списке
         foreach (MessageCTRL message in BufferMessages) {
             if (message == this) {
