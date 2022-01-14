@@ -332,11 +332,11 @@ public class GlobalMessage : MonoBehaviour
     /// <summary>
     /// ¬ыбрать уровень и показать туториал
     /// </summary>
-    static public void LevelTutorial(int levelNum)
+    static public void LevelTutorial(float TutoialNum)
     {        
         GameObject messageObj = Instantiate(main.PrefabLVLTutorial, main.transform);
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-        messageObj.transform.Find("Image").transform.Find("Text").GetComponent<TextTranslator>().key = "Tutorial" + levelNum.ToString();
+        messageObj.GetComponent<MessageLevelTutorial>().Inicializate(TutoialNum);
         MessageCTRL.NewMessage(messageCTRL);
     }
 
