@@ -67,6 +67,8 @@ public class PlayerProfile : MonoBehaviour
     public int moneyboxContent; //свинья копилка содержимое на данный момент
 
     /// <summary>
+<<<<<<< HEAD
+=======
     /// Сколько очков получил игрок на этом уровне
     /// </summary>
     public int[] LVLStar = new int[1];
@@ -78,6 +80,7 @@ public class PlayerProfile : MonoBehaviour
 
 
     /// <summary>
+>>>>>>> РЎРµРјРµРЅ4
     /// покупаемые предметы 
     /// </summary>
     public struct Item
@@ -187,9 +190,12 @@ public class PlayerProfile : MonoBehaviour
 
         //Отправить данные за сохрание в гугл
         GooglePlay.main.AddBufferWaitingFile(GooglePlay.KeyFileProfile, dataStr);
+<<<<<<< HEAD
+=======
 
         //Сохранить звезды уровней
         SaveForGoogleLVL();
+>>>>>>> РЎРµРјРµРЅ4
     }
 
     //начать процесс загрузки данных из гугла
@@ -242,6 +248,9 @@ public class PlayerProfile : MonoBehaviour
 
         
     }
+
+<<<<<<< HEAD
+=======
     //Проверить размер массива и расширить если не хватает места
     void TestArray(int length, ref int[] array)
     {
@@ -426,6 +435,8 @@ public class PlayerProfile : MonoBehaviour
 
         SaveForGoogleLVL();
     }
+
+>>>>>>> РЎРµРјРµРЅ4
     /// <summary>
     /// увеличение очков уровня игрока
     /// </summary>
