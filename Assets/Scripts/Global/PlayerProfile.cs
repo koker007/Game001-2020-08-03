@@ -246,6 +246,9 @@ public class PlayerProfile : MonoBehaviour
     //Проверить размер массива и расширить если не хватает места
     void TestArray(int length, ref int[] array)
     {
+        //Если расширение не требуется
+        if (length < array.Length) return;
+
         //расширяем до последнего значения
         int[] arrayNew = new int[length + 1];
 
@@ -360,8 +363,9 @@ public class PlayerProfile : MonoBehaviour
 
             dataStr += "" + keyOfLVLgold + LVLGold[x] + spliterDAD; //золотое прохождение //Должен быть последним, в конце символ окончания данных
         }
-
-
+        
+        //для теста
+        //LoadFromGoogleLVL(dataStr);
 
         //Старое 
         /*
@@ -385,6 +389,7 @@ public class PlayerProfile : MonoBehaviour
     public void SetLVLStar(int LVLnum, int starsCount) {
         
 
+        //Расширяемся если не хватает места
         if (LVLnum >= LVLStar.Length) {
             int[] LVLStarNew = new int[LVLnum + 1];
 

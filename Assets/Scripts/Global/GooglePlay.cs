@@ -26,11 +26,11 @@ public class GooglePlay : MonoBehaviour
     string LastMessage = "None";
 
     //Имена файлов которые участвуют в загрузке и сохранении на гуглплей
-    public const string KeyFileProfile = "Profile.v01";
-    public const string KeyFileLVLs = "LVLs.v01";
+    public const string KeyFileProfile = "Profile.v02";
+    public const string KeyFileLVLs = "LVLs.v02";
 
     bool firstGetProfile = false;
-    bool firstGetLVLStars = false;
+    bool firstGetLVLs = false;
 
     class SaveOrLoadData {
         public string keyFile; //имя файла который будет загружаться
@@ -129,6 +129,21 @@ public class GooglePlay : MonoBehaviour
         OpenSavedGame();
 
         lastTimeSaveLoad = Time.unscaledTime;
+    }
+
+    //Проверка первой загрузки
+    //чтобы все файлы были загруженны
+    void TestFirstReload() {
+        if (BufferWaitingFiles.Count > 0 || !isAutorized) return;
+
+        //Если нет в буффере очереди
+        ///Проверяем была ли выполнена первая загрузка
+        if (!firstGetProfile) {
+            AddBufferWaitingFile(KeyFileProfile);
+        }
+        else if (!firstGetLVLs) {
+            AddBufferWaitingFile(KeyFileLVLs);
+        }
     }
 
     //Удалить первого в списке на сохранение или загрузку
@@ -244,8 +259,10 @@ public class GooglePlay : MonoBehaviour
 
         StepBufferSaveOrLoad();
 
+        TestFirstReload();
+
         //Debug.Log("google play autorized: " + isAutorized);
-        if (Settings.main.DeveloperTesting)
+        if (Settings.main != null && Settings.main.DeveloperTesting)
         {
             TestText.text = "GPS:" + isAutorized;
             int fpsNew = (int)(1 / (float)Time.unscaledDeltaTime);
@@ -288,9 +305,10 @@ public class GooglePlay : MonoBehaviour
         //Говорим что в процессе выполнения
         BufferWaitingFiles[0].SetProcessTrue();
 
-        LastMessage = "OpenSavedGame";
+        LastMessage = BufferWaitingFiles[0].keyFile;
+
+        LastMessage += "OpenSavedGame";
         ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
-        LastMessage = "savedGameClient";
         savedGameClient.OpenWithAutomaticConflictResolution(BufferWaitingFiles[0].keyFile, DataSource.ReadCacheOrNetwork,
             ConflictResolutionStrategy.UseLongestPlaytime, OnSavedGameOpened);
     }
@@ -306,7 +324,7 @@ public class GooglePlay : MonoBehaviour
                 //Перезаписать данные можно только если был ранее получен ответ
                 bool canWrite = false;
                 if (BufferWaitingFiles[0].keyFile == KeyFileProfile && firstGetProfile ||
-                    BufferWaitingFiles[0].keyFile == KeyFileLVLs && firstGetLVLStars)
+                    BufferWaitingFiles[0].keyFile == KeyFileLVLs && firstGetLVLs)
                 {
                     canWrite = true;
                 }
@@ -440,7 +458,7 @@ public class GooglePlay : MonoBehaviour
             }
             //Если данные звезд уровней
             else if (BufferWaitingFiles[0].keyFile == KeyFileLVLs) {
-                firstGetLVLStars = true;
+                firstGetLVLs = true;
             }
         }
         else

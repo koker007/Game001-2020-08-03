@@ -54,8 +54,9 @@ public class MessageResults : MonoBehaviour
         //Сохранить прогресс звезд
         PlayerProfile.main.SetLVLStar(Gameplay.main.levelSelect, CountStar);
 
-        //Если текущий уровень предпоследний то пройдено на золото
-        if (Gameplay.main.levelSelect == PlayerProfile.main.ProfilelevelOpen - 1)
+        //Если текущий уровень предпоследний и собранно 3 звезды
+        //то пройдено на золото
+        if (Gameplay.main.levelSelect == PlayerProfile.main.ProfilelevelOpen - 1 && CountStar == 3)
         {
             PlayerProfile.main.SetLVLGold(Gameplay.main.levelSelect, 1);
         }
