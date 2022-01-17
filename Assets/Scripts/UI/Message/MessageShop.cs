@@ -18,6 +18,20 @@ public class MessageShop : MonoBehaviour
     [SerializeField]
     Text CountMixed;
 
+    [SerializeField] private RectTransform _PacksPanel;
+    private float _StartPositionPacksPanelY;
+    private const int _VisableHeightPacksPanel = 1080;
+    [SerializeField] private Scrollbar _Scrollbar;
+
+    private void Start()
+    {
+        _StartPositionPacksPanelY = _PacksPanel.anchoredPosition.y;
+        if(_PacksPanel.sizeDelta.y <= 1080)
+        {
+            _Scrollbar.gameObject.SetActive(false);
+        }
+    }
+
     void Update()
     {
         UpdateCountItem();
@@ -30,5 +44,11 @@ public class MessageShop : MonoBehaviour
         CountBomb.text = PlayerProfile.main.ShopBomb.Amount.ToString();
         CountColor5.text = PlayerProfile.main.ShopColor5.Amount.ToString();
         CountMixed.text = PlayerProfile.main.ShopMixed.Amount.ToString();
+    }
+
+    public void Scroll()
+    {
+        Vector2 position = new Vector2(_PacksPanel.anchoredPosition.x, _StartPositionPacksPanelY + (_PacksPanel.sizeDelta.y - _VisableHeightPacksPanel)  * _Scrollbar.value);
+        _PacksPanel.anchoredPosition = position;
     }
 }
