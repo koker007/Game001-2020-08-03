@@ -13,7 +13,7 @@ public class LevelButton3D : MonoBehaviour
 {
     public Color colorNotOpen;
     public Color colorOpen;
-    public Color colorComplite;
+    public Color colorGold;
 
     public GameObject parentText;
     public Text[] text;
@@ -23,7 +23,13 @@ public class LevelButton3D : MonoBehaviour
     Material SphereMat;
 
     [SerializeField]
+    GameObject osnovanieALL;
+
+    [SerializeField]
     GameObject osnovanie;
+    [SerializeField]
+    GameObject osnovanieSkirt;
+
     [SerializeField]
     GameObject bulka;
 
@@ -42,6 +48,10 @@ public class LevelButton3D : MonoBehaviour
     public int NumLevel = 0;
 
     public bool isActive = true;
+
+    //Золотое прохождение, старый результат
+    int goldenOld = 0;
+    int starsOld = 0;
 
     private void Awake()
     {
@@ -66,7 +76,7 @@ public class LevelButton3D : MonoBehaviour
             }
 
             bulka.SetActive(true);
-            osnovanie.SetActive(true);
+            osnovanieALL.SetActive(true);
             parentText.SetActive(true);
         }
         else {
@@ -74,13 +84,17 @@ public class LevelButton3D : MonoBehaviour
                 return;
 
             bulka.SetActive(false);
-            osnovanie.SetActive(false);
+            osnovanieALL.SetActive(false);
             parentText.SetActive(false);
         }
     }
 
     //Проверка активности кнопки
     void TestProfileOpen() {
+
+        TestStars();
+        TestGold();
+
         //Поставить цвет кнопки и установить ее активность
         if (NumLevel > PlayerProfile.main.ProfilelevelOpen)
         {
@@ -93,37 +107,67 @@ public class LevelButton3D : MonoBehaviour
         {
             //sprite.color = Color.white;
             isActive = true;
-            SphereMat.color = colorOpen;
 
+            if (goldenOld == 0)
+                SphereMat.color = colorOpen;
+            else if (goldenOld == 1)
+                SphereMat.color = colorGold;
         }
 
         //Проверка звезд
-        if (PlayerProfile.main.LVLStar.Length > NumLevel && PlayerProfile.main.LVLStar[NumLevel] > 0)
-        {
-            //1
-            if (PlayerProfile.main.LVLStar[NumLevel] == 1) {
-                StarsComplite[0].gameObject.SetActive(true);
+        void TestStars() {
+
+            if (PlayerProfile.main.LVLStar.Length > NumLevel && starsOld != PlayerProfile.main.LVLStar[NumLevel] && PlayerProfile.main.LVLStar[NumLevel] > 0)
+            {
+                //1
+                if (PlayerProfile.main.LVLStar[NumLevel] == 1)
+                {
+                    StarsComplite[0].gameObject.SetActive(true);
+                    StarsComplite[1].gameObject.SetActive(false);
+                    StarsComplite[2].gameObject.SetActive(false);
+                }
+                //2
+                else if (PlayerProfile.main.LVLStar[NumLevel] == 2)
+                {
+                    StarsComplite[0].gameObject.SetActive(true);
+                    StarsComplite[1].gameObject.SetActive(true);
+                    StarsComplite[2].gameObject.SetActive(false);
+                }
+                //3
+                else if (PlayerProfile.main.LVLStar[NumLevel] == 3)
+                {
+                    StarsComplite[0].gameObject.SetActive(true);
+                    StarsComplite[1].gameObject.SetActive(true);
+                    StarsComplite[2].gameObject.SetActive(true);
+                }
+            }
+            else
+            {
+                StarsComplite[0].gameObject.SetActive(false);
                 StarsComplite[1].gameObject.SetActive(false);
                 StarsComplite[2].gameObject.SetActive(false);
             }
-            //2
-            else if (PlayerProfile.main.LVLStar[NumLevel] == 2) {
-                StarsComplite[0].gameObject.SetActive(true);
-                StarsComplite[1].gameObject.SetActive(true);
-                StarsComplite[2].gameObject.SetActive(false);
+        }
+        void TestGold() {
+
+            if (PlayerProfile.main.LVLGold.Length > NumLevel && PlayerProfile.main.LVLGold[NumLevel] > 0)
+            {
+                //Пройдено на золото
+                if (PlayerProfile.main.LVLGold[NumLevel] == 1)
+                {
+                    osnovanie.gameObject.SetActive(false);
+                    osnovanieSkirt.gameObject.SetActive(true);
+                }
+
+                goldenOld = PlayerProfile.main.LVLGold[NumLevel];
             }
-            //3
-            else if (PlayerProfile.main.LVLStar[NumLevel] == 3) {
-                StarsComplite[0].gameObject.SetActive(true);
-                StarsComplite[1].gameObject.SetActive(true);
-                StarsComplite[2].gameObject.SetActive(true);
+            else
+            {
+                osnovanie.gameObject.SetActive(true);
+                osnovanieSkirt.gameObject.SetActive(false);
             }
         }
-        else {
-            StarsComplite[0].gameObject.SetActive(false);
-            StarsComplite[1].gameObject.SetActive(false);
-            StarsComplite[2].gameObject.SetActive(false);
-        }
+
     }
 
     //нажатие на кнопку

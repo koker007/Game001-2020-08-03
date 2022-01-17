@@ -35,6 +35,12 @@ public class PlayerProfile : MonoBehaviour
     private char spliterDAD = ';'; //Разделитель множества данных DAD = DataAndData
     private char spliterKAD = '='; //Разделитель ключа и собственно самих данных KAD = KeyAndData
 
+
+    private char keyOfLVLnum = 'L';
+    private char keyOfLVLstars = 'S';
+    private char keyOfLVLgold = 'G';
+
+
     //Пользовательское соглашение
     const string strProfileTermsOfUse = "ProfileTermsOfUse";
 
@@ -61,6 +67,20 @@ public class PlayerProfile : MonoBehaviour
     public int moneyboxContent; //свинья копилка содержимое на данный момент
 
     /// <summary>
+<<<<<<< HEAD
+=======
+    /// Сколько очков получил игрок на этом уровне
+    /// </summary>
+    public int[] LVLStar = new int[1];
+    /// <summary>
+    /// какие уровни пройдены на золото игроком
+    /// </summary>
+    public int[] LVLGold = new int[1];
+    
+
+
+    /// <summary>
+>>>>>>> РЎРµРјРµРЅ4
     /// покупаемые предметы 
     /// </summary>
     public struct Item
@@ -170,6 +190,12 @@ public class PlayerProfile : MonoBehaviour
 
         //Отправить данные за сохрание в гугл
         GooglePlay.main.AddBufferWaitingFile(GooglePlay.KeyFileProfile, dataStr);
+<<<<<<< HEAD
+=======
+
+        //Сохранить звезды уровней
+        SaveForGoogleLVL();
+>>>>>>> РЎРµРјРµРЅ4
     }
 
     //начать процесс загрузки данных из гугла
@@ -223,6 +249,194 @@ public class PlayerProfile : MonoBehaviour
         
     }
 
+<<<<<<< HEAD
+=======
+    //Проверить размер массива и расширить если не хватает места
+    void TestArray(int length, ref int[] array)
+    {
+        //Если расширение не требуется
+        if (length < array.Length) return;
+
+        //расширяем до последнего значения
+        int[] arrayNew = new int[length + 1];
+
+        //Заполняем данными
+        for (int x = 0; x < array.Length; x++)
+        {
+            arrayNew[x] = array[x];
+        }
+
+        array = arrayNew;
+    }
+
+    public void LoadFromGoogleLVL(string dataStr) {
+        //разделяем строку на множество данных
+        string[] dataDADs = dataStr.Split(spliterDAD);
+
+        foreach (string dataDAD in dataDADs)
+        {
+            string[] dataKAD = dataDAD.Split(spliterKAD);
+            //Если данных меньше 2 то это ошибка
+            if (dataKAD.Length < 2)
+            {
+                continue;
+            }
+
+            //Переписать данные профиля игрока данными из гугла
+            WriteDataLVL(dataKAD);
+        }
+
+        //Прочитать данные профиля игрока данными из гугла
+        void WriteDataLVL(string[] dataKAD) {
+
+            string LVLStr = "";
+            string starsStr = "";
+            string goldStr = "";
+
+            //Разделяем данные
+            foreach(string data in dataKAD) {
+                string dataOnly = "";
+                for (int num = 1; num < data.Length; num++) {
+                    dataOnly += data[num];
+                }
+
+                //Выходим если информации нет
+                if (dataOnly == "") continue;
+
+                //Выбираем чему присвоить информацию
+                //Номер уровня
+                if (data[0] == keyOfLVLnum)
+                    LVLStr = dataOnly;
+                //Количество звезд
+                else if (data[0] == keyOfLVLstars)
+                    starsStr = dataOnly;
+                //Пройдено ли на золото
+                else if (data[0] == keyOfLVLgold)
+                    goldStr = dataOnly;
+                
+            }
+
+            //Выходим если уровень неопределен
+            if (LVLStr == "") return;
+
+            //проверяем какой уровень и преобразуем данные
+            int lvl = System.Convert.ToInt32(LVLStr);
+            int stars = System.Convert.ToInt32(starsStr);
+            int gold = System.Convert.ToInt32(goldStr);
+
+            //если загружаемый уровень выше чем размерность массива, то рассширяем массив
+            TestArray(lvl, ref LVLStar);
+            TestArray(lvl, ref LVLGold);
+
+            /*
+            if (lvl >= LVLStar.Length) {
+                //расширяем до последнего значения
+                int[] LVLStarNew = new int[lvl+1];
+
+                //Заполняем данными
+                for (int x = 0; x < LVLStar.Length; x++) {
+                    LVLStarNew[x] = LVLStar[x];
+                }
+
+                LVLStar = LVLStarNew;
+            }
+            */
+
+            //Внедряем данные по значению
+            LVLStar[lvl] = stars;
+            LVLGold[lvl] = gold;
+
+        }
+    }
+    void SaveForGoogleLVL() {
+        //Создаем список параметров
+        string dataStr = "";
+
+        TestArray(ProfilelevelOpen, ref LVLStar);
+        TestArray(ProfilelevelOpen, ref LVLGold);
+
+        //Начинаем с конца чтобы последний лвл записался первым и потом первым считался
+        for (int x = ProfilelevelOpen; x > 0; x--) {
+
+            //Если данных нет то пропускаем этот лвл
+            if (LVLStar[x] == 0 &&
+                 LVLGold[x] == 0
+                ) {
+                continue;
+            }
+
+            //Данные есть заполняем
+            dataStr += "" + keyOfLVLnum + x + spliterKAD; //Номер уровня
+            dataStr += "" + keyOfLVLstars + LVLStar[x] + spliterKAD; //количество звезд
+
+            dataStr += "" + keyOfLVLgold + LVLGold[x] + spliterDAD; //золотое прохождение //Должен быть последним, в конце символ окончания данных
+        }
+        
+        //для теста
+        //LoadFromGoogleLVL(dataStr);
+
+        //Старое 
+        /*
+        for (int x = LVLStar.Length - 1; x > 0; x--) {
+            //Пропускаем если звезд нет
+            if (LVLStar[x] == 0)
+                continue;
+
+            //Записываем в строку |LVL=NUM|
+            dataStr += "" + x + spliterKAD + LVLStar[x] + spliterDAD;
+        }
+        */
+
+        //if (dataStr == "") return;
+
+        //Отправить данные на сохрание в гугл
+        GooglePlay.main.AddBufferWaitingFile(GooglePlay.KeyFileLVLs, dataStr);
+    }
+    
+    //Сохранить звезды
+    public void SetLVLStar(int LVLnum, int starsCount) {
+        
+
+        //Расширяемся если не хватает места
+        if (LVLnum >= LVLStar.Length) {
+            int[] LVLStarNew = new int[LVLnum + 1];
+
+            //Переносим данные
+            for (int x = 0; x < LVLStar.Length; x++) {
+                LVLStarNew[x] = LVLStar[x];
+            }
+
+            LVLStar = LVLStarNew;
+        }
+
+        LVLStar[LVLnum] = starsCount;
+
+        SaveForGoogleLVL();
+    }
+    
+    //Сохранить золото
+    public void SetLVLGold(int LVLnum, int goldNum) {
+        if (LVLnum >= LVLGold.Length)
+        {
+            int[] LVLGoldNew = new int[LVLnum + 1];
+
+            //Переносим данные
+            for (int x = 0; x < LVLGold.Length; x++)
+            {
+                LVLGoldNew[x] = LVLGold[x];
+            }
+
+            LVLGold = LVLGoldNew;
+        }
+
+        if (LVLGold[LVLnum] < goldNum)
+            LVLGold[LVLnum] = goldNum;
+        else return;
+
+        SaveForGoogleLVL();
+    }
+
+>>>>>>> РЎРµРјРµРЅ4
     /// <summary>
     /// увеличение очков уровня игрока
     /// </summary>

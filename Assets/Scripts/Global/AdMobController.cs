@@ -13,6 +13,10 @@ public class AdMobController : MonoBehaviour
     private RewardedAd rewardedAd;
     private BannerView bannerView;
 
+    string keyVideoTest = "ca-app-pub-3940256099942544/5224354917";
+    string keyVideoAndroid = "ca-app-pub-4685950010415099/1502718587";
+    string keyVideoIphone = "";
+
     [SerializeField]
     private bool showAd = true;
 
@@ -37,16 +41,24 @@ public class AdMobController : MonoBehaviour
     //Создаем наградную рекламу
     private void CreateAndLoadRewardedAd()
     {
-        string reawardedAdUnitId;
+        string rewardedAdUnitId;
         #if UNITY_ANDROID
-                reawardedAdUnitId = "ca-app-pub-3940256099942544/5224354917";
+                rewardedAdUnitId = "ca-app-pub-3940256099942544/5224354917";
         #elif UNITY_IPHONE
-                    reawardedAdUnitId = "ca-app-pub-3940256099942544/1712485313";
+                reawardedAdUnitId = "ca-app-pub-3940256099942544/1712485313";
         #else
-                    reawardedAdUnitId = "unexpected_platform";
+                reawardedAdUnitId = "unexpected_platform";
         #endif
 
-        rewardedAd = new RewardedAd(reawardedAdUnitId);
+        if (GooglePlay.main.isAutorized && !Settings.main.DeveloperTesting)
+        {
+            rewardedAdUnitId = keyVideoAndroid;
+        }
+        else {
+            rewardedAdUnitId = keyVideoTest;
+        }
+
+        rewardedAd = new RewardedAd(rewardedAdUnitId);
 
         rewardedAd.OnAdLoaded += HandleRewardedAdLoaded;
         rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
