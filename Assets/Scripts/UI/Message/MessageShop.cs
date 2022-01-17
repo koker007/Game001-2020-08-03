@@ -20,14 +20,16 @@ public class MessageShop : MonoBehaviour
 
     [SerializeField] private RectTransform _PacksPanel;
     private float _StartPositionPacksPanelY;
-    private float _StartHeightPacksPanelY;
-    private int _VisableHeightPacksPanel = 1080;
+    private const int _VisableHeightPacksPanel = 1080;
     [SerializeField] private Scrollbar _Scrollbar;
 
     private void Start()
     {
         _StartPositionPacksPanelY = _PacksPanel.anchoredPosition.y;
-        _StartHeightPacksPanelY = _PacksPanel.sizeDelta.y;
+        if(_PacksPanel.sizeDelta.y <= 1080)
+        {
+            _Scrollbar.gameObject.SetActive(false);
+        }
     }
 
     void Update()
@@ -46,7 +48,7 @@ public class MessageShop : MonoBehaviour
 
     public void Scroll()
     {
-        Vector2 position = new Vector2(_PacksPanel.anchoredPosition.x, 100 * _Scrollbar.value);
+        Vector2 position = new Vector2(_PacksPanel.anchoredPosition.x, _StartPositionPacksPanelY + (_PacksPanel.sizeDelta.y - _VisableHeightPacksPanel)  * _Scrollbar.value);
         _PacksPanel.anchoredPosition = position;
     }
 }

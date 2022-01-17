@@ -124,7 +124,7 @@ public class MessageBuyItem : MonoBehaviour
         else if (
             typeBuy == TypeBuy.gold100
             ) {
-            PlayerProfile.main.PayReal(new ShopPack(100));
+            PlayerProfile.main.PayPack(new ShopPack(100));
         }
         else if (health)
         {

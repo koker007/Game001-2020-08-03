@@ -78,11 +78,11 @@ public class PlayerProfile : MonoBehaviour
     public Item Health = new Item(1);
     public Item Ticket = new Item(1);
 
-    public Item ShopInternal = new Item(1);
-    public Item ShopRocket = new Item(1);
-    public Item ShopBomb = new Item(1);
-    public Item ShopColor5 = new Item(1);
-    public Item ShopMixed = new Item(1);
+    public Item ShopInternal = new Item(15);
+    public Item ShopRocket = new Item(45);
+    public Item ShopBomb = new Item(45);
+    public Item ShopColor5 = new Item(100);
+    public Item ShopMixed = new Item(35);
 
     private void Start()
     {
@@ -263,16 +263,29 @@ public class PlayerProfile : MonoBehaviour
     /// Покупка предмета за реал
     /// </summary>
     /// <returns></returns>
-    public void PayReal(ShopPack Pack) 
+    public void PayPack(ShopPack Pack) 
     {
-        GoldAmount += Pack._BuyInternalNum;
-        ShopInternal.Amount += Pack._BuyInternalNum;
-        ShopRocket.Amount += Pack._BuyRocketNum;
-        ShopBomb.Amount += Pack._BuyBombNum;
-        ShopColor5.Amount += Pack._BuyColor5Num;
-        ShopMixed.Amount += Pack._BuyMixedNum;
+        GoldAmount += Pack.BuyMoneyNum;
+        ShopInternal.Amount += Pack.BuyInternalNum;
+        ShopRocket.Amount += Pack.BuyRocketNum;
+        ShopBomb.Amount += Pack.BuyBombNum;
+        ShopColor5.Amount += Pack.BuyColor5Num;
+        ShopMixed.Amount += Pack.BuyMixedNum;
 
         SaveItemAmount();
+    }
+    public bool PayPackForMoney(ShopPack Pack)
+    {
+        if (GoldAmount < Pack.CostMoney)
+        {
+            return false;
+        }
+        else
+        {
+            GoldAmount -= Pack.CostMoney;
+            PayPack(Pack);
+            return true;
+        }
     }
 
     /// <summary>
