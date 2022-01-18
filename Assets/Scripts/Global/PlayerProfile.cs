@@ -518,15 +518,26 @@ public class PlayerProfile : MonoBehaviour
         SaveToGoogle();
     }
 
+    public void GiftItem(Item item, int num)
+    {
+        item.Amount += num;
+        SaveItemAmount();
+    }
+    public void GiftGold(int num)
+    {
+        GoldAmount += num;
+        SaveItemAmount();
+    }
+
+    //устанавливат количество жизней
     public void SetHealth(int value)
     {
-        if (value > 5)
-            value = 5;
         if (value < 0)
             value = 0;
 
         Health.Amount = value;
         PlayerPrefs.SetInt(strHealth, Health.Amount);
+        SaveToGoogle();
     }
 
     public void LevelPassed(int Level)

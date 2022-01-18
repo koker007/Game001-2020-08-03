@@ -18121,6 +18121,7 @@ GameObject:
   - component: {fileID: 1319929787}
   - component: {fileID: 1319929786}
   - component: {fileID: 1319929789}
+  - component: {fileID: 1319929792}
   - component: {fileID: 1319929790}
   - component: {fileID: 1319929788}
   - component: {fileID: 1319929791}
@@ -18235,7 +18236,6 @@ MonoBehaviour:
   ShopMixed:
     Cost: 35
     Amount: 0
-  _TimeRegenerationText: {fileID: 1709071481}
 --- !u!114 &1319929790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18260,6 +18260,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48de76f66f7cdd0479227396eda54054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1319929792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319929785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf12bbb949db7eb4da3b2fd9cf8f7d18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _TimeRegenerationText: {fileID: 1709071481}
+  _SystemTimeStartRegeneration: 0
 --- !u!1 &1323871308
 GameObject:
   m_ObjectHideFlags: 0
