@@ -262,6 +262,8 @@ public class Gameplay : MonoBehaviour
 
         //»щем это сообщение в буфере
         foreach (MessageCTRL message in MessageCTRL.BufferMessages) {
+            if (message == null) continue;
+
             MessageYouLose messageYouLose = message.gameObject.GetComponent<MessageYouLose>();
             if (messageYouLose != null) {
                 timeScale = 1;
