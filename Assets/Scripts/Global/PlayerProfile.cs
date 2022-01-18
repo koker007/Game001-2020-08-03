@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using System;
 //alexandr
 //Андрей
 /// <summary>
@@ -103,68 +101,15 @@ public class PlayerProfile : MonoBehaviour
     public Item ShopColor5 = new Item(100);
     public Item ShopMixed = new Item(35);
 
-    private bool _healthRegenerateStat;
-    private int _TimeStartRegeneration;
-    private int _SystemTimeStartRegeneration;
-    private const string _SystemTimeStartRegenerationID = "SystemTimeStartRegeneration";
-    private const int _TimeForRegenerate = 30; //second
-    private DateTime epochStart = new System.DateTime(1970, 1, 1, 8, 0, 0, System.DateTimeKind.Utc); //начало отсчета времени
-    [SerializeField]private Text _TimeRegenerationText;
-    private void Start()
+    private void Awake()
     {
         main = this;
+    }
+
+    private void Start()
+    {
         LoadProfie();
-        //HealthRegenerateRealTime();
-    }
-    private void Update()
-    {
-        HealthRegenerate();
-    }
-
-    //при запуске игры проверяет сколько хп надо восстановить
-    private void HealthRegenerateRealTime()
-    {
-        _SystemTimeStartRegeneration = PlayerPrefs.GetInt("SystemTimeStartRegeneration", (int)(System.DateTime.UtcNow - epochStart).TotalSeconds);
-        int plusHealth = (int)((System.DateTime.UtcNow - epochStart).TotalSeconds - _SystemTimeStartRegeneration) / _TimeForRegenerate;
-        if(plusHealth + Health.Amount > 5)
-        {
-            Health.Amount = 5;
-        }
-        else
-        {
-            Health.Amount = plusHealth;
-        }
-    }
-
-    //проверка нужно ли регенерировать хп и отсчет времени
-    private void HealthRegenerate()
-    {
-        if (Health.Amount >= 5 && !_healthRegenerateStat)
-            return;
-
-        if (_healthRegenerateStat)
-        {
-            if (_TimeForRegenerate <= (int)Time.time - _TimeStartRegeneration)
-            {
-                Health.Amount++;
-                _TimeRegenerationText.text = "";
-                _healthRegenerateStat = false;
-            }
-            else
-            {
-                int timeForRegenerate = _TimeForRegenerate - ((int)Time.time - _TimeStartRegeneration);
-                int second = timeForRegenerate % 60;
-                int minute = timeForRegenerate / 60;
-                _TimeRegenerationText.text = $"{minute}:{second}";
-            }
-        }
-        else
-        {
-            _healthRegenerateStat = true; 
-            _SystemTimeStartRegeneration = (int)(System.DateTime.UtcNow - epochStart).TotalSeconds;
-            PlayerPrefs.SetInt("SystemTimeStartRegeneration", _SystemTimeStartRegeneration);
-            _TimeStartRegeneration = (int)Time.time;
-        }
+        HealthTimer.main.HealthRegenerateRealTime();
     }
 
     //загрузка данных
@@ -571,6 +516,17 @@ public class PlayerProfile : MonoBehaviour
         PlayerPrefs.SetInt(strShopMixed, ShopMixed.Amount);
 
         SaveToGoogle();
+    }
+
+    public void SetHealth(int value)
+    {
+        if (value > 5)
+            value = 5;
+        if (value < 0)
+            value = 0;
+
+        Health.Amount = value;
+        PlayerPrefs.SetInt(strHealth, Health.Amount);
     }
 
     public void LevelPassed(int Level)
