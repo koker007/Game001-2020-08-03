@@ -22,7 +22,12 @@ public class MessageResults : MonoBehaviour
         ScoreText.text = "Score:\n" + Gameplay.main.score.ToString();
         //Gameplay.main.CountStars(ref StarsImage);
 
-        SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipLVLComplite, Settings.main.VolumeMusicFrom0To1, 1);
+        float volume = Settings.main.VolumeMusicFrom0To1;
+        if (Settings.main.VolumeSoundFrom0To1 > Settings.main.VolumeMusicFrom0To1)
+        {
+            volume = Settings.main.VolumeSoundFrom0To1;
+        }
+        SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipLVLComplite, volume, 1);
 
         iniStar();
     }
