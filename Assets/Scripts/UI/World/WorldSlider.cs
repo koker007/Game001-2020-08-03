@@ -28,7 +28,7 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         //Запомнить позицию нажатия
         StartTouchPosition = Input.mousePosition;
         Srotation = WorldGenerateScene.main.rotationNeed;
-        this.isDown = true;
+        isDown = true;
 
         
         //Пускаем луч из камеры
@@ -49,7 +49,7 @@ public class WorldSlider : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     //отпускание мыши
     public void OnPointerUp(PointerEventData eventData)
     {
-        this.isDown = false;
+        isDown = false;
 
         if (!ButtonStart) return;
 

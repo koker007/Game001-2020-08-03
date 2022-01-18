@@ -66,7 +66,6 @@ public class PlayerProfile : MonoBehaviour
     public int moneyboxCapacity; //Свинья копилка общий объем
     public int moneyboxContent; //свинья копилка содержимое на данный момент
 
-    /// <summary>
     /// Сколько очков получил игрок на этом уровне
     /// </summary>
     public int[] LVLStar = new int[1];
@@ -76,7 +75,7 @@ public class PlayerProfile : MonoBehaviour
     public int[] LVLGold = new int[1];
     
 
-
+    [System.Serializable]
     /// <summary>
     /// покупаемые предметы 
     /// </summary>
@@ -92,6 +91,7 @@ public class PlayerProfile : MonoBehaviour
         }
     }
     //покупаемые предметы
+    [SerializeField]
     public Item Health = new Item(1);
     public Item Ticket = new Item(1);
 
@@ -101,10 +101,15 @@ public class PlayerProfile : MonoBehaviour
     public Item ShopColor5 = new Item(100);
     public Item ShopMixed = new Item(35);
 
-    private void Start()
+    private void Awake()
     {
         main = this;
+    }
+
+    private void Start()
+    {
         LoadProfie();
+        HealthTimer.main.HealthRegenerateRealTime();
     }
 
     //загрузка данных
@@ -242,6 +247,7 @@ public class PlayerProfile : MonoBehaviour
 
         
     }
+
     //Проверить размер массива и расширить если не хватает места
     void TestArray(int length, ref int[] array)
     {
@@ -426,6 +432,7 @@ public class PlayerProfile : MonoBehaviour
 
         SaveForGoogleLVL();
     }
+
     /// <summary>
     /// увеличение очков уровня игрока
     /// </summary>
@@ -508,6 +515,28 @@ public class PlayerProfile : MonoBehaviour
         PlayerPrefs.SetInt(strShopColor5, ShopColor5.Amount);
         PlayerPrefs.SetInt(strShopMixed, ShopMixed.Amount);
 
+        SaveToGoogle();
+    }
+
+    public void GiftItem(Item item, int num)
+    {
+        item.Amount += num;
+        SaveItemAmount();
+    }
+    public void GiftGold(int num)
+    {
+        GoldAmount += num;
+        SaveItemAmount();
+    }
+
+    //устанавливат количество жизней
+    public void SetHealth(int value)
+    {
+        if (value < 0)
+            value = 0;
+
+        Health.Amount = value;
+        PlayerPrefs.SetInt(strHealth, Health.Amount);
         SaveToGoogle();
     }
 

@@ -19,11 +19,17 @@ public class MessageExitLevel : MonoBehaviour
 
     public void Restart()
     {
-        Gameplay.main.GameplayEnd = false;
-        Destroy(MenuGameplay.GameField);
-        UICTRL.main.OpenWorld();
-        UICTRL.main.OpenGameplay();
-
+        if (PlayerProfile.main.Health.Amount > 0)
+        {
+            Gameplay.main.GameplayEnd = false;
+            Destroy(MenuGameplay.GameField);
+            UICTRL.main.OpenWorld();
+            UICTRL.main.OpenGameplay();
+        }
+        else
+        {
+            GlobalMessage.ShopBuyHealth();
+        }
     }
 
     public void ExitLevelYes()
