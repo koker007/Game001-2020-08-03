@@ -50,7 +50,7 @@ public class AdMobController : MonoBehaviour
                 reawardedAdUnitId = "unexpected_platform";
         #endif
 
-        if (GooglePlay.main.isAutorized && !Settings.main.DeveloperTesting)
+        if (!Settings.main.DeveloperTesting)
         {
             rewardedAdUnitId = keyVideoAndroid;
         }
@@ -93,6 +93,7 @@ public class AdMobController : MonoBehaviour
 
     public void ShowRewardedAd()
     {
+
         if (rewardedAd.IsLoaded())
         {
             rewardedAd.Show();
@@ -103,6 +104,8 @@ public class AdMobController : MonoBehaviour
     private void HandleUserEarnedReward(object sender, Reward args)
     {
         Gameplay.main.movingCan += 2;
+        Gameplay.main.adWatchedCount++;
+        //MessageCTRL.selected.ClickButtonClose();
     }
 
     private void HandleRewardedAdLoaded(object sender, EventArgs args)

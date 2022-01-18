@@ -24,7 +24,8 @@ public class Gameplay : MonoBehaviour
 
     public bool isGameplay = false;
     public bool GameplayEnd = false;
-    public bool adWatched = false;
+    public int adWatchedCount = 0; //Количество просмотров рекламмы
+    public int buyMoveCount = 0; //Количество покупок ходов
     public bool gameStarted = false; //Проверяем, сделал ли игрок первый ход
     [Header("Level parameters")]
     public int score = 0;
@@ -76,7 +77,8 @@ public class Gameplay : MonoBehaviour
         movingCount = 0;
         movingMoldCount = 0;
         movingCan = LevelsScript.main.ReturnLevel().Move;
-        adWatched = false;
+        adWatchedCount = 0;
+        buyMoveCount = 0;
         moveCompleted = false;
         playerTurn = true;
         CountStars(ref stars);
@@ -256,6 +258,20 @@ public class Gameplay : MonoBehaviour
         GameplayEnd = true;
     }
     public void OpenMessageDefeat() {
+        if (movingCan > 0) return;
+
+        //Ищем это сообщение в буфере
+        foreach (MessageCTRL message in MessageCTRL.BufferMessages) {
+            MessageYouLose messageYouLose = message.gameObject.GetComponent<MessageYouLose>();
+            if (messageYouLose != null) {
+                timeScale = 1;
+                LevelsScript.main.ReturnLevel().MaxScore = score;
+                message.SetOpenTrue();
+                return;
+            }
+            
+        }
+
         timeScale = 1;
         GlobalMessage.Lose();
         LevelsScript.main.ReturnLevel().MaxScore = score;

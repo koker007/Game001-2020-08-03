@@ -28,7 +28,12 @@ public class MessageCTRL : MonoBehaviour
 
     [SerializeField] private bool levelInfo;
 
+    //протестируем сообщения по их типу
+    static public void TestBufferMessages() {
+        foreach (MessageCTRL message in BufferMessages) {
 
+        }
+    }
 
     public void SetSelected() {
         if (selected != null && selected != this) {
@@ -138,6 +143,13 @@ public class MessageCTRL : MonoBehaviour
     public void SetOpenFalse()
     {
         myAnimator.SetBool("Open", false);
+    }
+    public void SetOpenTrue() {
+        myAnimator.SetBool("Open", true);
+        if (selected != null && selected != this)
+            selected.SetOpenFalse();
+
+        selected = this;
     }
 
 

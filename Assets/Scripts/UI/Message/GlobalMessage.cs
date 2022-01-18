@@ -108,6 +108,8 @@ public class GlobalMessage : MonoBehaviour
         }
     }
 
+    
+
     /// <summary>
     /// Отправить сообщение в сплывающем окне
     /// </summary>

@@ -305,7 +305,7 @@ public class GooglePlay : MonoBehaviour
         //Говорим что в процессе выполнения
         BufferWaitingFiles[0].SetProcessTrue();
 
-        LastMessage = BufferWaitingFiles[0].keyFile;
+        LastMessage = BufferWaitingFiles[0].keyFile + " ";
 
         LastMessage += "OpenSavedGame";
         ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
