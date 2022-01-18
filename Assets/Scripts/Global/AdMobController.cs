@@ -104,6 +104,8 @@ public class AdMobController : MonoBehaviour
     private void HandleUserEarnedReward(object sender, Reward args)
     {
         Gameplay.main.movingCan += 2;
+        Gameplay.main.adWatchedCount++;
+        //MessageCTRL.selected.ClickButtonClose();
     }
 
     private void HandleRewardedAdLoaded(object sender, EventArgs args)
