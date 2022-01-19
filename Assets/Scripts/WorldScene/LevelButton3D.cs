@@ -69,7 +69,7 @@ public class LevelButton3D : MonoBehaviour
     }
 
     void UpdateVisualization() {
-        if (Vector3.Distance(MainCamera.main.gameObject.transform.position, gameObject.transform.position) < 50)
+        if (Vector3.Distance(MainCamera.main.gameObject.transform.position + MainCamera.main.gameObject.transform.forward * 35, gameObject.transform.position) < 40)
         {
             if (bulka.activeSelf) {
                 return;

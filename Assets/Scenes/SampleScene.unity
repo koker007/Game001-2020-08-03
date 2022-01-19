@@ -13101,7 +13101,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 125
+  far clip plane: 130
   field of view: 50
   orthographic: 0
   orthographic size: 5
@@ -18166,8 +18166,9 @@ MonoBehaviour:
   typeBlockerPercent: 0
   combo: 0
   moveCompleted: 0
-  threeStartFactor: 2
-  twoStartFactor: 1.5
+  StarFactor3: 1
+  StarFactor2: 0.81
+  StarFactor1: 0.61
 --- !u!4 &1319929787
 Transform:
   m_ObjectHideFlags: 0
