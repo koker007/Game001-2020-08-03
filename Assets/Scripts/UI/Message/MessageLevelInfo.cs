@@ -14,13 +14,17 @@ public class MessageLevelInfo : MonoBehaviour
     MessageCTRL messageCTRL;
 
     [SerializeField]
+    Image Fon;
+    [SerializeField]
     Text LevelText;
     [SerializeField]
     Text LevelTargetInfo;
     [SerializeField]
+    Text LevelNeedScore;
+    [SerializeField]
     Text LevelInfoText;
     [SerializeField]
-    Image[] LevelStars = new Image[3];
+    GameObject[] LevelStars;
 
     [SerializeField]
     Text TargetTitle;
@@ -43,8 +47,18 @@ public class MessageLevelInfo : MonoBehaviour
     Texture TargetRock;
     [SerializeField]
     Texture TargetEnemy;
-    
 
+    [Header("Fons")]
+    [SerializeField]
+    Texture FonGreen;
+    [SerializeField]
+    Texture FonYellow;
+    [SerializeField]
+    Texture FonOrange;
+    [SerializeField]
+    Texture FonRed;
+    [SerializeField]
+    Texture FonViolet;
 
     void Start()
     {
@@ -57,14 +71,56 @@ public class MessageLevelInfo : MonoBehaviour
         messageCTRL.title.text = messageTitleLVL;
 
         LevelGenerator.main.GenerateNewLevel(Gameplay.main.levelSelect);
-        string textInfo = TranslateManager.main.GetText("LevelRequrements") + 
-            " " + System.Convert.ToString(LevelsScript.main.ReturnLevel().NeedScore) + 
-            "\n" + TranslateManager.main.GetText("Record") + 
+
+        string textNeedScore = TranslateManager.main.GetText("LevelRequrements") +
+                               "\n" + 
+                               System.Convert.ToString(LevelsScript.main.ReturnLevel().NeedScore);
+        LevelNeedScore.text = textNeedScore;
+
+        string textInfo = //TranslateManager.main.GetText("LevelRequrements") + 
+            //" " + System.Convert.ToString(LevelsScript.main.ReturnLevel().NeedScore) + 
+            TranslateManager.main.GetText("Record") + 
             "\n" + System.Convert.ToString(LevelsScript.main.ReturnLevel().MaxScore);
 
         LevelInfoText.text = textInfo;
 
-        Gameplay.main.CountStars(LevelsScript.main.ReturnLevel().MaxScore, ref LevelStars, false);
+        //Gameplay.main.CountStars(LevelsScript.main.ReturnLevel().MaxScore, ref LevelStars, false);
+
+        //Рисуем звезды
+        if (Gameplay.main.levelSelect < PlayerProfile.main.LVLStar.Length)
+        {
+
+            if (PlayerProfile.main.LVLStar[Gameplay.main.levelSelect] == 1)
+            {
+                LevelStars[0].SetActive(true);
+                LevelStars[1].SetActive(false);
+                LevelStars[2].SetActive(false);
+            }
+            else if (PlayerProfile.main.LVLStar[Gameplay.main.levelSelect] == 2)
+            {
+                LevelStars[0].SetActive(true);
+                LevelStars[1].SetActive(true);
+                LevelStars[2].SetActive(false);
+            }
+            else if (PlayerProfile.main.LVLStar[Gameplay.main.levelSelect] == 3)
+            {
+                LevelStars[0].SetActive(true);
+                LevelStars[1].SetActive(true);
+                LevelStars[2].SetActive(true);
+            }
+            else
+            {
+                LevelStars[0].SetActive(false);
+                LevelStars[1].SetActive(false);
+                LevelStars[2].SetActive(false);
+            }
+        }
+        //Если нету звезд то выключаем
+        else {
+            LevelStars[0].SetActive(false);
+            LevelStars[1].SetActive(false);
+            LevelStars[2].SetActive(false);
+        }
 
         //Получаем данные уровня
         LevelsScript.Level level = LevelsScript.main.ReturnLevel();

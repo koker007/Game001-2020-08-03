@@ -57,8 +57,9 @@ public class Gameplay : MonoBehaviour
     public int typeBlockerPercent = 0;
     public int combo = 0;
     public bool moveCompleted = false;
-    public float threeStartFactor = 2f;
-    public float twoStartFactor = 1.5f;
+    public float StarFactor3 = 1f;
+    public float StarFactor2 = 0.81f;
+    public float StarFactor1 = 0.61f;
 
     void Start()
     {
@@ -287,21 +288,21 @@ public class Gameplay : MonoBehaviour
     /// <param name="stars"></param>
     public void CountStars(int score, ref Image[] stars, bool saveStars)
     {
-        if (score >= LevelsScript.main.ReturnLevel().NeedScore * threeStartFactor)
+        if (score >= LevelsScript.main.ReturnLevel().NeedScore * StarFactor3)
         {
             stars[0].color = Color.yellow;
             stars[1].color = Color.yellow;
             stars[2].color = Color.yellow;
             starsCount = 3;
         }
-        else if (score >= LevelsScript.main.ReturnLevel().NeedScore * twoStartFactor)
+        else if (score >= LevelsScript.main.ReturnLevel().NeedScore * StarFactor2)
         {
             stars[0].color = Color.yellow;
             stars[1].color = Color.yellow;
             stars[2].color = new Color32(140, 140, 60, 255);
             starsCount = 2;
         }
-        else if (score >= LevelsScript.main.ReturnLevel().NeedScore)
+        else if (score >= LevelsScript.main.ReturnLevel().NeedScore * StarFactor1)
         {
             stars[0].color = Color.yellow;
             stars[1].color = new Color32(140, 140, 60, 255);
@@ -323,15 +324,15 @@ public class Gameplay : MonoBehaviour
     public int CountStars(int score) {
         int num = 0;
 
-        if (score >= LevelsScript.main.ReturnLevel().NeedScore * threeStartFactor)
+        if (score >= LevelsScript.main.ReturnLevel().NeedScore * StarFactor3)
         {
             num = 3;
         }
-        else if (score >= LevelsScript.main.ReturnLevel().NeedScore * twoStartFactor)
+        else if (score >= LevelsScript.main.ReturnLevel().NeedScore * StarFactor2)
         {
             num = 2;
         }
-        else if (score >= LevelsScript.main.ReturnLevel().NeedScore)
+        else if (score >= LevelsScript.main.ReturnLevel().NeedScore * StarFactor1)
         {
             num = 1;
         }

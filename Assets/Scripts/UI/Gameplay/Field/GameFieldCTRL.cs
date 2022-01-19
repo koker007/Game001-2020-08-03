@@ -1883,7 +1883,6 @@ public class GameFieldCTRL : MonoBehaviour
                     if (CellSelect.cellInternal && CellSelect.cellInternal.type == CellInternalObject.Type.color5)
                     {
 
-
                         CellSelect.cellInternal.Activate(CellInternalObject.Type.rocketHorizontal, CellSelect.cellInternal, comb);
                     }
                     else
@@ -2138,7 +2137,7 @@ public class GameFieldCTRL : MonoBehaviour
         else if (ListWaitingInternals.Count <= 0)
         {
             //выводим собщение что перемешиваем
-            MenuGameplay.main.CreateMidleMessage(TranslateManager.main.GetText(MidleTextGameplay.strMixed));
+            MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strMixed);
 
             CreateRandomInternalList();
 
@@ -4143,7 +4142,7 @@ public class GameFieldCTRL : MonoBehaviour
             }
             else if (ComboInternal > 30)
             {
-                MenuGameplay.main.CreateMidleMessage(TranslateManager.main.GetText("Incredible"));
+                MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strIncredible);
             }
             else if (ComboInternal > 15)
             {

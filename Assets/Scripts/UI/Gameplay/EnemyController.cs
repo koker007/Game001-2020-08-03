@@ -47,7 +47,7 @@ public class EnemyController : MonoBehaviour
     void UpdateIndicators() {
         if (Gameplay.main.enemyScore != 0)
         {
-            SliderCoof.value += ((float)(Gameplay.main.score) / (float)(Gameplay.main.enemyScore) - SliderCoof.value) * Time.unscaledDeltaTime;
+            SliderCoof.value += ((float)(Gameplay.main.score) / (float)(Gameplay.main.enemyScore * 2) - SliderCoof.value) * Time.unscaledDeltaTime;
         }
         else SliderCoof.value = 0;
 

@@ -324,7 +324,7 @@ public class MenuGameplay : MonoBehaviour
     {
         Score.text = System.Convert.ToString(Gameplay.main.score);
 
-        ScoreSlider.value = (float)Gameplay.main.score / (level.NeedScore * Gameplay.main.threeStartFactor);
+        ScoreSlider.value = (float)Gameplay.main.score / (level.NeedScore * Gameplay.main.StarFactor3);
 
 
         Gameplay.main.CountStars(ref Stars);
@@ -381,12 +381,17 @@ public class MenuGameplay : MonoBehaviour
         {
             MidleText.SetTextCongratulations();
         }
-        else if (text == MidleTextGameplay.strLastMove) {
+        else if (text == MidleTextGameplay.strLastMove)
+        {
             MidleText.SetTextLastMove();
+        }
+        else if (text == MidleTextGameplay.strIncredible) {
+            MidleText.SetTextIncredible();
         }
 
         //Иначе обычный текст
-        else {
+        else
+        {
             MidleText.SetText(text);
         }
 

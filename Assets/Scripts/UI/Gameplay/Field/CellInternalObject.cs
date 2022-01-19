@@ -1341,37 +1341,42 @@ public class CellInternalObject : MonoBehaviour
             //Если активируемый тип не колор 5 но партнер с колор5 и вообще я сам себе партнер
             //(ситуация когда игрок нажимает кнопку бомбы или ракеты из магазина и применяет ее на супер цвет)
             //Цвет считается по приоритету
-            if (ActivateType != Type.color5 && partner.type == Type.color5 || partner == null) 
+            if (ActivateType != Type.color5 && partner.type == Type.color5 || partner == null && ActivateType != Type.color5)
             {
                 typePartner = ActivateType;
                 replaceColor = CalculateColorPriority();
             }
             //Иначе берем цвет партнера
-            else
-            {               
+            else if (partner != null && ActivateType != Type.color5)
+            {
                 replaceColor = partner.color;
             }
+            else {
+                replaceColor = color;
+            }
 
-            //Партнер такая же бомба
-            if (typePartner == Type.color5) {
-                DestroyAll();
+
+
+
+            //Если партнер просто цвет
+            if (typePartner == Type.color)
+            {
+                DestroyAllColor(partner.color);
             }
             //Если партнер бомба, ракета или самолет
             else if (typePartner == Type.bomb ||
                 typePartner == Type.airplane ||
-                typePartner == Type.rocketHorizontal || 
+                typePartner == Type.rocketHorizontal ||
                 typePartner == Type.rocketVertical
-                ) {
+                )
+            {
                 replacementColorAndActivate();
             }
-            //Если партнер просто цвет
-            else if (typePartner == Type.color)
-            {
-                DestroyAllColor(partner.color);
+            //Партнер такая же бомба
+            else if (typePartner == Type.color5) {
+                DestroyAll();
             }
-            //Если партнер я сам себе
-            else if (partner == null || partner == this)
-            {
+            else {
                 DestroyAllColor(color);
             }
 

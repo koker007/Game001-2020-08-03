@@ -36,6 +36,9 @@ public class MidleTextGameplay: MonoBehaviour
     [SerializeField]
     Image imageLastMove;
     public const string strLastMove = "Last Move";
+    [SerializeField]
+    Image imageIncredible;
+    public const string strIncredible = "Incredible";
 
     [SerializeField]
     AudioClip audioClip;
@@ -89,6 +92,11 @@ public class MidleTextGameplay: MonoBehaviour
         CloseAll();
         imageLastMove.gameObject.SetActive(true);
     }
+    public void SetTextIncredible()
+    {
+        CloseAll();
+        imageIncredible.gameObject.SetActive(true);
+    }
 
     public void CloseAll() {
         fon.gameObject.SetActive(false);
@@ -101,6 +109,7 @@ public class MidleTextGameplay: MonoBehaviour
         imageNotBad.gameObject.SetActive(false);
         imageYourMove.gameObject.SetActive(false);
         imageLastMove.gameObject.SetActive(false);
+        imageIncredible.gameObject.SetActive(false);
 
     }
 
