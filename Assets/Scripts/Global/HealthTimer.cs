@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 /// <summary>
 /// считает время для восстановления жизней
 /// </summary>
@@ -17,7 +18,7 @@ public class HealthTimer : MonoBehaviour
 
     [SerializeField] private int _SystemTimeStartRegeneration;
     private const string _SystemTimeStartRegenerationID = "SystemTimeStartRegeneration";
-    private const int _TimeForRegenerate = 50; //second
+    private const int _TimeForRegenerate = 60*5; //second
     private const int _maxLive = 5;
     private DateTime epochStart = new System.DateTime(1970, 1, 1, 8, 0, 0, System.DateTimeKind.Utc); //начало отсчета времени
     
@@ -58,6 +59,8 @@ public class HealthTimer : MonoBehaviour
     //проверка нужно ли регенерировать хп и отсчет времени
     private void HealthRegenerate()
     {
+        if (PlayerProfile.main == null) return;
+
         if (PlayerProfile.main.Health.Amount >= _maxLive)
         {
             _TimeRegenerationText.text = "";

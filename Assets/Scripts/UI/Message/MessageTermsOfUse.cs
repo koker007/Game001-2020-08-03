@@ -9,6 +9,15 @@ using UnityEngine;
 /// </summary>
 public class MessageTermsOfUse : MonoBehaviour
 {
+
+
+    [SerializeField]
+    string TermsOfUseUrl = "http://project5092068.tilda.ws";
+
+    public void ButtubClickOpenTermsOfUse() {
+        Application.OpenURL(TermsOfUseUrl);
+    }
+
     //ѕользователь нажал прин€ть пользовательское соглажение
     public void ButtonClickAccept() {
         //ѕользователь прин€л соглашение

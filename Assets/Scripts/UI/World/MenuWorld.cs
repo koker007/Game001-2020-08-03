@@ -168,7 +168,7 @@ public class MenuWorld : MonoBehaviour
 
 
     public void ClickButtonHealth() {
-        GlobalMessage.Health();
+        GlobalMessage.ShopBuyHealth();
     }
     public void ClickButtonTicket() {
         GlobalMessage.Tickets();

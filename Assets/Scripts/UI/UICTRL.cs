@@ -92,10 +92,10 @@ public class UICTRL : MonoBehaviour
     //Главная функция обрабатывающая какое из окон показать
     void UpdateUI() {
         if (UILoading.activeSelf) {
-            loadingPlayTime += Time.deltaTime;
-            if (loadingPlayTime > 0.1f) {
+            //loadingPlayTime += Time.deltaTime;
+            //if (loadingPlayTime > 0.1f) {
                 OpenHello();
-            }
+            //}
         }
         else if (UIHello.activeSelf) {
 

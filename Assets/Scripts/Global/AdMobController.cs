@@ -24,6 +24,13 @@ public class AdMobController : MonoBehaviour
     {
         main = this;
         MobileAds.Initialize(initStatus => { });
+
+        //Политика использования детской рекламы
+        RequestConfiguration requestConfiguration = new RequestConfiguration.Builder()
+            .SetTagForChildDirectedTreatment(TagForChildDirectedTreatment.True)
+            .build();
+        MobileAds.SetRequestConfiguration(requestConfiguration);
+
         CreateAndLoadRewardedAd();
         if (showAd)
         {
@@ -64,8 +71,10 @@ public class AdMobController : MonoBehaviour
         rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
         rewardedAd.OnAdClosed += HandleRewardedAdClosed;
 
-        AdRequest request = new AdRequest.Builder().Build();
+        AdRequest request = new AdRequest.Builder()
+            .Build();
         rewardedAd.LoadAd(request);
+
     }
 
     //Создаем баннер
