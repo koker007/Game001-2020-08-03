@@ -11,10 +11,13 @@ using UnityEngine;
 /// </summary>
 public class LevelsArray : LevelsScript
 {
+    [SerializeField] private LevelScriptableObject _levels;
+
     private void Start()
     {
         main = this;
-
+        
+        /*
         ////////////////////////////////////////////////////////////////////////////
         //уровень 1
         int lvl = 1;
@@ -4311,5 +4314,31 @@ public class LevelsArray : LevelsScript
             "teleport"
             );
         Levels[lvl].SetCells();
+        */
+        //SaveLevelsInScriptableObject();
+        
+        LoadLevelFromScriptableObject();
+    }
+
+    private void SaveLevelsInScriptableObject()
+    {
+        for(int i = 0; i < Levels.Length; i++)
+        {
+            if (_levels.levels.Count <= i)
+            {
+                _levels.levels.Add(Levels[i]);
+            }
+
+            _levels.levels[i] = new Level(Levels[i]);
+            _levels.levels[i].ConvertTwoCellsToOneCells();
+        }
+    }
+    private void LoadLevelFromScriptableObject()
+    {
+        for (int i = 0; i < _levels.levels.Count; i++)
+        {
+            Levels[i] = new Level(_levels.levels[i]);
+            Levels[i].ConvertOneCellToTwoCells();
+        }
     }
 }

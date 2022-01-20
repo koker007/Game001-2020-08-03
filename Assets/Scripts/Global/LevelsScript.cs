@@ -19,6 +19,7 @@ public class LevelsScript : MonoBehaviour
     /// <summary>
     /// хранит данные о ячейке
     /// </summary>
+    [System.Serializable]
     public class CellInfo
     {
         /// <summary>
@@ -43,6 +44,20 @@ public class LevelsScript : MonoBehaviour
         public int teleport;
         public bool dispencer;
 
+        public CellInfo(CellInfo cell)
+        {
+            colorCell = cell.colorCell;
+            typeCell = cell.typeCell;
+            Exist = cell.Exist;
+            HealthBox = cell.HealthBox;
+            HealthMold = cell.HealthMold;
+            HealthIce = cell.HealthIce;
+            Panel = cell.Panel;
+            rock = cell.rock;
+            wall = cell.wall;
+            teleport = cell.teleport;
+            dispencer = cell.dispencer;
+        }
         public CellInfo(int exist, int box, int mold, int color, int type, int panel, int rockF, int ice, int walls, int disp, int tp)
         {
             if (exist != 0)
@@ -91,6 +106,7 @@ public class LevelsScript : MonoBehaviour
     /// <summary>
     /// хранит данные о уровне
     /// </summary>
+    [System.Serializable]
     public class Level
     {
         /// <summary>
@@ -135,7 +151,9 @@ public class LevelsScript : MonoBehaviour
         /// <summary>
         /// массив ячеек на поле
         /// </summary>
-        public CellInfo[,] cells;
+        [SerializeField] public CellInfo[,] cells = new CellInfo[0,0];
+        [SerializeField] public CellInfo[] cellsArray = new CellInfo[0];
+
         //способы прохождения уровня
         public bool PassedWithScore = false;
         public bool PassedWithCrystal = false;
@@ -149,29 +167,101 @@ public class LevelsScript : MonoBehaviour
         public int NeedCrystal;
         public CellInternalObject.InternalColor NeedColor;
 
-        int[,] exist;
-        int[,] box;
-        int[,] mold;
-        int[,] ice;
-        int[,] panel;
-        int[,] internalColors;
-        int[,] type;
-        int[,] rock;
-        int[,] walls;
-        int[,] teleport;
+        public int[,] exist;
+        public int[,] box;
+        public int[,] mold;
+        public int[,] ice;
+        public int[,] panel;
+        public int[,] internalColors;
+        public int[,] type;
+        public int[,] rock;
+        public int[,] walls;
+        public int[,] teleport;
 
         /// <summary>
         /// Внимание! если надо создать раздатчик, то ячейка должна быть exist, иначе ничего не создастся
         /// </summary>
-        int[,] dispencers;
-        
-        public void NewMaxScore(int score)
+        public int[,] dispencers;
+        public Level()
         {
-            if(score > MaxScore)
+        }
+
+        public Level(Level lev)
+        {
+            Width = lev.Width;
+            Height = lev.Height;
+            NumLevel = lev.NumLevel;
+            NeedScore = lev.NeedScore;
+            MaxScore = lev.MaxScore;
+            Move = lev.Move;
+            NumColors = lev.NumColors;
+            SuperColorPercent = lev.SuperColorPercent;
+            TypeBlockerPercent = lev.TypeBlockerPercent;
+
+            cells = new CellInfo[lev.cells.GetLength(0), lev.cells.GetLength(1)];
+            for (int i = 0; i < cells.GetLength(0); i++)
             {
-                MaxScore = score;
+                for (int j = 0; j < cells.GetLength(1); j++)
+                {
+                    cells[i,j] = new CellInfo(lev.cells[i,j]);
+                }
+            }
+
+            cellsArray = new CellInfo[lev.cellsArray.Length];
+            for (int i = 0; i < cellsArray.Length; i++)
+            {
+                cellsArray[i] = new CellInfo(lev.cellsArray[i]);
+            }
+
+            PassedWithScore = lev.PassedWithScore;
+            PassedWithCrystal = lev.PassedWithCrystal;
+            PassedWithBox = lev.PassedWithBox;
+            PassedWithMold = lev.PassedWithMold;
+            PassedWithIce = lev.PassedWithIce;
+            PassedWithPanel = lev.PassedWithPanel;
+            PassedWithRock = lev.PassedWithRock;
+            PassedWithRock = lev.PassedWithRock;
+            PassedWithEnemy = lev.PassedWithEnemy;
+
+            NeedCrystal = lev.NeedCrystal;
+            NeedColor = lev.NeedColor;
+
+            exist = lev.exist;
+            box = lev.box;
+            mold = lev.mold;
+            ice = lev.ice;
+            panel = lev.panel;
+            internalColors = lev.internalColors;
+            type = lev.type;
+            rock = lev.rock;
+            walls = lev.walls;
+            teleport = lev.teleport;
+            dispencers = lev.dispencers;
+        }
+        
+        public void ConvertOneCellToTwoCells()
+        {
+            cells = new CellInfo[Width, Height];
+            for(int y = 0; y < Width; y++)
+            {
+                for (int x = 0; x < Height; x++)
+                {
+                    cells[y, x] = new CellInfo(cellsArray[y + x * Width]);
+                }
             }
         }
+        public void ConvertTwoCellsToOneCells()
+        {
+            cellsArray = new CellInfo[Height * Width];
+            for (int y = 0; y < Width; y++)
+            {
+                for (int x = 0; x < Height; x++)
+                {
+                    cellsArray[y + x * Width] = new CellInfo(cells[y, x]);
+                }
+            }
+        }
+
         /// <summary>
         ///заносит значения в массив уровня
         ///box, mold, ice, type, color, panel, exist, rock, walls, dispencers, teleport
@@ -294,8 +384,8 @@ public class LevelsScript : MonoBehaviour
                     //}
                 }
             }
-           
         }
+
 
         /// <summary>
         ///заносит в ячейки массиав определенное значение
@@ -330,8 +420,6 @@ public class LevelsScript : MonoBehaviour
     private Level level;
     private const int mainLevelsCount = 1000;
     public Level[] Levels = new Level[mainLevelsCount];
-
-
 
     /// <summary>
     ///создание уровня(метод существует для зрительного упрощения схемы уровня в Start)
