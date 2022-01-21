@@ -67,6 +67,7 @@
     <Compile Include="Assets\GooglePlayGames\BasicApi\Events\Event.cs" />
     <Compile Include="Assets\GooglePlayGames\BasicApi\SavedGame\ISavedGameMetadata.cs" />
     <Compile Include="Assets\Scripts\WorldScene\WorldGenerateScene.cs" />
+    <Compile Include="Assets\Scripts\Global\LevelScriptableObject.cs" />
     <Compile Include="Assets\GooglePlayGames\OurUtils\NearbyHelperObject.cs" />
     <Compile Include="Assets\Scripts\UI\World\MenuWorld.cs" />
     <Compile Include="Assets\Scripts\UI\CameraScaler.cs" />
@@ -198,7 +199,8 @@
     <Compile Include="Assets\Scripts\Global\Calculate.cs" />
     <Compile Include="Assets\Scripts\UI\Message\MessageExitLevel.cs" />
     <Compile Include="Assets\Scripts\UI\Gameplay\Field\CellInternalObject.cs" />
-    <Compile Include="Assets\Scripts\Global\LevelScriptableObject.cs" />
+    <Compile Include="Assets\Scripts\Global\LevelRedactor.cs" />
+    <Compile Include="Assets\Scripts\Global\CellRedactor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\GoogleMobileAds\GoogleMobileAds_version-6.1.2_manifest.txt" />

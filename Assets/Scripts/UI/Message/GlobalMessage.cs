@@ -73,6 +73,9 @@ public class GlobalMessage : MonoBehaviour
     [SerializeField]
     GameObject PrefabExitGame;
 
+    [SerializeField]
+    GameObject LevelRedactor;
+
 
     void Start()
     {
@@ -349,6 +352,17 @@ public class GlobalMessage : MonoBehaviour
     {
 
         GameObject messageObj = Instantiate(main.PrefabExitGame, main.transform);
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+
+        MessageCTRL.NewMessage(messageCTRL);
+    }
+
+    /// <summary>
+    /// редактор уровней
+    /// </summary>
+    static public void OpenLevelRedactor()
+    {
+        GameObject messageObj = Instantiate(main.LevelRedactor, main.transform);
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
 
         MessageCTRL.NewMessage(messageCTRL);
