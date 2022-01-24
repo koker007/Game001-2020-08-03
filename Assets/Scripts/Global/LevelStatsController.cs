@@ -21,6 +21,6 @@ public class LevelStatsController : MonoBehaviour
     //Отправляем статистику на сервер (в конце уровня)
     public void SendPlayerStats()
     {
-        Debug.Log("Stats have been sent: " + playerScore + " | " + playerTurns);
+        //Debug.Log("Stats have been sent: " + playerScore + " | " + playerTurns);
     }
 }

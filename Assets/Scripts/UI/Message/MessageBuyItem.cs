@@ -92,7 +92,7 @@ public class MessageBuyItem : MonoBehaviour
 
         bool NeedBuyAntigen = false;
 
-        //Если хватает антител
+        //Если хватает золота
         if (typeBuy == TypeBuy.internalObj) {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopInternal)) {
                 NeedBuyAntigen = true;
@@ -128,8 +128,19 @@ public class MessageBuyItem : MonoBehaviour
         }
         else if (health)
         {
-            if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.Health))
+            //если здоровья больше 5 выходим
+            if (PlayerProfile.main.Health.Amount >= 5) {
+                return;
+            }
+
+            if (PlayerProfile.main.GoldAmount < PlayerProfile.main.Health.Cost)
             {
+                PlayerProfile.main.GoldAmount -= PlayerProfile.main.Health.Cost;
+                PlayerProfile.main.Health.Amount++;
+
+                MenuWorld.main.SetText();
+            }
+            else {
                 NeedBuyAntigen = true;
             }
         }

@@ -137,6 +137,16 @@ public class Gameplay : MonoBehaviour
 
             //ƒобавл€ем комбинацию дл€ пост проверки
             //combWaiting.Add(combination);
+
+            //прибавл€ем ход плесени если никакой пользы не было
+            if (!combination.cross &&
+                !combination.foundPanel &&
+                !combination.line4 &&
+                !combination.line5 &&
+                !combination.square) {
+
+                movingMoldCount++;
+            }
         }
         else {
             EnemyController.MoveCount++;

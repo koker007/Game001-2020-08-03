@@ -16,6 +16,8 @@ public class MenuHello : MonoBehaviour
     
     [SerializeField]
     RectTransform PanelDown;
+    [SerializeField]
+    AnimatorCTRL animatorCTRL;
         
 
 
@@ -27,12 +29,6 @@ public class MenuHello : MonoBehaviour
     void Start()
     {
         main = this;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        UpdatePanels();
     }
 
     /// <summary>
@@ -64,7 +60,8 @@ public class MenuHello : MonoBehaviour
 
 
     void OpenPanels() {
-        PanelDown.pivot = new Vector2(PanelDown.pivot.x,2);
+        animatorCTRL.PlayAnimation("restart");
+        //PanelDown.pivot = new Vector2(PanelDown.pivot.x,2);
     }
 
     //
