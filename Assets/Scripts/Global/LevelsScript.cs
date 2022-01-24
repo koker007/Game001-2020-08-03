@@ -18,6 +18,7 @@ public class LevelsScript : MonoBehaviour
     public static LevelsScript main;
     /// <summary>
     /// хранит данные о €чейке
+    /// ”ƒјЋя“№ ѕќЋя Ќ≈Ћ№«я »Ќј„≈ —Ћ≈“я“ ”–ќ¬Ќ»
     /// </summary>
     [System.Serializable]
     public class CellInfo
@@ -43,7 +44,12 @@ public class LevelsScript : MonoBehaviour
         public int wall;
         public int teleport;
         public bool dispencer;
-
+        public CellInfo()
+        {
+            colorCell = CellInternalObject.InternalColor.Red;
+            typeCell = CellInternalObject.Type.color;
+            Exist = 1;
+        }
         public CellInfo(CellInfo cell)
         {
             colorCell = cell.colorCell;
@@ -104,7 +110,8 @@ public class LevelsScript : MonoBehaviour
 
     }
     /// <summary>
-    /// хранит данные о уровне
+    /// хранит данные о уровне 
+    /// ”ƒјЋя“№ ѕќЋя Ќ≈Ћ№«я »Ќј„≈ —Ћ≈“я“ ”–ќ¬Ќ»
     /// </summary>
     [System.Serializable]
     public class Level
@@ -246,7 +253,10 @@ public class LevelsScript : MonoBehaviour
             {
                 for (int x = 0; x < Height; x++)
                 {
-                    cells[y, x] = new CellInfo(cellsArray[y + x * Width]);
+                    try{
+                        cells[y, x] = new CellInfo(cellsArray[y + x * Width]);
+                    }
+                    catch { Debug.Log($"{NumLevel} error arrays"); }
                 }
             }
         }

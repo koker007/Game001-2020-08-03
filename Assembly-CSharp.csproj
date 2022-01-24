@@ -80,8 +80,10 @@
     <Compile Include="Assets\GooglePlayGames\ISocialPlatform\PlayGamesAchievement.cs" />
     <Compile Include="Assets\GooglePlayGames\BasicApi\Events\IEvent.cs" />
     <Compile Include="Assets\GooglePlayGames\BasicApi\Nearby\INearbyConnectionClient.cs" />
+    <Compile Include="Assets\Scripts\Global\CellRedactor.cs" />
     <Compile Include="Assets\Scripts\Global\StartRandomLevel.cs" />
     <Compile Include="Assets\GooglePlayGames\BasicApi\CommonStatusCodes.cs" />
+    <Compile Include="Assets\Scripts\Global\LevelRedactor.cs" />
     <Compile Include="Assets\Scripts\UI\Gameplay\Field\WallController.cs" />
     <Compile Include="Assets\Scripts\UI\Gameplay\DestroyCrystalObject.cs" />
     <Compile Include="Assets\Scripts\UI\Message\TutorialController.cs" />
@@ -199,8 +201,7 @@
     <Compile Include="Assets\Scripts\Global\Calculate.cs" />
     <Compile Include="Assets\Scripts\UI\Message\MessageExitLevel.cs" />
     <Compile Include="Assets\Scripts\UI\Gameplay\Field\CellInternalObject.cs" />
-    <Compile Include="Assets\Scripts\Global\LevelRedactor.cs" />
-    <Compile Include="Assets\Scripts\Global\CellRedactor.cs" />
+    <Compile Include="Assets\Scripts\UI\ScrollbarPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\GoogleMobileAds\GoogleMobileAds_version-6.1.2_manifest.txt" />
