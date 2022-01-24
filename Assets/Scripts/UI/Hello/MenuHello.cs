@@ -11,7 +11,7 @@ public class MenuHello : MonoBehaviour
     static public MenuHello main;
 
     [SerializeField]
-    Text[] Version;
+    Text Version;
 
     
     [SerializeField]
@@ -56,6 +56,8 @@ public class MenuHello : MonoBehaviour
     private void OnEnable()
     {
         OpenPanels();
+        Version.text = Application.version;
+
     }
 
 

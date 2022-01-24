@@ -27,7 +27,7 @@ public class PlayerProfile : MonoBehaviour
     /// </summary>
     /// 
 
-    public int ProfileTermsOfUse = 0;
+    public float ProfileTermsOfUse = 0;
 
     [HideInInspector]
     public int[] nextLevelPoint = new int[] { 1000 , 5000 , 10000 };
@@ -154,7 +154,7 @@ public class PlayerProfile : MonoBehaviour
         PlayerPrefs.SetInt(strProfileScore, ProfileScore);
         PlayerPrefs.SetInt(strProfileLevelOpen, ProfilelevelOpen);
 
-        PlayerPrefs.SetInt(strProfileTermsOfUse, ProfileTermsOfUse);
+        PlayerPrefs.SetFloat(strProfileTermsOfUse, ProfileTermsOfUse);
 
         SaveItemAmount();
 

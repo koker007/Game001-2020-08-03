@@ -27,7 +27,7 @@ public class MessageLevelTutorial : MonoBehaviour
     public void SetTextKey(string value)
     {
         _tutorialText.key = value;
-        _tutorialText.UpdtaeText();
+        _tutorialText.UpdateText();
     }
 
     public void SetAnimation(int value)
