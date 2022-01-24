@@ -77,7 +77,7 @@ public class GlobalMessage : MonoBehaviour
     void Start()
     {
         Fon.gameObject.SetActive(true);
-        InvokeRepeating("InvokeMessages", 0.1f, 5f);
+        InvokeRepeating("InvokeTermsOfUse", 0.1f, 5f);
     }
 
     void Update()
@@ -85,9 +85,22 @@ public class GlobalMessage : MonoBehaviour
         UpdateFon();
     }
 
-    public void InvokeMessages() {
-        if (PlayerProfile.main.ProfileTermsOfUse == 0 && !MessageCTRL.selected) {
+    public void InvokeTermsOfUse() {
+        if (PlayerProfile.main.ProfileTermsOfUse >= 1 ||         //если соглашение уже принято
+            MessageCTRL.selected //или сейчас показывается какое-то сообщение
+            ) {
+            return;
+        }
+
+        if (GooglePlay.main.isAutorized && //Авторизация прошла успешно
+            GooglePlay.main.FirstGetProfile //Информация о профиле была полученна
+            )
+        {
             TermsOfUse();
+        }
+        else if (Time.unscaledTime > 10) {
+
+                TermsOfUse();
         }
     }
     

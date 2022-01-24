@@ -32,6 +32,10 @@ public class MenuWorld : MonoBehaviour
     [SerializeField]
     Text Health;
 
+    [Header("Animator")]
+    [SerializeField]
+    AnimatorCTRL animatorCTRL;
+
     [HideInInspector]
     public enum UIIsOpen
     {
@@ -53,7 +57,7 @@ public class MenuWorld : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        updateButtons();
+        //updateButtons();
         ExitGame();
     }
 
@@ -71,7 +75,9 @@ public class MenuWorld : MonoBehaviour
 
     void OnEnable()
     {
-        startButtons();
+        animatorCTRL.PlayAnimation("restart");
+
+        //startButtons();
         SetText();
 
         if (WorldGenerateScene.main != null && !WorldGenerateScene.main.gameObject.activeSelf) {

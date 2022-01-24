@@ -4029,7 +4029,7 @@ public class GameFieldCTRL : MonoBehaviour
                     {
                         foreach (CellInternalObject cellInternal in bombs)
                         {
-                            cellInternal.Activate(CellInternalObject.Type.color5, null, null);
+                            cellInternal.Activate(CellInternalObject.Type.bomb, null, null);
                         }
                     }
                     //иначе активируем все ракеты
@@ -4052,28 +4052,78 @@ public class GameFieldCTRL : MonoBehaviour
                     //Иначе если еще есть ходы в запасе.. 
                     else if (Gameplay.main.movingCan > 0) {
 
+                        //Список номеров использованных при рандомизации
+                        List<int> numRangIsUse = new List<int>();
+
                         //выбираем случайную ячейку
                         int count = Gameplay.main.movingCan;
                         for (int num = 0; num < count; num++) {
 
+
                             //выбираем рандомуную ячейку
                             int numRand = Random.Range(0, colors.Count);
+
+                            bool numIsUsed = false;
+                            //Проверяем этот номер на то что его еще нет у списке
+                            foreach (int numUsed in numRangIsUse) {
+                                if (numRand == numUsed) {
+                                    numIsUsed = true;
+                                    break;
+                                }
+                            }
+
                             //Если этой внутренности нет или это не цвет
                             //Пропускаем
                             if (numRand >= colors.Count ||
-                                colors[numRand] == null ||
-                                colors[numRand].type != CellInternalObject.Type.color) {
+                                colors[numRand] == null || 
+                                colors[numRand].type != CellInternalObject.Type.color || //Если эта внутренность не цвет
+                                numIsUsed //Этот номер был в использовании
+                                ) {
                                 continue;
                             }
 
 
-                            //Меняем тип внутренности на ракету горизонтальную
-                            if (Random.Range(0, 100) < 50) {
-                                colors[numRand].setColorAndType(colors[numRand].color, CellInternalObject.Type.rocketHorizontal);
+                            //Расчитываем шанс того что надо заспавнить
+                            float shanceRocket = Random.Range(0, 100f);
+                            float shanceBomb = Random.Range(0, 100f);
+                            float shanceFly = Random.Range(0, 100f);
+                            float shanceSupBomb = Random.Range(0, 100f);
+
+                            //Выбираем тип спавняемого объекта
+                            CellInternalObject.Type shanceType = CellInternalObject.Type.rocketHorizontal;
+                            int shanceInt = Random.Range(0, 3);
+                            if (shanceInt == 0) {
+                                if (shanceBomb > 60) shanceType = CellInternalObject.Type.bomb;
                             }
-                            //Меняем тип внутренности на ракету вертикальную
-                            else {
-                                colors[numRand].setColorAndType(colors[numRand].color, CellInternalObject.Type.rocketVertical);
+                            else if (shanceInt == 1) {
+                                if (shanceFly > 60) shanceType = CellInternalObject.Type.airplane;
+                            }
+                            else if (shanceInt == 2) {
+                                if (shanceSupBomb > 1) shanceType = CellInternalObject.Type.color5;
+                            }
+
+                            //Спавним объекты
+                            if (shanceType == CellInternalObject.Type.rocketHorizontal)
+                            {
+                                //Меняем тип внутренности на ракету горизонтальную
+                                if (Random.Range(0, 100) < 50)
+                                {
+                                    colors[numRand].setColorAndType(colors[numRand].color, CellInternalObject.Type.rocketHorizontal);
+                                }
+                                //Меняем тип внутренности на ракету вертикальную
+                                else
+                                {
+                                    colors[numRand].setColorAndType(colors[numRand].color, CellInternalObject.Type.rocketVertical);
+                                }
+                            }
+                            else if (shanceType == CellInternalObject.Type.bomb) {
+                                colors[numRand].setColorAndType(colors[numRand].color, CellInternalObject.Type.bomb);
+                            }
+                            else if (shanceType == CellInternalObject.Type.airplane) {
+                                colors[numRand].setColorAndType(colors[numRand].color, CellInternalObject.Type.airplane);
+                            }
+                            else if (shanceType == CellInternalObject.Type.color5) {
+                                colors[numRand].setColorAndType(colors[numRand].color, CellInternalObject.Type.color5);
                             }
 
                             //Активируем ракету
@@ -4153,6 +4203,7 @@ public class GameFieldCTRL : MonoBehaviour
             ComboInternal = 0;
         }
     }
+
 
 
     void TestEndMessage()

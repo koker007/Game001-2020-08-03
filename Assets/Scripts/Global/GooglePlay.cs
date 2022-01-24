@@ -18,7 +18,7 @@ public class GooglePlay : MonoBehaviour
     Text TestFps;
 
     public bool isAutorized = false;
-    
+
 
     bool dataIsLoadedSuccess = false; //Была ли уже попытка считать данные и ответ был получен
     float lastTimeSaveLoad = 0;
@@ -30,6 +30,14 @@ public class GooglePlay : MonoBehaviour
     public const string KeyFileLVLs = "LVLs.v02";
 
     bool firstGetProfile = false;
+    public bool FirstGetProfile
+    {
+        get
+        {
+            return firstGetProfile;
+        }
+    }
+
     bool firstGetLVLs = false;
 
     class SaveOrLoadData {
