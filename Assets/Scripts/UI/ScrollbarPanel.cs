@@ -11,15 +11,18 @@ public class ScrollbarPanel : MonoBehaviour
     [SerializeField] private Scrollbar _scrollbar;
     [SerializeField] private RectTransform _panelTransform;
     private float _panelStartPosY;
+    private float _panelEndPosY;
 
     private void Start()
     {
-        _panelStartPosY = _panelTransform.anchoredPosition.y;
+        Scroll();
     }
 
     public void Scroll()
     {
-        Vector2 pos = new Vector2(_panelTransform.anchoredPosition.x, _panelStartPosY - (_panelTransform.sizeDelta.y / 2) + _panelTransform.sizeDelta.y * _scrollbar.value);
+        _panelStartPosY = 0 - _panelTransform.sizeDelta.y / 2;
+        _panelEndPosY = _panelTransform.sizeDelta.y - 600 < 0 ? 0 : _panelTransform.sizeDelta.y - 600;
+        Vector2 pos = new Vector2(_panelTransform.anchoredPosition.x, _panelStartPosY + _panelEndPosY * _scrollbar.value);
         _panelTransform.anchoredPosition = pos;
     }
 }
