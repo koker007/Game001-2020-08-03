@@ -599,7 +599,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         }
 
         //////////////////////////
-        //Ставим бользу
+        //Ставим пользу
         if (CanBenefit && combination != null) {
             combination.foundBenefit = true;
         }
@@ -658,9 +658,9 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         */
 
         //Создаем панель если плесени нет и нужно создать панель
-        if (combination != null && Box <= 0 && mold <= 0 && combination.foundPanel && !panel) {
-            CreatePanel();
-        }
+        //if (combination != null && Box <= 0 && mold <= 0 && combination.foundPanel && !panel) {
+        //    CreatePanel();
+        //}
 
         //Обновляем время последнего действия комбинации
         if (combination != null) {

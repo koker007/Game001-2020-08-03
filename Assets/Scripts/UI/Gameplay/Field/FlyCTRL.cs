@@ -93,10 +93,6 @@ public class FlyCTRL : MonoBehaviour
         isInicialized = true;
     }
 
-    void RandomTarget() {
-        PivotTarget = new Vector2Int(Random.Range(0, -5), Random.Range(0,-5));
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -357,24 +353,56 @@ public class FlyCTRL : MonoBehaviour
                 //В любом случае задать текушую чейку как целевую, у самолета должна быть цель
                 result = cellPriority;
 
-                //Если нашли эту ячейку в списке целей то завершаем перебор и переключаемся далее
-                bool found = false;
+                //Если эта ячейка не сочитается с текущим самолетом, ищем дальше
+                if (!IsGoodCombo())
+                    continue;
+
+
+                //Проверка на то что другой самолет не летит к этой же цели
+                int AnyFly = 0;
                 foreach (FlyCTRL fly in flyCTRLs)
                 {
                     if (fly.CellTarget == cellPriority)
-                    {
-                        found = true;
-                        break;
-                    }
+                        AnyFly++;
                 }
 
+
                 //Если закончили перебор и не нашли ячейку в списке, значит это то что нужно выбрать в качестве новой цели
-                if (!found)
+                if (AnyFly == 0)
                 {
                     break;
                 }
 
+                //Полезен ли самолет для текущей ячейки?
+                bool IsGoodCombo() {
 
+                    //Ищем взаимовыгоду
+                    //Если есть внутренность, уже хорошо
+                    if (cellPriority.cellInternal != null)
+                        return true;
+
+                    if (cellPriority.rock != 0) //Если есть камень
+                        return true;
+                    if (cellPriority.ice != 0) //Если есть лед
+                        return true;
+                    if (cellPriority.Box != 0) //Если есть яшик
+                        return true;
+                    if (cellPriority.mold != 0) //Если есть плесень
+                        return true;
+                    if (cellPriority.rock != 0) //Если есть камень-решетка
+                        return true;
+                    
+                    //ниже польза с комбинациями если комбинации нет, то выходим раньше
+                    if (comb == null)
+                        return false;
+
+                    //Если у самолета мазь а в клетке нету
+                    if (comb.foundPanel && !cellPriority.panel)
+                        return true;
+
+                    //Все плохо, пользы нет
+                    return false;
+                }
             }
 
 
