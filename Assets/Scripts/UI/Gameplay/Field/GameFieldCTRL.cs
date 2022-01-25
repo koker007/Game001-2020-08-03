@@ -161,6 +161,9 @@ public class GameFieldCTRL : MonoBehaviour
             NeedOpenDefeat = false;
         }
         TestSpawn(); //Спавним
+
+        UpdateAddPlayBonus();
+
         isMoving();
 
         TestFieldCombination(true); //Тестим комбинации с применением урона
@@ -217,8 +220,6 @@ public class GameFieldCTRL : MonoBehaviour
         }
 
         ScaleField();
-
-        AddPlayBonus();
 
         //Заполняем все поля ячейками рандомно
         void AddAllCellsRandom()
@@ -559,39 +560,6 @@ public class GameFieldCTRL : MonoBehaviour
             //Устанавливаем размер поля
             myRect.localScale = new Vector3(sizeNeed, sizeNeed, 1);
             myRect.sizeDelta = new Vector2(100 * cellCTRLs.GetLength(0), 100 * cellCTRLs.GetLength(1));
-        }
-
-        void AddPlayBonus() {
-            if (Gameplay.main.StartBonus == CellInternalObject.Type.none) {
-                return;
-            }
-
-            //проверяем все ячейки поля и разделяем по категориям
-            List<CellInternalObject> listInternals = new List<CellInternalObject>();
-            List<CellInternalObject> listinternalsClosed = new List<CellInternalObject>();
-            List<CellCTRL> listCellNotHaveInternal = new List<CellCTRL>();
-
-            for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
-                for (int y = 0; y < cellCTRLs.GetLength(1); y++) {
-                    //Проверяем ячейку
-                    /*
-                    if (cellCTRLs[x,y] == null || 
-                        cellCTRLs[x,y].cellInternal) {
-                        continue;
-                    }
-
-                    if () {
-
-                    }
-                    else if () {
-
-                    }
-                    else if () {
-                    
-                    }
-                    */
-                }
-            }
         }
     }
 
@@ -4463,5 +4431,70 @@ public class GameFieldCTRL : MonoBehaviour
             Gameplay.main.moveCompleted = false;
             canPassTurn = false;
         }        
+    }
+
+    //Проверка бонуса за рекламму
+    void UpdateAddPlayBonus()
+    {
+        if (Gameplay.main.StartBonus == CellInternalObject.Type.none)
+        {
+            return;
+        }
+
+        //проверяем все ячейки поля и разделяем по категориям
+        List<CellInternalObject> listInternals = new List<CellInternalObject>();
+        List<CellInternalObject> listinternalsClosed = new List<CellInternalObject>();
+        List<CellCTRL> listCellNotHaveInternal = new List<CellCTRL>();
+
+        for (int x = 0; x < cellCTRLs.GetLength(0); x++)
+        {
+            for (int y = 0; y < cellCTRLs.GetLength(1); y++)
+            {
+                //Проверяем ячейку
+                if (cellCTRLs[x, y] == null)
+                {
+                    continue;
+                }
+
+                if (cellCTRLs[x, y].cellInternal == null)
+                {
+                    if (cellCTRLs[x, y].rock == 0 && cellCTRLs[x, y].rockCTRL == null)
+                    {
+                        listCellNotHaveInternal.Add(cellCTRLs[x, y]);
+                    }
+                }
+                else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.color)
+                {
+                    if (cellCTRLs[x, y].rock == 0 && cellCTRLs[x, y].rockCTRL == null)
+                    {
+                        listInternals.Add(cellCTRLs[x, y].cellInternal);
+                    }
+                    else
+                    {
+                        listinternalsClosed.Add(cellCTRLs[x, y].cellInternal);
+                    }
+                }
+            }
+        }
+
+        //Надо использовать рандомную внутренность для создания бонуса
+        if (listInternals.Count > 0)
+        {
+            int rand = Random.Range(0, listInternals.Count);
+            listInternals[rand].setColorAndType(listInternals[rand].color, Gameplay.main.StartBonus);
+        }
+        else if (listinternalsClosed.Count > 0)
+        {
+            int rand = Random.Range(0, listinternalsClosed.Count);
+            listinternalsClosed[rand].setColorAndType(listinternalsClosed[rand].color, Gameplay.main.StartBonus);
+        }
+        else if (listCellNotHaveInternal.Count > 0)
+        {
+            //int rand = Random.Range(0, listinternalsClosed.Count);
+            //listinternalsClosed[rand].setColorAndType(listinternalsClosed[rand].color, Gameplay.main.StartBonus);
+        }
+
+        //ОЧИЩАЕМ
+        Gameplay.main.StartBonus = CellInternalObject.Type.none;
     }
 }

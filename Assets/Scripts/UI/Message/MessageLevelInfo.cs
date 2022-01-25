@@ -195,7 +195,7 @@ public class MessageLevelInfo : MonoBehaviour
 
         if (PlayerProfile.main.Health.Amount > 0)
         {
-            AdMobController.main.ShowRewardedAd();
+            AdMobController.main.ShowPlayBonusAd();
 
             MessageCTRL myMessageCTRL = gameObject.GetComponent<MessageCTRL>();
             myMessageCTRL.ClickButtonClose();
