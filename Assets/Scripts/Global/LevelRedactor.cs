@@ -37,8 +37,11 @@ public class LevelRedactor : MonoBehaviour
     [SerializeField] private Dropdown _crystalColorDropdown;
     [SerializeField] private InputField _crystalNumIF;
 
-    [SerializeField] private CellRedactor[,] _cells; //хранит редакторы! клеток
     //клетка
+    [SerializeField] private CellRedactor[,] _cells; //хранит редакторы! клеток
+    [SerializeField] private LevelsScript.CellInfo _cellBufer; //скопированная клетка (буфер)
+    [SerializeField] private CellRedactor _cellsBuferImage; //отображение клетки в буфере
+    [SerializeField] private Toggle _FastPast;
     private int _selectCellPos = 0;
     [Space]
     //UI элементы для настройки выбранной клетки
@@ -110,6 +113,7 @@ public class LevelRedactor : MonoBehaviour
     {
         _levelsObject.levels[0] = new LevelsScript.Level(_levelsObject.levels[int.Parse(_levelNumIF.text)]);
         SetValuesInText();
+        SelectCell(new Vector2Int(0, 0));
     }
 
     private void SetValuesInText()
@@ -474,5 +478,27 @@ public class LevelRedactor : MonoBehaviour
         _levelsObject.levels[0].cellsArray[_selectCellPos].colorCell = (CellInternalObject.InternalColor)_ColorSelectedCellSlider.value;
 
         UpdateCell(_selectCellPos % _levelsObject.levels[0].Width, _selectCellPos / _levelsObject.levels[0].Width);
+    }
+
+    public void CopyCell()
+    {
+        _cellsBuferImage.gameObject.SetActive(true);
+        _cellBufer = new LevelsScript.CellInfo(_levelsObject.levels[0].cellsArray[_selectCellPos]);
+        _cellsBuferImage.newCellRedactor(_cells[_selectCellPos % _levelsObject.levels[0].Width, _selectCellPos / _levelsObject.levels[0].Width]);
+    }
+
+    public void PastCell()
+    {
+        _levelsObject.levels[0].cellsArray[_selectCellPos] = new LevelsScript.CellInfo(_cellBufer);
+        UpdateCell(_selectCellPos % _levelsObject.levels[0].Width, _selectCellPos / _levelsObject.levels[0].Width);
+    }
+
+    public void FastPastCell(Vector2Int pos)
+    {
+        if (_FastPast.isOn && Input.GetMouseButton(0))
+        {
+            _levelsObject.levels[0].cellsArray[pos.x + pos.y * _levelsObject.levels[0].Width] = new LevelsScript.CellInfo(_cellBufer);
+            UpdateCell(pos.x, pos.y);
+        }
     }
 }
