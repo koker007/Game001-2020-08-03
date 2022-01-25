@@ -92,7 +92,7 @@ public class AdMobController : MonoBehaviour
         playBonusAd.OnAdClosed += HandlePlayWithBonusClosed;
 
         //»спользу€ настройки дл€ предыдущей рекламмы создаем эту
-        rewardedAd.LoadAd(request);
+        playBonusAd.LoadAd(request);
     }
 
     //—оздаем баннер
@@ -197,8 +197,7 @@ public class AdMobController : MonoBehaviour
     private void HandlePlayWithBonusReward(object sender, Reward args)
     {
         UICTRL.main.OpenGameplay();
-
-        Gameplay.main.movingCan += 2;
+        Gameplay.main.randomizedPlayBonus();
     }
 
     private void HandlePlayWithBonusLoaded(object sender, EventArgs args)

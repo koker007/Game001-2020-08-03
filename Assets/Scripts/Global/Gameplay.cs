@@ -360,4 +360,21 @@ public class Gameplay : MonoBehaviour
 
         CountStars(score,ref stars, false);
     }
+
+    public void randomizedPlayBonus() {
+
+        StartBonus = CellInternalObject.Type.rocketHorizontal;
+
+        int randType = Random.Range(0,4);
+
+        if (randType == 0) {
+            if(Random.Range(0, 100) < 50) StartBonus = CellInternalObject.Type.color5;
+        }
+        else if (randType == 1) {
+            if(Random.Range(0, 100) < 50) StartBonus = CellInternalObject.Type.bomb;
+        }
+        else if (randType == 2) {
+            if (Random.Range(0, 100) < 50) StartBonus = CellInternalObject.Type.airplane;
+        }
+    }
 }
