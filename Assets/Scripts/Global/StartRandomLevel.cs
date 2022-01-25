@@ -13,5 +13,9 @@ public class StartRandomLevel : MonoBehaviour
             //LevelGenerator.main.GenerateLevelV2(Gameplay.main.levelSelect);
             UICTRL.main.OpenGameplay();
         }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            GlobalMessage.OpenLevelRedactor();
+        }
     }
 }

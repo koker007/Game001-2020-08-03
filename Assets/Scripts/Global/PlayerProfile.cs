@@ -27,7 +27,7 @@ public class PlayerProfile : MonoBehaviour
     /// </summary>
     /// 
 
-    public int ProfileTermsOfUse = 0;
+    public float ProfileTermsOfUse = 0;
 
     [HideInInspector]
     public int[] nextLevelPoint = new int[] { 1000 , 5000 , 10000 };
@@ -117,7 +117,6 @@ public class PlayerProfile : MonoBehaviour
     {
 
         ProfileTermsOfUse = PlayerPrefs.GetInt(strProfileTermsOfUse, 0);
-        ProfileTermsOfUse = 0;
 
         ProfileLevel = PlayerPrefs.GetInt(strProfileLevel, 1);
         ProfileScore = PlayerPrefs.GetInt(strProfileScore, 0);
@@ -155,7 +154,7 @@ public class PlayerProfile : MonoBehaviour
         PlayerPrefs.SetInt(strProfileScore, ProfileScore);
         PlayerPrefs.SetInt(strProfileLevelOpen, ProfilelevelOpen);
 
-        PlayerPrefs.SetInt(strProfileTermsOfUse, ProfileTermsOfUse);
+        PlayerPrefs.SetFloat(strProfileTermsOfUse, ProfileTermsOfUse);
 
         SaveItemAmount();
 
@@ -233,11 +232,11 @@ public class PlayerProfile : MonoBehaviour
         else if (key == strProfileLevelOpen) ProfilelevelOpen = System.Convert.ToInt32(data);
         else if (key == strProfileTermsOfUse) ProfileTermsOfUse = System.Convert.ToInt32(data);
 
-        else if (key == strGoldAmount) ProfileTermsOfUse = System.Convert.ToInt32(GoldAmount);
-        else if (key == strHealth) ProfileTermsOfUse = System.Convert.ToInt32(Health.Amount);
-        else if (key == strTicket) ProfileTermsOfUse = System.Convert.ToInt32(Ticket.Amount);
-        else if (key == strMoneyboxCapacity) ProfileTermsOfUse = System.Convert.ToInt32(moneyboxCapacity);
-        else if (key == strMoneyboxContent) ProfileTermsOfUse = System.Convert.ToInt32(moneyboxContent);
+        else if (key == strGoldAmount) GoldAmount = System.Convert.ToInt32(data);
+        else if (key == strHealth) Health.Amount = System.Convert.ToInt32(data);
+        else if (key == strTicket) Ticket.Amount = System.Convert.ToInt32(data);
+        else if (key == strMoneyboxCapacity) moneyboxCapacity = System.Convert.ToInt32(data);
+        else if (key == strMoneyboxContent) moneyboxContent = System.Convert.ToInt32(data);
 
         else if (key == strShopInternal) ShopInternal.Amount = System.Convert.ToInt32(data);
         else if (key == strShopRocket) ShopRocket.Amount = System.Convert.ToInt32(data);

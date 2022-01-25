@@ -22,6 +22,7 @@ public class Gameplay : MonoBehaviour
     /// </summary>
     public int tickets = 0;
 
+    public CellInternalObject.Type StartBonus = CellInternalObject.Type.none;
     public bool isGameplay = false;
     public bool GameplayEnd = false;
     public int adWatchedCount = 0; //Количество просмотров рекламмы
@@ -137,6 +138,16 @@ public class Gameplay : MonoBehaviour
 
             //Добавляем комбинацию для пост проверки
             //combWaiting.Add(combination);
+
+            //прибавляем ход плесени если никакой пользы не было
+            if (!combination.cross &&
+                !combination.foundPanel &&
+                !combination.line4 &&
+                !combination.line5 &&
+                !combination.square) {
+
+                movingMoldCount++;
+            }
         }
         else {
             EnemyController.MoveCount++;

@@ -189,4 +189,23 @@ public class MessageLevelInfo : MonoBehaviour
             myMessageCTRL.ClickButtonClose();
         }
     }
+
+    public void ClickButtonSeeBonusAd()
+    {
+
+        if (PlayerProfile.main.Health.Amount > 0)
+        {
+            AdMobController.main.ShowRewardedAd();
+
+            MessageCTRL myMessageCTRL = gameObject.GetComponent<MessageCTRL>();
+            myMessageCTRL.ClickButtonClose();
+        }
+        else
+        {
+            GlobalMessage.ShopBuyHealth();
+            MessageCTRL myMessageCTRL = gameObject.GetComponent<MessageCTRL>();
+            myMessageCTRL.ClickButtonClose();
+        }
+    }
+
 }

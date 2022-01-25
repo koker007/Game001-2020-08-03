@@ -21,7 +21,7 @@ public class MessageTermsOfUse : MonoBehaviour
     //ѕользователь нажал прин€ть пользовательское соглажение
     public void ButtonClickAccept() {
         //ѕользователь прин€л соглашение
-        PlayerProfile.main.ProfileTermsOfUse = 1;
+        PlayerProfile.main.ProfileTermsOfUse = (float)System.Convert.ToDouble(Application.version);
 
         //—охран€ем эти данные
         PlayerProfile.main.Save();
