@@ -50,17 +50,19 @@ public class LevelRedactor : MonoBehaviour
     [SerializeField] private Toggle _MoldSelectedCell;
     [SerializeField] private Slider _BoxHealthSelectedCellSlider;
     [SerializeField] private Text _BoxHealthSelectedCellText;
+    [SerializeField] private Slider _PortalSelectedCellSlider;
+    [SerializeField] private Text _PortalSelectedCellText;
     [SerializeField] private Slider _WallsTypeSelectedCellSlider;
     [SerializeField] private Text _WallsTypeSelectedCellText;
-    [SerializeField] private string[] _WallsName = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
+    private string[] _WallsName = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
     [SerializeField] private Slider _IceHealthSelectedCellSlider;
     [SerializeField] private Text _IceHealthSelectedCellText;
     [SerializeField] private Slider _ColorSelectedCellSlider;
     [SerializeField] private Text _ColorSelectedCellText;
-    [SerializeField] private string[] _ColorsName = { "Red", "Green", "Blue", "Yellow", "Violet", "Ultimate" };
+    private string[] _ColorsName = { "Red", "Green", "Blue", "Yellow", "Violet", "Ultimate" };
     [SerializeField] private Slider _TypeSelectedCellSlider;
     [SerializeField] private Text _TypeSelectedCellText;
-    [SerializeField] private string[] _TypesName = { "none","color", "color5",  "rocketHorizontal",  "rocketVertical", "bomb", "airplane", "blocker" };
+    private string[] _TypesName = { "none", "color", "color5", "rocketHorizontal", "rocketVertical", "bomb", "airplane", "blocker" };
     [Space]
     [Space]
     [Space]
@@ -169,7 +171,7 @@ public class LevelRedactor : MonoBehaviour
     private void UpdateFieldInZeroLevel(Vector2Int oldSize)
     {
         LevelsScript.CellInfo[] oldCells = new LevelsScript.CellInfo[_levelsObject.levels[0].cellsArray.Length];
-        for(int i = 0; i < oldCells.Length; i++)
+        for (int i = 0; i < oldCells.Length; i++)
         {
             oldCells[i] = new LevelsScript.CellInfo(_levelsObject.levels[0].cellsArray[i]);
         }
@@ -184,7 +186,7 @@ public class LevelRedactor : MonoBehaviour
         {
             for (int y = 0; y < oldSize.y; y++)
             {
-                try{
+                try {
                     if (_levelsObject.levels[0].cellsArray[x + y * _levelsObject.levels[0].Width] == null)
                         _levelsObject.levels[0].cellsArray[x + y * _levelsObject.levels[0].Width] = new LevelsScript.CellInfo(oldCells[x + y * oldSize.x]);
                 }
@@ -203,7 +205,7 @@ public class LevelRedactor : MonoBehaviour
 
     private void UpdateField()
     {
-        if(_cells != null && _cells.Length > 0)
+        if (_cells != null && _cells.Length > 0)
         {
             foreach (CellRedactor cell in _cells)
             {
@@ -222,7 +224,7 @@ public class LevelRedactor : MonoBehaviour
         {
             for (int y = 0; y < _levelsObject.levels[0].Height; y++)
             {
-                _cells[x,y] = Instantiate(_cellPref, _gameFieldTransform);
+                _cells[x, y] = Instantiate(_cellPref, _gameFieldTransform);
 
                 Vector2 pos = new Vector2(startPos.x + x * _heightOneCell, startPos.y + y * _heightOneCell);
                 _cells[x, y].GetComponent<RectTransform>().anchoredPosition = pos;
@@ -240,19 +242,19 @@ public class LevelRedactor : MonoBehaviour
         {
             if (cell.dispencer)
                 _cells[x, y].UpdateImages(TextureExist, TextureDispencer);
-            else if(cell.teleport > 0)
+            else if (cell.teleport > 0)
                 _cells[x, y].UpdateImages(TextureExist, Color.white, null, Color.white, null, TexturePortal, PortalColors[cell.teleport - 1], null, " ");
             else
                 _cells[x, y].UpdateImages(TextureExist, null);
             return;
         }
 
-        Sprite  back = null, 
-                obj = null, 
-                rock = null, 
+        Sprite back = null,
+                obj = null,
+                rock = null,
                 port = null,
                 walls = null;
-        Color   cBack = Color.white,
+        Color cBack = Color.white,
                 cObj = Color.white,
                 cPort = Color.white;
         string str = "";
@@ -299,7 +301,7 @@ public class LevelRedactor : MonoBehaviour
 
         void TypeObject()
         {
-            if(cell.typeCell == CellInternalObject.Type.color)
+            if (cell.typeCell == CellInternalObject.Type.color)
             {
                 obj = SpriteColorObject();
             }
@@ -415,22 +417,25 @@ public class LevelRedactor : MonoBehaviour
         else
             _MoldSelectedCell.isOn = false;
 
-        _BoxHealthSelectedCellText.text = $"Box health:{_levelsObject.levels[0].cellsArray[_selectCellPos].HealthBox}";
         _BoxHealthSelectedCellSlider.value = _levelsObject.levels[0].cellsArray[_selectCellPos].HealthBox;
-
-        _WallsTypeSelectedCellText.text = $"Wall type:{_WallsName[_levelsObject.levels[0].cellsArray[_selectCellPos].wall]}";
+        _PortalSelectedCellSlider.value = _levelsObject.levels[0].cellsArray[_selectCellPos].teleport;
         _WallsTypeSelectedCellSlider.value = _levelsObject.levels[0].cellsArray[_selectCellPos].wall;
-
-        _IceHealthSelectedCellText.text = $"Ice health:{_levelsObject.levels[0].cellsArray[_selectCellPos].HealthBox}";
-        _IceHealthSelectedCellSlider.value = _levelsObject.levels[0].cellsArray[_selectCellPos].HealthBox;
-
-        _TypeSelectedCellText.text = $"Type:{_TypesName[(int)_levelsObject.levels[0].cellsArray[_selectCellPos].typeCell]}";
+        _IceHealthSelectedCellSlider.value = _levelsObject.levels[0].cellsArray[_selectCellPos].HealthIce;
         _TypeSelectedCellSlider.value = (int)_levelsObject.levels[0].cellsArray[_selectCellPos].typeCell;
-
-        _ColorSelectedCellText.text = $"Color:{_ColorsName[(int)_levelsObject.levels[0].cellsArray[_selectCellPos].colorCell]}";
         _ColorSelectedCellSlider.value = (int)_levelsObject.levels[0].cellsArray[_selectCellPos].colorCell;
+
+        UpdateSliderValuesInCellText();
     }
 
+    public void UpdateSliderValuesInCellText()
+    {
+        _BoxHealthSelectedCellText.text = $"Box health:{_BoxHealthSelectedCellSlider.value}";
+        _PortalSelectedCellText.text = $"Portal num:{_PortalSelectedCellSlider.value}";
+        _WallsTypeSelectedCellText.text = $"Wall type:{_WallsName[(int)_WallsTypeSelectedCellSlider.value]}";
+        _IceHealthSelectedCellText.text = $"Ice health:{_IceHealthSelectedCellSlider.value}";
+        _TypeSelectedCellText.text = $"Type:{_TypesName[(int)_TypeSelectedCellSlider.value]}";
+        _ColorSelectedCellText.text = $"Color:{_ColorsName[(int)_ColorSelectedCellSlider.value]}";
+    }
     public void SaveCellValuesInZeroLevel()
     {
 
@@ -458,9 +463,11 @@ public class LevelRedactor : MonoBehaviour
 
         _levelsObject.levels[0].cellsArray[_selectCellPos].HealthBox = (int)_BoxHealthSelectedCellSlider.value;
 
-         _levelsObject.levels[0].cellsArray[_selectCellPos].wall = (int)_WallsTypeSelectedCellSlider.value;
+        _levelsObject.levels[0].cellsArray[_selectCellPos].teleport = (int)_PortalSelectedCellSlider.value;
 
-        _levelsObject.levels[0].cellsArray[_selectCellPos].HealthBox = (int)_IceHealthSelectedCellSlider.value;
+        _levelsObject.levels[0].cellsArray[_selectCellPos].wall = (int)_WallsTypeSelectedCellSlider.value;
+
+        _levelsObject.levels[0].cellsArray[_selectCellPos].HealthIce = (int)_IceHealthSelectedCellSlider.value;
 
         _levelsObject.levels[0].cellsArray[_selectCellPos].typeCell = (CellInternalObject.Type)_TypeSelectedCellSlider.value;
 
