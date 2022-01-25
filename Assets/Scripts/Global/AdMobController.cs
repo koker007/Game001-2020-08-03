@@ -11,10 +11,12 @@ public class AdMobController : MonoBehaviour
 {
     public static AdMobController main;
     private RewardedAd rewardedAd;
+    private RewardedAd playBonusAd;
     private BannerView bannerView;
 
     string keyVideoTest = "ca-app-pub-3940256099942544/5224354917";
-    string keyVideoAndroid = "ca-app-pub-4685950010415099/1502718587";
+    string keyVideoAndroidAddMoving = "ca-app-pub-4685950010415099/1502718587";
+    string keyVideoAndroidPlayWithBonus = "ca-app-pub-4685950010415099/7529188422";
     string keyVideoIphone = "";
 
     [SerializeField]
@@ -59,7 +61,7 @@ public class AdMobController : MonoBehaviour
 
         if (!Settings.main.DeveloperTesting)
         {
-            rewardedAdUnitId = keyVideoAndroid;
+            rewardedAdUnitId = keyVideoAndroidAddMoving;
         }
         else {
             rewardedAdUnitId = keyVideoTest;
@@ -75,6 +77,22 @@ public class AdMobController : MonoBehaviour
             .Build();
         rewardedAd.LoadAd(request);
 
+
+        #if UNITY_ANDROID
+                rewardedAdUnitId = keyVideoAndroidPlayWithBonus;
+        #elif UNITY_IPHONE
+                        reawardedAdUnitId = "ca-app-pub-3940256099942544/1712485313";
+        #else
+                        reawardedAdUnitId = "unexpected_platform";
+        #endif
+
+        playBonusAd = new RewardedAd(rewardedAdUnitId);
+        playBonusAd.OnAdLoaded += HandlePlayWithBonusLoaded;
+        playBonusAd.OnUserEarnedReward += HandlePlayWithBonusReward;
+        playBonusAd.OnAdClosed += HandlePlayWithBonusClosed;
+
+        //»спользу€ настройки дл€ предыдущей рекламмы создаем эту
+        rewardedAd.LoadAd(request);
     }
 
     //—оздаем баннер
@@ -106,6 +124,14 @@ public class AdMobController : MonoBehaviour
         if (rewardedAd.IsLoaded())
         {
             rewardedAd.Show();
+        }
+    }
+    public void ShowPlayBonusAd()
+    {
+
+        if (playBonusAd.IsLoaded())
+        {
+            playBonusAd.Show();
         }
     }
 
@@ -164,5 +190,40 @@ public class AdMobController : MonoBehaviour
        
     }
 
+    #endregion
+
+
+    #region PlayWithBonusHandlers
+    private void HandlePlayWithBonusReward(object sender, Reward args)
+    {
+        UICTRL.main.OpenGameplay();
+
+        Gameplay.main.movingCan += 2;
+    }
+
+    private void HandlePlayWithBonusLoaded(object sender, EventArgs args)
+    {
+
+    }
+
+    private void HandlePlayWithBonusFailedToLoad(object sender, AdFailedToLoadEventArgs args)
+    {
+
+    }
+
+    private void HandlePlayWithBonusOpening(object sender, EventArgs args)
+    {
+
+    }
+
+    private void HandlePlayWithBonusFailedToShow(object sender, AdErrorEventArgs args)
+    {
+
+    }
+
+    private void HandlePlayWithBonusClosed(object sender, EventArgs args)
+    {
+        CreateAndLoadRewardedAd();
+    }
     #endregion
 }

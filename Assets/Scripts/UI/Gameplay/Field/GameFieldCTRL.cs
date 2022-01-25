@@ -218,6 +218,8 @@ public class GameFieldCTRL : MonoBehaviour
 
         ScaleField();
 
+        AddPlayBonus();
+
         //Заполняем все поля ячейками рандомно
         void AddAllCellsRandom()
         {
@@ -537,6 +539,8 @@ public class GameFieldCTRL : MonoBehaviour
 
                 }
             }
+
+
         }
 
         //Подогнать размер поля в зависимости от количества ячеек
@@ -557,7 +561,38 @@ public class GameFieldCTRL : MonoBehaviour
             myRect.sizeDelta = new Vector2(100 * cellCTRLs.GetLength(0), 100 * cellCTRLs.GetLength(1));
         }
 
+        void AddPlayBonus() {
+            if (Gameplay.main.StartBonus == CellInternalObject.Type.none) {
+                return;
+            }
 
+            //проверяем все ячейки поля и разделяем по категориям
+            List<CellInternalObject> listInternals = new List<CellInternalObject>();
+            List<CellInternalObject> listinternalsClosed = new List<CellInternalObject>();
+            List<CellCTRL> listCellNotHaveInternal = new List<CellCTRL>();
+
+            for (int x = 0; x < cellCTRLs.GetLength(0); x++) {
+                for (int y = 0; y < cellCTRLs.GetLength(1); y++) {
+                    //Проверяем ячейку
+                    /*
+                    if (cellCTRLs[x,y] == null || 
+                        cellCTRLs[x,y].cellInternal) {
+                        continue;
+                    }
+
+                    if () {
+
+                    }
+                    else if () {
+
+                    }
+                    else if () {
+                    
+                    }
+                    */
+                }
+            }
+        }
     }
 
     /// <summary>

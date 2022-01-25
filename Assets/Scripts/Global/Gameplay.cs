@@ -22,6 +22,7 @@ public class Gameplay : MonoBehaviour
     /// </summary>
     public int tickets = 0;
 
+    public CellInternalObject.Type StartBonus = CellInternalObject.Type.none;
     public bool isGameplay = false;
     public bool GameplayEnd = false;
     public int adWatchedCount = 0; //Количество просмотров рекламмы
