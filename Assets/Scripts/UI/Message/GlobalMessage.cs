@@ -89,7 +89,7 @@ public class GlobalMessage : MonoBehaviour
     }
 
     public void InvokeTermsOfUse() {
-        if (PlayerProfile.main.ProfileTermsOfUse >= System.Convert.ToDouble(Application.version) ||         //если соглашение уже принято
+        if (PlayerProfile.main.ProfileTermsOfUse +0.0001f >= System.Convert.ToDouble(Application.version) ||         //если соглашение уже принято
             MessageCTRL.selected //или сейчас показывается какое-то сообщение
             ) {
             return;
