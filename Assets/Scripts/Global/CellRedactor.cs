@@ -17,6 +17,24 @@ public class CellRedactor : MonoBehaviour
     [SerializeField] private Text _additionalText; //жизни
     [SerializeField] private Vector2Int _cellPos; //позиция
 
+    public void newCellRedactor(CellRedactor cell)
+    {
+        ReplacementImage(_cellImageBack, cell._cellImageBack);
+        ReplacementImage(_cellImageBasic, cell._cellImageBasic);
+        ReplacementImage(_cellImageRock, cell._cellImageRock);
+        ReplacementImage(_cellImagePortal, cell._cellImagePortal);
+        ReplacementImage(_cellImageWalls, cell._cellImageWalls);
+        _additionalText.text = cell._additionalText.text;
+    }
+
+    public void ReplacementImage(Image im1, Image im2)
+    {
+        if (im2.gameObject.activeSelf)
+            UpdateImage(im1, im2.sprite, im2.color);
+        else
+            im1.gameObject.SetActive(false);
+    }
+
     public void UpdateImages(Sprite cellImageBack, Color cellColorBack, Sprite cellImageBasic, Color cellColorBasic, Sprite cellImageRock, Sprite cellImagePortal, Color cellColorPortal, Sprite walls, string AdditionalText)
     {
         UpdateImage(_cellImageBack, cellImageBack, cellColorBack);
@@ -54,5 +72,9 @@ public class CellRedactor : MonoBehaviour
     public void TouchCell()
     {
         LevelRedactor.main.SelectCell(_cellPos);
+    }
+    public void FastPast()
+    {
+        LevelRedactor.main.FastPastCell(_cellPos);
     }
 }
