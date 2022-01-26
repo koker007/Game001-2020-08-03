@@ -50,6 +50,10 @@ public class Gameplay : MonoBehaviour
     /// </summary>
     public int movingCount = 0;
     /// <summary>
+    /// общее количество выполненных комбинаций
+    /// </summary>
+    public int movingCombCount = 0;
+    /// <summary>
     /// Общее количество требуемых ходов плесени
     /// </summary>
     public int movingMoldCount = 0;
@@ -79,6 +83,7 @@ public class Gameplay : MonoBehaviour
         movingCount = 0;
         movingMoldCount = 0;
         movingCan = LevelsScript.main.ReturnLevel().Move;
+        movingCombCount = 0; 
         adWatchedCount = 0;
         buyMoveCount = 0;
         moveCompleted = false;
@@ -139,18 +144,26 @@ public class Gameplay : MonoBehaviour
             //Добавляем комбинацию для пост проверки
             //combWaiting.Add(combination);
 
-            //прибавляем ход плесени если никакой пользы не было
-            if (!combination.cross &&
-                !combination.foundPanel &&
-                !combination.line4 &&
-                !combination.line5 &&
-                !combination.square) {
-
+            //прибавляем ход плесени только если ее не задели в этой комбинации
+            if (!combination.foundMould) {
                 movingMoldCount++;
             }
         }
         else {
             EnemyController.MoveCount++;
+        }
+
+        //Если комбинация то добавляем комбинацию в счетчик комбинаций
+        if (combination.cross ||
+            combination.line4 ||
+            combination.line5 ||
+            combination.square)
+        {
+            movingCombCount++;
+        }
+        else {
+            //ставим овер дохера комбинаций чтобы точно закончить этот ход
+            movingCombCount = 0;
         }
 
         //Завершено ли действие
