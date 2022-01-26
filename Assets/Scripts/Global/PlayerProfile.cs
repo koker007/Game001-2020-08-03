@@ -26,6 +26,8 @@ public class PlayerProfile : MonoBehaviour
     /// количество очков до следующего уровн€
     /// </summary>
     /// 
+    public float ProfileCurrentLVLScoreMax = 100;
+    public float ProfileCurrentLVLScoreNow = 100;
 
     public float ProfileTermsOfUse = 0;
 
@@ -69,10 +71,16 @@ public class PlayerProfile : MonoBehaviour
     /// —колько очков получил игрок на этом уровне
     /// </summary>
     public int[] LVLStar = new int[1];
+    int Star1Count = 0;
+    int Star2Count = 0;
+    int Star3Count = 0;
+
     /// <summary>
     /// какие уровни пройдены на золото игроком
     /// </summary>
     public int[] LVLGold = new int[1];
+    public int LVLGoldCount = 0;
+
     
 
     [System.Serializable]
@@ -147,7 +155,11 @@ public class PlayerProfile : MonoBehaviour
             ShopColor5.Amount = 10;
             ShopMixed.Amount = 10;
         }
-        
+
+        ReCalcStarsCount();
+        ReCalcGoldCount();
+        ReCalcProfileLVL();
+
     }
     public void Save() {
         PlayerPrefs.SetInt(strProfileLevel, ProfileLevel);
@@ -282,6 +294,8 @@ public class PlayerProfile : MonoBehaviour
             WriteDataLVL(dataKAD);
         }
 
+
+
         //ѕрочитать данные профил€ игрока данными из гугла
         void WriteDataLVL(string[] dataKAD) {
 
@@ -324,25 +338,15 @@ public class PlayerProfile : MonoBehaviour
             TestArray(lvl, ref LVLStar);
             TestArray(lvl, ref LVLGold);
 
-            /*
-            if (lvl >= LVLStar.Length) {
-                //расшир€ем до последнего значени€
-                int[] LVLStarNew = new int[lvl+1];
-
-                //«аполн€ем данными
-                for (int x = 0; x < LVLStar.Length; x++) {
-                    LVLStarNew[x] = LVLStar[x];
-                }
-
-                LVLStar = LVLStarNew;
-            }
-            */
-
             //¬недр€ем данные по значению
             LVLStar[lvl] = stars;
             LVLGold[lvl] = gold;
 
         }
+
+        ReCalcStarsCount();
+        ReCalcGoldCount();
+        ReCalcProfileLVL();
     }
     void SaveForGoogleLVL() {
         //—оздаем список параметров
@@ -407,7 +411,77 @@ public class PlayerProfile : MonoBehaviour
 
         LVLStar[LVLnum] = starsCount;
 
+        ReCalcStarsCount();
+        ReCalcGoldCount();
+        ReCalcProfileLVL();
+
         SaveForGoogleLVL();
+    }
+
+    public void ReCalcGoldCount() {
+        LVLGoldCount = 0;
+        foreach (int x in LVLGold) {
+            if (x == 1) LVLGoldCount++;
+        }
+    }
+    public void ReCalcStarsCount() {
+        Star1Count = 0;
+        Star2Count = 0;
+        Star3Count = 0;
+
+        foreach (int x in LVLStar) {
+            if (x == 1) Star1Count++;
+            else if (x == 2) Star2Count++;
+            else if (x == 3) Star3Count++;
+        }
+
+
+    }
+
+    //ѕересчитать уровень игрока и его очки
+    public void ReCalcProfileLVL() {
+        //”множаем количество очков на
+        ProfileScore = 0;
+        ProfileLevel = 1;
+
+        //«а открытые уровни игрок получает 1 очко
+        ProfileScore += ProfilelevelOpen * 1;
+
+        //«а звезды игрок получает 2,3,4 очка
+        ProfileScore += Star1Count * 2;
+        ProfileScore += Star2Count * 3;
+        ProfileScore += Star3Count * 4;
+
+        //«а пройденные на золото уровни игрок получает 5 очков
+        ProfileScore += LVLGoldCount * 5;
+
+        //—читаем уровень игрока
+        //предположим первый уровень равен 
+        ProfileCurrentLVLScoreMax = 10;
+        float CoofNextLVL = 1.18f;
+
+        bool isComplite = false;
+        //остаток очков дл€ понимани€ того сколько еще осталось
+        ProfileCurrentLVLScoreNow = ProfileScore;
+        while (!isComplite) {
+            ProfileCurrentLVLScoreMax *= CoofNextLVL;
+
+            //≈сли очков в запасе больше чем надо на текущий уровень
+            if (ProfileCurrentLVLScoreNow >= ProfileCurrentLVLScoreMax)
+            {
+                //ƒобавл€ем уровень
+                ProfileLevel++;
+                //вычитаем очки уровн€ из оставшихс€ очков
+                ProfileCurrentLVLScoreNow -= ProfileCurrentLVLScoreMax;
+            }
+
+            //Ёто наш конечный уровень
+            else {
+                isComplite = true;
+            }
+        }
+
+        //
     }
     
     //—охранить золото

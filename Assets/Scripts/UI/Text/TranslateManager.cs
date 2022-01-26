@@ -82,7 +82,7 @@ public class TranslateManager : MonoBehaviour
         }
     }
 
-    public string GetText(string key)
+    public string GetText(string key, string defoltText)
     {
         string text = null;
         int StartPositionKey = (int)key[0] * MaximumKeyOneSimbol;
@@ -96,8 +96,11 @@ public class TranslateManager : MonoBehaviour
         }
         if(text == null)
         {
-            return "Error";
+            return defoltText;
         }
         return text;
+    }
+    public string GetText(string key) {
+        return GetText(key, "Error");
     }
 }

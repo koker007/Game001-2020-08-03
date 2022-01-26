@@ -261,6 +261,22 @@ public class GooglePlay : MonoBehaviour
         });
     }
 
+    //Есть ли процесс сохранения в ожидании
+    public bool isSavingProcessNow() {
+
+        if (BufferWaitingFiles != null && 
+            BufferWaitingFiles.Count > 0) {
+
+            foreach (SaveOrLoadData data in BufferWaitingFiles) {
+                if (data.isSave) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     int[] fpsBuffer = new int[10];
     void Update()
     {
