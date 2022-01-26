@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657707, g: 0.49641156, b: 0.57481664, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657737, g: 0.49641192, b: 0.5748175, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7718,7 +7718,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 347167294}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -18228,6 +18228,7 @@ MonoBehaviour:
   playerTurn: 1
   levelSelect: 0
   tickets: 0
+  StartBonus: 0
   isGameplay: 0
   GameplayEnd: 0
   adWatchedCount: 0
@@ -18282,6 +18283,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18302,6 +18304,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18322,6 +18325,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18342,6 +18346,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18362,6 +18367,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18382,6 +18388,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18402,6 +18409,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18422,6 +18430,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18442,6 +18451,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18462,6 +18472,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18482,6 +18493,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18502,6 +18514,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18522,6 +18535,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18542,6 +18556,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18562,6 +18577,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18582,6 +18598,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18602,6 +18619,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18622,6 +18640,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18642,6 +18661,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18662,6 +18682,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18682,6 +18703,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18702,6 +18724,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18722,6 +18745,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18742,6 +18766,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18762,6 +18787,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18782,6 +18808,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18802,6 +18829,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18822,6 +18850,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18842,6 +18871,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18862,6 +18892,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18882,6 +18913,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18902,6 +18934,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18922,6 +18955,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18942,6 +18976,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18962,6 +18997,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -18982,6 +19018,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19002,6 +19039,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19022,6 +19060,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19042,6 +19081,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19062,6 +19102,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19082,6 +19123,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19102,6 +19144,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19122,6 +19165,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19142,6 +19186,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19162,6 +19207,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19182,6 +19228,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19202,6 +19249,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19222,6 +19270,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19242,6 +19291,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19262,6 +19312,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19282,6 +19333,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19302,6 +19354,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19322,6 +19375,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19342,6 +19396,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19362,6 +19417,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19382,6 +19438,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19402,6 +19459,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19422,6 +19480,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19442,6 +19501,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19462,6 +19522,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19482,6 +19543,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19502,6 +19564,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19522,6 +19585,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19542,6 +19606,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19562,6 +19627,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19582,6 +19648,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19602,6 +19669,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19622,6 +19690,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19642,6 +19711,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19662,6 +19732,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19682,6 +19753,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19702,6 +19774,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19722,6 +19795,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19742,6 +19816,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19762,6 +19837,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19782,6 +19858,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19802,6 +19879,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19822,6 +19900,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19842,6 +19921,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19862,6 +19942,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19882,6 +19963,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19902,6 +19984,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19922,6 +20005,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19942,6 +20026,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19962,6 +20047,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -19982,6 +20068,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20002,6 +20089,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20022,6 +20110,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20042,6 +20131,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20062,6 +20152,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20082,6 +20173,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20102,6 +20194,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20122,6 +20215,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20142,6 +20236,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20162,6 +20257,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20182,6 +20278,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20202,6 +20299,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20222,6 +20320,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20242,6 +20341,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20262,6 +20362,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20282,6 +20383,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20302,6 +20404,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20322,6 +20425,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20342,6 +20446,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20362,6 +20467,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20382,6 +20488,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20402,6 +20509,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20422,6 +20530,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20442,6 +20551,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20462,6 +20572,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20482,6 +20593,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20502,6 +20614,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20522,6 +20635,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20542,6 +20656,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20562,6 +20677,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20582,6 +20698,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20602,6 +20719,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20622,6 +20740,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20642,6 +20761,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20662,6 +20782,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20682,6 +20803,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20702,6 +20824,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20722,6 +20845,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20742,6 +20866,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20762,6 +20887,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20782,6 +20908,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20802,6 +20929,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20822,6 +20950,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20842,6 +20971,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20862,6 +20992,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20882,6 +21013,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20902,6 +21034,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20922,6 +21055,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20942,6 +21076,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20962,6 +21097,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -20982,6 +21118,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21002,6 +21139,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21022,6 +21160,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21042,6 +21181,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21062,6 +21202,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21082,6 +21223,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21102,6 +21244,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21122,6 +21265,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21142,6 +21286,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21162,6 +21307,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21182,6 +21328,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21202,6 +21349,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21222,6 +21370,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21242,6 +21391,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21262,6 +21412,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21282,6 +21433,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21302,6 +21454,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21322,6 +21475,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21342,6 +21496,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21362,6 +21517,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21382,6 +21538,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21402,6 +21559,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21422,6 +21580,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21442,6 +21601,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21462,6 +21622,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21482,6 +21643,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21502,6 +21664,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21522,6 +21685,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21542,6 +21706,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21562,6 +21727,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21582,6 +21748,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21602,6 +21769,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21622,6 +21790,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21642,6 +21811,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21662,6 +21832,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21682,6 +21853,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21702,6 +21874,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21722,6 +21895,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21742,6 +21916,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21762,6 +21937,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21782,6 +21958,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21802,6 +21979,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21822,6 +22000,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21842,6 +22021,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21862,6 +22042,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21882,6 +22063,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21902,6 +22084,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21922,6 +22105,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21942,6 +22126,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21962,6 +22147,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -21982,6 +22168,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22002,6 +22189,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22022,6 +22210,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22042,6 +22231,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22062,6 +22252,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22082,6 +22273,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22102,6 +22294,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22122,6 +22315,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22142,6 +22336,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22162,6 +22357,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22182,6 +22378,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22202,6 +22399,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22222,6 +22420,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22242,6 +22441,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22262,6 +22462,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22282,6 +22483,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22302,6 +22504,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22322,6 +22525,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22342,6 +22546,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22362,6 +22567,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22382,6 +22588,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22402,6 +22609,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22422,6 +22630,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22442,6 +22651,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22462,6 +22672,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22482,6 +22693,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22502,6 +22714,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22522,6 +22735,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22542,6 +22756,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22562,6 +22777,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22582,6 +22798,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22602,6 +22819,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22622,6 +22840,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22642,6 +22861,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22662,6 +22882,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22682,6 +22903,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22702,6 +22924,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22722,6 +22945,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22742,6 +22966,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22762,6 +22987,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22782,6 +23008,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22802,6 +23029,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22822,6 +23050,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22842,6 +23071,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22862,6 +23092,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22882,6 +23113,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22902,6 +23134,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22922,6 +23155,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22942,6 +23176,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22962,6 +23197,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -22982,6 +23218,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23002,6 +23239,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23022,6 +23260,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23042,6 +23281,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23062,6 +23302,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23082,6 +23323,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23102,6 +23344,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23122,6 +23365,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23142,6 +23386,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23162,6 +23407,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23182,6 +23428,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23202,6 +23449,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23222,6 +23470,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23242,6 +23491,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23262,6 +23512,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23282,6 +23533,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23302,6 +23554,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23322,6 +23575,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23342,6 +23596,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23362,6 +23617,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23382,6 +23638,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23402,6 +23659,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23422,6 +23680,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23442,6 +23701,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23462,6 +23722,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23482,6 +23743,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23502,6 +23764,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23522,6 +23785,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23542,6 +23806,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23562,6 +23827,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23582,6 +23848,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23602,6 +23869,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23622,6 +23890,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23642,6 +23911,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23662,6 +23932,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23682,6 +23953,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23702,6 +23974,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23722,6 +23995,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23742,6 +24016,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23762,6 +24037,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23782,6 +24058,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23802,6 +24079,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23822,6 +24100,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23842,6 +24121,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23862,6 +24142,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23882,6 +24163,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23902,6 +24184,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23922,6 +24205,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23942,6 +24226,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23962,6 +24247,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -23982,6 +24268,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24002,6 +24289,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24022,6 +24310,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24042,6 +24331,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24062,6 +24352,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24082,6 +24373,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24102,6 +24394,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24122,6 +24415,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24142,6 +24436,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24162,6 +24457,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24182,6 +24478,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24202,6 +24499,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24222,6 +24520,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24242,6 +24541,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24262,6 +24562,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24282,6 +24583,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24302,6 +24604,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24322,6 +24625,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24342,6 +24646,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24362,6 +24667,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24382,6 +24688,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24402,6 +24709,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24422,6 +24730,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24442,6 +24751,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24462,6 +24772,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24482,6 +24793,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24502,6 +24814,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24522,6 +24835,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24542,6 +24856,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24562,6 +24877,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24582,6 +24898,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24602,6 +24919,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24622,6 +24940,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24642,6 +24961,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24662,6 +24982,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24682,6 +25003,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24702,6 +25024,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24722,6 +25045,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24742,6 +25066,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24762,6 +25087,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24782,6 +25108,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24802,6 +25129,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24822,6 +25150,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24842,6 +25171,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24862,6 +25192,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24882,6 +25213,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24902,6 +25234,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24922,6 +25255,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24942,6 +25276,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24962,6 +25297,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -24982,6 +25318,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25002,6 +25339,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25022,6 +25360,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25042,6 +25381,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25062,6 +25402,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25082,6 +25423,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25102,6 +25444,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25122,6 +25465,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25142,6 +25486,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25162,6 +25507,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25182,6 +25528,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25202,6 +25549,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25222,6 +25570,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25242,6 +25591,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25262,6 +25612,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25282,6 +25633,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25302,6 +25654,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25322,6 +25675,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25342,6 +25696,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25362,6 +25717,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25382,6 +25738,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25402,6 +25759,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25422,6 +25780,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25442,6 +25801,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25462,6 +25822,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25482,6 +25843,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25502,6 +25864,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25522,6 +25885,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25542,6 +25906,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25562,6 +25927,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25582,6 +25948,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25602,6 +25969,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25622,6 +25990,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25642,6 +26011,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25662,6 +26032,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25682,6 +26053,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25702,6 +26074,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25722,6 +26095,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25742,6 +26116,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25762,6 +26137,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25782,6 +26158,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25802,6 +26179,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25822,6 +26200,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25842,6 +26221,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25862,6 +26242,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25882,6 +26263,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25902,6 +26284,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25922,6 +26305,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25942,6 +26326,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25962,6 +26347,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -25982,6 +26368,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26002,6 +26389,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26022,6 +26410,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26042,6 +26431,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26062,6 +26452,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26082,6 +26473,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26102,6 +26494,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26122,6 +26515,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26142,6 +26536,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26162,6 +26557,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26182,6 +26578,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26202,6 +26599,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26222,6 +26620,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26242,6 +26641,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26262,6 +26662,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26282,6 +26683,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26302,6 +26704,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26322,6 +26725,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26342,6 +26746,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26362,6 +26767,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26382,6 +26788,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26402,6 +26809,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26422,6 +26830,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26442,6 +26851,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26462,6 +26872,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26482,6 +26893,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26502,6 +26914,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26522,6 +26935,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26542,6 +26956,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26562,6 +26977,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26582,6 +26998,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26602,6 +27019,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26622,6 +27040,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26642,6 +27061,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26662,6 +27082,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26682,6 +27103,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26702,6 +27124,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26722,6 +27145,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26742,6 +27166,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26762,6 +27187,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26782,6 +27208,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26802,6 +27229,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26822,6 +27250,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26842,6 +27271,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26862,6 +27292,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26882,6 +27313,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26902,6 +27334,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26922,6 +27355,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26942,6 +27376,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26962,6 +27397,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -26982,6 +27418,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27002,6 +27439,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27022,6 +27460,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27042,6 +27481,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27062,6 +27502,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27082,6 +27523,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27102,6 +27544,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27122,6 +27565,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27142,6 +27586,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27162,6 +27607,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27182,6 +27628,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27202,6 +27649,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27222,6 +27670,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27242,6 +27691,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27262,6 +27712,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27282,6 +27733,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27302,6 +27754,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27322,6 +27775,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27342,6 +27796,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27362,6 +27817,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27382,6 +27838,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27402,6 +27859,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27422,6 +27880,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27442,6 +27901,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27462,6 +27922,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27482,6 +27943,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27502,6 +27964,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27522,6 +27985,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27542,6 +28006,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27562,6 +28027,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27582,6 +28048,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27602,6 +28069,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27622,6 +28090,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27642,6 +28111,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27662,6 +28132,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27682,6 +28153,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27702,6 +28174,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27722,6 +28195,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27742,6 +28216,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27762,6 +28237,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27782,6 +28258,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27802,6 +28279,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27822,6 +28300,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27842,6 +28321,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27862,6 +28342,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27882,6 +28363,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27902,6 +28384,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27922,6 +28405,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27942,6 +28426,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27962,6 +28447,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -27982,6 +28468,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28002,6 +28489,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28022,6 +28510,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28042,6 +28531,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28062,6 +28552,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28082,6 +28573,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28102,6 +28594,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28122,6 +28615,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28142,6 +28636,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28162,6 +28657,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28182,6 +28678,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28202,6 +28699,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28222,6 +28720,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28242,6 +28741,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28262,6 +28762,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28282,6 +28783,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28302,6 +28804,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28322,6 +28825,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28342,6 +28846,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28362,6 +28867,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28382,6 +28888,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28402,6 +28909,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28422,6 +28930,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28442,6 +28951,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28462,6 +28972,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28482,6 +28993,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28502,6 +29014,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28522,6 +29035,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28542,6 +29056,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28562,6 +29077,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28582,6 +29098,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28602,6 +29119,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28622,6 +29140,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28642,6 +29161,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28662,6 +29182,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28682,6 +29203,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28702,6 +29224,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28722,6 +29245,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28742,6 +29266,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28762,6 +29287,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28782,6 +29308,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28802,6 +29329,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28822,6 +29350,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28842,6 +29371,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28862,6 +29392,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28882,6 +29413,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28902,6 +29434,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28922,6 +29455,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28942,6 +29476,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28962,6 +29497,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -28982,6 +29518,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29002,6 +29539,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29022,6 +29560,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29042,6 +29581,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29062,6 +29602,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29082,6 +29623,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29102,6 +29644,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29122,6 +29665,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29142,6 +29686,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29162,6 +29707,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29182,6 +29728,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29202,6 +29749,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29222,6 +29770,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29242,6 +29791,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29262,6 +29812,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29282,6 +29833,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29302,6 +29854,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29322,6 +29875,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29342,6 +29896,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29362,6 +29917,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29382,6 +29938,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29402,6 +29959,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29422,6 +29980,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29442,6 +30001,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29462,6 +30022,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29482,6 +30043,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29502,6 +30064,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29522,6 +30085,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29542,6 +30106,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29562,6 +30127,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29582,6 +30148,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29602,6 +30169,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29622,6 +30190,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29642,6 +30211,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29662,6 +30232,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29682,6 +30253,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29702,6 +30274,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29722,6 +30295,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29742,6 +30316,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29762,6 +30337,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29782,6 +30358,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29802,6 +30379,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29822,6 +30400,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29842,6 +30421,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29862,6 +30442,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29882,6 +30463,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29902,6 +30484,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29922,6 +30505,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29942,6 +30526,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29962,6 +30547,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -29982,6 +30568,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30002,6 +30589,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30022,6 +30610,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30042,6 +30631,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30062,6 +30652,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30082,6 +30673,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30102,6 +30694,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30122,6 +30715,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30142,6 +30736,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30162,6 +30757,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30182,6 +30778,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30202,6 +30799,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30222,6 +30820,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30242,6 +30841,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30262,6 +30862,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30282,6 +30883,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30302,6 +30904,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30322,6 +30925,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30342,6 +30946,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30362,6 +30967,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30382,6 +30988,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30402,6 +31009,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30422,6 +31030,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30442,6 +31051,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30462,6 +31072,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30482,6 +31093,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30502,6 +31114,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30522,6 +31135,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30542,6 +31156,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30562,6 +31177,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30582,6 +31198,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30602,6 +31219,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30622,6 +31240,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30642,6 +31261,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30662,6 +31282,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30682,6 +31303,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30702,6 +31324,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30722,6 +31345,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30742,6 +31366,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30762,6 +31387,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30782,6 +31408,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30802,6 +31429,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30822,6 +31450,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30842,6 +31471,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30862,6 +31492,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30882,6 +31513,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30902,6 +31534,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30922,6 +31555,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30942,6 +31576,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30962,6 +31597,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -30982,6 +31618,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31002,6 +31639,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31022,6 +31660,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31042,6 +31681,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31062,6 +31702,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31082,6 +31723,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31102,6 +31744,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31122,6 +31765,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31142,6 +31786,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31162,6 +31807,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31182,6 +31828,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31202,6 +31849,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31222,6 +31870,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31242,6 +31891,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31262,6 +31912,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31282,6 +31933,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31302,6 +31954,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31322,6 +31975,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31342,6 +31996,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31362,6 +32017,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31382,6 +32038,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31402,6 +32059,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31422,6 +32080,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31442,6 +32101,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31462,6 +32122,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31482,6 +32143,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31502,6 +32164,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31522,6 +32185,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31542,6 +32206,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31562,6 +32227,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31582,6 +32248,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31602,6 +32269,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31622,6 +32290,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31642,6 +32311,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31662,6 +32332,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31682,6 +32353,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31702,6 +32374,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31722,6 +32395,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31742,6 +32416,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31762,6 +32437,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31782,6 +32458,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31802,6 +32479,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31822,6 +32500,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31842,6 +32521,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31862,6 +32542,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31882,6 +32563,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31902,6 +32584,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31922,6 +32605,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31942,6 +32626,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31962,6 +32647,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -31982,6 +32668,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32002,6 +32689,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32022,6 +32710,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32042,6 +32731,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32062,6 +32752,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32082,6 +32773,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32102,6 +32794,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32122,6 +32815,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32142,6 +32836,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32162,6 +32857,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32182,6 +32878,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32202,6 +32899,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32222,6 +32920,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32242,6 +32941,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32262,6 +32962,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32282,6 +32983,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32302,6 +33004,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32322,6 +33025,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32342,6 +33046,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32362,6 +33067,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32382,6 +33088,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32402,6 +33109,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32422,6 +33130,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32442,6 +33151,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32462,6 +33172,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32482,6 +33193,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32502,6 +33214,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32522,6 +33235,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32542,6 +33256,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32562,6 +33277,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32582,6 +33298,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32602,6 +33319,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32622,6 +33340,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32642,6 +33361,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32662,6 +33382,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32682,6 +33403,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32702,6 +33424,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32722,6 +33445,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32742,6 +33466,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32762,6 +33487,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32782,6 +33508,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32802,6 +33529,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32822,6 +33550,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32842,6 +33571,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32862,6 +33592,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32882,6 +33613,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32902,6 +33634,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32922,6 +33655,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32942,6 +33676,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32962,6 +33697,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -32982,6 +33718,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33002,6 +33739,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33022,6 +33760,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33042,6 +33781,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33062,6 +33802,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33082,6 +33823,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33102,6 +33844,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33122,6 +33865,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33142,6 +33886,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33162,6 +33907,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33182,6 +33928,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33202,6 +33949,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33222,6 +33970,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33242,6 +33991,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33262,6 +34012,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33282,6 +34033,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33302,6 +34054,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33322,6 +34075,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33342,6 +34096,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33362,6 +34117,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33382,6 +34138,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33402,6 +34159,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33422,6 +34180,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33442,6 +34201,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33462,6 +34222,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33482,6 +34243,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33502,6 +34264,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33522,6 +34285,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33542,6 +34306,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33562,6 +34327,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33582,6 +34348,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33602,6 +34369,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33622,6 +34390,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33642,6 +34411,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33662,6 +34432,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33682,6 +34453,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33702,6 +34474,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33722,6 +34495,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33742,6 +34516,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33762,6 +34537,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33782,6 +34558,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33802,6 +34579,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33822,6 +34600,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33842,6 +34621,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33862,6 +34642,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33882,6 +34663,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33902,6 +34684,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33922,6 +34705,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33942,6 +34726,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33962,6 +34747,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -33982,6 +34768,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34002,6 +34789,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34022,6 +34810,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34042,6 +34831,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34062,6 +34852,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34082,6 +34873,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34102,6 +34894,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34122,6 +34915,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34142,6 +34936,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34162,6 +34957,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34182,6 +34978,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34202,6 +34999,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34222,6 +35020,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34242,6 +35041,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34262,6 +35062,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34282,6 +35083,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34302,6 +35104,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34322,6 +35125,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34342,6 +35146,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34362,6 +35167,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34382,6 +35188,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34402,6 +35209,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34422,6 +35230,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34442,6 +35251,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34462,6 +35272,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34482,6 +35293,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34502,6 +35314,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34522,6 +35335,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34542,6 +35356,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34562,6 +35377,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34582,6 +35398,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34602,6 +35419,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34622,6 +35440,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34642,6 +35461,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34662,6 +35482,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34682,6 +35503,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34702,6 +35524,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34722,6 +35545,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34742,6 +35566,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34762,6 +35587,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34782,6 +35608,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34802,6 +35629,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34822,6 +35650,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34842,6 +35671,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34862,6 +35692,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34882,6 +35713,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34902,6 +35734,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34922,6 +35755,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34942,6 +35776,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34962,6 +35797,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -34982,6 +35818,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35002,6 +35839,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35022,6 +35860,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35042,6 +35881,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35062,6 +35902,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35082,6 +35923,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35102,6 +35944,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35122,6 +35965,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35142,6 +35986,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35162,6 +36007,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35182,6 +36028,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35202,6 +36049,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35222,6 +36070,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35242,6 +36091,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35262,6 +36112,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35282,6 +36133,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35302,6 +36154,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35322,6 +36175,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35342,6 +36196,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35362,6 +36217,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35382,6 +36238,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35402,6 +36259,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35422,6 +36280,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35442,6 +36301,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35462,6 +36322,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35482,6 +36343,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35502,6 +36364,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35522,6 +36385,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35542,6 +36406,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35562,6 +36427,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35582,6 +36448,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35602,6 +36469,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35622,6 +36490,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35642,6 +36511,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35662,6 +36532,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35682,6 +36553,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35702,6 +36574,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35722,6 +36595,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35742,6 +36616,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35762,6 +36637,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35782,6 +36658,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35802,6 +36679,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35822,6 +36700,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35842,6 +36721,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35862,6 +36742,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35882,6 +36763,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35902,6 +36784,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35922,6 +36805,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35942,6 +36826,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35962,6 +36847,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -35982,6 +36868,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36002,6 +36889,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36022,6 +36910,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36042,6 +36931,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36062,6 +36952,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36082,6 +36973,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36102,6 +36994,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36122,6 +37015,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36142,6 +37036,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36162,6 +37057,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36182,6 +37078,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36202,6 +37099,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36222,6 +37120,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36242,6 +37141,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36262,6 +37162,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36282,6 +37183,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36302,6 +37204,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36322,6 +37225,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36342,6 +37246,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36362,6 +37267,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36382,6 +37288,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36402,6 +37309,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36422,6 +37330,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36442,6 +37351,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36462,6 +37372,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36482,6 +37393,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36502,6 +37414,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36522,6 +37435,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36542,6 +37456,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36562,6 +37477,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36582,6 +37498,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36602,6 +37519,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36622,6 +37540,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36642,6 +37561,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36662,6 +37582,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36682,6 +37603,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36702,6 +37624,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36722,6 +37645,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36742,6 +37666,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36762,6 +37687,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36782,6 +37708,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36802,6 +37729,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36822,6 +37750,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36842,6 +37771,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36862,6 +37792,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36882,6 +37813,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36902,6 +37834,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36922,6 +37855,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36942,6 +37876,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36962,6 +37897,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -36982,6 +37918,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37002,6 +37939,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37022,6 +37960,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37042,6 +37981,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37062,6 +38002,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37082,6 +38023,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37102,6 +38044,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37122,6 +38065,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37142,6 +38086,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37162,6 +38107,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37182,6 +38128,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37202,6 +38149,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37222,6 +38170,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37242,6 +38191,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37262,6 +38212,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37282,6 +38233,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37302,6 +38254,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37322,6 +38275,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37342,6 +38296,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37362,6 +38317,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37382,6 +38338,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37402,6 +38359,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37422,6 +38380,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37442,6 +38401,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37462,6 +38422,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37482,6 +38443,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37502,6 +38464,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37522,6 +38485,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37542,6 +38506,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37562,6 +38527,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37582,6 +38548,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37602,6 +38569,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37622,6 +38590,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37642,6 +38611,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37662,6 +38632,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37682,6 +38653,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37702,6 +38674,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37722,6 +38695,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37742,6 +38716,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37762,6 +38737,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37782,6 +38758,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37802,6 +38779,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37822,6 +38800,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37842,6 +38821,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37862,6 +38842,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37882,6 +38863,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37902,6 +38884,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37922,6 +38905,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37942,6 +38926,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37962,6 +38947,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -37982,6 +38968,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -38002,6 +38989,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -38022,6 +39010,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -38042,6 +39031,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -38062,6 +39052,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -38082,6 +39073,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -38102,6 +39094,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -38122,6 +39115,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -38142,6 +39136,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -38162,6 +39157,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -38182,6 +39178,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -38202,6 +39199,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -38222,6 +39220,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -38242,6 +39241,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -38262,6 +39262,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -38339,6 +39340,7 @@ MonoBehaviour:
     NumLevel: 0
     NeedScore: 0
     MaxScore: 0
+    Difficult: 0
     Move: 0
     NumColors: 0
     SuperColorPercent: 0
@@ -42630,7 +43632,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 347167294}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -43373,7 +44375,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 981156020}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -43575,7 +44577,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 981156020}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -45185,7 +46187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: 022333dafc89786498373c927c330fdd, type: 2}
-  DeveloperTesting: 0
+  DeveloperTesting: 1
   volumeAll: 0
   volumeSound: 0
   volumeMusic: 0

@@ -520,11 +520,11 @@ public class LevelRedactor : MonoBehaviour
     }
     public void MoveFieldLeft()
     {
-        MoveField(new Vector2Int(0, -1));
+        MoveField(new Vector2Int(-1, 0));
     }
     public void MoveFieldDown()
     {
-        MoveField(new Vector2Int(-1, 0));
+        MoveField(new Vector2Int(0, -1));
     }
 
     private void MoveField(Vector2Int plusSize)
@@ -543,11 +543,11 @@ public class LevelRedactor : MonoBehaviour
                 int posX = x + plusSize.x;
                 int posY = y + plusSize.y;
 
-                if(posX >= _levelsObject.levels[0].Width || posX < 0)
-                    posX = x + _levelsObject.levels[0].Width + plusSize.x;
+                if (posX >= _levelsObject.levels[0].Width || posX < 0)
+                    posX = x + plusSize.x - _levelsObject.levels[0].Width * (plusSize.x / Mathf.Abs(plusSize.x));
 
                 if (posY >= _levelsObject.levels[0].Height || posY < 0)
-                    posY = y + _levelsObject.levels[0].Height + plusSize.y;
+                    posY = y + plusSize.y - _levelsObject.levels[0].Height * (plusSize.y / Mathf.Abs(plusSize.y));
 
                 _levelsObject.levels[0].cellsArray[posX + posY * _levelsObject.levels[0].Width] = cells[x + y * _levelsObject.levels[0].Width];
             }
@@ -576,6 +576,21 @@ public class LevelRedactor : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.D))
         {
             MoveFieldRight();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            _FastPast.isOn = !_FastPast.isOn;
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            CopyCell();
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            PastCell();
         }
     }
 }
