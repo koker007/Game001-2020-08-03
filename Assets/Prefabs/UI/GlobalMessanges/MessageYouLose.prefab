@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Continue
+  key: MessageYouLoseRestart
 --- !u!1 &631230631027040758
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,7 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: YouLose
+  key: MessageYouLoseTitle
 --- !u!114 &7813856300701832367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,7 +437,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Restart
+  key: MessageYouLoseContinue
+--- !u!114 &6924793079920281245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4561003151894999212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: MessageYouLoseSeeAd
 --- !u!1001 &357578075629065055
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1215,13 +1228,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+--- !u!224 &2421848686831540124 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6106494515621661619, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+  m_PrefabInstance: {fileID: 8440452567893744687}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8916779698993520134 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1052787884345213481, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
   m_PrefabInstance: {fileID: 8440452567893744687}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &2421848686831540124 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6106494515621661619, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
+--- !u!1 &4561003151894999212 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5361943101469650051, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
   m_PrefabInstance: {fileID: 8440452567893744687}
   m_PrefabAsset: {fileID: 0}
