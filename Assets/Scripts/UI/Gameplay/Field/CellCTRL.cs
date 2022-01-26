@@ -202,7 +202,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 {
                     //Если в ячейке есть панель
                     if (myField.cellCTRLs[pos.x - minus, pos.y].panel) comb.foundPanel = true;
-                    if (myField.cellCTRLs[pos.x - minus, pos.y].mold > 0) comb.foundBenefit = true;
+                    if (myField.cellCTRLs[pos.x - minus, pos.y].mold > 0) comb.foundMould = true;
 
                     //Если на ячейке есть взрыв, взрываем, удалем
                     if (myField.cellCTRLs[pos.x - minus, pos.y].explosion != null) {
@@ -269,7 +269,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
                     //Если в ячейке есть панель
                     if (myField.cellCTRLs[pos.x + plus, pos.y].panel) comb.foundPanel = true;
-                    if (myField.cellCTRLs[pos.x + plus, pos.y].mold > 0) comb.foundBenefit = true;
+                    if (myField.cellCTRLs[pos.x + plus, pos.y].mold > 0) comb.foundMould = true;
 
                     //Если на ячейке есть взрыв, взрываем, удалем
                     if (myField.cellCTRLs[pos.x + plus, pos.y].explosion != null)
@@ -336,7 +336,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
                     //Если в ячейке есть панель
                     if (myField.cellCTRLs[pos.x, pos.y + plus].panel) comb.foundPanel = true;
-                    if (myField.cellCTRLs[pos.x, pos.y + plus].mold > 0) comb.foundBenefit = true;
+                    if (myField.cellCTRLs[pos.x, pos.y + plus].mold > 0) comb.foundMould = true;
 
                     //Если на ячейке есть взрыв, взрываем, удалем
                     if (myField.cellCTRLs[pos.x, pos.y + plus].explosion != null)
@@ -403,7 +403,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 
                     //Если в ячейке есть панель
                     if (myField.cellCTRLs[pos.x, pos.y - minus].panel) comb.foundPanel = true;
-                    if (myField.cellCTRLs[pos.x, pos.y - minus].mold > 0) comb.foundBenefit = true;
+                    if (myField.cellCTRLs[pos.x, pos.y - minus].mold > 0) comb.foundMould = true;
 
                     //Если на ячейке есть взрыв, взрываем, удалем
                     if (myField.cellCTRLs[pos.x, pos.y - minus].explosion != null)
@@ -601,7 +601,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         //////////////////////////
         //Ставим пользу
         if (CanBenefit && combination != null) {
-            combination.foundBenefit = true;
+            combination.foundMould = true;
         }
 
         /*

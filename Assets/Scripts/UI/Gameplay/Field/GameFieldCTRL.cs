@@ -810,7 +810,7 @@ public class GameFieldCTRL : MonoBehaviour
         public float timeLastAction = 0;
 
         public bool foundPanel = false;
-        public bool foundBenefit = false;
+        public bool foundMould = false;
 
         public Combination()
         {
@@ -836,8 +836,8 @@ public class GameFieldCTRL : MonoBehaviour
 
                 if (ParentComb.foundPanel)
                     foundPanel = ParentComb.foundPanel;
-                if (ParentComb.foundBenefit)
-                    foundBenefit = ParentComb.foundBenefit;
+                if (ParentComb.foundMould)
+                    foundMould = ParentComb.foundMould;
             }
             else
             {
@@ -856,7 +856,7 @@ public class GameFieldCTRL : MonoBehaviour
                     foundPanel = true;
 
                 if (cell.mold > 0)
-                    foundBenefit = true;
+                    foundMould = true;
             }
         }
     }
@@ -1417,7 +1417,7 @@ public class GameFieldCTRL : MonoBehaviour
                     if (cell.panel)
                         comb.foundPanel = true;
                     if (cell.mold > 0)
-                        comb.foundBenefit = true;
+                        comb.foundMould = true;
                 }
 
 
@@ -1864,7 +1864,7 @@ public class GameFieldCTRL : MonoBehaviour
                     if (CellSelect.panel)
                         comb.foundPanel = true;
                     if (CellSelect.mold > 0)
-                        comb.foundBenefit = true;
+                        comb.foundMould = true;
 
                     CellSelect.BufferCombination = comb;
                     CellSelect.DamageInvoke(0.25f);
@@ -2139,10 +2139,11 @@ public class GameFieldCTRL : MonoBehaviour
         //если комбинаций не нашлось и лист нужных к перемещению объектов еще не создан и это не первый ход
         else if (ListWaitingInternals.Count <= 0)
         {
-            //выводим собщение что перемешиваем
-            MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strMixed);
 
             CreateRandomInternalList();
+
+            //если список перемещаемых обьектов был создан //выводим собщение что перемешиваем
+            if (ListWaitingInternals.Count > 0) MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strMixed);
 
             //Перемешивание закончено
             BuyMixedNeed = false;
@@ -3135,6 +3136,7 @@ public class GameFieldCTRL : MonoBehaviour
         //выходим если нет ячеек для перемешивания или движение еще не окончено
         if (ListWaitingInternals.Count == 0 || Time.unscaledTime - timeLastMove < 1 || isMovingInternalObj || Time.unscaledTime - timeLastBoom < 0.2f)
             return;
+
 
         //Двигаем к центру и если кто-то не достиг центра, выходим
         if (!isDoneTransformToCenter())
@@ -4412,24 +4414,40 @@ public class GameFieldCTRL : MonoBehaviour
             canPassTurn && 
             readyToPass &&
             !Gameplay.main.isMissionComplite() &&
-            !Gameplay.main.isMissionDefeat() &&           
-            Gameplay.main.moveCompleted)
+            !Gameplay.main.isMissionDefeat() &&
+            Gameplay.main.moveCompleted
+            )
         {
-            //Передаем ход противнику
-            if (Gameplay.main.playerTurn && !EnemyController.enemyTurn)
+            //Если комбинаций больше чем надо (больше одной) либо комбинации не было
+            if (Gameplay.main.movingCombCount > 1 || Gameplay.main.movingCombCount == 0)
             {
-                Gameplay.main.playerTurn = false;
-                EnemyController.enemyTurn = true;
-                MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strEnemyTurn, Color.blue);
+                //Передаем ход противнику
+                if (Gameplay.main.playerTurn && !EnemyController.enemyTurn)
+                {
+                    Gameplay.main.playerTurn = false;
+                    EnemyController.enemyTurn = true;
+                    MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strEnemyTurn, Color.blue);
+
+                    Gameplay.main.movingCombCount = 0;
+                }
+                //Передаем ход игроку
+                else if (!EnemyController.enemyTurn && !Gameplay.main.playerTurn)
+                {
+                    Gameplay.main.playerTurn = true;
+                    MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strYourTurn, Color.blue);
+
+                    Gameplay.main.movingCombCount = 0;
+                }
+
+                canPassTurn = false;
             }
-            //Передаем ход игроку
-            else if (!EnemyController.enemyTurn && !Gameplay.main.playerTurn)
-            {
-                Gameplay.main.playerTurn = true;
-                MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strYourTurn, Color.blue);
+            //Если произошла комбинация то необходимо разблокировать ход снова для ходяшего
+            else {
+                bool test = true;
+                if(!Gameplay.main.playerTurn)
+                EnemyController.enemyTurn = true;
             }
             Gameplay.main.moveCompleted = false;
-            canPassTurn = false;
         }        
     }
 
