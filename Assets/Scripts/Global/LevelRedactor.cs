@@ -592,5 +592,10 @@ public class LevelRedactor : MonoBehaviour
         {
             PastCell();
         }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            _levelsObject.Save();
+        }
     }
 }
