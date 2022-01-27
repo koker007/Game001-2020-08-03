@@ -45,6 +45,9 @@ public class PanelProfile : MonoBehaviour
     {
         Inicialize();
         SetActiveAll();
+
+        Invoke("GetPlayerLVLGift", 2f);
+
     }
 
     private void OnDisable()
@@ -90,6 +93,20 @@ public class PanelProfile : MonoBehaviour
 
         slider.value += (PlayerProfile.main.ProfileCurrentLVLScoreNow - slider.value) * Time.unscaledDeltaTime;
         slider.maxValue = PlayerProfile.main.ProfileCurrentLVLScoreMax;
+
+    }
+
+    void GetPlayerLVLGift() {
+        //Выходим если этот игровой объект не активен
+        //Выходим если игрок не должен получить подарок
+        //Если сообщение о подарке уже выведено
+        if (!PlayerProfile.main.CanPlusPlayerLVLGift() ||
+            !gameObject.activeSelf ||
+            MessageGetGiftNewProfileLevel.main != null
+            ) return;
+
+        //Выводим сообщение о получении подарка
+        GlobalMessage.GetGiftNewProfileLVL();
 
     }
 

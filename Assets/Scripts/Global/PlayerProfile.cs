@@ -15,6 +15,10 @@ public class PlayerProfile : MonoBehaviour
     /// </summary>
     public int ProfileLevel;
     /// <summary>
+    /// ”ровень игрока за которые он получил подарок
+    /// </summary>
+    public int ProfileLevelGetGift;
+    /// <summary>
     /// количество очков
     /// </summary>
     public int ProfileScore;
@@ -47,6 +51,8 @@ public class PlayerProfile : MonoBehaviour
     const string strProfileTermsOfUse = "ProfileTermsOfUse";
 
     const string strProfileLevel = "ProfileLevel";
+    const string strProfileLevelGetGift = "ProfileLevelGetGift";
+
     const string strProfileScore = "ProfileScore";
     const string strProfileLevelOpen = "ProfileLevelOpen";
 
@@ -81,7 +87,8 @@ public class PlayerProfile : MonoBehaviour
     public int[] LVLGold = new int[1];
     public int LVLGoldCount = 0;
 
-    
+    [SerializeField]
+    public MenuGameplay.SuperHitType[] ListGiftProfileLVL = new MenuGameplay.SuperHitType[1];
 
     [System.Serializable]
     /// <summary>
@@ -168,6 +175,8 @@ public class PlayerProfile : MonoBehaviour
 
         PlayerPrefs.SetFloat(strProfileTermsOfUse, ProfileTermsOfUse);
 
+        PlayerPrefs.SetInt(strProfileLevelGetGift, ProfileLevelGetGift);
+
         SaveItemAmount();
 
         SaveToGoogle();
@@ -183,6 +192,7 @@ public class PlayerProfile : MonoBehaviour
 
         //√лобальные данные
         dataStr += strProfileLevel + spliterKAD + ProfileLevel + spliterDAD;
+        dataStr += strProfileLevelGetGift + spliterKAD + ProfileLevelGetGift + spliterDAD;
         dataStr += strProfileScore + spliterKAD + ProfileScore + spliterDAD;
         dataStr += strProfileLevelOpen + spliterKAD + ProfilelevelOpen + spliterDAD;
         dataStr += strProfileTermsOfUse + spliterKAD + ProfileTermsOfUse + spliterDAD;
@@ -240,6 +250,7 @@ public class PlayerProfile : MonoBehaviour
     public void WriteDataFromKey(string key, string data) {
 
         if (key == strProfileLevel) ProfileLevel = System.Convert.ToInt32(data);
+        else if (key == strProfileLevelGetGift) ProfileLevelGetGift = System.Convert.ToInt32(data);
         else if (key == strProfileScore) ProfileScore = System.Convert.ToInt32(data);
         else if (key == strProfileLevelOpen) ProfilelevelOpen = System.Convert.ToInt32(data);
         else if (key == strProfileTermsOfUse) ProfileTermsOfUse = System.Convert.ToInt32(data);
@@ -418,13 +429,13 @@ public class PlayerProfile : MonoBehaviour
         SaveForGoogleLVL();
     }
 
-    public void ReCalcGoldCount() {
+    void ReCalcGoldCount() {
         LVLGoldCount = 0;
         foreach (int x in LVLGold) {
             if (x == 1) LVLGoldCount++;
         }
     }
-    public void ReCalcStarsCount() {
+    void ReCalcStarsCount() {
         Star1Count = 0;
         Star2Count = 0;
         Star3Count = 0;
@@ -439,7 +450,7 @@ public class PlayerProfile : MonoBehaviour
     }
 
     //ѕересчитать уровень игрока и его очки
-    public void ReCalcProfileLVL() {
+    void ReCalcProfileLVL() {
         //”множаем количество очков на
         ProfileScore = 0;
         ProfileLevel = 1;
@@ -482,6 +493,38 @@ public class PlayerProfile : MonoBehaviour
         }
 
         //
+    }
+
+    public bool CanPlusPlayerLVLGift()
+    {
+
+        //если уровень за которые игрок уже получил подарки больше либо равен уровню игрока или
+        //пока еще не были полученны данные профил€ из гугла то выходим
+        if (ProfileLevelGetGift >= ProfileLevel &&
+            !GooglePlay.main.FirstGetProfile)
+        {
+            return false;
+        }
+
+        return true;
+    
+    }
+    public bool PlusPlayerLVLGift() {
+        bool isOk = false;
+
+        //≈сли прибавл€ть нельз€ выходим
+        if (!CanPlusPlayerLVLGift()) {
+            return isOk;
+        }
+
+        //¬се ок, прибавл€ем подарок
+        ProfileLevelGetGift++;
+        isOk = true;
+
+        //»нициируем запись в гугл
+        Save();
+
+        return isOk;
     }
     
     //—охранить золото
@@ -601,6 +644,8 @@ public class PlayerProfile : MonoBehaviour
         GoldAmount += num;
         SaveItemAmount();
     }
+
+
 
     //устанавливат количество жизней
     public void SetHealth(int value)

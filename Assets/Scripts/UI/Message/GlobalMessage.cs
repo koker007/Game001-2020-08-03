@@ -26,6 +26,8 @@ public class GlobalMessage : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField]
     GameObject PrefabTermsOfUse;
+    [SerializeField]
+    GameObject PrefabGetGiftProfileLVL;
 
     [SerializeField]
     GameObject PrefabMessanger;
@@ -124,7 +126,12 @@ public class GlobalMessage : MonoBehaviour
         }
     }
 
-    
+    static void SendMessage(GameObject prefabMessage) {
+        GameObject messageObj = Instantiate(prefabMessage, main.transform);
+        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+
+        MessageCTRL.NewMessage(messageCTRL);
+    }
 
     /// <summary>
     /// Отправить сообщение в сплывающем окне
@@ -153,10 +160,19 @@ public class GlobalMessage : MonoBehaviour
 
     static public void Settings()
     {
-        GameObject messageObj = Instantiate(main.PrefabSettings, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
+        SendMessage(main.PrefabSettings);
+    }
 
-        MessageCTRL.NewMessage(messageCTRL);
+    /// <summary>
+    /// Получить подарок за новый уропень
+    /// </summary>
+    static public void GetGiftNewProfileLVL()
+    {
+        //если уже есть такое сообщение то выходим
+        if (MessageGetGiftNewProfileLevel.main != null) {
+            return;
+        }
+        SendMessage(main.PrefabGetGiftProfileLVL);
     }
 
     /// <summary>
@@ -164,30 +180,21 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void Health()
     {
-        GameObject messageObj = Instantiate(main.PrefabHealth, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabHealth);
     }
     /// <summary>
     /// Всплывающее окно билеты
     /// </summary>
     static public void Tickets()
     {
-        GameObject messageObj = Instantiate(main.PrefabTickets, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabTickets);
     }
     /// <summary>
     /// Всплывающее окно магазин
     /// </summary>
     static public void Shop()
     {
-        GameObject messageObj = Instantiate(main.PrefabShop, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabShop);
     }
 
     /// <summary>
@@ -195,32 +202,21 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void ShopBuyGold()
     {
-        GameObject messageObj = Instantiate(main.PrefabShopBuyGold, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabShopBuyGold);
     }
     /// <summary>
     /// Всплывающее окно купить первую абилку
     /// </summary>
     static public void ShopBuyInternal()
     {
-        GameObject messageObj = Instantiate(main.PrefabShopBuyBoom, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabShopBuyBoom);
     }
     /// <summary>
     /// Всплывающее окно купить вторую абилку
     /// </summary>
     static public void ShopBuyRocket()
     {
-        GameObject messageObj = Instantiate(main.PrefabShopBuyRocket, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabShopBuyRocket);
     }
 
     /// <summary>
@@ -228,10 +224,7 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void ShopBuyBomb() {
 
-        GameObject messageObj = Instantiate(main.PrefabShopBuyBomb, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabShopBuyBomb);
     }
 
     /// <summary>
@@ -239,10 +232,7 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void ShopBuyColor5()
     {
-        GameObject messageObj = Instantiate(main.PrefabShopBuyColor5, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabShopBuyColor5);
     }
 
     /// <summary>
@@ -250,10 +240,7 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void ShopBuyMixed()
     {
-        GameObject messageObj = Instantiate(main.PrefabShopBuyMixed, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabShopBuyMixed);
     }
 
     /// <summary>
@@ -261,10 +248,7 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void ShopBuyMoneybox()
     {
-        GameObject messageObj = Instantiate(main.PrefabShopBuyMoneybox, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabShopBuyMoneybox);
     }
 
     /// <summary>
@@ -272,10 +256,7 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void ShopBuyHealth()
     {
-        GameObject messageObj = Instantiate(main.PrefabShopBuyHealth, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabShopBuyHealth);
     }
 
 
@@ -284,10 +265,7 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void Events()
     {
-        GameObject messageObj = Instantiate(main.PrefabEvents, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabEvents);
     }
 
 
@@ -296,30 +274,21 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void ExitLevel()
     {
-        GameObject messageObj = Instantiate(main.PrefabExitLevel, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabExitLevel);
     }
     /// <summary>
     /// Поражение
     /// </summary>
     static public void Lose()
     {
-        GameObject messageObj = Instantiate(main.PrefabLose, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabLose);
     }
     /// <summary>
     /// результаты при победе
     /// </summary>
     static public void Results()
     {
-        GameObject messageObj = Instantiate(main.PrefabResults, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabResults);
     }
 
     /// <summary>
@@ -327,10 +296,7 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void ComingSoon()
     {
-        GameObject messageObj = Instantiate(main.PrefabComingSoon, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabComingSoon);
     }
 
     /// <summary>
@@ -339,23 +305,17 @@ public class GlobalMessage : MonoBehaviour
     /// <param name="SelectLevel"></param>
     static public void LevelInfo(int levelSelect)
     {
+
         Gameplay.main.levelSelect = levelSelect;
-
-        GameObject messageObj = Instantiate(main.PrefabLVLInfo, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabLVLInfo);
     }
 
     /// <summary>
     /// Выбрать уровень и показать туториал
     /// </summary>
     static public void LevelTutorial(float TutoialNum)
-    {        
-        GameObject messageObj = Instantiate(main.PrefabLVLTutorial, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-        messageObj.GetComponent<MessageLevelTutorial>().Inicializate(TutoialNum);
-        MessageCTRL.NewMessage(messageCTRL);
+    {
+        SendMessage(main.PrefabLVLTutorial);
     }
 
     /// <summary>
@@ -363,11 +323,7 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void ExitGame()
     {
-
-        GameObject messageObj = Instantiate(main.PrefabExitGame, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.PrefabExitGame);
     }
 
     /// <summary>
@@ -375,10 +331,7 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void OpenLevelRedactor()
     {
-        GameObject messageObj = Instantiate(main.LevelRedactor, main.transform);
-        MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
-
-        MessageCTRL.NewMessage(messageCTRL);
+        SendMessage(main.LevelRedactor);
     }
 
     //Открытие или закрытие информационного меню
