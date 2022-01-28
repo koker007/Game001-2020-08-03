@@ -23,11 +23,11 @@ public class GooglePlay : MonoBehaviour
     bool dataIsLoadedSuccess = false; //Была ли уже попытка считать данные и ответ был получен
     float lastTimeSaveLoad = 0;
     private DateTime startDateTime;
-    string LastMessage = "None";
+    public string LastMessage = "None";
 
     //Имена файлов которые участвуют в загрузке и сохранении на гуглплей
-    public const string KeyFileProfile = "Profile.v02";
-    public const string KeyFileLVLs = "LVLs.v02";
+    public const string KeyFileProfile = "Profile.v03";
+    public const string KeyFileLVLs = "LVLs.v03";
 
     bool firstGetProfile = false;
     public bool FirstGetProfile
@@ -261,6 +261,22 @@ public class GooglePlay : MonoBehaviour
         });
     }
 
+    //Есть ли процесс сохранения в ожидании
+    public bool isSavingProcessNow() {
+
+        if (BufferWaitingFiles != null && 
+            BufferWaitingFiles.Count > 0) {
+
+            foreach (SaveOrLoadData data in BufferWaitingFiles) {
+                if (data.isSave) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     int[] fpsBuffer = new int[10];
     void Update()
     {
@@ -448,26 +464,34 @@ public class GooglePlay : MonoBehaviour
             // handle processing the byte array data
             if (data.Length > 0)
             {
+                LastMessage = BufferWaitingFiles[0].keyFile + "StartEncoding";
                 string dataStr = System.Text.Encoding.ASCII.GetString(data);
 
                 //Успешно загруженно
                 //Обрабатываем файл в зависимости от имени
+                LastMessage = BufferWaitingFiles[0].keyFile + "StartDecryption: " + dataStr.Length;
                 CalcLoadedData(BufferWaitingFiles[0].keyFile, dataStr);
+                LastMessage = BufferWaitingFiles[0].keyFile + "EndDecryption: " + dataStr.Length;
             }
             else
             {
 
                 LastMessage = "loading data is null";
             }
+
             //Говорим что ответ был получен
             //Если данные профиля
-            if (BufferWaitingFiles[0].keyFile == KeyFileProfile) {
+            if (BufferWaitingFiles[0].keyFile == KeyFileProfile && !firstGetProfile) {
+                LastMessage = BufferWaitingFiles[0].keyFile + "First True";
                 firstGetProfile = true;
             }
             //Если данные звезд уровней
-            else if (BufferWaitingFiles[0].keyFile == KeyFileLVLs) {
+            else if (BufferWaitingFiles[0].keyFile == KeyFileLVLs && !firstGetLVLs) {
+                LastMessage = BufferWaitingFiles[0].keyFile + "First True";
                 firstGetLVLs = true;
             }
+
+            LastMessage = BufferWaitingFiles[0].keyFile + " isSaved";
         }
         else
         {

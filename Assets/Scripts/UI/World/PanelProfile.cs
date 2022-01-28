@@ -21,19 +21,34 @@ public class PanelProfile : MonoBehaviour
     [SerializeField]
     Text PlayerScore;
     [SerializeField]
-    Text PayerLevel;
+    Text PlayerLevel;
     [SerializeField]
     Text levelOpen;
+    [SerializeField]
+    Text levelGold;
+
+
+    [SerializeField]
+    Text SaveText;
+    string isSavedText = "Saved";
+    string isSaveProcess = "Saving..";
+    string isSaveBasic = "Save";
+
+    bool isClickedSave = false;
 
     void Update()
     {
         UpdateProfile();
+        UpdateButtonSave();
     }
 
     private void OnEnable()
     {
         Inicialize();
         SetActiveAll();
+
+        Invoke("GetPlayerLVLGift", 2f);
+
     }
 
     private void OnDisable()
@@ -52,7 +67,17 @@ public class PanelProfile : MonoBehaviour
     }
 
     void Inicialize() {
-        levelOpen.text = System.Convert.ToString(PlayerProfile.main.ProfilelevelOpen);
+        isClickedSave = false;
+
+        levelOpen.text = PlayerProfile.main.ProfilelevelOpen.ToString();
+        levelGold.text = PlayerProfile.main.LVLGoldCount.ToString();
+
+        isSaveBasic = TranslateManager.main.GetText("ProfileSaveBasic", isSaveBasic);
+        isSaveProcess = TranslateManager.main.GetText("ProfileSaveProcess", isSaveProcess);
+        isSavedText = TranslateManager.main.GetText("ProfileSaved", isSavedText);
+
+        PlayerLevel.text = PlayerProfile.main.ProfileLevel.ToString();
+        PlayerScore.text = ((int)PlayerProfile.main.ProfileCurrentLVLScoreNow).ToString() + " / " + ((int)PlayerProfile.main.ProfileCurrentLVLScoreMax).ToString();
     }
 
     public void ClickPlay()
@@ -61,20 +86,51 @@ public class PanelProfile : MonoBehaviour
         MenuWorld.main.OpenMapPanel();
     }
 
-    public void ClickSave()
+    void UpdateProfile()
     {
-        GlobalMessage.ComingSoon();
+        if (slider.value > PlayerProfile.main.ProfileCurrentLVLScoreNow) {
+            slider.value = 0;
+        }
+
+        slider.value += (PlayerProfile.main.ProfileCurrentLVLScoreNow - slider.value) * Time.unscaledDeltaTime;
+        slider.maxValue = PlayerProfile.main.ProfileCurrentLVLScoreMax;
+
     }
 
-    public void UpdateProfile()
-    {
-        int level = PlayerProfile.main.ProfileLevel;
-        int score = PlayerProfile.main.ProfileScore;
-        int nextLevelScore = PlayerProfile.main.nextLevelPoint[level - 1];
+    void GetPlayerLVLGift() {
+        //Выходим если этот игровой объект не активен
+        //Выходим если игрок не должен получить подарок
+        //Если сообщение о подарке уже выведено
+        if (!PlayerProfile.main.CanPlusPlayerLVLGift() ||
+            !gameObject.activeSelf ||
+            MessageGetGiftNewProfileLevel.main != null
+            ) return;
 
-        PayerLevel.text = level.ToString();
-        PlayerScore.text = score.ToString() + "/" + nextLevelScore.ToString();
+        //Выводим сообщение о получении подарка (не принудительно)
+        GlobalMessage.GetGiftNewProfileLVL(false);
 
-        slider.value = (float)score / nextLevelScore;
+    }
+
+    void UpdateButtonSave() {
+
+        if (GooglePlay.main.isSavingProcessNow())
+        {
+            SaveText.text = isSaveProcess;
+        }
+        else if (isClickedSave) {
+            SaveText.text = isSavedText;
+        }
+        else {
+            SaveText.text = isSaveBasic;
+        }
+    }
+
+    public void ClickSave() {
+        isClickedSave = true;
+        PlayerProfile.main.Save();
+    }
+
+    public void ClickDeleteProfile() {
+        GlobalMessage.DeleteProfile();
     }
 }
