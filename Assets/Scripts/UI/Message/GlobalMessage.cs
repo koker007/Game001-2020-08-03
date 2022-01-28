@@ -28,6 +28,8 @@ public class GlobalMessage : MonoBehaviour
     GameObject PrefabTermsOfUse;
     [SerializeField]
     GameObject PrefabGetGiftProfileLVL;
+    [SerializeField]
+    GameObject PrefabDeleteProfile;
 
     [SerializeField]
     GameObject PrefabMessanger;
@@ -166,13 +168,20 @@ public class GlobalMessage : MonoBehaviour
     /// <summary>
     /// Получить подарок за новый уропень
     /// </summary>
-    static public void GetGiftNewProfileLVL()
+    static public void GetGiftNewProfileLVL(bool IsForcibly)
     {
         //если уже есть такое сообщение то выходим
-        if (MessageGetGiftNewProfileLevel.main != null) {
+        if (!IsForcibly && MessageGetGiftNewProfileLevel.main != null) {
             return;
         }
         SendMessage(main.PrefabGetGiftProfileLVL);
+    }
+    /// <summary>
+    /// Удалить все данные профиля
+    /// </summary>
+    static public void DeleteProfile()
+    {
+        SendMessage(main.PrefabDeleteProfile);
     }
 
     /// <summary>

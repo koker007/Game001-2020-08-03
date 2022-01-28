@@ -986,7 +986,6 @@ GameObject:
   - component: {fileID: 4366546696096201298}
   - component: {fileID: 2708844486104426093}
   - component: {fileID: 3914244383531251381}
-  - component: {fileID: 2630327143573955242}
   - component: {fileID: 8987750392281706848}
   m_Layer: 5
   m_Name: ButtonDelete
@@ -1122,25 +1121,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!95 &2630327143573955242
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1718796768716647672}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2b17877301cce3d4093446e62030c7a4, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+      - m_Target: {fileID: 6704818899515635209}
+        m_TargetAssemblyTypeName: MessageDeleteProfile, Assembly-CSharp
+        m_MethodName: DeleteProfile
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8987750392281706848
 MonoBehaviour:
   m_ObjectHideFlags: 0

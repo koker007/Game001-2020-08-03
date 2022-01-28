@@ -60,7 +60,20 @@ public class MessageGetGiftNewProfileLevel : MonoBehaviour
         countGift = GetCountGift(typeGift);
 
         textLevel.text = PlayerProfile.main.ProfileLevelGetGift.ToString();
-        textCountGift.text = "+" + countGift;
+
+        int countNow = 0;
+        if (typeGift == MenuGameplay.SuperHitType.internalObj) countNow = PlayerProfile.main.ShopInternal.Amount;
+        else if (typeGift == MenuGameplay.SuperHitType.rosket2x) countNow = PlayerProfile.main.ShopRocket.Amount;
+        else if (typeGift == MenuGameplay.SuperHitType.bomb) countNow = PlayerProfile.main.ShopBomb.Amount;
+        else if (typeGift == MenuGameplay.SuperHitType.Color5) countNow = PlayerProfile.main.ShopColor5.Amount;
+        else if (typeGift == MenuGameplay.SuperHitType.mixed) countNow = PlayerProfile.main.ShopMixed.Amount;
+
+        if (countNow <= 0) {
+            textCountGift.text =  "+" + countGift;
+        }
+        else {
+            textCountGift.text = countNow + " +" + countGift;
+        }
 
         openImageType();
 
@@ -92,6 +105,22 @@ public class MessageGetGiftNewProfileLevel : MonoBehaviour
 
             //Сообщаем что получили подарок
             PlayerProfile.main.PlusPlayerLVLGift();
+        }
+
+        //открываем следующее сообщение о награде
+        MessageCTRL messageCTRL = MessageCTRL.selected;
+
+        //Если после получения текущего подарка все еще можем получить следующий
+        if (PlayerProfile.main.CanPlusPlayerLVLGift()) {
+            Destroy(messageCTRL.gameObject);
+
+            //после закрытия попытаться получить следующий подарок (принудительно)
+            GlobalMessage.GetGiftNewProfileLVL(true);
+
+        }
+        //Закрываем сообщение плавно
+        else {
+            messageCTRL.ClickButtonClose();
         }
 
         //получаем подарок

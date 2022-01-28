@@ -49,23 +49,38 @@ public class PlayerProfile : MonoBehaviour
 
     //ѕользовательское соглашение
     const string strProfileTermsOfUse = "ProfileTermsOfUse";
+    const float startProfileTermsOfUse = 0.00f;
 
     const string strProfileLevel = "ProfileLevel";
+    const int startProfileLevel = 1;
     const string strProfileLevelGetGift = "ProfileLevelGetGift";
+    const int startProfileLevelGetGift = 0; 
 
     const string strProfileScore = "ProfileScore";
+    const int stastProfileScore = 0;
     const string strProfileLevelOpen = "ProfileLevelOpen";
+    const int startProfileLevelOpen = 1;
 
     const string strGoldAmount = "GoldAmound";
+    const int startGoldAmount = 10;
     const string strMoneyboxCapacity = "MoneyboxCapacity";
+    const int startMoneyboxCapacity = 10;
     const string strMoneyboxContent = "MoneyboxContent";
+    const int startMoneyboxContent = 0;
     const string strHealth = "HealtAmount";
+    const int startHealth = 5;
     const string strTicket = "TicketAmount";
+    const int startTicket = 5;
     const string strShopInternal = "ShopInternal";
+    const int startShopInternal = 3;
     const string strShopRocket = "ShopRocket";
+    const int startShopRocket = 3;
     const string strShopBomb = "ShopBomb";
+    const int startShopBomb = 3;
     const string strShopColor5 = "ShopColor5";
+    const int startShopColors5 = 3;
     const string strShopMixed = "ShopMixed";
+    const int startShopMixed = 3;
 
     /// <summary>
     /// количество игровой валюты
@@ -131,25 +146,25 @@ public class PlayerProfile : MonoBehaviour
     private void LoadProfie()
     {
 
-        ProfileTermsOfUse = PlayerPrefs.GetInt(strProfileTermsOfUse, 0);
+        ProfileTermsOfUse = PlayerPrefs.GetFloat(strProfileTermsOfUse, startProfileTermsOfUse);
 
-        ProfileLevel = PlayerPrefs.GetInt(strProfileLevel, 1);
+        ProfileLevel = PlayerPrefs.GetInt(strProfileLevel, startProfileLevel);
         ProfileScore = PlayerPrefs.GetInt(strProfileScore, 0);
-        ProfilelevelOpen = PlayerPrefs.GetInt(strProfileLevelOpen, 1);
+        ProfilelevelOpen = PlayerPrefs.GetInt(strProfileLevelOpen, startProfileLevelOpen);
 
-        GoldAmount = PlayerPrefs.GetInt(strGoldAmount, 10);
-        moneyboxCapacity = PlayerPrefs.GetInt(strMoneyboxCapacity, 10);
-        moneyboxContent = PlayerPrefs.GetInt(strMoneyboxContent, 0);
+        GoldAmount = PlayerPrefs.GetInt(strGoldAmount, startGoldAmount);
+        moneyboxCapacity = PlayerPrefs.GetInt(strMoneyboxCapacity, startMoneyboxCapacity);
+        moneyboxContent = PlayerPrefs.GetInt(strMoneyboxContent, startMoneyboxContent);
 
 
-        Health.Amount = PlayerPrefs.GetInt(strHealth, 5);
-        Ticket.Amount = PlayerPrefs.GetInt(strTicket, 5);
-        ShopInternal.Amount = PlayerPrefs.GetInt(strShopInternal, 3);
-        ShopRocket.Amount = PlayerPrefs.GetInt(strShopRocket, 3);
-        ShopBomb.Amount = PlayerPrefs.GetInt(strShopBomb, 3);
-        ShopColor5.Amount = PlayerPrefs.GetInt(strShopColor5, 3);
+        Health.Amount = PlayerPrefs.GetInt(strHealth, startHealth);
+        Ticket.Amount = PlayerPrefs.GetInt(strTicket, startTicket);
+        ShopInternal.Amount = PlayerPrefs.GetInt(strShopInternal, startShopInternal);
+        ShopRocket.Amount = PlayerPrefs.GetInt(strShopRocket, startShopRocket);
+        ShopBomb.Amount = PlayerPrefs.GetInt(strShopBomb, startShopBomb);
+        ShopColor5.Amount = PlayerPrefs.GetInt(strShopColor5, startShopColors5);
 
-        ShopMixed.Amount = PlayerPrefs.GetInt(strShopMixed, 3);
+        ShopMixed.Amount = PlayerPrefs.GetInt(strShopMixed, startShopMixed);
 
         if (Settings.main.DeveloperTesting) {
             GoldAmount = 100;
@@ -226,6 +241,7 @@ public class PlayerProfile : MonoBehaviour
     //≈сли передаетс€ строка значит данные уже были загруженны и требуют расшифровки
     public void LoadFromGoogle(string dataStr) {
         
+      
         //раздел€ем строку на множество данных
         string[] dataDADs = dataStr.Split(spliterDAD);
 
@@ -233,6 +249,7 @@ public class PlayerProfile : MonoBehaviour
             string[] dataKAD = dataDAD.Split(spliterKAD);
             //≈сли данных не 2 то это ошибка
             if (dataKAD.Length != 2) {
+                GooglePlay.main.LastMessage = "Profile: Lenght != 2";
                 continue;
             }
 
@@ -249,23 +266,82 @@ public class PlayerProfile : MonoBehaviour
     /// <param name="data"></param>
     public void WriteDataFromKey(string key, string data) {
 
-        if (key == strProfileLevel) ProfileLevel = System.Convert.ToInt32(data);
-        else if (key == strProfileLevelGetGift) ProfileLevelGetGift = System.Convert.ToInt32(data);
-        else if (key == strProfileScore) ProfileScore = System.Convert.ToInt32(data);
-        else if (key == strProfileLevelOpen) ProfilelevelOpen = System.Convert.ToInt32(data);
-        else if (key == strProfileTermsOfUse) ProfileTermsOfUse = System.Convert.ToInt32(data);
+        if (key == strProfileLevel)
+        {
+            GooglePlay.main.LastMessage = "Profile: " + strProfileLevel;
+            ProfileLevel = System.Convert.ToInt32(data);
+        }
+        else if (key == strProfileLevelGetGift)
+        {
+            GooglePlay.main.LastMessage = "Profile: " + strProfileLevel;
+            ProfileLevelGetGift = System.Convert.ToInt32(data);
+        }
+        else if (key == strProfileScore)
+        {
+            GooglePlay.main.LastMessage = "Profile: " + strProfileScore;
+            ProfileScore = System.Convert.ToInt32(data);
+        }
+        else if (key == strProfileLevelOpen)
+        {
+            GooglePlay.main.LastMessage = "Profile: " + strProfileLevelOpen;
+            ProfilelevelOpen = System.Convert.ToInt32(data);
+        }
+        else if (key == strProfileTermsOfUse)
+        {
+            GooglePlay.main.LastMessage = "Profile: " + strProfileTermsOfUse;
+            ProfileTermsOfUse = (float)System.Convert.ToDouble(data);
+        }
 
-        else if (key == strGoldAmount) GoldAmount = System.Convert.ToInt32(data);
-        else if (key == strHealth) Health.Amount = System.Convert.ToInt32(data);
-        else if (key == strTicket) Ticket.Amount = System.Convert.ToInt32(data);
-        else if (key == strMoneyboxCapacity) moneyboxCapacity = System.Convert.ToInt32(data);
-        else if (key == strMoneyboxContent) moneyboxContent = System.Convert.ToInt32(data);
+        else if (key == strGoldAmount)
+        {
+            GooglePlay.main.LastMessage = "Profile: " + strGoldAmount;
+            GoldAmount = System.Convert.ToInt32(data);
+        }
+        else if (key == strHealth)
+        {
+            GooglePlay.main.LastMessage = "Profile: " + strHealth;
+            Health.Amount = System.Convert.ToInt32(data);
+        }
+        else if (key == strTicket)
+        {
+            GooglePlay.main.LastMessage = "Profile: " + strTicket;
+            Ticket.Amount = System.Convert.ToInt32(data);
+        }
+        else if (key == strMoneyboxCapacity)
+        {
+            GooglePlay.main.LastMessage = "Profile: " + strMoneyboxCapacity;
+            moneyboxCapacity = System.Convert.ToInt32(data);
+        }
+        else if (key == strMoneyboxContent)
+        {
+            GooglePlay.main.LastMessage = "Profile: " + strMoneyboxContent;
+            moneyboxContent = System.Convert.ToInt32(data);
+        }
 
-        else if (key == strShopInternal) ShopInternal.Amount = System.Convert.ToInt32(data);
-        else if (key == strShopRocket) ShopRocket.Amount = System.Convert.ToInt32(data);
-        else if (key == strShopBomb) ShopBomb.Amount = System.Convert.ToInt32(data);
-        else if (key == strShopColor5) ShopColor5.Amount = System.Convert.ToInt32(data);
-        else if (key == strShopMixed) ShopMixed.Amount = System.Convert.ToInt32(data);
+        else if (key == strShopInternal)
+        {
+            GooglePlay.main.LastMessage = "Profile: " + strShopInternal;
+            ShopInternal.Amount = System.Convert.ToInt32(data);
+        }
+        else if (key == strShopRocket)
+        {
+            GooglePlay.main.LastMessage = "Profile: " + strShopRocket;
+            ShopRocket.Amount = System.Convert.ToInt32(data);
+        }
+        else if (key == strShopBomb)
+        {
+            GooglePlay.main.LastMessage = "Profile: " + strShopBomb;
+            ShopBomb.Amount = System.Convert.ToInt32(data);
+        }
+        else if (key == strShopColor5)
+        {
+            GooglePlay.main.LastMessage = "Profile: " + strShopColor5;
+            ShopColor5.Amount = System.Convert.ToInt32(data);
+        }
+        else if (key == strShopMixed) {
+            GooglePlay.main.LastMessage = "Profile: " + strShopMixed;
+            ShopMixed.Amount = System.Convert.ToInt32(data);
+        }
 
         
     }
@@ -500,7 +576,7 @@ public class PlayerProfile : MonoBehaviour
 
         //если уровень за которые игрок уже получил подарки больше либо равен уровню игрока или
         //пока еще не были полученны данные профил€ из гугла то выходим
-        if (ProfileLevelGetGift >= ProfileLevel &&
+        if (ProfileLevelGetGift >= ProfileLevel ||
             !GooglePlay.main.FirstGetProfile)
         {
             return false;
@@ -665,6 +741,50 @@ public class PlayerProfile : MonoBehaviour
             ProfilelevelOpen = Level + 1;
         }
         PlayerPrefs.SetInt("ProfilelevelOpen", ProfilelevelOpen);
+    }
+
+    //”дал€ет провиль игрока занул€ все его данные
+    public void DeleteProfile() {
+
+        ProfileLevel = startProfileLevel;
+        PlayerPrefs.SetInt(strProfileLevel, ProfileLevel);
+        ProfileScore = 0;
+        PlayerPrefs.SetInt(strProfileScore, ProfileScore);
+        ProfilelevelOpen = startProfileLevelOpen;
+        PlayerPrefs.SetInt(strProfileLevelOpen, ProfilelevelOpen);
+
+        ProfileTermsOfUse = startProfileTermsOfUse;
+        PlayerPrefs.SetFloat(strProfileTermsOfUse, ProfileTermsOfUse);
+
+        ProfileLevelGetGift = startProfileLevelGetGift;
+        PlayerPrefs.SetInt(strProfileLevelGetGift, ProfileLevelGetGift);
+
+        GoldAmount = startGoldAmount;
+        PlayerPrefs.SetInt(strGoldAmount, GoldAmount);
+        Health.Amount = startHealth;
+        PlayerPrefs.SetInt(strHealth, Health.Amount);
+        Ticket.Amount = startTicket;
+        PlayerPrefs.SetInt(strTicket, Ticket.Amount);
+        moneyboxCapacity = startMoneyboxCapacity;
+        PlayerPrefs.SetInt(strMoneyboxCapacity, moneyboxCapacity);
+        moneyboxContent = startMoneyboxContent;
+        PlayerPrefs.SetInt(strMoneyboxContent, moneyboxContent);
+
+        ShopInternal.Amount = startShopInternal;
+        PlayerPrefs.SetInt(strShopInternal, ShopInternal.Amount);
+        ShopRocket.Amount = startShopRocket;
+        PlayerPrefs.SetInt(strShopRocket, ShopRocket.Amount);
+        ShopBomb.Amount = startShopBomb;
+        PlayerPrefs.SetInt(strShopBomb, ShopBomb.Amount);
+        ShopColor5.Amount = startShopColors5;
+        PlayerPrefs.SetInt(strShopColor5, ShopColor5.Amount);
+        ShopMixed.Amount = startShopMixed;
+        PlayerPrefs.SetInt(strShopMixed, ShopMixed.Amount);
+
+        //ќтправить данные ”ровней на сохрание в гугл
+        GooglePlay.main.AddBufferWaitingFile(GooglePlay.KeyFileLVLs, "");
+
+        SaveToGoogle();
     }
 
     #region moneybox

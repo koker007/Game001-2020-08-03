@@ -27,6 +27,7 @@ public class PanelProfile : MonoBehaviour
     [SerializeField]
     Text levelGold;
 
+
     [SerializeField]
     Text SaveText;
     string isSavedText = "Saved";
@@ -105,8 +106,8 @@ public class PanelProfile : MonoBehaviour
             MessageGetGiftNewProfileLevel.main != null
             ) return;
 
-        //¬ыводим сообщение о получении подарка
-        GlobalMessage.GetGiftNewProfileLVL();
+        //¬ыводим сообщение о получении подарка (не принудительно)
+        GlobalMessage.GetGiftNewProfileLVL(false);
 
     }
 
@@ -128,5 +129,8 @@ public class PanelProfile : MonoBehaviour
         isClickedSave = true;
         PlayerProfile.main.Save();
     }
-    
+
+    public void ClickDeleteProfile() {
+        GlobalMessage.DeleteProfile();
+    }
 }

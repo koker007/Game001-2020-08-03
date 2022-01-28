@@ -26,6 +26,6 @@ public class MessageDeleteProfile : MonoBehaviour
 
 
     public void DeleteProfile() {
-        
+        PlayerProfile.main.DeleteProfile();
     }
 }
