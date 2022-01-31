@@ -10,6 +10,8 @@ using UnityEngine;
 /// </summary>
 public class LevelGenerator : MonoBehaviour
 {
+    [SerializeField] private LevelScriptableObject _levelsObject;
+
     public static LevelGenerator main;
     private int ScoreСoefficient = 500;
     private float existChance = 0.3f;
@@ -23,6 +25,21 @@ public class LevelGenerator : MonoBehaviour
     private void Start()
     {
         main = this;
+        //GenerateRangeLevel(101, 150);
+    }
+    /// <summary>
+    /// запускается один раз, генерирует уровни и сохраняет их в файл, может перезаписать существующие уровни
+    /// </summary>
+    /// <param name="start"></param>
+    /// <param name="end"></param>
+    private void GenerateRangeLevel(int start, int end)
+    {
+        for (int i = start; i <= end; i++)
+        {
+            LevelsScript.Level lev = new LevelsScript.Level(GenerateLevelV2(i));
+            lev.ConvertTwoCellsToOneCells();
+            _levelsObject.levels[i] = new LevelsScript.Level(lev);
+        }
     }
 
     //генерация уровня
@@ -521,12 +538,13 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    public void GenerateNewLevel(int NumLevel)
+    public LevelsScript.Level GenerateNewLevel(int NumLevel)
     {
-        thisLevel = GenerateLevelV2(NumLevel);
+        thisLevel = new LevelsScript.Level(GenerateLevelV2(NumLevel));
+        return thisLevel;
     }
 
-    private LevelsScript.Level GenerateLevelV2(int NumLevel)
+    public LevelsScript.Level GenerateLevelV2(int NumLevel)
     {
         int perVar = (int)Mathf.Round(Mathf.PerlinNoise(777.777f / 666.666f + NumLevel, 0) * 10000 % 10);
 

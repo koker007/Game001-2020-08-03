@@ -17,6 +17,9 @@ public class LevelsScript : MonoBehaviour
     }
 
     public static LevelsScript main;
+
+    [SerializeField] protected LevelScriptableObject _levelsObject;
+
     /// <summary>
     /// õğàíèò äàííûå î ÿ÷åéêå
     /// ÓÄÀËßÒÜ ÏÎËß ÍÅËÜÇß ÈÍÀ×Å ÑËÅÒßÒ ÓĞÎÂÍÈ
@@ -474,18 +477,15 @@ public class LevelsScript : MonoBehaviour
     /// </summary>
     public Level ReturnLevel()
     {
-        int NumLevel = Gameplay.main.levelSelect;
-        Level result;
-
-        if (NumLevel < Levels.Length && Levels[NumLevel] != null)
+        if (_levelsObject.levels[Gameplay.main.levelSelect].cellsArray.Length > 0)
         {
-            result = Levels[NumLevel];
+            _levelsObject.levels[Gameplay.main.levelSelect].ConvertOneCellToTwoCells();
+            return _levelsObject.levels[Gameplay.main.levelSelect];
         }
-        else
+        else 
         {
-            result = LevelGenerator.main.thisLevel;
+            return LevelGenerator.main.GenerateNewLevel(Gameplay.main.levelSelect);
         }
-        return result;
     }
 }
 
