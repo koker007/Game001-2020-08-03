@@ -11,7 +11,8 @@ public class IceCTRL : MonoBehaviour
 {
 
     [SerializeField]
-    Image image;
+    AnimatorCTRL animatorCTRL;
+    //Image image;
 
     CellCTRL myCell;
     RectTransform myRect;
@@ -28,11 +29,16 @@ public class IceCTRL : MonoBehaviour
         //Добавляем в список эту плесень
         myCell.myField.iceCTRLs[cellIni.pos.x, cellIni.pos.y] = this;
 
+        SetAnimation(myCell.ice);
+        if (myCell.ice != 0) HealthOld = myCell.ice;
+
         IniRect();
 
         ReCalcIceCount();
 
         isInicialize = true;
+
+
     }
 
     void IniRect()
@@ -50,7 +56,7 @@ public class IceCTRL : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateAlpha();
+        //UpdateAlpha();
     }
     private void FixedUpdate()
     {
@@ -96,6 +102,10 @@ public class IceCTRL : MonoBehaviour
         }
 
         HealthOld = myCell.ice;
+
+        //Меняем анимацию
+        SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipDestroyRock, 0.5f, Random.Range(0.9f, 1.1f));
+        SetAnimation(HealthOld);
 
         //Перерасчет новой цели прозрачности
         calcColor();
@@ -144,10 +154,38 @@ public class IceCTRL : MonoBehaviour
         }
     }
 
+    void SetAnimation(int num) {
+        //Меняем анимацию
+        if (num == 5)
+        {
+            animatorCTRL.PlayAnimation("healt5");
+        }
+        else if (num == 4)
+        {
+            animatorCTRL.PlayAnimation("healt4");
+        }
+        else if (num == 3)
+        {
+            animatorCTRL.PlayAnimation("healt3");
+        }
+        else if (num == 2)
+        {
+            animatorCTRL.PlayAnimation("healt2");
+        }
+        else if (num == 1)
+        {
+            animatorCTRL.PlayAnimation("healt1");
+        }
+        else
+        {
+            animatorCTRL.PlayAnimation("healt0");
+        }
+    }
+
     void UpdateAlpha() {
         if (alphaCalc) {
             //вытаскиваем цвет
-            Color color = image.color;
+            Color color = new Color(); //= image.color;
 
             //проверка надобности вычислений
             if (color.a == alphaNeed) {
@@ -186,7 +224,7 @@ public class IceCTRL : MonoBehaviour
                 alphaCalc = false;
             }
 
-            image.color = color;
+            //image.color = color;
         }
     }
 
