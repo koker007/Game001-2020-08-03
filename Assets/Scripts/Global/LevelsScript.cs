@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -137,6 +138,10 @@ public class LevelsScript : MonoBehaviour
         /// </summary>
         public int MaxScore;
         /// <summary>
+        /// сложность уровня(от 0 до 100) процент поражений
+        /// </summary>
+        public int Difficult;
+        /// <summary>
         /// количество ходов
         /// </summary>
         public int Move;
@@ -200,6 +205,7 @@ public class LevelsScript : MonoBehaviour
             NumLevel = lev.NumLevel;
             NeedScore = lev.NeedScore;
             MaxScore = lev.MaxScore;
+            Difficult = lev.Difficult;
             Move = lev.Move;
             NumColors = lev.NumColors;
             SuperColorPercent = lev.SuperColorPercent;

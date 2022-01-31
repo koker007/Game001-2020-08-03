@@ -22,6 +22,7 @@ public class LevelRedactor : MonoBehaviour
     [SerializeField] private InputField _moveIF;
     [SerializeField] private InputField _needScoreIF;
     [SerializeField] private InputField _numColorsIF;
+    [SerializeField] private InputField _difficultIF;
     [Space]
     [SerializeField] private Slider _blockerSlider;
     [SerializeField] private Slider _superColorSlider;
@@ -103,6 +104,11 @@ public class LevelRedactor : MonoBehaviour
         LoadLevel();
     }
 
+    public void Update()
+    {
+        CheckInput();
+    }
+
     public void SaveLevel()
     {
         SaveInZeroLevel();
@@ -123,6 +129,7 @@ public class LevelRedactor : MonoBehaviour
         _moveIF.text = _levelsObject.levels[0].Move.ToString();
         _needScoreIF.text = _levelsObject.levels[0].NeedScore.ToString();
         _numColorsIF.text = _levelsObject.levels[0].NumColors.ToString();
+        _difficultIF.text = _levelsObject.levels[0].Difficult.ToString();
 
         _passedWithScore.isOn = _levelsObject.levels[0].PassedWithScore;
         _passedWithCrystal.isOn = _levelsObject.levels[0].PassedWithCrystal;
@@ -147,6 +154,7 @@ public class LevelRedactor : MonoBehaviour
         _levelsObject.levels[0].Move = int.Parse(_moveIF.text);
         _levelsObject.levels[0].NeedScore = int.Parse(_needScoreIF.text);
         _levelsObject.levels[0].NumColors = int.Parse(_numColorsIF.text);
+        _levelsObject.levels[0].Difficult = int.Parse(_difficultIF.text);
 
         _levelsObject.levels[0].PassedWithScore = _passedWithScore.isOn;
         _levelsObject.levels[0].PassedWithCrystal = _passedWithCrystal.isOn;
@@ -499,6 +507,95 @@ public class LevelRedactor : MonoBehaviour
         {
             _levelsObject.levels[0].cellsArray[pos.x + pos.y * _levelsObject.levels[0].Width] = new LevelsScript.CellInfo(_cellBufer);
             UpdateCell(pos.x, pos.y);
+        }
+    }
+
+    public void MoveFieldUp()
+    {
+        MoveField(new Vector2Int(0, 1));
+    }
+    public void MoveFieldRight()
+    {
+        MoveField(new Vector2Int(1, 0));
+    }
+    public void MoveFieldLeft()
+    {
+        MoveField(new Vector2Int(-1, 0));
+    }
+    public void MoveFieldDown()
+    {
+        MoveField(new Vector2Int(0, -1));
+    }
+
+    private void MoveField(Vector2Int plusSize)
+    {
+
+        LevelsScript.CellInfo[] cells = new LevelsScript.CellInfo[_levelsObject.levels[0].cellsArray.Length];
+        for (int i = 0; i < _levelsObject.levels[0].cellsArray.Length; i++)
+        {
+            cells[i] = new LevelsScript.CellInfo(_levelsObject.levels[0].cellsArray[i]);
+        }
+
+        for (int x = 0; x < _levelsObject.levels[0].Width; x++)
+        {
+            for (int y = 0; y < _levelsObject.levels[0].Height; y++)
+            {
+                int posX = x + plusSize.x;
+                int posY = y + plusSize.y;
+
+                if (posX >= _levelsObject.levels[0].Width || posX < 0)
+                    posX = x + plusSize.x - _levelsObject.levels[0].Width * (plusSize.x / Mathf.Abs(plusSize.x));
+
+                if (posY >= _levelsObject.levels[0].Height || posY < 0)
+                    posY = y + plusSize.y - _levelsObject.levels[0].Height * (plusSize.y / Mathf.Abs(plusSize.y));
+
+                _levelsObject.levels[0].cellsArray[posX + posY * _levelsObject.levels[0].Width] = cells[x + y * _levelsObject.levels[0].Width];
+            }
+        }
+
+        UpdateField();
+    }
+
+    private void CheckInput()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            MoveFieldLeft();
+        }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            MoveFieldUp();
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            MoveFieldDown();
+        }
+
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            MoveFieldRight();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            _FastPast.isOn = !_FastPast.isOn;
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            CopyCell();
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            PastCell();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            _levelsObject.Save();
         }
     }
 }
