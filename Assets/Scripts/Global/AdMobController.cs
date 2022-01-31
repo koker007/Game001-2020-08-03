@@ -29,8 +29,14 @@ public class AdMobController : MonoBehaviour
 
         //ѕолитика использовани€ детской рекламы
         RequestConfiguration requestConfiguration = new RequestConfiguration.Builder()
+            .SetMaxAdContentRating(MaxAdContentRating.G)
             .SetTagForChildDirectedTreatment(TagForChildDirectedTreatment.True)
+            .SetTagForUnderAgeOfConsent(TagForUnderAgeOfConsent.True)
             .build();
+
+        RequestConfiguration requestConfiguration2 = new RequestConfiguration.Builder()
+            .build();
+
         MobileAds.SetRequestConfiguration(requestConfiguration);
 
         CreateAndLoadRewardedAd();

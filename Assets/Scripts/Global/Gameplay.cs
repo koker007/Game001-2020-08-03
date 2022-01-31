@@ -131,10 +131,24 @@ public class Gameplay : MonoBehaviour
 
         if (playerTurn)
         {
+            //Прибавляем ход
             movingCount++;
 
-            if (level.PassedWithEnemy && EnemyController.MoveCount >= EnemyController.MoveCountForPlayer)
-                movingCan--;
+            //Если уровень с врагом
+            if (level.PassedWithEnemy)
+            {
+                //То отнимаем ход при определенных условиях
+
+                //Если враг уже сходил достаточное количество раз на этом уровне
+                //Если комбинации раньше не было
+                if (EnemyController.MoveCount >= EnemyController.MoveCountForPlayer &&
+                    movingCombCount == 0)
+                {
+                    movingCan--;
+                }
+            }
+
+            //Если уровень без врага то в любом случае отнимаем ход
             else movingCan--;
 
             LevelStatsController.main.playerTurns++;
