@@ -30,10 +30,17 @@ public class PlayerProfile : MonoBehaviour
     /// количество очков до следующего уровня
     /// </summary>
     /// 
+
+
     public float ProfileCurrentLVLScoreMax = 100;
     public float ProfileCurrentLVLScoreNow = 100;
 
     public float ProfileTermsOfUse = 0;
+
+    //Свинья копилка и золото в ней в данный момент и максимальное возможное
+    public int PiggyBankNow = 0;
+    public int PiggyBankMax = 0;
+
 
     [HideInInspector]
     public int[] nextLevelPoint = new int[] { 1000 , 5000 , 10000 };

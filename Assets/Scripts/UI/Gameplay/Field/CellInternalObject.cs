@@ -1186,8 +1186,6 @@ public class CellInternalObject : MonoBehaviour
         timeLastMoving = Time.unscaledTime;
 
 
-        //if (ActivateType == Type.color) return;
-
         //Если партнера нет
         if (partner == null)
         {
