@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//alexandr
 //Андрей
 public class TutorialController : MonoBehaviour
 {

@@ -13,20 +13,20 @@ MonoBehaviour:
   m_Name: Levels
   m_EditorClassIdentifier: 
   levels:
-  - Width: 5
-    Height: 6
-    NumLevel: 121
-    NeedScore: 150
+  - Width: 7
+    Height: 7
+    NumLevel: 106
+    NeedScore: 210
     MaxScore: 0
     Difficult: 0
-    Move: 15
+    Move: 21
     NumColors: 4
     SuperColorPercent: 0
-    TypeBlockerPercent: 0
+    TypeBlockerPercent: 25
     cellsArray:
-    - colorCell: 3
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -35,9 +35,64 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -46,9 +101,9 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -57,31 +112,9 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 1
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 1
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -90,176 +123,11 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 3
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 1
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 1
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 1
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 1
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 12
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 1
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
+      HealthMold: 1
       HealthIce: 0
       Panel: 0
       rock: 0
@@ -275,7 +143,73 @@ MonoBehaviour:
       Panel: 0
       rock: 0
       wall: 0
-      teleport: 1
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 2
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
       dispencer: 0
     - colorCell: 0
       typeCell: 1
@@ -286,16 +220,16 @@ MonoBehaviour:
       Panel: 0
       rock: 0
       wall: 0
-      teleport: 1
+      teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
-      HealthMold: 0
+      HealthMold: 1
       HealthIce: 0
       Panel: 0
-      rock: 0
+      rock: 1
       wall: 0
       teleport: 0
       dispencer: 0
@@ -303,7 +237,7 @@ MonoBehaviour:
       typeCell: 1
       Exist: 1
       HealthBox: 0
-      HealthMold: 0
+      HealthMold: 1
       HealthIce: 0
       Panel: 0
       rock: 0
@@ -314,20 +248,207 @@ MonoBehaviour:
       typeCell: 1
       Exist: 1
       HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
       HealthMold: 0
       HealthIce: 0
-      Panel: 1
+      Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 2
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 1
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 2
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 1
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 2
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
     - colorCell: 1
       typeCell: 1
       Exist: 1
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
-      Panel: 1
+      Panel: 0
       rock: 0
       wall: 0
       teleport: 0
@@ -336,18 +457,106 @@ MonoBehaviour:
       typeCell: 1
       Exist: 1
       HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
       HealthMold: 0
       HealthIce: 0
       Panel: 0
       rock: 0
-      wall: 15
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 2
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
       teleport: 0
       dispencer: 0
     - colorCell: 1
       typeCell: 1
       Exist: 1
       HealthBox: 0
-      HealthMold: 0
+      HealthMold: 1
       HealthIce: 0
       Panel: 0
       rock: 0
@@ -357,13 +566,13 @@ MonoBehaviour:
     PassedWithScore: 0
     PassedWithCrystal: 0
     PassedWithBox: 0
-    PassedWithMold: 0
+    PassedWithMold: 1
     PassedWithIce: 0
-    PassedWithPanel: 1
+    PassedWithPanel: 0
     PassedWithRock: 0
     PassedWithEnemy: 0
-    NeedCrystal: 0
-    NeedColor: 0
+    NeedCrystal: 17
+    NeedColor: 2
   - Width: 5
     Height: 6
     NumLevel: 1
@@ -41514,11 +41723,11 @@ MonoBehaviour:
     Height: 7
     NumLevel: 0
     NeedScore: 35000
-    MaxScore: 0
+    MaxScore: 30230
     Difficult: 0
     Move: 20
     NumColors: 3
-    SuperColorPercent: 0
+    SuperColorPercent: 52
     TypeBlockerPercent: 0
     cellsArray:
     - colorCell: 0
@@ -42074,7 +42283,7 @@ MonoBehaviour:
     Height: 9
     NumLevel: 0
     NeedScore: 25000
-    MaxScore: 0
+    MaxScore: 24400
     Difficult: 90
     Move: 26
     NumColors: 3
@@ -73887,284 +74096,31 @@ MonoBehaviour:
     PassedWithEnemy: 0
     NeedCrystal: 0
     NeedColor: 0
-  - Width: 8
-    Height: 7
+  - Width: 7
+    Height: 8
     NumLevel: 101
-    NeedScore: 2800
-    MaxScore: 0
+    NeedScore: 55000
+    MaxScore: 17390
     Difficult: 0
-    Move: 28
+    Move: 23
     NumColors: 4
     SuperColorPercent: 0
     TypeBlockerPercent: 0
     cellsArray:
     - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
       Panel: 0
       rock: 0
       wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 9
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 0
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 2
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 3
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 12
       teleport: 0
       dispencer: 0
     - colorCell: 0
       typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 2
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -74173,64 +74129,9 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 3
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 14
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -74244,15 +74145,48 @@ MonoBehaviour:
       Exist: 1
       HealthBox: 0
       HealthMold: 0
-      HealthIce: 0
+      HealthIce: 3
       Panel: 0
       rock: 0
       wall: 0
-      teleport: 1
-      dispencer: 1
-    - colorCell: 3
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
       typeCell: 1
       Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -74261,9 +74195,9 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -74272,9 +74206,9 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -74288,59 +74222,48 @@ MonoBehaviour:
       Exist: 1
       HealthBox: 0
       HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 1
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
+      HealthIce: 3
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
       HealthMold: 0
-      HealthIce: 0
+      HealthIce: 2
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
       HealthMold: 0
-      HealthIce: 0
+      HealthIce: 2
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
       HealthMold: 0
-      HealthIce: 0
+      HealthIce: 3
       Panel: 0
       rock: 0
-      wall: 9
+      wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -74349,9 +74272,9 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -74360,9 +74283,9 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -74371,9 +74294,53 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 3
+    - colorCell: 0
       typeCell: 1
       Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 4
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 2
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 2
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -74382,9 +74349,9 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -74393,9 +74360,9 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 3
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -74404,97 +74371,97 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 3
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
       HealthMold: 0
-      HealthIce: 0
+      HealthIce: 5
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
       HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 12
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
+      HealthIce: 4
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
       HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 8
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
+      HealthIce: 3
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
       HealthMold: 0
-      HealthIce: 0
+      HealthIce: 3
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 3
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
       HealthMold: 0
-      HealthIce: 0
+      HealthIce: 3
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
       HealthMold: 0
-      HealthIce: 0
+      HealthIce: 3
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 3
+    - colorCell: 0
       typeCell: 1
       Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 4
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 5
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -74503,9 +74470,251 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 1
-    - colorCell: 2
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 1
+    - colorCell: 0
       typeCell: 1
       Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 2
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 2
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 4
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 2
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 2
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -74515,27 +74724,27 @@ MonoBehaviour:
       teleport: 0
       dispencer: 0
     PassedWithScore: 0
-    PassedWithCrystal: 1
+    PassedWithCrystal: 0
     PassedWithBox: 0
     PassedWithMold: 0
-    PassedWithIce: 0
+    PassedWithIce: 1
     PassedWithPanel: 0
     PassedWithRock: 0
     PassedWithEnemy: 0
     NeedCrystal: 18
     NeedColor: 3
-  - Width: 8
+  - Width: 9
     Height: 7
     NumLevel: 102
-    NeedScore: 2800
-    MaxScore: 0
+    NeedScore: 28000
+    MaxScore: 27820
     Difficult: 0
-    Move: 28
-    NumColors: 4
+    Move: 21
+    NumColors: 3
     SuperColorPercent: 0
-    TypeBlockerPercent: 0
+    TypeBlockerPercent: 23
     cellsArray:
-    - colorCell: 3
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -74546,7 +74755,84 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -74557,7 +74843,18 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -74568,9 +74865,53 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
       typeCell: 1
       Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -74594,159 +74935,16 @@ MonoBehaviour:
       typeCell: 1
       Exist: 1
       HealthBox: 0
-      HealthMold: 0
+      HealthMold: 1
       HealthIce: 0
       Panel: 0
-      rock: 0
+      rock: 1
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 4
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 9
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 10
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -74757,95 +74955,7 @@ MonoBehaviour:
       dispencer: 1
     - colorCell: 0
       typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 3
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -74854,97 +74964,9 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 1
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 12
-      teleport: 0
-      dispencer: 0
     - colorCell: 0
       typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 2
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 14
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -74957,40 +74979,7 @@ MonoBehaviour:
       typeCell: 1
       Exist: 1
       HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 1
-      dispencer: 1
-    - colorCell: 0
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 2
-      teleport: 2
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
+      HealthMold: 1
       HealthIce: 0
       Panel: 0
       rock: 0
@@ -75001,38 +74990,27 @@ MonoBehaviour:
       typeCell: 1
       Exist: 1
       HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 1
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
+      HealthMold: 1
       HealthIce: 0
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
-      HealthMold: 0
+      HealthMold: 1
       HealthIce: 0
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -75041,108 +75019,9 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 9
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 15
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 12
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -75151,28 +75030,446 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
     PassedWithScore: 0
-    PassedWithCrystal: 1
+    PassedWithCrystal: 0
     PassedWithBox: 0
-    PassedWithMold: 0
+    PassedWithMold: 1
     PassedWithIce: 0
     PassedWithPanel: 0
     PassedWithRock: 0
     PassedWithEnemy: 0
     NeedCrystal: 18
     NeedColor: 3
-  - Width: 8
-    Height: 7
+  - Width: 9
+    Height: 9
     NumLevel: 103
-    NeedScore: 2800
+    NeedScore: 45000
     MaxScore: 0
     Difficult: 0
     Move: 28
     NumColors: 4
     SuperColorPercent: 0
-    TypeBlockerPercent: 0
+    TypeBlockerPercent: 100
     cellsArray:
-    - colorCell: 3
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 5
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -75183,7 +75480,40 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -75191,11 +75521,341 @@ MonoBehaviour:
       HealthIce: 0
       Panel: 0
       rock: 0
-      wall: 8
+      wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 5
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 5
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 5
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 5
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 0
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 5
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 5
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 0
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 0
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 0
       Exist: 1
       HealthBox: 0
       HealthMold: 0
@@ -75203,9 +75863,141 @@ MonoBehaviour:
       Panel: 0
       rock: 0
       wall: 10
+      teleport: 1
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 5
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 0
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 0
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 0
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 5
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 5
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -75216,9 +76008,9 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -75227,31 +76019,9 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 8
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 10
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -75260,10 +76030,32 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
-      typeCell: 1
+    - colorCell: 0
+      typeCell: 0
       Exist: 1
       HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 0
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 3
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
       HealthMold: 0
       HealthIce: 0
       Panel: 0
@@ -75271,18 +76063,29 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
       HealthMold: 0
-      HealthIce: 0
+      HealthIce: 5
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 5
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -75302,281 +76105,6 @@ MonoBehaviour:
       Panel: 0
       rock: 0
       wall: 0
-      teleport: 3
-      dispencer: 0
-    - colorCell: 0
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 4
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 9
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 10
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 0
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 3
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 3
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 12
       teleport: 0
       dispencer: 0
     - colorCell: 0
@@ -75588,11 +76116,11 @@ MonoBehaviour:
       Panel: 0
       rock: 0
       wall: 0
-      teleport: 2
+      teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -75601,9 +76129,9 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -75612,51 +76140,40 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 3
-      typeCell: 1
+    - colorCell: 0
+      typeCell: 0
       Exist: 1
       HealthBox: 0
       HealthMold: 0
-      HealthIce: 0
+      HealthIce: 3
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
       HealthMold: 0
-      HealthIce: 0
+      HealthIce: 5
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
       HealthMold: 0
-      HealthIce: 0
+      HealthIce: 5
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -75670,6 +76187,61 @@ MonoBehaviour:
     - colorCell: 0
       typeCell: 1
       Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -75677,30 +76249,19 @@ MonoBehaviour:
       rock: 0
       wall: 0
       teleport: 1
-      dispencer: 1
+      dispencer: 0
     - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
       HealthMold: 0
-      HealthIce: 0
+      HealthIce: 5
       Panel: 0
       rock: 0
-      wall: 2
-      teleport: 2
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 9
+      wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -75720,9 +76281,20 @@ MonoBehaviour:
       Panel: 0
       rock: 0
       wall: 0
-      teleport: 1
+      teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -75733,7 +76305,7 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -75744,7 +76316,7 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -75755,18 +76327,7 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 9
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -75777,51 +76338,51 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
       Panel: 0
       rock: 0
-      wall: 4
+      wall: 0
       teleport: 0
       dispencer: 0
     PassedWithScore: 0
-    PassedWithCrystal: 1
+    PassedWithCrystal: 0
     PassedWithBox: 0
     PassedWithMold: 0
-    PassedWithIce: 0
+    PassedWithIce: 1
     PassedWithPanel: 0
     PassedWithRock: 0
     PassedWithEnemy: 0
     NeedCrystal: 18
     NeedColor: 3
-  - Width: 8
-    Height: 7
+  - Width: 7
+    Height: 9
     NumLevel: 104
-    NeedScore: 2800
-    MaxScore: 0
+    NeedScore: 65000
+    MaxScore: 57190
     Difficult: 0
-    Move: 28
+    Move: 24
     NumColors: 4
     SuperColorPercent: 0
     TypeBlockerPercent: 0
     cellsArray:
-    - colorCell: 3
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
       Panel: 0
       rock: 0
-      wall: 14
+      wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
-      typeCell: 1
+    - colorCell: 0
+      typeCell: 0
       Exist: 1
       HealthBox: 0
       HealthMold: 0
@@ -75831,129 +76392,8 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 8
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 10
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 1
-      rock: 0
-      wall: 8
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
+    - colorCell: 0
+      typeCell: 0
       Exist: 1
       HealthBox: 0
       HealthMold: 0
@@ -75962,9 +76402,152 @@ MonoBehaviour:
       rock: 0
       wall: 0
       teleport: 0
-      dispencer: 1
-    - colorCell: 2
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 0
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 1
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 0
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 1
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 0
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 1
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
       typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 0
       Exist: 1
       HealthBox: 0
       HealthMold: 0
@@ -75974,8 +76557,8 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
-      typeCell: 1
+    - colorCell: 0
+      typeCell: 0
       Exist: 1
       HealthBox: 0
       HealthMold: 0
@@ -75985,8 +76568,8 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
-      typeCell: 1
+    - colorCell: 0
+      typeCell: 0
       Exist: 1
       HealthBox: 0
       HealthMold: 0
@@ -75996,7 +76579,260 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 0
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 0
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 0
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 0
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 0
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 3
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -76016,361 +76852,9 @@ MonoBehaviour:
       Panel: 0
       rock: 0
       wall: 0
-      teleport: 3
-      dispencer: 0
-    - colorCell: 0
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 3
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 4
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 1
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 9
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 10
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 1
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 1
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 1
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 0
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 2
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 1
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 1
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 3
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 1
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 12
       teleport: 0
       dispencer: 0
     - colorCell: 0
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 2
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 1
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 1
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -76387,11 +76871,11 @@ MonoBehaviour:
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
-      Panel: 1
+      Panel: 0
       rock: 0
       wall: 0
-      teleport: 1
-      dispencer: 1
+      teleport: 0
+      dispencer: 0
     - colorCell: 0
       typeCell: 1
       Exist: 1
@@ -76400,21 +76884,175 @@ MonoBehaviour:
       HealthIce: 0
       Panel: 0
       rock: 0
-      wall: 2
-      teleport: 1
+      wall: 0
+      teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
-      Panel: 1
+      Panel: 0
       rock: 0
-      wall: 9
+      wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -76436,19 +77074,30 @@ MonoBehaviour:
     NeedCrystal: 0
     NeedColor: 0
   - Width: 8
-    Height: 7
+    Height: 8
     NumLevel: 105
-    NeedScore: 2800
-    MaxScore: 0
-    Difficult: 0
-    Move: 28
+    NeedScore: 45000
+    MaxScore: 20080
+    Difficult: 90
+    Move: 21
     NumColors: 4
     SuperColorPercent: 0
-    TypeBlockerPercent: 0
+    TypeBlockerPercent: 20
     cellsArray:
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -76457,260 +77106,7 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 10
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 8
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 9
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -76730,7 +77126,7 @@ MonoBehaviour:
       Panel: 0
       rock: 0
       wall: 0
-      teleport: 2
+      teleport: 0
       dispencer: 0
     - colorCell: 0
       typeCell: 1
@@ -76741,9 +77137,9 @@ MonoBehaviour:
       Panel: 0
       rock: 0
       wall: 0
-      teleport: 2
+      teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -76751,10 +77147,241 @@ MonoBehaviour:
       HealthIce: 0
       Panel: 0
       rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 2
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 2
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 2
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
       wall: 4
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 4
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 4
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 2
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 2
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 2
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -76765,7 +77392,7 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -76776,7 +77403,73 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 3
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 4
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 4
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 4
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 2
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 2
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 2
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -76787,7 +77480,7 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -76798,7 +77491,73 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 2
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 4
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 4
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 4
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 2
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 2
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 2
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -76809,7 +77568,7 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -76820,9 +77579,42 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 3
+    - colorCell: 0
       typeCell: 1
       Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 4
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 4
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 4
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -76831,9 +77623,9 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 3
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -76841,54 +77633,10 @@ MonoBehaviour:
       rock: 0
       wall: 0
       teleport: 0
-      dispencer: 0
-    - colorCell: 2
+      dispencer: 1
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 10
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -76906,105 +77654,6 @@ MonoBehaviour:
       Panel: 0
       rock: 0
       wall: 0
-      teleport: 1
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 12
       teleport: 0
       dispencer: 0
     - colorCell: 0
@@ -77016,33 +77665,11 @@ MonoBehaviour:
       Panel: 0
       rock: 0
       wall: 0
-      teleport: 1
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -77051,7 +77678,51 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 1
-    - colorCell: 3
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -77059,330 +77730,154 @@ MonoBehaviour:
       HealthIce: 0
       Panel: 0
       rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 1
       wall: 0
       teleport: 0
       dispencer: 0
     PassedWithScore: 0
-    PassedWithCrystal: 1
+    PassedWithCrystal: 0
     PassedWithBox: 0
     PassedWithMold: 0
     PassedWithIce: 0
     PassedWithPanel: 0
-    PassedWithRock: 0
+    PassedWithRock: 1
     PassedWithEnemy: 0
     NeedCrystal: 18
     NeedColor: 3
   - Width: 7
-    Height: 6
+    Height: 7
     NumLevel: 106
     NeedScore: 2100
-    MaxScore: 0
+    MaxScore: 13430
     Difficult: 0
     Move: 21
     NumColors: 4
     SuperColorPercent: 0
-    TypeBlockerPercent: 0
+    TypeBlockerPercent: 25
     cellsArray:
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
       Panel: 0
       rock: 0
       wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 1
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 8
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 1
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 9
       teleport: 0
       dispencer: 0
     - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
-      HealthMold: 0
+      HealthMold: 1
       HealthIce: 0
       Panel: 0
       rock: 0
       wall: 0
-      teleport: 1
+      teleport: 0
       dispencer: 0
     - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
-      HealthMold: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
       HealthIce: 0
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
-      HealthMold: 0
+      HealthMold: 1
       HealthIce: 0
       Panel: 0
-      rock: 0
-      wall: 4
+      rock: 1
+      wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
-      HealthMold: 0
+      HealthMold: 1
       HealthIce: 0
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -77391,9 +77886,9 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 1
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -77402,9 +77897,9 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 3
+    - colorCell: 0
       typeCell: 1
-      Exist: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -77413,55 +77908,11 @@ MonoBehaviour:
       wall: 0
       teleport: 0
       dispencer: 0
-    - colorCell: 3
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 10
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 2
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
-      HealthIce: 0
-      Panel: 0
-      rock: 0
-      wall: 0
-      teleport: 0
-      dispencer: 0
-    - colorCell: 3
-      typeCell: 1
-      Exist: 1
-      HealthBox: 0
-      HealthMold: 0
+      HealthMold: 1
       HealthIce: 0
       Panel: 0
       rock: 0
@@ -77477,9 +77928,75 @@ MonoBehaviour:
       Panel: 0
       rock: 0
       wall: 0
-      teleport: 1
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
       dispencer: 0
     - colorCell: 2
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
       typeCell: 1
       Exist: 1
       HealthBox: 0
@@ -77487,6 +78004,149 @@ MonoBehaviour:
       HealthIce: 0
       Panel: 0
       rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 2
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 1
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 1
+    - colorCell: 1
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 2
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 1
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
       wall: 0
       teleport: 0
       dispencer: 0
@@ -77505,7 +78165,62 @@ MonoBehaviour:
       typeCell: 1
       Exist: 1
       HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 1
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 2
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
       HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 1
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 2
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
       HealthIce: 0
       Panel: 0
       rock: 0
@@ -77515,6 +78230,39 @@ MonoBehaviour:
     - colorCell: 1
       typeCell: 1
       Exist: 1
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 3
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
       HealthBox: 0
       HealthMold: 0
       HealthIce: 0
@@ -77527,18 +78275,73 @@ MonoBehaviour:
       typeCell: 1
       Exist: 1
       HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
       HealthMold: 0
       HealthIce: 0
       Panel: 0
       rock: 0
       wall: 0
       teleport: 0
-      dispencer: 1
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 1
+      HealthBox: 0
+      HealthMold: 1
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
+    - colorCell: 0
+      typeCell: 1
+      Exist: 0
+      HealthBox: 0
+      HealthMold: 0
+      HealthIce: 0
+      Panel: 0
+      rock: 0
+      wall: 0
+      teleport: 0
+      dispencer: 0
     - colorCell: 1
       typeCell: 1
       Exist: 1
       HealthBox: 0
-      HealthMold: 0
+      HealthMold: 1
       HealthIce: 0
       Panel: 0
       rock: 0
@@ -77546,9 +78349,9 @@ MonoBehaviour:
       teleport: 0
       dispencer: 0
     PassedWithScore: 0
-    PassedWithCrystal: 1
+    PassedWithCrystal: 0
     PassedWithBox: 0
-    PassedWithMold: 0
+    PassedWithMold: 1
     PassedWithIce: 0
     PassedWithPanel: 0
     PassedWithRock: 0
