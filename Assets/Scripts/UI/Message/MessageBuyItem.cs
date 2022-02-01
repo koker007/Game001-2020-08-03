@@ -65,7 +65,6 @@ public class MessageBuyItem : MonoBehaviour
 
         if (typeBuy == TypeBuy.internalObj)
         {
-
             TargetCount.text = System.Convert.ToString(PlayerProfile.main.ShopInternal.Amount);
         }
         else if (typeBuy == TypeBuy.rosket2x)

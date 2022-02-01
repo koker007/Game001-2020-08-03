@@ -10,6 +10,6 @@ public class LevelScriptableObject : ScriptableObject
 
     public void Save()
     {
-        EditorUtility.SetDirty(this);
+        //EditorUtility.SetDirty(this);
     }
 }

@@ -47,4 +47,8 @@ public class MainButtonManager : MonoBehaviour
     {
         GlobalMessage.ShopBuyMoneybox();
     }
+
+    public void ButtonClickPiggyBank() {
+        GlobalMessage.ShopPiggyBank();
+    }
 }

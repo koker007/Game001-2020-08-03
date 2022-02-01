@@ -46,6 +46,8 @@ public class GlobalMessage : MonoBehaviour
     [SerializeField]
     GameObject PrefabShop;
     [SerializeField]
+    GameObject PrefabPiggyBank;
+    [SerializeField]
     GameObject PrefabShopBuyGold;
     [SerializeField]
     GameObject PrefabShopBuyBoom;
@@ -258,6 +260,13 @@ public class GlobalMessage : MonoBehaviour
     static public void ShopBuyMoneybox()
     {
         SendMessage(main.PrefabShopBuyMoneybox);
+    }
+
+    /// <summary>
+    /// Всплывающее сообщение свиньи копилки
+    /// </summary>
+    static public void ShopPiggyBank() {
+        SendMessage(main.PrefabPiggyBank);   
     }
 
     /// <summary>

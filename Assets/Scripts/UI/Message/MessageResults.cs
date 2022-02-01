@@ -56,6 +56,14 @@ public class MessageResults : MonoBehaviour
             StarsImage[2].gameObject.SetActive(true);
         }
 
+        //Узнать количество звезд ранее
+        int CountStarOld = PlayerProfile.main.GetLVLStar(Gameplay.main.levelSelect);
+
+        //если ранее звед было меньше чем стало сейчас что прибавляем разницу в виде золота в свинью копилку
+        if (CountStarOld < CountStar) {
+            PlayerProfile.main.PiggyBankAdd(CountStar - CountStarOld);
+        }
+
         //Сохранить прогресс звезд
         PlayerProfile.main.SetLVLStar(Gameplay.main.levelSelect, CountStar);
 

@@ -7521,6 +7521,7 @@ MonoBehaviour:
   PrefabLVLInfo: {fileID: 3686116977431526258, guid: c93f18c795aa3e64297768e6eec8021b, type: 3}
   PrefabLVLTutorial: {fileID: 7825622768006301776, guid: 1582c56e8a7ec4d41a05f214ac3a8567, type: 3}
   PrefabShop: {fileID: 7170427015913258267, guid: 217e22a2e592af442a3af969ae0875e8, type: 3}
+  PrefabPiggyBank: {fileID: 7448406637881363497, guid: 1b68fdf0508f6734d8f5862fc86ae15f, type: 3}
   PrefabShopBuyGold: {fileID: 6217191110069904312, guid: bd4fd73b3d6ff414bb870af796ae915c, type: 3}
   PrefabShopBuyBoom: {fileID: 154171101930599835, guid: 2dc043e306d217e45b231f1fb7ff9964, type: 3}
   PrefabShopBuyRocket: {fileID: 2795669054295206829, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
@@ -7958,7 +7959,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 347167294}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9992,7 +9993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4915813174233924978, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 250
+      value: 266.2
       objectReference: {fileID: 0}
     - target: {fileID: 4915813174233924978, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
       propertyPath: m_SizeDelta.y
@@ -10000,7 +10001,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4915813174233924978, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -23
       objectReference: {fileID: 0}
     - target: {fileID: 4915813174233924978, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -14167,7 +14168,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -292, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 100, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &999635511
 MonoBehaviour:
@@ -14189,7 +14190,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 125f54453ce3e8943a7d0349ddef1218, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -14198,7 +14199,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 0.2
+  m_PixelsPerUnitMultiplier: 2
 --- !u!222 &999635512
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -39610,12 +39611,12 @@ MonoBehaviour:
   ProfileCurrentLVLScoreMax: 100
   ProfileCurrentLVLScoreNow: 100
   ProfileTermsOfUse: 0
-  PiggyBankNow: 0
-  PiggyBankMax: 0
   nextLevelPoint: e80300008813000010270000
   GoldAmount: 0
   moneyboxCapacity: 0
   moneyboxContent: 0
+  PiggyBankNow: 0
+  PiggyBankMax: 30
   LVLStar: 00000000
   LVLGold: 00000000
   LVLGoldCount: 0
@@ -41744,7 +41745,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4915813174233924978, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -21
       objectReference: {fileID: 0}
     - target: {fileID: 4915813174233924978, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -44044,7 +44045,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 347167294}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -44787,7 +44788,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 981156020}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -45065,7 +45066,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 981156020}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}

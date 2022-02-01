@@ -11,6 +11,9 @@ public class MessagePiggyBankV2 : MonoBehaviour
     [SerializeField]
     public Text[] CountMax;
 
+    [SerializeField]
+    GameObject ObjButtonOpen;
+
     
 
     // Start is called before the first frame update
@@ -28,16 +31,25 @@ public class MessagePiggyBankV2 : MonoBehaviour
     void Update()
     {
         UpdateTextCount();
+
+        //включить кнопку если золото в копилке есть
+        if (PlayerProfile.main.PiggyBankNow > 0) {
+            if (!ObjButtonOpen.activeSelf) ObjButtonOpen.SetActive(true);
+        }
+        //убрать кнопку если золота нет
+        else {
+            if (ObjButtonOpen.activeSelf) ObjButtonOpen.SetActive(false);
+        }
     }
 
 
     //Разбить свинью копилку и получить все накопленное золото
-    public void ClickGetGold() {
-        
+    public void ClickOpen() {
+        PlayerProfile.main.PiggyBankOpen();
     }
 
     //Улучшить свинью копилку чтобы вмещалось больше золота
-    public void ClickUpdatePiggyBank() {
-        //
+    public void ClickUpdate() {
+        PlayerProfile.main.PiggyBankUpgrade();
     }
 }

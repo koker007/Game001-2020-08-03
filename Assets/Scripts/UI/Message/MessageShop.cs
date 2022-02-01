@@ -8,6 +8,11 @@ public class MessageShop : MonoBehaviour
     [SerializeField]
     Text CountGold;
     [SerializeField]
+    Text CountPiggyNow;
+    [SerializeField]
+    Text CountPiggyMax;
+
+    [SerializeField]
     Text CountInternal;
     [SerializeField]
     Text CountRocket;
@@ -25,6 +30,10 @@ public class MessageShop : MonoBehaviour
 
     void UpdateCountItem() {
         CountGold.text = PlayerProfile.main.GoldAmount.ToString();
+        CountPiggyNow.text = PlayerProfile.main.PiggyBankNow.ToString();
+        CountPiggyMax.text = PlayerProfile.main.PiggyBankMax.ToString();
+
+
         CountInternal.text = PlayerProfile.main.ShopInternal.Amount.ToString();
         CountRocket.text = PlayerProfile.main.ShopRocket.Amount.ToString();
         CountBomb.text = PlayerProfile.main.ShopBomb.Amount.ToString();

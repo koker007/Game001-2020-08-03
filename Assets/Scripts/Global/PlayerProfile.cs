@@ -37,11 +37,6 @@ public class PlayerProfile : MonoBehaviour
 
     public float ProfileTermsOfUse = 0;
 
-    //Свинья копилка и золото в ней в данный момент и максимальное возможное
-    public int PiggyBankNow = 0;
-    public int PiggyBankMax = 0;
-
-
     [HideInInspector]
     public int[] nextLevelPoint = new int[] { 1000 , 5000 , 10000 };
 
@@ -67,6 +62,11 @@ public class PlayerProfile : MonoBehaviour
     const int stastProfileScore = 0;
     const string strProfileLevelOpen = "ProfileLevelOpen";
     const int startProfileLevelOpen = 1;
+
+    const string strPiggyBankNow = "PiggyBankNow";
+    const int startPiggyBankNow = 0;
+    const string strPiggyBankMax = "PiggyBankMax";
+    const int startPiggyBankMax = 30;
 
     const string strGoldAmount = "GoldAmound";
     const int startGoldAmount = 10;
@@ -95,6 +95,10 @@ public class PlayerProfile : MonoBehaviour
     public int GoldAmount;
     public int moneyboxCapacity; //Свинья копилка общий объем
     public int moneyboxContent; //свинья копилка содержимое на данный момент
+
+    //Свинья копилка и золото в ней в данный момент и максимальное возможное
+    public int PiggyBankNow = 0;
+    public int PiggyBankMax = 30;
 
     /// Сколько очков получил игрок на этом уровне
     /// </summary>
@@ -163,6 +167,8 @@ public class PlayerProfile : MonoBehaviour
         moneyboxCapacity = PlayerPrefs.GetInt(strMoneyboxCapacity, startMoneyboxCapacity);
         moneyboxContent = PlayerPrefs.GetInt(strMoneyboxContent, startMoneyboxContent);
 
+        PiggyBankNow = PlayerPrefs.GetInt(strPiggyBankNow, startPiggyBankNow);
+        PiggyBankMax = PlayerPrefs.GetInt(strPiggyBankMax, startPiggyBankMax);
 
         Health.Amount = PlayerPrefs.GetInt(strHealth, startHealth);
         Ticket.Amount = PlayerPrefs.GetInt(strTicket, startTicket);
@@ -199,6 +205,9 @@ public class PlayerProfile : MonoBehaviour
 
         PlayerPrefs.SetInt(strProfileLevelGetGift, ProfileLevelGetGift);
 
+        PlayerPrefs.SetInt(strPiggyBankNow, PiggyBankNow);
+        PlayerPrefs.SetInt(strPiggyBankMax, PiggyBankMax);
+
         SaveItemAmount();
 
         SaveToGoogle();
@@ -218,6 +227,9 @@ public class PlayerProfile : MonoBehaviour
         dataStr += strProfileScore + spliterKAD + ProfileScore + spliterDAD;
         dataStr += strProfileLevelOpen + spliterKAD + ProfilelevelOpen + spliterDAD;
         dataStr += strProfileTermsOfUse + spliterKAD + ProfileTermsOfUse + spliterDAD;
+
+        dataStr += strPiggyBankNow + spliterKAD + PiggyBankNow + spliterDAD;
+        dataStr += strPiggyBankMax + spliterKAD + PiggyBankMax + spliterDAD;
 
         //Данные игры
         dataStr += strGoldAmount + spliterKAD + GoldAmount + spliterDAD;
@@ -299,6 +311,15 @@ public class PlayerProfile : MonoBehaviour
             ProfileTermsOfUse = (float)System.Convert.ToDouble(data);
         }
 
+        //Свинья копилка
+        else if (key == strPiggyBankNow)
+        {
+            PiggyBankNow = System.Convert.ToInt32(data);
+        }
+        else if (key == strPiggyBankMax) {
+            PiggyBankMax = System.Convert.ToInt32(data);
+        }
+
         else if (key == strGoldAmount)
         {
             GooglePlay.main.LastMessage = "Profile: " + strGoldAmount;
@@ -345,7 +366,8 @@ public class PlayerProfile : MonoBehaviour
             GooglePlay.main.LastMessage = "Profile: " + strShopColor5;
             ShopColor5.Amount = System.Convert.ToInt32(data);
         }
-        else if (key == strShopMixed) {
+        else if (key == strShopMixed)
+        {
             GooglePlay.main.LastMessage = "Profile: " + strShopMixed;
             ShopMixed.Amount = System.Convert.ToInt32(data);
         }
@@ -510,6 +532,28 @@ public class PlayerProfile : MonoBehaviour
         ReCalcProfileLVL();
 
         SaveForGoogleLVL();
+
+        AudioClip clip;
+
+        clip.SetData();
+    }
+
+    /// <summary>
+    /// Получить количество звед на текущем уровне
+    /// </summary>
+    /// <param name="LVLnum"></param>
+    /// <returns></returns>
+    public int GetLVLStar(int LVLnum) {
+
+        //Если этого массива нет, то и звезд там нет
+        if (LVLnum >= LVLStar.Length || LVLnum < 0)
+        {
+            return 0;
+        }
+        else {
+            return LVLStar[LVLnum];
+        }
+
     }
 
     void ReCalcGoldCount() {
@@ -766,6 +810,10 @@ public class PlayerProfile : MonoBehaviour
         ProfileLevelGetGift = startProfileLevelGetGift;
         PlayerPrefs.SetInt(strProfileLevelGetGift, ProfileLevelGetGift);
 
+        //свинья копилка
+        PiggyBankNow = startPiggyBankNow;
+        PiggyBankMax = startPiggyBankMax;
+
         GoldAmount = startGoldAmount;
         PlayerPrefs.SetInt(strGoldAmount, GoldAmount);
         Health.Amount = startHealth;
@@ -809,6 +857,37 @@ public class PlayerProfile : MonoBehaviour
     {
         moneyboxCapacity += 5;
         SaveItemAmount();
+    }
+
+
+    //Добавить золота в свинью копилку
+    public void PiggyBankAdd(int count) {
+        //Прибавляем золото
+        PiggyBankNow += count;
+        //Если золота больше максимума то выравниваем по максимуму
+        if (PiggyBankNow > PiggyBankMax) {
+            PiggyBankNow = PiggyBankMax;
+        }
+    }
+    //Открыть свинью копилку
+    public void PiggyBankOpen() {
+        //Прибавляем накопленное золота к общему количеству золота
+        GoldAmount += PiggyBankNow;
+        //В свинье золота больше нет
+        PiggyBankNow = 0;
+
+        //Сохраняем статус открытия
+        Save();
+    }
+    //Улучшить свинью копилку
+    public void PiggyBankUpgrade() {
+        //Улучшаем свинью копилку
+        int plus = 30;
+
+        PiggyBankMax += (int)(plus);
+
+        //Сохраняем улучшение
+        Save();
     }
 
     //Заполняем копилку
