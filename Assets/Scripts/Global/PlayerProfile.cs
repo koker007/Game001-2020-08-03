@@ -533,9 +533,6 @@ public class PlayerProfile : MonoBehaviour
 
         SaveForGoogleLVL();
 
-        AudioClip clip;
-
-        clip.SetData();
     }
 
     /// <summary>
