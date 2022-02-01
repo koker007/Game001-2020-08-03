@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.49070728, g: 0.70745045, b: 0.79802656, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0.99999946, b: 0.99999946, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -18590,6 +18590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93afa409f3453de43b023b48a1925b70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _levelsObject: {fileID: 11400000, guid: 35486bccf97554b4a88622f23e70f7a7, type: 2}
   Levels:
   - Width: 0
     Height: 0
@@ -39591,7 +39592,6 @@ MonoBehaviour:
     PassedWithEnemy: 0
     NeedCrystal: 0
     NeedColor: 0
-  _levelsObject: {fileID: 11400000, guid: 35486bccf97554b4a88622f23e70f7a7, type: 2}
 --- !u!114 &1319929789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39654,6 +39654,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecf5bd8ff68bee747b5485a1efdde608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _levelsObject: {fileID: 11400000, guid: 35486bccf97554b4a88622f23e70f7a7, type: 2}
   thisLevel:
     Width: 0
     Height: 0

@@ -130,11 +130,13 @@ public class GlobalMessage : MonoBehaviour
         }
     }
 
-    static void SendMessage(GameObject prefabMessage) {
+    static MessageCTRL SendMessage(GameObject prefabMessage) {
         GameObject messageObj = Instantiate(prefabMessage, main.transform);
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
 
         MessageCTRL.NewMessage(messageCTRL);
+
+        return messageCTRL;
     }
 
     /// <summary>
@@ -333,7 +335,8 @@ public class GlobalMessage : MonoBehaviour
     /// </summary>
     static public void LevelTutorial(float TutoialNum)
     {
-        SendMessage(main.PrefabLVLTutorial);
+        MessageLevelTutorial tutorial = SendMessage(main.PrefabLVLTutorial).GetComponent<MessageLevelTutorial>();
+        tutorial.Inicializate(TutoialNum);
     }
 
     /// <summary>

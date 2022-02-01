@@ -11,7 +11,6 @@ using UnityEngine;
 /// </summary>
 public class LevelsArray : LevelsScript
 {
-    [SerializeField] private LevelScriptableObject _levelsObject;
 
     private void Start()
     {
