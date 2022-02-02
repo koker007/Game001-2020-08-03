@@ -181,7 +181,7 @@ public class PlayerProfile : MonoBehaviour
 
         if (Settings.main.DeveloperTesting) {
             GoldAmount = 100;
-            ProfilelevelOpen = 1000;
+            ProfilelevelOpen = 200;
             Health.Amount = 100;
 
             ShopInternal.Amount = 10;

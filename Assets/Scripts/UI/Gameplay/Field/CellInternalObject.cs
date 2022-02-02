@@ -1336,7 +1336,7 @@ public class CellInternalObject : MonoBehaviour
 
             //Цвет, на который заменяем
             InternalColor replaceColor;
-            //Если активируемый тип не колор 5 но партнер с колор5 и вообще я сам себе партнер
+            //Если активируемый тип не колор 5 но партнер с колор5 и вообще при этом колор 5 сам себе партнер
             //(ситуация когда игрок нажимает кнопку бомбы или ракеты из магазина и применяет ее на супер цвет)
             //Цвет считается по приоритету
             if (ActivateType != Type.color5 && partner.type == Type.color5 || partner == null && ActivateType != Type.color5)
@@ -1344,16 +1344,23 @@ public class CellInternalObject : MonoBehaviour
                 typePartner = ActivateType;
                 replaceColor = CalculateColorPriority();
             }
-            //Иначе берем цвет партнера
+            //если есть партнер и мы не коронавирус
             else if (partner != null && ActivateType != Type.color5)
             {
+                //Берем цвет партнера
                 replaceColor = partner.color;
             }
-            else {
+            //если партнер есть, он не короновирус, но мы коронавирус
+            else if (partner != null && ActivateType == Type.color5 && partner.type != Type.color5)
+            {
+                //то берем цвет партнера
+                replaceColor = partner.color;
+            }
+            //Иначе берем свой собственный цвет
+            else
+            {
                 replaceColor = color;
             }
-
-
 
 
             //Если партнер просто цвет

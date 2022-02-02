@@ -295,18 +295,26 @@ public class GameFieldCTRL : MonoBehaviour
                 {
 
                     //Если этой ячейки не существует и нет телепорта и нет раздатчика
-                    if (level.cells[x,y].Exist == 0 && //Если ячейки нет
+                    if (level.cells[x, y].Exist == 0 && //Если ячейки нет
                         level.cells[x, y].teleport == 0 && //Нет телепорта
                         !level.cells[x, y].dispencer) //Нет раздатчика
                     {
                         //То пропускаем создание этой ячейки
                         continue;
                     }
-                    else
-                    {
 
+
+                    //Там где раздатчик не может быть ячейки, по этому
+
+                    //Если есть ячейка
+                    //Если нет раздатчика
+                    else if (level.cells[x,y].Exist != 0 &&
+                        !level.cells[x,y].dispencer)
+                    {
+                        //Прибавлям интерактивную ячейку если она существует
                         CountInteractiveCells++;
                     }
+
 
                     //Если ячейки нет, или вместо нее тут раздатчик, создаем
                     if (!cellCTRLs[x, y] && level.cells[x,y].Exist == 1 || level.cells[x,y].dispencer)
