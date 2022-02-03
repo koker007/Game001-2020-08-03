@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 2447543562557600718}
   - component: {fileID: 479107869973892665}
   - component: {fileID: 281479224828411971}
+  - component: {fileID: 1961840349611850698}
   m_Layer: 5
   m_Name: dayObj
   m_TagString: Untagged
@@ -235,6 +236,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 2
+--- !u!114 &1961840349611850698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767213213085264227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb417e6967b6a743a772a735dc06eef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GiftImage: {fileID: 725317339369222587}
+  _daysCounter: {fileID: 5283001922172254272}
+  _GiftCounter: {fileID: 5510451871267621529}
 --- !u!1 &1825256258320419611
 GameObject:
   m_ObjectHideFlags: 0

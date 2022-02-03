@@ -36,6 +36,7 @@ public class MenuHello : MonoBehaviour
     /// </summary>
     public void clickButtonPlay() {
         UICTRL.main.OpenWorld();
+        GiftCalendar.main.CheckNewDay();
     }
 
     /// <summary>
