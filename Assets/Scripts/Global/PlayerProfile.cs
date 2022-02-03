@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 //alexandr
 //Андрей
@@ -68,6 +66,16 @@ public class PlayerProfile : MonoBehaviour
     const string strPiggyBankMax = "PiggyBankMax";
     const int startPiggyBankMax = 30;
 
+    const string strSubscriptionDataYear = "SubscriptionYear";
+    const int startSubscriptionDataYear = 1;
+    const string strSubscriptionDataMonth = "SubscriptionMonth";
+    const int startSubscriptionDataMonth = 1;
+    const string strSubscriptionDataDay = "SubscriptionDay";
+    const int startSubscriptionDataDay = 1;
+
+
+
+
     const string strGoldAmount = "GoldAmound";
     const int startGoldAmount = 10;
     const string strMoneyboxCapacity = "MoneyboxCapacity";
@@ -99,6 +107,13 @@ public class PlayerProfile : MonoBehaviour
     //Свинья копилка и золото в ней в данный момент и максимальное возможное
     public int PiggyBankNow = 0;
     public int PiggyBankMax = 30;
+
+    //Подписка
+    int subscriptionYear = 1;
+    int subscriptionMonth = 1;
+    int subscriptionDay = 1;
+    public System.DateTime subscriptionDateEnd = new System.DateTime(1);
+    
 
     /// Сколько очков получил игрок на этом уровне
     /// </summary>
@@ -208,6 +223,10 @@ public class PlayerProfile : MonoBehaviour
         PlayerPrefs.SetInt(strPiggyBankNow, PiggyBankNow);
         PlayerPrefs.SetInt(strPiggyBankMax, PiggyBankMax);
 
+        PlayerPrefs.SetInt(strSubscriptionDataYear, startSubscriptionDataYear);
+        PlayerPrefs.SetInt(strSubscriptionDataMonth, startSubscriptionDataMonth);
+        PlayerPrefs.SetInt(strSubscriptionDataDay, startSubscriptionDataDay);
+
         SaveItemAmount();
 
         SaveToGoogle();
@@ -230,6 +249,12 @@ public class PlayerProfile : MonoBehaviour
 
         dataStr += strPiggyBankNow + spliterKAD + PiggyBankNow + spliterDAD;
         dataStr += strPiggyBankMax + spliterKAD + PiggyBankMax + spliterDAD;
+
+        dataStr += strSubscriptionDataYear + spliterKAD + subscriptionDateEnd.Year + spliterDAD;
+        dataStr += strSubscriptionDataMonth + spliterKAD + subscriptionDateEnd.Month + spliterDAD;
+        dataStr += strSubscriptionDataDay + spliterKAD + subscriptionDateEnd.Day + spliterDAD;
+
+
 
         //Данные игры
         dataStr += strGoldAmount + spliterKAD + GoldAmount + spliterDAD;
@@ -276,6 +301,11 @@ public class PlayerProfile : MonoBehaviour
             WriteDataFromKey(dataKAD[0], dataKAD[1]);
         }
 
+        //Все данные были разшифрованны теперь заносим куда надо
+
+        //Переписать дату окончания подписки
+        subscriptionDateEnd = new System.DateTime(subscriptionYear, subscriptionMonth, subscriptionDay);
+        
     }
 
     /// <summary>
@@ -318,6 +348,17 @@ public class PlayerProfile : MonoBehaviour
         }
         else if (key == strPiggyBankMax) {
             PiggyBankMax = System.Convert.ToInt32(data);
+        }
+
+        //Подписка (дата окончания)
+        else if (key == strSubscriptionDataYear) {
+            subscriptionYear = System.Convert.ToInt32(data);
+        }
+        else if (key == strSubscriptionDataMonth) {
+            subscriptionMonth = System.Convert.ToInt32(data);
+        }
+        else if (key == strSubscriptionDataDay) {
+            subscriptionDay = System.Convert.ToInt32(data);
         }
 
         else if (key == strGoldAmount)
