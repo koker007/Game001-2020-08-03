@@ -9,9 +9,9 @@ public class DayPanel : MonoBehaviour
     [SerializeField] private Text _daysCounter;
     [SerializeField] private Text _GiftCounter;
 
-    public void Set(GiftCalendar.TypeItem item, int dayNum, int counter)
+    public void Set(Sprite sprite, int dayNum, int counter)
     {
-        _GiftImage.sprite = GiftCalendar.main._itemSprites[(int)item];
+        _GiftImage.sprite = sprite;
         _daysCounter.text = dayNum.ToString();
         _GiftCounter.text = $"x{counter}";
     }

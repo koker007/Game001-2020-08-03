@@ -799,7 +799,7 @@ public class PlayerProfile : MonoBehaviour
         SaveToGoogle();
     }
 
-    public void GiftItem(Item item, int num)
+    public void GiftItem(ref Item item, int num)
     {
         item.Amount += num;
         SaveItemAmount();
