@@ -81,6 +81,8 @@ public class GlobalMessage : MonoBehaviour
 
     [SerializeField]
     GameObject LevelRedactor;
+    [SerializeField]
+    GameObject PrefabCalendar;
 
 
     void Start()
@@ -317,6 +319,14 @@ public class GlobalMessage : MonoBehaviour
     static public void ComingSoon()
     {
         SendMessage(main.PrefabComingSoon);
+    }
+    
+    /// <summary>
+     /// скоро будет обновлено (не готовая часть игры)
+     /// </summary>
+    static public void Calendar()
+    {
+        SendMessage(main.PrefabCalendar);
     }
 
     /// <summary>
