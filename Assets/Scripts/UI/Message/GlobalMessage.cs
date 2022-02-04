@@ -63,6 +63,8 @@ public class GlobalMessage : MonoBehaviour
     GameObject PrefabShopBuyMoneybox;
     [SerializeField]
     GameObject PrefabShopBuyHealth;
+    [SerializeField]
+    GameObject PrefabShopBuySubscriptionMonth;
 
     [SerializeField]
     GameObject PrefabEvents;
@@ -279,6 +281,10 @@ public class GlobalMessage : MonoBehaviour
     static public void ShopBuyHealth()
     {
         SendMessage(main.PrefabShopBuyHealth);
+    }
+
+    static public void ShopBuySubscriptionMonth() {
+        SendMessage(main.PrefabShopBuySubscriptionMonth);
     }
 
 

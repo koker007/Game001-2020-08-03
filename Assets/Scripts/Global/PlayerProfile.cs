@@ -36,7 +36,7 @@ public class PlayerProfile : MonoBehaviour
     public float ProfileTermsOfUse = 0;
 
     [HideInInspector]
-    public int[] nextLevelPoint = new int[] { 1000 , 5000 , 10000 };
+    public int[] nextLevelPoint = new int[] { 1000, 5000, 10000 };
 
     private char spliterDAD = ';'; //Разделитель множества данных DAD = DataAndData
     private char spliterKAD = '='; //Разделитель ключа и собственно самих данных KAD = KeyAndData
@@ -54,7 +54,7 @@ public class PlayerProfile : MonoBehaviour
     const string strProfileLevel = "ProfileLevel";
     const int startProfileLevel = 1;
     const string strProfileLevelGetGift = "ProfileLevelGetGift";
-    const int startProfileLevelGetGift = 0; 
+    const int startProfileLevelGetGift = 0;
 
     const string strProfileScore = "ProfileScore";
     const int stastProfileScore = 0;
@@ -113,7 +113,7 @@ public class PlayerProfile : MonoBehaviour
     int subscriptionMonth = 1;
     int subscriptionDay = 1;
     public System.DateTime subscriptionDateEnd = new System.DateTime(1);
-    
+
 
     /// Сколько очков получил игрок на этом уровне
     /// </summary>
@@ -185,6 +185,14 @@ public class PlayerProfile : MonoBehaviour
         PiggyBankNow = PlayerPrefs.GetInt(strPiggyBankNow, startPiggyBankNow);
         PiggyBankMax = PlayerPrefs.GetInt(strPiggyBankMax, startPiggyBankMax);
 
+        //Дата подписки
+        subscriptionYear = PlayerPrefs.GetInt(strSubscriptionDataYear, startSubscriptionDataYear);
+        subscriptionMonth = PlayerPrefs.GetInt(strSubscriptionDataMonth, startSubscriptionDataMonth);
+        subscriptionDay = PlayerPrefs.GetInt(strSubscriptionDataDay, startSubscriptionDataDay);
+
+        //Преобразуем данные в дату
+        subscriptionDateEnd = new System.DateTime(subscriptionYear, subscriptionMonth, subscriptionDay);
+
         Health.Amount = PlayerPrefs.GetInt(strHealth, startHealth);
         Ticket.Amount = PlayerPrefs.GetInt(strTicket, startTicket);
         ShopInternal.Amount = PlayerPrefs.GetInt(strShopInternal, startShopInternal);
@@ -223,9 +231,13 @@ public class PlayerProfile : MonoBehaviour
         PlayerPrefs.SetInt(strPiggyBankNow, PiggyBankNow);
         PlayerPrefs.SetInt(strPiggyBankMax, PiggyBankMax);
 
-        PlayerPrefs.SetInt(strSubscriptionDataYear, startSubscriptionDataYear);
-        PlayerPrefs.SetInt(strSubscriptionDataMonth, startSubscriptionDataMonth);
-        PlayerPrefs.SetInt(strSubscriptionDataDay, startSubscriptionDataDay);
+        //вытаскиваем дату из даты
+        subscriptionYear = subscriptionDateEnd.Year;
+        subscriptionMonth = subscriptionDateEnd.Month;
+        subscriptionDay = subscriptionDateEnd.Day;
+        PlayerPrefs.SetInt(strSubscriptionDataYear, subscriptionYear);
+        PlayerPrefs.SetInt(strSubscriptionDataMonth, subscriptionMonth);
+        PlayerPrefs.SetInt(strSubscriptionDataDay, subscriptionDay);
 
         SaveItemAmount();
 
@@ -235,7 +247,7 @@ public class PlayerProfile : MonoBehaviour
     //Сохранить данные в гугл плей в виде строки
     public void SaveToGoogle() {
         //if (!GooglePlay.main.isAutorized)
-            //return;
+        //return;
 
         //Создаем список параметров
         string dataStr = "";
@@ -279,13 +291,13 @@ public class PlayerProfile : MonoBehaviour
 
     //начать процесс загрузки данных из гугла
     public void LoadFromGoogle() {
-        
+
     }
 
     //Если передается строка значит данные уже были загруженны и требуют расшифровки
     public void LoadFromGoogle(string dataStr) {
-        
-      
+
+
         //разделяем строку на множество данных
         string[] dataDADs = dataStr.Split(spliterDAD);
 
@@ -305,7 +317,7 @@ public class PlayerProfile : MonoBehaviour
 
         //Переписать дату окончания подписки
         subscriptionDateEnd = new System.DateTime(subscriptionYear, subscriptionMonth, subscriptionDay);
-        
+
     }
 
     /// <summary>
@@ -413,7 +425,7 @@ public class PlayerProfile : MonoBehaviour
             ShopMixed.Amount = System.Convert.ToInt32(data);
         }
 
-        
+
     }
 
     //Проверить размер массива и расширить если не хватает места
@@ -461,7 +473,7 @@ public class PlayerProfile : MonoBehaviour
             string goldStr = "";
 
             //Разделяем данные
-            foreach(string data in dataKAD) {
+            foreach (string data in dataKAD) {
                 string dataOnly = "";
                 for (int num = 1; num < data.Length; num++) {
                     dataOnly += data[num];
@@ -480,7 +492,7 @@ public class PlayerProfile : MonoBehaviour
                 //Пройдено ли на золото
                 else if (data[0] == keyOfLVLgold)
                     goldStr = dataOnly;
-                
+
             }
 
             //Выходим если уровень неопределен
@@ -528,7 +540,7 @@ public class PlayerProfile : MonoBehaviour
 
             dataStr += "" + keyOfLVLgold + LVLGold[x] + spliterDAD; //золотое прохождение //Должен быть последним, в конце символ окончания данных
         }
-        
+
         //для теста
         //LoadFromGoogleLVL(dataStr);
 
@@ -549,10 +561,10 @@ public class PlayerProfile : MonoBehaviour
         //Отправить данные на сохрание в гугл
         GooglePlay.main.AddBufferWaitingFile(GooglePlay.KeyFileLVLs, dataStr);
     }
-    
+
     //Сохранить звезды
     public void SetLVLStar(int LVLnum, int starsCount) {
-        
+
 
         //Расширяемся если не хватает места
         if (LVLnum >= LVLStar.Length) {
@@ -672,7 +684,7 @@ public class PlayerProfile : MonoBehaviour
         }
 
         return true;
-    
+
     }
     public bool PlusPlayerLVLGift() {
         bool isOk = false;
@@ -691,7 +703,7 @@ public class PlayerProfile : MonoBehaviour
 
         return isOk;
     }
-    
+
     //Сохранить золото
     public void SetLVLGold(int LVLnum, int goldNum) {
         if (LVLnum >= LVLGold.Length)
@@ -720,7 +732,7 @@ public class PlayerProfile : MonoBehaviour
     public void ScorePlus(int plus)
     {
         ProfileScore += plus;
-        if(ProfileScore > nextLevelPoint[ProfileLevel - 1])
+        if (ProfileScore > nextLevelPoint[ProfileLevel - 1])
         {
             ProfileScore %= nextLevelPoint[ProfileLevel - 1];
             ProfileLevel++;
@@ -734,7 +746,7 @@ public class PlayerProfile : MonoBehaviour
     /// </summary>
     public bool isPurchaseItem(ref Item item)
     {
-        if(GoldAmount < item.Cost)
+        if (GoldAmount < item.Cost)
         {
             return false;
         }
@@ -754,7 +766,7 @@ public class PlayerProfile : MonoBehaviour
     /// Покупка предмета за реал
     /// </summary>
     /// <returns></returns>
-    public void PayPack(ShopPack Pack) 
+    public void PayPack(ShopPack Pack)
     {
         GoldAmount += Pack.BuyMoneyNum;
         ShopInternal.Amount += Pack.BuyInternalNum;
@@ -810,7 +822,27 @@ public class PlayerProfile : MonoBehaviour
         SaveItemAmount();
     }
 
+    //Добавить месяц подписки
+    public void AddSubscriptionMonth(){
+        //Берем начальную дату
+        System.DateTime dateEndNew = System.DateTime.Now;
 
+        //Если текущая дата подписки больше чем сейчас
+        if (subscriptionDateEnd > dateEndNew) {
+            //Берем дату подписки в качестве точки отсчета
+            dateEndNew = subscriptionDateEnd;
+        }
+
+        //Теперь к стартовой дате прибавляем месяц
+        dateEndNew = dateEndNew.AddMonths(1);
+
+        //Запоминаем дату подписки
+        subscriptionDateEnd = dateEndNew;
+
+        //Отправляем изменения в гугл
+        Save();
+
+    }
 
     //устанавливат количество жизней
     public void SetHealth(int value)
@@ -851,6 +883,15 @@ public class PlayerProfile : MonoBehaviour
         //свинья копилка
         PiggyBankNow = startPiggyBankNow;
         PiggyBankMax = startPiggyBankMax;
+
+        //зануление даты
+        subscriptionYear = startSubscriptionDataYear;
+        PlayerPrefs.SetInt(strSubscriptionDataYear, subscriptionYear);
+        subscriptionMonth = startSubscriptionDataMonth;
+        PlayerPrefs.SetInt(strSubscriptionDataMonth, subscriptionMonth);
+        subscriptionDay = startSubscriptionDataDay;
+        PlayerPrefs.SetInt(strSubscriptionDataDay, subscriptionDay);
+        subscriptionDateEnd = new System.DateTime(subscriptionYear, subscriptionMonth, subscriptionDay);
 
         GoldAmount = startGoldAmount;
         PlayerPrefs.SetInt(strGoldAmount, GoldAmount);
