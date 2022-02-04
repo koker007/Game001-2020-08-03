@@ -27,6 +27,12 @@ public class GiftCalendar : MonoBehaviour
         [SerializeField] private TypeItem _typeItem;
         [SerializeField] private int _count;
 
+        public void SetValues(TypeItem item, int count)
+        {
+            _typeItem = item;
+            _count = count;
+        }
+
         public TypeItem RetTypeItem()
         {
             return _typeItem;
@@ -91,11 +97,74 @@ public class GiftCalendar : MonoBehaviour
         DayCombo = 1;
         DaySubEnded = 0;
 
+        GenerateNewGifts();
         GlobalMessage.Calendar();
 
         PlayerPrefs.SetInt(DayOfPurchaseKey, DayOfPurchase);
         PlayerPrefs.SetInt(LastDayKey, LastDay);
         PlayerPrefs.SetInt(DayComboKey, DayCombo);
+    }
+
+    private void GenerateNewGifts()
+    {
+        int maxGold = 100;
+
+        for(int i = 0; i < days.Count; i++)
+        {
+            if(i == 14)
+            {
+                days[i].SetValues(TypeItem.ShopColor5, 2);
+            }
+            else
+            {
+                if (i % 2 == 0)
+                {
+                    days[i].SetValues(TypeItem.Gold, Gold());
+                }
+                else
+                {
+                    int type = UnityEngine.Random.Range(3, 8);
+
+                    switch(type)
+                    {
+                        case 3:
+                            days[i].SetValues((TypeItem)type, UnityEngine.Random.Range(1, 5));
+                            break;
+                        case 4:
+                            days[i].SetValues((TypeItem)type, UnityEngine.Random.Range(1, 3));
+                            break;
+                        case 5:
+                            days[i].SetValues((TypeItem)type, UnityEngine.Random.Range(1, 3));
+                            break;
+                        case 6:
+                            days[i].SetValues((TypeItem)type, UnityEngine.Random.Range(1, 2));
+                            break;
+                        case 7:
+                            days[i].SetValues((TypeItem)type, UnityEngine.Random.Range(1, 3));
+                            break;
+                    }
+                }
+            }
+        }
+
+        days[26].SetValues(TypeItem.Gold, days[26].RetCount() + maxGold / 2);
+        days[28].SetValues(TypeItem.Gold, days[28].RetCount() + maxGold / 2);
+        days[days.Count - 1].SetValues(TypeItem.Gold, 20);
+
+        int Gold()
+        {
+            int gold = UnityEngine.Random.Range(4, 10);
+            if(maxGold >= gold)
+            {
+                maxGold -= gold;
+            }
+            else
+            {
+                gold = maxGold;
+                maxGold = 0;
+            }
+            return gold;
+        }
     }
 
     public void CheckNewDay()
