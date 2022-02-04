@@ -7,7 +7,7 @@ public class MessageBuySubscription : MonoBehaviour
 {
 
     [SerializeField]
-    System.DateTime dateEnd;
+    System.DateTime dateEnd = new System.DateTime(1,2,3);
 
     [Header("Text")]
     [SerializeField]

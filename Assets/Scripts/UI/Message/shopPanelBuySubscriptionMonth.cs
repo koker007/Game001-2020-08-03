@@ -28,7 +28,7 @@ public class shopPanelBuySubscriptionMonth : MonoBehaviour
     string textDateEnd = "Works until";
 
 
-    System.DateTime TimeEnd; //Время подписки записанное в памяти
+    System.DateTime TimeEnd = new System.DateTime(1,2,3); //Время подписки записанное в памяти
 
     void inicialize() {
         textPanelName = TranslateManager.main.GetText(KeyPanelName, textPanelName);
@@ -64,7 +64,18 @@ public class shopPanelBuySubscriptionMonth : MonoBehaviour
         NamePanelText.text = textPanelName;
         //Если время подписки больше текущего времени то подписка работает
         if (TimeEnd > System.DateTime.Now) {
-            DateText.text = textDateEnd + " " + TimeEnd.Year + "." + TimeEnd.Month + "." + TimeEnd.Day;
+
+            string strMonth = "";
+            string strDay = "";
+
+            //Если числа не двухзначные прибавляем ноль
+            if (TimeEnd.Month < 10) strMonth += "0";
+            if (TimeEnd.Day < 10) strDay += "0";
+
+            strMonth += TimeEnd.Month;
+            strDay += TimeEnd.Day;
+
+            DateText.text = textDateEnd + " " + TimeEnd.Year + "." + strMonth + "." + strDay;
         }
         else {
             DateText.text = textPanelNotSigned;
