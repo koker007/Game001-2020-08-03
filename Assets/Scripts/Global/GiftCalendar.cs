@@ -84,17 +84,9 @@ public class GiftCalendar : MonoBehaviour
         main = this;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            BuySubscription();
-        }
-    }
-
     public void BuySubscription()
     {
-        DayOfPurchase = (int)((System.DateTime.UtcNow - epochStart).TotalMinutes);
+        DayOfPurchase = (int)((System.DateTime.UtcNow - epochStart).TotalDays);
         LastDay = DayOfPurchase;
         DayCombo = 1;
         DaySubEnded = 0;
@@ -110,16 +102,16 @@ public class GiftCalendar : MonoBehaviour
     {
         DayOfPurchase = PlayerPrefs.GetInt(DayOfPurchaseKey, 0);
 
-        if (DayOfPurchase + days.Count < (int)((System.DateTime.UtcNow - epochStart).TotalMinutes))
+        if (DayOfPurchase + days.Count < (int)((System.DateTime.UtcNow - epochStart).TotalDays))
             return;
 
-        DaySubEnded = (int)((System.DateTime.UtcNow - epochStart).TotalMinutes) - DayOfPurchase;
+        DaySubEnded = (int)((System.DateTime.UtcNow - epochStart).TotalDays) - DayOfPurchase;
         LastDay = PlayerPrefs.GetInt(LastDayKey, 0);
         DayCombo = PlayerPrefs.GetInt(DayComboKey, 0);
 
-        if (LastDay < (int)(System.DateTime.UtcNow - epochStart).TotalMinutes)
+        if (LastDay < (int)(System.DateTime.UtcNow - epochStart).TotalDays)
         {
-            LastDay = (int)((System.DateTime.UtcNow - epochStart).TotalMinutes);
+            LastDay = (int)((System.DateTime.UtcNow - epochStart).TotalDays);
             PlayerPrefs.SetInt(LastDayKey, LastDay);
 
             DayCombo++;

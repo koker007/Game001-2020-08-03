@@ -839,6 +839,8 @@ public class PlayerProfile : MonoBehaviour
         //Запоминаем дату подписки
         subscriptionDateEnd = dateEndNew;
 
+        GiftCalendar.main.BuySubscription();
+
         //Отправляем изменения в гугл
         Save();
 
