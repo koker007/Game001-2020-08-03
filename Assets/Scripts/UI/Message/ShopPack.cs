@@ -70,8 +70,4 @@ public class ShopPack : MonoBehaviour
         }
         catch { }
     }
-
-    public void ClickButtonOpenInfo() {
-        
-    }
 }
