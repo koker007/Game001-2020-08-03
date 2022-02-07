@@ -82,9 +82,4 @@ public class shopPanelBuySubscriptionMonth : MonoBehaviour
         }
     }
 
-    //ќткрыть всплывающее сообщение о покупки подписки на мес€ц
-    public void ClickButtonOpenInfo()
-    {
-        GlobalMessage.ShopBuySubscriptionMonth();
-    }
 }
