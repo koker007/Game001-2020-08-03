@@ -102,7 +102,7 @@ public class GiftCalendar : MonoBehaviour
     {
         DayOfPurchase = PlayerPrefs.GetInt(DayOfPurchaseKey, 0);
 
-        if (DayOfPurchase + days.Count < (int)((System.DateTime.UtcNow - epochStart).TotalDays))
+        if (DayOfPurchase + days.Count <= (int)((System.DateTime.UtcNow - epochStart).TotalDays))
             return;
 
         DaySubEnded = (int)((System.DateTime.UtcNow - epochStart).TotalDays) - DayOfPurchase;
