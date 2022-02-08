@@ -25,7 +25,7 @@ public class LevelGenerator : MonoBehaviour
     private void Start()
     {
         main = this;
-        //GenerateRangeLevel(101, 150);
+        //GenerateRangeLevel(151, 200);
     }
     /// <summary>
     /// запускается один раз, генерирует уровни и сохраняет их в файл, может перезаписать существующие уровни
