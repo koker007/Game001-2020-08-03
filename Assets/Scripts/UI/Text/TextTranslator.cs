@@ -20,7 +20,7 @@ public class TextTranslator : MonoBehaviour
 
     public void UpdateText()
     {
-        string textNew = TranslateManager.main.GetText(key);
+        string textNew = TranslateManager.main.GetText(key, text.text);
         if (textNew != null && textNew != "Error") {
             text.text = textNew;
         }
