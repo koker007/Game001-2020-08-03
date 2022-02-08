@@ -834,7 +834,7 @@ public class PlayerProfile : MonoBehaviour
         }
 
         //Теперь к стартовой дате прибавляем месяц
-        dateEndNew = dateEndNew.AddMonths(1);
+        dateEndNew = dateEndNew.AddDays(30);
 
         //Запоминаем дату подписки
         subscriptionDateEnd = dateEndNew;
