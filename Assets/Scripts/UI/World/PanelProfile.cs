@@ -72,9 +72,9 @@ public class PanelProfile : MonoBehaviour
         levelOpen.text = PlayerProfile.main.ProfilelevelOpen.ToString();
         levelGold.text = PlayerProfile.main.LVLGoldCount.ToString();
 
-        isSaveBasic = TranslateManager.main.GetText("ProfileSaveBasic", isSaveBasic);
-        isSaveProcess = TranslateManager.main.GetText("ProfileSaveProcess", isSaveProcess);
-        isSavedText = TranslateManager.main.GetText("ProfileSaved", isSavedText);
+        isSaveBasic = TranslateManager.main.GetText("ProfileSaveBasic");
+        isSaveProcess = TranslateManager.main.GetText("ProfileSaveProcess");
+        isSavedText = TranslateManager.main.GetText("ProfileSaved");
 
         PlayerLevel.text = PlayerProfile.main.ProfileLevel.ToString();
         PlayerScore.text = ((int)PlayerProfile.main.ProfileCurrentLVLScoreNow).ToString() + " / " + ((int)PlayerProfile.main.ProfileCurrentLVLScoreMax).ToString();

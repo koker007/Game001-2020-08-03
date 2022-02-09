@@ -31,9 +31,9 @@ public class shopPanelBuySubscriptionMonth : MonoBehaviour
     System.DateTime TimeEnd = new System.DateTime(1,2,3); //Время подписки записанное в памяти
 
     void inicialize() {
-        textPanelName = TranslateManager.main.GetText(KeyPanelName, textPanelName);
-        textPanelNotSigned = TranslateManager.main.GetText(KeyDateNotSigned, textPanelNotSigned);
-        textDateEnd = TranslateManager.main.GetText(KeyDateEnd, textDateEnd);
+        textPanelName = TranslateManager.main.GetText(KeyPanelName);
+        textPanelNotSigned = TranslateManager.main.GetText(KeyDateNotSigned);
+        textDateEnd = TranslateManager.main.GetText(KeyDateEnd);
 
         
     }

@@ -2230,6 +2230,7 @@ GameObject:
   - component: {fileID: 4190962053921038798}
   - component: {fileID: 1808637464589524053}
   - component: {fileID: 8414186586069903833}
+  - component: {fileID: 9144761070364577153}
   m_Layer: 5
   m_Name: TextProcessNotReversible
   m_TagString: Untagged
@@ -2298,6 +2299,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: This process is not reversible
+--- !u!114 &9144761070364577153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5101042838394141660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: MessageDeleteProfileNotReversible
 --- !u!1 &5328333483089712674
 GameObject:
   m_ObjectHideFlags: 0
@@ -2567,6 +2581,7 @@ GameObject:
   - component: {fileID: 5887985066438204625}
   - component: {fileID: 7966085901549649650}
   - component: {fileID: 4562597062246311669}
+  - component: {fileID: 4077881240250472377}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -2635,6 +2650,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Delete Profile
+--- !u!114 &4077881240250472377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5453393030896234865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: MessageDeleteProfileHead
 --- !u!1 &5483845647378010541
 GameObject:
   m_ObjectHideFlags: 0
@@ -4626,6 +4654,7 @@ GameObject:
   - component: {fileID: 5418464476767285067}
   - component: {fileID: 6957630040905864637}
   - component: {fileID: 7145362983477896671}
+  - component: {fileID: 7451699877942900586}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -4694,3 +4723,16 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Are you sure you want to delete all your profile data?
+--- !u!114 &7451699877942900586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8859967840480589113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: MessageDeleteProfileDoYouWantDeleteProfile

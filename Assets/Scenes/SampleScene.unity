@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0, g: 0.99999946, b: 0.99999946, a: 1}
+  m_IndirectSpecularColor: {r: 0.49070728, g: 0.70745045, b: 0.79802656, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6665,7 +6665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Exit
+  key: GameplayExitFromLevel
 --- !u!1 &537618618
 GameObject:
   m_ObjectHideFlags: 0
@@ -9404,7 +9404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Play
+  key: ProfileButtonPlay
 --- !u!1 &746984819
 GameObject:
   m_ObjectHideFlags: 0
@@ -11827,7 +11827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Play
+  key: ProfileButtonPlay
 --- !u!1 &894582407
 GameObject:
   m_ObjectHideFlags: 0
@@ -14615,7 +14615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Save
+  key: ProfileButtonSave
 --- !u!1 &1015290172 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5361943101469650051, guid: eef4d11750aab664ca308e18b6f5b979, type: 3}
@@ -17170,7 +17170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Save
+  key: ProfileButtonSave
 --- !u!1 &1250968737
 GameObject:
   m_ObjectHideFlags: 0
@@ -43888,7 +43888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Map
+  key: WorldButtonMap
 --- !u!1 &1700430522
 GameObject:
   m_ObjectHideFlags: 0
@@ -49319,7 +49319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Profile
+  key: WorldButtonProfile
 --- !u!1 &2138313816
 GameObject:
   m_ObjectHideFlags: 0

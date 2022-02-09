@@ -28,11 +28,12 @@ public class TranslateManager : MonoBehaviour
         public string text;
     }
 
-    private const int MaximumKeyOneSimbol = 256;
+    private const int _MaximumKeyOneSimbol = 256;
 
-    private Translate[] translate = new Translate[char.MaxValue * MaximumKeyOneSimbol];
+    private Translate[] _translate = new Translate[char.MaxValue * _MaximumKeyOneSimbol];
+    private Translate[] _englishLaunguage = new Translate[char.MaxValue * _MaximumKeyOneSimbol];
 
-    char StringsKey = '|';
+    private const char _stringsKey = '|';
 
     public static TranslateManager main;
 
@@ -46,23 +47,34 @@ public class TranslateManager : MonoBehaviour
         string file = "Launguage/" + launguage + "/text";
         try
         {
-            var text = Resources.Load<TextAsset>(file).text;
-            string[] fileStrings = text.Split('\n');
-            foreach (string str in fileStrings)
-            {
-                SetText(str);
-            }
+            LoadLaunguageFile(file, false);
+            LoadLaunguageFile("Launguage/English/text", true);
         }
-        catch{
+        catch
+        {
+            LoadLaunguageFile("Launguage/English/text", false);
+            LoadLaunguageFile("Launguage/English/text", true);
             Debug.Log("Error: Load launguage");
         }
     }
 
-    private void SetText(string str)
+    private void LoadLaunguageFile(string filePosition, bool isEnglish)
     {
-        string[] KeyOrText = str.Split(StringsKey);
+        var text = Resources.Load<TextAsset>(filePosition).text;
+        string[] fileStrings = text.Split('\n');
+        foreach (string str in fileStrings)
+        {
+            SetText(str, isEnglish);
+        }
+    }
 
-        if(KeyOrText.Length != 2)
+    private void SetText(string str, bool isEnglish)
+    {
+        string[] KeyOrText = str.Split(_stringsKey);
+
+        Translate[] tempTranslate = isEnglish ? _englishLaunguage : _translate;
+
+        if (KeyOrText.Length != 2)
         {
             return;
         }
@@ -70,37 +82,39 @@ public class TranslateManager : MonoBehaviour
         string key = KeyOrText[0];
         string text = KeyOrText[1];
 
-        int StartPositionKey = (int)key[0] * MaximumKeyOneSimbol;
-        for(int num = StartPositionKey; num < StartPositionKey + MaximumKeyOneSimbol && num < translate.Length; num++)
+        int StartPositionKey = (int)key[0] * _MaximumKeyOneSimbol;
+        for(int num = StartPositionKey; num < StartPositionKey + _MaximumKeyOneSimbol && num < tempTranslate.Length; num++)
         {
-            if (translate[num].key == null || translate[num].key == "")
+            if (tempTranslate[num].key == null || _translate[num].key == "")
             {
-                translate[num].key = key;
-                translate[num].text = text;
+                tempTranslate[num].key = key;
+                tempTranslate[num].text = text;
                 return;
             }
         }
     }
 
-    public string GetText(string key, string defoltText)
+    public string GetText(string key, bool isEnglish)
     {
+        Translate[] tempTranslate = isEnglish ? _englishLaunguage : _translate;
         string text = null;
-        int StartPositionKey = (int)key[0] * MaximumKeyOneSimbol;
-        for (int num = StartPositionKey; num < StartPositionKey + MaximumKeyOneSimbol && num < translate.Length; num++)
+        int StartPositionKey = (int)key[0] * _MaximumKeyOneSimbol;
+        for (int num = StartPositionKey; num < StartPositionKey + _MaximumKeyOneSimbol && num < tempTranslate.Length; num++)
         {
-            if (key == translate[num].key)
+            if (key == tempTranslate[num].key)
             {
-                text = translate[num].text;
+                text = tempTranslate[num].text;
                 break;
             }
         }
         if(text == null)
         {
-            return defoltText;
+            Debug.Log($"Error. Not find text {key} key");
+            return null;
         }
         return text;
     }
     public string GetText(string key) {
-        return GetText(key, "Error");
+        return GetText(key, false) == null ? GetText(key, true) : GetText(key, false);
     }
 }
