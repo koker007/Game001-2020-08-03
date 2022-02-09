@@ -1146,7 +1146,6 @@ GameObject:
   m_Component:
   - component: {fileID: 140120033}
   - component: {fileID: 140120031}
-  - component: {fileID: 140120032}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -1179,7 +1178,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 30
+  field of view: 10
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -1197,14 +1196,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &140120032
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 140120030}
-  m_Enabled: 1
 --- !u!4 &140120033
 Transform:
   m_ObjectHideFlags: 0
@@ -2511,6 +2502,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 230262151}
+  - component: {fileID: 230262152}
   m_Layer: 5
   m_Name: DortorV2
   m_TagString: Untagged
@@ -2538,6 +2530,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: -890}
   m_Pivot: {x: 0.5, y: 0}
+--- !u!95 &230262152
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230262150}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bf7434eb4bca3e447892388aae7b11fc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &234201272
 GameObject:
   m_ObjectHideFlags: 0
@@ -3114,8 +3125,8 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1200, y: 2000}
-  m_Pivot: {x: 1, y: 0}
+  m_SizeDelta: {x: 2000, y: 2500}
+  m_Pivot: {x: 0, y: 0.1}
 --- !u!114 &250414231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3163,7 +3174,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c219d1909f24ef47bc2376b8f5fc2b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeTexture: {x: 1200, y: 2000}
+  sizeTexture: {x: 2000, y: 2500}
+  emotion: 1
+  CamAngle: 20
+  CamOffset: {x: 0, y: 0}
   rawImage: {fileID: 0}
   render: {fileID: 0}
 --- !u!1 &269831947
@@ -5719,7 +5733,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 442022549}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.769, z: 10}
+  m_LocalPosition: {x: 0, y: -3, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 72264015}
@@ -7294,7 +7308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &554453768
 RectTransform:
   m_ObjectHideFlags: 0

@@ -41,7 +41,7 @@ public class DoctorScene : MonoBehaviour
             anim.SetInteger("Emotion", 1);
         }
         else if (emotion == Emotions.Sad) {
-            anim.SetInteger("emotion", 2);
+            anim.SetInteger("Emotion", 2);
         }
     }
 
@@ -59,5 +59,22 @@ public class DoctorScene : MonoBehaviour
         main.render = main.camera.targetTexture;
 
         return renderNew;
+    }
+
+    //Установить угл обзора
+    public static void SetViewAngle(float angle) {
+
+        float angleNew = angle;
+
+        if (angleNew < 1) angleNew = 1;
+        else if (angleNew > 45) angleNew = 45;
+
+        main.camera.fieldOfView = angleNew;
+
+    }
+
+    //Установить позицию камеры
+    public static void SetCamOffset(Vector2 offset) {
+        main.camera.gameObject.transform.localPosition = new Vector3(offset.x, offset.y, 0);
     }
 }

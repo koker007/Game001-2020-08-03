@@ -7,6 +7,12 @@ public class DoctorIni : MonoBehaviour
 {
     [SerializeField]
     Vector2Int sizeTexture = new Vector2Int(100, 100);
+    [SerializeField]
+    DoctorScene.Emotions emotion = DoctorScene.Emotions.Normal;
+    [SerializeField]
+    float CamAngle = 20;
+    [SerializeField]
+    Vector2 CamOffset = new Vector2(0,0);
 
     [Header("Other")]
     [SerializeField]
@@ -24,6 +30,11 @@ public class DoctorIni : MonoBehaviour
 
         rawImage.texture = DoctorScene.GetRender(sizeTexture.x, sizeTexture.y);
         sizeTextureOld = sizeTexture;
+
+        //Переместить камеру в связи с заданными параметрами
+        DoctorScene.SetViewAngle(CamAngle);
+        DoctorScene.SetCamOffset(CamOffset);
+
     }
 
     // Start is called before the first frame update
