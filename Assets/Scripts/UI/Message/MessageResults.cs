@@ -19,7 +19,7 @@ public class MessageResults : MonoBehaviour
 
     public void OnEnable()
     {
-        ScoreText.text = "Score:\n" + Gameplay.main.score.ToString();
+        ScoreText.text = $"{TranslateManager.main.GetText("Score")}:\n{Gameplay.main.score.ToString()}";
         //Gameplay.main.CountStars(ref StarsImage);
 
         float volume = Settings.main.VolumeMusicFrom0To1;

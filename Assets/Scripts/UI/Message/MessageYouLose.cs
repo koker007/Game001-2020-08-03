@@ -29,7 +29,7 @@ public class MessageYouLose : MonoBehaviour
             Destroy(gameObject);
         }
 
-        ScoreText.text = "Score:\n" + Gameplay.main.score.ToString();
+        ScoreText.text = $"{TranslateManager.main.GetText("Score")}:\n{Gameplay.main.score.ToString()}";
         if (Gameplay.main.adWatchedCount < 3)
         {
             showAdButton.SetActive(true);
