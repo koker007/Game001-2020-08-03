@@ -42,6 +42,33 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    private void MoveLevel(int startPos, int dif)
+    {
+        if(dif > 0)
+        {
+            for (int i = _levelsObject.levels.Count - 1; i >= startPos; i--)
+            {
+                try
+                {
+                    _levelsObject.levels[i + dif] = new LevelsScript.Level(_levelsObject.levels[i]);
+                }
+                catch { }
+            }
+        }
+        else
+        {
+
+            for (int i = startPos; i < _levelsObject.levels.Count; i++)
+            {
+                try
+                {
+                    _levelsObject.levels[i + dif] = new LevelsScript.Level(_levelsObject.levels[i]);
+                }
+                catch { }
+            }
+        }
+    }
+
     //генерация уровня
     public LevelsScript.Level GenerateLevel(int NumLevel)
     {
