@@ -349,10 +349,10 @@ public class GlobalMessage : MonoBehaviour
     /// <summary>
     /// ¬ыбрать уровень и показать туториал
     /// </summary>
-    static public void LevelTutorial(float TutoialNum)
+    static public void LevelTutorial(int numLevel, string tutorialName, TutorialController.Tutorials tutorialType, int tutorialTypeNum, int tutorialNum)
     {
         MessageLevelTutorial tutorial = SendMessage(main.PrefabLVLTutorial).GetComponent<MessageLevelTutorial>();
-        tutorial.Inicializate(TutoialNum);
+        tutorial.Inicializate(numLevel, tutorialName, tutorialType, tutorialTypeNum, tutorialNum);
     }
 
     /// <summary>

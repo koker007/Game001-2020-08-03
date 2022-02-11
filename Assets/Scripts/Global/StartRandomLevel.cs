@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class StartRandomLevel : MonoBehaviour
 {
+    #if UNITY_EDITOR
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.L))
@@ -18,4 +19,5 @@ public class StartRandomLevel : MonoBehaviour
             GlobalMessage.OpenLevelRedactor();
         }
     }
+    #endif
 }
