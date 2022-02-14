@@ -34,7 +34,7 @@ public class DoctorIni : MonoBehaviour
         //Переместить камеру в связи с заданными параметрами
         DoctorScene.SetViewAngle(CamAngle);
         DoctorScene.SetCamOffset(CamOffset);
-
+        DoctorScene.SetEmotion(emotion);
     }
 
     // Start is called before the first frame update
@@ -45,7 +45,9 @@ public class DoctorIni : MonoBehaviour
 
     Vector2Int sizeTextureOld = new Vector2Int(0,0);
     void ReSize() {
-        if (sizeTexture == sizeTextureOld) return;
+        if (sizeTexture == sizeTextureOld &&
+            emotion == DoctorScene.main.emotion)
+            return;
 
         iniRawImage();
 

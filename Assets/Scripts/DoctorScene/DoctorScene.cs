@@ -6,6 +6,14 @@ public class DoctorScene : MonoBehaviour
 {
     public static DoctorScene main;
 
+
+    [SerializeField]
+    GameObject objBottle;
+    [SerializeField]
+    GameObject objDocument;
+    [SerializeField]
+    GameObject objMask;
+
     [SerializeField]
     RenderTexture render;
     [SerializeField]
@@ -18,6 +26,7 @@ public class DoctorScene : MonoBehaviour
         Normal,
         Sad
     }
+    public Emotions emotion;
 
     // Start is called before the first frame update
     void Start()
@@ -33,15 +42,28 @@ public class DoctorScene : MonoBehaviour
     }
 
     //Поставить новую эмоцию у доктора
-    public void SetEmotion(Emotions emotion) {
-        if (emotion == Emotions.Happy) {
-            anim.SetInteger("Emotion", 0);
+    public static void SetEmotion(Emotions emotionNew) {
+        if (main == null) return;
+
+        main.emotion = emotionNew;
+
+        if (main.emotion == Emotions.Happy) {
+            main.objBottle.SetActive(true);
+            main.objDocument.SetActive(false);
+            main.objMask.SetActive(false);
+            main.anim.SetInteger("emotion", 3);
         }
-        else if (emotion == Emotions.Normal) {
-            anim.SetInteger("Emotion", 1);
+        else if (main.emotion == Emotions.Normal) {
+            main.objBottle.SetActive(true);
+            main.objDocument.SetActive(true);
+            main.objMask.SetActive(true);
+            main.anim.SetInteger("emotion", 1);
         }
-        else if (emotion == Emotions.Sad) {
-            anim.SetInteger("Emotion", 2);
+        else if (main.emotion == Emotions.Sad) {
+            main.objBottle.SetActive(false);
+            main.objDocument.SetActive(false);
+            main.objMask.SetActive(true);
+            main.anim.SetInteger("emotion", 2);
         }
     }
 
@@ -52,11 +74,19 @@ public class DoctorScene : MonoBehaviour
         RenderTexture renderNew = new RenderTexture(wight, height, 1);
 
         renderNew.anisoLevel = 0;
-        renderNew.antiAliasing = 0;
+        renderNew.antiAliasing = 1;
         renderNew.filterMode = FilterMode.Trilinear;
 
-        main.camera.targetTexture = renderNew;
-        main.render = main.camera.targetTexture;
+        renderNew.depth = 24;
+        renderNew.autoGenerateMips = true;
+        renderNew.useMipMap = true;
+
+        //В начале может не быть
+        if (main != null)
+        {
+            main.camera.targetTexture = renderNew;
+            main.render = main.camera.targetTexture;
+        }
 
         return renderNew;
     }
@@ -69,12 +99,17 @@ public class DoctorScene : MonoBehaviour
         if (angleNew < 1) angleNew = 1;
         else if (angleNew > 45) angleNew = 45;
 
+        //Если не проинициализированно выходим
+        if (main == null) return;
+
         main.camera.fieldOfView = angleNew;
 
     }
 
     //Установить позицию камеры
     public static void SetCamOffset(Vector2 offset) {
+        if (main == null) return;
+
         main.camera.gameObject.transform.localPosition = new Vector3(offset.x, offset.y, 0);
     }
 }
