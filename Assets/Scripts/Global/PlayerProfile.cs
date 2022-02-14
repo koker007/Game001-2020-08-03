@@ -97,6 +97,9 @@ public class PlayerProfile : MonoBehaviour
     const string strShopMixed = "ShopMixed";
     const int startShopMixed = 3;
 
+    const string strDayVipCalendarTypeGift = "DayVipCalendarTypeGift";
+    const string strDayVipCalendarCountGift = "DayVipCalendarCountGift";
+
     /// <summary>
     /// количество игровой валюты
     /// </summary>
@@ -204,7 +207,7 @@ public class PlayerProfile : MonoBehaviour
 
         if (Settings.main.DeveloperTesting) {
             GoldAmount = 100;
-            ProfilelevelOpen = 200;
+            ProfilelevelOpen = 100;
             Health.Amount = 100;
 
             ShopInternal.Amount = 10;
@@ -810,7 +813,28 @@ public class PlayerProfile : MonoBehaviour
 
         SaveToGoogle();
     }
+    //сохранить генерацию календар€
+    public void SaveCalendar()
+    {
+        for(int i = 0; i < GiftCalendar.main.days.Count; i++)
+        {
+            PlayerPrefs.SetInt($"{strDayVipCalendarCountGift}:{i}", GiftCalendar.main.days[i].RetCount());
+            PlayerPrefs.SetInt($"{strDayVipCalendarTypeGift}:{i}", (int)GiftCalendar.main.days[i].RetTypeItem());
+        }
+    }
 
+    //загрузить генерацию календар€
+    public void LoadCalendar()
+    {
+        for (int i = 0; i < GiftCalendar.main.days.Count; i++)
+        {
+            int count = PlayerPrefs.GetInt($"{strDayVipCalendarCountGift}:{i}");
+            int type = PlayerPrefs.GetInt($"{strDayVipCalendarTypeGift}:{i}");
+            GiftCalendar.main.days[i].SetValues((GiftCalendar.TypeItem)type, count);
+        }
+    }
+
+    //выдать подарок
     public void GiftItem(ref Item item, int num)
     {
         item.Amount += num;
@@ -834,7 +858,7 @@ public class PlayerProfile : MonoBehaviour
         }
 
         //“еперь к стартовой дате прибавл€ем мес€ц
-        dateEndNew = dateEndNew.AddMonths(1);
+        dateEndNew = dateEndNew.AddDays(30);
 
         //«апоминаем дату подписки
         subscriptionDateEnd = dateEndNew;

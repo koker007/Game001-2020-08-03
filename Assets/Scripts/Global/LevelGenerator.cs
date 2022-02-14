@@ -25,7 +25,7 @@ public class LevelGenerator : MonoBehaviour
     private void Start()
     {
         main = this;
-        //GenerateRangeLevel(101, 150);
+        //GenerateRangeLevel(900, 1000);
     }
     /// <summary>
     /// запускается один раз, генерирует уровни и сохраняет их в файл, может перезаписать существующие уровни
@@ -36,9 +36,36 @@ public class LevelGenerator : MonoBehaviour
     {
         for (int i = start; i <= end; i++)
         {
-            LevelsScript.Level lev = new LevelsScript.Level(GenerateLevelV2(i));
+            LevelsScript.Level lev = new LevelsScript.Level(GenerateLevel(i));
             lev.ConvertTwoCellsToOneCells();
             _levelsObject.levels[i] = new LevelsScript.Level(lev);
+        }
+    }
+
+    private void MoveLevel(int startPos, int dif)
+    {
+        if(dif > 0)
+        {
+            for (int i = _levelsObject.levels.Count - 1; i >= startPos; i--)
+            {
+                try
+                {
+                    _levelsObject.levels[i + dif] = new LevelsScript.Level(_levelsObject.levels[i]);
+                }
+                catch { }
+            }
+        }
+        else
+        {
+
+            for (int i = startPos; i < _levelsObject.levels.Count; i++)
+            {
+                try
+                {
+                    _levelsObject.levels[i + dif] = new LevelsScript.Level(_levelsObject.levels[i]);
+                }
+                catch { }
+            }
         }
     }
 

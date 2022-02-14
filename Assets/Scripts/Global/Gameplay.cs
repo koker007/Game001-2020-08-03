@@ -93,6 +93,8 @@ public class Gameplay : MonoBehaviour
         for (int x = 0; x < colorsCount.Length; x++) {
             colorsCount[x] = 0;
         }
+
+        TutorialController.main.CheckLevelTutorial(levelSelect);
     }
 
     //Список комбинаций которые получились благодаря действиям игрока и ждут пост проверок
@@ -133,6 +135,7 @@ public class Gameplay : MonoBehaviour
         {
             //Прибавляем ход
             movingCount++;
+            TutorialController.main.CheckNextTutorialField(levelSelect, (int)movingCount/2);
 
             //Если уровень с врагом
             if (level.PassedWithEnemy)

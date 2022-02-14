@@ -8,20 +8,18 @@ public class MessageLevelTutorial : MonoBehaviour
 {
     [SerializeField] private TextTranslator _tutorialText;
     [SerializeField] private Animator _tutorialAnimation;
-    private MessageCTRL _MessageController;
 
-    private float _tutorialNum;
+    private int _tutorialTypeNum;
+    private int _tutorialNum;
+    private int _numLevel;
 
-    private void Awake()
+    public void Inicializate(int numLevel, string tutorialName, TutorialController.Tutorials tutorialType, int tutorialTypeNum, int tutorialNum)
     {
-        _MessageController = GetComponent<MessageCTRL>();
-    }
-
-    public void Inicializate(float tutorialNum)
-    {
+        _numLevel = numLevel;
+        _tutorialTypeNum = tutorialTypeNum;
         _tutorialNum = tutorialNum;
-        SetTextKey("Tutorial" + tutorialNum.ToString());
-        SetAnimation((int)(Mathf.Round(tutorialNum * 10)));
+        SetTextKey($"Tutorial{tutorialName}_{tutorialNum}");
+        SetAnimation(((int)tutorialType + 1) * 10 + tutorialNum);
     }
 
     public void SetTextKey(string value)
@@ -37,6 +35,6 @@ public class MessageLevelTutorial : MonoBehaviour
 
     public void NextTutorial()
     {
-        TutorialController.main.CheckNextTutorial(_tutorialNum);
+        TutorialController.main.CheckNextTutorial(_numLevel, _tutorialTypeNum, _tutorialNum);
     }
 }

@@ -104,10 +104,12 @@ public class LevelRedactor : MonoBehaviour
         LoadLevel();
     }
 
+    #if UNITY_EDITOR
     public void Update()
     {
         CheckInput();
     }
+    #endif
 
     public void SaveLevel()
     {

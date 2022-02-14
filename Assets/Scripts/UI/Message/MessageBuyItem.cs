@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class MessageBuyItem : MonoBehaviour
 {
     [SerializeField]
+    MessageCTRL messageCTRL;
+
+    [SerializeField]
     int DealPrice = 1;
     [SerializeField]
     int DealResult = 1;
@@ -61,7 +64,8 @@ public class MessageBuyItem : MonoBehaviour
             FromPrice.text = "-"+ System.Convert.ToString(DealPrice);
         }
 
-        TargetPrice.text = "+" + System.Convert.ToString(DealResult);
+        if(TargetPrice != null)
+            TargetPrice.text = "+" + System.Convert.ToString(DealResult);
 
         if (typeBuy == TypeBuy.internalObj)
         {
@@ -89,34 +93,34 @@ public class MessageBuyItem : MonoBehaviour
 
     public void ButtonClickBuy() {
 
-        bool NeedBuyAntigen = false;
+        bool NeedBuyGold = false;
 
         //Если хватает золота
         if (typeBuy == TypeBuy.internalObj) {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopInternal)) {
-                NeedBuyAntigen = true;
+                NeedBuyGold = true;
             }
         }
         else if (typeBuy == TypeBuy.rosket2x) {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopRocket)) {
-                NeedBuyAntigen = true;
+                NeedBuyGold = true;
             }
         }
         else if (typeBuy == TypeBuy.bomb) {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopBomb)) {
-                NeedBuyAntigen = true;
+                NeedBuyGold = true;
             }
         }
         else if (typeBuy == TypeBuy.Color5) {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopColor5)) {
-                NeedBuyAntigen = true;
+                NeedBuyGold = true;
             }
         }
         else if (typeBuy == TypeBuy.mixed)
         {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopMixed))
             {
-                NeedBuyAntigen = true;
+                NeedBuyGold = true;
             }
         }
         //Кнопка покупки за реал
@@ -127,27 +131,38 @@ public class MessageBuyItem : MonoBehaviour
         }
         else if (health)
         {
+            int healthMax = 5;
+
             //если здоровья больше 5 выходим
             if (PlayerProfile.main.Health.Amount >= 5) {
                 return;
             }
 
-            if (PlayerProfile.main.GoldAmount < PlayerProfile.main.Health.Cost)
+            //Если количества золота больше либо равно стоимости
+            if (PlayerProfile.main.GoldAmount >= PlayerProfile.main.Health.Cost)
             {
                 PlayerProfile.main.GoldAmount -= PlayerProfile.main.Health.Cost;
                 PlayerProfile.main.Health.Amount++;
 
                 MenuWorld.main.SetText();
+
+                //Если здоровья стало максимум
+                if (PlayerProfile.main.Health.Amount >= healthMax) {
+                    messageCTRL.ClickButtonClose();
+                }
             }
             else {
-                NeedBuyAntigen = true;
+                NeedBuyGold = true;
             }
         }
 
         //Если не хватило голды на покупку, то открываем окно о покупке голды за реал
-        if (NeedBuyAntigen) {
-
+        if (NeedBuyGold) {
+            messageCTRL.ClickButtonClose();
+            GlobalMessage.ShopBuyGold();
         }
+
+        PlayerProfile.main.Save();
     }
 
 }

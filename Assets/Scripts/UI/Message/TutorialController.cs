@@ -8,11 +8,40 @@ public class TutorialController : MonoBehaviour
     public static TutorialController main;
 
     [System.Serializable]
+    public enum Tutorials
+    {
+        Start,
+        Super,
+        Combinations,
+        Rock,
+        Panel,
+        Box,
+        Ice,
+        Mold,
+        Portal,
+        Dispencer,
+        Blocker,
+        Walls,
+        Enemy,
+        Ultimative
+    }
+
+    [System.Serializable]
+    public class TypeTutorial
+    {
+        public int length;
+        public Tutorials _tutorialType;
+    }
+
+    [System.Serializable]
     public class LevelTutorial
     {
         public int _levelNum;
-        public float[] _tutorialNumMessages = new float[0];
+        public TypeTutorial[] _tutorialTypes = new TypeTutorial[0];
+        public int[] _tutorialsFieldID = new int[0];
     }
+
+    [SerializeField] private GameObject[] _tutorialsField = new GameObject[0];
 
     [SerializeField] private LevelTutorial[] _tutorials = new LevelTutorial[0];
 
@@ -23,10 +52,13 @@ public class TutorialController : MonoBehaviour
     
     public bool CheckLevelTutorial(int levelNum)
     {
+        CloseAllTutorialField();
         int levelID = 0;
         if (FindIdLevel(ref levelID, levelNum))
         {
-            GlobalMessage.LevelTutorial(_tutorials[levelID]._tutorialNumMessages[0]);
+            GlobalMessage.LevelTutorial(levelID, _tutorials[levelID]._tutorialTypes[0]._tutorialType.ToString(), _tutorials[levelID]._tutorialTypes[0]._tutorialType, 0, 1);
+            if(_tutorials[levelID]._tutorialsFieldID.Length > 0)
+                _tutorialsField[_tutorials[levelID]._tutorialsFieldID[0]].SetActive(true);
             return true;
         }
         else
@@ -49,21 +81,52 @@ public class TutorialController : MonoBehaviour
         return false;
     }
     //запускает следующий туториал если найдет его
-    public bool CheckNextTutorial(float tutorialNum)
+    public bool CheckNextTutorial(int levelID, int tutorialTypeNum, int tutorialNum)
     {
-        int levelID = 0;
-        if (FindIdLevel(ref levelID, (int)tutorialNum))
+        if(_tutorials[levelID]._tutorialTypes[tutorialTypeNum].length > tutorialNum)
         {
-            for (int i = 0; i < _tutorials[levelID]._tutorialNumMessages.Length; i++)
-            {
-                //Если найден туториал и у выбранного уровня есть следующий туториал вызываем его
-                if (tutorialNum == _tutorials[levelID]._tutorialNumMessages[i] && i + 1 < _tutorials[levelID]._tutorialNumMessages.Length)
-                {
-                    GlobalMessage.LevelTutorial(_tutorials[levelID]._tutorialNumMessages[i + 1]);
-                    return true;
-                }
-            }
+            tutorialNum++;
+            GlobalMessage.LevelTutorial(levelID, _tutorials[levelID]._tutorialTypes[tutorialTypeNum]._tutorialType.ToString(), _tutorials[levelID]._tutorialTypes[tutorialTypeNum]._tutorialType, tutorialTypeNum, tutorialNum);
+            return true;
+        }
+        else if (_tutorials[levelID]._tutorialTypes.Length - 1 > tutorialTypeNum)
+        {
+            tutorialTypeNum++;
+            GlobalMessage.LevelTutorial(levelID, _tutorials[levelID]._tutorialTypes[tutorialTypeNum]._tutorialType.ToString(), _tutorials[levelID]._tutorialTypes[tutorialTypeNum]._tutorialType, tutorialTypeNum, tutorialNum);
+            return true;
         }
         return false;
+    }
+
+    public bool CheckNextTutorialField(int levelNum, int tutorialFieldNum)
+    {
+        int levelID = 0;
+        if (FindIdLevel(ref levelID, levelNum))
+        {
+            foreach (int tutID in _tutorials[levelID]._tutorialsFieldID)
+            {
+                _tutorialsField[tutID].SetActive(false);
+            }
+            if (_tutorials[levelID]._tutorialsFieldID.Length <= tutorialFieldNum)
+            {
+                return false;
+            }
+            else
+            {
+                _tutorialsField[_tutorials[levelID]._tutorialsFieldID[tutorialFieldNum]].SetActive(true);
+                return true;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public void CloseAllTutorialField()
+    {
+        foreach (GameObject tut in _tutorialsField)
+        {
+            tut.SetActive(false);
+        }
     }
 }

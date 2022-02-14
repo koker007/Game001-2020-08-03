@@ -214,6 +214,32 @@ MonoBehaviour:
   - {fileID: 5419753135138827445, guid: 0ff3c98b099806d41b96916b15959df6, type: 3}
   - {fileID: 21300000, guid: ab5113cc7b45e8c44ace1b0450d35e71, type: 3}
   - {fileID: 7227928216454086663, guid: 0ff3c98b099806d41b96916b15959df6, type: 3}
+--- !u!114 &5940965018212061034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3772681117107857762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: MessageCalendarHead
+--- !u!114 &8495226352903994331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9093387407572547815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: MessageCalendarButtonTake
 --- !u!1 &9107056920921131830
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,6 +251,7 @@ GameObject:
   - component: {fileID: 8422878487838670803}
   - component: {fileID: 6146725814605112043}
   - component: {fileID: 1398455177479316362}
+  - component: {fileID: 3506395727204010428}
   m_Layer: 5
   m_Name: CalendarText
   m_TagString: Untagged
@@ -293,6 +320,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Days in a row in the game:'
+--- !u!114 &3506395727204010428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9107056920921131830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ea9ced9fddeab4892ef1519db13231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: MessageCalendarDaysEnd
 --- !u!1001 &6021637270843342300
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -639,8 +679,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7478902612445323561, guid: 6b09534c2d1526a4fadec986dd22fea9, type: 3}
   m_PrefabInstance: {fileID: 6021637270843342300}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3772681117107857762 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7478902613490472126, guid: 6b09534c2d1526a4fadec986dd22fea9, type: 3}
+  m_PrefabInstance: {fileID: 6021637270843342300}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8088959947200370298 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2580814406353103782, guid: 6b09534c2d1526a4fadec986dd22fea9, type: 3}
+  m_PrefabInstance: {fileID: 6021637270843342300}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9093387407572547815 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3288494806841525563, guid: 6b09534c2d1526a4fadec986dd22fea9, type: 3}
   m_PrefabInstance: {fileID: 6021637270843342300}
   m_PrefabAsset: {fileID: 0}

@@ -115,7 +115,7 @@ public class LevelsScript : MonoBehaviour
     }
     /// <summary>
     /// õğàíèò äàííûå î óğîâíå 
-    /// ÓÄÀËßÒÜ ÏÎËß ÍÅËÜÇß ÈÍÀ×Å ÑËÅÒßÒ ÓĞÎÂÍÈ
+    /// ÓÄÀËßÒÜ ÈËÈ ÏÅĞÅÈÌÅÍÎÂÛÂÀÒÜ ÏÎËß ÍÅËÜÇß ÈÍÀ×Å ÑËÅÒßÒ ÓĞÎÂÍÈ
     /// </summary>
     [System.Serializable]
     public class Level
@@ -437,6 +437,7 @@ public class LevelsScript : MonoBehaviour
     }
 
     private Level level;
+    private Level generatedLevel = new Level();
     private const int mainLevelsCount = 1000;
     public Level[] Levels = new Level[mainLevelsCount];
 
@@ -477,14 +478,16 @@ public class LevelsScript : MonoBehaviour
     /// </summary>
     public Level ReturnLevel()
     {
-        if (_levelsObject.levels[Gameplay.main.levelSelect].cellsArray.Length > 0)
+        if (Gameplay.main.levelSelect < _levelsObject.levels.Count && _levelsObject.levels[Gameplay.main.levelSelect].cellsArray.Length > 0)
         {
             _levelsObject.levels[Gameplay.main.levelSelect].ConvertOneCellToTwoCells();
             return _levelsObject.levels[Gameplay.main.levelSelect];
         }
         else 
         {
-            return LevelGenerator.main.GenerateNewLevel(Gameplay.main.levelSelect);
+            if (generatedLevel.NumLevel != Gameplay.main.levelSelect)
+                generatedLevel = new Level(LevelGenerator.main.GenerateNewLevel(Gameplay.main.levelSelect));
+            return generatedLevel;
         }
     }
 }

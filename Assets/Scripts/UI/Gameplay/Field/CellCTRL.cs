@@ -800,12 +800,11 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     /// Расчет приоритера данной ячейки
     /// </summary>
     public void CalcMyPriority() {
-
-        const int PriorityBox = 20; //Приоритет ящика
-        const int PriorityRock = 10;
-        const int PriorityMold = 5; //приоритет плесени
-        const int PriorityIce = 5;
-        const int PriorityPanel = 5; //Приоритет отсутствия панели
+        int PriorityBox = 80; //Приоритет ящика
+        int PriorityRock = 80;
+        int PriorityMold = 150; //приоритет плесени
+        int PriorityIce = 150;
+        int PriorityPanel = 150; //Приоритет отсутствия панели
 
 
         MyPriority = GetPriorityNow();
@@ -819,12 +818,40 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             //ящика
             if (Box > 0)
             {
-                result += (5 - Box) * PriorityBox; //Чем меньше жизней, тем желательнее ее сломать
+                result += (int)(((5 - Box) * 0.1f + 1) * PriorityBox); //Чем меньше жизней, тем желательнее ее сломать
+
+                if (LevelsScript.main.ReturnLevel().PassedWithBox)
+                {
+                    result *= 2;
+                }
+
+                try
+                {
+                    if (myField.cellCTRLs[pos.x, pos.y - 1].cellInternal == null && myField.cellCTRLs[pos.x, pos.y - 1].Box == 0)
+                    {
+                        result = (int)(result * 3f);
+                    }
+                }
+                catch { }
             }
             //Камня
             if (rock > 0) {
-                result += (5 - rock) * PriorityRock; //Чем меньше жизней, тем желательнее ее сломать
+                result += (int)(((5 - rock) * 0.1f + 1) * PriorityRock); //Чем меньше жизней, тем желательнее ее сломать
 
+                if (LevelsScript.main.ReturnLevel().PassedWithRock)
+                {
+                    result *= 2;
+                }
+
+                try
+                {
+                    if (myField.cellCTRLs[pos.x, pos.y - 1].cellInternal == null && myField.cellCTRLs[pos.x, pos.y - 1].Box == 0)
+                    {
+                        result = (int)(result * 3f);
+                    }
+                }
+                catch { }
+                /*
                 //проверка соседей
                 //Слева
                 if (pos.x - 1 >= 0 &&
@@ -854,53 +881,60 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 {
                     result += 5;
                 }
+                */
             }
             //Плесени
-            if (mold > 0)
+            if (mold > 0 && LevelsScript.main.ReturnLevel().PassedWithMold)
             {
-                result += (5 - mold) * PriorityMold; //Чем меньше жизней, тем желательнее ее сломать
+                result += (int)((mold * 0.1f + 1) * PriorityMold); //Чем меньше жизней, тем желательнее ее сломать
             }
             //Лед
-            if (ice > 0) {
-                result += ice * PriorityIce; //Чем больше жизней тем желательнее сломать
+            if (ice > 0 && LevelsScript.main.ReturnLevel().PassedWithIce) {
+                result += (int)((ice * 0.1f + 1) * PriorityIce); //Чем больше жизней тем желательнее сломать
             }
             //отсутствия панели
-            if (!panel)
+            if (!panel && LevelsScript.main.ReturnLevel().PassedWithPanel)
             {
                 result += PriorityPanel;
             }
 
-            /////////////////////////////////////////////
-            //Умножаем за цель миссии на 2.5
-            //ящики
-            if (Box > 0 && LevelsScript.main.ReturnLevel().PassedWithBox)
+            //проверка соседей
+            //Слева
+            try
             {
-                result *= pos.y + 1;
-                result *= 3;
+                if (myField.cellCTRLs[pos.x - 1, pos.y] == null)
+                {
+                    result = (int)(result * 1.2f);
+                }
             }
-            //панель
-            if (rock > 0 && LevelsScript.main.ReturnLevel().PassedWithRock)
+            catch { result = (int)(result * 1.2f); }
+            //справа
+            try
             {
-                result *= pos.y + 1;
-                result *= 3;
+                if (myField.cellCTRLs[pos.x + 1, pos.y] == null)
+                {
+                    result = (int)(result * 1.2f);
+                }
             }
-            //mold
-            if (mold > 0 && LevelsScript.main.ReturnLevel().PassedWithMold)
+            catch { result = (int)(result * 1.2f); }
+            //сверху
+            try
             {
-                result *= pos.y + 1;
-                result *= 3;
+                if (myField.cellCTRLs[pos.x, pos.y + 1] == null)
+                {
+                    result = (int)(result * 1.2f);
+                }
             }
-            //панель
-            if (!panel && LevelsScript.main.ReturnLevel().PassedWithPanel) {
-                result *= pos.y + 1;
-                result *= 3;
+            catch { result = (int)(result * 1.2f); }
+            //снизу
+            try
+            {
+                if (myField.cellCTRLs[pos.x, pos.y - 1] == null)
+                {
+                    result = (int)(result * 1.2f);
+                }
             }
-
-            //Освободить верх
-            if (pos.y + 1 == myField.cellCTRLs.GetLength(1)) {
-                result *= 5;
-            }
-
+            catch { result = (int)(result * 1.2f); }
             return result;
         }
 

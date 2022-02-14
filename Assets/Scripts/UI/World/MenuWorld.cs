@@ -174,7 +174,10 @@ public class MenuWorld : MonoBehaviour
 
 
     public void ClickButtonHealth() {
-        GlobalMessage.ShopBuyHealth();
+        if(PlayerProfile.main.Health.Amount < 5)
+        {
+            GlobalMessage.ShopBuyHealth();
+        }
     }
     public void ClickButtonTicket() {
         GlobalMessage.Tickets();

@@ -35,7 +35,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: TutorialNum
-    m_EventTreshold: 31
+    m_EventTreshold: 51
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5917630886825963474}
   m_Solo: 0
@@ -57,7 +57,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tutorial_1_3
+  m_Name: TutorialStart_2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -86,7 +86,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: TutorialNum
-    m_EventTreshold: 511
+    m_EventTreshold: 91
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1295845433909920609}
   m_Solo: 0
@@ -111,7 +111,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: TutorialNum
-    m_EventTreshold: 901
+    m_EventTreshold: 121
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3158157904994197330}
   m_Solo: 0
@@ -133,7 +133,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tutorial_10_1
+  m_Name: TutorialIce_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -159,7 +159,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tutorial_3_1
+  m_Name: TutorialPanel_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -185,7 +185,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tutorial_3_2
+  m_Name: TutorialCombinations_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -239,7 +239,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: TutorialNum
-    m_EventTreshold: 12
+    m_EventTreshold: 41
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 657594116242784279}
   m_Solo: 0
@@ -261,7 +261,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tutorial_2_2
+  m_Name: TutorialSuper_2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -290,7 +290,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: TutorialNum
-    m_EventTreshold: 101
+    m_EventTreshold: 71
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6285287041421074191}
   m_Solo: 0
@@ -356,49 +356,49 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 5911519432926614492}
-    m_Position: {x: 530, y: -210, z: 0}
+    m_Position: {x: 470, y: -200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2721334914784430083}
     m_Position: {x: 250, y: 110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 657594116242784279}
-    m_Position: {x: 530, y: -160, z: 0}
+    m_Position: {x: -20, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7853072067061571862}
-    m_Position: {x: 530, y: -110, z: 0}
+    m_Position: {x: 470, y: -150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4422965141621942562}
-    m_Position: {x: 530, y: -30, z: 0}
+    m_Position: {x: 630, y: 50, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3904288430462036152}
-    m_Position: {x: 530, y: 20, z: 0}
+    m_Position: {x: 630, y: 100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5917630886825963474}
-    m_Position: {x: 530, y: 120, z: 0}
+    m_Position: {x: -20, y: 300, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5705924255711826706}
-    m_Position: {x: 530, y: 180, z: 0}
+    m_Position: {x: 630, y: 150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2143706164830579095}
-    m_Position: {x: 530, y: 260, z: 0}
+    m_Position: {x: -20, y: 360, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4429671778109151694}
-    m_Position: {x: 530, y: 410, z: 0}
+    m_Position: {x: -20, y: 480, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1295845433909920609}
-    m_Position: {x: 530, y: 470, z: 0}
+    m_Position: {x: 470, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3158157904994197330}
-    m_Position: {x: 530, y: 650, z: 0}
+    m_Position: {x: 470, y: 420, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6691204943795069520}
-    m_Position: {x: 530, y: 590, z: 0}
+    m_Position: {x: 470, y: 360, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6285287041421074191}
-    m_Position: {x: 530, y: 330, z: 0}
+    m_Position: {x: -20, y: 420, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4454321606350399802}
-    m_Position: {x: 530, y: 530, z: 0}
+    m_Position: {x: 470, y: 300, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -444,7 +444,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: TutorialNum
-    m_EventTreshold: 751
+    m_EventTreshold: 111
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6691204943795069520}
   m_Solo: 0
@@ -469,7 +469,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: TutorialNum
-    m_EventTreshold: 51
+    m_EventTreshold: 61
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2143706164830579095}
   m_Solo: 0
@@ -519,7 +519,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tutorial_1_2
+  m_Name: TutorialRock_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -545,7 +545,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tutorial_Portal
+  m_Name: TutorialPortal_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -571,7 +571,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tutorial_5_1
+  m_Name: TutorialBox_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -625,7 +625,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: TutorialNum
-    m_EventTreshold: 13
+    m_EventTreshold: 12
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7853072067061571862}
   m_Solo: 0
@@ -647,7 +647,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tutorial_Wall
+  m_Name: TutorialWall_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -673,7 +673,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tutorial_2_1
+  m_Name: TutorialSuper_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -699,7 +699,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tutorial_Mold
+  m_Name: TutorialMold_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -725,7 +725,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tutorial_Spawner
+  m_Name: TutorialDispencer_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -751,7 +751,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tutorial_1_1
+  m_Name: TutorialStart_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -780,7 +780,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: TutorialNum
-    m_EventTreshold: 201
+    m_EventTreshold: 81
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4429671778109151694}
   m_Solo: 0
@@ -805,7 +805,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: TutorialNum
-    m_EventTreshold: 611
+    m_EventTreshold: 101
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4454321606350399802}
   m_Solo: 0
@@ -827,7 +827,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tutorial_Rock
+  m_Name: TutorialBlocker_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []

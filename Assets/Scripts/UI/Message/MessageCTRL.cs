@@ -74,11 +74,6 @@ public class MessageCTRL : MonoBehaviour
     public void Destroy()
     {
         DeleteInBuffer();
-        //≈сли окно содержит информацию об уровне, то после его закрыти€ открываем туториал
-        if (levelInfo && Gameplay.main.isGameplay)
-        {
-            TutorialController.main.CheckLevelTutorial(Gameplay.main.levelSelect);
-        }
         Destroy(gameObject);
     }
 

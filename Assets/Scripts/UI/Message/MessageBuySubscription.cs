@@ -34,9 +34,9 @@ public class MessageBuySubscription : MonoBehaviour
 
     //получаем текст перевода по ключам
     void inicizlize() {
-        strNotWorkingNow = TranslateManager.main.GetText(KeyNotWorkingNow, strNotWorkingNow);
-        strWorkingNow = TranslateManager.main.GetText(KeyWorkingNow, strWorkingNow);
-        strDateEnd = TranslateManager.main.GetText(KeyDateEnd, strDateEnd);
+        strNotWorkingNow = TranslateManager.main.GetText(KeyNotWorkingNow);
+        strWorkingNow = TranslateManager.main.GetText(KeyWorkingNow);
+        strDateEnd = TranslateManager.main.GetText(KeyDateEnd);
     }
 
     // Start is called before the first frame update

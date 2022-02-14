@@ -51,4 +51,11 @@ public class MainButtonManager : MonoBehaviour
     public void ButtonClickPiggyBank() {
         GlobalMessage.ShopPiggyBank();
     }
+
+
+    //ќткрыть всплывающее сообщение о покупки подписки на мес€ц
+    public void ButtonClickSubscription()
+    {
+        GlobalMessage.ShopBuySubscriptionMonth();
+    }
 }

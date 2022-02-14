@@ -18,7 +18,7 @@ public class HealthTimer : MonoBehaviour
 
     [SerializeField] private int _SystemTimeStartRegeneration;
     private const string _SystemTimeStartRegenerationID = "SystemTimeStartRegeneration";
-    private const int _TimeForRegenerate = 60*5; //second
+    private const int _TimeForRegenerate = 60*30; //second
     private const int _maxLive = 5;
     private DateTime epochStart = new System.DateTime(1970, 1, 1, 8, 0, 0, System.DateTimeKind.Utc); //начало отсчета времени
     
