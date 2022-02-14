@@ -230,7 +230,7 @@ public class CellInternalObject : MonoBehaviour
             }
 
 
-            MovingSpeed += Time.unscaledDeltaTime * 1.5f;
+            MovingSpeed += Time.unscaledDeltaTime * 1.35f;
 
             float speed = 0.09f + MovingSpeed;
             speed *= Gameplay.main.timeScale;

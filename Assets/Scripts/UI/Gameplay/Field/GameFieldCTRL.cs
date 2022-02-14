@@ -2163,7 +2163,8 @@ public class GameFieldCTRL : MonoBehaviour
         //¬оспроизвести анимацию потенциала если есть
         void AnimationPlayPotencial()
         {
-            if (potencialBest == null || Time.unscaledTime - timeLastMove < 4)
+            //¬оспроизвести анимацию потенциального хода через 10 секунд
+            if (potencialBest == null || Time.unscaledTime - timeLastMove < 10)
                 return;
 
             //≈сли потенциал есть
