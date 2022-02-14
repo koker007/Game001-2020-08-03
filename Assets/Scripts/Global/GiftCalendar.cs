@@ -151,6 +151,8 @@ public class GiftCalendar : MonoBehaviour
         days[28].SetValues(TypeItem.Gold, days[28].RetCount() + maxGold / 2);
         days[days.Count - 1].SetValues(TypeItem.Gold, 20);
 
+        PlayerProfile.main.SaveCalendar();
+
         int Gold()
         {
             int gold = UnityEngine.Random.Range(4, 10);
@@ -184,6 +186,7 @@ public class GiftCalendar : MonoBehaviour
             PlayerPrefs.SetInt(LastDayKey, LastDay);
 
             DayCombo++;
+            PlayerProfile.main.LoadCalendar();
             GlobalMessage.Calendar();
 
             PlayerPrefs.SetInt(DayComboKey, DayCombo);
