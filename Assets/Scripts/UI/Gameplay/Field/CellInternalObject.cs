@@ -1363,7 +1363,7 @@ public class CellInternalObject : MonoBehaviour
                 replaceColor = color;
             }
 
-
+            //выбираем тип активации
             //Если партнер просто цвет
             if (typePartner == Type.color)
             {
@@ -1457,7 +1457,10 @@ public class CellInternalObject : MonoBehaviour
                         }
                         float dist = Vector2.Distance(myField.cellCTRLs[x, y].pos, myCell.pos);
 
+                        //Создаем запрос на изменение объекта и дальнейшую активицию
+                        myField.cellCTRLs[x, y].cellInternal.InvokeReplacementColorAndActivate(dist * speedPerCell, typePartner, combination);
 
+                        /*
                         CellInternalObject cellInternalObject = myField.cellCTRLs[x, y].cellInternal;
 
                         //Удаляем старый объект
@@ -1502,11 +1505,13 @@ public class CellInternalObject : MonoBehaviour
 
                             }
                         }
+                        */
 
                         Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomSuperColor(myField.transform, myCell);
                         particle3DCTRL.SetTransformTarget(new Vector2(x + 0.5f, y + 0.5f));
                         particle3DCTRL.SetTransformSpeed(1 / speedPerCell);
 
+                        /*
                         //Перемещаем объект на место старого
                         cellInternalObject.StartMove(myField.cellCTRLs[x, y]);
                         cellInternalObject.EndMove();
@@ -1517,7 +1522,7 @@ public class CellInternalObject : MonoBehaviour
                         cellInternalObject.BufferCombination = combination;
                         //cellInternalObject.Activate(cellInternalObject.type, null, combination);
                         cellInternalObject.ActivateInvoke(dist * speedPerCell);
-
+                        */
                     }
                 }
 
@@ -2188,6 +2193,79 @@ public class CellInternalObject : MonoBehaviour
             }
         }
         return priorityColor;
+    }
+
+
+    Type replacementType = Type.color;
+    GameFieldCTRL.Combination replacementCombination = null;
+
+
+    //Отсроченная замена с активацией
+    public void InvokeReplacementColorAndActivate(float time, Type type, GameFieldCTRL.Combination comb) {
+        replacementType = type;
+        replacementCombination = comb;
+        Invoke("ReplacementColorAndActivate", time);
+    }
+    //Заменить и активировать
+    void ReplacementColorAndActivate()
+    {
+        
+        //создаем новый обьект
+        GameObject internalObj = Instantiate(myField.prefabInternal, myField.parentOfInternals);
+
+        //Создаем объект
+        CellInternalObject cellInternalObject = internalObj.GetComponent<CellInternalObject>();
+
+        cellInternalObject.myField = myField;
+
+        //Заменяем если нет камня
+        if (myCell.rock <= 0)
+        {
+
+            //Если партнер ракета
+            if (replacementType == Type.rocketHorizontal || replacementType == Type.rocketVertical)
+            {
+                if (Random.Range(0, 100) < 50)
+                {
+                    cellInternalObject.setColorAndType(color, Type.rocketVertical);
+                }
+                else
+                {
+                    cellInternalObject.setColorAndType(color, Type.rocketHorizontal);
+                }
+            }
+            //Если бомба
+            else if (replacementType == Type.bomb)
+            {
+                cellInternalObject.setColorAndType(color, Type.bomb);
+            }
+            //Если самолет
+            else if (replacementType == Type.airplane)
+            {
+                cellInternalObject.setColorAndType(color, Type.airplane);
+
+            }
+            else
+            {
+
+            }
+        }
+
+        //Перемещаем новый объект на мое место
+        cellInternalObject.StartMove(myCell);
+        cellInternalObject.EndMove();
+
+        //needInstantDamage = false;
+        cellInternalObject.BufferActivateType = cellInternalObject.type;
+        cellInternalObject.BufferPartner = null;
+        cellInternalObject.BufferCombination = replacementCombination;
+        //cellInternalObject.Activate(cellInternalObject.type, null, combination);
+        cellInternalObject.ActivateInvoke(1.0f);
+        cellInternalObject.animatorCTRL.PlayAnimation("BombActivated");
+
+
+        //Текущий объект по тихому удаляем
+        DestroyObj(true);
     }
 
 }
