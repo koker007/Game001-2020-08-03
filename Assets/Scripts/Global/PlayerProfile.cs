@@ -207,7 +207,11 @@ public class PlayerProfile : MonoBehaviour
 
         if (Settings.main.DeveloperTesting) {
             GoldAmount = 100;
+<<<<<<< HEAD
             ProfilelevelOpen = 250;
+=======
+            ProfilelevelOpen = 1000;
+>>>>>>> Vadim02
             Health.Amount = 100;
 
             ShopInternal.Amount = 10;
