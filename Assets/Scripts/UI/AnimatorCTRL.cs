@@ -13,6 +13,7 @@ public class AnimatorCTRL : MonoBehaviour
     [SerializeField]
     bool disableOnBaceAnimation = false;
     public string parameterNameInt = "parameter";
+  
 
     [System.Serializable]
     public class Animations
@@ -30,6 +31,9 @@ public class AnimatorCTRL : MonoBehaviour
 
     public void PlayAnimation(string key)
     {
+        //Если аниматора нет или
+        //включена блокировка
+        //то выходим
         if (animator == null)
             return;
 

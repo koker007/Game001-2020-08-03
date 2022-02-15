@@ -325,6 +325,7 @@ public class CellInternalObject : MonoBehaviour
                     isMove = false;
                     myCell.CalcMyPriority();
                     //Запустить анимацию остановки
+
                     animatorCTRL.PlayAnimation("DroppedDown");
                 }
             }
