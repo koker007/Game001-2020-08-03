@@ -15,6 +15,9 @@ public class Particle3dCTRL : MonoBehaviour
     ParticleSystem[] particles;
 
     [SerializeField]
+    ParticleSystem[] particlesMove;
+
+    [SerializeField]
     float posZ = 0;
 
     [SerializeField]
@@ -141,7 +144,11 @@ public class Particle3dCTRL : MonoBehaviour
 
             Destroy(gameObject);
         }
-        
+
+        //ќстанавливаем анимацию если скорость больша€, но цель достигнута
+        StoppedMoveStopAnim();
+
+
         bool isAllParticlesStoped() {
 
             bool play = false;
@@ -158,13 +165,35 @@ public class Particle3dCTRL : MonoBehaviour
             return !play;
         }
 
-        bool isStoppedMoveDestroy() {
+        bool isStoppedMoveDestroy()
+        {
             bool result = false;
-            if (SpeedMove > 0.01f && Vector2.Distance(TargetMove, new Vector2(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y)) < 0.01f && Time.unscaledTime - timeLastMove > 5f) {
+            if (SpeedMove > 0.01f && Vector2.Distance(TargetMove, new Vector2(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y)) < 0.01f && Time.unscaledTime - timeLastMove > 5f)
+            {
                 result = true;
             }
 
             return result;
+        }
+
+        //≈сли движение остановилось, провер€ем обьект на удаление
+        void StoppedMoveStopAnim() {
+            if (SpeedMove > 0.01f && Vector2.Distance(TargetMove, new Vector2(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y)) < 0.01f && Time.unscaledTime - timeLastMove > 0.1f)
+            {
+
+                foreach (ParticleSystem particle in particlesMove)
+                {
+                    if (!particle.isStopped)
+                        particle.Stop();
+                }
+            }
+            else {
+                foreach (ParticleSystem particle in particlesMove)
+                {
+                    if (!particle.isPlaying)
+                        particle.Play();
+                }
+            }
         }
     }
 

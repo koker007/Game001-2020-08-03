@@ -1675,40 +1675,6 @@ public class GameFieldCTRL : MonoBehaviour
                         particle3DCTRL.SetColor(color1);
 
                     }
-                    //Если собрался квадрат
-                    else if (comb.square)
-                    {
-                        //Проверяем ячейки
-                        int count = 0;
-                        foreach (CellCTRL cellCTRL in comb.cells)
-                        {
-                            if (cellCTRL)
-                            {
-                                count++;
-                                //Если было больще 4 запусков выходим
-                                if (count > 4)
-                                {
-                                    break;
-                                }
-
-                                //если там уже есть самолет, запускаем
-                                if (cellCTRL.cellInternal && cellCTRL.cellInternal.type == CellInternalObject.Type.airplane)
-                                {
-                                    cellCTRL.cellInternal.Activate(CellInternalObject.Type.airplane, null, comb);
-                                    break;
-                                }
-
-                                //Удаляем внутренний объект
-                                Destroy(cellCTRL.cellInternal.gameObject);
-
-                                //Запускаем с этой ячейки самолет
-                                //Создаем самолет
-                                CreateFly(cellCTRL, cellCTRL.cellInternal.color, comb.ID);
-                                //Запускаем замолет
-                                cellCTRL.cellInternal.Activate(CellInternalObject.Type.airplane, null, comb);
-                            }
-                        }
-                    }
                     //Если собралась горизонталь
                     else if (comb.horizontal && comb.line4)
                     {
@@ -1731,6 +1697,43 @@ public class GameFieldCTRL : MonoBehaviour
                             c.BufferCombination = comb;
                             c.BufferNearDamage = false;
                             c.ExplosionBoomInvoke(c.explosion, c.explosion.timer);
+                        }
+                    }
+                    //Если собрался квадрат
+                    else if (comb.square)
+                    {
+                        //Проверяем ячейки
+                        int count = 0;
+                        foreach (CellCTRL cellCTRL in comb.cells)
+                        {
+                            if (cellCTRL)
+                            {
+
+                                //Старое ограничение на 4 запуска самолета
+
+                                //count++;
+                                //Если было больще 4 запусков выходим
+                                //if (count > 4)
+                                //{
+                                //    break;
+                                //}
+
+                                //если там уже есть самолет, запускаем
+                                if (cellCTRL.cellInternal && cellCTRL.cellInternal.type == CellInternalObject.Type.airplane)
+                                {
+                                    cellCTRL.cellInternal.Activate(CellInternalObject.Type.airplane, null, comb);
+                                    break;
+                                }
+
+                                //Удаляем внутренний объект
+                                Destroy(cellCTRL.cellInternal.gameObject);
+
+                                //Запускаем с этой ячейки самолет
+                                //Создаем самолет
+                                CreateFly(cellCTRL, cellCTRL.cellInternal.color, comb.ID);
+                                //Запускаем замолет
+                                cellCTRL.cellInternal.Activate(CellInternalObject.Type.airplane, null, comb);
+                            }
                         }
                     }
 
