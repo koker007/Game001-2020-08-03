@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //alexandr
-//Андрей
 public class TutorialController : MonoBehaviour
 {
     public static TutorialController main;
@@ -49,7 +48,11 @@ public class TutorialController : MonoBehaviour
     {
         main = this;
     }
-    
+    /// <summary>
+    /// проверка есть ли у уровня туториал
+    /// </summary>
+    /// <param name="levelNum"></param>
+    /// <returns></returns>
     public bool CheckLevelTutorial(int levelNum)
     {
         CloseAllTutorialField();
@@ -97,16 +100,14 @@ public class TutorialController : MonoBehaviour
         }
         return false;
     }
-
+    //запускает следующее затемнение игрового поля если найдет его
     public bool CheckNextTutorialField(int levelNum, int tutorialFieldNum)
     {
         int levelID = 0;
         if (FindIdLevel(ref levelID, levelNum))
         {
-            foreach (int tutID in _tutorials[levelID]._tutorialsFieldID)
-            {
-                _tutorialsField[tutID].SetActive(false);
-            }
+            CloseAllTutorialFieldForLevel(levelID);
+
             if (_tutorials[levelID]._tutorialsFieldID.Length <= tutorialFieldNum)
             {
                 return false;
@@ -122,6 +123,17 @@ public class TutorialController : MonoBehaviour
             return false;
         }
     }
+
+    //закрывает все затемнения игрового для уровня
+    private void CloseAllTutorialFieldForLevel(int levelID)
+    {
+        foreach (int tutID in _tutorials[levelID]._tutorialsFieldID)
+        {
+            _tutorialsField[tutID].SetActive(false);
+        }
+    }
+
+    //закрывает все существующие затемнения игрового
     public void CloseAllTutorialField()
     {
         foreach (GameObject tut in _tutorialsField)

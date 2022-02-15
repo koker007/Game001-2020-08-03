@@ -1856,6 +1856,7 @@ public class GameFieldCTRL : MonoBehaviour
                 else if (buffer.superHit == MenuGameplay.SuperHitType.mixed)
                     TestShopMixed();
 
+                TutorialController.main.CloseAllTutorialField();
                 //Активировали, возвращаем ничего
                 MenuGameplay.main.SuperHitSelected = MenuGameplay.SuperHitType.none;
 
