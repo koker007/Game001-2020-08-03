@@ -78,8 +78,15 @@ public class Particle3dCTRL : MonoBehaviour
         }
     }
     public void SetColor(Color color) {
+        //Меняем цвет базовых частиц
         foreach (ParticleSystem particleSystem in particles)
         {
+            particleSystem.startColor = color;
+            particleSystem.GetComponent<ParticleSystemRenderer>().material.SetColor("_EmisColor", color);
+        }
+
+        //Меняем цвет двигающихся частиц
+        foreach (ParticleSystem particleSystem in particlesMove) {
             particleSystem.startColor = color;
             particleSystem.GetComponent<ParticleSystemRenderer>().material.SetColor("_EmisColor", color);
         }
@@ -236,9 +243,13 @@ public class Particle3dCTRL : MonoBehaviour
     /// <summary>
     /// Создать эффект взрыва ракеты и получить ссылку на нее
     /// </summary>
-    public static Particle3dCTRL CreateBoomRocket(Transform field, CellCTRL cellStartExplose) {
+    public static Particle3dCTRL CreateBoomRocket(Transform field, CellCTRL cellStartExplose, Color color) {
 
-        return CreateParticle(field, cellStartExplose, GameplayParticles3D.main.prefabBoomRocket);
+        Particle3dCTRL particle3d = CreateParticle(field, cellStartExplose, GameplayParticles3D.main.prefabBoomRocket);
+        //Нужно поменять цвет частиц на цвет бомбанутого объекта
+        particle3d.SetColor(color);
+
+        return particle3d;
     }
 
     /// <summary>

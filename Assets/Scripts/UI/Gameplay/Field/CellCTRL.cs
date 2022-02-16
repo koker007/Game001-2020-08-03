@@ -157,8 +157,10 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
         public Particle3dCTRL UpParticleEffect;
         public Particle3dCTRL DownParticleEffect;
 
+        public Color color = new Color(1,1,1);
+
         //Создаем параметры взрыва
-        public Explosion(bool leftf, bool rightf, bool upf, bool downf, float timerF, GameFieldCTRL.Combination combf)
+        public Explosion(bool leftf, bool rightf, bool upf, bool downf, float timerF, GameFieldCTRL.Combination combf, Color colorFunc)
         {
             left = leftf;
             right = rightf;
@@ -168,6 +170,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
             timer = timerF;
             comb = combf;
 
+            color = colorFunc;
         }
 
         /// <summary>
@@ -214,19 +217,19 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     //Если в ячейке есть стойкий к взрыву предмет
                     if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x - minus, pos.y]))
                     {
-                        myField.cellCTRLs[pos.x - minus, pos.y].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, comb), explosion.timer * minus);
+                        myField.cellCTRLs[pos.x - minus, pos.y].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, comb, explosion.color), explosion.timer * minus);
                     }
                     //Иначе просто взрываем с таймером
                     else
                     {
 
                         //Создаем взрыв и взрываем с таймером
-                        myField.cellCTRLs[pos.x - minus, pos.y].ExplosionBoomInvoke(new Explosion(true, false, false, false, explosion.timer, comb), explosion.timer * minus);
+                        myField.cellCTRLs[pos.x - minus, pos.y].ExplosionBoomInvoke(new Explosion(true, false, false, false, explosion.timer, comb, explosion.color), explosion.timer * minus);
 
                         //Если нету частиц взрыва то создаем
                         if (explosion.LeftParticleEffect == null)
                         {
-                            explosion.LeftParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
+                            explosion.LeftParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this, explosion.color);
                             explosion.LeftParticleEffect.SetTransformSpeed(1 / explosion.timer);
 
                             //Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
@@ -246,7 +249,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 //Если нету частиц взрыва то создаем
                 if (explosion.LeftParticleEffect == null)
                 {
-                    explosion.LeftParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
+                    explosion.LeftParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this, explosion.color);
                     explosion.LeftParticleEffect.SetTransformSpeed(1 / explosion.timer);
                     //Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
                 }
@@ -282,18 +285,18 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     //Если в ячейке есть стойкий к взрыву предмет
                     if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x + plus, pos.y]))
                     {
-                        myField.cellCTRLs[pos.x + plus, pos.y].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, comb), explosion.timer * plus);
+                        myField.cellCTRLs[pos.x + plus, pos.y].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, comb, explosion.color), explosion.timer * plus);
                     }
                     //Иначе просто взрываем с таймером
                     else
                     {
                         //Создаем взрыв и взрываем с таймером
-                        myField.cellCTRLs[pos.x + plus, pos.y].ExplosionBoomInvoke(new Explosion(false, true, false, false, explosion.timer, comb), explosion.timer * plus);
+                        myField.cellCTRLs[pos.x + plus, pos.y].ExplosionBoomInvoke(new Explosion(false, true, false, false, explosion.timer, comb, explosion.color), explosion.timer * plus);
 
                         //Если нету частиц взрыва то создаем
                         if (explosion.RightParticleEffect == null)
                         {
-                            explosion.RightParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
+                            explosion.RightParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this, explosion.color);
                             explosion.RightParticleEffect.SetTransformSpeed(1 / explosion.timer);
                             //Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
                         }
@@ -312,7 +315,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 //Если нету частиц взрыва то создаем
                 if (explosion.RightParticleEffect == null)
                 {
-                    explosion.RightParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
+                    explosion.RightParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this, explosion.color);
                     explosion.RightParticleEffect.SetTransformSpeed(1 / explosion.timer);
                     //Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
                 }
@@ -349,19 +352,19 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     //Если в ячейке есть стойкий к взрыву предмет
                     if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x, pos.y + plus]))
                     {
-                        myField.cellCTRLs[pos.x, pos.y + plus].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, comb), explosion.timer * plus);
+                        myField.cellCTRLs[pos.x, pos.y + plus].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, comb, explosion.color), explosion.timer * plus);
                     }
                     //Иначе просто взрываем с таймером
                     else
                     {
 
                         //Создаем взрыв и взрываем с таймером
-                        myField.cellCTRLs[pos.x, pos.y + plus].ExplosionBoomInvoke(new Explosion(false, false, true, false, explosion.timer, comb), explosion.timer * plus);
+                        myField.cellCTRLs[pos.x, pos.y + plus].ExplosionBoomInvoke(new Explosion(false, false, true, false, explosion.timer, comb, explosion.color), explosion.timer * plus);
 
                         //Если нету частиц взрыва то создаем
                         if (explosion.UpParticleEffect == null)
                         {
-                            explosion.UpParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
+                            explosion.UpParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this, explosion.color);
                             explosion.UpParticleEffect.SetTransformSpeed(1 / explosion.timer);
                             //Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
                         }
@@ -379,7 +382,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 //Если нету частиц взрыва то создаем
                 if (explosion.UpParticleEffect == null)
                 {
-                    explosion.UpParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
+                    explosion.UpParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this, explosion.color);
                     explosion.UpParticleEffect.SetTransformSpeed(1 / explosion.timer);
                     //Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
                 }
@@ -416,19 +419,19 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                     //Если в ячейке есть стойкий к взрыву предмет
                     if (myField.isBlockingBoomDamage(myField.cellCTRLs[pos.x, pos.y - minus]))
                     {
-                        myField.cellCTRLs[pos.x, pos.y - minus].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, comb), explosion.timer * minus);
+                        myField.cellCTRLs[pos.x, pos.y - minus].ExplosionBoomInvoke(new Explosion(false, false, false, false, explosion.timer, comb, explosion.color), explosion.timer * minus);
                     }
                     //Иначе просто взрываем с таймером
                     else
                     {
 
                         //Создаем взрыв и взрываем с таймером
-                        myField.cellCTRLs[pos.x, pos.y - minus].ExplosionBoomInvoke(new Explosion(false, false, false, true, explosion.timer, comb), explosion.timer * minus);
+                        myField.cellCTRLs[pos.x, pos.y - minus].ExplosionBoomInvoke(new Explosion(false, false, false, true, explosion.timer, comb, explosion.color), explosion.timer * minus);
 
                         //Если нету частиц взрыва то создаем
                         if (explosion.DownParticleEffect == null)
                         {
-                            explosion.DownParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
+                            explosion.DownParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this, explosion.color);
                             explosion.DownParticleEffect.SetTransformSpeed(1 / explosion.timer);
                             //Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
                         }
@@ -447,7 +450,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
                 //Если нету частиц взрыва то создаем
                 if (explosion.DownParticleEffect == null)
                 {
-                    explosion.DownParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this);
+                    explosion.DownParticleEffect = Particle3dCTRL.CreateBoomRocket(myField.transform, this, explosion.color);
                     explosion.DownParticleEffect.SetTransformSpeed(1 / explosion.timer);
                     //Particle3dCTRL.CreateBoomBomb(myField.gameObject, this, 1);
                 }
