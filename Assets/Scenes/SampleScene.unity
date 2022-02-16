@@ -7858,6 +7858,7 @@ MonoBehaviour:
   PrefabExitGame: {fileID: 543893135704408321, guid: 5c4a815def117fe41896ea87b7101726, type: 3}
   LevelRedactor: {fileID: 2605148959411535080, guid: 6a941257d27ac29468fd32721b6a5300, type: 3}
   PrefabCalendar: {fileID: 3772681116005555445, guid: 9f542a37ebde20844b918d262d2ed4cf, type: 3}
+  PrefabDailyGift: {fileID: 7257101969109481498, guid: 12ef5b5c332f7da4891117063175dc77, type: 3}
 --- !u!1 &597577164
 GameObject:
   m_ObjectHideFlags: 0
@@ -19211,6 +19212,7 @@ GameObject:
   - component: {fileID: 1319929790}
   - component: {fileID: 1319929788}
   - component: {fileID: 1319929791}
+  - component: {fileID: 1319929794}
   m_Layer: 0
   m_Name: _Gameplay / Profile
   m_TagString: Untagged
@@ -40408,6 +40410,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 368d0b02f597f0d47a0ba22b12c5b220, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemSprites:
+  - {fileID: 21300000, guid: 7b22c429926e1ea4080a0e93e2a2ca7e, type: 3}
+  - {fileID: 21300000, guid: 9f332aa50d1df7341afc7bab3c760bb9, type: 3}
+  - {fileID: 6063098703574239612, guid: 0ff3c98b099806d41b96916b15959df6, type: 3}
+  - {fileID: 21300000, guid: 8a282f45d7937bd48bf91b318c66ec2a, type: 3}
+  - {fileID: -5765065655285555256, guid: 0ff3c98b099806d41b96916b15959df6, type: 3}
+  - {fileID: 5419753135138827445, guid: 0ff3c98b099806d41b96916b15959df6, type: 3}
+  - {fileID: 21300000, guid: ab5113cc7b45e8c44ace1b0450d35e71, type: 3}
+  - {fileID: 7227928216454086663, guid: 0ff3c98b099806d41b96916b15959df6, type: 3}
   days:
   - _typeItem: 0
     _count: 1
@@ -40469,8 +40480,36 @@ MonoBehaviour:
     _count: 10
   - _typeItem: 0
     _count: 10
+  DaysInGameCounter: 0
   DaySubEnded: 0
   DayCombo: 0
+--- !u!114 &1319929794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319929785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dbf602a6894a354ab0c0ce3866003cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SevenDays:
+  - _typeItem: 5
+    _count: 1
+  - _typeItem: 0
+    _count: 10
+  - _typeItem: 3
+    _count: 2
+  - _typeItem: 5
+    _count: 2
+  - _typeItem: 0
+    _count: 5
+  - _typeItem: 0
+    _count: 6
+  - _typeItem: 6
+    _count: 2
 --- !u!1 &1320293063
 GameObject:
   m_ObjectHideFlags: 0
@@ -47595,6 +47634,7 @@ GameObject:
   - component: {fileID: 1909814429}
   - component: {fileID: 1909814431}
   - component: {fileID: 1909814432}
+  - component: {fileID: 1909814433}
   m_Layer: 0
   m_Name: _Settings
   m_TagString: Untagged
@@ -47658,6 +47698,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 105d42954824213469535ecd2dacce43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1909814433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909814428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daad3aacfbf5d774f98da2046e59077d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1913568377

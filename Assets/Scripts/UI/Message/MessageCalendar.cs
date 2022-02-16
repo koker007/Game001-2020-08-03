@@ -9,8 +9,6 @@ public class MessageCalendar : MonoBehaviour
     [SerializeField] private DayPanel dayPanel;
     [SerializeField] private RectTransform dayPanelParrent;
 
-    public List<Sprite> itemSprites = new List<Sprite>();
-
     private Vector2 _panelStartPosition;
 
     public void Start()
@@ -30,11 +28,11 @@ public class MessageCalendar : MonoBehaviour
             if (i < GiftCalendar.main.days.Count)
             {
                 if(i < GiftCalendar.main.DayCombo)
-                    day.Set(itemSprites[(int)GiftCalendar.main.days[i].RetTypeItem()], i + 1, (int)GiftCalendar.main.days[i].RetCount(), true, true);
+                    day.Set(GiftCalendar.main.itemSprites[(int)GiftCalendar.main.days[i].RetTypeItem()], i + 1, (int)GiftCalendar.main.days[i].RetCount(), true, true);
                 else if(i > GiftCalendar.main.days.Count - (GiftCalendar.main.DaySubEnded - GiftCalendar.main.DayCombo))
-                    day.Set(itemSprites[(int)GiftCalendar.main.days[i].RetTypeItem()], i + 1, (int)GiftCalendar.main.days[i].RetCount(), false, false);
+                    day.Set(GiftCalendar.main.itemSprites[(int)GiftCalendar.main.days[i].RetTypeItem()], i + 1, (int)GiftCalendar.main.days[i].RetCount(), false, false);
                 else
-                    day.Set(itemSprites[(int)GiftCalendar.main.days[i].RetTypeItem()], i + 1, (int)GiftCalendar.main.days[i].RetCount(), true, false);
+                    day.Set(GiftCalendar.main.itemSprites[(int)GiftCalendar.main.days[i].RetTypeItem()], i + 1, (int)GiftCalendar.main.days[i].RetCount(), true, false);
             }
             else
             {
