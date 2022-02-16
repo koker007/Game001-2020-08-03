@@ -1681,7 +1681,7 @@ public class GameFieldCTRL : MonoBehaviour
                         foreach (CellCTRL c in comb.cells)
                         {
                             //Вертикально запускаем взрыв
-                            c.explosion = new CellCTRL.Explosion(false, false, true, true, 0.1f, comb);
+                            c.explosion = new CellCTRL.Explosion(false, false, true, true, 0.1f, comb, new Color(1,1,1));
                             c.BufferCombination = comb;
                             c.BufferNearDamage = false;
                             c.ExplosionBoomInvoke(c.explosion, c.explosion.timer);
@@ -1693,7 +1693,7 @@ public class GameFieldCTRL : MonoBehaviour
                         foreach (CellCTRL c in comb.cells)
                         {
                             //Вертикально запускаем взрыв
-                            c.explosion = new CellCTRL.Explosion(true, true, false, false, 0.1f, comb);
+                            c.explosion = new CellCTRL.Explosion(true, true, false, false, 0.1f, comb, new Color(1, 1, 1));
                             c.BufferCombination = comb;
                             c.BufferNearDamage = false;
                             c.ExplosionBoomInvoke(c.explosion, c.explosion.timer);
@@ -1905,7 +1905,7 @@ public class GameFieldCTRL : MonoBehaviour
 
                         CellSelect.BufferCombination = comb;
 
-                        CellSelect.explosion = new CellCTRL.Explosion(true, true, true, true, 0.05f, comb);
+                        CellSelect.explosion = new CellCTRL.Explosion(true, true, true, true, 0.05f, comb, new Color(1, 1, 1));
                         CellSelect.ExplosionBoomInvoke(CellSelect.explosion, CellSelect.explosion.timer);
                     }
 

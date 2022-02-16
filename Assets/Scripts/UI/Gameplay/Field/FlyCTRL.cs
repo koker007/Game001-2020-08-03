@@ -233,7 +233,7 @@ public class FlyCTRL : MonoBehaviour
                     //myField.CreateRocketHorizontal(CellTarget, CellInternalObject.InternalColor.Red, 0);
                     //CellTarget.Damage();
 
-                    CellTarget.explosion = new CellCTRL.Explosion(true, true, false, false, 0.05f, comb);
+                    CellTarget.explosion = new CellCTRL.Explosion(true, true, false, false, 0.05f, comb, image.color);
                     CellTarget.BufferCombination = comb;
                     CellTarget.BufferNearDamage = false;
                     CellTarget.ExplosionBoomInvoke(CellTarget.explosion, CellTarget.explosion.timer);
@@ -241,7 +241,7 @@ public class FlyCTRL : MonoBehaviour
                 //Если партнер самолета была ракета вертикальная
                 else if (partnerType == CellInternalObject.Type.rocketVertical)
                 {
-                    CellTarget.explosion = new CellCTRL.Explosion(false, false, true, true, 0.05f, comb);
+                    CellTarget.explosion = new CellCTRL.Explosion(false, false, true, true, 0.05f, comb, image.color);
                     CellTarget.BufferCombination = comb;
                     CellTarget.BufferNearDamage = false;
                     CellTarget.ExplosionBoomInvoke(CellTarget.explosion, CellTarget.explosion.timer);
@@ -261,7 +261,7 @@ public class FlyCTRL : MonoBehaviour
             void BombDamage() {
                 //Наносим урон по области 3х3
 
-                CellTarget.explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, comb);
+                CellTarget.explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, comb, image.color);
                 CellTarget.BufferCombination = comb;
                 CellTarget.BufferNearDamage = false;
                 CellTarget.ExplosionBoomInvoke(CellTarget.explosion, CellTarget.explosion.timer);
@@ -286,7 +286,7 @@ public class FlyCTRL : MonoBehaviour
                         //Считаем время задержки взрыва этой ячейки
                         float time = Vector2.Distance(new Vector2(), new Vector2(x, y)) * 0.05f;
                         //
-                        myField.cellCTRLs[fieldPosX, fieldPosY].explosion = new CellCTRL.Explosion(false, false, false, false, time, comb);
+                        myField.cellCTRLs[fieldPosX, fieldPosY].explosion = new CellCTRL.Explosion(false, false, false, false, time, comb, image.color);
                         myField.cellCTRLs[fieldPosX, fieldPosY].BufferCombination = comb;
                         myField.cellCTRLs[fieldPosX, fieldPosY].BufferNearDamage = false;
                         myField.cellCTRLs[fieldPosX, fieldPosY].ExplosionBoomInvoke(CellTarget.explosion, CellTarget.explosion.timer);

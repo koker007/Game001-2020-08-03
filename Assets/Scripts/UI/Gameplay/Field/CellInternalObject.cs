@@ -1274,7 +1274,7 @@ public class CellInternalObject : MonoBehaviour
             if (horizontal && vertical) {
                 if (myCell.explosion == null)
                 {
-                    myCell.explosion = new CellCTRL.Explosion(true, true, true, true, 0.05f, BufferCombination);
+                    myCell.explosion = new CellCTRL.Explosion(true, true, true, true, 0.05f, BufferCombination, GetColor(color));
                 }
                 else {
                     myCell.explosion.left = true;
@@ -1292,7 +1292,7 @@ public class CellInternalObject : MonoBehaviour
 
                 if (myCell.explosion == null)
                 {
-                    myCell.explosion = new CellCTRL.Explosion(true, true, false, false, 0.05f, BufferCombination);
+                    myCell.explosion = new CellCTRL.Explosion(true, true, false, false, 0.05f, BufferCombination, GetColor(color));
                 }
                 else
                 {
@@ -1309,7 +1309,7 @@ public class CellInternalObject : MonoBehaviour
 
                 if (myCell.explosion == null)
                 {
-                    myCell.explosion = new CellCTRL.Explosion(false, false, true, true, 0.05f, BufferCombination);
+                    myCell.explosion = new CellCTRL.Explosion(false, false, true, true, 0.05f, BufferCombination, GetColor(color));
                 }
                 else
                 {
@@ -1610,11 +1610,17 @@ public class CellInternalObject : MonoBehaviour
         void ActivateBombAndRocket() {
             Debug.Log("ActivateBombVertical");
 
+            Color ResultColor = GetColor(color);
+
             if (partner) {
+                ResultColor = GetColor(partner.color);
                 //”дал€ем партнера
                 partner.activate = false;
                 partner.DestroyObj();
             }
+
+            ResultColor = Color.Lerp(GetColor(color), ResultColor, 0.5f);
+
             //Ѕерем позицию бомбы
             Vector2Int pos = myCell.pos;
 
@@ -1666,7 +1672,7 @@ public class CellInternalObject : MonoBehaviour
                     //создаем взрыв если на этой €чейке нет взрыва
                     if (myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion == null)
                     {
-                        myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, BufferCombination);
+                        myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, BufferCombination, ResultColor);
                     }
                     else {
                     
@@ -1697,7 +1703,7 @@ public class CellInternalObject : MonoBehaviour
                     //создаем взрыв если на этой €чейке нет взрыва
                     if (myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion == null)
                     {
-                        myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, BufferCombination);
+                        myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, BufferCombination, ResultColor);
                     }
                     else {
                     
@@ -1737,7 +1743,7 @@ public class CellInternalObject : MonoBehaviour
                     //создаем взрыв если на этой €чейке нет взрыва
                     if (myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion == null)
                     {
-                        myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, BufferCombination);
+                        myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, BufferCombination, ResultColor);
                     }
                     else {
                     
@@ -1769,7 +1775,7 @@ public class CellInternalObject : MonoBehaviour
                     //создаем взрыв если на этой €чейке нет взрыва
                     if (myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion == null)
                     {
-                        myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, BufferCombination);
+                        myField.cellCTRLs[myCell.pos.x + x, myCell.pos.y + y].explosion = new CellCTRL.Explosion(false, false, false, false, 0.05f, BufferCombination, ResultColor);
                     }
                     else {
                     
@@ -1915,7 +1921,6 @@ public class CellInternalObject : MonoBehaviour
                 GameObject flyObj = Instantiate(FlyPrefab, myField.parentOfFly);
                 FlyCTRL flyCTRL = flyObj.GetComponent<FlyCTRL>();
 
-
                 //ищем €чейку к которой еще никто не летит
                 foreach (CellCTRL cellPriority in myField.cellsPriority)
                 {
@@ -1937,8 +1942,7 @@ public class CellInternalObject : MonoBehaviour
                     //≈сли закончили перебор и не нашли €чейку в списке, значит это то что нужно выбрать в качестве новой цели
                     if (!found)
                     {
-                        flyCTRL.inicialize(myCell, cellPriority, partner, combination, Image.color);
-
+                        flyCTRL.inicialize(myCell, cellPriority, partner, combination, GetColor(color));
                         break;
                     }
 
@@ -1969,7 +1973,7 @@ public class CellInternalObject : MonoBehaviour
                     //≈сли закончили перебор и не нашли €чейку в списке, значит это то что нужно выбрать в качестве новой цели
                     if (!found)
                     {
-                        flyCTRL.inicialize(partner.myCell, cellPriority, null, combination, Image.color);
+                        flyCTRL.inicialize(partner.myCell, cellPriority, null, combination, GetColor(partner.color));
 
                         break;
                     }
