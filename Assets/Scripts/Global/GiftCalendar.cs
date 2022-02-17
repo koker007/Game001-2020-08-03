@@ -74,16 +74,20 @@ public class GiftCalendar : MonoBehaviour
         }
     }
 
+
+    public List<Sprite> itemSprites = new List<Sprite>();
     public List<Day> days = new List<Day>();
 
-    private DateTime epochStart = new System.DateTime(1970, 1, 1, 8, 0, 0, System.DateTimeKind.Utc); //начало отсчета времени
-    private int LastDay;
-    private string LastDayKey = "LastDay";
-    private int DayOfPurchase;
-    private string DayOfPurchaseKey = "DayOfPurchase";
+    private DateTime _epochStart = new System.DateTime(1970, 1, 1, 8, 0, 0, System.DateTimeKind.Utc); //начало отсчета времени
+    private int _lastDay;
+    private string _lastDayKey = "LastDay";
+    public int DaysInGameCounter;
+    private string _daysInGameCounterKey = "DaysInGameCounterKey";
+    private int _dayOfPurchase;
+    private string _dayOfPurchaseKey = "DayOfPurchase";
     public int DaySubEnded;
-    public int DayCombo = 0;
-    private string DayComboKey = "DayCombo";
+    public int DayCombo;
+    private string _dayComboKey = "DayCombo";
 
     private void Awake()
     {
@@ -92,17 +96,24 @@ public class GiftCalendar : MonoBehaviour
 
     public void BuySubscription()
     {
-        DayOfPurchase = (int)((System.DateTime.UtcNow - epochStart).TotalDays);
-        LastDay = DayOfPurchase;
-        DayCombo = 1;
-        DaySubEnded = 0;
+        try
+        {
+            _dayOfPurchase = (int)((TimeWorld.GetTimeWorld() - _epochStart).TotalDays);
+        }
+        catch
+        {
+            _dayOfPurchase = (int)((DateTime.UtcNow - _epochStart).TotalDays);
+        }
+        _lastDay = _dayOfPurchase;
+            DayCombo = 1;
+            DaySubEnded = 0;
 
-        GenerateNewGifts();
-        GlobalMessage.Calendar();
+            GenerateNewGifts();
+            GlobalMessage.Calendar();
 
-        PlayerPrefs.SetInt(DayOfPurchaseKey, DayOfPurchase);
-        PlayerPrefs.SetInt(LastDayKey, LastDay);
-        PlayerPrefs.SetInt(DayComboKey, DayCombo);
+            PlayerPrefs.SetInt(_dayOfPurchaseKey, _dayOfPurchase);
+            PlayerPrefs.SetInt(_lastDayKey, _lastDay);
+            PlayerPrefs.SetInt(_dayComboKey, DayCombo);
     }
 
     private void GenerateNewGifts()
@@ -171,26 +182,40 @@ public class GiftCalendar : MonoBehaviour
 
     public void CheckNewDay()
     {
-        DayOfPurchase = PlayerPrefs.GetInt(DayOfPurchaseKey, 0);
+        try
+        {
+            _lastDay = PlayerPrefs.GetInt(_lastDayKey, 0);
+            DayCombo = PlayerPrefs.GetInt(_dayComboKey, 0);
+            DaysInGameCounter = PlayerPrefs.GetInt(_daysInGameCounterKey, 0);
 
-        if (DayOfPurchase + days.Count <= (int)((System.DateTime.UtcNow - epochStart).TotalDays))
+            if (_lastDay < (int)(TimeWorld.GetTimeWorld() - _epochStart).TotalDays)
+            {
+                _lastDay = (int)((TimeWorld.GetTimeWorld() - _epochStart).TotalDays);
+                PlayerPrefs.SetInt(_lastDayKey, _lastDay);
+
+                DaysInGameCounter++;
+                PlayerPrefs.SetInt(_daysInGameCounterKey, DaysInGameCounter);
+
+                SubscribeNewDay();
+                DailyGifts.main.CheckHaveGift();
+            }
+        }
+        catch {}
+    }
+
+
+    public void SubscribeNewDay()
+    {
+        _dayOfPurchase = PlayerPrefs.GetInt(_dayOfPurchaseKey, 0);
+
+        if (_dayOfPurchase + days.Count <= (int)((TimeWorld.GetTimeWorld() - _epochStart).TotalDays))
             return;
 
-        DaySubEnded = (int)((System.DateTime.UtcNow - epochStart).TotalDays) - DayOfPurchase;
-        LastDay = PlayerPrefs.GetInt(LastDayKey, 0);
-        DayCombo = PlayerPrefs.GetInt(DayComboKey, 0);
-
-        if (LastDay < (int)(System.DateTime.UtcNow - epochStart).TotalDays)
-        {
-            LastDay = (int)((System.DateTime.UtcNow - epochStart).TotalDays);
-            PlayerPrefs.SetInt(LastDayKey, LastDay);
-
-            DayCombo++;
-            PlayerProfile.main.LoadCalendar();
-            GlobalMessage.Calendar();
-
-            PlayerPrefs.SetInt(DayComboKey, DayCombo);
-        }
+        DaySubEnded = (int)((TimeWorld.GetTimeWorld() - _epochStart).TotalDays) - _dayOfPurchase;
+        DayCombo++;
+        PlayerProfile.main.LoadCalendar();
+        GlobalMessage.Calendar();
+        PlayerPrefs.SetInt(_dayComboKey, DayCombo);
     }
 
     public void GetGift()
