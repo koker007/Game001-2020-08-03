@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
@@ -27,6 +28,11 @@ public class Settings : MonoBehaviour
     [SerializeField]
     public string launguage;
 
+    public bool isLandscapeRotation = true;
+    [SerializeField] private Text RotationText;
+    [SerializeField] private List<GameObject> VerticalUI;
+    [SerializeField] private List<GameObject> HorizontalUI;
+
     private void Awake()
     {
         main = this;
@@ -35,6 +41,59 @@ public class Settings : MonoBehaviour
     private void Start()
     {
         SetSettings();
+    }
+
+    private void Update()
+    {
+        CheckScreenRotation();
+    }
+
+    private void CheckScreenRotation()
+    {
+        switch (Screen.orientation)
+        {
+            case ScreenOrientation.Portrait:
+                if (!isLandscapeRotation)
+                {
+                    isLandscapeRotation = false;
+                    RotationText.text = "portrait";
+                    ScreenRotationPortrait();
+                }
+                break;
+            case ScreenOrientation.Landscape:
+                if (isLandscapeRotation)
+                {
+                    isLandscapeRotation = true;
+                    RotationText.text = "landscape";
+                    ScreenRotationLandscape();
+
+                }
+                break;
+        }
+    }
+
+    private void ScreenRotationPortrait()
+    {
+        foreach (GameObject UI in VerticalUI)
+        {
+            UI.SetActive(true);
+        }
+        foreach (GameObject UI in HorizontalUI)
+        {
+            UI.SetActive(false);
+        }
+    }
+    private void ScreenRotationLandscape()
+    {
+        foreach (GameObject UI in VerticalUI)
+        {
+            UI.SetActive(false);
+        }
+        foreach (GameObject UI in HorizontalUI)
+        {
+            UI.SetActive(true);
+        }
+
     }
 
     /// <summary>
@@ -173,11 +232,5 @@ public class Settings : MonoBehaviour
         VolumeMusic = volumeMusic;
         launguage = PlayerPrefs.GetString("Launguage", "English");
         TranslateManager.main.LoadFile(launguage);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

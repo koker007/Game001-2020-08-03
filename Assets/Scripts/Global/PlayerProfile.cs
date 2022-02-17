@@ -155,10 +155,10 @@ public class PlayerProfile : MonoBehaviour
     public Item Ticket = new Item(1);
 
     public Item ShopInternal = new Item(15);
-    public Item ShopRocket = new Item(45);
-    public Item ShopBomb = new Item(45);
-    public Item ShopColor5 = new Item(100);
-    public Item ShopMixed = new Item(35);
+    public Item ShopRocket = new Item(20);
+    public Item ShopBomb = new Item(20);
+    public Item ShopColor5 = new Item(45);
+    public Item ShopMixed = new Item(20);
 
     private void Awake()
     {
