@@ -20,7 +20,7 @@ public class HealthTimer : MonoBehaviour
     private const string _SystemTimeStartRegenerationID = "SystemTimeStartRegeneration";
     private const int _TimeForRegenerate = 60*30; //second
     private const int _maxLive = 5;
-    private DateTime epochStart = new System.DateTime(1970, 1, 1, 8, 0, 0, System.DateTimeKind.Utc); //начало отсчета времени
+    private DateTime epochStart = new DateTime(1970, 1, 1, 8, 0, 0, DateTimeKind.Utc); //начало отсчета времени
     
     private void Awake()
     {
@@ -36,9 +36,9 @@ public class HealthTimer : MonoBehaviour
     //при запуске игры проверяет сколько хп надо восстановить
     public void HealthRegenerateRealTime()
     {
-        _SystemTimeStartRegeneration = PlayerPrefs.GetInt(_SystemTimeStartRegenerationID, (int)(System.DateTime.UtcNow - epochStart).TotalSeconds);
+        _SystemTimeStartRegeneration = PlayerPrefs.GetInt(_SystemTimeStartRegenerationID, (int)(DateTime.UtcNow - epochStart).TotalSeconds);
 
-        int inactiveGameTime = (int)((System.DateTime.UtcNow - epochStart).TotalSeconds - _SystemTimeStartRegeneration);
+        int inactiveGameTime = (int)((DateTime.UtcNow - epochStart).TotalSeconds - _SystemTimeStartRegeneration);
         int plusHealth = inactiveGameTime / _TimeForRegenerate;
 
         if (PlayerProfile.main.Health.Amount > _maxLive)
@@ -52,7 +52,7 @@ public class HealthTimer : MonoBehaviour
         else
         {
             PlayerProfile.main.SetHealth(PlayerProfile.main.Health.Amount += plusHealth);
-            TimerStart((int)Time.time - inactiveGameTime % _TimeForRegenerate, (int)(System.DateTime.UtcNow - epochStart).TotalSeconds - inactiveGameTime % _TimeForRegenerate);
+            TimerStart((int)Time.time - inactiveGameTime % _TimeForRegenerate, (int)(DateTime.UtcNow - epochStart).TotalSeconds - inactiveGameTime % _TimeForRegenerate);
         }
     }
 
@@ -86,7 +86,7 @@ public class HealthTimer : MonoBehaviour
         }
         else
         {
-            TimerStart((int)Time.time, (int)(System.DateTime.UtcNow - epochStart).TotalSeconds);
+            TimerStart((int)Time.time, (int)(DateTime.UtcNow - epochStart).TotalSeconds);
         }
     }
     //устанавливает значения начала таймера
