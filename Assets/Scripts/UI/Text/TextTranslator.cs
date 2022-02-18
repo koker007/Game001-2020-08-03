@@ -13,7 +13,7 @@ public class TextTranslator : MonoBehaviour
         text = GetComponent<Text>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         UpdateText();
     }

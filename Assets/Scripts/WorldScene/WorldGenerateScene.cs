@@ -101,7 +101,7 @@ public class WorldGenerateScene : MonoBehaviour
             mainLevels += (int)(MainLocations[i].lenghtAngle / 2.5f);
         }
 
-        rotationNow = -(PlayerProfile.main.ProfilelevelOpen * 2.5f) - 100;
+        rotationNeed = -(PlayerProfile.main.ProfilelevelOpen * 2.5f) - 115;
 
         
     }
@@ -181,9 +181,9 @@ public class WorldGenerateScene : MonoBehaviour
         {
             rotationNeed = WorldSlider.main.StartRotation;
         }
-        else if (rotationNeed <= WorldSlider.main.StartRotation - (PlayerProfile.main.ProfilelevelOpen * 2.5f))
+        else if (rotationNeed <= WorldSlider.main.StartRotation - ((PlayerProfile.main.ProfilelevelOpen + 10) * 2.5f))
         {
-            rotationNeed = WorldSlider.main.StartRotation - (PlayerProfile.main.ProfilelevelOpen * 2.5f);
+            rotationNeed = WorldSlider.main.StartRotation - ((PlayerProfile.main.ProfilelevelOpen + 10) * 2.5f);
         }
 
         float timeOffSet = Time.deltaTime * SpeedLerpRotation;
