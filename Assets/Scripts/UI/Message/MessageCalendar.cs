@@ -44,5 +44,6 @@ public class MessageCalendar : MonoBehaviour
     public void TakeButton()
     {
         GiftCalendar.main.GetGift();
+        DailyGifts.main.CheckHaveGift();
     }
 }

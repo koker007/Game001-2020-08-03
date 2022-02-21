@@ -29,7 +29,6 @@ public class Settings : MonoBehaviour
     public string launguage;
 
     public bool isLandscapeRotation = true;
-    [SerializeField] private Text RotationText;
     [SerializeField] private List<GameObject> VerticalUI;
     [SerializeField] private List<GameObject> HorizontalUI;
 
@@ -50,23 +49,30 @@ public class Settings : MonoBehaviour
 
     private void CheckScreenRotation()
     {
-        switch (Screen.orientation)
+        switch (Input.deviceOrientation)
         {
-            case ScreenOrientation.Portrait:
-                if (!isLandscapeRotation)
+            case DeviceOrientation.Portrait:
+                if (isLandscapeRotation)
                 {
-                    isLandscapeRotation = false;
-                    RotationText.text = "portrait";
                     ScreenRotationPortrait();
                 }
                 break;
-            case ScreenOrientation.Landscape:
+            case DeviceOrientation.PortraitUpsideDown:
                 if (isLandscapeRotation)
                 {
-                    isLandscapeRotation = true;
-                    RotationText.text = "landscape";
+                    ScreenRotationPortrait();
+                }
+                break;
+            case DeviceOrientation.LandscapeLeft:
+                if (!isLandscapeRotation)
+                {
                     ScreenRotationLandscape();
-
+                }
+                break;
+            case DeviceOrientation.LandscapeRight:
+                if (!isLandscapeRotation)
+                {
+                    ScreenRotationLandscape();
                 }
                 break;
         }
@@ -74,6 +80,7 @@ public class Settings : MonoBehaviour
 
     private void ScreenRotationPortrait()
     {
+        isLandscapeRotation = false;
         foreach (GameObject UI in VerticalUI)
         {
             UI.SetActive(true);
@@ -85,6 +92,7 @@ public class Settings : MonoBehaviour
     }
     private void ScreenRotationLandscape()
     {
+        isLandscapeRotation = true;
         foreach (GameObject UI in VerticalUI)
         {
             UI.SetActive(false);

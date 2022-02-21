@@ -34,6 +34,10 @@ public class MessageYouLose : MonoBehaviour
         {
             showAdButton.SetActive(true);
         }
+        else
+        {
+            showAdButton.SetActive(false);
+        }
 
         float volume = Settings.main.VolumeMusicFrom0To1;
         if (Settings.main.VolumeSoundFrom0To1 > Settings.main.VolumeMusicFrom0To1) {
