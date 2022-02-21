@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class DataBase : MonoBehaviour
 {
+    public static DataBase main;
+
     //Инициализация референса
     static DatabaseReference reference;
 
@@ -14,7 +16,7 @@ public class DataBase : MonoBehaviour
     }
 
     //Раздел уровней
-    public struct TypeLevel {
+    public class TypeLevel {
         const string LevelsStr = "Levels"; //Подраздел уровни
         const string PlayersVictoryStr = "Players_Passed"; //Количество пользователей которые прошли данный уровень
         const string StartStr = "Start"; //Количество раз когда уровень был запущен
@@ -23,25 +25,25 @@ public class DataBase : MonoBehaviour
         const string ScoreAverageStr = "Score_Average"; //Количество набираемых очков в среднем
         const string ScoreAllTimeStr = "Score_AllTime"; //Количество очков за все время
 
-        static int Level = -1;
-        static int PlayersVictoryL = -1;
-        static int StartL = -1;
-        static int CountMoveToWinAllTimeL = -1;
-        static int ScoreAllTimeL = -1;
+        int levelNumS = -1;
+        int PlayersVictoryL = -1;
+        int StartL = -1;
+        int CountMoveToWinAllTimeL = -1;
+        int ScoreAllTimeL = -1;
 
-        static int PlayersVictoryS = -1;
-        static int StartS = -1;
-        static int CountMoveToWinS = -1;
+        int PlayersVictoryS = -1;
+        int StartS = -1;
+        int CountMoveToWinS = -1;
 
-        static int ScoreAllTimeS = -1;
+        int ScoreAllTimeS = -1;
 
-        static bool LevelNeed = false;
-        static bool PlayersVictoryNeed = true;
-        static bool StartNeed = true;
-        static bool CountMoveToWinAllTimeNeed = true;
+        bool LevelNeed = false;
+        bool PlayersVictoryNeed = true;
+        bool StartNeed = true;
+        bool CountMoveToWinAllTimeNeed = true;
         //static bool CountMoveToWinAverageNeed = true;
         //static bool ScoreAverageNeed = true;
-        static bool ScoreAllTimeNeed = true;
+        bool ScoreAllTimeNeed = true;
 
         //Покупки общие на уровне
         const string Store = "Store"; //Покупки - подраздел
@@ -57,39 +59,39 @@ public class DataBase : MonoBehaviour
         const string HummerBuyStr = "Hummer_Buy";
 
         //Загруженное значение
-        static int CoronaUseL = -1;
-        static int CoronaBuyL = -1;
-        static int PillUseL = -1;
-        static int PillBuyL = -1;
-        static int BombUseL = -1;
-        static int BombBuyL = -1;
-        static int MixedUseL = -1;
-        static int MixedBuyL = -1;
-        static int HummerUseL = -1;
-        static int HummerBuyL = -1;
+        int CoronaUseL = -1;
+        int CoronaBuyL = -1;
+        int PillUseL = -1;
+        int PillBuyL = -1;
+        int BombUseL = -1;
+        int BombBuyL = -1;
+        int MixedUseL = -1;
+        int MixedBuyL = -1;
+        int HummerUseL = -1;
+        int HummerBuyL = -1;
 
         //Значения которые надо сохранить
-        static int CoronaUseS = -1;
-        static int CoronaBuyS = -1;
-        static int PillUseS = -1;
-        static int PillBuyS = -1;
-        static int BombUseS = -1;
-        static int BombBuyS = -1;
-        static int MixedUseS = -1;
-        static int MixedBuyS = -1;
-        static int HummerUseS = -1;
-        static int HummerBuyS = -1;
+        int CoronaUseS = -1;
+        int CoronaBuyS = -1;
+        int PillUseS = -1;
+        int PillBuyS = -1;
+        int BombUseS = -1;
+        int BombBuyS = -1;
+        int MixedUseS = -1;
+        int MixedBuyS = -1;
+        int HummerUseS = -1;
+        int HummerBuyS = -1;
 
-        static bool CoronaUseNeed = true;
-        static bool CoronaBuyNeed = true;
-        static bool PillUseNeed = true;
-        static bool PillBuyNeed = true;
-        static bool BombUseNeed = true;
-        static bool BombBuyNeed = true;
-        static bool MixedUseNeed = true;
-        static bool MixedBuyNeed = true;
-        static bool HummerUseNeed = true;
-        static bool HummerBuyNeed = true;
+        bool CoronaUseNeed = true;
+        bool CoronaBuyNeed = true;
+        bool PillUseNeed = true;
+        bool PillBuyNeed = true;
+        bool BombUseNeed = true;
+        bool BombBuyNeed = true;
+        bool MixedUseNeed = true;
+        bool MixedBuyNeed = true;
+        bool HummerUseNeed = true;
+        bool HummerBuyNeed = true;
 
         //Покупки ходов 
         public const string MoveBuyStr = "Move_Buy"; //покупка ходов золотом
@@ -97,14 +99,14 @@ public class DataBase : MonoBehaviour
         public const string MoveBuyAverageStr = "Move_Buy_Average";
         public const string MoveAdAverageStr = "Move_Ad_Average";
 
-        static int MoveBuyL = -1;
-        static int MoveAdL = -1;
+        int MoveBuyL = -1;
+        int MoveAdL = -1;
 
-        static int MoveBuyS = -1;
-        static int MoveAdS = -1;
+        int MoveBuyS = -1;
+        int MoveAdS = -1;
 
-        static bool MoveBuyNeed = true;
-        static bool MoveAdNeed = true;
+        bool MoveBuyNeed = true;
+        bool MoveAdNeed = true;
 
         //покупки золота
         public const string Gold___50str = "Gold___50"; //Количество покупок пакета
@@ -113,26 +115,26 @@ public class DataBase : MonoBehaviour
         public const string Gold__500str = "Gold__500";
         public const string Gold_1000str = "Gold_1000";
 
-        static int Gold___50L = -1;
-        static int Gold__100L = -1;
-        static int Gold__250L = -1;
-        static int Gold__500L = -1;
-        static int Gold_1000L = -1;
+        int Gold___50L = -1;
+        int Gold__100L = -1;
+        int Gold__250L = -1;
+        int Gold__500L = -1;
+        int Gold_1000L = -1;
 
-        static int Gold___50S = -1;
-        static int Gold__100S = -1;
-        static int Gold__250S = -1;
-        static int Gold__500S = -1;
-        static int Gold_1000S = -1;
+        int Gold___50S = -1;
+        int Gold__100S = -1;
+        int Gold__250S = -1;
+        int Gold__500S = -1;
+        int Gold_1000S = -1;
 
-        static bool Gold___50Need = true;
-        static bool Gold__100Need = true;
-        static bool Gold__250Need = true;
-        static bool Gold__500Need = true;
-        static bool Gold_1000Need = true;
+        bool Gold___50Need = true;
+        bool Gold__100Need = true;
+        bool Gold__250Need = true;
+        bool Gold__500Need = true;
+        bool Gold_1000Need = true;
 
         //Отправить на запись данные //Если данную отправлять на запись не надо, отправь 0
-        public static void SetLevelData(int levelNum, int CountMoveToWinF, int ScoreF, 
+        public void SetLevelData(int levelNumF, bool PlayersVictoryF, int CountMoveToWinF, int ScoreF, 
             int coronaUseF, int coronaBuyF, 
             int pillUseF, int pillBuyF,
             int bombUseF, int bombBuyF,
@@ -145,7 +147,17 @@ public class DataBase : MonoBehaviour
             ) {
 
 
-            if (levelNum < 0) return;
+            if (levelNumF < 0) return;
+
+            levelNumS = levelNumF; //Для какого уровня предназначенны данные
+            LevelNeed = true;
+
+            if (PlayersVictoryF) {
+                PlayersVictoryNeed = true; //Данную необходимо загрузить
+                PlayersVictoryL = -1; //Информацию о загруженной данной чистим
+                PlayersVictoryS = 1; //Наша переменная изменилась на это число
+            }
+
 
             if (CountMoveToWinF > 0) {
                 CountMoveToWinAllTimeNeed = true; //Данную необходимо загрузить
@@ -256,7 +268,7 @@ public class DataBase : MonoBehaviour
         }
 
         //Этот метод строго последовательно сначала пытается загрузить данные из сети, и только потом сохраняет когда точно известно что данные были полученны
-        public static void TestLoadAndSave() {
+        public void TestLoadAndSave() {
             //Сначала проверяем нужно ли вообще загружать какие либо данные уровня
             if (!LevelNeed) return;
 
@@ -264,7 +276,7 @@ public class DataBase : MonoBehaviour
             DatabaseReference yearChild = reference.Child(TimeWorld.GetTimeWorld().Year.ToString());
             DatabaseReference monthChild = yearChild.Child(TimeWorld.GetTimeWorld().Month.ToString());
             DatabaseReference levels = monthChild.Child(LevelsStr);
-            DatabaseReference levelData = levels.Child(LevelNeed.ToString());
+            DatabaseReference levelData = levels.Child(levelNumS.ToString());
 
             ///////////////////////////////////////////////////////////////////////////////
             //Стадия подгрузки
@@ -343,7 +355,6 @@ public class DataBase : MonoBehaviour
                     {
                         Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
-
                     else
                     {
                         int geted = getInt(task.Result);
@@ -380,7 +391,7 @@ public class DataBase : MonoBehaviour
             if (CoronaUseNeed && CoronaUseL == -1)
             {
                 //грузим из сети
-                levelData.Child(CoronaBuyStr).GetValueAsync().ContinueWith(task => {
+                levelData.Child(CoronaUseStr).GetValueAsync().ContinueWith(task => {
                     if (task.Result == null || !task.IsCompleted)
                     {
                         Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
@@ -390,7 +401,7 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) CoronaUseL = geted;
-                        else CoronaBuyL = 0;
+                        else CoronaUseL = 0;
                     }
                 });
 
@@ -561,12 +572,12 @@ public class DataBase : MonoBehaviour
                         result = getInt(task.Result);
                     }
 
-                    if (result != -1) MixedUseL = result;
-                    else MixedUseL = 0;
+                    if (result != -1) HummerUseL = result;
+                    else HummerUseL = 0;
                 });
 
                 //Запрос отправлен
-                MixedUseNeed = false;
+                HummerUseNeed = false;
             }
 
             if (MoveBuyNeed && MoveBuyL == -1)
@@ -678,7 +689,7 @@ public class DataBase : MonoBehaviour
             if (Gold__500Need && Gold__500L == -1)
             {
                 //грузим из сети
-                levelData.Child(Gold__100str).GetValueAsync().ContinueWith(task => {
+                levelData.Child(Gold__500str).GetValueAsync().ContinueWith(task => {
                     int result = -1;
                     if (task.Result == null || !task.IsCompleted)
                     {
@@ -744,74 +755,146 @@ public class DataBase : MonoBehaviour
                 ) return;
 
             //////////////////////////////////////////////////////////////////////////////////////////////
-            //Стадия расчета новых данных
+            //Стадия расчета новых данных и сохранения
 
             //Теперь, Когда все данные подгруженны и синхронизированы
 
-            //Считаем новые значения
-            PlayersVictoryS += PlayersVictoryL;
-            StartS += StartL;
-            ScoreAllTimeS += ScoreAllTimeL;
-            CountMoveToWinS += CountMoveToWinAllTimeL;
+            //Сохраняем только то что требует изменения
 
-            CoronaBuyS += CoronaBuyL;
-            CoronaUseS += CoronaUseL;
-            PillBuyS += PillBuyL;
-            PillUseS += PillUseL;
-            BombBuyS += BombBuyL;
-            BombUseS += BombUseL;
-            MixedBuyS += MixedBuyL;
-            MixedUseS += MixedUseL;
-            HummerBuyS += HummerBuyL;
-            HummerUseS += HummerUseL;
+            if (PlayersVictoryS > 0)
+            {
+                float PlayersVictoryF = PlayersVictoryS + PlayersVictoryL;
+                levelData.Child(PlayersVictoryStr).SetValueAsync(PlayersVictoryF);
+            }
+            if (StartS > 0) {
+                float StartF = StartS + StartL;
+                levelData.Child(StartStr).SetValueAsync(StartS);
+            }
+            if (ScoreAllTimeS > 0) {
+                float ScoreAllTimeF = ScoreAllTimeS + ScoreAllTimeL;
+                levelData.Child(ScoreAllTimeStr).SetValueAsync(ScoreAllTimeF);
+            }
+            if (CountMoveToWinS > 0) {
+                float CountMoveToWinF = CountMoveToWinS + CountMoveToWinAllTimeL;
+                levelData.Child(CountMoveToWinAllTimeStr).SetValueAsync(CountMoveToWinF);
+            }
+            if (CoronaBuyS > 0) {
+                float CoronaBuyF = CoronaBuyS + CoronaBuyL;
+                levelData.Child(CoronaBuyStr).SetValueAsync(CoronaBuyF);
+            }
+            if (CoronaUseS > 0) {
+                float CoronaUseF = CoronaUseS + CoronaUseL;
+                levelData.Child(CoronaUseStr).SetValueAsync(CoronaUseF);
+            }
+            if (PillBuyS > 0) {
+                float PillBuyF = PillBuyS + PillBuyL;
+                levelData.Child(pillBuyStr).SetValueAsync(PillBuyF);
+            }
+            if (PillUseS > 0) {
+                float PillUseF = PillUseS + PillUseL;
+                levelData.Child(pillUseStr).SetValueAsync(PillUseF);
+            }
+            if (BombBuyS > 0) {
+                float BombBuyF = BombBuyS + BombBuyL;
+                levelData.Child(bombBuyStr).SetValueAsync(BombBuyF);
+            }
+            if (BombUseS > 0) {
+                float BombUseF = BombUseS + BombUseL;
+                levelData.Child(bombUseStr).SetValueAsync(BombUseF);
+            }
+            if (MixedBuyS > 0) {
+                float MixedBuyF = MixedBuyS + MixedBuyL;
+                levelData.Child(MixedBuyStr).SetValueAsync(MixedBuyF);
+            }
+            if (MixedUseS > 0) {
+                float MixedUseF = MixedUseS + MixedUseL;
+                levelData.Child(MixedUseStr).SetValueAsync(MixedUseF);
+            }
+            if (HummerBuyS > 0) {
+                float HummerBuyF = HummerBuyS + HummerBuyL;
+                levelData.Child(HummerBuyStr).SetValueAsync(HummerBuyF);
+            }
+            if (HummerUseS > 0) {
+                float HummerUseF = HummerUseS + HummerUseL;
+                levelData.Child(HummerUseStr).SetValueAsync(HummerUseF);
+            }
 
-            MoveBuyS += MoveBuyL;
-            MoveAdS += MoveAdL;
+            if (MoveBuyS > 0) {
+                float MoveBuyF = MoveBuyS + MoveBuyL;
+                levelData.Child(MoveBuyStr).SetValueAsync(MoveBuyF);
+            }
+            if (MoveAdS > 0) {
+                float MoveAdF = MoveAdS + MoveAdL;
+                levelData.Child(MoveAdStr).SetValueAsync(MoveAdF);
+            }
 
-            Gold___50S += Gold___50L;
-            Gold__100S += Gold__100L;
-            Gold__250S += Gold__250L;
-            Gold__500S += Gold__500L;
-            Gold_1000S += Gold_1000L;
+            if (Gold___50S > 0) {
+                float Gold___50F = Gold___50S + Gold___50L;
+                levelData.Child(Gold___50str).SetValueAsync(Gold___50F);
+            }
+            if (Gold__100S > 0) {
+                float Gold__100F = Gold__100S + Gold__100L;
+                levelData.Child(Gold__100str).SetValueAsync(Gold__100F);
+            }
+            if (Gold__250S > 0) {
+                float Gold__250F = Gold__250S + Gold__250L;
+                levelData.Child(Gold__250str).SetValueAsync(Gold__250F);
+            }
+            if (Gold__500S > 0) {
+                float Gold__500F = Gold__500S + Gold__500L;
+                levelData.Child(Gold__500str).SetValueAsync(Gold__500F);
+            }
+            if (Gold_1000S > 0) {
+                float Gold_1000F = Gold_1000S + Gold_1000L;
+                levelData.Child(Gold_1000str).SetValueAsync(Gold_1000F);
+            }
 
-            //Расчет средних статистических значений
-            float CountMoveToWinAverage = CountMoveToWinS / PlayersVictoryS; //Сколько в средним игроки делали ходы на уровне чтобы выиграть
-            float ScoreAverage = ScoreAllTimeS / PlayersVictoryS; //Сколько в среднем игроки набирают очков при победе
+            //Перерасчет средних статистических значений если хотябы одна из переменных изменилась 
+            if (CountMoveToWinS > 0 || PlayersVictoryS > 0) {
 
-            float MoveBuyAverage = MoveBuyS / (float)StartS;
-            float MoveAdSAverage = MoveAdS / (float)StartS;
+                // считаем значение
+                float CountMoveToWinF = CountMoveToWinAllTimeL;
+                if (CountMoveToWinS > 0) CountMoveToWinF += CountMoveToWinS;
 
-            //////////////////////////////////////////////////////////////////////////////////////////////
-            //стадия сохранения
+                float PlayersVictoryF = PlayersVictoryL;
+                if (PlayersVictoryS > 0) PlayersVictoryF += PlayersVictoryS;
 
-            levelData.Child(PlayersVictoryStr).SetValueAsync(PlayersVictoryS);
-            levelData.Child(StartStr).SetValueAsync(StartS);
-            levelData.Child(ScoreAllTimeStr).SetValueAsync(ScoreAllTimeS);
-            levelData.Child(CountMoveToWinAllTimeStr).SetValueAsync(CountMoveToWinS);
-            
-            levelData.Child(CountMoveToWinAverageStr).SetValueAsync(CountMoveToWinAverage);
+                float CountMoveToWinAverage = CountMoveToWinF / PlayersVictoryF; //Сколько в средним игроки делали ходы на уровне чтобы выиграть
+                levelData.Child(CountMoveToWinAverageStr).SetValueAsync(CountMoveToWinAverage);
+            }
 
-            levelData.Child(CoronaBuyStr).SetValueAsync(CoronaBuyS);
-            levelData.Child(CoronaUseStr).SetValueAsync(CoronaUseS);
-            levelData.Child(pillBuyStr).SetValueAsync(PillBuyS);
-            levelData.Child(pillUseStr).SetValueAsync(PillUseS);
-            levelData.Child(bombBuyStr).SetValueAsync(BombBuyS);
-            levelData.Child(bombUseStr).SetValueAsync(BombUseS);
-            levelData.Child(MixedBuyStr).SetValueAsync(MixedBuyS);
-            levelData.Child(MixedUseStr).SetValueAsync(MixedUseS);
-            levelData.Child(HummerBuyStr).SetValueAsync(HummerBuyS);
-            levelData.Child(HummerUseStr).SetValueAsync(HummerUseS);
+            if (ScoreAllTimeS > 0 || PlayersVictoryS > 0) {
+                float ScoreAllTimeF = ScoreAllTimeL;
+                if (ScoreAllTimeS > 0) ScoreAllTimeF += ScoreAllTimeS;
 
-            levelData.Child(MoveBuyStr).SetValueAsync(MoveBuyS);
-            levelData.Child(MoveAdStr).SetValueAsync(MoveAdS);
-            levelData.Child(MoveBuyAverageStr).SetValueAsync(MoveBuyAverage);
-            levelData.Child(MoveAdAverageStr).SetValueAsync(MoveAdSAverage);
+                float PlayersVictoryF = PlayersVictoryL;
+                if (PlayersVictoryS > 0) PlayersVictoryF += PlayersVictoryS;
 
-            levelData.Child(Gold___50str).SetValueAsync(Gold___50S);
-            levelData.Child(Gold__100str).SetValueAsync(Gold__100S);
-            levelData.Child(Gold__250str).SetValueAsync(Gold__250S);
-            levelData.Child(Gold__500str).SetValueAsync(Gold__500S);
-            levelData.Child(Gold_1000str).SetValueAsync(Gold_1000S);
+                float ScoreAverage = ScoreAllTimeF / PlayersVictoryF; //Сколько в среднем игроки набирают очков при победе
+                //Не используется
+            }
+
+            if (MoveBuyS > 0 || StartS > 0) {
+                float MoveBuyF = MoveBuyL;
+                if (MoveBuyS > 0) MoveBuyF += MoveBuyS;
+
+                float StartF = StartL;
+                if (StartS > 0) StartF += StartS;
+
+                float MoveBuyAverage = MoveBuyF / (float)StartF;
+                levelData.Child(MoveBuyAverageStr).SetValueAsync(MoveBuyAverage);
+            }
+            if (MoveAdS > 0 || StartS > 0) {
+                float MoveAdF = MoveAdL;
+                if (MoveAdS > 0) MoveAdF += MoveAdS;
+
+                float StartF = StartL;
+                if (StartS > 0) StartF += StartS;
+
+                float MoveAdSAverage = MoveAdF / (float)StartF;
+                levelData.Child(MoveAdAverageStr).SetValueAsync(MoveAdSAverage);
+            }
+
 
 
             ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -845,6 +928,7 @@ public class DataBase : MonoBehaviour
             LevelNeed = false;
         }
     }
+    public TypeLevel typeLevel = new TypeLevel();
 
     //Раздел профиля
     public struct TypeProfile {
@@ -870,18 +954,19 @@ public class DataBase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        main = this;
         reference = FirebaseDatabase.DefaultInstance.RootReference;
 
 
 
-        TypeLevel.SetVictory(0, 12, 123, 4,5,6,7,8,9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
+        //typeLevel.SetLevelData(0, true, 2, 4,5,6,7,8,9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21);
     }
 
     // Update is called once per frame
     void Update()
     {
         //попытка загрузить из сети или сохранить в сеть
-        TypeLevel.TestLoadAndSave();
+        typeLevel.TestLoadAndSave();
     }
 
 }
