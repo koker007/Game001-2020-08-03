@@ -55,17 +55,17 @@ public class MenuGameplay : MonoBehaviour
 
     [Header("PassedImages")]
     [SerializeField]
-    Sprite[] PassedCrystalImage = new Sprite[5];
+    public Sprite[] PassedCrystalImage = new Sprite[5];
     [SerializeField]
-    Sprite PassedBoxImage;
+    public Sprite PassedBoxImage;
     [SerializeField]
-    Sprite PassedPanelImage;
+    public Sprite PassedPanelImage;
     [SerializeField]
-    Sprite PassedMoldImage;
+    public Sprite PassedMoldImage;
     [SerializeField]
-    Sprite PassedIceImage;
+    public Sprite PassedIceImage;
     [SerializeField]
-    Sprite PassedRockImage;
+    public Sprite PassedRockImage;
 
     [SerializeField]
     public RawImage ImageFon;

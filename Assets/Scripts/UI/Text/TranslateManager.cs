@@ -98,16 +98,20 @@ public class TranslateManager : MonoBehaviour
     {
         Translate[] tempTranslate = isEnglish ? _englishLaunguage : _translate;
         string text = null;
-        int StartPositionKey = (int)key[0] * _MaximumKeyOneSimbol;
-        for (int num = StartPositionKey; num < StartPositionKey + _MaximumKeyOneSimbol && num < tempTranslate.Length; num++)
+        try
         {
-            if (key == tempTranslate[num].key)
+            int StartPositionKey = (int)key[0] * _MaximumKeyOneSimbol;
+            for (int num = StartPositionKey; num < StartPositionKey + _MaximumKeyOneSimbol || num >= tempTranslate.Length; num++)
             {
-                text = tempTranslate[num].text;
-                break;
+                if (key == tempTranslate[num].key)
+                {
+                    text = tempTranslate[num].text;
+                    break;
+                }
             }
         }
-        if(text == null)
+        catch { }
+        if (text == null)
         {
             Debug.Log($"Error. Not find text {key} key");
             return null;

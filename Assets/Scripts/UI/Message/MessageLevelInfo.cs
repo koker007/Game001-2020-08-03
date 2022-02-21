@@ -34,7 +34,7 @@ public class MessageLevelInfo : MonoBehaviour
     [SerializeField]
     Texture TargetScore;
     [SerializeField]
-    Texture TargetCrystal;
+    Texture[] TargetCrystal = new Texture[0];
     [SerializeField]
     Texture TargetIce;
     [SerializeField]
@@ -157,7 +157,7 @@ public class MessageLevelInfo : MonoBehaviour
                 text = TranslateManager.main.GetText(TranslateManager.keyMessageLVLTargetICE);
             }
             else if (level.PassedWithCrystal) {
-                texture = TargetCrystal;
+                texture = TargetCrystal[(int)level.NeedColor];
                 text = TranslateManager.main.GetText(TranslateManager.keyMessageLVLTargetCrystal);
             }
             else if (level.PassedWithBox) {

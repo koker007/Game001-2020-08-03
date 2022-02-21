@@ -14,9 +14,16 @@ public class DailyGifts : MonoBehaviour
         main = this;
     }
 
-    public void CheckHaveGift()
+    public bool CheckHaveGift()
     {
         if (GiftCalendar.main.DaysInGameCounter <= SevenDays.Length && GiftCalendar.main.DaysInGameCounter > 0)
+        {
             GlobalMessage.DailyGift();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

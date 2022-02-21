@@ -29,5 +29,7 @@ public class MessageDailyGift : MonoBehaviour
     public void ButtonTake()
     {
         _day.TakeGift();
+
+        GiftCalendar.main.SubscribeNewDay();
     }
 }
