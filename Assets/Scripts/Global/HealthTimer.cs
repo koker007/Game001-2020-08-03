@@ -11,6 +11,7 @@ public class HealthTimer : MonoBehaviour
 {
     public static HealthTimer main;
 
+    [SerializeField] private GameObject _TimeRegenerationUI;
     [SerializeField] private Text _TimeRegenerationText;
 
     private bool _healthRegenerateStart;
@@ -64,6 +65,7 @@ public class HealthTimer : MonoBehaviour
         if (PlayerProfile.main.Health.Amount >= _maxLive)
         {
             _TimeRegenerationText.text = "";
+            _TimeRegenerationUI.SetActive(false);
             _healthRegenerateStart = false;
             return;
         }
@@ -74,6 +76,7 @@ public class HealthTimer : MonoBehaviour
             {
                 PlayerProfile.main.SetHealth(PlayerProfile.main.Health.Amount + 1);
                 _TimeRegenerationText.text = "";
+                _TimeRegenerationUI.SetActive(false);
                 _healthRegenerateStart = false;
             }
             else
@@ -81,7 +84,8 @@ public class HealthTimer : MonoBehaviour
                 int timeForRegenerate = _TimeForRegenerate - ((int)Time.time - _TimeStartRegeneration);
                 int second = timeForRegenerate % 60;
                 int minute = timeForRegenerate / 60;
-                _TimeRegenerationText.text = $"{minute}:{second}";
+                _TimeRegenerationUI.SetActive(true);
+                _TimeRegenerationText.text = second < 10 ? $"{minute}:0{second}": $"{minute}:{second}";
             }
         }
         else

@@ -197,7 +197,6 @@ public class GiftCalendar : MonoBehaviour
                 PlayerPrefs.SetInt(_daysInGameCounterKey, DaysInGameCounter);
 
                 SubscribeNewDay();
-                DailyGifts.main.CheckHaveGift();
             }
         }
         catch {}
@@ -209,7 +208,10 @@ public class GiftCalendar : MonoBehaviour
         _dayOfPurchase = PlayerPrefs.GetInt(_dayOfPurchaseKey, 0);
 
         if (_dayOfPurchase + days.Count <= (int)((TimeWorld.GetTimeWorld() - _epochStart).TotalDays))
+        {
+            DailyGifts.main.CheckHaveGift();
             return;
+        }
 
         DaySubEnded = (int)((TimeWorld.GetTimeWorld() - _epochStart).TotalDays) - _dayOfPurchase;
         DayCombo++;

@@ -261,7 +261,7 @@ public class MenuGameplay : MonoBehaviour
             if (level.PassedWithScore)
             {
                 GoalImage[i].sprite = PassedPanelImage;
-                GoalText[i].text = "S " + level.NeedScore.ToString();
+                GoalText[i].text = level.NeedScore.ToString();
                 i++;
             }
             if (level.PassedWithCrystal)
@@ -269,37 +269,37 @@ public class MenuGameplay : MonoBehaviour
                 GoalImage[i].sprite = PassedCrystalImage[(int)level.NeedColor];
                 int countColor = level.NeedCrystal - Gameplay.main.colorsCount[(int)level.NeedColor];
                 if (countColor < 0) countColor = 0;
-                GoalText[i].text = "C " + (countColor).ToString();
+                GoalText[i].text = (countColor).ToString();
                 i++;
             }
             if (level.PassedWithBox)
             {
                 GoalImage[i].sprite = PassedBoxImage;
-                GoalText[i].text = "B " + gameFieldCTRL.CountBoxBlocker.ToString();
+                GoalText[i].text = gameFieldCTRL.CountBoxBlocker.ToString();
                 i++;
             }
             if (level.PassedWithMold)
             {
                 GoalImage[i].sprite = PassedMoldImage;
-                GoalText[i].text = "M " + gameFieldCTRL.CountMold.ToString();
+                GoalText[i].text = gameFieldCTRL.CountMold.ToString();
                 i++;
             }
             if (level.PassedWithIce)
             {
                 GoalImage[i].sprite = PassedIceImage;
-                GoalText[i].text = "I " + gameFieldCTRL.CountIce.ToString();
+                GoalText[i].text = gameFieldCTRL.CountIce.ToString();
                 i++;
             }
             if (level.PassedWithPanel)
             {
                 GoalImage[i].sprite = PassedPanelImage;
-                GoalText[i].text = "P " + (gameFieldCTRL.CountInteractiveCells - gameFieldCTRL.CountPanelSpread).ToString();
+                GoalText[i].text = (gameFieldCTRL.CountInteractiveCells - gameFieldCTRL.CountPanelSpread).ToString();
                 i++;
             }
             if (level.PassedWithRock)
             {
                 GoalImage[i].sprite = PassedRockImage;
-                GoalText[i].text = "R " + gameFieldCTRL.CountRockBlocker.ToString();
+                GoalText[i].text = gameFieldCTRL.CountRockBlocker.ToString();
                 i++;
             }
 
