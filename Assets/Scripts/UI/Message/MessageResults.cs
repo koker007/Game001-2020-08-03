@@ -30,6 +30,7 @@ public class MessageResults : MonoBehaviour
         SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipLVLComplite, volume, 1);
 
         iniStar();
+        saveDataBace();
     }
 
     void iniStar() {
@@ -73,6 +74,10 @@ public class MessageResults : MonoBehaviour
         {
             PlayerProfile.main.SetLVLGold(Gameplay.main.levelSelect, 1);
         }
+    }
+    void saveDataBace() {
+        DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, true, Gameplay.main.movingCount, Gameplay.main.score, 
+            0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0);
     }
 
     public void NextLVL()
