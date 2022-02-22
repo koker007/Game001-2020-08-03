@@ -189,6 +189,7 @@ public class WorldGenerateScene : MonoBehaviour
         float timeOffSet = Time.deltaTime * SpeedLerpRotation;
         if (timeOffSet > 1) timeOffSet = 1;
         rotationNow = Mathf.Lerp(rotationNow, rotationNeed, timeOffSet);
+        if (rotationNow > -110) rotationNow = -110;
 
         if (Mathf.Abs(rotationNeed - rotationNow) < 0.01f) {
             rotationNow = rotationNeed;

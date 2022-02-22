@@ -28,12 +28,41 @@ public class MessageCTRL : MonoBehaviour
 
     [SerializeField] private bool levelInfo;
 
-    //протестируем сообщения по их типу
-    static public void TestBufferMessages() {
-        foreach (MessageCTRL message in BufferMessages) {
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////// Новые функциии управления буфером сообщений
+    
+    //Сделать текущее сообщение первым в списке
+    public void OpenMessageBuffer() {
+        //сперва ищем это сообщение в буффере
 
+        //Создаем новый буфер без этого сообщения
+        List<MessageCTRL> BufferMessagesPlus = new List<MessageCTRL>();
+        foreach (MessageCTRL message in BufferMessages) {
+            if (message != this && message != null)
+            {
+                BufferMessagesPlus.Add(message);
+            }
         }
+
+        //Новый список сообщений
+        List<MessageCTRL> BufferMessageNew = new List<MessageCTRL>();
+
+        //запихиваем это сообщение на первое место
+        BufferMessageNew.Add(this);
+        //Запихиваем все оставшиеся сообщения в список
+        foreach (MessageCTRL message in BufferMessagesPlus) {
+            BufferMessageNew.Add(message);
+        }
+
+        //заменяем буфер с текущим сообщением первым в списке
+        BufferMessages = BufferMessageNew;
     }
+
+    
+
+
+    ///конец новых сообщений буфера
+    /// ////////////////////////////////////////////////////////////////////////////////
 
     public void SetSelected() {
         if (selected != null && selected != this) {
