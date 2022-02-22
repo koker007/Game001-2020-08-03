@@ -70,35 +70,4 @@ public class ShopPack : MonoBehaviour
         }
         catch { }
     }
-
-
-    public void ClickDataBaceGold50() {
-        if (GameFieldCTRL.main != null) {
-            DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
-        }    
-    }
-    public void ClickDataBaceGold100() {
-        if (GameFieldCTRL.main != null)
-        {
-            DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0);
-        }
-    }
-    public void ClickDataBaceGold250() {
-        if (GameFieldCTRL.main != null)
-        {
-            DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0);
-        }
-    }
-    public void ClickDataBaceGold500() {
-        if (GameFieldCTRL.main != null)
-        {
-            DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
-        }
-    }
-    public void ClickDataBaceGold1000() {
-        if (GameFieldCTRL.main != null)
-        {
-            DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
-        }
-    }
 }

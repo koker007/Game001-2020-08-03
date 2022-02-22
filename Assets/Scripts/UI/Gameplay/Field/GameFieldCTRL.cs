@@ -1881,9 +1881,6 @@ public class GameFieldCTRL : MonoBehaviour
                     CellSelect.BufferCombination = comb;
                     CellSelect.DamageInvoke(0.25f);
                     MenuGameplay.main.SuperHitSelected = MenuGameplay.SuperHitType.none;
-
-                    //Записываем данные в базу
-                    DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0);
                 }
             }
             void TestShopRocket()
@@ -1913,9 +1910,6 @@ public class GameFieldCTRL : MonoBehaviour
                     }
 
                     MenuGameplay.main.SuperHitSelected = MenuGameplay.SuperHitType.none;
-
-                    //Записываем данные в базу
-                    DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                 }
 
             }
@@ -1949,9 +1943,6 @@ public class GameFieldCTRL : MonoBehaviour
                 }
 
                 CellSelect.Damage();
-
-                //Записываем данные в базу
-                DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             }
 
             void TestShopSuperColor()
@@ -1972,9 +1963,6 @@ public class GameFieldCTRL : MonoBehaviour
                 CellSelect.cellInternal.Activate(CellInternalObject.Type.color5, CellSelect.cellInternal, comb);
 
                 MenuGameplay.main.SuperHitSelected = MenuGameplay.SuperHitType.none;
-
-                //Записываем данные в базу
-                DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 1, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
             }
 
             void TestShopMixed()
@@ -1990,9 +1978,6 @@ public class GameFieldCTRL : MonoBehaviour
                 BuyMixedNeed = true;
 
                 MenuGameplay.main.SuperHitSelected = MenuGameplay.SuperHitType.none;
-
-                //Записываем данные в базу
-                DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             }
         }
 

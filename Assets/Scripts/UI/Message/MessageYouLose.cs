@@ -144,10 +144,6 @@ public class MessageYouLose : MonoBehaviour
 
             //Закрываем окно
             MessageCTRL.selected.ClickButtonClose();
-
-            //Добавляем в статистику уровня информацию что было купленно золото
-            if (GameFieldCTRL.main != null)
-                DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0);
         }
     }
 

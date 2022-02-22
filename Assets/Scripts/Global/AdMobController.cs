@@ -147,12 +147,6 @@ public class AdMobController : MonoBehaviour
         Gameplay.main.movingCan += 2;
         Gameplay.main.adWatchedCount++;
         //MessageCTRL.selected.ClickButtonClose();
-
-
-        if (GameFieldCTRL.main != null)
-            DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0);
-
-        
     }
 
     private void HandleRewardedAdLoaded(object sender, EventArgs args)
