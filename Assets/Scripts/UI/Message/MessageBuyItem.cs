@@ -99,39 +99,39 @@ public class MessageBuyItem : MonoBehaviour
         if (typeBuy == TypeBuy.internalObj) {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopInternal)) {
                 NeedBuyGold = true;
-
-                //если сейчас активный уровень
-                if (GameFieldCTRL.main != null) {
-                    //Сохраняем в базу данных
-                    DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0);
-                }
+            }
+            //если сейчас активный уровень
+            else if (GameFieldCTRL.main != null)
+            {
+                //Сохраняем в базу данных
+                DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0);
             }
         }
         else if (typeBuy == TypeBuy.rosket2x) {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopRocket)) {
                 NeedBuyGold = true;
-                if (GameFieldCTRL.main != null)
-                {
-                    DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0);
-                }
+            }
+            else if (GameFieldCTRL.main != null)
+            {
+                DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             }
         }
         else if (typeBuy == TypeBuy.bomb) {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopBomb)) {
                 NeedBuyGold = true;
-                if (GameFieldCTRL.main != null)
-                {
-                    DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                }
+            }
+            else if (GameFieldCTRL.main != null)
+            {
+                DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             }
         }
         else if (typeBuy == TypeBuy.Color5) {
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopColor5)) {
                 NeedBuyGold = true;
-                if (GameFieldCTRL.main != null)
-                {
-                    DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                }
+            }
+            else if (GameFieldCTRL.main != null)
+            {
+                DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             }
         }
         else if (typeBuy == TypeBuy.mixed)
@@ -139,10 +139,10 @@ public class MessageBuyItem : MonoBehaviour
             if (!PlayerProfile.main.isPurchaseItem(ref PlayerProfile.main.ShopMixed))
             {
                 NeedBuyGold = true;
-                if (GameFieldCTRL.main != null)
-                {
-                    DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                }
+            }
+            else if (GameFieldCTRL.main != null)
+            {
+                DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             }
         }
         //Кнопка покупки за реал
