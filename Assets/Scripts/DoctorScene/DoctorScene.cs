@@ -48,21 +48,23 @@ public class DoctorScene : MonoBehaviour
         main.emotion = emotionNew;
 
         if (main.emotion == Emotions.Happy) {
-            main.objBottle.SetActive(true);
-            main.objDocument.SetActive(false);
-            main.objMask.SetActive(false);
+            if(main.objBottle != null) main.objBottle.SetActive(true);
+            if (main.objDocument != null) main.objDocument.SetActive(false);
+            if(main.objMask) main.objMask.SetActive(false);
+
             main.anim.SetInteger("emotion", 3);
         }
         else if (main.emotion == Emotions.Normal) {
-            main.objBottle.SetActive(true);
-            main.objDocument.SetActive(true);
-            main.objMask.SetActive(true);
+
+            if (main.objBottle != null) main.objBottle.SetActive(true);
+            if (main.objDocument != null) main.objDocument.SetActive(true);
+            if (main.objMask) main.objMask.SetActive(true);
             main.anim.SetInteger("emotion", 1);
         }
         else if (main.emotion == Emotions.Sad) {
-            main.objBottle.SetActive(false);
-            main.objDocument.SetActive(false);
-            main.objMask.SetActive(true);
+            if (main.objBottle != null) main.objBottle.SetActive(false);
+            if (main.objDocument != null) main.objDocument.SetActive(false);
+            if (main.objMask) main.objMask.SetActive(true);
             main.anim.SetInteger("emotion", 2);
         }
     }
