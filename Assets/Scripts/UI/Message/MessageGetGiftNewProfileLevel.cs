@@ -107,21 +107,22 @@ public class MessageGetGiftNewProfileLevel : MonoBehaviour
             PlayerProfile.main.PlusPlayerLVLGift();
         }
 
+        
         //открываем следующее сообщение о награде
-        MessageCTRL messageCTRL = MessageCTRL.selected;
+        //MessageCTRL messageCTRL = MessageCTRL.selected;
 
         //Если после получения текущего подарка все еще можем получить следующий
         if (PlayerProfile.main.CanPlusPlayerLVLGift()) {
-            Destroy(messageCTRL.gameObject);
+
+            //Destroy(messageCTRL.gameObject);
 
             //после закрытия попытаться получить следующий подарок (принудительно)
             GlobalMessage.GetGiftNewProfileLVL(true);
 
         }
-        //Закрываем сообщение плавно
-        else {
-            messageCTRL.ClickButtonClose();
-        }
+
+        //Удаляем это сообщение из буфера
+        gameObject.GetComponent<MessageCTRL>().DeleteMessageBuffer();
 
         //получаем подарок
         void GetGift()

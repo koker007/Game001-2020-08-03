@@ -9,7 +9,9 @@ public class MessageFonCloser : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData pointerEventData)
     {
-
-        MessageCTRL.selected.ClickButtonClose();
+        if (MessageCTRL.BufferMessages.Count > 0) {
+            MessageCTRL.BufferMessages[0].DeleteMessageBuffer();
+        }
+        //MessageCTRL.selected.ClickButtonClose();
     }
 }

@@ -129,7 +129,9 @@ public class MessageYouLose : MonoBehaviour
         //Если золота не хватает.. открываем окно с покупкой золота
         if (PlayerProfile.main.GoldAmount < PriceMoveOfGold)
         {
-            MessageCTRL.selected.ClickButtonClose();
+            //gameObject.GetComponent<MessageCTRL>().DeleteMessageBuffer();
+
+            //MessageCTRL.selected.ClickButtonClose();
 
             GlobalMessage.ShopBuyGold();
 
@@ -143,7 +145,8 @@ public class MessageYouLose : MonoBehaviour
             Gameplay.main.buyMoveCount++;
 
             //Закрываем окно
-            MessageCTRL.selected.ClickButtonClose();
+            gameObject.GetComponent<MessageCTRL>().DeleteMessageBuffer();
+            //MessageCTRL.selected.ClickButtonClose();
 
             //Добавляем в статистику уровня информацию что было купленно золото
             if (GameFieldCTRL.main != null)
@@ -156,6 +159,9 @@ public class MessageYouLose : MonoBehaviour
         //Сообщение не уместно так как у игрока есть еще ходы
         if (Gameplay.main.movingCan > 0)
         {
+            gameObject.GetComponent<MessageCTRL>().DeleteMessageBuffer();
+
+            /*
             //Если сообщение видно игроку закрываем медленно
             if (MessageCTRL.selected != null && MessageCTRL.selected.gameObject == gameObject) {
                 MessageCTRL.selected.ClickButtonClose();
@@ -164,6 +170,7 @@ public class MessageYouLose : MonoBehaviour
             else {
                 MessageCTRL.selected.Destroy();
             }
+            */
         }
     }
 }
