@@ -310,7 +310,8 @@ public class Gameplay : MonoBehaviour
             if (messageYouLose != null) {
                 timeScale = 1;
                 LevelsScript.main.ReturnLevel().MaxScore = score;
-                message.SetOpenTrue();
+
+                message.OpenMessageBuffer();
                 return;
             }
             

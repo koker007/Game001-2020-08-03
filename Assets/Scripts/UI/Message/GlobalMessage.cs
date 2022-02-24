@@ -102,7 +102,7 @@ public class GlobalMessage : MonoBehaviour
 
     public void InvokeTermsOfUse() {
         if (PlayerProfile.main.ProfileTermsOfUse +0.0001f >= System.Convert.ToDouble(Application.version) ||         //если соглашение уже принято
-            MessageCTRL.selected //или сейчас показывается какое-то сообщение
+            MessageCTRL.BufferMessages.Count != 0 //или сейчас показывается какое-то сообщение
             ) {
             return;
         }
@@ -128,11 +128,10 @@ public class GlobalMessage : MonoBehaviour
     static public void Close()
     {
 
-        if (MessageCTRL.selected)
+        if (MessageCTRL.BufferMessages.Count > 0)
         {
             //Говорим сообщению выпилиться
-            MessageCTRL.selected.AddInBuffer();
-            MessageCTRL.selected.ClickButtonClose();
+            MessageCTRL.BufferMessages[0].ClickButtonClose();
         }
     }
 
@@ -140,7 +139,11 @@ public class GlobalMessage : MonoBehaviour
         GameObject messageObj = Instantiate(prefabMessage, main.transform);
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
 
-        MessageCTRL.NewMessage(messageCTRL);
+        //Сообщение само откроется
+        //ставим сообщение на первое место
+        messageCTRL.OpenMessageBuffer();
+
+        //MessageCTRL.NewMessage(messageCTRL);
 
         return messageCTRL;
     }
@@ -157,7 +160,8 @@ public class GlobalMessage : MonoBehaviour
 
         messageCTRL.setMessage(title, message, button);
 
-        MessageCTRL.NewMessage(messageCTRL);
+        messageCTRL.OpenMessageBuffer();
+        //MessageCTRL.NewMessage(messageCTRL);
     }
     static public void Message(string title, string message) {
         Message(title, message, "Ok");
@@ -167,7 +171,8 @@ public class GlobalMessage : MonoBehaviour
         GameObject messageObj = Instantiate(main.PrefabTermsOfUse, main.transform);
         MessageCTRL messageCTRL = messageObj.GetComponent<MessageCTRL>();
 
-        MessageCTRL.NewMessage(messageCTRL);
+        //Соосщение само откроется
+        //MessageCTRL.NewMessage(messageCTRL);
     }
 
     static public void Settings()
@@ -391,7 +396,7 @@ public class GlobalMessage : MonoBehaviour
             
 
             float alphaMax = 0.5f;
-            if (!MessageCTRL.selected && Fon.color.a > 0)
+            if (MessageCTRL.BufferMessages.Count == 0 && Fon.color.a > 0)
             {
                 float alpha = Fon.color.a;
                 alpha -= Time.unscaledDeltaTime;
@@ -407,7 +412,7 @@ public class GlobalMessage : MonoBehaviour
 
                 Fon.color = new Color(Fon.color.r, Fon.color.g, Fon.color.b, alpha);
             }
-            else if (MessageCTRL.selected && Fon.color.a < alphaMax) {
+            else if (MessageCTRL.BufferMessages.Count > 0 && Fon.color.a < alphaMax) {
                 Fon.raycastTarget = true;
 
                 float alpha = Fon.color.a;

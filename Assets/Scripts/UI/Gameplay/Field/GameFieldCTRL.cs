@@ -4241,7 +4241,7 @@ public class GameFieldCTRL : MonoBehaviour
 
     void TestEndMessage()
     {
-        if (MessageCTRL.selected != null)
+        if (MessageCTRL.BufferMessages.Count > 0)
         {
             return;
         }
