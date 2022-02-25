@@ -933,6 +933,7 @@ public class DataBase : MonoBehaviour
     //Раздел профиля
     public struct TypeProfile {
         public const string Profiles = "Profiles";
+        public const
         public const string Level_Max = "Level_opened_maximum";
         public const string Level_Open_Averade = "Level_opened_average";
         public const string Level_Open_Averade_Count = "Level_opened_average_count";
