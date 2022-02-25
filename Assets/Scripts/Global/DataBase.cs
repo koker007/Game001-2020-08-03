@@ -931,12 +931,167 @@ public class DataBase : MonoBehaviour
     public TypeLevel typeLevel = new TypeLevel();
 
     //Раздел профиля
-    public struct TypeProfile {
+    public class TypeProfile {
+        bool loadNeed = true;
+
         public const string Profiles = "Profiles";
-        public const
-        public const string Level_Max = "Level_opened_maximum";
-        public const string Level_Open_Averade = "Level_opened_average";
-        public const string Level_Open_Averade_Count = "Level_opened_average_count";
+        public const string Level_Max = "Level_opened_maximum"; //Максимальный открытый уровень
+        public const string Level_Open_Averade = "Level_opened_average"; //
+
+        //Имя профиля
+        public const string name = "Name";
+        public const string level_max = "level_max";
+
+        //магазин пользователя
+        public const string shop = "Shop";
+        public const string buying = "buying";
+        public const string gold_50 = "gold_50";
+        public const string gold_100 = "gold_100";
+        public const string gold_250 = "gold_250";
+        public const string gold_500 = "gold_500";
+        public const string gold_1000 = "gold_1000";
+
+        public const string pack_01 = "pack01";
+        public const string pack_02 = "pack02";
+        public const string pack_03 = "pack03";
+        public const string pack_04 = "pack04";
+        public const string pack_05 = "pack05";
+
+        public const string vip = "vip";
+
+        int buyingL = -1;
+        int gold_50L = -1;
+        int gold_100L = -1;
+        int gold_250L = -1;
+        int gold_500L = -1;
+        int gold_1000L = -1;
+        int pack_01L = -1;
+        int pack_02L = -1;
+        int pack_03L = -1;
+        int pack_04L = -1;
+        int pack_05L = -1;
+        int vipL = -1;
+
+        int buyingS = -1;
+        int gold_50S = -1;
+        int gold_100S = -1;
+        int gold_250S = -1;
+        int gold_500S = -1;
+        int gold_1000S = -1;
+        int pack_01S = -1;
+        int pack_02S = -1;
+        int pack_03S = -1;
+        int pack_04S = -1;
+        int pack_05S = -1;
+        int vipS = -1;
+
+        bool buyingNeed = true;
+        bool gold_50Need = true;
+        bool gold_100Need = true;
+        bool gold_250Need = true;
+        bool gold_500Need = true;
+        bool gold_1000Need = true;
+        bool pack_01Need = true;
+        bool pack_02Need = true;
+        bool pack_03Need = true;
+        bool pack_04Need = true;
+        bool pack_05Need = true;
+        bool vipNeed = true;
+
+
+        public void setProfileData(int buyingF, 
+            int gold_50F, int gold_100F, int gold_250F, int gold_500F, int gold_1000F, 
+            int pack_01F, int pack_02F, int pack_03F, int pack_04F, int pack_05F, int vipF) {
+
+            if (buyingF > 0)
+            {
+                buyingNeed = true;
+                buyingL = -1;
+                buyingS = buyingF;
+            }
+            if (gold_50F > 0)
+            {
+                gold_50Need = true;
+                gold_50L = -1;
+                gold_50S = gold_50F;
+            }
+            if (gold_100F > 0)
+            {
+                gold_100Need = true;
+                gold_100L = -1;
+                gold_100S = gold_100F;
+            }
+            if (gold_250F > 0)
+            {
+                gold_250Need = true;
+                gold_250L = -1;
+                gold_250S = gold_250F;
+            }
+            if (gold_500F > 0)
+            {
+                gold_500Need = true;
+                gold_500L = -1;
+                gold_500S = gold_500F;
+            }
+            if (gold_1000F > 0)
+            {
+                gold_1000Need = true;
+                gold_1000L = -1;
+                gold_1000S = gold_100F;
+            }
+            if (pack_01F > 0)
+            {
+                pack_01Need = true;
+                pack_01L = -1;
+                pack_01S = pack_01F;
+            }
+            if (pack_02F > 0)
+            {
+                pack_02Need = true;
+                pack_02L = -1;
+                pack_02S = pack_02F;
+            }
+            if (pack_03F > 0)
+            {
+                pack_03Need = true;
+                pack_03L = -1;
+                pack_03S = pack_03F;
+            }
+            if (pack_04F > 0)
+            {
+                pack_04Need = true;
+                pack_04L = -1;
+                pack_04S = pack_04F;
+            }
+            if (pack_05F > 0)
+            {
+                pack_05Need = true;
+                pack_05L = -1;
+                pack_05S = pack_05F;
+            }
+            if (vipF > 0)
+            {
+                vipNeed = true;
+                vipL = -1;
+                vipS = vipF;
+            }
+
+            loadNeed = false;
+        }
+
+        void TestLoadAndSave() {
+
+            if (!loadNeed) return;
+
+            //Зашли в подраздел уровней текущего времени
+            DatabaseReference yearChild = reference.Child(TimeWorld.GetTimeWorld().Year.ToString());
+            DatabaseReference monthChild = yearChild.Child(TimeWorld.GetTimeWorld().Month.ToString());
+
+            DatabaseReference profile = monthChild.Child(Profiles);
+            DatabaseReference profileData = profile.Child("");
+
+
+        }
     }
 
     static int getInt(DataSnapshot dataSnapshot) {
