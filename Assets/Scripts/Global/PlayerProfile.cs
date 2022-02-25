@@ -50,7 +50,7 @@ public class PlayerProfile : MonoBehaviour
 
     //Время первого включения чтобы различать пользователей
     const string strProfileTimeStart = "ProfileTimeStart";
-    string profileTimeStart = "";
+    public string profileTimeStart = "";
 
     //Пользовательское соглашение
     const string strProfileTermsOfUse = "ProfileTermsOfUse";

@@ -4028,24 +4028,29 @@ public class GameFieldCTRL : MonoBehaviour
 
                             //Если в ячейке
                             //Цвет
-                            if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.color) {
+                            if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.color)
+                            {
                                 colors.Add(cellCTRLs[x, y].cellInternal);
                             }
                             //Бомба
-                            else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.bomb) {
+                            else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.bomb)
+                            {
                                 bombs.Add(cellCTRLs[x, y].cellInternal);
                             }
                             //Самолет
-                            else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.airplane) {
+                            else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.airplane)
+                            {
                                 flys.Add(cellCTRLs[x, y].cellInternal);
                             }
                             //ракета
                             else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.rocketHorizontal ||
-                                cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.rocketVertical) {
+                                cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.rocketVertical)
+                            {
                                 roskets.Add(cellCTRLs[x, y].cellInternal);
                             }
                             //Супер цвет
-                            else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.color5) {
+                            else if (cellCTRLs[x, y].cellInternal.type == CellInternalObject.Type.color5)
+                            {
                                 color5.Add(cellCTRLs[x, y].cellInternal);
                             }
                         }
@@ -4166,8 +4171,8 @@ public class GameFieldCTRL : MonoBehaviour
 
                         }
 
-                        //Если ходов не осталось высвечиваем сообщение о последнем ходе
-                        if (Gameplay.main.movingCan <= 0) {
+                        //Если ходов не осталось или нет объектов для взрывов высвечиваем сообщение о последнем ходе
+                        if (Gameplay.main.movingCan <= 0 || colors.Count <= 0) {
                             MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strLastMove);
                         }
                     }
@@ -4178,7 +4183,6 @@ public class GameFieldCTRL : MonoBehaviour
                         PlayerProfile.main.Save();
                         NeedOpenComplite = true;
                     }
-
                 }
 
                 else if (Gameplay.main.isMissionDefeat())
