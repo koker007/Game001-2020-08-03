@@ -187,4 +187,11 @@ public class MessageBuyItem : MonoBehaviour
         PlayerProfile.main.Save();
     }
 
+    public void AddHealtForAds() {
+
+        //Просто добавляем жизнь
+        AdMobController.main.ShowPlusHealthAd();
+
+    }
+
 }

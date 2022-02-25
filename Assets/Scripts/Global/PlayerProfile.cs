@@ -196,7 +196,12 @@ public class PlayerProfile : MonoBehaviour
         //Преобразуем данные в дату
         subscriptionDateEnd = new System.DateTime(subscriptionYear, subscriptionMonth, subscriptionDay);
 
-        Health.Amount = PlayerPrefs.GetInt(strHealth, startHealth);
+
+        int loadHealth = PlayerPrefs.GetInt(strHealth, startHealth);
+        if(Health.Amount < loadHealth)  
+            Health.Amount = PlayerPrefs.GetInt(strHealth, startHealth);
+
+
         Ticket.Amount = PlayerPrefs.GetInt(strTicket, startTicket);
         ShopInternal.Amount = PlayerPrefs.GetInt(strShopInternal, startShopInternal);
         ShopRocket.Amount = PlayerPrefs.GetInt(strShopRocket, startShopRocket);
@@ -273,7 +278,7 @@ public class PlayerProfile : MonoBehaviour
 
         //Данные игры
         dataStr += strGoldAmount + spliterKAD + GoldAmount + spliterDAD;
-        dataStr += strHealth + spliterKAD + Health.Amount + spliterDAD;
+        //dataStr += strHealth + spliterKAD + Health.Amount + spliterDAD;
         dataStr += strTicket + spliterKAD + Ticket.Amount + spliterDAD;
         dataStr += strMoneyboxCapacity + spliterKAD + moneyboxCapacity + spliterDAD;
         dataStr += strMoneyboxContent + spliterKAD + moneyboxContent + spliterDAD;
@@ -381,11 +386,11 @@ public class PlayerProfile : MonoBehaviour
             GooglePlay.main.LastMessage = "Profile: " + strGoldAmount;
             GoldAmount = System.Convert.ToInt32(data);
         }
-        else if (key == strHealth)
-        {
-            GooglePlay.main.LastMessage = "Profile: " + strHealth;
-            Health.Amount = System.Convert.ToInt32(data);
-        }
+        //else if (key == strHealth)
+        //{
+        //    GooglePlay.main.LastMessage = "Profile: " + strHealth;
+        //    Health.Amount = System.Convert.ToInt32(data);
+        //}
         else if (key == strTicket)
         {
             GooglePlay.main.LastMessage = "Profile: " + strTicket;

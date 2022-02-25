@@ -12,11 +12,13 @@ public class AdMobController : MonoBehaviour
     public static AdMobController main;
     private RewardedAd rewardedAd;
     private RewardedAd playBonusAd;
+    private RewardedAd rewardedHealthAd;
     private BannerView bannerView;
 
     string keyVideoTest = "ca-app-pub-3940256099942544/5224354917";
     string keyVideoAndroidAddMoving = "ca-app-pub-4685950010415099/1502718587";
     string keyVideoAndroidPlayWithBonus = "ca-app-pub-4685950010415099/7529188422";
+    string keyVideoAndroidAddHealth = "ca-app-pub-4685950010415099/3868092669";
     string keyVideoIphone = "";
 
     [SerializeField]
@@ -99,6 +101,20 @@ public class AdMobController : MonoBehaviour
 
         //»спользу€ настройки дл€ предыдущей рекламмы создаем эту
         playBonusAd.LoadAd(request);
+
+
+        #if UNITY_ANDROID
+            rewardedAdUnitId = keyVideoAndroidAddHealth;
+        #elif UNITY_IPHONE
+            reawardedAdUnitId = "ca-app-pub-3940256099942544/1712485313";
+        #else
+            reawardedAdUnitId = "unexpected_platform";
+        #endif
+        rewardedHealthAd = new RewardedAd(rewardedAdUnitId);
+        rewardedHealthAd.OnAdLoaded += HandleAddHealthLoaded;
+        rewardedHealthAd.OnUserEarnedReward += HandleAddHealthReward;
+        rewardedHealthAd.OnAdClosed += HandleAddHealthClosed;
+        rewardedHealthAd.LoadAd(request);
     }
 
     //—оздаем баннер
@@ -139,6 +155,13 @@ public class AdMobController : MonoBehaviour
         {
             playBonusAd.Show();
         }
+    }
+
+    public void ShowPlusHealthAd() {
+        //—мотрим рекламу чтобы получить жизнь
+        if (rewardedHealthAd.IsLoaded()) {
+            rewardedHealthAd.Show();
+        }        
     }
 
     #region rewardedAdHandlers
@@ -233,6 +256,39 @@ public class AdMobController : MonoBehaviour
     }
 
     private void HandlePlayWithBonusClosed(object sender, EventArgs args)
+    {
+        CreateAndLoadRewardedAd();
+    }
+    #endregion
+
+    #region RewardedHealth
+    private void HandleAddHealthReward(object sender, Reward args)
+    {
+        PlayerProfile.main.Health.Amount++;
+        PlayerProfile.main.Save();
+    }
+
+    private void HandleAddHealthLoaded(object sender, EventArgs args)
+    {
+
+    }
+
+    private void HandleAddHealthFailedToLoad(object sender, AdFailedToLoadEventArgs args)
+    {
+
+    }
+
+    private void HandleAddHealthOpening(object sender, EventArgs args)
+    {
+
+    }
+
+    private void HandleAddHealthFailedToShow(object sender, AdErrorEventArgs args)
+    {
+
+    }
+
+    private void HandleAddHealthClosed(object sender, EventArgs args)
     {
         CreateAndLoadRewardedAd();
     }
