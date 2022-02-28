@@ -237,7 +237,7 @@ public class Particle3dCTRL : MonoBehaviour
     public static Particle3dCTRL CreateBoomAll(Transform field, CellCTRL cellStartExplose)
     {
 
-        return CreateParticle(field, cellStartExplose, GameplayParticles3D.main.prefabBoomRocket);
+        return CreateParticle(field, cellStartExplose, GameplayParticles3D.main.prefabBoomAll);
     }
 
     /// <summary>

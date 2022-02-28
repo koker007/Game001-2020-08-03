@@ -85,6 +85,9 @@ public class FlyCTRL : MonoBehaviour
         myRect.pivot = new Vector2(-CellStart.pos.x, -CellStart.pos.y);
 
         myField = CellStart.myField;
+        if (CellTarget == null) {
+            bool test = false;
+        }
         CellTarget = CellTargetFunc;
         PivotTarget = new Vector2(-CellTarget.pos.x, -CellTarget.pos.y);
 

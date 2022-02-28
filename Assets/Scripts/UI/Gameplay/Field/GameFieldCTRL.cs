@@ -4095,7 +4095,7 @@ public class GameFieldCTRL : MonoBehaviour
 
                         //выбираем случайную €чейку
                         int count = Gameplay.main.movingCan;
-                        for (int num = 0; num < count; num++) {
+                        for (int num = 0; num < count && num < colors.Count; num++) {
 
 
                             //выбираем рандомуную €чейку
@@ -4174,6 +4174,7 @@ public class GameFieldCTRL : MonoBehaviour
                         //≈сли ходов не осталось или нет объектов дл€ взрывов высвечиваем сообщение о последнем ходе
                         if (Gameplay.main.movingCan <= 0 || colors.Count <= 0) {
                             MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strLastMove);
+                            Gameplay.main.movingCan = 0;
                         }
                     }
 

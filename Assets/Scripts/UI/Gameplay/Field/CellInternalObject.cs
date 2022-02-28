@@ -1455,74 +1455,16 @@ public class CellInternalObject : MonoBehaviour
                         {
                             continue;
                         }
+
+                        //высчитываем растояние до ячейки от
                         float dist = Vector2.Distance(myField.cellCTRLs[x, y].pos, myCell.pos);
 
                         //Создаем запрос на изменение объекта и дальнейшую активицию
                         myField.cellCTRLs[x, y].cellInternal.InvokeReplacementColorAndActivate(dist * speedPerCell, typePartner, combination);
 
-                        /*
-                        CellInternalObject cellInternalObject = myField.cellCTRLs[x, y].cellInternal;
-
-                        //Удаляем старый объект
-                        if (myField.cellCTRLs[x, y].cellInternal && myField.cellCTRLs[x, y].rock <= 0)
-                        {
-                            Destroy(myField.cellCTRLs[x, y].cellInternal.gameObject);
-
-                            //создаем новый обьект
-                            GameObject internalObj = Instantiate(myField.prefabInternal, myField.parentOfInternals);
-                            cellInternalObject = internalObj.GetComponent<CellInternalObject>();
-                            cellInternalObject.myField = myField;
-                        }
-
-                        //Заменяем если нет камня
-                        if (myField.cellCTRLs[x, y].rock <= 0) {
-
-                            //Если партнер ракета
-                            if (typePartner == Type.rocketHorizontal || typePartner == Type.rocketVertical)
-                            {
-                                if (Random.Range(0, 100) < 50)
-                                {
-                                    cellInternalObject.setColorAndType(partner.color, Type.rocketVertical);
-                                }
-                                else
-                                {
-                                    cellInternalObject.setColorAndType(partner.color, Type.rocketHorizontal);
-                                }
-                            }
-                            //Если бомба
-                            else if (typePartner == Type.bomb)
-                            {
-                                cellInternalObject.setColorAndType(replaceColor, Type.bomb);
-                            }
-                            //Если самолет
-                            else if (typePartner == Type.airplane)
-                            {
-                                cellInternalObject.setColorAndType(partner.color, Type.airplane);
-
-                            }
-                            else
-                            {
-
-                            }
-                        }
-                        */
-
                         Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomSuperColor(myField.transform, myCell);
                         particle3DCTRL.SetTransformTarget(new Vector2(x + 0.5f, y + 0.5f));
                         particle3DCTRL.SetTransformSpeed(1 / speedPerCell);
-
-                        /*
-                        //Перемещаем объект на место старого
-                        cellInternalObject.StartMove(myField.cellCTRLs[x, y]);
-                        cellInternalObject.EndMove();
-
-                        //needInstantDamage = false;
-                        cellInternalObject.BufferActivateType = cellInternalObject.type;
-                        cellInternalObject.BufferPartner = null;
-                        cellInternalObject.BufferCombination = combination;
-                        //cellInternalObject.Activate(cellInternalObject.type, null, combination);
-                        cellInternalObject.ActivateInvoke(dist * speedPerCell);
-                        */
                     }
                 }
 
@@ -1924,7 +1866,7 @@ public class CellInternalObject : MonoBehaviour
                 //ищем ячейку к которой еще никто не летит
                 foreach (CellCTRL cellPriority in myField.cellsPriority)
                 {
-                    if (cellPriority == myCell) { 
+                    if (cellPriority == myCell || cellPriority == null) { 
                         continue; 
                     }
 
@@ -1963,7 +1905,7 @@ public class CellInternalObject : MonoBehaviour
                     bool found = false;
                     foreach (FlyCTRL fly in FlyCTRL.flyCTRLs)
                     {
-                        if (fly.CellTarget == cellPriority)
+                        if (fly.CellTarget == cellPriority || cellPriority == null)
                         {
                             found = true;
                             break;
@@ -2253,19 +2195,25 @@ public class CellInternalObject : MonoBehaviour
             {
 
             }
+
+            //needInstantDamage = false;
+            cellInternalObject.BufferActivateType = cellInternalObject.type;
+            cellInternalObject.BufferPartner = null;
+            cellInternalObject.BufferCombination = replacementCombination;
+            cellInternalObject.animatorCTRL.PlayAnimation("BombActivated");
+        }
+
+        //Если камень есть то 
+        else {
+            cellInternalObject.setColorAndType(color, type);
         }
 
         //Перемещаем новый объект на мое место
         cellInternalObject.StartMove(myCell);
         cellInternalObject.EndMove();
 
-        //needInstantDamage = false;
-        cellInternalObject.BufferActivateType = cellInternalObject.type;
-        cellInternalObject.BufferPartner = null;
-        cellInternalObject.BufferCombination = replacementCombination;
         //cellInternalObject.Activate(cellInternalObject.type, null, combination);
-        cellInternalObject.ActivateInvoke(1.0f);
-        cellInternalObject.animatorCTRL.PlayAnimation("BombActivated");
+        cellInternalObject.ActivateInvoke(0.01f);
 
 
         //Текущий объект по тихому удаляем
