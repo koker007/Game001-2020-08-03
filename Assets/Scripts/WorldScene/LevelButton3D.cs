@@ -19,6 +19,9 @@ public class LevelButton3D : MonoBehaviour
     public Text[] text;
 
     [SerializeField]
+    Transform cameraTransform;
+
+    [SerializeField]
     MeshRenderer SphereMesh;
     Material SphereMat;
 
@@ -57,6 +60,7 @@ public class LevelButton3D : MonoBehaviour
     {
         eventSystem = MainComponents.eventSystem;
         eventData = new PointerEventData(eventSystem);
+        cameraTransform = MainCamera.main.transform;
     }
     public void OnEnable()
     {
@@ -74,7 +78,7 @@ public class LevelButton3D : MonoBehaviour
     }
 
     void UpdateVisualization() {
-        if (Vector3.Distance(MainCamera.main.gameObject.transform.position + MainCamera.main.gameObject.transform.forward * 35, gameObject.transform.position) < 40)
+        if (Vector3.Distance(cameraTransform.position + cameraTransform.forward * 35, transform.position) < 40)
         {
             if (bulka.activeSelf) {
                 return;

@@ -51,6 +51,8 @@ public class MessageBuyItem : MonoBehaviour
     [SerializeField]
     TypeBuy typeBuy;
 
+    private const int healthMax = 5;
+
     void Update()
     {
         UpdateText();
@@ -167,10 +169,9 @@ public class MessageBuyItem : MonoBehaviour
         }
         else if (health)
         {
-            int healthMax = 5;
 
             //если здоровья больше 5 выходим
-            if (PlayerProfile.main.Health.Amount >= 5) {
+            if (PlayerProfile.main.Health.Amount >= healthMax) {
                 return;
             }
 
@@ -203,9 +204,12 @@ public class MessageBuyItem : MonoBehaviour
 
     public void AddHealtForAds() {
 
+        if (PlayerProfile.main.Health.Amount >= healthMax - 1)
+        {
+            messageCTRL.ClickButtonClose();
+        }
         //Просто добавляем жизнь
         AdMobController.main.ShowPlusHealthAd();
-
     }
 
 }

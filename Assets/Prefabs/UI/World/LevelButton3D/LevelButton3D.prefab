@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7347080515962639975
 RectTransform:
   m_ObjectHideFlags: 0
@@ -366,7 +366,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1045484609451621557
 RectTransform:
   m_ObjectHideFlags: 0
@@ -441,7 +441,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2770312965746715715
 RectTransform:
   m_ObjectHideFlags: 0
@@ -783,6 +783,7 @@ MonoBehaviour:
   text:
   - {fileID: 6268983627043593965}
   - {fileID: 2206672247563306086}
+  cameraTransform: {fileID: 0}
   SphereMesh: {fileID: 7285641171746747866}
   osnovanieALL: {fileID: 2131145662863426401}
   osnovanie: {fileID: 4089781827015788212}
@@ -967,7 +968,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c92d0ce63851f6849abf9bc4335847de, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c92d0ce63851f6849abf9bc4335847de, type: 3}
