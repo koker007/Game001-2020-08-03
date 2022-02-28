@@ -32,6 +32,8 @@ public class WorldLocation : MonoBehaviour
     [SerializeField]
     public LevelPosition[] LevelPositions;
 
+    [SerializeField] private List<GameObject> LevelButtons = new List<GameObject>();
+
     public GameObject[] Graunds;
 
     //»нициализировать локацию
@@ -95,6 +97,12 @@ public class WorldLocation : MonoBehaviour
         }
 
     }
+
+    public void AddLevelButton(GameObject levelButton)
+    {
+        LevelButtons.Add(levelButton);
+    }
+
     public void TestDelete() {
         rotateNow = WorldGenerateScene.main.rotationNow;
         //ѕервое расто€ние спереди от которого надо удал€ть локацию. второе расто€ние сзади после которого надо удал€ть
@@ -102,6 +110,11 @@ public class WorldLocation : MonoBehaviour
         if (WorldGenerateScene.main.rotationNow - myAngle > WorldGenerateScene.main.angleForvardSpawn 
             || WorldGenerateScene.main.rotationNow - myAngle < (lenghtAngle+45) * -1) {
             //gameObject.SetActive(false);
+            foreach(GameObject but in LevelButtons)
+            {
+                but.SetActive(false);
+                but.transform.SetParent(WorldGenerateScene.main.RotatableObj);
+            }
             Destroy(gameObject);           
         }
     }

@@ -58,6 +58,11 @@ public class LevelButton3D : MonoBehaviour
         eventSystem = MainComponents.eventSystem;
         eventData = new PointerEventData(eventSystem);
     }
+    public void OnEnable()
+    {
+        iniMaterial();
+        InvokeRepeating("TestProfileOpen", 0, Random.Range(1, 2.5f));
+    }
 
     public void Update()
     {
@@ -190,11 +195,6 @@ public class LevelButton3D : MonoBehaviour
     }
 
 
-    public void Start()
-    {
-        iniMaterial();
-        InvokeRepeating("TestProfileOpen", 0, Random.Range(1, 2.5f));
-    }
     public void ClickLevel()
     {
         SoundCTRL.main.PlaySound(SoundCTRL.main.clipPressButtonLVL);
