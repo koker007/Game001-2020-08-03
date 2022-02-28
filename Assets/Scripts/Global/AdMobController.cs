@@ -146,6 +146,7 @@ public class AdMobController : MonoBehaviour
         if (rewardedAd.IsLoaded())
         {
             rewardedAd.Show();
+            DoctorScene.main.CameraSetActive(false);
         }
     }
     public void ShowPlayBonusAd()

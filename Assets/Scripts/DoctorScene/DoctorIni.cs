@@ -62,6 +62,12 @@ public class DoctorIni : MonoBehaviour
     private void OnEnable()
     {
         iniRawImage();
+        DoctorScene.main.CameraSetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        DoctorScene.main.CameraSetActive(false);
     }
 
 }

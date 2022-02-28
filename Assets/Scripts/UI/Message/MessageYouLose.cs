@@ -46,7 +46,6 @@ public class MessageYouLose : MonoBehaviour
         SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipLVLFailed, volume, 1);
 
         ReCalcCostMoveOfGold();
-
     }
 
     void ReCalcCostMoveOfGold() {
@@ -152,6 +151,7 @@ public class MessageYouLose : MonoBehaviour
             if (GameFieldCTRL.main != null)
                 DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0);
         }
+
     }
 
     private void Update()
