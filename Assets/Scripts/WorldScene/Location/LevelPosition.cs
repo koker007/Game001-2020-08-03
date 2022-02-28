@@ -24,11 +24,13 @@ public class LevelPosition : MonoBehaviour
 
     //Инициализировать позицию
     bool inicialized = false;
-    public void Inicialize(int level) {
+    public void Inicialize(GameObject but, int level) {
         if (inicialized) return;
 
         button.NumLevel = level;
-        button.obj = Instantiate(WorldGenerateScene.main.PrefLevelButton, positionVisualizator.transform.parent);
+        but.transform.SetParent(transform);
+        button.obj = but;
+        but.transform.rotation = transform.rotation;
         button.obj.transform.localPosition = positionVisualizator.transform.localPosition;
     }
 }

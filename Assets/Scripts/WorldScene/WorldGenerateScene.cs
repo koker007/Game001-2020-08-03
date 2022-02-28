@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 //alexandr
@@ -37,7 +38,7 @@ public class WorldGenerateScene : MonoBehaviour
     public float rotationNow;
     public float rotationNeed;
     private const float SpeedLerpRotation = 5f;
-    private Transform RotatableObj;
+    public Transform RotatableObj;
     private float levelAngleSum = 0;
 
     [SerializeField] private float additionalLocationSize;
@@ -61,6 +62,7 @@ public class WorldGenerateScene : MonoBehaviour
         }
     }
 
+    [SerializeField] private List<GameObject> LevelButtonsObjects = new List<GameObject>(new GameObject[50]);
     private List<LButton> LevelButtons = new List<LButton>();
     private GameObject[] Locations = new GameObject[2];
     private int locationCounter;
@@ -84,7 +86,7 @@ public class WorldGenerateScene : MonoBehaviour
         MaxLevel = 0;
         MinLevel = 1;
 
-
+        InicializeButtonBufer();
 
         locationCounter = 0;
         //Locations[locationCounter] = Instantiate(PrefabsLocation[1].gameObject, MainComponents.RotatableObj.transform.position, Quaternion.identity, MainComponents.RotatableObj.transform);
@@ -165,6 +167,15 @@ public class WorldGenerateScene : MonoBehaviour
 
         //выполнять проверку не каждый кадр, чтобы снизить нагрузку
         Invoke("InvokeFonImage", Random.Range(0.5f, 1f));
+    }
+
+    private void InicializeButtonBufer()
+    {
+        for (int i = 0; i < LevelButtonsObjects.Count; i++)
+        {
+            LevelButtonsObjects[i] = Instantiate(PrefLevelButton, transform.position, Quaternion.identity, RotatableObj);
+            LevelButtonsObjects[i].SetActive(false);
+        }
     }
 
     //поворот обьекта
@@ -298,21 +309,11 @@ public class WorldGenerateScene : MonoBehaviour
                     foreach (LevelPosition levelPosition in location.LevelPositions)
                     {
                         //Проверяем что текущий уровень еще не создан
-                        bool foundButton = false;
-                        foreach (LButton lButton in LevelButtons)
-                        {
-                            if (lButton.NumLevel == lvlLastCreate)
-                            {
-                                foundButton = true;
-                                break;
-                            }
-                        }
-
-                        if (!foundButton)
+                        if (!CheckButtons(lvlLastCreate))
                         {
                             if (levelPosition != null)
                             {
-                                CreateNewButtonPos(levelPosition);
+                                CreateNewButtonPos(location, levelPosition);
                             }
                             else
                             {
@@ -326,17 +327,7 @@ public class WorldGenerateScene : MonoBehaviour
                     for (; needCreatelvl > 0;)
                     {
                         //Проверяем что текущий уровень еще не создан
-                        bool foundButton = false;
-                        foreach (LButton lButton in LevelButtons)
-                        {
-                            if (lButton.NumLevel == lvlLastCreate)
-                            {
-                                foundButton = true;
-                                break;
-                            }
-                        }
-
-                        if (!foundButton)
+                        if (!CheckButtons(lvlLastCreate))
                             CreateNewButtonLocate(location);
 
                         needCreatelvl--;
@@ -460,22 +451,12 @@ public class WorldGenerateScene : MonoBehaviour
                     foreach (LevelPosition levelPosition in location.LevelPositions)
                     {
                         //Проверяем что текущий уровень еще не создан
-                        bool foundButton = false;
-                        foreach (LButton lButton in LevelButtons)
-                        {
-                            if (lButton.NumLevel == lvlLastCreate)
-                            {
-                                foundButton = true;
-                                break;
-                            }
-                        }
-
-                        if (!foundButton)
+                        if (!CheckButtons(lvlLastCreate))
                         {
 
                             if (levelPosition != null)
                             {
-                                CreateNewButtonPos(levelPosition);
+                                CreateNewButtonPos(location, levelPosition);
                             }
                             else
                             {
@@ -488,17 +469,7 @@ public class WorldGenerateScene : MonoBehaviour
                     for (; needCreatelvl > 0;)
                     {
                         //Проверяем что текущий уровень еще не создан
-                        bool foundButton = false;
-                        foreach (LButton lButton in LevelButtons)
-                        {
-                            if (lButton.NumLevel == lvlLastCreate)
-                            {
-                                foundButton = true;
-                                break;
-                            }
-                        }
-
-                        if (!foundButton)
+                        if (!CheckButtons(lvlLastCreate))
                             CreateNewButtonLocate(location);
 
                         needCreatelvl--;
@@ -514,13 +485,14 @@ public class WorldGenerateScene : MonoBehaviour
         }
 
         //Создать кнопку на месте отправляемого объекта
-        void CreateNewButtonPos(LevelPosition levelPos)
+        void CreateNewButtonPos(WorldLocation location, LevelPosition levelPos)
         {
             if (levelPos == null || lvlLastCreate <= 0) return;
-
-            levelPos.Inicialize(lvlLastCreate);
+            GameObject but = FindButtonObject();
+            levelPos.Inicialize(but, lvlLastCreate);
             LevelButtons.Add(levelPos.button);
             LevelButtons[LevelButtons.Count - 1].Level();
+            location.AddLevelButton(but);
         }
 
         //создать уровень на рандомной позиции
@@ -532,10 +504,17 @@ public class WorldGenerateScene : MonoBehaviour
             float radian;
             radian = (Mathf.Abs(rotationNow) - lvlLastCreate * DistanceSpawnLevelBut) * Mathf.Deg2Rad;
             position = new Vector3(position.x + AlorithmX(lvlLastCreate), position.y + DistanceFromWorldCenter * Mathf.Sin(radian), position.z + DistanceFromWorldCenter * Mathf.Cos(radian));
+
+            GameObject but = FindButtonObject();
+            but.transform.SetParent(location.transform);
+            location.AddLevelButton(but);
+            but.transform.position = position;
+            but.transform.rotation = Quaternion.identity;
+
             LevelButtons.Add(new LButton()
             {
                 NumLevel = lvlLastCreate,
-                obj = Instantiate(PrefLevelButton, position, Quaternion.identity, location.transform)
+                obj = but
             });
             LevelButtons[LevelButtons.Count - 1].Level();
         }
@@ -585,6 +564,42 @@ public class WorldGenerateScene : MonoBehaviour
         res = Mathf.Cos(Mathf.Sin(Level)) * 1000;
         res = res % WidthSpawnLevelBut - WidthSpawnLevelBut / 2;
         return res;
+    }
+
+    private GameObject FindButtonObject()
+    {
+        GameObject but = null;
+        foreach (GameObject button in LevelButtonsObjects)
+        {
+            if(button.activeSelf == false)
+            {
+                but = button;
+                break;
+            }
+        }
+
+        if(but == null)
+        {
+            LevelButtonsObjects.Add(Instantiate(PrefLevelButton, transform.position, Quaternion.identity, RotatableObj));
+            but = LevelButtonsObjects[LevelButtonsObjects.Count - 1];
+        }
+
+        but.SetActive(true);
+        return but;
+    }
+
+    private bool CheckButtons(int lvlLastCreate)
+    {
+        bool foundButton = false;
+        foreach (LButton lButton in LevelButtons)
+        {
+            if (lButton.NumLevel == lvlLastCreate)
+            {
+                foundButton = true;
+                break;
+            }
+        }
+        return false;
     }
 
 }
