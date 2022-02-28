@@ -8,6 +8,7 @@ public class PlayerProfile : MonoBehaviour
 {
     public static PlayerProfile main;
 
+
     /// <summary>
     /// уровень игрока
     /// </summary>
@@ -46,6 +47,10 @@ public class PlayerProfile : MonoBehaviour
     private char keyOfLVLstars = 'S';
     private char keyOfLVLgold = 'G';
 
+
+    //¬рем€ первого включени€ чтобы различать пользователей
+    const string strProfileTimeStart = "ProfileTimeStart";
+    public string profileTimeStart = "";
 
     //ѕользовательское соглашение
     const string strProfileTermsOfUse = "ProfileTermsOfUse";
@@ -174,6 +179,9 @@ public class PlayerProfile : MonoBehaviour
     //загрузка данных
     private void LoadProfie()
     {
+        
+        profileTimeStart = PlayerPrefs.GetString(strProfileTimeStart, " ");
+        
 
         ProfileTermsOfUse = PlayerPrefs.GetFloat(strProfileTermsOfUse, startProfileTermsOfUse);
 
@@ -212,7 +220,7 @@ public class PlayerProfile : MonoBehaviour
 
         if (Settings.main.DeveloperTesting) {
             GoldAmount = 100;
-            ProfilelevelOpen = 250;
+            ProfilelevelOpen = 300;
             Health.Amount = 100;
 
             ShopInternal.Amount = 10;
@@ -228,6 +236,14 @@ public class PlayerProfile : MonoBehaviour
 
     }
     public void Save() {
+
+        //—охран€ем врем€ первой регистрации. 
+        //≈сли врем€ в пам€ти нету то получаем
+        if (profileTimeStart.Length < 2 && TimeWorld.GetTimeWorld().Year > 1000)
+            profileTimeStart = TimeWorld.GetTimeWorld().ToString() + " " + Random.Range(1, 9999);
+
+        PlayerPrefs.SetString(strProfileTimeStart, profileTimeStart);
+
         PlayerPrefs.SetInt(strProfileLevel, ProfileLevel);
         PlayerPrefs.SetInt(strProfileScore, ProfileScore);
         PlayerPrefs.SetInt(strProfileLevelOpen, ProfilelevelOpen);
@@ -897,6 +913,10 @@ public class PlayerProfile : MonoBehaviour
 
     //”дал€ет провиль игрока занул€ все его данные
     public void DeleteProfile() {
+
+        //ѕолучаем новое врем€ акаунта
+        profileTimeStart = TimeWorld.GetTimeWorld().ToString() + " " + Random.Range(1, 9999);
+        PlayerPrefs.SetString(strProfileTimeStart, profileTimeStart);
 
         ProfileLevel = startProfileLevel;
         PlayerPrefs.SetInt(strProfileLevel, ProfileLevel);

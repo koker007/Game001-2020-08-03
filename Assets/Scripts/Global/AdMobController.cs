@@ -24,6 +24,10 @@ public class AdMobController : MonoBehaviour
     [SerializeField]
     private bool showAd = true;
 
+    [SerializeField]
+    private bool TestingADs = false; //если включенно то показывается только тестовая реклама
+
+
     private void Start()
     {
         main = this;
@@ -75,8 +79,10 @@ public class AdMobController : MonoBehaviour
             rewardedAdUnitId = keyVideoTest;
         }
 
-        rewardedAd = new RewardedAd(rewardedAdUnitId);
 
+        if (Settings.main.DeveloperTesting || TestingADs)
+            rewardedAdUnitId = keyVideoTest;
+        rewardedAd = new RewardedAd(rewardedAdUnitId);
         rewardedAd.OnAdLoaded += HandleRewardedAdLoaded;
         rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
         rewardedAd.OnAdClosed += HandleRewardedAdClosed;
@@ -94,6 +100,9 @@ public class AdMobController : MonoBehaviour
                         reawardedAdUnitId = "unexpected_platform";
         #endif
 
+
+        if (Settings.main.DeveloperTesting || TestingADs)
+            rewardedAdUnitId = keyVideoTest;
         playBonusAd = new RewardedAd(rewardedAdUnitId);
         playBonusAd.OnAdLoaded += HandlePlayWithBonusLoaded;
         playBonusAd.OnUserEarnedReward += HandlePlayWithBonusReward;
@@ -110,6 +119,9 @@ public class AdMobController : MonoBehaviour
         #else
             reawardedAdUnitId = "unexpected_platform";
         #endif
+
+        if (Settings.main.DeveloperTesting || TestingADs)
+            rewardedAdUnitId = keyVideoTest;
         rewardedHealthAd = new RewardedAd(rewardedAdUnitId);
         rewardedHealthAd.OnAdLoaded += HandleAddHealthLoaded;
         rewardedHealthAd.OnUserEarnedReward += HandleAddHealthReward;
@@ -183,22 +195,18 @@ public class AdMobController : MonoBehaviour
     {
         
     }
-
     private void HandleRewardedAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
         
     }
-
     private void HandleRewardedAdOpening(object sender, EventArgs args)
     {
 
     }
-
     private void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs args)
     {
 
     }
-
     private void HandleRewardedAdClosed(object sender, EventArgs args)
     {
         CreateAndLoadRewardedAd();
@@ -210,22 +218,18 @@ public class AdMobController : MonoBehaviour
     {
         
     }
-
     private void HandleOnBannerAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
         
     }
-
     private void HandleOnBannerAdOpened(object sender, EventArgs args)
     {
        
     }
-
     private void HandleOnBannerAdClosed(object sender, EventArgs args)
     {
        
     }
-
     #endregion
 
 
@@ -235,27 +239,22 @@ public class AdMobController : MonoBehaviour
         UICTRL.main.OpenGameplay();
         Gameplay.main.randomizedPlayBonus();
     }
-
     private void HandlePlayWithBonusLoaded(object sender, EventArgs args)
     {
 
     }
-
     private void HandlePlayWithBonusFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
 
     }
-
     private void HandlePlayWithBonusOpening(object sender, EventArgs args)
     {
 
     }
-
     private void HandlePlayWithBonusFailedToShow(object sender, AdErrorEventArgs args)
     {
 
     }
-
     private void HandlePlayWithBonusClosed(object sender, EventArgs args)
     {
         CreateAndLoadRewardedAd();
@@ -268,27 +267,22 @@ public class AdMobController : MonoBehaviour
         PlayerProfile.main.Health.Amount++;
         PlayerProfile.main.Save();
     }
-
     private void HandleAddHealthLoaded(object sender, EventArgs args)
     {
 
     }
-
     private void HandleAddHealthFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
 
     }
-
     private void HandleAddHealthOpening(object sender, EventArgs args)
     {
 
     }
-
     private void HandleAddHealthFailedToShow(object sender, AdErrorEventArgs args)
     {
 
     }
-
     private void HandleAddHealthClosed(object sender, EventArgs args)
     {
         CreateAndLoadRewardedAd();

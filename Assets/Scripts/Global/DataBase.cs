@@ -931,13 +931,678 @@ public class DataBase : MonoBehaviour
     public TypeLevel typeLevel = new TypeLevel();
 
     //Раздел профиля
-    public struct TypeProfile {
+    public class TypeProfile {
+        bool loadNeed = true;
+
         public const string Profiles = "Profiles";
-        public const
-        public const string Level_Max = "Level_opened_maximum";
-        public const string Level_Open_Averade = "Level_opened_average";
-        public const string Level_Open_Averade_Count = "Level_opened_average_count";
+        public const string Level_Max = "Level_opened_maximum"; //Максимальный открытый уровень
+        public const string Level_Open_Averade = "Level_opened_average"; //
+
+        //Имя профиля
+        public const string name = "Name";
+        public const string level_max = "level_max";
+
+        //магазин пользователя
+        public const string shopStr = "Shop";
+        public const string buyingStr = "buying";
+        public const string gold_50Str = "gold_50";
+        public const string gold_100Str = "gold_100";
+        public const string gold_250Str = "gold_250";
+        public const string gold_500Str = "gold_500";
+        public const string gold_1000Str = "gold_1000";
+
+        public const string pack_01Str = "pack01";
+        public const string pack_02Str = "pack02";
+        public const string pack_03Str = "pack03";
+        public const string pack_04Str = "pack04";
+        public const string pack_05Str = "pack05";
+        public const string vipStr = "vip";
+
+        public const string hummerStr = "hummer";
+        public const string bombStr = "bomb";
+        public const string pillStr = "pill";
+        public const string coronaStr = "corona";
+        public const string mixedStr = "mixed";
+
+        int buyingL = -1;
+        int gold_50L = -1;
+        int gold_100L = -1;
+        int gold_250L = -1;
+        int gold_500L = -1;
+        int gold_1000L = -1;
+        int pack_01L = -1;
+        int pack_02L = -1;
+        int pack_03L = -1;
+        int pack_04L = -1;
+        int pack_05L = -1;
+        int vipL = -1;
+        int hummerL = -1;
+        int bombL = -1;
+        int pillL = -1;
+        int coronaL = -1;
+        int mixedL = -1;
+
+        int buyingS = -1;
+        int gold_50S = -1;
+        int gold_100S = -1;
+        int gold_250S = -1;
+        int gold_500S = -1;
+        int gold_1000S = -1;
+        int pack_01S = -1;
+        int pack_02S = -1;
+        int pack_03S = -1;
+        int pack_04S = -1;
+        int pack_05S = -1;
+        int vipS = -1;
+        int hummerS = -1;
+        int bombS = -1;
+        int pillS = -1;
+        int coronaS = -1;
+        int mixedS = -1;
+
+        bool buyingNeed = true;
+        bool gold_50Need = true;
+        bool gold_100Need = true;
+        bool gold_250Need = true;
+        bool gold_500Need = true;
+        bool gold_1000Need = true;
+        bool pack_01Need = true;
+        bool pack_02Need = true;
+        bool pack_03Need = true;
+        bool pack_04Need = true;
+        bool pack_05Need = true;
+        bool vipNeed = true;
+        bool hummerNeed = true;
+        bool bombNeed = true;
+        bool pillNeed = true;
+        bool coronaNeed = true;
+        bool mixedNeed = true;
+
+
+
+        public void setProfileData(int buyingF, 
+            int gold_50F, int gold_100F, int gold_250F, int gold_500F, int gold_1000F, 
+            int pack_01F, int pack_02F, int pack_03F, int pack_04F, int pack_05F, int vipF,
+            int hummerF, int pillF, int bombF, int coronaF, int mixedF) {
+
+            if (buyingF > 0)
+            {
+                buyingNeed = true;
+                buyingL = -1;
+                buyingS = buyingF;
+            }
+            if (gold_50F > 0)
+            {
+                gold_50Need = true;
+                gold_50L = -1;
+                gold_50S = gold_50F;
+            }
+            if (gold_100F > 0)
+            {
+                gold_100Need = true;
+                gold_100L = -1;
+                gold_100S = gold_100F;
+            }
+            if (gold_250F > 0)
+            {
+                gold_250Need = true;
+                gold_250L = -1;
+                gold_250S = gold_250F;
+            }
+            if (gold_500F > 0)
+            {
+                gold_500Need = true;
+                gold_500L = -1;
+                gold_500S = gold_500F;
+            }
+            if (gold_1000F > 0)
+            {
+                gold_1000Need = true;
+                gold_1000L = -1;
+                gold_1000S = gold_100F;
+            }
+            if (pack_01F > 0)
+            {
+                pack_01Need = true;
+                pack_01L = -1;
+                pack_01S = pack_01F;
+            }
+            if (pack_02F > 0)
+            {
+                pack_02Need = true;
+                pack_02L = -1;
+                pack_02S = pack_02F;
+            }
+            if (pack_03F > 0)
+            {
+                pack_03Need = true;
+                pack_03L = -1;
+                pack_03S = pack_03F;
+            }
+            if (pack_04F > 0)
+            {
+                pack_04Need = true;
+                pack_04L = -1;
+                pack_04S = pack_04F;
+            }
+            if (pack_05F > 0)
+            {
+                pack_05Need = true;
+                pack_05L = -1;
+                pack_05S = pack_05F;
+            }
+            if (vipF > 0)
+            {
+                vipNeed = true;
+                vipL = -1;
+                vipS = vipF;
+            }
+
+            if (hummerF > 0) {
+                hummerNeed = true;
+                hummerL = -1;
+                hummerS = hummerF;
+            }
+            if (pillF > 0) {
+                pillNeed = true;
+                pillL = -1;
+                pillS = pillF;
+            }
+            if (bombF > 0) {
+                bombNeed = true;
+                bombL = -1;
+                bombS = bombF;
+            }
+            if (coronaF > 0) {
+                coronaNeed = true;
+                coronaL = -1;
+                coronaS = coronaF;
+            }
+            if (mixedF > 0) {
+                mixedNeed = true;
+                mixedL = -1;
+                mixedS = mixedF;
+            }
+
+            loadNeed = true;
+        }
+
+        public void TestLoadAndSave() {
+
+            if (!loadNeed) return;
+
+            //Зашли в подраздел уровней текущего времени
+            DatabaseReference yearChild = reference.Child(TimeWorld.GetTimeWorld().Year.ToString());
+            DatabaseReference monthChild = yearChild.Child(TimeWorld.GetTimeWorld().Month.ToString());
+
+            DatabaseReference profile = monthChild.Child(Profiles);
+            DatabaseReference profileData = profile.Child(PlayerProfile.main.profileTimeStart);
+
+            DatabaseReference profileShop = profileData.Child(shopStr);
+
+            ///////////////////////////////////////////////////////////////////////////////
+            //Стадия подгрузки
+
+            //Загузка уровня
+
+            //если количество игроков которые победили не известно -1
+            
+            //Магазин 
+            if (buyingNeed && buyingL == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(buyingStr).GetValueAsync().ContinueWith(task => {
+
+                    buyingL = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) buyingL = geted;
+
+                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                buyingNeed = false;
+            }
+            if (gold_50Need && gold_50L == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(gold_50Str).GetValueAsync().ContinueWith(task => {
+
+                    gold_50L = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) gold_50L = geted;
+
+                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                gold_50Need = false;
+            }
+            if (gold_100Need && gold_100L == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(gold_100Str).GetValueAsync().ContinueWith(task => {
+
+                    gold_100L = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) gold_100L = geted;
+
+                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                gold_100Need = false;
+            }
+            if (gold_250Need && gold_250L == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(gold_250Str).GetValueAsync().ContinueWith(task => {
+
+                    gold_250L = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) gold_250L = geted;
+
+                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                gold_250Need = false;
+            }
+            if (gold_500Need && gold_500L == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(gold_500Str).GetValueAsync().ContinueWith(task => {
+
+                    gold_500L = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) gold_500L = geted;
+
+                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                gold_500Need = false;
+            }
+            if (gold_1000Need && gold_1000L == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(gold_1000Str).GetValueAsync().ContinueWith(task => {
+
+                    gold_1000L = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) gold_1000L = geted;
+
+                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                gold_1000Need = false;
+            }
+
+            if (pack_01Need && pack_01L == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(pack_01Str).GetValueAsync().ContinueWith(task => {
+
+                    pack_01L = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) pack_01L = geted;
+
+                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                pack_01Need = false;
+            }
+            if (pack_02Need && pack_02L == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(pack_02Str).GetValueAsync().ContinueWith(task => {
+
+                    pack_02L = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) pack_02L = geted;
+
+                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                pack_02Need = false;
+            }
+            if (pack_03Need && pack_03L == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(pack_03Str).GetValueAsync().ContinueWith(task => {
+
+                    pack_03L = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) pack_03L = geted;
+
+                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                pack_03Need = false;
+            }
+            if (pack_04Need && pack_04L == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(pack_04Str).GetValueAsync().ContinueWith(task => {
+
+                    pack_04L = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) pack_04L = geted;
+
+                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                pack_04Need = false;
+            }
+            if (pack_05Need && pack_05L == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(pack_05Str).GetValueAsync().ContinueWith(task => {
+
+                    pack_05L = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) pack_05L = geted;
+
+                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                pack_05Need = false;
+            }
+            if (vipNeed && vipL == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(vipStr).GetValueAsync().ContinueWith(task => {
+
+                    vipL = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) vipL = geted;
+
+                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                vipNeed = false;
+            }
+
+            if (hummerNeed && hummerL == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(hummerStr).GetValueAsync().ContinueWith(task => {
+
+                    hummerL = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) hummerL = geted;
+
+                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                hummerNeed = false;
+            }
+            if (bombNeed && bombL == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(bombStr).GetValueAsync().ContinueWith(task => {
+
+                    bombL = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) bombL = geted;
+
+                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                bombNeed = false;
+            }
+            if (pillNeed && pillL == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(pillStr).GetValueAsync().ContinueWith(task => {
+
+                    pillL = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) pillL = geted;
+
+                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                pillNeed = false;
+            }
+            if (coronaNeed && coronaL == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(coronaStr).GetValueAsync().ContinueWith(task => {
+
+                    coronaL = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) coronaL = geted;
+
+                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                coronaNeed = false;
+            }
+            if (mixedNeed && mixedL == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(mixedStr).GetValueAsync().ContinueWith(task => {
+
+                    mixedL = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) mixedL = geted;
+
+                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                mixedNeed = false;
+            }
+
+            //Данные профиля
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            //Стадия ожидания
+
+            if (buyingL == -1 ||
+                gold_50L == -1 || gold_100L == -1 || gold_250L == -1 || gold_500L == -1 || gold_1000L == -1 ||
+                pack_01L == -1 || pack_02L == -1 || pack_03L == -1 || pack_04L == -1 || pack_05L == -1 ||
+                vipL == -1 ||
+                hummerL == -1 || bombL == -1 || pillL == -1 || coronaL == -1 || mixedL == -1
+                ) return;
+
+
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            //Стадия расчета новых данных и сохранения
+            //Теперь, Когда все данные подгруженны и синхронизированы
+            //Сохраняем только то что требует изменения
+
+            if (buyingS > 0)
+            {
+                float buyingF = buyingS + buyingL;
+                profileData.Child(buyingStr).SetValueAsync(buyingF);
+            }
+            if (gold_50S > 0)
+            {
+                float gold_50F = gold_50S + gold_50L;
+                profileData.Child(gold_50Str).SetValueAsync(gold_50F);
+            }
+            if (gold_100S > 0)
+            {
+                float gold_100F = gold_100S + gold_100L;
+                profileData.Child(gold_100Str).SetValueAsync(gold_100F);
+            }
+            if (gold_250S > 0)
+            {
+                float gold_250F = gold_250S + gold_250L;
+                profileData.Child(gold_250Str).SetValueAsync(gold_250F);
+            }
+            if (gold_500S > 0)
+            {
+                float gold_500F = gold_500S + gold_500L;
+                profileData.Child(gold_500Str).SetValueAsync(gold_500F);
+            }
+            if (gold_1000S > 0)
+            {
+                float gold_1000F = gold_1000S + gold_1000L;
+                profileData.Child(gold_1000Str).SetValueAsync(gold_1000F);
+            }
+            if (pack_01L > 0)
+            {
+                float pack_01F = pack_01S + pack_01L;
+                profileData.Child(pack_01Str).SetValueAsync(pack_01F);
+            }
+            if (pack_02L > 0)
+            {
+                float pack_02F = pack_02S + pack_02L;
+                profileData.Child(pack_02Str).SetValueAsync(pack_02F);
+            }
+            if (pack_03L > 0)
+            {
+                float pack_03F = pack_03S + pack_03L;
+                profileData.Child(pack_03Str).SetValueAsync(pack_03F);
+            }
+            if (pack_04L > 0)
+            {
+                float pack_04F = pack_04S + pack_04L;
+                profileData.Child(pack_04Str).SetValueAsync(pack_04F);
+            }
+            if (pack_05L > 0)
+            {
+                float pack_05F = pack_05S + pack_05L;
+                profileData.Child(pack_05Str).SetValueAsync(pack_05F);
+            }
+            if (vipL > 0)
+            {
+                float vipF = vipS + vipL;
+                profileData.Child(vipStr).SetValueAsync(vipF);
+            }
+            if (hummerL > 0) {
+                float hummerF = hummerS + hummerL;
+                profileData.Child(hummerStr).SetValueAsync(hummerF);
+            }
+            if (pillL > 0)
+            {
+                float pillF = pillS + pillL;
+                profileData.Child(pillStr).SetValueAsync(pillF);
+            }
+            if (bombL > 0)
+            {
+                float bombF = bombS + bombL;
+                profileData.Child(pillStr).SetValueAsync(bombF);
+            }
+            if (coronaL > 0)
+            {
+                float coronaF = coronaS + coronaL;
+                profileData.Child(coronaStr).SetValueAsync(coronaF);
+            }
+            if (mixedL > 0)
+            {
+                float mixedF = mixedS + mixedL;
+                profileData.Child(mixedStr).SetValueAsync(mixedL);
+            }
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            ///стадия зачищения данных, чтобы показать что изменения были приняты и заного не сохранять
+            buyingS = 0;
+            gold_50S = 0;
+            gold_100S = 0;
+            gold_250S = 0;
+            gold_500S = 0;
+            gold_1000S = 0;
+            pack_01S = 0;
+            pack_02S = 0;
+            pack_03S = 0;
+            pack_04S = 0;
+            pack_05S = 0;
+            vipS = 0;
+            hummerS = 0;
+            pillS = 0;
+            bombS = 0;
+            coronaS = 0;
+            mixedS = 0;
+
+            //Данные уровня были сохранены
+            loadNeed = false;
+
+        }
     }
+    public TypeProfile typeProfile = new TypeProfile();
 
     static int getInt(DataSnapshot dataSnapshot) {
         int result = -1;
@@ -968,6 +1633,7 @@ public class DataBase : MonoBehaviour
     {
         //попытка загрузить из сети или сохранить в сеть
         typeLevel.TestLoadAndSave();
+        typeProfile.TestLoadAndSave();
     }
 
 }
