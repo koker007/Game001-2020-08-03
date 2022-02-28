@@ -114,4 +114,9 @@ public class DoctorScene : MonoBehaviour
 
         main.camera.gameObject.transform.localPosition = new Vector3(offset.x, offset.y, 0);
     }
+
+    public void CameraSetActive(bool value)
+    {
+        camera.gameObject.SetActive(value);
+    }
 }
