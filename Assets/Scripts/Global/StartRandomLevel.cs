@@ -10,7 +10,7 @@ public class StartRandomLevel : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             UICTRL.main.OpenWorld();
-            Gameplay.main.levelSelect = Random.Range(100, 999);
+            Gameplay.main.levelSelect = Random.Range(900, 1000);
             //LevelGenerator.main.GenerateLevelV2(Gameplay.main.levelSelect);
             UICTRL.main.OpenGameplay();
         }

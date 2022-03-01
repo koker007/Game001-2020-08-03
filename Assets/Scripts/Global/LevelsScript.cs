@@ -486,7 +486,7 @@ public class LevelsScript : MonoBehaviour
         else 
         {
             if (generatedLevel.NumLevel != Gameplay.main.levelSelect)
-                generatedLevel = new Level(LevelGenerator.main.GenerateNewLevel(Gameplay.main.levelSelect));
+                generatedLevel = new Level(LevelGenerator.main.GenerateLevel(Gameplay.main.levelSelect));
             return generatedLevel;
         }
     }

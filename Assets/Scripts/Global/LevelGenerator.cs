@@ -25,7 +25,7 @@ public class LevelGenerator : MonoBehaviour
     private void Start()
     {
         main = this;
-        //GenerateRangeLevel(900, 1000);
+        GenerateRangeLevel(900, 1000);
     }
     /// <summary>
     /// запускается один раз, генерирует уровни и сохраняет их в файл, может перезаписать существующие уровни
@@ -36,7 +36,7 @@ public class LevelGenerator : MonoBehaviour
     {
         for (int i = start; i <= end; i++)
         {
-            LevelsScript.Level lev = new LevelsScript.Level(GenerateLevel(i));
+            LevelsScript.Level lev = new LevelsScript.Level(GenerateLevelV3(i));
             lev.ConvertTwoCellsToOneCells();
             _levelsObject.levels[i] = new LevelsScript.Level(lev);
         }
@@ -78,7 +78,6 @@ public class LevelGenerator : MonoBehaviour
 
 
         //Иначе генерируем
-
         float NoizeResult = Mathf.PerlinNoise(Mathf.Cos(NumLevel), 0f) * Mathf.PerlinNoise(Mathf.Sin(NumLevel), 0f) * Mathf.PerlinNoise(Mathf.Tan(NumLevel), 0f) * 1000000;
         //устанавливаем размер уровня
         int Width = (int)NoizeResult % 8 + 6;
@@ -565,13 +564,7 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    public LevelsScript.Level GenerateNewLevel(int NumLevel)
-    {
-        thisLevel = new LevelsScript.Level(GenerateLevelV2(NumLevel));
-        return thisLevel;
-    }
-
-    public LevelsScript.Level GenerateLevelV2(int NumLevel)
+    public LevelsScript.Level GenerateNewLevelWithoutMassive(int NumLevel)
     {
         int perVar = (int)Mathf.Round(Mathf.PerlinNoise(777.777f / 666.666f + NumLevel, 0) * 10000 % 10);
 
@@ -596,13 +589,24 @@ public class LevelGenerator : MonoBehaviour
 
         //какой процент для создания блокираторов
         float perlinBlocker = Mathf.PerlinNoise(777.777f / 666.666f + NumLevel, 9876) * 100;
-        if (perlinBlocker < 60)
-        {
-            perlinBlocker = 0;
-        }
 
         //создаем уровень без массивов
         LevelsScript.Level level = LevelsScript.main.CreateLevel(NumLevel, Height, Width, NeedScore, (int)move, numColors, (int)perlinSuperColor, (int)perlinBlocker);
+
+        return level;
+    }
+
+    public LevelsScript.Level GenerateLevelV2(int NumLevel)
+    {
+        int perVar = (int)Mathf.Round(Mathf.PerlinNoise(777.777f / 666.666f + NumLevel, 0) * 10000 % 10);
+
+        int Width = perVar % 4 + 5;
+        int Height = perVar * 123 % (Width / 2) + 6;
+
+        //выюираем количество цветов
+        int numColors = 4;
+
+        LevelsScript.Level level = new LevelsScript.Level(GenerateNewLevelWithoutMassive(NumLevel));
 
         PassRandom();
 
@@ -831,6 +835,151 @@ public class LevelGenerator : MonoBehaviour
                     }
                 }
                 return array;
+            }
+        }
+    }
+
+    public LevelsScript.Level GenerateLevelV3(int NumLevel)
+    {
+        float RandomFactor = 1.234567f * NumLevel;
+        RandomFactor = Mathf.PerlinNoise(0, RandomFactor) + 1;
+
+        float NoizeResult = Mathf.PerlinNoise(Mathf.Cos(NumLevel), 0f) * Mathf.PerlinNoise(Mathf.Sin(NumLevel), 0f) * Mathf.PerlinNoise(Mathf.Tan(NumLevel), 0f) * 1000000;
+        //устанавливаем размер уровня
+        int Width = (int)NoizeResult % 4 + 6;
+        int Height = (int)NoizeResult * 123 % 6 + 6;
+        //основные параметры уровня
+        int NeedScore = Width * Height * ((int)NoizeResult % ScoreСoefficient + ScoreСoefficient / 2);
+        float move = (float)30 / (Width * Height * ScoreСoefficient) * NeedScore;
+        //выюираем количество цветов
+        int numColors = 4;
+
+        //создаем уровень без массивов
+        LevelsScript.Level level = LevelsScript.main.Levels[NumLevel];
+        level = LevelsScript.main.CreateLevel(NumLevel, Height, Width, NeedScore, (int)move, numColors, (int)NoizeResult * 100, (int)NoizeResult * 100);
+
+        int[,] exist = new int[Height, Width];
+        int[,] ice = new int[Height, Width];
+        int[,] box = new int[Height, Width];
+        int[,] mold = new int[Height, Width];
+        int[,] panel = new int[Height, Width];
+        int[,] rock = new int[Height, Width];
+        int[,] IColors = new int[Height, Width];
+        int[,] Type = new int[Height, Width];
+        int[,] dispencers = new int[Height, Width];
+        int[,] walls = new int[Height, Width];
+        int[,] teleports = new int[Height, Width];
+
+        PassRandom();
+        CrystalRandom();
+        ExistRandom();
+        SymmetryArrayForGorizontal(ref exist);
+        Dispencers();
+
+        level.SetMass(exist, "exist");
+        level.SetMass(IColors, "color");
+        level.SetMass(Type, "type");
+        level.SetMass(box, "box");
+        level.SetMass(mold, "mold");
+        level.SetMass(panel, "panel");
+        level.SetMass(rock, "rock");
+        level.SetMass(ice, "ice");
+        level.SetMass(walls, "walls");
+        level.SetMass(dispencers, "dispencers");
+        level.SetMass(teleports, "teleport");
+
+        level.SetCells();
+
+        return level;
+
+        //выбираем цели уровня
+        void PassRandom()
+        {
+
+            int rand = (int)(NoizeResult % 6);
+            switch (rand)
+            {
+                case 0:
+                    level.PassedWithPanel = true;
+                    break;
+                case 1:
+                    level.PassedWithMold = true;
+                    break;
+                case 2:
+                    level.PassedWithEnemy = true;
+                    break;
+                case 3:
+                    level.PassedWithRock = true;
+                    break;
+                case 4:
+                    level.PassedWithBox = true;
+                    break;
+                default:
+                    level.PassedWithCrystal = true;
+                    level.NeedCrystal = (int)NoizeResult % 35 + 25;
+                    level.NeedColor = (CellInternalObject.InternalColor)(int)(NoizeResult % 5);
+                    break;
+            }
+        }
+
+        //генерация ячеек
+        void ExistRandom()
+        {
+            float scaler = 0.5f;
+            float chance = 0.4f;
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    float noize = Mathf.PerlinNoise(x * scaler + RandomFactor * NumLevel, y * scaler);
+                    exist[y, x] = noize > chance ? 1 : 0;
+                }
+            }
+        }
+
+        void Dispencers()
+        {
+            for (int y = 0; y < Height - 1; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    if (exist[y, x] == 0 && exist[y + 1, x] == 1)
+                    {
+                        if (x == 0 && exist[y, x + 1] == 0 || x == Width - 1 && exist[y, x - 1] == 0)
+                        {
+                            dispencers[y, x] = 1;
+                        }
+                        else if(x != 0 && x != Width - 1 && exist[y, x - 1] == 0 && exist[y, x + 1] == 0)
+                        {
+                            dispencers[y, x] = 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        //генерация кристаллов
+        void CrystalRandom()
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    IColors[y, x] = 1;
+                    Type[y, x] = 1;
+                }
+            }
+        }
+
+        //отзеркаливает массив по горизонтали
+        void SymmetryArrayForGorizontal(ref int[,] arr)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width / 2; x++)
+                {
+                    arr[y, Width - 1 - x] = arr[y, x];
+                }
             }
         }
     }
