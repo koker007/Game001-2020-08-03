@@ -25,7 +25,7 @@ public class LevelGenerator : MonoBehaviour
     private void Start()
     {
         main = this;
-        GenerateRangeLevel(900, 1000);
+        GenerateRangeLevel(900, 999);
     }
     /// <summary>
     /// запускается один раз, генерирует уровни и сохраняет их в файл, может перезаписать существующие уровни
@@ -371,7 +371,6 @@ public class LevelGenerator : MonoBehaviour
                 if (rightAndLeftBox)
                 {
                     int widthtBox = RandomInt(Height / 2 - 4) + 1;
-                    Debug.Log(widthtBox);
                     for (int y = 0; y < Height; y++)
                     {
                         for (int x = widthtBox; x >= 0; x--)
@@ -841,22 +840,44 @@ public class LevelGenerator : MonoBehaviour
 
     public LevelsScript.Level GenerateLevelV3(int NumLevel)
     {
-        float RandomFactor = 1.234567f * NumLevel;
-        RandomFactor = Mathf.PerlinNoise(0, RandomFactor) + 1;
+        float symetryChance = 0.8f;
+        bool symetry = false;
 
-        float NoizeResult = Mathf.PerlinNoise(Mathf.Cos(NumLevel), 0f) * Mathf.PerlinNoise(Mathf.Sin(NumLevel), 0f) * Mathf.PerlinNoise(Mathf.Tan(NumLevel), 0f) * 1000000;
+        float existscaler = 0.5f;
+        float existchance = 0.4f;
+
+        float boxScaler = 2f;
+        float boxchance = 0.6f;
+
+        float rockScaler = 30f;
+        float rockChance = 0.7f;
+
+        float panelScaler = 30f;
+        float panelChance = 0.7f;
+
+        float moldScaler = 0.4f;
+        float moldChance = 0.45f;
+
+        float iceScaler = 0.2f;
+        float iceChance = 0.45f;
+
+        int[] freeCellsBox = new int[10];
+        int freeCellsUpNum = 0;
+
+        int random = Random.Range(1000, 100000);
+
         //устанавливаем размер уровня
-        int Width = (int)NoizeResult % 4 + 6;
-        int Height = (int)NoizeResult * 123 % 6 + 6;
+        int Width = random % 4 + 6;
+        int Height = random * 123 % 6 + 6;
         //основные параметры уровня
-        int NeedScore = Width * Height * ((int)NoizeResult % ScoreСoefficient + ScoreСoefficient / 2);
+        int NeedScore = Width * Height * (random % ScoreСoefficient + ScoreСoefficient / 2);
         float move = (float)30 / (Width * Height * ScoreСoefficient) * NeedScore;
         //выюираем количество цветов
         int numColors = 4;
 
         //создаем уровень без массивов
         LevelsScript.Level level = LevelsScript.main.Levels[NumLevel];
-        level = LevelsScript.main.CreateLevel(NumLevel, Height, Width, NeedScore, (int)move, numColors, (int)NoizeResult * 100, (int)NoizeResult * 100);
+        level = LevelsScript.main.CreateLevel(NumLevel, Height, Width, NeedScore, (int)move, numColors, 0, 0);
 
         int[,] exist = new int[Height, Width];
         int[,] ice = new int[Height, Width];
@@ -871,10 +892,73 @@ public class LevelGenerator : MonoBehaviour
         int[,] teleports = new int[Height, Width];
 
         PassRandom();
-        CrystalRandom();
-        ExistRandom();
-        SymmetryArrayForGorizontal(ref exist);
-        Dispencers();
+        Crystal();
+        symetry = Chance(symetryChance);
+        if (level.PassedWithBox == false && level.PassedWithRock == false)
+        {
+            for (int i = 0; i <= 100; i++)
+            {
+                ExistRandom();
+                Dispencers();
+                BoxRandom();
+                RockRandom();
+                CheckFreeCells();
+                CheckFreeUpCells();
+                if (freeCellsBox[6] >= 8 && freeCellsBox[9] >= 1 && freeCellsUpNum >= 14)
+                    break;
+            }
+        }
+
+        for (int i = 0; i <= 1000; i++)
+        {
+            if (level.PassedWithPanel == true)
+            {
+                PanelRandom();
+                if (CheckArr(ref panel) >= CheckArr(ref exist) / 10)
+                    break;
+            }
+            else if (level.PassedWithIce == true)
+            {
+                IceRandom();
+                if (CheckArr(ref ice) >= CheckArr(ref exist) / 2)
+                    break;
+            }
+            else if (level.PassedWithMold == true)
+            {
+                MoldRandom();
+                if (CheckArr(ref mold) >= CheckArr(ref exist) / 3)
+                    break;
+            }
+            else if (level.PassedWithRock == true)
+            {
+                ArrayNull(ref box, 0);
+                ExistRandom();
+                Dispencers();
+                RockRandomPass(1.2f);
+                CheckFreeCells();
+                CheckFreeUpCells();
+                if (CheckArr(ref rock) >= CheckArr(ref exist) / 6 && freeCellsBox[6] >= 8 && freeCellsBox[9] >= 1 && freeCellsUpNum >= 14)
+                    break;
+            }
+            else if (level.PassedWithBox == true)
+            {
+                ArrayNull(ref rock, 0);
+                ExistRandom();
+                Dispencers();
+                BoxRandomPass(1.1f);
+                CheckFreeCells();
+                CheckFreeUpCells();
+                if (CheckArr(ref box) >= CheckArr(ref exist) / 6 && freeCellsBox[6] >= 8 && freeCellsBox[9] >= 1 && freeCellsUpNum >= 14)
+                    break;
+            }
+            else if (level.PassedWithCrystal == true)
+            {
+                level.NeedCrystal = random % CheckArr(ref exist) + 15;
+                level.NeedColor = (CellInternalObject.InternalColor)(random % 5);
+            }
+            if (i == 1000)
+                Debug.Log("pizda");
+        }
 
         level.SetMass(exist, "exist");
         level.SetMass(IColors, "color");
@@ -896,7 +980,7 @@ public class LevelGenerator : MonoBehaviour
         void PassRandom()
         {
 
-            int rand = (int)(NoizeResult % 6);
+            int rand = (int)(random % 7);
             switch (rand)
             {
                 case 0:
@@ -914,10 +998,11 @@ public class LevelGenerator : MonoBehaviour
                 case 4:
                     level.PassedWithBox = true;
                     break;
+                case 5:
+                    level.PassedWithIce = true;
+                    break;
                 default:
                     level.PassedWithCrystal = true;
-                    level.NeedCrystal = (int)NoizeResult % 35 + 25;
-                    level.NeedColor = (CellInternalObject.InternalColor)(int)(NoizeResult % 5);
                     break;
             }
         }
@@ -925,20 +1010,98 @@ public class LevelGenerator : MonoBehaviour
         //генерация ячеек
         void ExistRandom()
         {
-            float scaler = 0.5f;
-            float chance = 0.4f;
-            for (int y = 0; y < Height; y++)
+            ArrayNull(ref exist, 0);
+            ArrayRandomPerlin(existscaler, existchance, ref exist, 1);
+        }
+
+        //проверка количества ячеек вокруг которых нет отверстий
+        void CheckFreeCells()
+        {
+            for (int i = 0; i <= 9; i++)
             {
-                for (int x = 0; x < Width; x++)
+                freeCellsBox[i] = 0;
+            }
+            for (int y = 1; y < Height - 1; y++)
+            {
+                for (int x = 1; x < Width - 1; x++)
                 {
-                    float noize = Mathf.PerlinNoise(x * scaler + RandomFactor * NumLevel, y * scaler);
-                    exist[y, x] = noize > chance ? 1 : 0;
+                    int freeCellsNum = 0;
+                    //циклы проверки одной ячейки(вокруг нее)
+                    for (int y2 = -1; y2 <= 1; y2++)
+                    {
+                        for (int x2 = -1; x2 <= 1; x2++)
+                        {
+                            if (exist[y + y2, x + x2] == 1 && box[y + y2, x + x2] == 0 && rock[y + y2, x + x2] == 0)
+                                freeCellsNum++;
+                        }
+                    }
+                    for (int i = 0; i <= 9; i++)
+                    {
+                        if (freeCellsNum >= i)
+                            freeCellsBox[i]++;
+                    }
                 }
             }
         }
 
+        //проверка количества свободных ячеек при старте уровня(сколько ячеек может заполнится)
+        void CheckFreeUpCells()
+        {
+            freeCellsUpNum = 0;
+            bool[,] free = new bool[Height, Width];
+
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    free[y, x] = true;
+                }
+            }
+
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    if (exist[y, x] == 1 && box[y, x] == 0 && rock[y, x] == 0)
+                    {
+                        if (y == 0 || dispencers[y - 1, x] == 1 || free[y - 1, x] == true || (x != 0 && free[y - 1, x - 1] == true) || (x != Width - 1 && free[y - 1, x + 1] == true))
+                        {
+                            free[y, x] = true;
+                            Type[y, x] = 1;
+                            freeCellsUpNum++;
+                        }
+                    }
+                    else
+                    {
+                        free[y, x] = false;
+
+                        if(rock[y, x] == 0)
+                            Type[y, x] = 0;
+                        else
+                            Type[y, x] = 1;
+                    }
+                }
+            }
+        }
+
+        int CheckArr(ref int[,] arr)
+        {
+            int numArr = 0;
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    if (arr[y, x] == 1 && exist[y, x] == 1)
+                        numArr++;
+                }
+            }
+            return numArr;
+        }
+
+        //генерация раздатчиков в необходимых местах
         void Dispencers()
         {
+            ArrayNull(ref dispencers, 0);
             for (int y = 0; y < Height - 1; y++)
             {
                 for (int x = 0; x < Width; x++)
@@ -959,14 +1122,95 @@ public class LevelGenerator : MonoBehaviour
         }
 
         //генерация кристаллов
-        void CrystalRandom()
+        void Crystal()
         {
             for (int y = 0; y < Height; y++)
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    IColors[y, x] = 1;
+                    IColors[y, x] = 0;
                     Type[y, x] = 1;
+                }
+            }
+        }
+        //генерация ящиков
+        void BoxRandomPass(float value)
+        {
+            ArrayNull(ref box, 0);
+            ArrayRandomPerlin(boxScaler, boxchance / value, ref box, 5);
+        }
+
+        //генерация ящиков
+        void BoxRandom()
+        {
+            ArrayNull(ref box, 0);
+            ArrayRandomPerlin(boxScaler, boxchance, ref box, 5);
+        }
+
+        //генерация камней
+        void RockRandomPass(float value)
+        {
+            ArrayNull(ref rock, 0);
+            ArrayRandomPerlin(rockScaler, rockChance / value, ref rock, 1);
+        }
+
+        //генерация камней
+        void RockRandom()
+        {
+            ArrayNull(ref rock, 0);
+            ArrayRandomPerlin(rockScaler, rockChance, ref rock, 1);
+        }
+
+        //генерация льда
+        void IceRandom()
+        {
+            ArrayNull(ref ice, 0);
+            ArrayRandomPerlin(iceScaler, iceChance, ref ice, 5);
+        }
+
+        //генерация панели
+        void PanelRandom()
+        {
+            ArrayNull(ref panel, 0);
+            ArrayRandomPerlin(panelScaler, panelChance, ref panel, 1);
+        }
+
+        //генерация плесени
+        void MoldRandom()
+        {
+            ArrayNull(ref mold, 0);
+            ArrayRandomPerlin(moldScaler, moldChance, ref mold, 1);
+        }
+
+        void ArrayRandomPerlin(float scaler, float chance, ref int[,] arr, int maxValue)
+        {
+            float randomPositionX = Random.Range(0f, 10000f);
+            float randomPositionY = Random.Range(0f, 10000f);
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    float noize = Mathf.PerlinNoise(x * scaler + randomPositionX * NumLevel, y * scaler + randomPositionY);
+                    for (int i = 0; i < maxValue; i++)
+                    {
+                        if(noize > chance + i * 0.05f)
+                        {
+                            arr[y, x] = i + 1;
+                        }
+                    }
+                }
+            }
+            if (symetry)
+                SymmetryArrayForGorizontal(ref arr);
+        }
+
+        void ArrayNull(ref int[,] arr, int defaultValue)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    arr[y, x] = defaultValue;
                 }
             }
         }
@@ -981,6 +1225,15 @@ public class LevelGenerator : MonoBehaviour
                     arr[y, Width - 1 - x] = arr[y, x];
                 }
             }
+        }
+        //рандомный расчет шанса
+        bool Chance(float i)
+        {
+            float random = Random.Range(0f, 1f);
+            if (random < i)
+                return true;
+            else
+                return false;
         }
     }
 }
