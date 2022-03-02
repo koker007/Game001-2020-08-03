@@ -87,7 +87,7 @@ public class MoldCTRL : MonoBehaviour
                 break;
             }
         }
-        myCell.myField.ReCalcMoldList();
+        myCell.myField.ReCalcLists();
         myCell.moldCTRL = null;
         Destroy(gameObject);
     }

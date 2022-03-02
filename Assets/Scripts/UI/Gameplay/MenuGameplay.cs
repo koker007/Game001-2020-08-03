@@ -48,7 +48,7 @@ public class MenuGameplay : MonoBehaviour
     [SerializeField]
     Image[] Stars = new Image[3];
     [SerializeField]
-    GameObject[] Goal = new GameObject[3];
+    public GameObject[] Goal = new GameObject[3];
     Text[] GoalText = new Text[3];
     Image[] GoalImage = new Image[3];
 
