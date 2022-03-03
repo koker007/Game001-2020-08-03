@@ -58,6 +58,8 @@ public class GameFieldCTRL : MonoBehaviour
 
     [Header("Prefabs")]
     [SerializeField]
+    public GameObject prefabFlyingParticleObj;
+    [SerializeField]
     GameObject prefabCell;
     [SerializeField]
     public GameObject prefabInternal;
@@ -69,6 +71,8 @@ public class GameFieldCTRL : MonoBehaviour
     public GameObject prefabPanel;
     [SerializeField]
     GameObject prefabMold;
+    [SerializeField]
+    GameObject prefabUnderIceObj;                           //Подледные объекты
     [SerializeField]
     GameObject prefabIce;
     [SerializeField]
@@ -103,6 +107,8 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     public Transform parentOfMold;
     [SerializeField]
+    public Transform parentOfUnderIceObj;
+    [SerializeField]
     public Transform parentOfIce;
     [SerializeField]
     public Transform parentOfRock;
@@ -124,6 +130,12 @@ public class GameFieldCTRL : MonoBehaviour
     public Transform parentOfDispencers;                    //Раздатчики
     [SerializeField]
     public Transform parentOfTeleport;                    //Раздатчики
+    
+
+    /// //////////////////////////////////////////////////////////////////////////////////////////
+    //Список объектов принадлежащие этому игровому полю
+    [Header("Lists Objs")]
+    public List<UnderIceObj> listUnderIceObj = new List<UnderIceObj>(); //подледные объекты
 
     [Header("Other")]
     public CellCTRL CellSelect; //Первый выделенный пользователем объект
@@ -152,6 +164,9 @@ public class GameFieldCTRL : MonoBehaviour
     {
         main = this;
         buffer.Ini(); //Проинициализировать буффер
+
+        //Перерасчет списков через некоторые промежутки времени
+        InvokeRepeating("ReCalcLists", 0, Random.Range(0.2f, 0.75f));
     }
 
     void Update()
@@ -460,8 +475,9 @@ public class GameFieldCTRL : MonoBehaviour
                         IceCTRL iceCTRL = iceObj.GetComponent<IceCTRL>();
                         cellCTRLs[x, y].iceCTRL = iceCTRL;
 
-                        //Инициализация плесени
-                        iceCTRL.inicialize(cellCTRLs[x, y]);
+                        //Инициализация льда
+                        iceCTRL.inicialize(cellCTRLs[x, y]);                   
+                        
                     }
 
                     //Нужно ли создать панель
@@ -549,7 +565,164 @@ public class GameFieldCTRL : MonoBehaviour
                 }
             }
 
+            
+            //проверяем ячейки на возможность растановки подледных объектов
+            for (int x = 0; x < iceCTRLs.GetLength(0); x++) {
+                for (int y = 0; y < iceCTRLs.GetLength(1); y++) {
+                    //Пропускаем создание с некоторым шансом
+                    if (cellCTRLs[x,y] == null || Random.Range(0, 100) < 0) continue;
 
+                    //Пытаемся создать
+                    bool result = TestAndSetUnderIceObj2(new Vector2Int(x,y));
+                    if (result) {
+                        bool rest = false;
+                    }
+                }
+            }
+
+            //попытка создать объект подольдом если найдется хотябы 1 лед
+            bool TestAndSetUnderIceObj2(Vector2Int pos, int typeUnderIce = 9999) {
+                bool created = false;
+                //Смещаемся
+                
+                int distOk = 0; //размер квадратной области на котором возможно создание
+                Vector2Int NearIce = new Vector2Int(9999,9999); //Растояние ближайшего льда
+
+                //Сперва проверяем ячейки на растоянии в 1 и потом раcстояние проверки увеличиваем
+                for (int dist = 0; dist < 4; dist++)
+                {
+                    bool distGood = true;
+
+                    for (int x = 0; x <= dist; x++)
+                    {
+                        //Если икс меньше дистанции то проверяем только 
+                        if (x < dist)
+                        {
+                            //То проверяем только ячейку с максимальной дистанцией на этой X
+                            if (!canUnderIce(x, dist))
+                            {
+                                distGood = false;
+                            }
+                        }
+                        //если икс равен максимальной дистанции
+                        else
+                        {
+                            //то на максимальной x проходимся по всем y 
+                            for (int y = 0; y <= dist; y++)
+                            {
+                                if (!canUnderIce(x, y))
+                                {
+                                    distGood = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                        //Если дистанция оказалась плохой то выходим
+                        if (!distGood) break;
+                    }
+
+                    //Если дистанция прошла проверку то выходим
+                    if (distGood)
+                        distOk = dist;
+                    else
+                    {
+                        //Если это стартовая ячейка и она не прошла проверку то выходим
+                        if (dist == 0)
+                            return false;
+
+                        break;
+                    }
+                }
+
+                //теперь известно растояние на котором можем создавать
+                //Теперь ищем лед внутри этого растояния
+                Vector2Int MinDist = new Vector2Int(9999, 9999);
+                Vector2Int MaxDist = new Vector2Int(-1, -1);
+
+                for (int x = 0; x <= distOk; x++) {
+                    for (int y = 0; y <= distOk; y++) {
+                        //Выходим если льда нет
+                        if (!foundIce(x, y)) continue;
+
+                        //Если лед, то обновляем значения
+                        //ближайшие значения //Если лед нашелся на более близкой дистаннции обновляем значения
+                        if (MinDist.x > x && MinDist.y > y) {
+                            MinDist = new Vector2Int(x,y);
+                        }
+                        //Далекие значения //Если лед нашелся на более далекой дистаннции обноляем значения
+                        if (MaxDist.x < x && MaxDist.y < y) {
+                            MaxDist = new Vector2Int(x,y);
+                        }
+                    }
+                }
+
+                //получаем компонент префаба для работы с данными
+                UnderIceObj underIceObjPrefab = prefabUnderIceObj.GetComponent<UnderIceObj>();
+
+                //Теперь выбираем объект из списка объектов который поместится в пространстве
+                for (int num = 0; num < underIceObjPrefab.texturesAndSizes.Length * 4; num++) {
+                    //Если объект был создан выходим
+                    if (created) break;
+
+
+                    int rand = Random.Range(0, underIceObjPrefab.texturesAndSizes.Length);
+                    //несколько раз пытаемся выбрать рандомный объект из списка
+                    if (num == 0 && typeUnderIce < underIceObjPrefab.texturesAndSizes.Length)
+                    {
+                        rand = typeUnderIce;
+                    }
+
+                    //Если обьект не помещается продолжаем перебор
+                    if (underIceObjPrefab.texturesAndSizes[rand].size.x > distOk || //Если объект больше максимального растояния
+                        underIceObjPrefab.texturesAndSizes[rand].size.y > distOk ||
+                        underIceObjPrefab.texturesAndSizes[rand].size.x < MinDist.x || //Если объект меньше чем растояние до первого льда
+                        underIceObjPrefab.texturesAndSizes[rand].size.y < MinDist.y
+                        ) continue;
+
+                    //Если все ок, то создаем объект
+                    GameObject underIceObj = Instantiate(prefabUnderIceObj, parentOfUnderIceObj);
+                    UnderIceObj underIce = underIceObj.GetComponent<UnderIceObj>();
+                    //Инициализируем
+                    bool iniok = underIce.IniObjectSizeAndPos(this, pos, underIceObjPrefab.texturesAndSizes[rand]);
+
+                    //Если ошибка удаляем выходим
+                    if (!iniok) {
+                        Destroy(underIceObj);
+                        continue;
+                    }
+                    //Если все хорошо, завершаем цикл создания
+                    created = true;
+                }
+
+                return created;
+
+                //////////////////////////////////////////////////////////////////////////////////////////
+                //Можно ли создать объект подольдом
+                bool canUnderIce(int x, int y)
+                {
+                    if (pos.x + x < cellCTRLs.GetLength(0) &&
+                        pos.y + y < cellCTRLs.GetLength(1) &&
+                        cellCTRLs[pos.x + x, pos.y + y] != null && //Если ячейка существует
+                        level.cells[pos.x + x, pos.y + y].dispencer != true && //Если ячейка без раздатчика
+                        cellCTRLs[pos.x + x, pos.y + y].underIceObj == null //Если эта ячейка не занята предметом
+                        )
+                    {
+                        return true;
+                    }
+                    else return false;
+                }
+
+                //Есть лед
+                bool foundIce(int x, int y) {
+                    if (cellCTRLs[pos.x + x, pos.y + y] != null &&
+                        cellCTRLs[pos.x + x, pos.y + y].ice > 0) {
+                        return true;
+
+                    }
+                    else return false;
+                }
+            }
         }
 
         //Подогнать размер поля в зависимости от количества ячеек
@@ -574,7 +747,7 @@ public class GameFieldCTRL : MonoBehaviour
     /// <summary>
     /// Пересчитать текущее количество плесени, исключить удаленные из списка
     /// </summary>
-    public void ReCalcMoldList()
+    public void ReCalcLists()
     {
         List<MoldCTRL> moldCTRLsNew = new List<MoldCTRL>();
 
@@ -588,6 +761,16 @@ public class GameFieldCTRL : MonoBehaviour
 
         moldCTRLs = moldCTRLsNew;
         CountMold = moldCTRLs.Count;
+
+        //Очищаем список подледных объектов
+        List<UnderIceObj> listUnderIceObjNew = new List<UnderIceObj>();
+        foreach (UnderIceObj UnderIce in listUnderIceObj) {
+            if (UnderIce)
+                listUnderIceObjNew.Add(UnderIce);
+        }
+        listUnderIceObj = listUnderIceObjNew;
+
+
     }
 
     /// <summary>
@@ -2105,20 +2288,6 @@ public class GameFieldCTRL : MonoBehaviour
         }
         AnimationPlayPotencial();
 
-        /*
-        float timeToTest = 0.5f;
-        //Если недавно было движение то обнуляем лист
-        if (Time.unscaledTime - timeLastMove < timeToTest)
-        {
-            listPotencial = new List<PotencialComb>();
-            potencialBest = null;
-            enemyPotencialBest = null;
-
-            //Debug.Log("Waiting Time " + Time.unscaledTime);
-
-            return;
-        }
-        */
         //ВЫходим если список уже есть или миссия провалена или выполнена
         if ((listPotencial.Count > 0 && !BuyMixedNeed) || Gameplay.main.isMissionComplite() || Gameplay.main.isMissionDefeat())
         {
@@ -2247,7 +2416,7 @@ public class GameFieldCTRL : MonoBehaviour
                     {
                         TestCreateMarker();
                     }
-                    if (currentLevel.PassedWithPanel && CountPanelSpread < 10 && cellCTRLs[x, y] != null && cellCTRLs[x, y].panelCTRL == null)
+                    if (currentLevel.PassedWithPanel && MenuGameplay.main.gameFieldCTRL.CountInteractiveCells - MenuGameplay.main.gameFieldCTRL.CountPanelSpread < 10 && cellCTRLs[x, y] != null && cellCTRLs[x, y].panelCTRL == null)
                     {
                         TestCreateMarker();
                     }
@@ -3625,8 +3794,8 @@ public class GameFieldCTRL : MonoBehaviour
             Destroy(rectParticleSelect.gameObject);
         }
 
-        //Только есть с кем поменяться
-        if (!CellSwap || !CellSelect)
+        //Только есть с кем поменяться и сейчас не перемешивание
+        if (!CellSwap || !CellSelect || ListWaitingInternals.Count > 0)
             return;
 
         bool neibour = false;

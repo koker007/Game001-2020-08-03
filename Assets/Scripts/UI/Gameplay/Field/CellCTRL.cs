@@ -81,6 +81,10 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     /// </summary>
     public IceCTRL iceCTRL;
     /// <summary>
+    /// Подледный объект //Если какая-то часть подледного объекта находится этой ячейке то ячейка знает об этом
+    /// </summary>
+    public UnderIceObj underIceObj;
+    /// <summary>
     /// Разбиваемый камень (бинты), который заперает внутри себя перемещаемый объект
     /// </summary>
     public RockCTRL rockCTRL;
