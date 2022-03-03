@@ -11,7 +11,7 @@ public class GameFieldCTRL : MonoBehaviour
 {
     public static GameFieldCTRL main;
 
-    private TeleportController[] firstTeleports = new TeleportController[100]; //fix
+    //private TeleportController[] firstTeleports = new TeleportController[100]; //fix
 
     [SerializeField]
     bool NeedOpenComplite = false;
@@ -136,6 +136,7 @@ public class GameFieldCTRL : MonoBehaviour
     //Список объектов принадлежащие этому игровому полю
     [Header("Lists Objs")]
     public List<UnderIceObj> listUnderIceObj = new List<UnderIceObj>(); //подледные объекты
+    public List<TeleportController>[] teleportLists = new List<TeleportController>[10]; //Массив не больше 10 разновидностей телепортов 
 
     [Header("Other")]
     public CellCTRL CellSelect; //Первый выделенный пользователем объект
@@ -386,8 +387,12 @@ public class GameFieldCTRL : MonoBehaviour
                         }
                         //Цвет основного (выдаваемого) объекта, берем из массива цветов
                         dispencerObj.GetComponent<DispencerController>().primaryObjectColor = level.cells[x, y].colorCell;
-                        //Тип основного (выдаваемого) объекта, берем из массива типов
-                        dispencerObj.GetComponent<DispencerController>().primaryObjectType = level.cells[x, y].typeCell;
+
+                        //Тип основного (выдаваемого) объекта, берем из массива типов. если указан тип то выдаем
+                        if (level.cells[x,y].typeCell != CellInternalObject.Type.none)
+                            dispencerObj.GetComponent<DispencerController>().primaryObjectType = level.cells[x, y].typeCell;
+                        //Если тип не указан то это будет обычный цвет
+                        else dispencerObj.GetComponent<DispencerController>().primaryObjectType = CellInternalObject.Type.color;
                     }
 
 
@@ -407,6 +412,22 @@ public class GameFieldCTRL : MonoBehaviour
                             teleportObj.GetComponent<TeleportController>().cellOut = cellCTRLs[x, y - 1];
                         }
 
+
+                        //Вытаскиваем контроллер телепорта
+                        TeleportController teleport = teleportObj.GetComponent<TeleportController>();
+
+                        //проверяем наличие списка телепортов
+                        if (teleportLists[teleportID] == null)
+                            teleportLists[teleportID] = new List<TeleportController>();
+
+                        //Добавляем телепорт в список телепортов по указанному id
+                        teleportLists[teleportID].Add(teleport);
+
+                        //Заполняем данными этот телепорт
+                        teleport.setIDAndColor(teleportID);
+                        teleport.myField = this;
+
+                        /*
                         //Если первый телепорт с заданным ID отсутствует в массиве, добавляем текущий
                         if (firstTeleports[teleportID] == null)
                         {
@@ -430,7 +451,7 @@ public class GameFieldCTRL : MonoBehaviour
                             firstTeleports[teleportID].myField = this;
                             firstTeleports[teleportID].secondTeleport.myField = this;
                         }
-
+                        */
 
                         //Проверяем нужна ли 
                     }
