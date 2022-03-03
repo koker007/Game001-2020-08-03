@@ -235,33 +235,22 @@ public class Gameplay : MonoBehaviour
             {
                 //Если
                 LevelsScript.Level level = LevelsScript.main.ReturnLevel();
-                if (score >= level.NeedScore || !level.PassedWithScore)
-                {                   
-                    if (MenuGameplay.main.gameFieldCTRL.CountMold <= 0 || !level.PassedWithMold)
-                    {
-                        if (MenuGameplay.main.gameFieldCTRL.CountBoxBlocker <= 0 || !level.PassedWithBox)
-                        {
-                            if (MenuGameplay.main.gameFieldCTRL.CountRockBlocker <= 0 || !level.PassedWithRock)
-                            {
-                                if (MenuGameplay.main.gameFieldCTRL.CountIce <= 0 || !level.PassedWithIce)
-                                {
-                                    if (MenuGameplay.main.gameFieldCTRL.CountInteractiveCells <= MenuGameplay.main.gameFieldCTRL.CountPanelSpread || !level.PassedWithPanel)
-                                    {                                       
-                                        if (level.NeedCrystal <= main.colorsCount[(int)level.NeedColor] || !level.PassedWithCrystal)
-                                        {
-                                            //Если битва с врагом и у нас больше нет ходов и очков у нас больше чем у врага
-                                            if (!level.PassedWithEnemy || score > enemyScore && EnemyController.MoveCount > EnemyController.MoveCountForPlayer && playerTurn)
-                                            {
-                                                buffer.missionComplite = true;
-                                                LevelStatsController.main.playerScore = score;
-                                                LevelStatsController.main.SendPlayerStats();
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                if (
+                    (!level.PassedWithScore || score >= level.NeedScore) &&                                                                                     //Если очков больше чем нужно или этот уровень завешается не через 
+                    (!level.PassedWithMold || MenuGameplay.main.gameFieldCTRL.CountMold <= 0) &&                                                                //Если плесени нету
+                    (!level.PassedWithBox || MenuGameplay.main.gameFieldCTRL.CountBoxBlocker <= 0) &&                                                           //Если нет коробок
+                    (!level.PassedWithRock || MenuGameplay.main.gameFieldCTRL.CountRockBlocker <= 0) &&                                                         //Если нет решеток
+                    (!level.PassedWithIce || MenuGameplay.main.gameFieldCTRL.CountIce <= 0) &&                                                                  //Если нет льда
+                    (!level.PassedWithPanel || MenuGameplay.main.gameFieldCTRL.CountInteractiveCells <= MenuGameplay.main.gameFieldCTRL.CountPanelSpread) &&    //Если все замазанно мазью
+                    (!level.PassedWithCrystal || level.NeedCrystal <= main.colorsCount[(int)level.NeedColor]) &&                                                //Если собранны все кристалы
+                    (!level.PassedWithUnderObj || MenuGameplay.main.gameFieldCTRL.listUnderIceObj.Count <= 0) &&                                                //Если все внутренние объекты достались
+                    (!level.PassedWithEnemy || score > enemyScore && EnemyController.MoveCount > EnemyController.MoveCountForPlayer && playerTurn)              //Если у нас больше очков чем у врага
+                    )
+                {
+
+                    buffer.missionComplite = true;
+                    LevelStatsController.main.playerScore = score;
+                    LevelStatsController.main.SendPlayerStats();
                 }
                 //если ходов нет проигрыш
                 if (movingCan <= 0 && (!level.PassedWithEnemy || (level.PassedWithEnemy && score <= enemyScore)))

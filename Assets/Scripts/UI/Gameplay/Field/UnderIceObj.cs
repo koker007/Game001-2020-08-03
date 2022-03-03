@@ -118,7 +118,7 @@ public class UnderIceObj : MonoBehaviour
     //Переодическая проверка на жизнь
     void InvokeTestLive() {
         //проверяем позицию подледного объекта на наличие льда
-        bool isEnd = false;
+        bool isEnd = true;
 
         for (int x = 0; x < texturesAndSize.size.x; x++) {
             for (int y = 0; y < texturesAndSize.size.y; y++) {
@@ -126,12 +126,12 @@ public class UnderIceObj : MonoBehaviour
                 if (myField.cellCTRLs[pos.x + x, pos.y + y].ice > 0 ||
                     myField.cellCTRLs[pos.x + x, pos.y + y].Box > 0 ||
                     myField.cellCTRLs[pos.x + x, pos.y + y].rock > 0) {
-                    isEnd = true;
+                    isEnd = false;
                     break;
                 }
             }
 
-            if (isEnd) break;
+            if (!isEnd) break;
         }
 
         //Жизнь еще не закончилась

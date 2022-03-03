@@ -580,73 +580,8 @@ public class GameFieldCTRL : MonoBehaviour
                 }
             }
 
-            //Проверки ячейки на возможность создания подлёдного объекта
-            void TestAndSetUnderIceObj(Vector2Int pos) {
-
-                //Смещаемся
-                int distOk = 0;
-
-                //Сперва проверяем ячейки на растоянии в 1 и потом раcстояние проверки увеличиваем
-                for (int dist = 0; dist < 4; dist++) {
-                    bool distGood = true;
-
-                    for (int x = 0; x <= dist; x++) {
-                        //Если икс меньше дистанции то проверяем только 
-                        if (x < dist) {
-                            //То проверяем только ячейку с максимальной дистанцией на этой X
-                            if (!canUnderIce(x, dist))
-                            {
-                                distGood = false;
-                            }
-                        }
-                        //если икс равен максимальной дистанции
-                        else {
-                            //то на максимальной x проходимся по всем y 
-                            for (int y = 0; y <= dist; y++) {
-                                if (!canUnderIce(x, y))
-                                {
-                                    distGood = false;
-                                    break;
-                                }
-                            }
-                        }
-
-                        //Если дистанция оказалась плохой то выходим
-                        if (!distGood) break;
-                    }
-
-                    if (!distGood)
-                    {
-                        distOk = dist;
-                    }
-                    else {
-                        break;
-                    }
-                }
-
-                UnderIceObj underIceObj = prefabUnderIceObj.GetComponent<UnderIceObj>();
-
-                //теперь ищем внутренний объект который
-                for (int num = 0; num < underIceObj.texturesAndSizes.Length; num++) {
-                    //Если объект помещается по ширине и высоте то  
-                    if (underIceObj.texturesAndSizes[num].size.x <= distOk && 
-                        underIceObj.texturesAndSizes[num].size.y <= distOk) {
-                        
-                    }
-                }
-
-
-                bool canUnderIce(int x, int y) {
-
-                    if (cellCTRLs[x,y].iceCTRL != null || cellCTRLs[x,y].ice != 0) {
-                        return true;
-                    }
-                    else return false;
-                }
-            }
-
             //попытка создать объект подольдом если найдется хотябы 1 лед
-            bool TestAndSetUnderIceObj2(Vector2Int pos) {
+            bool TestAndSetUnderIceObj2(Vector2Int pos, int typeUnderIce = 9999) {
                 bool created = false;
                 //Смещаемся
                 
@@ -730,8 +665,13 @@ public class GameFieldCTRL : MonoBehaviour
                     //Если объект был создан выходим
                     if (created) break;
 
-                    //несколько раз пытаемся выбрать рандомный объект из списка
+
                     int rand = Random.Range(0, underIceObjPrefab.texturesAndSizes.Length);
+                    //несколько раз пытаемся выбрать рандомный объект из списка
+                    if (num == 0 && typeUnderIce < underIceObjPrefab.texturesAndSizes.Length)
+                    {
+                        rand = typeUnderIce;
+                    }
 
                     //Если обьект не помещается продолжаем перебор
                     if (underIceObjPrefab.texturesAndSizes[rand].size.x > distOk || //Если объект больше максимального растояния
@@ -2348,20 +2288,6 @@ public class GameFieldCTRL : MonoBehaviour
         }
         AnimationPlayPotencial();
 
-        /*
-        float timeToTest = 0.5f;
-        //Если недавно было движение то обнуляем лист
-        if (Time.unscaledTime - timeLastMove < timeToTest)
-        {
-            listPotencial = new List<PotencialComb>();
-            potencialBest = null;
-            enemyPotencialBest = null;
-
-            //Debug.Log("Waiting Time " + Time.unscaledTime);
-
-            return;
-        }
-        */
         //ВЫходим если список уже есть или миссия провалена или выполнена
         if ((listPotencial.Count > 0 && !BuyMixedNeed) || Gameplay.main.isMissionComplite() || Gameplay.main.isMissionDefeat())
         {
@@ -2490,7 +2416,7 @@ public class GameFieldCTRL : MonoBehaviour
                     {
                         TestCreateMarker();
                     }
-                    if (currentLevel.PassedWithPanel && CountPanelSpread < 10 && cellCTRLs[x, y] != null && cellCTRLs[x, y].panelCTRL == null)
+                    if (currentLevel.PassedWithPanel && MenuGameplay.main.gameFieldCTRL.CountInteractiveCells - MenuGameplay.main.gameFieldCTRL.CountPanelSpread < 10 && cellCTRLs[x, y] != null && cellCTRLs[x, y].panelCTRL == null)
                     {
                         TestCreateMarker();
                     }
@@ -3868,8 +3794,8 @@ public class GameFieldCTRL : MonoBehaviour
             Destroy(rectParticleSelect.gameObject);
         }
 
-        //Только есть с кем поменяться
-        if (!CellSwap || !CellSelect)
+        //Только есть с кем поменяться и сейчас не перемешивание
+        if (!CellSwap || !CellSelect || ListWaitingInternals.Count > 0)
             return;
 
         bool neibour = false;

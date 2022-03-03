@@ -97,7 +97,7 @@ public class GlobalMessage : MonoBehaviour
 
     void Update()
     {
-        UpdateFon();
+        UpdateMessages();
     }
 
     public void InvokeTermsOfUse() {
@@ -387,10 +387,22 @@ public class GlobalMessage : MonoBehaviour
     }
 
     //Открытие или закрытие информационного меню
-    void UpdateFon()
+    void UpdateMessages()
     {
+        testList();
         testFon();
 
+        void testList() {
+            List<MessageCTRL> bufferMessagesNew = new List<MessageCTRL>();
+
+            //Ищем в текущем списке и добавляем только те что есть
+            foreach (MessageCTRL message in MessageCTRL.BufferMessages) {
+                if (message) bufferMessagesNew.Add(message);
+            }
+
+            MessageCTRL.BufferMessages = bufferMessagesNew;
+
+        }
         //Изменение альфы
         void testFon() {
             

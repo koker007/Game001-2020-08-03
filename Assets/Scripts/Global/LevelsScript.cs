@@ -48,6 +48,7 @@ public class LevelsScript : MonoBehaviour
         public int wall;
         public int teleport;
         public bool dispencer;
+        public int underObj;
         public CellInfo()
         {
             colorCell = CellInternalObject.InternalColor.Red;
@@ -67,8 +68,9 @@ public class LevelsScript : MonoBehaviour
             wall = cell.wall;
             teleport = cell.teleport;
             dispencer = cell.dispencer;
+            underObj = cell.underObj;
         }
-        public CellInfo(int exist, int box, int mold, int color, int type, int panel, int rockF, int ice, int walls, int disp, int tp)
+        public CellInfo(int exist, int box, int mold, int color, int type, int panel, int rockF, int ice, int walls, int disp, int tp, int underObj)
         {
             if (exist != 0)
                 Exist = exist;
@@ -106,6 +108,10 @@ public class LevelsScript : MonoBehaviour
             if (tp > 0)
             {
                 teleport = tp;
+            }
+
+            if (underObj > 0) {
+                this.underObj = underObj;
             }
 
             dispencer = (disp != 0);
@@ -178,6 +184,7 @@ public class LevelsScript : MonoBehaviour
         public bool PassedWithPanel = false;
         public bool PassedWithRock = false;
         public bool PassedWithEnemy = false;
+        public bool PassedWithUnderObj = false; //Завершение с помощью сбора всех подледных объектов
         //для прохождения с помощью сбора кристаллов
         public int NeedCrystal;
         public CellInternalObject.InternalColor NeedColor;
@@ -197,6 +204,7 @@ public class LevelsScript : MonoBehaviour
         /// Внимание! если надо создать раздатчик, то ячейка должна быть exist, иначе ничего не создастся
         /// </summary>
         public int[,] dispencers;
+        public int[,] underObjs;
         public Level()
         {
         }
@@ -238,6 +246,7 @@ public class LevelsScript : MonoBehaviour
             PassedWithRock = lev.PassedWithRock;
             PassedWithRock = lev.PassedWithRock;
             PassedWithEnemy = lev.PassedWithEnemy;
+            PassedWithUnderObj = lev.PassedWithUnderObj;
 
             NeedCrystal = lev.NeedCrystal;
             NeedColor = lev.NeedColor;
@@ -253,6 +262,7 @@ public class LevelsScript : MonoBehaviour
             walls = lev.walls;
             teleport = lev.teleport;
             dispencers = lev.dispencers;
+            underObjs = lev.underObjs;
         }
         
         public void ConvertOneCellToTwoCells()
@@ -323,6 +333,10 @@ public class LevelsScript : MonoBehaviour
                 case "teleport":
                     teleport = values;
                     break;
+                case "underObjs":
+                    underObjs = values;
+                    break;
+
             }
         }
         /// <summary>
@@ -388,19 +402,16 @@ public class LevelsScript : MonoBehaviour
             {
                 massNull(ref dispencers, 0);
             }
+            if (underObjs == null) {
+                massNull(ref underObjs, 0);
+            }
+
 
             for (int y = 0; y < Height; y++)
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    //if (exist[y, x] == 0 && teleport[y,x] == 0)
-                    //{
-                    //    cells[x, cells.GetLength(1) - 1 - y] = null;
-                    //}
-                    //else
-                    //{
-                        cells[x, cells.GetLength(1) - 1 - y] = new CellInfo(exist[y,x], box[y, x], mold[y, x], internalColors[y, x], type[y, x], panel[y, x], rock[y,x], ice[y,x], walls[y,x], dispencers[y,x], teleport[y,x]);
-                    //}
+                    cells[x, cells.GetLength(1) - 1 - y] = new CellInfo(exist[y,x], box[y, x], mold[y, x], internalColors[y, x], type[y, x], panel[y, x], rock[y,x], ice[y,x], walls[y,x], dispencers[y,x], teleport[y,x], underObjs[y,x]);
                 }
             }
         }

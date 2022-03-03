@@ -92,15 +92,15 @@ public class PlayerProfile : MonoBehaviour
     const string strTicket = "TicketAmount";
     const int startTicket = 5;
     const string strShopInternal = "ShopInternal";
-    const int startShopInternal = 3;
+    const int startShopInternal = 1;
     const string strShopRocket = "ShopRocket";
-    const int startShopRocket = 3;
+    const int startShopRocket = 1;
     const string strShopBomb = "ShopBomb";
-    const int startShopBomb = 3;
+    const int startShopBomb = 1;
     const string strShopColor5 = "ShopColor5";
-    const int startShopColors5 = 3;
+    const int startShopColors5 = 1;
     const string strShopMixed = "ShopMixed";
-    const int startShopMixed = 3;
+    const int startShopMixed = 1;
 
     const string strDayVipCalendarTypeGift = "DayVipCalendarTypeGift";
     const string strDayVipCalendarCountGift = "DayVipCalendarCountGift";
@@ -220,7 +220,7 @@ public class PlayerProfile : MonoBehaviour
 
         if (Settings.main.DeveloperTesting) {
             GoldAmount = 100;
-            ProfilelevelOpen = 300;
+            ProfilelevelOpen = 500;
             Health.Amount = 100;
 
             ShopInternal.Amount = 10;
@@ -565,22 +565,6 @@ public class PlayerProfile : MonoBehaviour
             dataStr += "" + keyOfLVLgold + LVLGold[x] + spliterDAD; //золотое прохождение //Должен быть последним, в конце символ окончания данных
         }
 
-        //для теста
-        //LoadFromGoogleLVL(dataStr);
-
-        //Старое 
-        /*
-        for (int x = LVLStar.Length - 1; x > 0; x--) {
-            //Пропускаем если звезд нет
-            if (LVLStar[x] == 0)
-                continue;
-
-            //Записываем в строку |LVL=NUM|
-            dataStr += "" + x + spliterKAD + LVLStar[x] + spliterDAD;
-        }
-        */
-
-        //if (dataStr == "") return;
 
         //Отправить данные на сохрание в гугл
         GooglePlay.main.AddBufferWaitingFile(GooglePlay.KeyFileLVLs, dataStr);

@@ -230,7 +230,7 @@ public class CellInternalObject : MonoBehaviour
             }
 
 
-            MovingSpeed += Time.unscaledDeltaTime * 1.35f;
+            MovingSpeed += Time.unscaledDeltaTime * 1.1f; //1.20f;
 
             float speed = 0.09f + MovingSpeed;
             speed *= Gameplay.main.timeScale;
@@ -1387,54 +1387,6 @@ public class CellInternalObject : MonoBehaviour
             }
 
             SoundCTRL.main.SmartPlaySound(SoundCTRL.main.clipExploseColor5);
-
-            /*
-            void DestroyAllRocket(InternalColor internalColor)
-            {
-
-                float destroyNum = 0;
-                //Проверяем все ячейки на совпадение цветов
-                for (int x = 0; x < myField.cellCTRLs.GetLength(0); x++)
-                {
-                    for (int y = 0; y < myField.cellCTRLs.GetLength(1); y++)
-                    {
-                        if (!myField.cellCTRLs[x, y] || !myField.cellCTRLs[x, y].cellInternal)
-                        {
-                            continue;
-                        }
-
-
-                        if (myField.cellCTRLs[x, y].cellInternal.color == internalColor)
-                        {
-                            //Удаляем старый объект
-                            Destroy(myField.cellCTRLs[x, y].cellInternal.gameObject);
-
-                            //Сперва создаем новый обьект ракету
-                            GameObject internalObj = Instantiate(myField.prefabInternal, myField.parentOfInternals);
-                            CellInternalObject cellInternalObject = internalObj.GetComponent<CellInternalObject>();
-                            cellInternalObject.myField = myField;
-
-                            if (Random.Range(0, 100) < 50) {
-                                cellInternalObject.setColorAndType(internalColor, Type.rocketVertical);
-                            }
-                            else {
-                                cellInternalObject.setColorAndType(internalColor, Type.rocketHorizontal);
-                            }
-                            //Перемещаем объект на место старого
-                            cellInternalObject.StartMove(myField.cellCTRLs[x, y]);
-                            cellInternalObject.EndMove();
-
-                            needInstantDamage = false;
-                            cellInternalObject.BufferActivateType = cellInternalObject.type;
-                            cellInternalObject.ActivateInvoke(destroyNum);
-                            destroyNum++;
-                        }
-                    }
-                }
-
-                myCell.Damage(null, combination);
-            }
-            */
 
             void replacementColorAndActivate() {
 
