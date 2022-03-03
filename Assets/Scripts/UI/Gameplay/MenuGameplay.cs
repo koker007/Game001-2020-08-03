@@ -173,7 +173,7 @@ public class MenuGameplay : MonoBehaviour
 
         if (LevelsScript.main)
         {
-            LevelGenerator.main.GenerateNewLevel(Gameplay.main.levelSelect);
+            LevelGenerator.main.GenerateLevel(Gameplay.main.levelSelect);
             level = LevelsScript.main.ReturnLevel();
             gameFieldCTRL.inicializeField(level);
         }

@@ -10,6 +10,8 @@ using UnityEngine.UI;
 public class MessageSettings : MonoBehaviour
 {
     public Dropdown launguageDropdown;
+    
+    [SerializeField] private Text Version;
 
     [Header("Images")]
     [SerializeField]
@@ -33,6 +35,10 @@ public class MessageSettings : MonoBehaviour
     {
         imagesUpdate();
         DropdownUpdate();
+    }
+    private void OnEnable()
+    {
+        Version.text = Application.version;
     }
 
     public void ClickButtonMusic() {

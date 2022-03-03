@@ -46,7 +46,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6268549530330161676}
-  m_CullTransparentMesh: 1
+  m_CullTransparentMesh: 0
 --- !u!114 &6268549530330161715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,7 +112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3901c420618e6a54bb80e23684b4d37a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 7951196449721417352}
+  rTransform: {fileID: 0}
+  ScoreText: {fileID: 0}
 --- !u!1 &7951196449721417352
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,4 +158,4 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7951196449721417352}
-  m_CullTransparentMesh: 1
+  m_CullTransparentMesh: 0

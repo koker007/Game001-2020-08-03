@@ -124,6 +124,13 @@ public class LevelRedactor : MonoBehaviour
         SelectCell(new Vector2Int(0, 0));
     }
 
+    public void GenerateLevel()
+    {
+        _levelsObject.levels[0] = new LevelsScript.Level(LevelGenerator.main.GenerateLevelV3(int.Parse(_levelNumIF.text), _levelsObject.levels[0]));
+        SetValuesInText();
+        SelectCell(new Vector2Int(0, 0));
+    }
+
     private void SetValuesInText()
     {
         _sizeXIF.text = _levelsObject.levels[0].Width.ToString();

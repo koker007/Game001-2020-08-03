@@ -70,7 +70,7 @@ public class MessageLevelInfo : MonoBehaviour
         string messageTitleLVL = TranslateManager.main.GetText(TranslateManager.keyMessageLVLTitle) + " " + Gameplay.main.levelSelect.ToString();
         messageCTRL.title.text = messageTitleLVL;
 
-        LevelGenerator.main.GenerateNewLevel(Gameplay.main.levelSelect);
+        LevelGenerator.main.GenerateLevel(Gameplay.main.levelSelect);
 
         string textNeedScore = TranslateManager.main.GetText("LevelRequrements") +
                                "\n" + 
