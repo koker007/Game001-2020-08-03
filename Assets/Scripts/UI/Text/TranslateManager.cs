@@ -16,6 +16,7 @@ public class TranslateManager : MonoBehaviour
     public const string keyMessageLVLTargetScore = "MessageLVLScore";
     public const string keyMessageLVLTargetCrystal = "MessageLVLTargetCrystal";
     public const string keyMessageLVLTargetICE = "MessageLVLTargetICE";
+    public const string keyMessageLVLTargetUnderObj = "MessageLVLTargetUnderObj";
     public const string keyMessageLVLTargetBox = "MessageLVLTargetBox";
     public const string keyMessageLVLTargetMold = "MessageLVLTargetMold";
     public const string keyMessageLVLTargetPanel = "MessageLVLTargetPanel";

@@ -244,7 +244,8 @@ public class Gameplay : MonoBehaviour
                     (!level.PassedWithPanel || MenuGameplay.main.gameFieldCTRL.CountInteractiveCells <= MenuGameplay.main.gameFieldCTRL.CountPanelSpread) &&    //Если все замазанно мазью
                     (!level.PassedWithCrystal || level.NeedCrystal <= main.colorsCount[(int)level.NeedColor]) &&                                                //Если собранны все кристалы
                     (!level.PassedWithUnderObj || MenuGameplay.main.gameFieldCTRL.listUnderIceObj.Count <= 0) &&                                                //Если все внутренние объекты достались
-                    (!level.PassedWithEnemy || score > enemyScore && EnemyController.MoveCount > EnemyController.MoveCountForPlayer && playerTurn)              //Если у нас больше очков чем у врага
+                    (!level.PassedWithEnemy || score > enemyScore && EnemyController.MoveCount > EnemyController.MoveCountForPlayer && playerTurn) &&           //Если у нас больше очков чем у врага
+                    (!level.PassedWithUnderObj || MenuGameplay.main.gameFieldCTRL.listUnderIceObj.Count <= 0)                                                   //Если нет предметов под льдом
                     )
                 {
 
