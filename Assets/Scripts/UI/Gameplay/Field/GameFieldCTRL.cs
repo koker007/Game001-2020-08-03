@@ -58,7 +58,7 @@ public class GameFieldCTRL : MonoBehaviour
 
     [Header("Prefabs")]
     [SerializeField]
-    public GameObject prefabFlyingParticleObj;
+    public GameObject prefabFlyingParticleObj;              //летающие частицы до определенной точки
     [SerializeField]
     GameObject prefabCell;
     [SerializeField]
@@ -182,23 +182,23 @@ public class GameFieldCTRL : MonoBehaviour
 
         isMoving();
 
-        TestFieldCombination(true); //Тестим комбинации с применением урона
+        TestFieldCombination(true);     //Тестим комбинации с применением урона
 
-        TestFieldPotencial(); //ищем потенциальные ходы
-        TestRandomNotPotencial(); //Рандомизируем если ходов не обнаружено
+        TestFieldPotencial();           //ищем потенциальные ходы
+        TestRandomNotPotencial();       //Рандомизируем если ходов не обнаружено
 
-        ActivateMarkers(); //Включаем маркеры цели
+        ActivateMarkers();              //Включаем маркеры цели
 
-        TestStartSwap(); //Начинаем обмен
-        TestReturnSwap(); //Возвращяем обмен
+        TestStartSwap();                //Начинаем обмен
+        TestReturnSwap();               //Возвращяем обмен
 
-        TestMold(); //Выполняем действия после хода
+        TestMold();                     //Выполняем действия после хода
 
-        TestCalcPriorityCells(); //Вычисление приоритета ячеек
+        TestCalcPriorityCells();        //Вычисление приоритета ячеек
 
         TurnPass();
 
-        //Проверка на завершение игры
+                                        //Проверка на завершение игры
         TestEndMessage();
 
         //Расчет буферных вычислений.. в основном нужно для эллеменнов на после, не для самого поля..
@@ -4246,46 +4246,115 @@ public class GameFieldCTRL : MonoBehaviour
                         }
                     }
 
-                    //Активируем все супер цвет
-                    if (color5.Count > 0) {
-                        foreach (CellInternalObject cellInternal in color5) {
+                    //Если игрок не нажал на экран то взрываем медленно
+                    if (!Gameplay.main.speedEnd) {
+                        //Активируем все супер цвет
+                        if (color5.Count > 0)
+                        {
+                            setColor5();
+                        }
+                        //активируем все бомбы
+                        else if (bombs.Count > 0)
+                        {
+                            setBomb();
+                        }
+                        //активируем все ракеты
+                        else if (roskets.Count > 0)
+                        {
+                            setRosket();
+                        }
+                        //активируем все леталки
+                        else if (flys.Count > 0)
+                        {
+                            setFlying();
+                        }
+
+                        //Иначе если еще есть ходы в запасе.. 
+                        else if (Gameplay.main.movingCan > 0)
+                        {
+
+                            setMovingCan();
+                        }
+
+                        else if (Gameplay.main.isMissionComplite() && !NeedOpenComplite && Time.unscaledTime - timeLastMove > 0.5f)
+                        {
+                            setComplite();
+                        }
+                    }
+                    else {
+                        /*
+                        //Активируем все супер цвет
+                        if (color5.Count > 0)
+                        {
+                            setColor5();
+                        }
+                        //активируем все бомбы
+                        if (bombs.Count > 0)
+                        {
+                            setBomb();
+                        }
+                        //активируем все ракеты
+                        if (roskets.Count > 0)
+                        {
+                            setRosket();
+                        }
+                        //активируем все леталки
+                        if (flys.Count > 0)
+                        {
+                            setFlying();
+                        }
+                        */
+
+                        /*
+                        //Иначе если еще есть ходы в запасе.. 
+                        if (Gameplay.main.movingCan > 0)
+                        {
+                            setMovingCan();
+                        }
+                        */
+
+                        if (Gameplay.main.isMissionComplite() && !NeedOpenComplite //&& Time.unscaledTime - timeLastMove > 0.5f
+                            )
+                        {
+                            setComplite();
+                        }
+                    }
+
+                    void setColor5()
+                    {
+                        foreach (CellInternalObject cellInternal in color5)
+                        {
                             cellInternal.Activate(CellInternalObject.Type.color5, null, null);
                         }
                     }
-                    //иначе активируем все бомбы
-                    else if (bombs.Count > 0)
+                    void setBomb()
                     {
                         foreach (CellInternalObject cellInternal in bombs)
                         {
                             cellInternal.Activate(CellInternalObject.Type.bomb, null, null);
                         }
                     }
-                    //иначе активируем все ракеты
-                    else if (roskets.Count > 0)
-                    {
-                        foreach (CellInternalObject cellInternal in roskets)
-                        {
-                            cellInternal.Activate(cellInternal.type, null, null);
-                        }
-                    }
-                    //активируем все леталки
-                    else if (flys.Count > 0)
+                    void setFlying()
                     {
                         foreach (CellInternalObject cellInternal in flys)
                         {
                             cellInternal.Activate(CellInternalObject.Type.airplane, null, null);
                         }
                     }
-
-                    //Иначе если еще есть ходы в запасе.. 
-                    else if (Gameplay.main.movingCan > 0) {
-
+                    void setRosket() {
+                        foreach (CellInternalObject cellInternal in roskets)
+                        {
+                            cellInternal.Activate(cellInternal.type, null, null);
+                        }
+                    }
+                    void setMovingCan() {
                         //Список номеров использованных при рандомизации
                         List<int> numRangIsUse = new List<int>();
 
                         //выбираем случайную ячейку
                         int count = Gameplay.main.movingCan;
-                        for (int num = 0; num < count && num < colors.Count; num++) {
+                        for (int num = 0; num < count && num < colors.Count; num++)
+                        {
 
 
                             //выбираем рандомуную ячейку
@@ -4293,8 +4362,10 @@ public class GameFieldCTRL : MonoBehaviour
 
                             bool numIsUsed = false;
                             //Проверяем этот номер на то что его еще нет у списке
-                            foreach (int numUsed in numRangIsUse) {
-                                if (numRand == numUsed) {
+                            foreach (int numUsed in numRangIsUse)
+                            {
+                                if (numRand == numUsed)
+                                {
                                     numIsUsed = true;
                                     break;
                                 }
@@ -4303,10 +4374,11 @@ public class GameFieldCTRL : MonoBehaviour
                             //Если этой внутренности нет или это не цвет
                             //Пропускаем
                             if (numRand >= colors.Count ||
-                                colors[numRand] == null || 
+                                colors[numRand] == null ||
                                 colors[numRand].type != CellInternalObject.Type.color || //Если эта внутренность не цвет
                                 numIsUsed //Этот номер был в использовании
-                                ) {
+                                )
+                            {
                                 continue;
                             }
 
@@ -4320,13 +4392,16 @@ public class GameFieldCTRL : MonoBehaviour
                             //Выбираем тип спавняемого объекта
                             CellInternalObject.Type shanceType = CellInternalObject.Type.rocketHorizontal;
                             int shanceInt = Random.Range(0, 3);
-                            if (shanceInt == 0) {
+                            if (shanceInt == 0)
+                            {
                                 if (shanceBomb > 60) shanceType = CellInternalObject.Type.bomb;
                             }
-                            else if (shanceInt == 1) {
+                            else if (shanceInt == 1)
+                            {
                                 if (shanceFly > 60) shanceType = CellInternalObject.Type.airplane;
                             }
-                            else if (shanceInt == 2) {
+                            else if (shanceInt == 2)
+                            {
                                 if (shanceSupBomb > 1) shanceType = CellInternalObject.Type.color5;
                             }
 
@@ -4344,13 +4419,16 @@ public class GameFieldCTRL : MonoBehaviour
                                     colors[numRand].setColorAndType(colors[numRand].color, CellInternalObject.Type.rocketVertical);
                                 }
                             }
-                            else if (shanceType == CellInternalObject.Type.bomb) {
+                            else if (shanceType == CellInternalObject.Type.bomb)
+                            {
                                 colors[numRand].setColorAndType(colors[numRand].color, CellInternalObject.Type.bomb);
                             }
-                            else if (shanceType == CellInternalObject.Type.airplane) {
+                            else if (shanceType == CellInternalObject.Type.airplane)
+                            {
                                 colors[numRand].setColorAndType(colors[numRand].color, CellInternalObject.Type.airplane);
                             }
-                            else if (shanceType == CellInternalObject.Type.color5) {
+                            else if (shanceType == CellInternalObject.Type.color5)
+                            {
                                 colors[numRand].setColorAndType(colors[numRand].color, CellInternalObject.Type.color5);
                             }
 
@@ -4362,14 +4440,13 @@ public class GameFieldCTRL : MonoBehaviour
                         }
 
                         //Если ходов не осталось или нет объектов для взрывов высвечиваем сообщение о последнем ходе
-                        if (Gameplay.main.movingCan <= 0 || colors.Count <= 0) {
+                        if (Gameplay.main.movingCan <= 0 || colors.Count <= 0)
+                        {
                             MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strLastMove);
                             Gameplay.main.movingCan = 0;
                         }
                     }
-
-                    else if (Gameplay.main.isMissionComplite() && !NeedOpenComplite && Time.unscaledTime - timeLastMove > 0.5f)
-                    {
+                    void setComplite() {
                         PlayerProfile.main.Health.Amount++;
                         PlayerProfile.main.Save();
                         NeedOpenComplite = true;

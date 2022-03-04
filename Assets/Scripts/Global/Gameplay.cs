@@ -35,6 +35,8 @@ public class Gameplay : MonoBehaviour
     public float timeScale = 1;
     public int enemyScore = 0;
 
+    public bool speedEnd = false;
+
     /// <summary>
     /// Цель окончания игры
     /// </summary>
@@ -89,6 +91,8 @@ public class Gameplay : MonoBehaviour
         moveCompleted = false;
         playerTurn = true;
         CountStars(ref stars);
+
+        speedEnd = false;
 
         for (int x = 0; x < colorsCount.Length; x++) {
             colorsCount[x] = 0;
@@ -225,7 +229,7 @@ public class Gameplay : MonoBehaviour
         {
             //Ставим время последней проверки
             buffer.missionTestTime = Time.unscaledTime;
-
+            
             //Делаем параметры по умолчанию
             buffer.missionComplite = false;
             buffer.missionDefeat = false;
@@ -259,6 +263,13 @@ public class Gameplay : MonoBehaviour
                     LevelStatsController.main.playerScore = score;                    
                     LevelStatsController.main.SendPlayerStats();
                 }
+            }
+
+            if (Input.GetMouseButtonDown(0) && //Если нажата кнопка то включаем завершающий пропуск 
+                (buffer.missionComplite || buffer.missionDefeat)
+                ) {
+                //Говорим что пропускаем завершаюшие действия
+                speedEnd = true;
             }
         }
     }

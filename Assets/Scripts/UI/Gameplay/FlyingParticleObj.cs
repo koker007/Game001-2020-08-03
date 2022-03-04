@@ -42,7 +42,7 @@ public class FlyingParticleObj : MonoBehaviour
 
 
 
-     public void IniFlyingParticleData(GameObject ParentObj, Texture image, Sprite sprite, Vector2 sizeimage, RectTransform rectStart, RectTransform rectTarget) {
+     public void IniFlyingParticleData(GameObject ParentObj, Texture image, Sprite sprite, Vector2 sizeimage, RectTransform rectStart, RectTransform rectTarget, Vector2 offset) {
         //Родитель внутри которого перемещаемся
         if (gameObject.transform.parent != ParentObj.transform)
             gameObject.transform.parent = ParentObj.transform;
@@ -67,7 +67,7 @@ public class FlyingParticleObj : MonoBehaviour
 
         //Устанавливаем начальную позицию и размер
         Vector2 startPos = new Vector2(rectStart.position.x + sizeimage.x, rectStart.position.y + sizeimage.y/2);
-        rectSpawn.position = startPos;
+        rectSpawn.position = startPos + offset;
         sizeStart = sizeimage * 100;
         rectSpawn.sizeDelta = sizeStart;
 
@@ -150,7 +150,7 @@ public class FlyingParticleObj : MonoBehaviour
             sizeObj.transform.localScale = new Vector3(scale, scale, scale); //sizeStart/2 * scale;
 
         //если дистанция еще большая выыходим
-        if (distNow > 0.1f) return;
+        if (distNow > 0.2f) return;
 
         //Удаляем
         Destroy(gameObject);
