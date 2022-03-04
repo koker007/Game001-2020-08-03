@@ -1150,7 +1150,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    if (arr[y, x] == 1 && exist[y, x] == 1)
+                    if (arr[y, x] >= 1 && exist[y, x] == 1)
                         numArr++;
                 }
             }
