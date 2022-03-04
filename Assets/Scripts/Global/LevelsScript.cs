@@ -450,7 +450,7 @@ public class LevelsScript : MonoBehaviour
     private Level level;
     private Level generatedLevel = new Level();
     private const int mainLevelsCount = 1000;
-    public Level[] Levels = new Level[mainLevelsCount];
+    public List<Level> Levels = new List<Level>(mainLevelsCount);
 
     /// <summary>
     ///создание уровня(метод существует для зрительного упрощения схемы уровня в Start)
@@ -497,7 +497,7 @@ public class LevelsScript : MonoBehaviour
         else 
         {
             if (generatedLevel.NumLevel != Gameplay.main.levelSelect)
-                generatedLevel = new Level(LevelGenerator.main.GenerateLevel(Gameplay.main.levelSelect));
+                generatedLevel = new Level(LevelGenerator.main.GenerateLevelV3(Gameplay.main.levelSelect, true));
             return generatedLevel;
         }
     }

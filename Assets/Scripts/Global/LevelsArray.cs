@@ -21,7 +21,7 @@ public class LevelsArray : LevelsScript
 
     private void SaveLevelsInScriptableObject()
     {
-        for(int i = 1; i < Levels.Length; i++)
+        for(int i = 1; i < Levels.Count; i++)
         {
             if (_levelsObject.levels.Count <= i)
             {
