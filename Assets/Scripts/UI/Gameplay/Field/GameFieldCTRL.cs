@@ -588,7 +588,7 @@ public class GameFieldCTRL : MonoBehaviour
             }
 
             //Перебираем всю карту
-            //Создаем подледный объект //Если тип объекта выбран
+            //Создаем подледный объект //Если такие объекты есть
             for (int x = 0; x < iceCTRLs.GetLength(0); x++)
             {
                 for (int y = 0; y < iceCTRLs.GetLength(1); y++)
@@ -602,7 +602,7 @@ public class GameFieldCTRL : MonoBehaviour
 
             //проверяем ячейки на возможность растановки подледных объектов рандомных объектов
             //Рандомно не принудительно
-            if (listUnderIceObj.Count < 0) {
+            if (level.PassedWithUnderObj && listUnderIceObj.Count <= 0) {
                 for (int x = 0; x < iceCTRLs.GetLength(0); x++) {
                     for (int y = 0; y < iceCTRLs.GetLength(1); y++) {
                         //Пропускаем создание с некоторым шансом
@@ -707,10 +707,10 @@ public class GameFieldCTRL : MonoBehaviour
                     int rand = Random.Range(0, underIceObjPrefab.texturesAndSizes.Length);
 
                     //Если обьект не помещается продолжаем перебор
-                    if (underIceObjPrefab.texturesAndSizes[rand].size.x > distOk || //Если объект больше максимального растояния
-                        underIceObjPrefab.texturesAndSizes[rand].size.y > distOk ||
-                        underIceObjPrefab.texturesAndSizes[rand].size.x < MinDist.x || //Если объект меньше чем растояние до первого льда
-                        underIceObjPrefab.texturesAndSizes[rand].size.y < MinDist.y
+                    if (underIceObjPrefab.texturesAndSizes[rand].size.x - 1 > distOk || //Если объект больше максимального растояния
+                        underIceObjPrefab.texturesAndSizes[rand].size.y - 1 > distOk ||
+                        underIceObjPrefab.texturesAndSizes[rand].size.x - 1 < MinDist.x || //Если объект меньше чем растояние до первого льда
+                        underIceObjPrefab.texturesAndSizes[rand].size.y - 1 < MinDist.y
                         ) continue;
 
                     //Если все ок, то создаем объект
@@ -732,13 +732,13 @@ public class GameFieldCTRL : MonoBehaviour
 
                 //////////////////////////////////////////////////////////////////////////////////////////
                 //Можно ли создать объект подольдом
-                bool canUnderIce(int x, int y)
+                bool canUnderIce(int locX, int locY)
                 {
-                    if (pos.x + x < cellCTRLs.GetLength(0) &&
-                        pos.y + y < cellCTRLs.GetLength(1) &&
-                        cellCTRLs[pos.x + x, pos.y + y] != null && //Если ячейка существует
-                        level.cells[pos.x + x, pos.y + y].dispencer != true && //Если ячейка без раздатчика
-                        cellCTRLs[pos.x + x, pos.y + y].underIceObj == null //Если эта ячейка не занята предметом
+                    if (pos.x + locX < cellCTRLs.GetLength(0) &&
+                        pos.y + locY < cellCTRLs.GetLength(1) &&
+                        cellCTRLs[pos.x + locX, pos.y + locY] != null && //Если ячейка существует
+                        level.cells[pos.x + locX, pos.y + locY].dispencer != true && //Если ячейка без раздатчика
+                        cellCTRLs[pos.x + locX, pos.y + locY].underIceObj == null //Если эта ячейка не занята предметом
                         )
                     {
                         return true;
