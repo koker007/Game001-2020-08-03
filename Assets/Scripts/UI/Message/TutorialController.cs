@@ -22,7 +22,8 @@ public class TutorialController : MonoBehaviour
         Blocker,
         Walls,
         Enemy,
-        Ultimative
+        Ultimative,
+        UnderObjects
     }
 
     [System.Serializable]
