@@ -129,7 +129,7 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     public Transform parentOfDispencers;                    //Раздатчики
     [SerializeField]
-    public Transform parentOfTeleport;                    //Раздатчики
+    public Transform parentOfTeleport;                      //Раздатчики
     
 
     /// //////////////////////////////////////////////////////////////////////////////////////////
@@ -369,6 +369,7 @@ public class GameFieldCTRL : MonoBehaviour
                         }
                         cellCTRLs[x, y].ice = level.cells[x, y].HealthIce;
 
+
                         if (level.cells[x, y].Panel > 0)
                             cellCTRLs[x, y].panel = true;
                     }
@@ -534,8 +535,8 @@ public class GameFieldCTRL : MonoBehaviour
                     }
 
                     //Создаем подвижные объекты
-                    if (level.cells[x, y].typeCell != CellInternalObject.Type.none &&
-                        cellCTRLs[x, y].Box == 0 && //Если нету ящика
+                    if (level.cells[x, y].typeCell != CellInternalObject.Type.none &&   
+                        cellCTRLs[x, y].Box == 0 &&                                     //Если нету ящика
                         !level.cells[x, y].dispencer
                         )
                     {
@@ -586,23 +587,39 @@ public class GameFieldCTRL : MonoBehaviour
                 }
             }
 
-            
-            //проверяем ячейки на возможность растановки подледных объектов
-            for (int x = 0; x < iceCTRLs.GetLength(0); x++) {
-                for (int y = 0; y < iceCTRLs.GetLength(1); y++) {
-                    //Пропускаем создание с некоторым шансом
-                    if (cellCTRLs[x,y] == null || Random.Range(0, 100) < 0) continue;
-
-                    //Пытаемся создать
-                    bool result = TestAndSetUnderIceObj2(new Vector2Int(x,y));
-                    if (result) {
-                        bool rest = false;
+            //Перебираем всю карту
+            //Создаем подледный объект //Если такие объекты есть
+            for (int x = 0; x < iceCTRLs.GetLength(0); x++)
+            {
+                for (int y = 0; y < iceCTRLs.GetLength(1); y++)
+                {
+                    if (level.cells[x, y].underObj > 0)
+                    {
+                        TestAndSetUnderIceNum(new Vector2Int(x, y), level.cells[x, y].underObj - 1);
                     }
                 }
             }
 
+            //проверяем ячейки на возможность растановки подледных объектов рандомных объектов
+            //Рандомно не принудительно
+            if (level.PassedWithUnderObj && listUnderIceObj.Count <= 0) {
+                for (int x = 0; x < iceCTRLs.GetLength(0); x++) {
+                    for (int y = 0; y < iceCTRLs.GetLength(1); y++) {
+                        //Пропускаем создание с некоторым шансом
+                        if (cellCTRLs[x, y] == null || Random.Range(0, 100) < 0) continue;
+
+                        //Пытаемся создать
+                        bool result = TestAndSetUnderIceRandom(new Vector2Int(x, y));
+                        if (result) {
+                            bool rest = false;
+                        }
+                    }
+                }
+            }
+
+
             //попытка создать объект подольдом если найдется хотябы 1 лед
-            bool TestAndSetUnderIceObj2(Vector2Int pos, int typeUnderIce = 9999) {
+            bool TestAndSetUnderIceRandom(Vector2Int pos) {
                 bool created = false;
                 //Смещаемся
                 
@@ -688,17 +705,12 @@ public class GameFieldCTRL : MonoBehaviour
 
 
                     int rand = Random.Range(0, underIceObjPrefab.texturesAndSizes.Length);
-                    //несколько раз пытаемся выбрать рандомный объект из списка
-                    if (num == 0 && typeUnderIce < underIceObjPrefab.texturesAndSizes.Length)
-                    {
-                        rand = typeUnderIce;
-                    }
 
                     //Если обьект не помещается продолжаем перебор
-                    if (underIceObjPrefab.texturesAndSizes[rand].size.x > distOk || //Если объект больше максимального растояния
-                        underIceObjPrefab.texturesAndSizes[rand].size.y > distOk ||
-                        underIceObjPrefab.texturesAndSizes[rand].size.x < MinDist.x || //Если объект меньше чем растояние до первого льда
-                        underIceObjPrefab.texturesAndSizes[rand].size.y < MinDist.y
+                    if (underIceObjPrefab.texturesAndSizes[rand].size.x - 1 > distOk || //Если объект больше максимального растояния
+                        underIceObjPrefab.texturesAndSizes[rand].size.y - 1 > distOk ||
+                        underIceObjPrefab.texturesAndSizes[rand].size.x - 1 < MinDist.x || //Если объект меньше чем растояние до первого льда
+                        underIceObjPrefab.texturesAndSizes[rand].size.y - 1 < MinDist.y
                         ) continue;
 
                     //Если все ок, то создаем объект
@@ -720,6 +732,65 @@ public class GameFieldCTRL : MonoBehaviour
 
                 //////////////////////////////////////////////////////////////////////////////////////////
                 //Можно ли создать объект подольдом
+                bool canUnderIce(int locX, int locY)
+                {
+                    if (pos.x + locX < cellCTRLs.GetLength(0) &&
+                        pos.y + locY < cellCTRLs.GetLength(1) &&
+                        cellCTRLs[pos.x + locX, pos.y + locY] != null && //Если ячейка существует
+                        level.cells[pos.x + locX, pos.y + locY].dispencer != true && //Если ячейка без раздатчика
+                        cellCTRLs[pos.x + locX, pos.y + locY].underIceObj == null //Если эта ячейка не занята предметом
+                        )
+                    {
+                        return true;
+                    }
+                    else return false;
+                }
+
+                //Есть лед
+                bool foundIce(int x, int y) {
+                    if (cellCTRLs[pos.x + x, pos.y + y] != null &&
+                        cellCTRLs[pos.x + x, pos.y + y].ice > 0) {
+                        return true;
+
+                    }
+                    else return false;
+                }
+            }
+            bool TestAndSetUnderIceNum(Vector2Int pos, int typeObj) {
+                bool created = true;
+
+                //получаем компонент префаба для работы с данными
+                UnderIceObj underIceObjPrefab = prefabUnderIceObj.GetComponent<UnderIceObj>();
+
+                //проверяем ячейки по типпу объекта //
+                UnderIceObj.TexturesAndSize texturesAndSize = underIceObjPrefab.texturesAndSizes[typeObj];
+                for (int x = 0; x < texturesAndSize.size.x; x++) {
+                    for (int y = 0; y < texturesAndSize.size.y; y++) {
+                        //проверяем все ячейки на то что в них пожет разместиться часть подледного объекта
+                        if (!canUnderIce(x,y))
+                            return false;
+                    }
+                }
+
+                
+
+                //все ок, создаем объект
+                GameObject underIceObj = Instantiate(prefabUnderIceObj, parentOfUnderIceObj);
+                UnderIceObj underIce = underIceObj.GetComponent<UnderIceObj>();
+                //Инициализируем
+                bool iniok = underIce.IniObjectSizeAndPos(this, pos, underIceObjPrefab.texturesAndSizes[typeObj]);
+
+                //Если ошибка удаляем выходим
+                if (!iniok)
+                {
+                    Destroy(underIceObj);
+                    return false;
+                }
+
+                return created;
+
+                //////////////////////////////////////////////////////////////////////////////////////////
+                //Можно ли создать объект подольдом
                 bool canUnderIce(int x, int y)
                 {
                     if (pos.x + x < cellCTRLs.GetLength(0) &&
@@ -735,9 +806,11 @@ public class GameFieldCTRL : MonoBehaviour
                 }
 
                 //Есть лед
-                bool foundIce(int x, int y) {
+                bool foundIce(int x, int y)
+                {
                     if (cellCTRLs[pos.x + x, pos.y + y] != null &&
-                        cellCTRLs[pos.x + x, pos.y + y].ice > 0) {
+                        cellCTRLs[pos.x + x, pos.y + y].ice > 0)
+                    {
                         return true;
 
                     }
