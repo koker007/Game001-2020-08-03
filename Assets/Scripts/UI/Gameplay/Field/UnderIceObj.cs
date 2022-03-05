@@ -147,7 +147,7 @@ public class UnderIceObj : MonoBehaviour
         FlyingParticleObj flyingParticle = flyingParticleObj.GetComponent<FlyingParticleObj>();
         //Инициализируем
         flyingParticle.IniFlyingParticleData(
-            MenuGameplay.main.transform.gameObject, null, texturesAndSize.texture, texturesAndSize.size, myRectSize, MenuGameplay.main.Goal[0].GetComponent<RectTransform>());
+            MenuGameplay.main.transform.gameObject, null, texturesAndSize.texture, texturesAndSize.size, myRectSize, MenuGameplay.main.Goal[0].GetComponent<RectTransform>(), new Vector2(0,0));
 
         Destroy(gameObject);
 

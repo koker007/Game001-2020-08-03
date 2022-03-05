@@ -36,7 +36,7 @@ public class LevelGenerator : MonoBehaviour
     {
         for (int i = start; i <= end; i++)
         {
-            LevelsScript.Level lev = new LevelsScript.Level(GenerateLevelV3(i));
+            LevelsScript.Level lev = new LevelsScript.Level(GenerateLevelV3(i, false));
             lev.ConvertTwoCellsToOneCells();
             _levelsObject.levels[i] = new LevelsScript.Level(lev);
         }
@@ -837,13 +837,14 @@ public class LevelGenerator : MonoBehaviour
             }
         }
     }
-    public LevelsScript.Level GenerateLevelV3(int NumLevel)
+    public LevelsScript.Level GenerateLevelV3(int NumLevel, bool isKey)
     {
-        return GenerateLevelV3(NumLevel, null);
+        return GenerateLevelV3(NumLevel, isKey);
     }
 
-    public LevelsScript.Level GenerateLevelV3(int NumLevel, LevelsScript.Level baseLevel)
+    public LevelsScript.Level GenerateLevelV3(int NumLevel, LevelsScript.Level baseLevel, bool isKey)
     {
+        int key = (int)((float)NumLevel * 12345.6789);
         float symetryChance = 0.8f;
         bool symetry = false;
         int[] freeCellsUpBox = new int[10];
@@ -865,12 +866,12 @@ public class LevelGenerator : MonoBehaviour
         float moldScaler = 0.4f;
         float moldChance = 0.45f;
 
-        float iceScaler = 0.2f;
+        float iceScaler = 0.4f;
         float iceChance = 0.45f;
 
         //устанавливаем размер уровня
-        int Width = Random.Range(0, 1000) % 4 + 6;
-        int Height = Random.Range(0, 1000) % 6 + 6;
+        int Width = isKey ? Key() % 4 + 6 : Random.Range(0, 1000) % 4 + 6;
+        int Height = isKey ? Key() % 6 + 6 : Random.Range(0, 1000) % 6 + 6;
 
         //создаем уровень без массивов
         LevelsScript.Level level = LevelsScript.main.Levels[NumLevel];
@@ -960,8 +961,8 @@ public class LevelGenerator : MonoBehaviour
             }
             else if (level.PassedWithCrystal == true)
             {
-                level.NeedCrystal = Random.Range(0, 1000) % CheckArr(ref exist) + 15;
-                level.NeedColor = (CellInternalObject.InternalColor)(Random.Range(0, 1000) % 5);
+                level.NeedCrystal = isKey ? Key() % CheckArr(ref exist) + 15 : Random.Range(0, 1000) % CheckArr(ref exist) + 15;
+                level.NeedColor = isKey ? (CellInternalObject.InternalColor)(Key() % 5) : (CellInternalObject.InternalColor)(Random.Range(0, 1000) % 5);
                 break;
             }
             else if (level.PassedWithEnemy == true || level.PassedWithScore)
@@ -1014,7 +1015,7 @@ public class LevelGenerator : MonoBehaviour
                 return;
             }
 
-            int rand = (int)(Random.Range(0, 1000) % 7);
+            int rand = isKey ? Key() % 7 : Random.Range(0, 1000) % 7;
             switch (rand)
             {
                 case 0:
@@ -1149,7 +1150,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    if (arr[y, x] == 1 && exist[y, x] == 1)
+                    if (arr[y, x] >= 1 && exist[y, x] == 1)
                         numArr++;
                 }
             }
@@ -1242,8 +1243,8 @@ public class LevelGenerator : MonoBehaviour
 
         void ArrayRandomPerlin(float scaler, float chance, ref int[,] arr, int maxValue)
         {
-            float randomPositionX = Random.Range(0f, 10000f);
-            float randomPositionY = Random.Range(0f, 10000f);
+            float randomPositionX = isKey ? Key() * 1.1f : Random.Range(0, 1000f);
+            float randomPositionY = isKey ? Key() * 1.1f : Random.Range(0, 1000f);
             for (int y = 0; y < Height; y++)
             {
                 for (int x = 0; x < Width; x++)
@@ -1354,11 +1355,18 @@ public class LevelGenerator : MonoBehaviour
         //рандомный расчет шанса
         bool Chance(float i)
         {
-            float random = Random.Range(0f, 1f);
+            float random = isKey ? Key() / 1000 % 1 : Random.Range(0f, 1f); ;
             if (random < i)
                 return true;
             else
                 return false;
+        }
+
+        int Key()
+        {
+            Debug.Log($"key{key}");
+            key = (int)((key * 1234.5678) % 1000);
+            return key;
         }
     }
 }

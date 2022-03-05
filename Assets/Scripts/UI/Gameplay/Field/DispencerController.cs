@@ -106,7 +106,7 @@ public class DispencerController : MonoBehaviour
                 internalController.setColorAndType(primaryObjectColor, CellInternalObject.Type.blocker);
             }
             //Спавн основного предмета
-            else if (primaryObjectSpawnChance >= currentChance) //Проверяем шанс
+            else if (primaryObjectType > 0 && primaryObjectSpawnChance >= currentChance) //Проверяем шанс
             {            
                 internalController.setColorAndType(primaryObjectColor, primaryObjectType);
             }

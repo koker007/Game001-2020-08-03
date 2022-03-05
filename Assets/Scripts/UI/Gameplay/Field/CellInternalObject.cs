@@ -776,13 +776,37 @@ public class CellInternalObject : MonoBehaviour
 
         AddCountColor();
         SpawnEffects();
+        SpawnUnderObjFly();
 
         if (gameObject)
             Destroy(gameObject);
 
         SoundCTRL.main.PlaySoundDestroyInvoke();
         
-        
+        //Создаем эффект полета
+        void SpawnUnderObjFly() {
+            //Если цель миссии собрать внутренние объекты
+            LevelsScript.Level level = LevelsScript.main.ReturnLevel();
+
+            //Если цель уровня не кристалы или цвет не тот который нужен
+            if (!level.PassedWithCrystal || level.NeedColor != color || level.NeedCrystal <= Gameplay.main.colorsCount[(int)level.NeedColor]) return;
+
+            //создаем внутренний объект
+            GameObject partObj = Instantiate(myField.prefabFlyingParticleObj, MenuGameplay.main.transform.gameObject.transform);
+            FlyingParticleObj part = partObj.GetComponent<FlyingParticleObj>();
+            
+            if (part == null) {
+                Destroy(partObj);
+                return;
+            }
+
+            RectTransform rect = Image.GetComponent<RectTransform>();
+            rect.position -= new Vector3(20,20);
+
+            part.IniFlyingParticleData(
+                MenuGameplay.main.transform.gameObject, Image.mainTexture, null, new Vector2(1,1), rect, MenuGameplay.main.Goal[0].GetComponent<RectTransform>(), new Vector2(0, 0));
+            
+        }
 
         void SpawnEffects() {
             myCell.timeBoomOld = Time.unscaledTime; //Ставим время взрыва

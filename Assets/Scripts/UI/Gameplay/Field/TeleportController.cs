@@ -7,6 +7,7 @@ using UnityEngine.UI;
 //—емен
 public class TeleportController : MonoBehaviour
 {
+
     public Image image;
     public RectTransform rectMigleImage;
 
@@ -14,7 +15,7 @@ public class TeleportController : MonoBehaviour
 
     public CellCTRL cellIn; 
     public CellCTRL cellOut;
-    public TeleportController secondTeleport;
+    //public TeleportController secondTeleport;
 
     public Image ImageUP;
     public Image imageDown;
@@ -48,18 +49,40 @@ public class TeleportController : MonoBehaviour
             !cellIn.cellInternal.isMove //ќбъект бездействует
             )
         {
-            //≈сли выход второго телепорта свободен и доступен, инициируем телепортацию
-            if (secondTeleport.cellOut != null && //точка выхода существует
-                secondTeleport.cellOut.Box == 0 && //ƒвижение на выходе не заблокировано
-                !secondTeleport.cellOut.cellInternal && //ћесто выхода не зан€то
-                secondTeleport.cellOut.rock == 0 //на месте выхода нет камн€
-                                                 ) 
-            {
-                tele();
+
+            //»щем рандомный выход дл€ текущего телепорта
+            if (GameFieldCTRL.main.teleportLists[ID] != null) {
+                for (int trying = 0; trying < GameFieldCTRL.main.teleportLists[ID].Count; trying++) {
+                    int rand = Random.Range(0, GameFieldCTRL.main.teleportLists[ID].Count);
+                    if (GameFieldCTRL.main.teleportLists[ID][rand] == this) continue;
+
+                    //≈сли обнаружилась дырка то пересоздаем список чтобы без дырки
+                    if (GameFieldCTRL.main.teleportLists[ID][rand] == null) {
+                        List<TeleportController> teleportListNew = new List<TeleportController>();
+                        foreach (TeleportController teleport in GameFieldCTRL.main.teleportLists[ID]) {
+                            teleportListNew.Add(teleport);
+                        }
+                        //Ќовый список готов запомианем
+                        GameFieldCTRL.main.teleportLists[ID] = teleportListNew;
+                        //¬ыходим из цикла т.к. помен€лась размерность списка
+                        break;
+                    }
+
+                    //≈сли выход второго телепорта свободен и доступен, инициируем телепортацию
+                    if (GameFieldCTRL.main.teleportLists[ID][rand].cellOut != null && //точка выхода существует
+                        GameFieldCTRL.main.teleportLists[ID][rand].cellOut.Box == 0 && //ƒвижение на выходе не заблокировано
+                        !GameFieldCTRL.main.teleportLists[ID][rand].cellOut.cellInternal && //ћесто выхода не зан€то
+                        GameFieldCTRL.main.teleportLists[ID][rand].cellOut.rock == 0 //на месте выхода нет камн€
+                                                         )
+                    {
+                        tele(GameFieldCTRL.main.teleportLists[ID][rand]);
+                        break;
+                    }
+                }
             }
         }
 
-        void tele() {
+        void tele(TeleportController secondTeleport) {
             //—оздаем внутренний объект дубликат
             GameObject dublicateObj = Instantiate(cellIn.myField.prefabInternal, cellIn.myField.parentOfInternals);
             CellInternalObject dublicate = dublicateObj.GetComponent<CellInternalObject>();

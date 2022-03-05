@@ -38,6 +38,8 @@ public class MessageLevelInfo : MonoBehaviour
     [SerializeField]
     Texture TargetIce;
     [SerializeField]
+    Texture TargetUnderObj;
+    [SerializeField]
     Texture TargetMold;
     [SerializeField]
     Texture TargetBox;
@@ -155,6 +157,11 @@ public class MessageLevelInfo : MonoBehaviour
             else if (level.PassedWithIce) {
                 texture = TargetIce;
                 text = TranslateManager.main.GetText(TranslateManager.keyMessageLVLTargetICE);
+            }
+            else if (level.PassedWithUnderObj)
+            {
+                texture = TargetUnderObj;
+                text = TranslateManager.main.GetText(TranslateManager.keyMessageLVLTargetUnderObj);
             }
             else if (level.PassedWithCrystal) {
                 texture = TargetCrystal[(int)level.NeedColor];

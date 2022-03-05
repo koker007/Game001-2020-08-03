@@ -11,7 +11,7 @@ public class GameFieldCTRL : MonoBehaviour
 {
     public static GameFieldCTRL main;
 
-    private TeleportController[] firstTeleports = new TeleportController[100]; //fix
+    //private TeleportController[] firstTeleports = new TeleportController[100]; //fix
 
     [SerializeField]
     bool NeedOpenComplite = false;
@@ -58,7 +58,7 @@ public class GameFieldCTRL : MonoBehaviour
 
     [Header("Prefabs")]
     [SerializeField]
-    public GameObject prefabFlyingParticleObj;
+    public GameObject prefabFlyingParticleObj;              //летающие частицы до определенной точки
     [SerializeField]
     GameObject prefabCell;
     [SerializeField]
@@ -129,13 +129,14 @@ public class GameFieldCTRL : MonoBehaviour
     [SerializeField]
     public Transform parentOfDispencers;                    //Раздатчики
     [SerializeField]
-    public Transform parentOfTeleport;                    //Раздатчики
+    public Transform parentOfTeleport;                      //Раздатчики
     
 
     /// //////////////////////////////////////////////////////////////////////////////////////////
     //Список объектов принадлежащие этому игровому полю
     [Header("Lists Objs")]
     public List<UnderIceObj> listUnderIceObj = new List<UnderIceObj>(); //подледные объекты
+    public List<TeleportController>[] teleportLists = new List<TeleportController>[10]; //Массив не больше 10 разновидностей телепортов 
 
     [Header("Other")]
     public CellCTRL CellSelect; //Первый выделенный пользователем объект
@@ -181,23 +182,23 @@ public class GameFieldCTRL : MonoBehaviour
 
         isMoving();
 
-        TestFieldCombination(true); //Тестим комбинации с применением урона
+        TestFieldCombination(true);     //Тестим комбинации с применением урона
 
-        TestFieldPotencial(); //ищем потенциальные ходы
-        TestRandomNotPotencial(); //Рандомизируем если ходов не обнаружено
+        TestFieldPotencial();           //ищем потенциальные ходы
+        TestRandomNotPotencial();       //Рандомизируем если ходов не обнаружено
 
-        ActivateMarkers(); //Включаем маркеры цели
+        ActivateMarkers();              //Включаем маркеры цели
 
-        TestStartSwap(); //Начинаем обмен
-        TestReturnSwap(); //Возвращяем обмен
+        TestStartSwap();                //Начинаем обмен
+        TestReturnSwap();               //Возвращяем обмен
 
-        TestMold(); //Выполняем действия после хода
+        TestMold();                     //Выполняем действия после хода
 
-        TestCalcPriorityCells(); //Вычисление приоритета ячеек
+        TestCalcPriorityCells();        //Вычисление приоритета ячеек
 
         TurnPass();
 
-        //Проверка на завершение игры
+                                        //Проверка на завершение игры
         TestEndMessage();
 
         //Расчет буферных вычислений.. в основном нужно для эллеменнов на после, не для самого поля..
@@ -368,6 +369,7 @@ public class GameFieldCTRL : MonoBehaviour
                         }
                         cellCTRLs[x, y].ice = level.cells[x, y].HealthIce;
 
+
                         if (level.cells[x, y].Panel > 0)
                             cellCTRLs[x, y].panel = true;
                     }
@@ -386,8 +388,12 @@ public class GameFieldCTRL : MonoBehaviour
                         }
                         //Цвет основного (выдаваемого) объекта, берем из массива цветов
                         dispencerObj.GetComponent<DispencerController>().primaryObjectColor = level.cells[x, y].colorCell;
-                        //Тип основного (выдаваемого) объекта, берем из массива типов
-                        dispencerObj.GetComponent<DispencerController>().primaryObjectType = level.cells[x, y].typeCell;
+
+                        //Тип основного (выдаваемого) объекта, берем из массива типов. если указан тип то выдаем
+                        if (level.cells[x,y].typeCell != CellInternalObject.Type.none)
+                            dispencerObj.GetComponent<DispencerController>().primaryObjectType = level.cells[x, y].typeCell;
+                        //Если тип не указан то это будет обычный цвет
+                        else dispencerObj.GetComponent<DispencerController>().primaryObjectType = CellInternalObject.Type.color;
                     }
 
 
@@ -407,6 +413,22 @@ public class GameFieldCTRL : MonoBehaviour
                             teleportObj.GetComponent<TeleportController>().cellOut = cellCTRLs[x, y - 1];
                         }
 
+
+                        //Вытаскиваем контроллер телепорта
+                        TeleportController teleport = teleportObj.GetComponent<TeleportController>();
+
+                        //проверяем наличие списка телепортов
+                        if (teleportLists[teleportID] == null)
+                            teleportLists[teleportID] = new List<TeleportController>();
+
+                        //Добавляем телепорт в список телепортов по указанному id
+                        teleportLists[teleportID].Add(teleport);
+
+                        //Заполняем данными этот телепорт
+                        teleport.setIDAndColor(teleportID);
+                        teleport.myField = this;
+
+                        /*
                         //Если первый телепорт с заданным ID отсутствует в массиве, добавляем текущий
                         if (firstTeleports[teleportID] == null)
                         {
@@ -430,7 +452,7 @@ public class GameFieldCTRL : MonoBehaviour
                             firstTeleports[teleportID].myField = this;
                             firstTeleports[teleportID].secondTeleport.myField = this;
                         }
-
+                        */
 
                         //Проверяем нужна ли 
                     }
@@ -513,8 +535,8 @@ public class GameFieldCTRL : MonoBehaviour
                     }
 
                     //Создаем подвижные объекты
-                    if (level.cells[x, y].typeCell != CellInternalObject.Type.none &&
-                        cellCTRLs[x, y].Box == 0 && //Если нету ящика
+                    if (level.cells[x, y].typeCell != CellInternalObject.Type.none &&   
+                        cellCTRLs[x, y].Box == 0 &&                                     //Если нету ящика
                         !level.cells[x, y].dispencer
                         )
                     {
@@ -565,23 +587,39 @@ public class GameFieldCTRL : MonoBehaviour
                 }
             }
 
-            
-            //проверяем ячейки на возможность растановки подледных объектов
-            for (int x = 0; x < iceCTRLs.GetLength(0); x++) {
-                for (int y = 0; y < iceCTRLs.GetLength(1); y++) {
-                    //Пропускаем создание с некоторым шансом
-                    if (cellCTRLs[x,y] == null || Random.Range(0, 100) < 0) continue;
-
-                    //Пытаемся создать
-                    bool result = TestAndSetUnderIceObj2(new Vector2Int(x,y));
-                    if (result) {
-                        bool rest = false;
+            //Перебираем всю карту
+            //Создаем подледный объект //Если такие объекты есть
+            for (int x = 0; x < iceCTRLs.GetLength(0); x++)
+            {
+                for (int y = 0; y < iceCTRLs.GetLength(1); y++)
+                {
+                    if (level.cells[x, y].underObj > 0)
+                    {
+                        TestAndSetUnderIceNum(new Vector2Int(x, y), level.cells[x, y].underObj - 1);
                     }
                 }
             }
 
+            //проверяем ячейки на возможность растановки подледных объектов рандомных объектов
+            //Рандомно не принудительно
+            if (level.PassedWithUnderObj && listUnderIceObj.Count <= 0) {
+                for (int x = 0; x < iceCTRLs.GetLength(0); x++) {
+                    for (int y = 0; y < iceCTRLs.GetLength(1); y++) {
+                        //Пропускаем создание с некоторым шансом
+                        if (cellCTRLs[x, y] == null || Random.Range(0, 100) < 0) continue;
+
+                        //Пытаемся создать
+                        bool result = TestAndSetUnderIceRandom(new Vector2Int(x, y));
+                        if (result) {
+                            bool rest = false;
+                        }
+                    }
+                }
+            }
+
+
             //попытка создать объект подольдом если найдется хотябы 1 лед
-            bool TestAndSetUnderIceObj2(Vector2Int pos, int typeUnderIce = 9999) {
+            bool TestAndSetUnderIceRandom(Vector2Int pos) {
                 bool created = false;
                 //Смещаемся
                 
@@ -667,17 +705,12 @@ public class GameFieldCTRL : MonoBehaviour
 
 
                     int rand = Random.Range(0, underIceObjPrefab.texturesAndSizes.Length);
-                    //несколько раз пытаемся выбрать рандомный объект из списка
-                    if (num == 0 && typeUnderIce < underIceObjPrefab.texturesAndSizes.Length)
-                    {
-                        rand = typeUnderIce;
-                    }
 
                     //Если обьект не помещается продолжаем перебор
-                    if (underIceObjPrefab.texturesAndSizes[rand].size.x > distOk || //Если объект больше максимального растояния
-                        underIceObjPrefab.texturesAndSizes[rand].size.y > distOk ||
-                        underIceObjPrefab.texturesAndSizes[rand].size.x < MinDist.x || //Если объект меньше чем растояние до первого льда
-                        underIceObjPrefab.texturesAndSizes[rand].size.y < MinDist.y
+                    if (underIceObjPrefab.texturesAndSizes[rand].size.x - 1 > distOk || //Если объект больше максимального растояния
+                        underIceObjPrefab.texturesAndSizes[rand].size.y - 1 > distOk ||
+                        underIceObjPrefab.texturesAndSizes[rand].size.x - 1 < MinDist.x || //Если объект меньше чем растояние до первого льда
+                        underIceObjPrefab.texturesAndSizes[rand].size.y - 1 < MinDist.y
                         ) continue;
 
                     //Если все ок, то создаем объект
@@ -699,6 +732,65 @@ public class GameFieldCTRL : MonoBehaviour
 
                 //////////////////////////////////////////////////////////////////////////////////////////
                 //Можно ли создать объект подольдом
+                bool canUnderIce(int locX, int locY)
+                {
+                    if (pos.x + locX < cellCTRLs.GetLength(0) &&
+                        pos.y + locY < cellCTRLs.GetLength(1) &&
+                        cellCTRLs[pos.x + locX, pos.y + locY] != null && //Если ячейка существует
+                        level.cells[pos.x + locX, pos.y + locY].dispencer != true && //Если ячейка без раздатчика
+                        cellCTRLs[pos.x + locX, pos.y + locY].underIceObj == null //Если эта ячейка не занята предметом
+                        )
+                    {
+                        return true;
+                    }
+                    else return false;
+                }
+
+                //Есть лед
+                bool foundIce(int x, int y) {
+                    if (cellCTRLs[pos.x + x, pos.y + y] != null &&
+                        cellCTRLs[pos.x + x, pos.y + y].ice > 0) {
+                        return true;
+
+                    }
+                    else return false;
+                }
+            }
+            bool TestAndSetUnderIceNum(Vector2Int pos, int typeObj) {
+                bool created = true;
+
+                //получаем компонент префаба для работы с данными
+                UnderIceObj underIceObjPrefab = prefabUnderIceObj.GetComponent<UnderIceObj>();
+
+                //проверяем ячейки по типпу объекта //
+                UnderIceObj.TexturesAndSize texturesAndSize = underIceObjPrefab.texturesAndSizes[typeObj];
+                for (int x = 0; x < texturesAndSize.size.x; x++) {
+                    for (int y = 0; y < texturesAndSize.size.y; y++) {
+                        //проверяем все ячейки на то что в них пожет разместиться часть подледного объекта
+                        if (!canUnderIce(x,y))
+                            return false;
+                    }
+                }
+
+                
+
+                //все ок, создаем объект
+                GameObject underIceObj = Instantiate(prefabUnderIceObj, parentOfUnderIceObj);
+                UnderIceObj underIce = underIceObj.GetComponent<UnderIceObj>();
+                //Инициализируем
+                bool iniok = underIce.IniObjectSizeAndPos(this, pos, underIceObjPrefab.texturesAndSizes[typeObj]);
+
+                //Если ошибка удаляем выходим
+                if (!iniok)
+                {
+                    Destroy(underIceObj);
+                    return false;
+                }
+
+                return created;
+
+                //////////////////////////////////////////////////////////////////////////////////////////
+                //Можно ли создать объект подольдом
                 bool canUnderIce(int x, int y)
                 {
                     if (pos.x + x < cellCTRLs.GetLength(0) &&
@@ -714,9 +806,11 @@ public class GameFieldCTRL : MonoBehaviour
                 }
 
                 //Есть лед
-                bool foundIce(int x, int y) {
+                bool foundIce(int x, int y)
+                {
                     if (cellCTRLs[pos.x + x, pos.y + y] != null &&
-                        cellCTRLs[pos.x + x, pos.y + y].ice > 0) {
+                        cellCTRLs[pos.x + x, pos.y + y].ice > 0)
+                    {
                         return true;
 
                     }
@@ -4225,46 +4319,115 @@ public class GameFieldCTRL : MonoBehaviour
                         }
                     }
 
-                    //Активируем все супер цвет
-                    if (color5.Count > 0) {
-                        foreach (CellInternalObject cellInternal in color5) {
+                    //Если игрок не нажал на экран то взрываем медленно
+                    if (!Gameplay.main.speedEnd) {
+                        //Активируем все супер цвет
+                        if (color5.Count > 0)
+                        {
+                            setColor5();
+                        }
+                        //активируем все бомбы
+                        else if (bombs.Count > 0)
+                        {
+                            setBomb();
+                        }
+                        //активируем все ракеты
+                        else if (roskets.Count > 0)
+                        {
+                            setRosket();
+                        }
+                        //активируем все леталки
+                        else if (flys.Count > 0)
+                        {
+                            setFlying();
+                        }
+
+                        //Иначе если еще есть ходы в запасе.. 
+                        else if (Gameplay.main.movingCan > 0)
+                        {
+
+                            setMovingCan();
+                        }
+
+                        else if (Gameplay.main.isMissionComplite() && !NeedOpenComplite && Time.unscaledTime - timeLastMove > 0.5f)
+                        {
+                            setComplite();
+                        }
+                    }
+                    else {
+                        /*
+                        //Активируем все супер цвет
+                        if (color5.Count > 0)
+                        {
+                            setColor5();
+                        }
+                        //активируем все бомбы
+                        if (bombs.Count > 0)
+                        {
+                            setBomb();
+                        }
+                        //активируем все ракеты
+                        if (roskets.Count > 0)
+                        {
+                            setRosket();
+                        }
+                        //активируем все леталки
+                        if (flys.Count > 0)
+                        {
+                            setFlying();
+                        }
+                        */
+
+                        /*
+                        //Иначе если еще есть ходы в запасе.. 
+                        if (Gameplay.main.movingCan > 0)
+                        {
+                            setMovingCan();
+                        }
+                        */
+
+                        if (Gameplay.main.isMissionComplite() && !NeedOpenComplite //&& Time.unscaledTime - timeLastMove > 0.5f
+                            )
+                        {
+                            setComplite();
+                        }
+                    }
+
+                    void setColor5()
+                    {
+                        foreach (CellInternalObject cellInternal in color5)
+                        {
                             cellInternal.Activate(CellInternalObject.Type.color5, null, null);
                         }
                     }
-                    //иначе активируем все бомбы
-                    else if (bombs.Count > 0)
+                    void setBomb()
                     {
                         foreach (CellInternalObject cellInternal in bombs)
                         {
                             cellInternal.Activate(CellInternalObject.Type.bomb, null, null);
                         }
                     }
-                    //иначе активируем все ракеты
-                    else if (roskets.Count > 0)
-                    {
-                        foreach (CellInternalObject cellInternal in roskets)
-                        {
-                            cellInternal.Activate(cellInternal.type, null, null);
-                        }
-                    }
-                    //активируем все леталки
-                    else if (flys.Count > 0)
+                    void setFlying()
                     {
                         foreach (CellInternalObject cellInternal in flys)
                         {
                             cellInternal.Activate(CellInternalObject.Type.airplane, null, null);
                         }
                     }
-
-                    //Иначе если еще есть ходы в запасе.. 
-                    else if (Gameplay.main.movingCan > 0) {
-
+                    void setRosket() {
+                        foreach (CellInternalObject cellInternal in roskets)
+                        {
+                            cellInternal.Activate(cellInternal.type, null, null);
+                        }
+                    }
+                    void setMovingCan() {
                         //Список номеров использованных при рандомизации
                         List<int> numRangIsUse = new List<int>();
 
                         //выбираем случайную ячейку
                         int count = Gameplay.main.movingCan;
-                        for (int num = 0; num < count && num < colors.Count; num++) {
+                        for (int num = 0; num < count && num < colors.Count; num++)
+                        {
 
 
                             //выбираем рандомуную ячейку
@@ -4272,8 +4435,10 @@ public class GameFieldCTRL : MonoBehaviour
 
                             bool numIsUsed = false;
                             //Проверяем этот номер на то что его еще нет у списке
-                            foreach (int numUsed in numRangIsUse) {
-                                if (numRand == numUsed) {
+                            foreach (int numUsed in numRangIsUse)
+                            {
+                                if (numRand == numUsed)
+                                {
                                     numIsUsed = true;
                                     break;
                                 }
@@ -4282,10 +4447,11 @@ public class GameFieldCTRL : MonoBehaviour
                             //Если этой внутренности нет или это не цвет
                             //Пропускаем
                             if (numRand >= colors.Count ||
-                                colors[numRand] == null || 
+                                colors[numRand] == null ||
                                 colors[numRand].type != CellInternalObject.Type.color || //Если эта внутренность не цвет
                                 numIsUsed //Этот номер был в использовании
-                                ) {
+                                )
+                            {
                                 continue;
                             }
 
@@ -4299,13 +4465,16 @@ public class GameFieldCTRL : MonoBehaviour
                             //Выбираем тип спавняемого объекта
                             CellInternalObject.Type shanceType = CellInternalObject.Type.rocketHorizontal;
                             int shanceInt = Random.Range(0, 3);
-                            if (shanceInt == 0) {
+                            if (shanceInt == 0)
+                            {
                                 if (shanceBomb > 60) shanceType = CellInternalObject.Type.bomb;
                             }
-                            else if (shanceInt == 1) {
+                            else if (shanceInt == 1)
+                            {
                                 if (shanceFly > 60) shanceType = CellInternalObject.Type.airplane;
                             }
-                            else if (shanceInt == 2) {
+                            else if (shanceInt == 2)
+                            {
                                 if (shanceSupBomb > 1) shanceType = CellInternalObject.Type.color5;
                             }
 
@@ -4323,13 +4492,16 @@ public class GameFieldCTRL : MonoBehaviour
                                     colors[numRand].setColorAndType(colors[numRand].color, CellInternalObject.Type.rocketVertical);
                                 }
                             }
-                            else if (shanceType == CellInternalObject.Type.bomb) {
+                            else if (shanceType == CellInternalObject.Type.bomb)
+                            {
                                 colors[numRand].setColorAndType(colors[numRand].color, CellInternalObject.Type.bomb);
                             }
-                            else if (shanceType == CellInternalObject.Type.airplane) {
+                            else if (shanceType == CellInternalObject.Type.airplane)
+                            {
                                 colors[numRand].setColorAndType(colors[numRand].color, CellInternalObject.Type.airplane);
                             }
-                            else if (shanceType == CellInternalObject.Type.color5) {
+                            else if (shanceType == CellInternalObject.Type.color5)
+                            {
                                 colors[numRand].setColorAndType(colors[numRand].color, CellInternalObject.Type.color5);
                             }
 
@@ -4341,14 +4513,13 @@ public class GameFieldCTRL : MonoBehaviour
                         }
 
                         //Если ходов не осталось или нет объектов для взрывов высвечиваем сообщение о последнем ходе
-                        if (Gameplay.main.movingCan <= 0 || colors.Count <= 0) {
+                        if (Gameplay.main.movingCan <= 0 || colors.Count <= 0)
+                        {
                             MenuGameplay.main.CreateMidleMessage(MidleTextGameplay.strLastMove);
                             Gameplay.main.movingCan = 0;
                         }
                     }
-
-                    else if (Gameplay.main.isMissionComplite() && !NeedOpenComplite && Time.unscaledTime - timeLastMove > 0.5f)
-                    {
+                    void setComplite() {
                         PlayerProfile.main.Health.Amount++;
                         PlayerProfile.main.Save();
                         NeedOpenComplite = true;
