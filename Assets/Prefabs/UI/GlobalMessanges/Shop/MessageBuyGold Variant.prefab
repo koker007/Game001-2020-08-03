@@ -650,7 +650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.9647059, b: 0.8, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1452,6 +1452,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2795669054309879256, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: m_Color.b
+      value: 0.2198736
+      objectReference: {fileID: 0}
+    - target: {fileID: 2795669054309879256, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: m_Color.g
+      value: 0.64871055
+      objectReference: {fileID: 0}
+    - target: {fileID: 2795669054309879256, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: m_Color.r
+      value: 0.764151
+      objectReference: {fileID: 0}
     - target: {fileID: 2795669054418461023, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
       propertyPath: m_Text
       value: You want to buy gold
@@ -1504,6 +1516,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3977207006176006567, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4126816512209564579, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1520,9 +1536,41 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5722456333600421546, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6182555824944968532, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6558719086925862741, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6558719086925862741, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111917891000299054, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: m_Color.a
+      value: 0.59607846
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111917891000299054, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6462264
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111917891000299054, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111917891000299054, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: m_Color.r
+      value: 0.97502774
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111917891000299054, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 7122079401419284770, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1555,6 +1603,18 @@ PrefabInstance:
     - target: {fileID: 8418187813694582105, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8576544793094318985, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: m_Color.b
+      value: 0.7971698
+      objectReference: {fileID: 0}
+    - target: {fileID: 8576544793094318985, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9621859
+      objectReference: {fileID: 0}
+    - target: {fileID: 8576544793094318985, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8787602311654469385, guid: baaddae65d84a9245b21db3d54ecec5f, type: 3}
       propertyPath: typeBuy

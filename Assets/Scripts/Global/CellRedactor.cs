@@ -70,7 +70,7 @@ public class CellRedactor : MonoBehaviour
     private void UpdateImageSize(Image image, Vector2 size)
     {
         image.rectTransform.sizeDelta = size * 100;
-        image.rectTransform.position = (Vector2)gameObject.GetComponent<RectTransform>().position + new Vector2(size.x * 50 - 50, size.y * 50 - 50);
+        image.rectTransform.position = (Vector2)gameObject.GetComponent<RectTransform>().position + new Vector2((size.x - 1) * (50f / 1080f * Screen.width), (size.y - 1) * (50f / 1920f * Screen.height));
     }
 
     public void UpdatePos(Vector2Int pos)
