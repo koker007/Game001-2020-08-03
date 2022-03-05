@@ -1470,13 +1470,13 @@ public class CellInternalObject : MonoBehaviour
                         if (myField.cellCTRLs[x, y].cellInternal.color == internalColor)
                         {
                             myField.cellCTRLs[x, y].cellInternal.BufferPartner = partner;
-                            myField.cellCTRLs[x, y].cellInternal.BufferCombination = combination;
+                            myField.cellCTRLs[x, y].cellInternal.BufferCombination = BufferCombination;
                             //myField.cellCTRLs[x, y].DamageInvoke(dist * speedPerCell + 0.5f);
 
                             
 
                             Particle3dCTRL particle3DCTRL = Particle3dCTRL.CreateBoomSuperColor(myField.transform, myCell);
-                            particle3DCTRL.SetTransformTarget(myField.cellCTRLs[x,y].cellInternal, combination);
+                            particle3DCTRL.SetTransformTarget(myField.cellCTRLs[x,y].cellInternal, BufferCombination);
                             particle3DCTRL.SetTransformSpeed(1 / speedPerCell);
                         }
 
@@ -1487,7 +1487,7 @@ public class CellInternalObject : MonoBehaviour
                     }
                 }
 
-                myCell.Damage(null, combination);
+                myCell.Damage(null, BufferCombination);
             }
 
             void DestroyAll()
