@@ -784,7 +784,7 @@ public class CellCTRL : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
     void Update()
     {
         TestInternal();
-        TestBoxBlock();
+        //TestBoxBlock();
     }
 
     //Проверка если внутренний обьект не ссылается на эту ячейку, мы забываем про нее

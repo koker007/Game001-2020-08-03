@@ -888,6 +888,7 @@ public class LevelGenerator : MonoBehaviour
         int[,] dispencers = new int[Height, Width];
         int[,] walls = new int[Height, Width];
         int[,] teleports = new int[Height, Width];
+        int[,] uObj = new int[Height, Width];
 
         PassRandom();
         Crystal();
@@ -917,13 +918,33 @@ public class LevelGenerator : MonoBehaviour
                 if (CheckArr(ref panel) >= CheckArr(ref exist) / 10)
                     break;
             }
-            else if (level.PassedWithIce == true)
+            else if (level.PassedWithIce == true || level.PassedWithUnderObj == true)
             {
                 if (i == 1000)
                     Debug.Log("ice");
-                IceRandom();
+                if(level.PassedWithUnderObj == true)
+                {
+                    IceRandomPass(1.5f);
+                }
+                else
+                {
+                    IceRandom();
+                }
                 if (CheckArr(ref ice) >= CheckArr(ref exist) / 2)
+                {
+                    if (level.PassedWithUnderObj == true)
+                    {
+                        for (int k = 0; k <= 1000; k++)
+                        {
+                            UObjRandom();
+                            if (CheckArr(ref uObj) >= 2)
+                            {
+                                break;
+                            }
+                        }
+                    }
                     break;
+                }
             }
             else if (level.PassedWithMold == true)
             {
@@ -986,6 +1007,7 @@ public class LevelGenerator : MonoBehaviour
         level.SetMass(walls, "walls");
         level.SetMass(dispencers, "dispencers");
         level.SetMass(teleports, "teleport");
+        level.SetMass(uObj, "underObjs");
 
         level.SetCells();
 
@@ -1002,12 +1024,13 @@ public class LevelGenerator : MonoBehaviour
         //выбираем цели уровня
         void PassRandom()
         {
-            if(baseLevel != null && (baseLevel.PassedWithBox || baseLevel.PassedWithCrystal || baseLevel.PassedWithEnemy || baseLevel.PassedWithIce || baseLevel.PassedWithMold || baseLevel.PassedWithPanel || baseLevel.PassedWithRock || baseLevel.PassedWithScore))
+            if(baseLevel != null && (baseLevel.PassedWithBox || baseLevel.PassedWithCrystal || baseLevel.PassedWithEnemy || baseLevel.PassedWithIce || baseLevel.PassedWithMold || baseLevel.PassedWithPanel || baseLevel.PassedWithRock || baseLevel.PassedWithScore || baseLevel.PassedWithUnderObj))
             {
                 level.PassedWithBox = baseLevel.PassedWithBox;
                 level.PassedWithCrystal = baseLevel.PassedWithCrystal;
                 level.PassedWithEnemy = baseLevel.PassedWithEnemy;
                 level.PassedWithIce = baseLevel.PassedWithIce;
+                level.PassedWithUnderObj = baseLevel.PassedWithUnderObj;
                 level.PassedWithMold = baseLevel.PassedWithMold;
                 level.PassedWithPanel = baseLevel.PassedWithPanel;
                 level.PassedWithRock = baseLevel.PassedWithRock;
@@ -1015,7 +1038,7 @@ public class LevelGenerator : MonoBehaviour
                 return;
             }
 
-            int rand = isKey ? Key() % 7 : Random.Range(0, 1000) % 7;
+            int rand = isKey ? Key() % 7 : Random.Range(0, 1000) % 8;
             switch (rand)
             {
                 case 0:
@@ -1035,6 +1058,9 @@ public class LevelGenerator : MonoBehaviour
                     break;
                 case 5:
                     level.PassedWithIce = true;
+                    break;
+                case 6:
+                    level.PassedWithUnderObj = true;
                     break;
                 default:
                     level.PassedWithCrystal = true;
@@ -1221,6 +1247,13 @@ public class LevelGenerator : MonoBehaviour
         }
 
         //генерация льда
+        void IceRandomPass(float value)
+        {
+            ArrayNull(ref ice, 0);
+            ArrayRandomPerlin(iceScaler, iceChance / value, ref ice, 5);
+        }
+
+        //генерация льда
         void IceRandom()
         {
             ArrayNull(ref ice, 0);
@@ -1239,6 +1272,66 @@ public class LevelGenerator : MonoBehaviour
         {
             ArrayNull(ref mold, 0);
             ArrayRandomPerlin(moldScaler, moldChance, ref mold, 1);
+        }
+
+        void UObjRandom()
+        {
+            bool[,] isUObj = new bool[Height, Width];
+            UnderIceObj UnderObj = LevelRedactor.main._underObjPrefab;
+
+            ArrayNull(ref uObj, 0);
+            ArrayRandomPerlin(100, 0.4f, ref uObj, 8);
+            /*
+            for (int y = Height - 1; y >= 0; y--)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+
+                    uObj[y, x] = 1;
+                }
+
+            }*/
+            for (int y = Height - 1; y >= 0; y--)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    if (uObj[y, x] > 0)
+                    {
+                        try
+                        {
+                            for (int y2 = y; y2 >= y - UnderObj.texturesAndSizes[uObj[y, x]].size.y; y2--)
+                            {
+                                for (int x2 = x; x2 <= x + UnderObj.texturesAndSizes[uObj[y, x]].size.x; x2++)
+                                {
+                                    if (exist[y2, x2] == 0 || ice[y2, x2] == 0 || isUObj[y2, x2] == true)
+                                    {
+                                        uObj[y, x] = 0;
+                                        break;
+                                    }
+                                }
+                                if (uObj[y, x] == 0)
+                                    break;
+                            }
+                        }
+                        catch
+                        {
+                            uObj[y, x] = 0;
+                        }
+
+                        if (uObj[y, x] > 0)
+                        {
+                            for (int y2 = y; y2 >= y - UnderObj.texturesAndSizes[uObj[y, x]].size.y; y2--)
+                            {
+                                for (int x2 = x; x2 <= x + UnderObj.texturesAndSizes[uObj[y, x]].size.x; x2++)
+                                {
+                                    isUObj[y2, x2] = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
         }
 
         void ArrayRandomPerlin(float scaler, float chance, ref int[,] arr, int maxValue)

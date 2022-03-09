@@ -101,7 +101,7 @@ public class LevelRedactor : MonoBehaviour
     [SerializeField] private Sprite[] TextureWall = new Sprite[5];
     [SerializeField] private Sprite TextureRock;
 
-    [SerializeField] private UnderIceObj _underObjPrefab;
+    public UnderIceObj _underObjPrefab;
 
     private void Awake()
     {

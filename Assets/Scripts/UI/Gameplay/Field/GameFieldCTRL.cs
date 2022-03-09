@@ -967,10 +967,10 @@ public class GameFieldCTRL : MonoBehaviour
                     {
 
                         //Узнаем какая ячейка выше
-                        CellCTRL upCell = null;
+                        Vector2Int upCell = new Vector2Int();
                         //Если выше потенциально есть ячейки 
                         if (y + plusY + 1 < cellCTRLs.GetLength(1)) {
-                            upCell = cellCTRLs[x, y + plusY + 1];
+                            upCell = new Vector2Int(x,y + plusY + 1);
                         }
 
                         //Если достигли самого верха поля
@@ -1007,7 +1007,7 @@ public class GameFieldCTRL : MonoBehaviour
                         //или дошли до несуществующей йчейки, выходим
                         else if (y + plusY < cellCTRLs.GetLength(1) &&
                             (//!CheckObstaclesToMoveUp(cellCTRLs[x, y + plusY], null) || //Не очень понятно но вроде работает
-                            !CheckObstaclesToMoveDown(cellCTRLs[x, y + plusY], upCell)))
+                            !CheckObstaclesToMoveDown(cellCTRLs[x, y + plusY], cellCTRLs[upCell.x, upCell.y])))
                         {
                             break;
                         }

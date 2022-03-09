@@ -106,13 +106,12 @@ public class MenuGameplay : MonoBehaviour
         //updateButtons();
         updateGoal();
 
-        if (Application.platform == RuntimePlatform.Android)
+#if PLATFORM_ANDROID
+        if (Input.GetKey(KeyCode.Escape))
         {
-            if (Input.GetKey(KeyCode.Escape))
-            {
-                clickButtonExitLevel();
-            }
+            clickButtonExitLevel();
         }
+#endif
 
         UpdateUI();
     }
@@ -148,6 +147,7 @@ public class MenuGameplay : MonoBehaviour
         DestroyAllField();
         CreateGameField();
         EnableUI();
+        ClearGoal();
 
         if (!GameplayParticles3D.main.gameObject.activeSelf) {
             GameplayParticles3D.main.gameObject.SetActive(true);
@@ -161,6 +161,7 @@ public class MenuGameplay : MonoBehaviour
         {
             GameplayParticles3D.main.gameObject.SetActive(false);
         }
+
     }
 
     //Создать игровое поле согласно параметрам игры
@@ -235,7 +236,6 @@ public class MenuGameplay : MonoBehaviour
     /// </summary>
     public void updateGoal()
     {
-        ClearGoal();
 
         //Включаем индикаторы врага
         if (level.PassedWithEnemy)
@@ -317,14 +317,16 @@ public class MenuGameplay : MonoBehaviour
             }
 
         }
+    }
 
-        void ClearGoal() {
-            for (int j = 0; j < Goal.Length; j++)
-            {
-                Goal[j].SetActive(false);
-            }
+    private void ClearGoal()
+    {
+        for (int j = 0; j < Goal.Length; j++)
+        {
+            Goal[j].SetActive(false);
         }
     }
+
     /// <summary>
     /// обновляет счет очков
     /// </summary>
