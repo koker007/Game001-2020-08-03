@@ -964,6 +964,13 @@ public class DataBase : MonoBehaviour
         public const string coronaStr = "corona";
         public const string mixedStr = "mixed";
 
+        public const string adBonusStr = "AdBonus";
+        public const string adPlusMoveStr = "AdPlusMove";
+        public const string adPlusHealthStr = "AdPlusHealth";
+
+        public const string levelPlayerStr = "LevelPlayer";
+        public const string levelLastOpenedStr = "LevelLastOpened";
+
         int buyingL = -1;
         int gold_50L = -1;
         int gold_100L = -1;
@@ -981,6 +988,11 @@ public class DataBase : MonoBehaviour
         int pillL = -1;
         int coronaL = -1;
         int mixedL = -1;
+        int adBonusL = -1;
+        int adPlusMoveL = -1;
+        int adPlusHealthL = -1;
+        int levelPlayerL = -1;
+        int levelLastOpenedL = -1;
 
         int buyingS = -1;
         int gold_50S = -1;
@@ -999,6 +1011,11 @@ public class DataBase : MonoBehaviour
         int pillS = -1;
         int coronaS = -1;
         int mixedS = -1;
+        int adBonusS = -1;
+        int adPlusMoveS = -1;
+        int adPlusHealthS = -1;
+        int levelPlayerS = -1;
+        int levelLastOpenedS = -1;
 
         bool buyingNeed = true;
         bool gold_50Need = true;
@@ -1017,13 +1034,19 @@ public class DataBase : MonoBehaviour
         bool pillNeed = true;
         bool coronaNeed = true;
         bool mixedNeed = true;
+        bool adBonusNeed = true;
+        bool adPlusMoveNeed = true;
+        bool adPlusHealthNeed = true;
+        bool levelPlayerNeed = true;
+        bool levelLastOpenedNeed = true;
 
 
 
         public void setProfileData(int buyingF, 
             int gold_50F, int gold_100F, int gold_250F, int gold_500F, int gold_1000F, 
             int pack_01F, int pack_02F, int pack_03F, int pack_04F, int pack_05F, int vipF,
-            int hummerF, int pillF, int bombF, int coronaF, int mixedF) {
+            int hummerF, int pillF, int bombF, int coronaF, int mixedF, int adBonusF, int adPlusMoveF, int adPlusHealthF,
+            int levelPlayerF, int levelLastOpenedF) {
 
             if (buyingF > 0)
             {
@@ -1124,18 +1147,53 @@ public class DataBase : MonoBehaviour
                 mixedS = mixedF;
             }
 
+            if (adBonusF > 0)
+            {
+                adBonusNeed = true;
+                adBonusL = -1;
+                adBonusS = adBonusF;
+            }
+            if (adPlusMoveF > 0)
+            {
+                adPlusMoveNeed = true;
+                adPlusMoveL = -1;
+                adPlusMoveS = adPlusMoveF;
+            }
+            if (adPlusHealthF > 0)
+            {
+                adPlusHealthNeed = true;
+                adPlusHealthL = -1;
+                adPlusHealthS = adPlusHealthF;
+            }
+
+            if (levelPlayerF > 0) {
+                levelPlayerNeed = true;
+                levelPlayerL = -1;
+                levelPlayerS = levelPlayerF;
+            }
+            if (levelLastOpenedF > 0) {
+                levelLastOpenedNeed = true;
+                levelLastOpenedL = -1;
+                levelLastOpenedS = levelLastOpenedF;
+            }
+
             loadNeed = true;
         }
 
-        public void TestLoadAndSave() {
+        public void TestLoadAndSave(bool thisMonth) {
 
             if (!loadNeed) return;
 
             //Зашли в подраздел уровней текущего времени
-            DatabaseReference yearChild = reference.Child(TimeWorld.GetTimeWorld().Year.ToString());
-            DatabaseReference monthChild = yearChild.Child(TimeWorld.GetTimeWorld().Month.ToString());
+            DatabaseReference yearChild = reference.Child(System.DateTime.Now.Year.ToString());
+            DatabaseReference monthChild = yearChild.Child(System.DateTime.Now.Month.ToString());
 
             DatabaseReference profile = monthChild.Child(Profiles);
+
+            //Если нужно сохранить данные не к конкретному месяцу а общие
+            if (!thisMonth)
+                profile = reference.Child(Profiles);
+
             DatabaseReference profileData = profile.Child(PlayerProfile.main.profileTimeStart);
 
             DatabaseReference profileShop = profileData.Child(shopStr);
@@ -1146,7 +1204,7 @@ public class DataBase : MonoBehaviour
             //Загузка уровня
 
             //если количество игроков которые победили не известно -1
-            
+
             //Магазин 
             if (buyingNeed && buyingL == -1)
             {
@@ -1158,8 +1216,8 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) buyingL = geted;
-
-                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
 
                 });
@@ -1177,8 +1235,8 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) gold_50L = geted;
-
-                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
 
                 });
@@ -1196,7 +1254,7 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) gold_100L = geted;
-
+                        else
                         Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
 
@@ -1215,8 +1273,8 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) gold_250L = geted;
-
-                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
 
                 });
@@ -1234,8 +1292,8 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) gold_500L = geted;
-
-                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
 
                 });
@@ -1253,8 +1311,8 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) gold_1000L = geted;
-
-                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
 
                 });
@@ -1273,8 +1331,8 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) pack_01L = geted;
-
-                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
 
                 });
@@ -1292,8 +1350,8 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) pack_02L = geted;
-
-                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
 
                 });
@@ -1311,8 +1369,8 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) pack_03L = geted;
-
-                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
 
                 });
@@ -1330,8 +1388,8 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) pack_04L = geted;
-
-                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
 
                 });
@@ -1349,8 +1407,8 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) pack_05L = geted;
-
-                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
 
                 });
@@ -1368,8 +1426,8 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) vipL = geted;
-
-                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
 
                 });
@@ -1388,8 +1446,8 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) hummerL = geted;
-
-                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
 
                 });
@@ -1407,8 +1465,8 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) bombL = geted;
-
-                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
 
                 });
@@ -1426,8 +1484,8 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) pillL = geted;
-
-                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
 
                 });
@@ -1445,8 +1503,8 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) coronaL = geted;
-
-                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
 
                 });
@@ -1464,14 +1522,111 @@ public class DataBase : MonoBehaviour
                     {
                         int geted = getInt(task.Result);
                         if (geted != -1) mixedL = geted;
-
-                        Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
                     }
 
                 });
 
                 //Запрос отправлен
                 mixedNeed = false;
+            }
+
+            if (adBonusNeed && adBonusL == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(adBonusStr).GetValueAsync().ContinueWith(task => {
+
+                    adBonusL = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) adBonusL = geted;
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                adBonusNeed = false;
+            }
+            if (adPlusHealthNeed && adPlusHealthL == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(adPlusHealthStr).GetValueAsync().ContinueWith(task => {
+
+                    adPlusHealthL = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) adPlusHealthL = geted;
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                adPlusHealthNeed = false;
+            }
+            if (adPlusMoveNeed && adPlusMoveL == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(adPlusMoveStr).GetValueAsync().ContinueWith(task => {
+
+                    adPlusMoveL = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) adPlusMoveL = geted;
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                adPlusMoveNeed = false;
+            }
+
+            if (levelPlayerNeed && levelPlayerL == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(levelPlayerStr).GetValueAsync().ContinueWith(task => {
+
+                    levelPlayerL = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) levelPlayerL = geted;
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                levelPlayerNeed = false;
+            }
+            if (levelLastOpenedNeed && levelLastOpenedL == -1)
+            {
+                //Грузим из сети
+                profileShop.Child(levelLastOpenedStr).GetValueAsync().ContinueWith(task => {
+
+                    levelLastOpenedL = 0;
+                    if (task != null && task.Result != null && task.IsCompleted)
+                    {
+                        int geted = getInt(task.Result);
+                        if (geted != -1) levelLastOpenedL = geted;
+                        else
+                            Debug.LogError("FirebaseStorageService - RetrieveSummary has failed!");
+                    }
+
+                });
+
+                //Запрос отправлен
+                levelLastOpenedNeed = false;
             }
 
             //Данные профиля
@@ -1483,7 +1638,9 @@ public class DataBase : MonoBehaviour
                 gold_50L == -1 || gold_100L == -1 || gold_250L == -1 || gold_500L == -1 || gold_1000L == -1 ||
                 pack_01L == -1 || pack_02L == -1 || pack_03L == -1 || pack_04L == -1 || pack_05L == -1 ||
                 vipL == -1 ||
-                hummerL == -1 || bombL == -1 || pillL == -1 || coronaL == -1 || mixedL == -1
+                hummerL == -1 || bombL == -1 || pillL == -1 || coronaL == -1 || mixedL == -1 ||
+                adBonusL == -1 || adPlusHealthL == -1 || adPlusMoveL == -1 ||
+                levelPlayerL == -1 || levelLastOpenedL == -1
                 ) return;
 
 
@@ -1495,86 +1652,110 @@ public class DataBase : MonoBehaviour
             if (buyingS > 0)
             {
                 float buyingF = buyingS + buyingL;
-                profileData.Child(buyingStr).SetValueAsync(buyingF);
+                profileShop.Child(buyingStr).SetValueAsync(buyingF);
             }
             if (gold_50S > 0)
             {
                 float gold_50F = gold_50S + gold_50L;
-                profileData.Child(gold_50Str).SetValueAsync(gold_50F);
+                profileShop.Child(gold_50Str).SetValueAsync(gold_50F);
             }
             if (gold_100S > 0)
             {
                 float gold_100F = gold_100S + gold_100L;
-                profileData.Child(gold_100Str).SetValueAsync(gold_100F);
+                profileShop.Child(gold_100Str).SetValueAsync(gold_100F);
             }
             if (gold_250S > 0)
             {
                 float gold_250F = gold_250S + gold_250L;
-                profileData.Child(gold_250Str).SetValueAsync(gold_250F);
+                profileShop.Child(gold_250Str).SetValueAsync(gold_250F);
             }
             if (gold_500S > 0)
             {
                 float gold_500F = gold_500S + gold_500L;
-                profileData.Child(gold_500Str).SetValueAsync(gold_500F);
+                profileShop.Child(gold_500Str).SetValueAsync(gold_500F);
             }
             if (gold_1000S > 0)
             {
                 float gold_1000F = gold_1000S + gold_1000L;
-                profileData.Child(gold_1000Str).SetValueAsync(gold_1000F);
+                profileShop.Child(gold_1000Str).SetValueAsync(gold_1000F);
             }
-            if (pack_01L > 0)
+            if (pack_01S > 0)
             {
                 float pack_01F = pack_01S + pack_01L;
-                profileData.Child(pack_01Str).SetValueAsync(pack_01F);
+                profileShop.Child(pack_01Str).SetValueAsync(pack_01F);
             }
-            if (pack_02L > 0)
+            if (pack_02S > 0)
             {
                 float pack_02F = pack_02S + pack_02L;
-                profileData.Child(pack_02Str).SetValueAsync(pack_02F);
+                profileShop.Child(pack_02Str).SetValueAsync(pack_02F);
             }
-            if (pack_03L > 0)
+            if (pack_03S > 0)
             {
                 float pack_03F = pack_03S + pack_03L;
-                profileData.Child(pack_03Str).SetValueAsync(pack_03F);
+                profileShop.Child(pack_03Str).SetValueAsync(pack_03F);
             }
-            if (pack_04L > 0)
+            if (pack_04S > 0)
             {
                 float pack_04F = pack_04S + pack_04L;
-                profileData.Child(pack_04Str).SetValueAsync(pack_04F);
+                profileShop.Child(pack_04Str).SetValueAsync(pack_04F);
             }
-            if (pack_05L > 0)
+            if (pack_05S > 0)
             {
                 float pack_05F = pack_05S + pack_05L;
-                profileData.Child(pack_05Str).SetValueAsync(pack_05F);
+                profileShop.Child(pack_05Str).SetValueAsync(pack_05F);
             }
-            if (vipL > 0)
+            if (vipS > 0)
             {
                 float vipF = vipS + vipL;
-                profileData.Child(vipStr).SetValueAsync(vipF);
+                profileShop.Child(vipStr).SetValueAsync(vipF);
             }
-            if (hummerL > 0) {
+            if (hummerS > 0) {
                 float hummerF = hummerS + hummerL;
-                profileData.Child(hummerStr).SetValueAsync(hummerF);
+                profileShop.Child(hummerStr).SetValueAsync(hummerF);
             }
-            if (pillL > 0)
+            if (pillS > 0)
             {
                 float pillF = pillS + pillL;
-                profileData.Child(pillStr).SetValueAsync(pillF);
+                profileShop.Child(pillStr).SetValueAsync(pillF);
             }
-            if (bombL > 0)
+            if (bombS > 0)
             {
                 float bombF = bombS + bombL;
-                profileData.Child(pillStr).SetValueAsync(bombF);
+                profileShop.Child(bombStr).SetValueAsync(bombF);
             }
-            if (coronaL > 0)
+            if (coronaS > 0)
             {
                 float coronaF = coronaS + coronaL;
-                profileData.Child(coronaStr).SetValueAsync(coronaF);
+                profileShop.Child(coronaStr).SetValueAsync(coronaF);
             }
-            if (mixedL > 0)
+            if (mixedS > 0)
             {
                 float mixedF = mixedS + mixedL;
-                profileData.Child(mixedStr).SetValueAsync(mixedL);
+                profileShop.Child(mixedStr).SetValueAsync(mixedL);
+            }
+            if (adBonusS > 0)
+            {
+                float adBonusF = adBonusS + adBonusL;
+                profileShop.Child(adBonusStr).SetValueAsync(adBonusF);
+            }
+            if (adPlusHealthS > 0)
+            {
+                float adPlusHealthF = adPlusHealthS + adPlusHealthL;
+                profileShop.Child(adPlusHealthStr).SetValueAsync(adPlusHealthF);
+            }
+            if (adPlusMoveS > 0)
+            {
+                float adPlusMoveF = adPlusMoveS + adPlusMoveL;
+                profileShop.Child(adPlusMoveStr).SetValueAsync(adPlusMoveF);
+            }
+
+            //Если новый уровень больше чем в базе данных то перезаписываем
+            if (levelPlayerS > levelPlayerL) {
+                profileData.Child(levelPlayerStr).SetValueAsync(levelPlayerS);
+            }
+            if (levelLastOpenedS > levelLastOpenedL)
+            {
+                profileData.Child(levelLastOpenedStr).SetValueAsync(levelLastOpenedS);
             }
 
             ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -1596,13 +1777,20 @@ public class DataBase : MonoBehaviour
             bombS = 0;
             coronaS = 0;
             mixedS = 0;
+            adBonusS = 0;
+            adPlusHealthS = 0;
+            adPlusMoveS = 0;
+            levelPlayerS = 0;
+            levelLastOpenedS = 0;
 
             //Данные уровня были сохранены
             loadNeed = false;
 
         }
     }
+
     public TypeProfile typeProfile = new TypeProfile();
+    public TypeProfile typeProfileMonth = new TypeProfile();
 
     static int getInt(DataSnapshot dataSnapshot) {
         int result = -1;
@@ -1626,6 +1814,8 @@ public class DataBase : MonoBehaviour
 
 
         //typeLevel.SetLevelData(0, true, 2, 4,5,6,7,8,9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21);
+        //typeProfile.setProfileData(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+        //typeProfileMonth.setProfileData(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
     }
 
     // Update is called once per frame
@@ -1633,7 +1823,8 @@ public class DataBase : MonoBehaviour
     {
         //попытка загрузить из сети или сохранить в сеть
         typeLevel.TestLoadAndSave();
-        typeProfile.TestLoadAndSave();
+        typeProfile.TestLoadAndSave(false);
+        typeProfileMonth.TestLoadAndSave(true);
     }
 
 }

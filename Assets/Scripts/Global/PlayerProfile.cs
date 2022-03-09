@@ -179,8 +179,8 @@ public class PlayerProfile : MonoBehaviour
     //загрузка данных
     private void LoadProfie()
     {
-        
-        profileTimeStart = PlayerPrefs.GetString(strProfileTimeStart, " ");
+        //Создаем имя профиля
+        profileTimeStart = PlayerPrefs.GetString(strProfileTimeStart, "" + System.DateTime.Now.Year + "`" + System.DateTime.Now.Month + "`" + System.DateTime.Now.Day + "`" + Random.Range(1, 99999));
         
 
         ProfileTermsOfUse = PlayerPrefs.GetFloat(strProfileTermsOfUse, startProfileTermsOfUse);
@@ -237,11 +237,6 @@ public class PlayerProfile : MonoBehaviour
     }
     public void Save() {
 
-        //Сохраняем время первой регистрации. 
-        //Если время в памяти нету то получаем
-        if (profileTimeStart.Length < 2 && TimeWorld.GetTimeWorld().Year > 1000)
-            profileTimeStart = TimeWorld.GetTimeWorld().ToString() + " " + Random.Range(1, 9999);
-
         PlayerPrefs.SetString(strProfileTimeStart, profileTimeStart);
 
         PlayerPrefs.SetInt(strProfileLevel, ProfileLevel);
@@ -277,6 +272,7 @@ public class PlayerProfile : MonoBehaviour
         string dataStr = "";
 
         //Глобальные данные
+        dataStr += strProfileTimeStart + spliterKAD + profileTimeStart + spliterDAD; //Имя профиля
         dataStr += strProfileLevel + spliterKAD + ProfileLevel + spliterDAD;
         dataStr += strProfileLevelGetGift + spliterKAD + ProfileLevelGetGift + spliterDAD;
         dataStr += strProfileScore + spliterKAD + ProfileScore + spliterDAD;
@@ -776,6 +772,7 @@ public class PlayerProfile : MonoBehaviour
     /// <returns></returns>
     public void PayPack(ShopPack Pack)
     {
+
         GoldAmount += Pack.BuyMoneyNum;
         ShopInternal.Amount += Pack.BuyInternalNum;
         ShopRocket.Amount += Pack.BuyRocketNum;
@@ -784,6 +781,30 @@ public class PlayerProfile : MonoBehaviour
         ShopMixed.Amount += Pack.BuyMixedNum;
 
         SaveItemAmount();
+
+        if (Pack.typePack == ShopPack.Type.verySmallPack) {
+            DataBase.main.typeProfile.setProfileData(1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            DataBase.main.typeProfileMonth.setProfileData(1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        }
+        else if (Pack.typePack == ShopPack.Type.smallPack) {
+            DataBase.main.typeProfile.setProfileData(1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            DataBase.main.typeProfileMonth.setProfileData(1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        }
+        else if (Pack.typePack == ShopPack.Type.normalPack)
+        {
+            DataBase.main.typeProfile.setProfileData(1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            DataBase.main.typeProfileMonth.setProfileData(1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        }
+        else if (Pack.typePack == ShopPack.Type.bigPack)
+        {
+            DataBase.main.typeProfile.setProfileData(1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            DataBase.main.typeProfileMonth.setProfileData(1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        }
+        else if (Pack.typePack == ShopPack.Type.veryBigPack)
+        {
+            DataBase.main.typeProfile.setProfileData(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            DataBase.main.typeProfileMonth.setProfileData(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        }
     }
     public bool PayPackForMoney(ShopPack Pack)
     {
@@ -899,7 +920,7 @@ public class PlayerProfile : MonoBehaviour
     public void DeleteProfile() {
 
         //Получаем новое время акаунта
-        profileTimeStart = TimeWorld.GetTimeWorld().ToString() + " " + Random.Range(1, 9999);
+        profileTimeStart = "" + System.DateTime.Now.Year + "`" + System.DateTime.Now.Month + "`" + System.DateTime.Now.Day + "`" + Random.Range(1, 99999);
         PlayerPrefs.SetString(strProfileTimeStart, profileTimeStart);
 
         ProfileLevel = startProfileLevel;

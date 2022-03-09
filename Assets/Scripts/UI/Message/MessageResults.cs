@@ -74,6 +74,11 @@ public class MessageResults : MonoBehaviour
         {
             PlayerProfile.main.SetLVLGold(Gameplay.main.levelSelect, 1);
         }
+
+        //Сохранить в базу данных последний открытый уровень
+        DataBase.main.typeProfile.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, PlayerProfile.main.ProfileLevel, PlayerProfile.main.ProfilelevelOpen);
+        DataBase.main.typeProfileMonth.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, PlayerProfile.main.ProfileLevel, PlayerProfile.main.ProfilelevelOpen);
+
     }
     void saveDataBace() {
         DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, true, Gameplay.main.movingCount, Gameplay.main.score, 

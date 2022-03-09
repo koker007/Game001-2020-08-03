@@ -184,6 +184,8 @@ public class AdMobController : MonoBehaviour
         Gameplay.main.adWatchedCount++;
         //MessageCTRL.selected.ClickButtonClose();
 
+        DataBase.main.typeProfile.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0);
+        DataBase.main.typeProfileMonth.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0);
 
         if (GameFieldCTRL.main != null)
             DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0);
@@ -238,6 +240,9 @@ public class AdMobController : MonoBehaviour
     {
         UICTRL.main.OpenGameplay();
         Gameplay.main.randomizedPlayBonus();
+
+        DataBase.main.typeProfile.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+        DataBase.main.typeProfileMonth.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
     }
     private void HandlePlayWithBonusLoaded(object sender, EventArgs args)
     {
@@ -266,6 +271,9 @@ public class AdMobController : MonoBehaviour
     {
         PlayerProfile.main.Health.Amount++;
         PlayerProfile.main.Save();
+
+        DataBase.main.typeProfile.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0);
+        DataBase.main.typeProfileMonth.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,0);
     }
     private void HandleAddHealthLoaded(object sender, EventArgs args)
     {

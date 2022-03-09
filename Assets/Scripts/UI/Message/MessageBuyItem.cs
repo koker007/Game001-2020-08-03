@@ -105,7 +105,8 @@ public class MessageBuyItem : MonoBehaviour
 
             else 
             {
-                DataBase.main.typeProfile.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
+                DataBase.main.typeProfile.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                DataBase.main.typeProfileMonth.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
                 //Сохраняем в базу данных
                 if (GameFieldCTRL.main != null)
@@ -118,7 +119,8 @@ public class MessageBuyItem : MonoBehaviour
             }
             else
             {
-                DataBase.main.typeProfile.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0);
+                DataBase.main.typeProfile.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0);
+                DataBase.main.typeProfileMonth.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0);
 
                 if (GameFieldCTRL.main != null)
                     DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -130,7 +132,8 @@ public class MessageBuyItem : MonoBehaviour
             }
             else
             {
-                DataBase.main.typeProfile.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0);
+                DataBase.main.typeProfile.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0);
+                DataBase.main.typeProfileMonth.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0);
 
                 if (GameFieldCTRL.main != null)
                     DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -142,7 +145,8 @@ public class MessageBuyItem : MonoBehaviour
             }
             else
             {
-                DataBase.main.typeProfile.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
+                DataBase.main.typeProfile.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0);
+                DataBase.main.typeProfileMonth.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0);
 
                 if (GameFieldCTRL.main != null)
                     DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -156,7 +160,8 @@ public class MessageBuyItem : MonoBehaviour
             }
             else if (GameFieldCTRL.main != null)
             {
-                DataBase.main.typeProfile.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
+                DataBase.main.typeProfile.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0);
+                DataBase.main.typeProfileMonth.setProfileData(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0);
                 if (GameFieldCTRL.main != null)
                     DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0);
             }

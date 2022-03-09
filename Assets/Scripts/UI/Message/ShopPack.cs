@@ -17,6 +17,16 @@ public class ShopPack : MonoBehaviour
     [SerializeField] private Text _Color5Text;
     [SerializeField] private Text _MixedText;
 
+    public enum Type { 
+        verySmallPack,
+        smallPack,
+        normalPack,
+        bigPack,
+        veryBigPack
+    }
+
+    public Type typePack;
+
     public string Name;
     public int CostMoney;
 
@@ -74,14 +84,16 @@ public class ShopPack : MonoBehaviour
 
     public void ClickDataBaceGold50() {
 
-        DataBase.main.typeProfile.setProfileData(0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        DataBase.main.typeProfile.setProfileData(1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        DataBase.main.typeProfileMonth.setProfileData(1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         if (GameFieldCTRL.main != null) {
             DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0);
         }    
     }
     public void ClickDataBaceGold100() {
 
-        DataBase.main.typeProfile.setProfileData(0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        DataBase.main.typeProfile.setProfileData(1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        DataBase.main.typeProfileMonth.setProfileData(1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         if (GameFieldCTRL.main != null)
         {
             DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0);
@@ -89,7 +101,8 @@ public class ShopPack : MonoBehaviour
     }
     public void ClickDataBaceGold250() {
 
-        DataBase.main.typeProfile.setProfileData(0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        DataBase.main.typeProfile.setProfileData(1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        DataBase.main.typeProfileMonth.setProfileData(1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         if (GameFieldCTRL.main != null)
         {
             DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0);
@@ -97,7 +110,8 @@ public class ShopPack : MonoBehaviour
     }
     public void ClickDataBaceGold500() {
 
-        DataBase.main.typeProfile.setProfileData(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        DataBase.main.typeProfile.setProfileData(1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        DataBase.main.typeProfileMonth.setProfileData(1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         if (GameFieldCTRL.main != null)
         {
             DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
@@ -105,7 +119,8 @@ public class ShopPack : MonoBehaviour
     }
     public void ClickDataBaceGold1000() {
 
-        DataBase.main.typeProfile.setProfileData(0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        DataBase.main.typeProfile.setProfileData(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        DataBase.main.typeProfileMonth.setProfileData(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         if (GameFieldCTRL.main != null)
         {
             DataBase.main.typeLevel.SetLevelData(Gameplay.main.levelSelect, false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
