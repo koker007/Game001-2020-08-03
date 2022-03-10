@@ -181,7 +181,8 @@ public class PlayerProfile : MonoBehaviour
     {
         //Создаем имя профиля
         profileTimeStart = PlayerPrefs.GetString(strProfileTimeStart, "" + System.DateTime.Now.Year + "`" + System.DateTime.Now.Month + "`" + System.DateTime.Now.Day + "`" + Random.Range(1, 99999));
-        
+        //Если имя профиля длинее чем мжет быть, значит профиль испорчен, нужно пересоздать
+        if (profileTimeStart.Length > 22) profileTimeStart = "" + System.DateTime.Now.Year + "`" + System.DateTime.Now.Month + "`" + System.DateTime.Now.Day + "`" + Random.Range(1, 99999);
 
         ProfileTermsOfUse = PlayerPrefs.GetFloat(strProfileTermsOfUse, startProfileTermsOfUse);
 
