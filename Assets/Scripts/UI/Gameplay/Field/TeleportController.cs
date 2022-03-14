@@ -84,8 +84,7 @@ public class TeleportController : MonoBehaviour
 
         void tele(TeleportController secondTeleport) {
             //Создаем внутренний объект дубликат
-            GameObject dublicateObj = Instantiate(cellIn.myField.prefabInternal, cellIn.myField.parentOfInternals);
-            CellInternalObject dublicate = dublicateObj.GetComponent<CellInternalObject>();
+            CellInternalObject dublicate = GameFieldCTRL.main.FindFreeCellInternal();
 
             //Дубликат должен выглядеть идентично оригиналу
             dublicate.setColorAndType(cellIn.cellInternal.color, cellIn.cellInternal.type);

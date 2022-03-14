@@ -779,7 +779,7 @@ public class CellInternalObject : MonoBehaviour
         SpawnUnderObjFly();
 
         if (gameObject)
-            Destroy(gameObject);
+            gameObject.SetActive(false);
 
         SoundCTRL.main.PlaySoundDestroyInvoke();
         
@@ -867,7 +867,7 @@ public class CellInternalObject : MonoBehaviour
 
         //Уничтожение по тихому без нанесения урона и последствий
         void SilendRemove() {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
@@ -2131,12 +2131,8 @@ public class CellInternalObject : MonoBehaviour
     //Заменить и активировать
     void ReplacementColorAndActivate()
     {
-        
-        //создаем новый обьект
-        GameObject internalObj = Instantiate(myField.prefabInternal, myField.parentOfInternals);
-
         //Создаем объект
-        CellInternalObject cellInternalObject = internalObj.GetComponent<CellInternalObject>();
+        CellInternalObject cellInternalObject = GameFieldCTRL.main.FindFreeCellInternal();
 
         cellInternalObject.myField = myField;
 

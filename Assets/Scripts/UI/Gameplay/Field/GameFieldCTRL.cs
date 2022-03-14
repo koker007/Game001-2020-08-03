@@ -160,9 +160,11 @@ public class GameFieldCTRL : MonoBehaviour
 
     private GameObject[,] markers;
 
+    private List<CellInternalObject> _internals = new List<CellInternalObject>(1);
 
     private void Start()
     {
+
         main = this;
         buffer.Ini(); //Проинициализировать буффер
 
@@ -213,6 +215,8 @@ public class GameFieldCTRL : MonoBehaviour
     /// </summary>
     public void inicializeField(LevelsScript.Level level)
     {
+        InicializeInternalObjects(level.Width * level.Height);
+
         currentLevel = level;
         timeLastMove = Time.unscaledTime;
         timeLastMarker = Time.unscaledTime;
@@ -543,8 +547,7 @@ public class GameFieldCTRL : MonoBehaviour
                         if (level.cells[x, y].typeCell == CellInternalObject.Type.color)
                         {
                             //Создаем объект и перемещаем
-                            GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
-                            CellInternalObject internalCtrl = internalObj.GetComponent<CellInternalObject>();
+                            CellInternalObject internalCtrl = FindFreeCellInternal();
                             internalCtrl.myField = this;
                             internalCtrl.StartMove(cellCTRLs[x, y]);
                             internalCtrl.EndMove();
@@ -978,14 +981,13 @@ public class GameFieldCTRL : MonoBehaviour
                             Time.unscaledTime - timeLastBoom > 0.1f)
                         {
                             //Создаем префаб перемещаемого объекта
-                            GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
+                            CellInternalObject internalCtrl = FindFreeCellInternal();
                             //ставим на позицию 
-                            RectTransform rect = internalObj.GetComponent<RectTransform>();
+                            RectTransform rect = internalCtrl.GetComponent<RectTransform>();
 
                             //Считаем количество ходов до верха
                             rect.pivot = new Vector2(-x, -y - (countSpawned[x] + cellCTRLs.GetLength(1) - y));
 
-                            CellInternalObject internalCtrl = internalObj.GetComponent<CellInternalObject>();
 
                             //Установить цвет
                             internalCtrl.randSpawnType(true);
@@ -1063,6 +1065,47 @@ public class GameFieldCTRL : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void InicializeInternalObjects(int num)
+    {
+        for (int i = 0; i < num; i++)
+        {
+            GameObject obj = Instantiate(prefabInternal, parentOfInternals);
+            if (_internals.Count - 1 < i)
+            {
+                _internals.Add(obj.GetComponent<CellInternalObject>());
+            }
+            else
+            {
+                _internals[i] = obj.GetComponent<CellInternalObject>();
+            }
+
+            _internals[i].gameObject.SetActive(false);
+        }
+    }
+
+    public CellInternalObject FindFreeCellInternal()
+    {
+
+        CellInternalObject inter = null;
+        foreach (CellInternalObject internalObject in _internals)
+        {
+            if (internalObject.gameObject.activeSelf == false)
+            {
+                inter = internalObject;
+                break;
+            }
+        }
+
+        if (inter == null)
+        {
+            _internals.Add(Instantiate(prefabInternal, parentOfInternals).GetComponent<CellInternalObject>());
+            inter = _internals[_internals.Count - 1];
+        }
+
+        inter.gameObject.SetActive(true);
+        return inter;
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3766,8 +3809,7 @@ public class GameFieldCTRL : MonoBehaviour
 
         if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
-        GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
-        CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
+        CellInternalObject cellInternal = FindFreeCellInternal();
         cellLast.timeAddInternalOld = Time.unscaledTime;
 
         cellInternal.IniBomb(cellLast, this, internalColor, combID);
@@ -3783,8 +3825,7 @@ public class GameFieldCTRL : MonoBehaviour
 
         if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
-        GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
-        CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
+        CellInternalObject cellInternal = FindFreeCellInternal();
         cellLast.timeAddInternalOld = Time.unscaledTime;
 
         cellInternal.IniFly(cellLast, this, internalColor, combID);
@@ -3800,8 +3841,7 @@ public class GameFieldCTRL : MonoBehaviour
 
         if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
-        GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
-        CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
+        CellInternalObject cellInternal = FindFreeCellInternal();
         cellLast.timeAddInternalOld = Time.unscaledTime;
 
         cellInternal.IniSuperColor(cellLast, this, internalColor, combID);
@@ -3817,8 +3857,7 @@ public class GameFieldCTRL : MonoBehaviour
 
         if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
-        GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
-        CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
+        CellInternalObject cellInternal = FindFreeCellInternal();
         cellLast.timeAddInternalOld = Time.unscaledTime;
 
         cellInternal.IniRocketVertical(cellLast, this, internalColor, combID);
@@ -3833,8 +3872,7 @@ public class GameFieldCTRL : MonoBehaviour
 
         if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
-        GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
-        CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
+        CellInternalObject cellInternal = FindFreeCellInternal();
         cellLast.timeAddInternalOld = Time.unscaledTime;
 
         cellInternal.IniRocketHorizontal(cellLast, this, internalColor, combID);
@@ -3850,8 +3888,7 @@ public class GameFieldCTRL : MonoBehaviour
 
         if (cellLast.myInternalNum == 0 && cellLast.timeAddInternalOld == Time.unscaledTime) return;
 
-        GameObject internalObj = Instantiate(prefabInternal, parentOfInternals);
-        CellInternalObject cellInternal = internalObj.GetComponent<CellInternalObject>();
+        CellInternalObject cellInternal = FindFreeCellInternal();
         cellLast.timeAddInternalOld = Time.unscaledTime;
 
         cellInternal.IniBlockerColor(cellLast, this, internalColor, combID);

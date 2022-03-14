@@ -91,12 +91,11 @@ public class DispencerController : MonoBehaviour
             targetCell.cellInternal == null)
         {
             //Создаем и размещаем предмет
-            GameObject internalObj = Instantiate(GameFieldCTRL.main.prefabInternal, GameFieldCTRL.main.parentOfInternals);
-            CellInternalObject internalController = internalObj.GetComponent<CellInternalObject>();
+            CellInternalObject internalController = GameFieldCTRL.main.FindFreeCellInternal();
             //прячем объект под маской, выпадение сверху
             internalController.SetFullMask2D(CellInternalObject.MaskType.top);
 
-            RectTransform internalRect = internalObj.GetComponent<RectTransform>();
+            RectTransform internalRect = internalController.GetComponent<RectTransform>();
             internalRect.pivot = -MyPosition;
 
             int currentChance = Random.Range(1, 101);
